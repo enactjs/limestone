@@ -1,11 +1,11 @@
-import Marquee from '@enact/sandstone/Marquee';
+import Marquee from '@enact/limestone/Marquee';
 import {boolean, number, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 
 Marquee.displayName = 'Marquee';
 
 export default {
-	title: 'Sandstone/Marquee',
+	title: 'Limestone/Marquee',
 	component: 'Marquee'
 };
 

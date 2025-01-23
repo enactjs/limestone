@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 
-import DayPicker from '@enact/sandstone/DayPicker';
-import {FixedPopupPanels, Header, Panel} from '@enact/sandstone/FixedPopupPanels';
-import Item from '@enact/sandstone/Item';
+import DayPicker from '@enact/limestone/DayPicker';
+import {FixedPopupPanels, Header, Panel} from '@enact/limestone/FixedPopupPanels';
+import Item from '@enact/limestone/Item';
 import {useState} from 'react';
 
 import Section from '../components/Section';

@@ -4,17 +4,17 @@ import PropTypes from 'prop-types';
 import css from './Page.module.less';
 
 /**
- * Page for {@link sandstone/PageViews.PageViews|PageViews}.
+ * Page for {@link limestone/PageViews.PageViews|PageViews}.
  *
  * @class Page
- * @memberof sandstone/PageViews
+ * @memberof limestone/PageViews
  * @ui
  * @public
  */
 const Page = kind({
 	name: 'Page',
 
-	propTypes: /** @lends sandstone/PageViews.Page.prototype */ {
+	propTypes: /** @lends limestone/PageViews.Page.prototype */ {
 		/**
 		 * Contents of the page.
 		 *
@@ -61,7 +61,7 @@ const Page = kind({
  * ```
  * @name aria-label
  * @type {String}
- * @memberof sandstone/PageViews.Page.prototype
+ * @memberof limestone/PageViews.Page.prototype
  * @public
  */
 

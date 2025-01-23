@@ -2,8 +2,8 @@
 
 import classnames from 'classnames';
 import kind from '@enact/core/kind';
-import {Panels, Panel, Header} from '@enact/sandstone/Panels';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import {Panels, Panel, Header} from '@enact/limestone/Panels';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import LS2Request from '@enact/webos/LS2Request';
 import {platform} from '@enact/webos/platform';
 import PropTypes from 'prop-types';
@@ -104,7 +104,7 @@ const StorybookDecorator = (story, config = {}) => {
 			focusRing={JSON.parse(globals['focus ring'])}
 			highContrast={JSON.parse(globals['high contrast'])}
 			style={{
-				'--sand-env-background': globals.background === 'default' ? '' : globals.background
+				'--lime-env-background': globals.background === 'default' ? '' : globals.background
 			}}
 			skin={globals.skin}
 			{...hasProps ? config.parameters.props : null}

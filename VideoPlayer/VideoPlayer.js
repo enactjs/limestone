@@ -1,7 +1,7 @@
 /**
- * Provides Sandstone-themed video player components.
+ * Provides Limestone-themed video player components.
  *
- * @module sandstone/VideoPlayer
+ * @module limestone/VideoPlayer
  * @exports Video
  * @exports VideoPlayer
  * @exports VideoPlayerBase
@@ -150,11 +150,11 @@ const AnnounceState = {
 };
 
 /**
- * Every callback sent by {@link sandstone/VideoPlayer|VideoPlayer} receives a status package,
+ * Every callback sent by {@link limestone/VideoPlayer|VideoPlayer} receives a status package,
  * which includes an object with the following key/value pairs as the first argument:
  *
  * @typedef {Object} videoStatus
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @property {String} type - Type of event that triggered this callback
  * @property {Number} currentTime - Playback index of the media in seconds
  * @property {Number} duration - Media's entire duration in seconds
@@ -178,7 +178,7 @@ const AnnounceState = {
  * (e.g.: `0.5`, `'0.5'`, `'1/2'`).
  *
  * @typedef {Object} playbackRateHash
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @property {[]} fastForward - An array of playback rates when media fast forwards
  * @property {[]} rewind - An array of playback rates when media rewinds
  * @property {[]} slowForward - An array of playback rates when media slow-forwards
@@ -188,17 +188,17 @@ const AnnounceState = {
  */
 
 /**
- * A player for video {@link sandstone/VideoPlayer.VideoPlayerBase}.
+ * A player for video {@link limestone/VideoPlayer.VideoPlayerBase}.
  *
  * @class VideoPlayerBase
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @public
  */
 const VideoPlayerBase = class extends Component {
 	static displayName = 'VideoPlayerBase';
 
-	static propTypes = /** @lends sandstone/VideoPlayer.VideoPlayerBase.prototype */ {
+	static propTypes = /** @lends limestone/VideoPlayer.VideoPlayerBase.prototype */ {
 		/**
 		 * passed by AnnounceDecorator for accessibility
 		 *
@@ -332,7 +332,7 @@ const VideoPlayerBase = class extends Component {
 		 * * `visible` - `true` when the media controls should be displayed
 		 *
 		 * @type {Component|Element}
-		 * @default sandstone/MediaPlayer.MediaControls
+		 * @default limestone/MediaPlayer.MediaControls
 		 * @public
 		 */
 		mediaControlsComponent: EnactPropTypes.componentOverride,
@@ -453,7 +453,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * Called when the user clicks the JumpBackward button.
 		 *
-		 * Is passed a {@link sandstone/VideoPlayer.videoStatus} as the first argument.
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		 *
 		 * @type {Function}
 		 * @public
@@ -463,7 +463,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * Called when the user clicks the JumpForward button.
 		 *
-		 * Is passed a {@link sandstone/VideoPlayer.videoStatus} as the first argument.
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		 *
 		 * @type {Function}
 		 * @public
@@ -550,7 +550,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		  * Called once before the video is jump backwarded.
 		  *
-		  * Is passed a {@link sandstone/VideoPlayer.videoStatus} as the first argument.
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		  *
 		  * @type {Function}
 		  * @public
@@ -560,7 +560,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		  * Called once before the video is jump forwarded.
 		  *
-		  * Is passed a {@link sandstone/VideoPlayer.videoStatus} as the first argument.
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		  *
 		  * @type {Function}
 		  * @public
@@ -604,7 +604,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * Mapping of playback rate names to playback rate values that may be set.
 		 *
-		 * @type {sandstone/VideoPlayer.playbackRateHash}
+		 * @type {limestone/VideoPlayer.playbackRateHash}
 		 * @default {
 		 *	fastForward: ['2', '4', '8', '16'],
 		 *	rewind: ['-2', '-4', '-8', '-16'],
@@ -661,7 +661,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * The video source.
 		 *
-		 * Any children `<source>` tag elements of {@link sandstone/VideoPlayer|VideoPlayer} will
+		 * Any children `<source>` tag elements of {@link limestone/VideoPlayer|VideoPlayer} will
 		 * be sent directly to the `videoComponent` as video sources.
 		 *
 		 * @type {Node}
@@ -701,7 +701,7 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * Thumbnail image source to show on the slider knob.
 		 *
-		 * This is a standard {@link sandstone/Image} component so it supports all the same
+		 * This is a standard {@link limestone/Image} component so it supports all the same
 		 * options for the `src` property. If no `thumbnailComponent` and no `thumbnailSrc` is set,
 		 * no tooltip will display.
 		 *
@@ -764,7 +764,7 @@ const VideoPlayerBase = class extends Component {
 		 * * `pause()` - pause video
 		 * * `load()` - load video
 		 *
-		 * The {@link sandstone/VideoPlayer.Video.source|source} property is passed to
+		 * The {@link limestone/VideoPlayer.Video.source|source} property is passed to
 		 * the video component as a child node.
 		 *
 		 * @type {Component|Element}
@@ -1036,7 +1036,7 @@ const VideoPlayerBase = class extends Component {
 	 * Shows media controls.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	showControls = () => {
@@ -1073,7 +1073,7 @@ const VideoPlayerBase = class extends Component {
 	 * Hides media controls.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	hideControls = () => {
@@ -1096,7 +1096,7 @@ const VideoPlayerBase = class extends Component {
 	 * Toggles the media controls.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	toggleControls = () => {
@@ -1375,7 +1375,7 @@ const VideoPlayerBase = class extends Component {
 	 * `paused`, `playbackRate`, `proportionLoaded`, and `proportionPlayed`.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @returns {Object}
 	 * @public
 	 */
@@ -1410,7 +1410,7 @@ const VideoPlayerBase = class extends Component {
 	 * If you call this function during fast forwarding or rewinding, the playback speed will be set to normal.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	play = () => {
@@ -1437,7 +1437,7 @@ const VideoPlayerBase = class extends Component {
 	 * If you call this function during fast forwarding or rewinding, the playback speed will be set to normal.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	pause = () => {
@@ -1463,7 +1463,7 @@ const VideoPlayerBase = class extends Component {
 	 * Sets the media playback time index.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @param {Number} timeIndex - Time index to seek
 	 * @public
 	 */
@@ -1477,10 +1477,10 @@ const VideoPlayerBase = class extends Component {
 
 	/**
 	 * Step a given amount of time away from the current playback position.
-	 * Like {@link sandstone/VideoPlayer.VideoPlayerBase.seek|seek} but relative.
+	 * Like {@link limestone/VideoPlayer.VideoPlayerBase.seek|seek} but relative.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @param {Number} distance - Time value to jump
 	 * @public
 	 */
@@ -1505,7 +1505,7 @@ const VideoPlayerBase = class extends Component {
 	 * If you call `play` or `pause` during fast forwarding, the playback speed will be set to normal.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	fastForward = () => {
@@ -1567,7 +1567,7 @@ const VideoPlayerBase = class extends Component {
 	 * If you call `play` or `pause` during rewinding, the playback speed will be set to normal.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	rewind = () => {
@@ -1635,7 +1635,7 @@ const VideoPlayerBase = class extends Component {
 	 * Sets the playback speed.
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @param {Number} rate - The desired playback rate. This value is passed to the `playbackRate` property of `HTMLMediaElement`.
 	 * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/playbackRate|MDN playbackRate property}
 	 * @returns {Boolean} Returns true if the speed changes successfully.
@@ -1672,7 +1672,7 @@ const VideoPlayerBase = class extends Component {
 	 * Returns a proxy to the underlying `<video>` node currently used by the VideoPlayer
 	 *
 	 * @function
-	 * @memberof sandstone/VideoPlayer.VideoPlayerBase.prototype
+	 * @memberof limestone/VideoPlayer.VideoPlayerBase.prototype
 	 * @public
 	 */
 	getVideoNode = () => {
@@ -1684,7 +1684,7 @@ const VideoPlayerBase = class extends Component {
 	};
 
 	/**
-	 * Sets the playback rate type for video seeking (from the keys of {@link sandstone/VideoPlayer.VideoPlayer.playbackRateHash|playbackRateHash}).
+	 * Sets the playback rate type for video seeking (from the keys of {@link limestone/VideoPlayer.VideoPlayer.playbackRateHash|playbackRateHash}).
 	 *
 	 * @param {String} cmd - Key of the playback rate type.
 	 * @private
@@ -2213,7 +2213,7 @@ const VideoPlayerBase = class extends Component {
 };
 
 /**
- * A standard HTML5 video player for Sandstone. It behaves, responds to, and operates like a
+ * A standard HTML5 video player for Limestone. It behaves, responds to, and operates like a
  * `<video>` tag in its support for `<source>`.  It also accepts custom tags such as
  * `<infoComponents>` for displaying additional information in the title area and `<MediaControls>`
  * for handling media playback controls and adding more controls.
@@ -2255,7 +2255,7 @@ const VideoPlayerBase = class extends Component {
  * ```
  *
  * @class VideoPlayer
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @mixes ui/Slottable.Slottable
  * @ui
  * @public

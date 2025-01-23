@@ -1,5 +1,5 @@
-import ImageItem from '@enact/sandstone/ImageItem';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import ImageItem from '@enact/limestone/ImageItem';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import {useCallback} from 'react';

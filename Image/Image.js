@@ -1,10 +1,10 @@
 /**
- * Provides Sandstone styled Image component that supports multiple resolution sources.
+ * Provides Limestone styled Image component that supports multiple resolution sources.
  *
  * @example
  * <Image src="https://dummyimage.com/64/e048e0/0011ff" style={{height: 64, width: 64}} />
  *
- * @module sandstone/Image
+ * @module limestone/Image
  * @exports Image
  * @exports ImageBase
  * @exports ImageDecorator
@@ -26,10 +26,10 @@ import Skinnable from '../Skinnable';
 import componentCss from './Image.module.less';
 
 /**
- * A Sandstone-styled image component without any behavior
+ * A Limestone-styled image component without any behavior
  *
  * @class ImageBase
- * @memberof sandstone/Image
+ * @memberof limestone/Image
  * @extends ui/Image.Image
  * @ui
  * @public
@@ -37,11 +37,11 @@ import componentCss from './Image.module.less';
 const ImageBase = kind({
 	name: 'Image',
 
-	propTypes: /** @lends sandstone/Image.ImageBase.prototype */ {
+	propTypes: /** @lends limestone/Image.ImageBase.prototype */ {
 		/**
 		 * Called with a reference to the root component.
 		 *
-		 * When using {@link sandstone/Image.Image}, the `ref` prop is forwarded to this component
+		 * When using {@link limestone/Image.Image}, the `ref` prop is forwarded to this component
 		 * as `componentRef`.
 		 *
 		 * @type {Object|Function}
@@ -118,11 +118,11 @@ const ResponsiveImageDecorator = hoc((config, Wrapped) => {
 });
 
 /**
- * Sandstone-specific behaviors to apply to {@link sandstone/Image.ImageBase|Image}.
+ * Limestone-specific behaviors to apply to {@link limestone/Image.ImageBase|Image}.
  *
  * @hoc
- * @memberof sandstone/Image
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/Image
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ImageDecorator = compose(
@@ -133,7 +133,7 @@ const ImageDecorator = compose(
 );
 
 /**
- * A Sandstone-styled image component
+ * A Limestone-styled image component
  *
  * ```
  * <Image
@@ -146,9 +146,9 @@ const ImageDecorator = compose(
  * ```
  *
  * @class Image
- * @memberof sandstone/Image
- * @extends sandstone/Image.ImageBase
- * @mixes sandstone/Image.ImageDecorator
+ * @memberof limestone/Image
+ * @extends limestone/Image.ImageBase
+ * @mixes limestone/Image.ImageDecorator
  * @ui
  * @public
  */

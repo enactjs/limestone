@@ -1,5 +1,5 @@
-import {PageViews} from '@enact/sandstone/PageViews';
-import Item from '@enact/sandstone/Item';
+import {PageViews} from '@enact/limestone/PageViews';
+import Item from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
 import {Cell, Row, Column} from '@enact/ui/Layout';
@@ -13,7 +13,7 @@ const propOptions = {
 };
 
 export default {
-	title: 'Sandstone/PageViews',
+	title: 'Limestone/PageViews',
 	component: 'PageViews'
 };
 

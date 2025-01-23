@@ -1,10 +1,10 @@
 /**
- * Provides Sandstone-themed progress bar component.
+ * Provides Limestone-themed progress bar component.
  *
  * @example
  * <ProgressBar progress={0.5} backgroundProgress={0.75} />
  *
- * @module sandstone/ProgressBar
+ * @module limestone/ProgressBar
  * @exports ProgressBar
  * @exports ProgressBarBase
  * @exports ProgressBarDecorator
@@ -25,17 +25,17 @@ import {ProgressBarTooltip} from './ProgressBarTooltip';
 import componentCss from './ProgressBar.module.less';
 
 /**
- * Renders a sandstone-styled progress bar.
+ * Renders a limestone-styled progress bar.
  *
  * @class ProgressBarBase
- * @memberof sandstone/ProgressBar
+ * @memberof limestone/ProgressBar
  * @ui
  * @public
  */
 const ProgressBarBase = kind({
 	name: 'ProgressBar',
 
-	propTypes: /** @lends sandstone/ProgressBar.ProgressBarBase.prototype */ {
+	propTypes: /** @lends limestone/ProgressBar.ProgressBarBase.prototype */ {
 		/**
 		 * The proportion of the loaded portion of the progress bar.
 		 *
@@ -102,7 +102,7 @@ const ProgressBarBase = kind({
 		 * Enables the built-in tooltip.
 		 *
 		 * To customize the tooltip, pass either a custom tooltip component or an instance of
-		 * {@link sandstone/ProgressBar.ProgressBarTooltip|ProgressBarTooltip} with additional
+		 * {@link limestone/ProgressBar.ProgressBarTooltip|ProgressBarTooltip} with additional
 		 * props configured.
 		 *
 		 * The provided component will receive the following props from `ProgressBar`:
@@ -182,11 +182,11 @@ const ProgressBarBase = kind({
 });
 
 /**
- * Sandstone-specific behaviors to apply to {@link sandstone/ProgressBar.ProgressBarBase|ProgressBar}.
+ * Limestone-specific behaviors to apply to {@link limestone/ProgressBar.ProgressBarBase|ProgressBar}.
  *
  * @hoc
- * @memberof sandstone/ProgressBar
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/ProgressBar
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ProgressBarDecorator = compose(
@@ -196,12 +196,12 @@ const ProgressBarDecorator = compose(
 );
 
 /**
- * The ready-to-use Sandstone-styled ProgressBar.
+ * The ready-to-use Limestone-styled ProgressBar.
  *
  * @class ProgressBar
- * @memberof sandstone/ProgressBar
- * @extends sandstone/ProgressBar.ProgressBarBase
- * @mixes sandstone/ProgressBar.ProgressBarDecorator
+ * @memberof limestone/ProgressBar
+ * @extends limestone/ProgressBar.ProgressBarBase
+ * @mixes limestone/ProgressBar.ProgressBarDecorator
  * @ui
  * @public
  */

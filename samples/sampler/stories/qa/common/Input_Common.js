@@ -1,4 +1,4 @@
-import Button from '@enact/sandstone/Button';
+import Button from '@enact/limestone/Button';
 import ri from '@enact/ui/resolution';
 import {Fragment} from 'react';
 

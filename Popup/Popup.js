@@ -4,7 +4,7 @@
  * @example
  * <Popup open>Hello!</Popup>
  *
- * @module sandstone/Popup
+ * @module limestone/Popup
  * @exports Popup
  * @exports PopupBase
  */
@@ -56,14 +56,14 @@ const transitionDirection = {
  * The base popup component.
  *
  * @class PopupBase
- * @memberof sandstone/Popup
+ * @memberof limestone/Popup
  * @ui
  * @public
  */
 const PopupBase = kind({
 	name: 'PopupBase',
 
-	propTypes: /** @lends sandstone/Popup.PopupBase.prototype */ {
+	propTypes: /** @lends limestone/Popup.PopupBase.prototype */ {
 		/**
 		 * The contents to be displayed in the body of the popup.
 		 *
@@ -194,7 +194,7 @@ const PopupBase = kind({
 		 *
 		 * It can be either `'none'`, `'self-first'`, or `'self-only'`.
 		 *
-		 * Note: The ready-to-use {@link sandstone/Popup.Popup|Popup} component only supports
+		 * Note: The ready-to-use {@link limestone/Popup.Popup|Popup} component only supports
 		 * `'self-first'` and `'self-only'`.
 		 *
 		 * @type {('none'|'self-first'|'self-only')}
@@ -284,14 +284,14 @@ const OpenState = {
  * {@link ui/FloatingLayer.FloatingLayer|FloatingLayer}.
  *
  * @class Popup
- * @memberof sandstone/Popup
- * @extends sandstone/Popup.PopupBase
+ * @memberof limestone/Popup
+ * @extends limestone/Popup.PopupBase
  * @ui
  * @public
  */
 class Popup extends Component {
 
-	static propTypes = /** @lends sandstone/Popup.Popup.prototype */ {
+	static propTypes = /** @lends limestone/Popup.Popup.prototype */ {
 		/**
 		 * Prevents closing the popup via 5-way navigation out of the content.
 		 *
@@ -361,7 +361,7 @@ class Popup extends Component {
 		 * Called after show transition has completed, and immediately with no transition.
 		 *
 		 * Note: The function does not run if Popup is initially opened and
-		 * {@link sandstone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
+		 * {@link limestone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
 		 *
 		 * @type {Function}
 		 * @public

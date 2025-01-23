@@ -7,14 +7,14 @@
 .mediaOverlay {
 	display: block;
 	position: relative;
-	width: @sand-mediaoverlay-width;
+	width: @lime-mediaoverlay-width;
 	height: auto;
-	padding: @sand-mediaoverlay-padding;
+	padding: @lime-mediaoverlay-padding;
 
 	.bg {
 		position: absolute;
 		.position(0);
-		border-radius: @sand-mediaoverlay-border-radius;
+		border-radius: @lime-mediaoverlay-border-radius;
 	}
 
 	.mediaContainer {
@@ -36,7 +36,7 @@
 	}
 
 	.textLayout {
-		margin: @sand-mediaoverlay-textlayout-margin;
+		margin: @lime-mediaoverlay-textlayout-margin;
 	}
 
 	.image {
@@ -46,66 +46,66 @@
 	}
 
 	.text {
-		.sand-font({
-			font-size: @sand-mediaoverlay-font-size;
-			line-height: @sand-mediaoverlay-line-height;
+		.lime-font({
+			font-size: @lime-mediaoverlay-font-size;
+			line-height: @lime-mediaoverlay-line-height;
 		});
-		font-size: @sand-mediaoverlay-font-size;
-		line-height: @sand-mediaoverlay-line-height;
-		font-weight: @sand-mediaoverlay-font-weight;
+		font-size: @lime-mediaoverlay-font-size;
+		line-height: @lime-mediaoverlay-line-height;
+		font-weight: @lime-mediaoverlay-font-weight;
 	}
 
 	.progressBar {
 		position: absolute;
 		.position(auto, 0, 0);
-		margin: @sand-mediaoverlay-progressbar-margin;
+		margin: @lime-mediaoverlay-progressbar-margin;
 	}
 
 	.captionContainer {
 		> :first-child {
-			margin-top: @sand-mediaoverlay-caption-margin-top;
+			margin-top: @lime-mediaoverlay-caption-margin-top;
 		}
 
 		> :last-child {
-			margin-bottom: @sand-mediaoverlay-caption-margin-bottom;
+			margin-bottom: @lime-mediaoverlay-caption-margin-bottom;
 		}
     }
 
 	.caption,
 	.subtitle {
-		.sand-font({
-			font-size: @sand-mediaoverlay-caption-font-size;
-			line-height: @sand-mediaoverlay-line-height;
+		.lime-font({
+			font-size: @lime-mediaoverlay-caption-font-size;
+			line-height: @lime-mediaoverlay-line-height;
 		});
-		font-size: @sand-mediaoverlay-caption-font-size;
-		line-height: @sand-mediaoverlay-line-height;
+		font-size: @lime-mediaoverlay-caption-font-size;
+		line-height: @lime-mediaoverlay-line-height;
 	}
 
 	.title {
-		.sand-font({
-			font-size: @sand-mediaoverlay-title-font-size;
-			line-height: @sand-mediaoverlay-line-height;
+		.lime-font({
+			font-size: @lime-mediaoverlay-title-font-size;
+			line-height: @lime-mediaoverlay-line-height;
 		});
-		font-size: @sand-mediaoverlay-title-font-size;
-		line-height: @sand-mediaoverlay-line-height;
+		font-size: @lime-mediaoverlay-title-font-size;
+		line-height: @lime-mediaoverlay-line-height;
 	}
 
 	.applySkins({
 		.bg {
-			.sand-spotlight-resting-bg-colors();
+			.lime-spotlight-resting-bg-colors();
 		}
 
 		.caption,
 		.title {
-			color: @sand-mediaoverlay-caption-color;
+			color: @lime-mediaoverlay-caption-color;
 		}
 
 		.subtitle {
-			color: @sand-mediaoverlay-subtitle-color;
+			color: @lime-mediaoverlay-subtitle-color;
 		}
 
 		.focus({
-			.sand-spotlight-focus-text-colors();
+			.lime-spotlight-focus-text-colors();
 
 			.caption,
 			.title,
@@ -114,7 +114,7 @@
 			}
 
 			.bg {
-				.sand-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors();
 			}
 		});
 

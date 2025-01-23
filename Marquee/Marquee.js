@@ -5,7 +5,7 @@
  * <Marquee marqueeOn="render">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Marquee>
  *
  * @see {@link ui/Marquee}
- * @module sandstone/Marquee
+ * @module limestone/Marquee
  * @exports Marquee
  * @exports MarqueeBase
  * @exports MarqueeController
@@ -40,7 +40,7 @@ export {
 	 * @see {@link ui/Marquee.Marquee}
 	 * @class Marquee
 	 * @extends ui/Marquee.Marquee
-	 * @memberof sandstone/Marquee
+	 * @memberof limestone/Marquee
 	 * @ui
 	 * @public
 	 */
@@ -52,7 +52,7 @@ export {
 	 * @see {@link ui/Marquee.Marquee}
 	 * @class MarqueeBase
 	 * @extends ui/Marquee.MarqueeBase
-	 * @memberof sandstone/Marquee
+	 * @memberof limestone/Marquee
 	 * @ui
 	 * @public
 	 */
@@ -65,7 +65,7 @@ export {
 	 * @hoc
 	 * @name MarqueeController
 	 * @extends ui/Marquee.MarqueeController
-	 * @memberof sandstone/Marquee
+	 * @memberof limestone/Marquee
 	 * @public
 	 */
 	MarqueeController,
@@ -77,7 +77,7 @@ export {
 	 * @hoc
 	 * @name MarqueeDecorator
 	 * @extends ui/Marquee.MarqueeDecorator
-	 * @memberof sandstone/Marquee
+	 * @memberof limestone/Marquee
 	 * @public
 	 */
 	MarqueeDecorator

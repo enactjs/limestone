@@ -1,9 +1,9 @@
-import Heading from '@enact/sandstone/Heading';
-import Item from '@enact/sandstone/Item';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import Heading from '@enact/limestone/Heading';
+import Item from '@enact/limestone/Item';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Layout, {Cell} from '@enact/ui/Layout';
-import Panels, {Panel} from '@enact/sandstone/Panels';
+import Panels, {Panel} from '@enact/limestone/Panels';
 import {Fragment, useState} from 'react';
 
 import css from './App.module.less';

@@ -1,4 +1,4 @@
-import {Header, HeaderBase} from '@enact/sandstone/Panels';
+import {Header, HeaderBase} from '@enact/limestone/Panels';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Fragment} from 'react';
@@ -10,7 +10,7 @@ const Config = mergeComponentMetadata('Header', HeaderBase, Header);
 const customizedConfig = makeCustomizedConfig();
 
 export default {
-	title: 'Sandstone/Header/Locale',
+	title: 'Limestone/Header/Locale',
 	component: 'Header'
 };
 

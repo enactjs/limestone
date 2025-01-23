@@ -25,7 +25,7 @@ const defaultConfig = {
 	emitSpotlightEvents: null
 };
 
-// Adds sandstone-specific slider behaviors
+// Adds limestone-specific slider behaviors
 // * aria-valuetext handling
 //   * use aria-valuetext when set
 //   * defaults to current value

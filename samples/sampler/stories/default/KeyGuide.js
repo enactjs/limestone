@@ -1,4 +1,4 @@
-import KeyGuide from '@enact/sandstone/KeyGuide';
+import KeyGuide from '@enact/limestone/KeyGuide';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, range, select, text} from '@enact/storybook-utils/addons/controls';
 
@@ -10,7 +10,7 @@ const Config = mergeComponentMetadata('KeyGuide', KeyGuide);
 KeyGuide.displayName = 'KeyGuide';
 
 export default {
-	title: 'Sandstone/KeyGuide',
+	title: 'Limestone/KeyGuide',
 	component: 'KeyGuide'
 };
 

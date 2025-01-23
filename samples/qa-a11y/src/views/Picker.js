@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Picker from '@enact/sandstone/Picker';
+import Picker from '@enact/limestone/Picker';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {useState} from 'react';
 

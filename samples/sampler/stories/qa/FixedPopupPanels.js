@@ -2,17 +2,17 @@
 
 import {add, is} from '@enact/core/keymap';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import {FixedPopupPanels, Panel, Header} from '@enact/sandstone/FixedPopupPanels';
-import Dropdown from '@enact/sandstone/Dropdown';
-import Icon from '@enact/sandstone/Icon';
-import Input, {InputField} from '@enact/sandstone/Input';
-import Item from '@enact/sandstone/Item';
-import Popup from '@enact/sandstone/Popup';
-import Scroller from '@enact/sandstone/Scroller';
-import Slider from '@enact/sandstone/Slider';
-import {VirtualList} from '@enact/sandstone/VirtualList';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import {FixedPopupPanels, Panel, Header} from '@enact/limestone/FixedPopupPanels';
+import Dropdown from '@enact/limestone/Dropdown';
+import Icon from '@enact/limestone/Icon';
+import Input, {InputField} from '@enact/limestone/Input';
+import Item from '@enact/limestone/Item';
+import Popup from '@enact/limestone/Popup';
+import Scroller from '@enact/limestone/Scroller';
+import Slider from '@enact/limestone/Slider';
+import {VirtualList} from '@enact/limestone/VirtualList';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
@@ -80,7 +80,7 @@ const itemRenderer = ({index, ...rest}) => {
 };
 
 export default {
-	title: 'Sandstone/FixedPopupPanels',
+	title: 'Limestone/FixedPopupPanels',
 	component: 'FixedPopupPanels'
 };
 

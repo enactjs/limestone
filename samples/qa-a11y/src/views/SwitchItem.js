@@ -1,4 +1,4 @@
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import SwitchItem from '@enact/limestone/SwitchItem';
 
 import Section from '../components/Section';
 

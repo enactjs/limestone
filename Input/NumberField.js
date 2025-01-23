@@ -27,7 +27,7 @@ const normalizeValueProp = ({value, maxLength}) => normalizeValue(value, maxLeng
 const NumberCell = kind({
 	name: 'NumberCell',
 
-	propTypes: /** @lends sandstone/Input.NumberCell.prototype */ {
+	propTypes: /** @lends limestone/Input.NumberCell.prototype */ {
 		active: PropTypes.bool,
 		children: PropTypes.string,
 		disabled: PropTypes.bool,

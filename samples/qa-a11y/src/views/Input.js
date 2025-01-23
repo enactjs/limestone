@@ -1,4 +1,4 @@
-import Input from '@enact/sandstone/Input';
+import Input from '@enact/limestone/Input';
 
 import Section from '../components/Section';
 

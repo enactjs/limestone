@@ -5,10 +5,10 @@
 .flexiblePopupPanels {
 	// Override for Popup
 	&.popup {
-		padding: @sand-flexiblepopuppanels-margin; // redirect this to padding for simpler size calculation
+		padding: @lime-flexiblepopuppanels-margin; // redirect this to padding for simpler size calculation
 		margin: 0;
 		max-height: 100vh;
-		min-width: @sand-flexiblepopuppanels-min-width;
+		min-width: @lime-flexiblepopuppanels-min-width;
 		box-sizing: border-box;
 
 		&.narrow { /* Needed to prevent global class being added in the DOM */ }
@@ -18,11 +18,11 @@
 		position: relative;
 
 		.panel {
-			padding: @sand-flexiblepopuppanels-padding;
+			padding: @lime-flexiblepopuppanels-padding;
 			// The next line is very long, but it calculates the maximum height by adding up all
 			// of the paddings between this node and the edge of the screen, top and bottom.
 			// If the margin or padding configuration changes, this will likely need to be updated.
-			height: ~"calc(100vh -" ((extract(@sand-flexiblepopuppanels-margin, 1) * 2) + extract(@sand-flexiblepopuppanels-padding, 1) + extract(@sand-flexiblepopuppanels-padding, 1)) ~")";
+			height: ~"calc(100vh -" ((extract(@lime-flexiblepopuppanels-margin, 1) * 2) + extract(@lime-flexiblepopuppanels-padding, 1) + extract(@lime-flexiblepopuppanels-padding, 1)) ~")";
 		}
 	}
 
@@ -44,13 +44,13 @@
 		.navButton {
 			position: absolute;
 			transform: translate(0, -50%);
-			margin: @sand-flexiblepopuppanels-navbutton-margin;
+			margin: @lime-flexiblepopuppanels-navbutton-margin;
 
-			.sand-custom-text({
-				.sand-small-button-text();
-				height: @sand-button-small-height;
-				line-height: (@sand-button-small-height - (2 * @sand-button-border-width));
-				min-width: @sand-button-small-height;
+			.lime-custom-text({
+				.lime-small-button-text();
+				height: @lime-button-small-height;
+				line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+				min-width: @lime-button-small-height;
 			});
 		}
 	}
@@ -76,12 +76,12 @@
 
 		.header,
 		.content {
-			border-radius: @sand-flexiblepopuppanels-panel-border-radius;
-			box-shadow: @sand-flexiblepopuppanels-panel-shadow;
-			outline-color: @sand-overlay-outline-color;
-			outline-style: @sand-overlay-outline-style;
-			outline-width: @sand-overlay-outline-width;
-			outline-offset: -@sand-overlay-outline-width;
+			border-radius: @lime-flexiblepopuppanels-panel-border-radius;
+			box-shadow: @lime-flexiblepopuppanels-panel-shadow;
+			outline-color: @lime-overlay-outline-color;
+			outline-style: @lime-overlay-outline-style;
+			outline-width: @lime-overlay-outline-width;
+			outline-offset: -@lime-overlay-outline-width;
 		}
 
 		:global(.noAnimation) & {
@@ -94,7 +94,7 @@
 		&.scrimTranslucent {
 			.header,
 			.content {
-				background-color: @sand-flexiblepopuppanels-panel-bg-color;
+				background-color: @lime-flexiblepopuppanels-panel-bg-color;
 			}
 		}
 
@@ -102,7 +102,7 @@
 		&.scrimTransparent {
 			.header,
 			.content {
-				background-color: @sand-flexiblepopuppanels-panel-scrimtransparent-bg-color;
+				background-color: @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color;
 			}
 		}
 	});
@@ -133,17 +133,17 @@
 	}
 
 	.header {
-		margin-left: .extract(@sand-flexiblepopuppanels-panel-margin, left)[];
-		margin-right: .extract(@sand-flexiblepopuppanels-panel-margin, right)[];
+		margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[];
+		margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[];
 
 		&.showBack {
-			margin-left: @sand-flexiblepopuppanels-header-padding;
+			margin-left: @lime-flexiblepopuppanels-header-padding;
 		}
 	}
 
 	.content {
-		margin: @sand-flexiblepopuppanels-panel-margin;
-		padding: @sand-flexiblepopuppanels-panel-padding;
+		margin: @lime-flexiblepopuppanels-panel-margin;
+		padding: @lime-flexiblepopuppanels-panel-padding;
 		box-sizing: border-box;
 	}
 
@@ -154,19 +154,19 @@
 	// requiring border-box sizing in one dimension and content-box in the other.
 	// The following adds the left margin, left padding, width, right padding, and right margin
 	@panel-small-width: (
-		.extract(@sand-flexiblepopuppanels-panel-margin, left)[]
-		+ .extract(@sand-flexiblepopuppanels-padding, left)[]
-		+ @sand-flexiblepopuppanels-small-width
-		+ .extract(@sand-flexiblepopuppanels-padding, right)[]
-		+ .extract(@sand-flexiblepopuppanels-panel-margin, right)[]
+		.extract(@lime-flexiblepopuppanels-panel-margin, left)[]
+		+ .extract(@lime-flexiblepopuppanels-padding, left)[]
+		+ @lime-flexiblepopuppanels-small-width
+		+ .extract(@lime-flexiblepopuppanels-padding, right)[]
+		+ .extract(@lime-flexiblepopuppanels-panel-margin, right)[]
 	);
 	// The following adds the left margin, left padding, width, right padding, and right margin
 	@panel-large-width: (
-		.extract(@sand-flexiblepopuppanels-panel-margin, left)[]
-		+ .extract(@sand-flexiblepopuppanels-padding, left)[]
-		+ @sand-flexiblepopuppanels-large-width
-		+ .extract(@sand-flexiblepopuppanels-padding, right)[]
-		+ .extract(@sand-flexiblepopuppanels-panel-margin, right)[]
+		.extract(@lime-flexiblepopuppanels-panel-margin, left)[]
+		+ .extract(@lime-flexiblepopuppanels-padding, left)[]
+		+ @lime-flexiblepopuppanels-large-width
+		+ .extract(@lime-flexiblepopuppanels-padding, right)[]
+		+ .extract(@lime-flexiblepopuppanels-panel-margin, right)[]
 	);
 
 	// With a panel width defined, the container (viewport) extends to the width of both child panels,

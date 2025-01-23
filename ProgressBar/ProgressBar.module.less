@@ -6,31 +6,31 @@
 
 .radial-bar-styles() {
 	border-color: inherit;
-	border-width: @sand-progressbar-radial-thickness;
+	border-width: @lime-progressbar-radial-thickness;
 }
 
 .progressBar {
-	height: @sand-progressbar-bar-thickness;
-	margin: @sand-progressbar-margin;
+	height: @lime-progressbar-bar-thickness;
+	margin: @lime-progressbar-margin;
 
 	&.showAnchor {
 		&::after {
 			content: "";
 			position: absolute;
-			transform: @sand-translate-center;
+			transform: @lime-translate-center;
 		}
 	}
 
 	.bar {
-		border-radius: @sand-progressbar-bar-border-radius;
+		border-radius: @lime-progressbar-bar-border-radius;
 		overflow: hidden;
 	}
 
 	&.horizontal {
 		&.showAnchor {
 			&::after {
-				width: @sand-progressbar-anchor-width;
-				height: @sand-progressbar-anchor-height;
+				width: @lime-progressbar-anchor-width;
+				height: @lime-progressbar-anchor-height;
 				top: 50%;
 				left: ~"calc(var(--ui-progressbar-proportion-anchor) * 100%)";
 			}
@@ -38,13 +38,13 @@
 	}
 
 	&.vertical {
-		min-height: @sand-progressbar-vertical-min-height;
-		width: @sand-progressbar-bar-thickness;
+		min-height: @lime-progressbar-vertical-min-height;
+		width: @lime-progressbar-bar-thickness;
 
 		&.showAnchor {
 			&::after {
-				width: @sand-progressbar-anchor-height;
-				height: @sand-progressbar-anchor-width;
+				width: @lime-progressbar-anchor-height;
+				height: @lime-progressbar-anchor-width;
 				bottom: ~"calc(var(--ui-progressbar-proportion-anchor) * 100%)";
 				left: 50%;
 				transform: translate(-50%, 50%);
@@ -53,8 +53,8 @@
 	}
 
 	&.radial {
-		height: @sand-progressbar-radial-size;
-		width: @sand-progressbar-radial-size;
+		height: @lime-progressbar-radial-size;
+		width: @lime-progressbar-radial-size;
 
 		.bar {
 			.radial-bar-styles();
@@ -63,7 +63,7 @@
 
 		.fill,
 		.load {
-			.position(-@sand-progressbar-radial-thickness);
+			.position(-@lime-progressbar-radial-thickness);
 
 			&::before,
 			&::after {
@@ -75,15 +75,15 @@
 	// Skin colors
 	.applySkins({
 		.bar {
-			background-color: @sand-progressbar-bar-bg-color;
+			background-color: @lime-progressbar-bar-bg-color;
 		}
 
 		.fill {
-			background-color: @sand-progressbar-fill-bg-color;
+			background-color: @lime-progressbar-fill-bg-color;
 		}
 
 		.load {
-			background-color: @sand-progressbar-load-bg-color;
+			background-color: @lime-progressbar-load-bg-color;
 		}
 
 		&.radial {
@@ -94,34 +94,34 @@
 			}
 
 			.bar {
-				border-color: @sand-progressbar-bar-bg-color;
+				border-color: @lime-progressbar-bar-bg-color;
 			}
 
 			.fill {
-				border-color: @sand-progressbar-fill-bg-color;
+				border-color: @lime-progressbar-fill-bg-color;
 			}
 
 			.load {
-				border-color: @sand-progressbar-load-bg-color;
+				border-color: @lime-progressbar-load-bg-color;
 			}
 		}
 
 		&.highlighted {
 			.fill {
-				background-color: @sand-progressbar-highlighted-fill-bg-color;
+				background-color: @lime-progressbar-highlighted-fill-bg-color;
 			}
 
 			&.radial {
 				.fill {
 					background-color: transparent;
-					border-color: @sand-progressbar-highlighted-fill-bg-color;
+					border-color: @lime-progressbar-highlighted-fill-bg-color;
 				}
 			}
 		}
 
 		&.showAnchor {
 			&::after {
-				background-color: @sand-progressbar-bar-bg-color;
+				background-color: @lime-progressbar-bar-bg-color;
 			}
 		}
 	});

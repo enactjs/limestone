@@ -1,4 +1,4 @@
-import {Panel} from '@enact/sandstone/Panels';
+import {Panel} from '@enact/limestone/Panels';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import ImageList from '../components/ImageList';

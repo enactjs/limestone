@@ -1,5 +1,5 @@
-import Dropdown from '@enact/sandstone/Dropdown';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import Dropdown from '@enact/limestone/Dropdown';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import {useCallback, useState} from 'react';
 
 import HorizontalDifferentWidthItemList from './views/HorizontalDifferentWidthItemList';

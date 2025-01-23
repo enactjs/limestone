@@ -1,4 +1,4 @@
-import Slider, {SliderBase, SliderTooltip} from '@enact/sandstone/Slider';
+import Slider, {SliderBase, SliderTooltip} from '@enact/limestone/Slider';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, range, object, select} from '@enact/storybook-utils/addons/controls';
@@ -9,7 +9,7 @@ Slider.displayName = 'Slider';
 SliderTooltip.displayName = 'SliderTooltip';
 
 export default {
-	title: 'Sandstone/Slider',
+	title: 'Limestone/Slider',
 	component: 'Slider'
 };
 

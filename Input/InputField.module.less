@@ -5,7 +5,7 @@
 @import "../styles/skin.less";
 
 .input {
-	.sand-body-text();
+	.lime-body-text();
 
 	padding: 0;
 	border: 0;
@@ -14,7 +14,7 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	flex-grow: 1;
-	text-indent: @sand-inputfield-text-indent;
+	text-indent: @lime-inputfield-text-indent;
 
 	&[type=number] {
 		appearance: textfield;
@@ -49,8 +49,8 @@
 .inputField {
 	display: inline-flex;
 	position: relative;
-	padding: @sand-inputfield-padding;
-	margin: @sand-inputfield-margin;
+	padding: @lime-inputfield-padding;
+	margin: @lime-inputfield-margin;
 	box-sizing: border-box;
 	vertical-align: middle;
 	align-items: center;
@@ -58,20 +58,20 @@
 	.bg {
 		position: absolute;
 		.position(0);
-		border-radius: @sand-inputfield-border-radius;
+		border-radius: @lime-inputfield-border-radius;
 	}
 
 	.input,
 	.inputHighlight {
 		z-index: 1;
-		font-size: @sand-input-font-size;
-		font-weight: @sand-inputfield-font-weight;
+		font-size: @lime-input-font-size;
+		font-weight: @lime-inputfield-font-weight;
 	}
 
 	.input,
 	.inputHighlight {
-		line-height: @sand-inputfield-height;
-		height: @sand-inputfield-height;
+		line-height: @lime-inputfield-height;
+		height: @lime-inputfield-height;
 		vertical-align: middle;
 	}
 
@@ -82,8 +82,8 @@
 	.inputHighlight {
 		position: absolute;
 		top: 0;
-		height: @sand-inputfield-highlight-height;
-		max-width: @sand-inputfield-highlight-max-width;
+		height: @lime-inputfield-highlight-height;
+		max-width: @lime-inputfield-highlight-max-width;
 		overflow: hidden;
 		letter-spacing: 0.1px;
 		pointer-events: none;
@@ -96,18 +96,18 @@
 	}
 
 	&.small {
-		height: @sand-inputfield-small-height;
+		height: @lime-inputfield-small-height;
 
 		.input {
-			font-size: @sand-inputfield-small-font-size;
-			height: @sand-inputfield-small-height;
-			line-height: @sand-inputfield-small-height;
+			font-size: @lime-inputfield-small-font-size;
+			height: @lime-inputfield-small-height;
+			line-height: @lime-inputfield-small-height;
 		}
 
 		.inputHighlight {
-			line-height: @sand-inputfield-small-height;
-			height: @sand-inputfield-small-height;
-			max-width: @sand-inputfield-highlight-small-max-width;
+			line-height: @lime-inputfield-small-height;
+			height: @lime-inputfield-small-height;
+			max-width: @lime-inputfield-highlight-small-max-width;
 		}
 	}
 
@@ -125,20 +125,20 @@
 	}
 
 	.tooltip {
-		margin-top: @sand-inputfield-invalid-tooltip-margin-top;
+		margin-top: @lime-inputfield-invalid-tooltip-margin-top;
 
 		.tooltipLabel {
-			font-size: @sand-inputfield-invalid-tooltip-font-size;
-			font-weight: @sand-inputfield-invalid-tooltip-font-weight;
+			font-size: @lime-inputfield-invalid-tooltip-font-size;
+			font-weight: @lime-inputfield-invalid-tooltip-font-weight;
 		}
 	}
 
 	// Skin colors
 	.applySkins({
-		color: @sand-inputfield-text-color;
+		color: @lime-inputfield-text-color;
 
 		.bg {
-			.sand-spotlight-resting-bg-colors(@sand-inputfield-bg-opacity);
+			.lime-spotlight-resting-bg-colors(@lime-inputfield-bg-opacity);
 		}
 
 		.input {
@@ -146,22 +146,22 @@
 			color: inherit;
 
 			.input-placeholder({
-				font-weight: @sand-inputfield-placeholder-font-weight;
-				color: @sand-inputfield-placeholder-color;
+				font-weight: @lime-inputfield-placeholder-font-weight;
+				color: @lime-inputfield-placeholder-color;
 			});
 
 			&:focus-within {
-				color: @sand-inputfield-focus-text-color;
+				color: @lime-inputfield-focus-text-color;
 
 				.input-placeholder({
-					font-weight: @sand-inputfield-placeholder-focus-font-weight;
-					color: @sand-inputfield-placeholder-active-color;
+					font-weight: @lime-inputfield-placeholder-focus-font-weight;
+					color: @lime-inputfield-placeholder-active-color;
 				});
 			}
 		}
 
 		&.invalid input {
-			color: @sand-inputfield-invalid-color;
+			color: @lime-inputfield-invalid-color;
 		}
 
 		.inputHighlight {
@@ -169,27 +169,27 @@
 			background-color: transparent;
 			// Set `.inputHighlight` background color to make it appear that the text is highlighted
 			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
-			// background-color: @sand-spotlight-color;
+			// background-color: @lime-spotlight-color;
 		}
 
 		.tooltip {
 			.tooltipLabel {
-				color: @sand-inputfield-invalid-tooltip-color;
+				color: @lime-inputfield-invalid-tooltip-color;
 			}
 		}
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @sand-inputfield-focus-text-color;
+			color: @lime-inputfield-focus-text-color;
 
 			.bg {
-				.sand-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors();
 			}
 
 			.input {
 				.input-placeholder({
-					font-weight: @sand-inputfield-placeholder-focus-font-weight;
-					color: @sand-inputfield-placeholder-active-color;
+					font-weight: @lime-inputfield-placeholder-focus-font-weight;
+					color: @lime-inputfield-placeholder-active-color;
 				});
 			}
 
@@ -210,34 +210,34 @@
 
 		// For when the HTML input field has focus (someone is typing)
 		&:focus-within {
-			color: @sand-inputfield-focus-text-color;
+			color: @lime-inputfield-focus-text-color;
 
 			.bg {
-				.sand-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors();
 				box-shadow: none;
 			}
 		}
 
-		.sand-disabled({
+		.lime-disabled({
 			.bg {
-				.sand-disabled-focus-bg-colors(@bg: {
+				.lime-disabled-focus-bg-colors(@bg: {
 					filter+_: brightness(0.28);  // Adjusting the background color to match the gui designs. Filter-shift the color.
 				}); // Apply a proper opacity to the disabled background, according to the designs.
 			}
 
 			.input {
-				.sand-disabled-colors();
-				color: @sand-inputfield-disabled-text-color;
+				.lime-disabled-colors();
+				color: @lime-inputfield-disabled-text-color;
 			}
 
 			.focus({
 				.bg {
-					.sand-disabled-focus-bg-colors();
+					.lime-disabled-focus-bg-colors();
 					filter: unset;
 				}
 
 				.input {
-					.sand-disabled-focus-content-colors();
+					.lime-disabled-focus-content-colors();
 				}
 			});
 		});

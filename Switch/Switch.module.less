@@ -9,9 +9,9 @@
 	position: relative;
 
 	.client {
-		border-radius: @sand-switch-border-radius;
-		width: @sand-switch-width;
-		height: @sand-switch-height;
+		border-radius: @lime-switch-border-radius;
+		width: @lime-switch-width;
+		height: @lime-switch-height;
 		position: relative;
 		text-align: left;
 		cursor: default;
@@ -20,17 +20,17 @@
 	.icon {
 		visibility: visible;
 		left: 0;
-		width: @sand-switch-icon-height;
+		width: @lime-switch-icon-height;
 		height: inherit;
-		font-size: @sand-switch-icon-font-size;
-		line-height: @sand-switch-icon-line-height;
+		font-size: @lime-switch-icon-font-size;
+		line-height: @lime-switch-icon-line-height;
 		margin: 0;
 		vertical-align: top;
 	}
 
 	&.selected {
 		.icon {
-			left: (@sand-switch-width - @sand-switch-height);
+			left: (@lime-switch-width - @lime-switch-height);
 		}
 	}
 
@@ -46,11 +46,11 @@
 
 	// The switch is acting a standalone capacity and is Spottable
 	.spottable({
-		margin: @sand-switch-spottable-margin;
+		margin: @lime-switch-spottable-margin;
 
 		.bg {
 			position: absolute;
-			.position(@sand-switch-spottable-position-top-bottom, @sand-switch-spottable-position-left-right);
+			.position(@lime-switch-spottable-position-top-bottom, @lime-switch-spottable-position-left-right);
 			z-index: -1;
 		}
 	});
@@ -58,58 +58,58 @@
 	// Skin colors
 	.applySkins({
 		.client {
-			background-color: @sand-switch-bg-color;
+			background-color: @lime-switch-bg-color;
 		}
 
 		.icon {
 			background-color: transparent;
-			color: @sand-switch-color;
+			color: @lime-switch-color;
 		}
 
 		&.selected {
 			.client {
-				background-color: @sand-switch-selected-bg-color;
+				background-color: @lime-switch-selected-bg-color;
 			}
 
 			.icon {
-				color: @sand-switch-selected-color;
+				color: @lime-switch-selected-color;
 			}
 		}
 
 		.disabled({
 			&.selected {
 				.client {
-					background-color: @sand-switch-disabled-selected-bg-color;
+					background-color: @lime-switch-disabled-selected-bg-color;
 				}
 
 				.icon {
-					color: @sand-switch-disabled-selected-color;
+					color: @lime-switch-disabled-selected-color;
 				}
 			}
 		});
 
 		// Standalone Switch
 		.spottable({
-			.sand-taparea(@sand-switch-height);
+			.lime-taparea(@lime-switch-height);
 
 			.bg {
-				border-radius: @sand-switch-spottable-border-radius;
-				.sand-spotlight-resting-bg-colors();
+				border-radius: @lime-switch-spottable-border-radius;
+				.lime-spotlight-resting-bg-colors();
 			}
 		});
 
 		.focus({
 			.bg {
-				.sand-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors();
 			}
 
 			.icon {
-				color: @sand-switch-focus-color;
+				color: @lime-switch-focus-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @sand-switch-selected-focus-color;
+					color: @lime-switch-selected-focus-color;
 				}
 			}
 		});
@@ -122,17 +122,17 @@
 			})
 		}
 
-		.sand-disabled({
+		.lime-disabled({
 			.client {
-				.sand-disabled-colors();
+				.lime-disabled-colors();
 			}
 
 			.focus({
 				.bg {
-					.sand-disabled-focus-bg-colors();
+					.lime-disabled-focus-bg-colors();
 				}
 				.client {
-					.sand-disabled-focus-content-colors();
+					.lime-disabled-focus-content-colors();
 				}
 			});
 		});
@@ -145,12 +145,12 @@
 	.focus({
 		.switch {
 			.icon {
-				color: @sand-switch-focus-color;
+				color: @lime-switch-focus-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @sand-switch-selected-focus-color;
+					color: @lime-switch-selected-focus-color;
 				}
 			}
 		}
@@ -162,11 +162,11 @@
 		.switch {
 			&.selected {
 				.client {
-					background-color: @sand-switch-disabled-selected-bg-color;
+					background-color: @lime-switch-disabled-selected-bg-color;
 				}
 
 				.icon {
-					color: @sand-switch-disabled-selected-color;
+					color: @lime-switch-disabled-selected-color;
 				}
 			}
 		}

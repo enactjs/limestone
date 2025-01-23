@@ -1,12 +1,12 @@
 /**
- * Provides Sandstone-themed item component and interactive toggleable switch.
+ * Provides Limestone-themed item component and interactive toggleable switch.
  *
  * @example
  * <SwitchItem>
  * 	Item
  * </SwitchItem>
  *
- * @module sandstone/SwitchItem
+ * @module limestone/SwitchItem
  * @exports SwitchItem
  * @exports SwitchItemBase
  */
@@ -30,11 +30,11 @@ const Switch = Skinnable(SwitchBase);
 Switch.displayName = 'Switch';
 
 /**
- * Renders an item with a {@link sandstone/Switch|Switch}.
+ * Renders an item with a {@link limestone/Switch|Switch}.
  *
  * @class SwitchItemBase
- * @memberof sandstone/SwitchItem
- * @extends sandstone/Item.Item
+ * @memberof limestone/SwitchItem
+ * @extends limestone/Item.Item
  * @omit iconComponent
  * @ui
  * @public
@@ -42,7 +42,7 @@ Switch.displayName = 'Switch';
 const SwitchItemBase = kind({
 	name: 'SwitchItem',
 
-	propTypes: /** @lends sandstone/SwitchItem.SwitchItemBase.prototype */ {
+	propTypes: /** @lends limestone/SwitchItem.SwitchItemBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
@@ -106,7 +106,7 @@ const SwitchItemBase = kind({
  * Adds interactive functionality to `SwitchItem`.
  *
  * @class SwitchItemDecorator
- * @memberof sandstone/SwitchItem
+ * @memberof limestone/SwitchItem
  * @mixes ui/Toggleable.Toggleable
  * @hoc
  * @public
@@ -117,15 +117,15 @@ const SwitchItemDecorator = compose(
 );
 
 /**
- * A Sandstone-styled item with a switch component.
+ * A Limestone-styled item with a switch component.
  *
  * `SwitchItem` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
  * directly.
  *
  * @class SwitchItem
- * @memberof sandstone/SwitchItem
- * @extends sandstone/SwitchItem.SwitchItemBase
- * @mixes sandstone/SwitchItem.SwitchItemDecorator
+ * @memberof limestone/SwitchItem
+ * @extends limestone/SwitchItem.SwitchItemBase
+ * @mixes limestone/SwitchItem.SwitchItemDecorator
  * @ui
  * @public
  */

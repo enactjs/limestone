@@ -6,7 +6,7 @@
  *   <source src="https://media.w3.org/2010/05/sintel/trailer.mp4" />
  * </MediaOverlay>
  *
- * @module sandstone/MediaOverlay
+ * @module limestone/MediaOverlay
  * @exports MediaOverlay
  * @exports MediaOverlayBase
  * @exports MediaOverlayDecorator
@@ -33,14 +33,14 @@ import componentCss from './MediaOverlay.module.less';
  * A media component with image and text overlay support.
  *
  * @class MediaOverlayBase
- * @memberof sandstone/MediaOverlay
+ * @memberof limestone/MediaOverlay
  * @ui
  * @public
  */
 const MediaOverlayBase = kind({
 	name: 'MediaOverlay',
 
-	propTypes: /** @lends sandstone/MediaOverlay.MediaOverlayBase.prototype */ {
+	propTypes: /** @lends limestone/MediaOverlay.MediaOverlayBase.prototype */ {
 		/**
 		 * Any children `<source>` tag elements will be sent directly to the media element as
 		 * sources.
@@ -261,14 +261,14 @@ const MediaOverlayBase = kind({
 });
 
 /**
- * A higher-order component that adds Sandstone specific behaviors to `MediaOverlay`.
+ * A higher-order component that adds Limestone specific behaviors to `MediaOverlay`.
  *
  * @hoc
- * @memberof sandstone/MediaOverlay
- * @mixes sandstone/Marquee.MarqueeController
+ * @memberof limestone/MediaOverlay
+ * @mixes limestone/Marquee.MarqueeController
  * @mixes spotlight/Spottable.Spottable
  * @mixes ui/Slottable.Slottable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const MediaOverlayDecorator = compose(
@@ -280,7 +280,7 @@ const MediaOverlayDecorator = compose(
 );
 
 /**
- * A Sandstone-styled `Media` component.
+ * A Limestone-styled `Media` component.
  *
  * Usage:
  * ```
@@ -290,9 +290,9 @@ const MediaOverlayDecorator = compose(
  * ```
  *
  * @class MediaOverlay
- * @memberof sandstone/MediaOverlay
- * @extends sandstone/MediaOverlay.MediaOverlayBase
- * @mixes sandstone/MediaOverlay.MediaOverlayDecorator
+ * @memberof limestone/MediaOverlay
+ * @extends limestone/MediaOverlay.MediaOverlayBase
+ * @mixes limestone/MediaOverlay.MediaOverlayDecorator
  * @ui
  * @public
  */

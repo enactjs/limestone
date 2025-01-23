@@ -1,5 +1,5 @@
-import Button, {ButtonBase} from '@enact/sandstone/Button';
-import Dropdown, {DropdownBase} from '@enact/sandstone/Dropdown';
+import Button, {ButtonBase} from '@enact/limestone/Button';
+import Dropdown, {DropdownBase} from '@enact/limestone/Dropdown';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, range, select, text} from '@enact/storybook-utils/addons/controls';
@@ -17,7 +17,7 @@ const Config = mergeComponentMetadata(
 );
 
 export default {
-	title: 'Sandstone/Dropdown',
+	title: 'Limestone/Dropdown',
 	component: 'Dropdown'
 };
 

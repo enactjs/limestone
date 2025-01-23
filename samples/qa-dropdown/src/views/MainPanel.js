@@ -1,7 +1,7 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import Dropdown from '@enact/sandstone/Dropdown';
-import {Panel, WizardPanels} from '@enact/sandstone/WizardPanels';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import Dropdown from '@enact/limestone/Dropdown';
+import {Panel, WizardPanels} from '@enact/limestone/WizardPanels';
 import ri from '@enact/ui/resolution';
 import {useCallback, useState} from 'react';
 

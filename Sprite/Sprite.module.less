@@ -8,21 +8,21 @@
 	display: inline-block;
 	overflow: hidden;
 	position: relative;
-	height: var(--sand-sprite-height);
-	width: var(--sand-sprite-width);
+	height: var(--lime-sprite-height);
+	width: var(--lime-sprite-width);
 
 	.image {
 		// This calculation is used in 2 places, so for maintainability, it has been split out into LESS variables
-		@image-height: ~"calc(var(--sand-sprite-height) * var(--sand-sprite-rows))";
-		@image-width: ~"calc(var(--sand-sprite-width) * var(--sand-sprite-columns))";
+		@image-height: ~"calc(var(--lime-sprite-height) * var(--lime-sprite-rows))";
+		@image-width: ~"calc(var(--lime-sprite-width) * var(--lime-sprite-columns))";
 
 		margin: 0;
 		position: absolute;
-		top: calc(var(--sand-sprite-offset-top, 0) * -1);
-		left: calc(var(--sand-sprite-offset-left, 0) * -1);
+		top: calc(var(--lime-sprite-offset-top, 0) * -1);
+		left: calc(var(--lime-sprite-offset-left, 0) * -1);
 		background-position: top left;
-		height: calc(@image-height + var(--sand-sprite-offset-top, 0));
-		width: calc(@image-width + var(--sand-sprite-offset-left, 0));
+		height: calc(@image-height + var(--lime-sprite-offset-top, 0));
+		width: calc(@image-width + var(--lime-sprite-offset-left, 0));
 		background-size: @image-width @image-height;
 		will-change: transform;
 	}

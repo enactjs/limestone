@@ -5,7 +5,7 @@
 @import "../styles/variables.less";
 
 .scrollbarTrack {
-	--scrollbar-track-margin: @sand-scrollbar-track-margin;
+	--scrollbar-track-margin: @lime-scrollbar-track-margin;
 	--scrollbar-thumb-size-ratio: 1;
 	--scrollbar-thumb-progress-ratio: 0;
 	--scrollbar-thumb-size: ~"calc(100% * var(--scrollbar-thumb-size-ratio))";
@@ -14,8 +14,8 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
-	background-color: @sand-scrollbar-track-bg-color;
-	border-radius: @sand-scrollbar-track-border-radius;
+	background-color: @lime-scrollbar-track-bg-color;
+	border-radius: @lime-scrollbar-track-border-radius;
 	opacity: 0;
 	transition: opacity 100ms ease-out;
 
@@ -26,31 +26,31 @@
 	&.focusableScrollbar {
 		// Always show the scrollbar
 		opacity: 1;
-		--scrollbar-track-margin: @sand-scrollbar-track-focusable-margin;
+		--scrollbar-track-margin: @lime-scrollbar-track-focusable-margin;
 	}
 
 	.thumb {
-		background: @sand-scrollbar-thumb-bg-color;
+		background: @lime-scrollbar-thumb-bg-color;
 		display: block;
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		border-radius: @sand-scrollbar-thumb-border-radius;
+		border-radius: @lime-scrollbar-thumb-border-radius;
 
 		.focus({
 			position: absolute;
-			background-color: @sand-scrollbar-thumb-focus-bg-color;
-			box-shadow: @sand-scrollbar-thumb-focus-box-shadow @sand-scrollbar-thumb-focus-box-shadow-color;
-			border-radius: @sand-scrollbar-thumb-focus-border-radius;
+			background-color: @lime-scrollbar-thumb-focus-bg-color;
+			box-shadow: @lime-scrollbar-thumb-focus-box-shadow @lime-scrollbar-thumb-focus-box-shadow-color;
+			border-radius: @lime-scrollbar-thumb-focus-border-radius;
 
 			.directionIndicator {
 				position: absolute;
 				width: 0;
 				height: 0;
-				border-top: @sand-scrollbar-thumb-focus-direction-indicator-height solid transparent;
-				border-bottom: @sand-scrollbar-thumb-focus-direction-indicator-height solid @sand-scrollbar-thumb-focus-direction-indicator-color;
-				border-right: (@sand-scrollbar-thumb-focus-direction-indicator-width / 2) solid transparent;
-				border-left: (@sand-scrollbar-thumb-focus-direction-indicator-width / 2) solid transparent;
+				border-top: @lime-scrollbar-thumb-focus-direction-indicator-height solid transparent;
+				border-bottom: @lime-scrollbar-thumb-focus-direction-indicator-height solid @lime-scrollbar-thumb-focus-direction-indicator-color;
+				border-right: (@lime-scrollbar-thumb-focus-direction-indicator-width / 2) solid transparent;
+				border-left: (@lime-scrollbar-thumb-focus-direction-indicator-width / 2) solid transparent;
 			}
 		});
 
@@ -67,7 +67,7 @@
 
 	&.vertical {
 		margin: 0 var(--scrollbar-track-margin);
-		width: @sand-scrollbar-track-width;
+		width: @lime-scrollbar-track-width;
 
 		.thumb {
 			height: var(--scrollbar-thumb-size);
@@ -75,18 +75,18 @@
 			will-change: top;
 
 			&:focus {
-				width: @sand-scrollbar-thumb-focus-width;
-				left: @sand-scrollbar-thumb-focus-left;
+				width: @lime-scrollbar-thumb-focus-width;
+				left: @lime-scrollbar-thumb-focus-left;
 
 				.directionIndicator.backward {
-					top: calc(@sand-scrollbar-thumb-focus-direction-indicator-top - @sand-scrollbar-thumb-focus-direction-indicator-height);
-					left: @sand-scrollbar-thumb-focus-direction-indicator-left;
+					top: calc(@lime-scrollbar-thumb-focus-direction-indicator-top - @lime-scrollbar-thumb-focus-direction-indicator-height);
+					left: @lime-scrollbar-thumb-focus-direction-indicator-left;
 				}
 
 				.directionIndicator.forward {
 					transform: rotate(180deg);
-					bottom: calc(@sand-scrollbar-thumb-focus-direction-indicator-top - @sand-scrollbar-thumb-focus-direction-indicator-height);
-					left: @sand-scrollbar-thumb-focus-direction-indicator-left;
+					bottom: calc(@lime-scrollbar-thumb-focus-direction-indicator-top - @lime-scrollbar-thumb-focus-direction-indicator-height);
+					left: @lime-scrollbar-thumb-focus-direction-indicator-left;
 				}
 			}
 		}
@@ -94,7 +94,7 @@
 
 	&:not(.vertical) {
 		margin: var(--scrollbar-track-margin) 0;
-		height: @sand-scrollbar-track-width;
+		height: @lime-scrollbar-track-width;
 
 		.thumb {
 			width: var(--scrollbar-thumb-size);
@@ -104,18 +104,18 @@
 			transform: translateY(-50%);
 
 			.focus({
-				height: @sand-scrollbar-thumb-focus-width;
+				height: @lime-scrollbar-thumb-focus-width;
 
 				.directionIndicator.backward {
 					transform: rotate(-90deg);
-					left: calc(@sand-scrollbar-thumb-focus-direction-indicator-top - @sand-scrollbar-thumb-focus-direction-indicator-height);
-					top: calc(@sand-scrollbar-thumb-focus-direction-indicator-left / 2);
+					left: calc(@lime-scrollbar-thumb-focus-direction-indicator-top - @lime-scrollbar-thumb-focus-direction-indicator-height);
+					top: calc(@lime-scrollbar-thumb-focus-direction-indicator-left / 2);
 				}
 
 				.directionIndicator.forward {
 					transform: rotate(90deg);
-					right: calc(@sand-scrollbar-thumb-focus-direction-indicator-top - @sand-scrollbar-thumb-focus-direction-indicator-height);
-					top: calc(@sand-scrollbar-thumb-focus-direction-indicator-left / 2);
+					right: calc(@lime-scrollbar-thumb-focus-direction-indicator-top - @lime-scrollbar-thumb-focus-direction-indicator-height);
+					top: calc(@lime-scrollbar-thumb-focus-direction-indicator-left / 2);
 				}
 			})
 		}

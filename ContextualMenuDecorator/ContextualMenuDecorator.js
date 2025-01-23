@@ -1,7 +1,7 @@
 /**
  * A decorator for adding contextual menus to components.
  *
- * @module sandstone/ContextualMenuDecorator
+ * @module limestone/ContextualMenuDecorator
  * @exports ContextualMenuDecorator
  */
 
@@ -25,20 +25,20 @@ import css from './ContextualMenuDecorator.module.less';
 const MAX_VISIBLE_MENU_ITEMS = 5;
 
 /**
- * Default config for {@link sandstone/ContextualMenuDecorator.ContextualMenuDecorator}
+ * Default config for {@link limestone/ContextualMenuDecorator.ContextualMenuDecorator}
  *
  * @type {Object}
  * @hocconfig
- * @memberof sandstone/ContextualMenuDecorator.ContextualMenuDecorator
+ * @memberof limestone/ContextualMenuDecorator.ContextualMenuDecorator
  */
 const defaultConfig = {
 	/**
 	 * Disables passing the `skin` prop to the wrapped component.
 	 *
-	 * @see {@link sandstone/Skinnable.Skinnable.skin}
+	 * @see {@link limestone/Skinnable.Skinnable.skin}
 	 * @type {Boolean}
 	 * @default false
-	 * @memberof sandstone/ContextualMenuDecorator.ContextualMenuDecorator.defaultConfig
+	 * @memberof limestone/ContextualMenuDecorator.ContextualMenuDecorator.defaultConfig
 	 * @public
 	 */
 	noSkin: false,
@@ -49,7 +49,7 @@ const defaultConfig = {
 	 *
 	 * @type {String}
 	 * @default 'selected'
-	 * @memberof sandstone/ContextualMenuDecorator.ContextualMenuDecorator.defaultConfig
+	 * @memberof limestone/ContextualMenuDecorator.ContextualMenuDecorator.defaultConfig
 	 * @public
 	 */
 	openProp: 'selected'
@@ -74,7 +74,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 	return kind({
 		name: 'ContextualMenuDecorator',
 
-		propTypes: /** @lends sandstone/ContextualMenuDecorator.ContextualMenuDecorator.prototype */ {
+		propTypes: /** @lends limestone/ContextualMenuDecorator.ContextualMenuDecorator.prototype */ {
 			/**
 			 * Direction of popup with respect to the wrapped component.
 			 *
@@ -134,7 +134,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 
 			/**
 			 * CSS class name to pass to the
-			 * {@link sandstone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
+			 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
 			 *
 			 * This is commonly used to set width and height of the popup.
 			 *
@@ -254,10 +254,10 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
  * Wraps a component to display a contextual popup menu.
  *
  * @hoc
- * @memberof sandstone/ContextualMenuDecorator
+ * @memberof limestone/ContextualMenuDecorator
  * @mixes ui/Toggleable.Toggleable
- * @mixes sandstone/Skinnable.Skinnable
- * @mixes sandstone/ContextualPopupDecorator.ContextualPopupDecorator
+ * @mixes limestone/Skinnable.Skinnable
+ * @mixes limestone/ContextualPopupDecorator.ContextualPopupDecorator
  * @public
  */
 const ContextualMenuDecorator = compose(

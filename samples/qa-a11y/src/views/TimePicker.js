@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 
-import {FixedPopupPanels, Header, Panel} from '@enact/sandstone/FixedPopupPanels';
-import Item from '@enact/sandstone/Item';
-import TimePicker, {timeToLocaleString} from '@enact/sandstone/TimePicker';
+import {FixedPopupPanels, Header, Panel} from '@enact/limestone/FixedPopupPanels';
+import Item from '@enact/limestone/Item';
+import TimePicker, {timeToLocaleString} from '@enact/limestone/TimePicker';
 import {useState} from 'react';
 
 import Section from '../components/Section';

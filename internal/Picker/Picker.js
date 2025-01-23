@@ -80,10 +80,10 @@ const forwardBlur = forward('onBlur'),
 const allowedClassNames = ['picker', 'valueWrapper', 'joined', 'horizontal', 'vertical'];
 
 /**
- * The base component for {@link sandstone/internal/Picker.Picker}.
+ * The base component for {@link limestone/internal/Picker.Picker}.
  *
  * @class Picker
- * @memberof sandstone/internal/Picker
+ * @memberof limestone/internal/Picker
  * @ui
  * @private
  */
@@ -657,7 +657,7 @@ const PickerBase = (props) => {
 };
 
 PickerBase.displayName = 'Picker';
-PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ {
+PickerBase.propTypes = /** @lends limestone/internal/Picker.Picker.prototype */ {
 	/**
 	 * Index for internal ViewManager
 	 *
@@ -671,7 +671,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * The maximum value selectable by the picker (inclusive).
 	 *
 	 * The range between `min` and `max` should be evenly divisible by
-	 * {@link sandstone/internal/Picker.PickerBase.step|step}.
+	 * {@link limestone/internal/Picker.PickerBase.step|step}.
 	 *
 	 * @type {Number}
 	 * @required
@@ -683,7 +683,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * The minimum value selectable by the picker (inclusive).
 	 *
 	 * The range between `min` and `max` should be evenly divisible by
-	 * {@link sandstone/internal/Picker.PickerBase.step|step}.
+	 * {@link limestone/internal/Picker.PickerBase.step|step}.
 	 *
 	 * @type {Number}
 	 * @required
@@ -709,7 +709,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * when the picker is `joined`.
 	 *
 	 * @type {String}
-	 * @memberof sandstone/internal/Picker.PickerBase.prototype
+	 * @memberof limestone/internal/Picker.PickerBase.prototype
 	 * @public
 	 */
 	'aria-label': PropTypes.string,
@@ -721,7 +721,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * text.
 	 *
 	 * @type {String}
-	 * @memberof sandstone/internal/Picker.PickerBase.prototype
+	 * @memberof limestone/internal/Picker.PickerBase.prototype
 	 * @public
 	 */
 	'aria-valuetext': PropTypes.string,
@@ -733,8 +733,8 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 *  * `'arrow'` allows the user to use the left or right keys to adjust the picker's value.
 	 *
 	 * The default value for joined horizontal picker is `'enter'`.
-	 * If {@link sandstone/internal/Picker.PickerBase.orientation|orientation} is `'vertical'` or
-	 * {@link sandstone/internal/Picker.PickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
+	 * If {@link limestone/internal/Picker.PickerBase.orientation|orientation} is `'vertical'` or
+	 * {@link limestone/internal/Picker.PickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
 	 *
 	 * @type {('enter'|'arrow')}
 	 * @default 'enter'
@@ -770,7 +770,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * Disables voice control.
 	 *
 	 * @type {Boolean}
-	 * @memberof sandstone/internal/Picker.PickerBase.prototype
+	 * @memberof limestone/internal/Picker.PickerBase.prototype
 	 * @public
 	 */
 	'data-webos-voice-disabled': PropTypes.bool,
@@ -779,7 +779,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	 * The `data-webos-voice-group-label` for the Button of Picker.
 	 *
 	 * @type {String}
-	 * @memberof sandstone/internal/Picker.PickerBase.prototype
+	 * @memberof limestone/internal/Picker.PickerBase.prototype
 	 * @public
 	 */
 	'data-webos-voice-group-label': PropTypes.string,
@@ -794,9 +794,9 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	decrementAriaLabel: PropTypes.string,
 
 	/**
-	 * Assign a custom icon for the decrementer. All strings supported by {@link sandstone/Icon.Icon|Icon} are
+	 * Assign a custom icon for the decrementer. All strings supported by {@link limestone/Icon.Icon|Icon} are
 	 * supported. Without a custom icon, the default is used, and is automatically changed when
-	 * the {@link sandstone/internal/Picker.PickerBase.orientation|orientation} is changed.
+	 * the {@link limestone/internal/Picker.PickerBase.orientation|orientation} is changed.
 	 *
 	 * @type {String}
 	 * @public
@@ -830,9 +830,9 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	incrementAriaLabel: PropTypes.string,
 
 	/**
-	 * Assign a custom icon for the incrementer. All strings supported by {@link sandstone/Icon.Icon|Icon} are
+	 * Assign a custom icon for the incrementer. All strings supported by {@link limestone/Icon.Icon|Icon} are
 	 * supported. Without a custom icon, the default is used, and is automatically changed when
-	 * the {@link sandstone/internal/Picker.PickerBase.orientation|orientation} is changed.
+	 * the {@link limestone/internal/Picker.PickerBase.orientation|orientation} is changed.
 	 *
 	 * @type {String}
 	 * @public
@@ -842,7 +842,7 @@ PickerBase.propTypes = /** @lends sandstone/internal/Picker.Picker.prototype */ 
 	/**
 	 * Determines the user interaction of the control. A joined picker allows the user to use
 	 * the arrow keys or the enter key to adjust the picker's value.
-	 * It depends on {@link sandstone/internal/Picker.PickerBase.changedBy|changedBy}
+	 * It depends on {@link limestone/internal/Picker.PickerBase.changedBy|changedBy}
 	 * whether to use the arrow keys or the enter key.
 	 * A split control allows full navigation,
 	 * but requires individual ENTER presses on the incrementer and decrementer buttons.

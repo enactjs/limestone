@@ -1,6 +1,6 @@
-import Button from '@enact/sandstone/Button';
-import {InputField} from '@enact/sandstone/Input';
-import Spinner from '@enact/sandstone/Spinner';
+import Button from '@enact/limestone/Button';
+import {InputField} from '@enact/limestone/Input';
+import Spinner from '@enact/limestone/Spinner';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
@@ -49,7 +49,7 @@ class FocusOnSpinner extends Component {
 }
 
 export default {
-	title: 'Sandstone/Spinner',
+	title: 'Limestone/Spinner',
 	component: 'Spinner'
 };
 

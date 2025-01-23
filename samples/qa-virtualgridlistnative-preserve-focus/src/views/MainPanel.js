@@ -1,6 +1,6 @@
 import kind from '@enact/core/kind';
-import Button from '@enact/sandstone/Button';
-import {Panel, Header} from '@enact/sandstone/Panels';
+import Button from '@enact/limestone/Button';
+import {Panel, Header} from '@enact/limestone/Panels';
 import PropTypes from 'prop-types';
 
 import SampleVirtualGridList from '../components/SampleVirtualGridList';

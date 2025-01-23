@@ -1,11 +1,11 @@
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import Button from '@enact/sandstone/Button';
-import ContextualPopupDecorator from '@enact/sandstone/ContextualPopupDecorator';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Item from '@enact/sandstone/Item';
-import {Header, Panel, Panels} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import Button from '@enact/limestone/Button';
+import ContextualPopupDecorator from '@enact/limestone/ContextualPopupDecorator';
+import ImageItem from '@enact/limestone/ImageItem';
+import Item from '@enact/limestone/Item';
+import {Header, Panel, Panels} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
@@ -180,7 +180,7 @@ const ButtonAndVirtualGridListSamples = I18nContextDecorator (
 );
 
 export default {
-	title: 'Sandstone/VirtualGridList',
+	title: 'Limestone/VirtualGridList',
 	component: 'VirtualGridList'
 };
 

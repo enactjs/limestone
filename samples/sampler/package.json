@@ -1,7 +1,7 @@
 {
-  "name": "sandstone-sampler",
+  "name": "limestone-sampler",
   "version": "3.0.0-alpha.4",
-  "description": "Component and QA samples for Sandstone",
+  "description": "Component and QA samples for Limestone",
   "private": true,
   "main": "index.js",
   "scripts": {
@@ -17,12 +17,12 @@
   },
   "license": "Apache-2.0",
   "enact": {
-    "theme": "sandstone"
+    "theme": "limestone"
   },
   "dependencies": {
     "@enact/core": "^5.0.0-alpha.4",
     "@enact/i18n": "^5.0.0-alpha.4",
-    "@enact/sandstone": "../../",
+    "@enact/limestone": "../../",
     "@enact/spotlight": "^5.0.0-alpha.4",
     "@enact/storybook-utils": "^6.0.0-rc.3",
     "@enact/ui": "^5.0.0-alpha.4",

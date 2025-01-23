@@ -8,7 +8,7 @@
 	.timeSeparator {
 		vertical-align: inherit;
 		display: inline-block;
-		margin: @sand-timepicker-colon-margin;
+		margin: @lime-timepicker-colon-margin;
 	}
 
 	.pickers {
@@ -20,7 +20,7 @@
 			// Reading from right to left, the sequence is "minute : hour meridiem"
 			.hourPicker {
 				order: 3;
-				margin-inline-start: .extract(@sand-datecomponentpicker-margin, left)[];
+				margin-inline-start: .extract(@lime-datecomponentpicker-margin, left)[];
 			}
 			.timeSeparator {
 				order: 2;
@@ -37,8 +37,8 @@
 
 	.applySkins({
 		.timeSeparator {
-			.sand-disabled({
-				.sand-disabled-colors();
+			.lime-disabled({
+				.lime-disabled-colors();
 			});
 		}
 	});

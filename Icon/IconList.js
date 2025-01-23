@@ -1,4 +1,4 @@
-// Full List (Hash) of Sandstone Supported Icons
+// Full List (Hash) of Limestone Supported Icons
 //
 
 export default {

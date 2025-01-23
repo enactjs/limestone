@@ -33,13 +33,13 @@ const defaultConfig = {
 
 /**
  * PanelsRouter passes the children, footer, subtitle, and title from
- * {@link sandstone/WizardPanels.Panel|WizardPanel} to
- * {@link sandstone/WizardPanels.WizardPanelsBase|WizardPanelsBase} and passes the children from
- * {@link sandstone/QuickGuidePanels.Panel|QuickGuidePanel} to
- * {@link sandstone/QuickGuidePanels.QuickGuidePanelsBase|QuickGuidePanelsBase}.
+ * {@link limestone/WizardPanels.Panel|WizardPanel} to
+ * {@link limestone/WizardPanels.WizardPanelsBase|WizardPanelsBase} and passes the children from
+ * {@link limestone/QuickGuidePanels.Panel|QuickGuidePanel} to
+ * {@link limestone/QuickGuidePanels.QuickGuidePanelsBase|QuickGuidePanelsBase}.
  *
  * @class PanelsRouter
- * @memberof sandstone/internal/Panels
+ * @memberof limestone/internal/Panels
  * @hoc
  * @private
  */
@@ -120,7 +120,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 		);
 	};
 
-	PanelsProvider.propTypes =  /** @lends sandstone/internal/Panels.PanelsRouter.prototype */  {
+	PanelsProvider.propTypes =  /** @lends limestone/internal/Panels.PanelsRouter.prototype */  {
 		/**
 		 * Obtains a reference to the root node.
 		 *
@@ -180,7 +180,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 
 		/**
 		* The "default" subtitle for WizardPanels if subtitle isn't explicitly set in
-		* {@link sandstone/WizardPanels.Panel|Panel}.
+		* {@link limestone/WizardPanels.Panel|Panel}.
 		* @example
 		* 	<WizardPanels subtitle="Subtitle">
 		*		<WizardPanels.Panel>
@@ -195,7 +195,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 
 		/**
 		* The "default" title for WizardPanels if title isn't explicitly set in
-		* {@link sandstone/WizardPanels.Panel|Panel}.
+		* {@link limestone/WizardPanels.Panel|Panel}.
 		* @example
 		* 	<WizardPanels title="Title">
 		*		<WizardPanels.Panel>

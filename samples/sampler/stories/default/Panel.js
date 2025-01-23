@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import ImageItem from '@enact/sandstone/ImageItem';
-import {Header, Panel} from '@enact/sandstone/Panels';
-import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import Button from '@enact/limestone/Button';
+import ImageItem from '@enact/limestone/ImageItem';
+import {Header, Panel} from '@enact/limestone/Panels';
+import TabLayout, {Tab} from '@enact/limestone/TabLayout';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {number, select, text} from '@enact/storybook-utils/addons/controls';
@@ -74,7 +74,7 @@ const updateDataSize = (dataSize) => {
 updateDataSize(defaultDataSize);
 
 export default {
-	title: 'Sandstone/Panels.Panel',
+	title: 'Limestone/Panels.Panel',
 	component: 'Panel'
 };
 

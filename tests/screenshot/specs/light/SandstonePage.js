@@ -1,14 +1,14 @@
 'use strict';
 const {Page} = require('@enact/ui-test-utils/utils');
 
-class SandstonePage extends Page {
+class LimestonePage extends Page {
 	constructor () {
 		super();
-		this.title = 'Sandstone Test';
+		this.title = 'Limestone Test';
 	}
 
 	async open (urlExtra) {
-		await super.open('Sandstone-View', urlExtra);
+		await super.open('Limestone-View', urlExtra);
 	}
 
 	get component () {
@@ -16,4 +16,4 @@ class SandstonePage extends Page {
 	}
 }
 
-module.exports = new SandstonePage();
+module.exports = new LimestonePage();

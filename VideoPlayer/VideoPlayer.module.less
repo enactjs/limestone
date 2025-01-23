@@ -38,16 +38,16 @@
 
 	.fullscreen {
 		.miniFeedback {
-			.sand-font-number();
+			.lime-font-number();
 			position: absolute;
 			z-index: 50;  // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
-			top: @sand-video-feedback-mini-position-top;
-			left: @sand-video-feedback-mini-position-left;
-			font-weight: @sand-video-feedback-mini-font-weight;
-			font-style: @sand-video-feedback-mini-font-style;
-			font-size: @sand-video-feedback-mini-font-size;
-			padding: 0 @sand-video-feedback-mini-padding-side;
-			line-height: @sand-video-feedback-mini-line-height;
+			top: @lime-video-feedback-mini-position-top;
+			left: @lime-video-feedback-mini-position-left;
+			font-weight: @lime-video-feedback-mini-font-weight;
+			font-style: @lime-video-feedback-mini-font-style;
+			font-size: @lime-video-feedback-mini-font-size;
+			padding: 0 @lime-video-feedback-mini-padding-side;
+			line-height: @lime-video-feedback-mini-line-height;
 			bottom: auto;
 			pointer-events: none;
 		}
@@ -55,16 +55,16 @@
 		.back {
 			position: absolute;
 			z-index: 100; // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
-			top: @sand-video-back-button-top;
-			.position-start-end(@sand-video-back-button-left, initial);
+			top: @lime-video-back-button-top;
+			.position-start-end(@lime-video-back-button-left, initial);
 		}
 
 		.bottom {
 			position: absolute;
 			z-index: 100;  // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
-			bottom: @sand-video-player-padding-bottom;
-			left: @sand-video-player-padding-side;
-			right: @sand-video-player-padding-side;
+			bottom: @lime-video-player-padding-bottom;
+			left: @lime-video-player-padding-side;
+			right: @lime-video-player-padding-side;
 
 			&.lift {
 				transform: translateY(~"calc(var(--liftDistance) * -1)");
@@ -86,7 +86,7 @@
 
 			.infoFrame {
 				display: flex;
-				margin: @sand-video-player-info-margin;
+				margin: @lime-video-player-info-margin;
 			}
 
 			.sliderContainer {
@@ -114,22 +114,22 @@
 	.applySkins({
 		.fullscreen {
 			.miniFeedback {
-				background-color: @sand-video-feedback-mini-bg-color;
-				color: @sand-video-feedback-mini-text-color;
+				background-color: @lime-video-feedback-mini-bg-color;
+				color: @lime-video-feedback-mini-text-color;
 			}
 
 			.bottom {
-				background-color: @sand-video-player-bottom-bg-color;
+				background-color: @lime-video-player-bottom-bg-color;
 
 				.infoFrame {
-					text-shadow: @sand-video-player-title-text-shadow;
+					text-shadow: @lime-video-player-title-text-shadow;
 				}
 			}
 		}
 
 		.overlay {
 			&.scrim::after {
-				background: @sand-video-player-scrim-gradient-color
+				background: @lime-video-player-scrim-gradient-color
 			}
 		}
 	});

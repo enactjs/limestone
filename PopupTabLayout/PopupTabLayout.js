@@ -1,7 +1,7 @@
 /**
  * Provides a floating component suitable for grouping collections of managed views.
  *
- * @module sandstone/PopupTabLayout
+ * @module limestone/PopupTabLayout
  * @exports PopupTabLayout
  * @exports Tab
  * @exports TabPanels
@@ -37,18 +37,18 @@ const popupPropList = ['noAutoDismiss', 'onHide', 'onKeyDown', 'onShow', 'open',
  * Tabbed Layout component in a floating Popup.
  *
  * @class PopupTabLayoutBase
- * @memberof sandstone/PopupTabLayout
- * @extends sandstone/Popup.Popup
- * @extends sandstone/TabLayout.TabLayout
+ * @memberof limestone/PopupTabLayout
+ * @extends limestone/Popup.Popup
+ * @extends limestone/TabLayout.TabLayout
  * @ui
  * @public
  */
 const PopupTabLayoutBase = kind({
 	name: 'PopupTabLayout',
 
-	propTypes: /** @lends sandstone/PopupTabLayout.PopupTabLayoutBase.prototype */ {
+	propTypes: /** @lends limestone/PopupTabLayout.PopupTabLayoutBase.prototype */ {
 		/**
-		 * Collection of {@link sandstone/PopupTabLayout.Tab|Tabs} to render.
+		 * Collection of {@link limestone/PopupTabLayout.Tab|Tabs} to render.
 		 *
 		 * @type {Node}
 		 * @public
@@ -227,7 +227,7 @@ const PopupTabLayoutBase = kind({
 		 *
 		 * It can be either `'none'`, `'self-first'`, or `'self-only'`.
 		 *
-		 * Note: The ready-to-use {@link sandstone/Popup.Popup|Popup} component only supports
+		 * Note: The ready-to-use {@link limestone/Popup.Popup|Popup} component only supports
 		 * `'self-first'` and `'self-only'`.
 		 *
 		 * @type {('none'|'self-first'|'self-only')}
@@ -294,8 +294,8 @@ const PopupTabLayoutBase = kind({
  * Add behaviors to PopupTabLayout.
  *
  * @class PopupTabLayoutDecorator
- * @memberof sandstone/PopupTabLayout
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/PopupTabLayout
+ * @mixes limestone/Skinnable.Skinnable
  * @hoc
  * @public
  */
@@ -304,7 +304,7 @@ const PopupTabLayoutDecorator = compose(
 );
 
 /**
- * An instance of {@link sandstone/Popup.Popup|Popup} which restricts the `TabLayout` content to
+ * An instance of {@link limestone/Popup.Popup|Popup} which restricts the `TabLayout` content to
  * the left side of the screen. The content of `TabLayout` can flex vertically, but not horizontally
  * (fixed width). This is typically used to switch between several collections of managed views
  * (`TabPanels` and `TabPanel`, also exported from this module).
@@ -334,19 +334,19 @@ const PopupTabLayoutDecorator = compose(
  * ```
  *
  * @class PopupTabLayout
- * @memberof sandstone/PopupTabLayout
+ * @memberof limestone/PopupTabLayout
  * @ui
  * @public
  */
 const PopupTabLayout = PopupTabLayoutDecorator(PopupTabLayoutBase);
 
 /**
- * A shortcut to access {@link sandstone/PopupTabLayout.Tab}
+ * A shortcut to access {@link limestone/PopupTabLayout.Tab}
  *
  * @name Tab
- * @type {sandstone/PopupTabLayout.Tab}
- * @memberof sandstone/PopupTabLayout.PopupTabLayout
- * @extends sandstone/TabLayout.Tab
+ * @type {limestone/PopupTabLayout.Tab}
+ * @memberof limestone/PopupTabLayout.PopupTabLayout
+ * @extends limestone/TabLayout.Tab
  */
 PopupTabLayout.Tab = Tab;
 
@@ -354,8 +354,8 @@ PopupTabLayout.Tab = Tab;
  * A Tab for use inside this component.
  *
  * @class Tab
- * @memberof sandstone/PopupTabLayout
- * @extends sandstone/TabLayout.Tab
+ * @memberof limestone/PopupTabLayout
+ * @extends limestone/TabLayout.Tab
  * @ui
  */
 
@@ -397,12 +397,12 @@ const tabPanelsHandlers = {
 };
 
 /**
- * A base component for {@link sandstone/PopupTabLayout.TabPanels|TabPanels} which has
+ * A base component for {@link limestone/PopupTabLayout.TabPanels|TabPanels} which has
  * left key handler to navigate panels.
  *
  * @class TabPanelsBase
- * @memberof sandstone/PopupTabLayout
- * @extends sandstone/Panels.Panels
+ * @memberof limestone/PopupTabLayout
+ * @extends limestone/Panels.Panels
  * @ui
  * @public
  */
@@ -421,8 +421,8 @@ TabPanelsBase.propTypes = {
  * A customized version of Panels for use inside this component.
  *
  * @class TabPanels
- * @memberof sandstone/PopupTabLayout
- * @extends sandstone/PopupTabLayout.TabPanelsBase
+ * @memberof limestone/PopupTabLayout
+ * @extends limestone/PopupTabLayout.TabPanelsBase
  * @ui
  * @public
  */
@@ -442,7 +442,7 @@ const TabPanels = I18nContextDecorator(
  * ```
  *
  * @name noCloseButton
- * @memberof sandstone/PopupTabLayout.TabPanels.prototype
+ * @memberof limestone/PopupTabLayout.TabPanels.prototype
  * @type {Boolean}
  * @default true
  * @public
@@ -452,8 +452,8 @@ const TabPanels = I18nContextDecorator(
  * A customized version of Panel for use inside this component.
  *
  * @class TabPanel
- * @memberof sandstone/PopupTabLayout
- * @extends sandstone/Panels.Panel
+ * @memberof limestone/PopupTabLayout
+ * @extends limestone/Panels.Panel
  * @ui
  * @public
  */

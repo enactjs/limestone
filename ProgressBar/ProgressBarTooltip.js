@@ -105,19 +105,19 @@ const getSide = (orientation, position) => {
 };
 
 /**
- * A {@link sandstone/TooltipDecorator.Tooltip|Tooltip} specifically adapted for use with
- * {@link sandstone/ProgressBar.ProgressBar|ProgressBar} or
- * {@link sandstone/Slider.Slider|Slider}.
+ * A {@link limestone/TooltipDecorator.Tooltip|Tooltip} specifically adapted for use with
+ * {@link limestone/ProgressBar.ProgressBar|ProgressBar} or
+ * {@link limestone/Slider.Slider|Slider}.
  *
  * @class ProgressBarTooltip
- * @memberof sandstone/ProgressBar
+ * @memberof limestone/ProgressBar
  * @ui
  * @public
  */
 const ProgressBarTooltipBase = kind({
 	name: 'ProgressBarTooltip',
 
-	propTypes: /** @lends sandstone/ProgressBar.ProgressBarTooltip.prototype */{
+	propTypes: /** @lends limestone/ProgressBar.ProgressBarTooltip.prototype */{
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.

@@ -140,7 +140,7 @@ const GroupComponent = SpotlightContainerDecorator(
  * A group of tabs
  *
  * @class TabGroup
- * @memberof sandstone/TabLayout
+ * @memberof limestone/TabLayout
  * @ui
  * @private
  */
@@ -149,7 +149,7 @@ const TabGroupBase = kind({
 
 	functional: true,
 
-	propTypes: /** @lends sandstone/TabGroup.TabGroup.prototype */ {
+	propTypes: /** @lends limestone/TabGroup.TabGroup.prototype */ {
 		tabs: PropTypes.array.isRequired,
 		collapsed: PropTypes.bool,
 		css: PropTypes.object,

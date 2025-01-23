@@ -1,10 +1,10 @@
-import Button from '@enact/sandstone/Button';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Icon from '@enact/sandstone/Icon';
-import Item from '@enact/sandstone/Item';
-import {Panel, Header} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import TabLayout, {TabLayoutBase, Tab} from '@enact/sandstone/TabLayout';
+import Button from '@enact/limestone/Button';
+import ImageItem from '@enact/limestone/ImageItem';
+import Icon from '@enact/limestone/Icon';
+import Item from '@enact/limestone/Item';
+import {Panel, Header} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {range, select} from '@enact/storybook-utils/addons/controls';
@@ -33,7 +33,7 @@ const tabSelections = {
 };
 
 export default {
-	title: 'Sandstone/TabLayout',
+	title: 'Limestone/TabLayout',
 	component: 'TabLayout'
 };
 
@@ -57,7 +57,7 @@ export const _TabLayout = (args) => {
 
 	return (
 		<Panel>
-			<Header title="Sandstone TabLayout" subtitle="Basic TabLayout" />
+			<Header title="Limestone TabLayout" subtitle="Basic TabLayout" />
 			<TabLayout
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}

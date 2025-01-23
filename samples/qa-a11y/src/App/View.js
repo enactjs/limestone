@@ -1,5 +1,5 @@
-import {Header, Panel} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
+import {Header, Panel} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
 import Layout, {Cell} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 

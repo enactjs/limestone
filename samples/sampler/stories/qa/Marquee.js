@@ -1,11 +1,11 @@
 import kind from '@enact/core/kind';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import Button from '@enact/sandstone/Button';
-import Heading from '@enact/sandstone/Heading';
-import Icon from '@enact/sandstone/Icon';
-import Item from '@enact/sandstone/Item';
-import Marquee, {MarqueeController} from '@enact/sandstone/Marquee';
-import Skinnable from '@enact/sandstone/Skinnable';
+import Button from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
+import Icon from '@enact/limestone/Icon';
+import Item from '@enact/limestone/Item';
+import Marquee, {MarqueeController} from '@enact/limestone/Marquee';
+import Skinnable from '@enact/limestone/Skinnable';
 import Spottable from '@enact/spotlight/Spottable';
 import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
@@ -202,7 +202,7 @@ class MarqueeSynchronizedWithContentChanged extends Component {
 }
 
 export default {
-	title: 'Sandstone/Marquee',
+	title: 'Limestone/Marquee',
 	component: 'Marquee'
 };
 

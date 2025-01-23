@@ -11,13 +11,13 @@ import {Component} from 'react';
  * @class TransitionDecorator
  * @hoc
  * @private
- * @memberof sandstone/Panels
+ * @memberof limestone/Panels
  */
 const TransitionDecorator = hoc((config, Wrapped) => {
 	return class extends Component {
 		static displayName = 'TransitionDecorator';
 
-		static propTypes = /** @lends sandstone/Panels.TransitionDecorator.prototype */ {
+		static propTypes = /** @lends limestone/Panels.TransitionDecorator.prototype */ {
 			/**
 			 * Called after hide transition has completed, and immediately with no transition.
 			 *

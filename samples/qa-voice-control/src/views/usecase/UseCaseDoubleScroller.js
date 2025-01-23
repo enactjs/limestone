@@ -1,6 +1,6 @@
-import Heading from '@enact/sandstone/Heading';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
+import Heading from '@enact/limestone/Heading';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
 import Repeater from '@enact/ui/Repeater';
 import ri from '@enact/ui/resolution';
 import {useCallback, useState} from 'react';

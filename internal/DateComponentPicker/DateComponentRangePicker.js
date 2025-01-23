@@ -7,18 +7,18 @@ import RangePicker from '../../RangePicker';
 import css from './DateComponentPicker.module.less';
 
 /**
- * {@link sandstone/internal/DataComponentPicker.DateComponentRangePicker} allows the selection of
- * one part of the date or time using a {@link sandstone/RangePicker.RangePicker}.
+ * {@link limestone/internal/DataComponentPicker.DateComponentRangePicker} allows the selection of
+ * one part of the date or time using a {@link limestone/RangePicker.RangePicker}.
  *
  * @class DateComponentRangePickerBase
- * @memberof sandstone/internal/DateComponentPicker
+ * @memberof limestone/internal/DateComponentPicker
  * @ui
  * @private
  */
 const DateComponentRangePickerBase = kind({
 	name: 'DateComponentRangePicker',
 
-	propTypes:  /** @lends sandstone/internal/DateComponentPicker.DateComponentRangePickerBase.prototype */ {
+	propTypes:  /** @lends limestone/internal/DateComponentPicker.DateComponentRangePickerBase.prototype */ {
 		/**
 		 * The maximum value for the date component
 		 *
@@ -105,12 +105,12 @@ const DateComponentRangePickerBase = kind({
 });
 
 /**
- * {@link sandstone/internal/DateComponentPicker.DateComponentRangePicker} allows the selection of one
+ * {@link limestone/internal/DateComponentPicker.DateComponentRangePicker} allows the selection of one
  * part of the date (date, month, or year). It is a stateful component but allows updates by
  * providing a new `value` via props.
  *
  * @class DateComponentRangePicker
- * @memberof sandstone/internal/DateComponentPicker
+ * @memberof limestone/internal/DateComponentPicker
  * @mixes ui/Changeable.Changeable
  * @ui
  * @private

@@ -1,6 +1,6 @@
-import Button from '@enact/sandstone/Button';
-import {MediaControls} from '@enact/sandstone/MediaPlayer';
-import VideoPlayer, {Video, VideoPlayerBase} from '@enact/sandstone/VideoPlayer';
+import Button from '@enact/limestone/Button';
+import {MediaControls} from '@enact/limestone/MediaPlayer';
+import VideoPlayer, {Video, VideoPlayerBase} from '@enact/limestone/VideoPlayer';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {select, number} from '@enact/storybook-utils/addons/controls';
 import PropTypes from 'prop-types';
@@ -108,7 +108,7 @@ class VideoSourceSwap extends Component {
 }
 
 export default {
-	title: 'Sandstone/VideoPlayer',
+	title: 'Limestone/VideoPlayer',
 	component: 'VideoPlayer'
 };
 
