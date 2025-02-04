@@ -579,10 +579,10 @@ class Popup extends Component {
 	handleDismiss = (ev) => {
 		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, this.props);
 	};
-	
+
 	handlePopupHide = (ev) => {
 		forwardHide(ev, this.props);
-		
+
 		this.setState({
 			floatLayerOpen: false
 		}, () => {
