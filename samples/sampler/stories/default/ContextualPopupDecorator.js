@@ -1,6 +1,6 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import {ContextualPopupDecorator} from '@enact/sandstone/ContextualPopupDecorator';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import {ContextualPopupDecorator} from '@enact/limestone/ContextualPopupDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -21,7 +21,7 @@ Config.defaultProps = {
 };
 
 export default {
-	title: 'Sandstone/ContextualPopupDecorator',
+	title: 'Limestone/ContextualPopupDecorator',
 	component: 'ContextualPopupDecorator'
 };
 

@@ -1,4 +1,4 @@
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
 
 const ScrollModeSwitch = (props) => {
 	return (

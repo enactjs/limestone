@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import BodyText from '@enact/sandstone/BodyText';
-import Scroller from '@enact/sandstone/Scroller';
+import BodyText from '@enact/limestone/BodyText';
+import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -23,7 +23,7 @@ const prop = {
 const ScrollerConfig = mergeComponentMetadata('Scroller', UiScrollerBasic, Scroller);
 
 export default {
-	title: 'Sandstone/Scroller',
+	title: 'Limestone/Scroller',
 	component: 'Scroller'
 };
 

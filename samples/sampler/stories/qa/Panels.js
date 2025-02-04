@@ -1,12 +1,12 @@
 import {is} from '@enact/core/keymap';
-import Button from '@enact/sandstone/Button';
-import IconItem from '@enact/sandstone/IconItem';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Item from '@enact/sandstone/Item';
-import {Header, Panel, Panels} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
-import $L from '@enact/sandstone/internal/$L';
+import Button from '@enact/limestone/Button';
+import IconItem from '@enact/limestone/IconItem';
+import ImageItem from '@enact/limestone/ImageItem';
+import Item from '@enact/limestone/Item';
+import {Header, Panel, Panels} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
+import $L from '@enact/limestone/internal/$L';
 import Spotlight from '@enact/spotlight';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
@@ -143,7 +143,7 @@ export const WithAutoFocusControl = (args) => {
 select('autoFocus for Panel 0', WithAutoFocusControl, ['none', 'last-focused', 'default-element'], Config, 'none');
 
 export default {
-	title: 'Sandstone/Panels',
+	title: 'Limestone/Panels',
 	component: 'Panels'
 };
 

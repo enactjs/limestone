@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import kind from '@enact/core/kind';
-import Button from '@enact/sandstone/Button';
-import Region from '@enact/sandstone/Region';
+import Button from '@enact/limestone/Button';
+import Region from '@enact/limestone/Region';
 
 import css from './Region.module.less';
 

@@ -32,14 +32,14 @@ const isPasswordType = type => type && type.includes('password');
  * Base component for providing text input in the form of a popup without button.
  *
  * @class InputPopupBase
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @ui
  * @public
  */
 const InputPopupBase = kind({
 	name: 'InputPopup',
 
-	propTypes: /** @lends sandstone/Input.InputPopupBase.prototype */ {
+	propTypes: /** @lends limestone/Input.InputPopupBase.prototype */ {
 		/**
 		 * Passed by AnnounceDecorator for accessibility.
 		 *
@@ -69,7 +69,7 @@ const InputPopupBase = kind({
 		 * Initial value of the input.
 		 *
 		 * This value is used for setting the `defaultValue` of the `InputField`.
-		 * @see {@link sandstone/Input.InputField}
+		 * @see {@link limestone/Input.InputField}
 		 * @type {String|Number}
 		 * @public
 		 */
@@ -93,7 +93,7 @@ const InputPopupBase = kind({
 
 		/**
 		 * Indicates the value is invalid and shows
-		 * {@link sandstone/Input.InputPopupBase.invalidMessage|invalidMessage}, if set.
+		 * {@link limestone/Input.InputPopupBase.invalidMessage|invalidMessage}, if set.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -102,7 +102,7 @@ const InputPopupBase = kind({
 
 		/**
 		 * The tooltip text to be displayed when the input is
-		 * {@link sandstone/Input.InputPopupBase.invalid|invalid}.
+		 * {@link limestone/Input.InputPopupBase.invalid|invalid}.
 		 *
 		 * If this value is *falsy*, the tooltip will be shown with the default message.
 		 *
@@ -173,7 +173,7 @@ const InputPopupBase = kind({
 		 * The default is to display separated digits when `length` is less than `7`. If `field` is
 		 * set, a standard `InputField` will be used instead of the normal number input.
 		 *
-		 * This has no effect on other {@link sandstone/Input.InputPopupBase.type|types}.
+		 * This has no effect on other {@link limestone/Input.InputPopupBase.type|types}.
 		 *
 		 * @type {('auto'|'separated'|'joined'|'field')}
 		 * @default 'auto'
@@ -466,14 +466,14 @@ const InputPopupBase = kind({
  * Base component for providing text input in the form of a popup.
  *
  * @class InputBase
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @ui
  * @public
  */
 const InputBase = kind({
 	name: 'Input',
 
-	propTypes: /** @lends sandstone/Input.InputBase.prototype */ {
+	propTypes: /** @lends limestone/Input.InputBase.prototype */ {
 		/**
 		 * Disables the button that activates the input popup.
 		 *
@@ -520,7 +520,7 @@ const InputBase = kind({
 		/**
 		 * The value of the input.
 		 *
-		 * @see {@link sandstone/Input.InputField}
+		 * @see {@link limestone/Input.InputField}
 		 * @type {String|Number}
 		 * @public
 		 */
@@ -600,14 +600,14 @@ const AnnounceDecorator = Wrapped => (function AnnounceDecorator (props) {
 });
 
 /**
- * Sandstone specific item behaviors to apply to {@link sandstone/Input.InputBase|Input}.
+ * Limestone specific item behaviors to apply to {@link limestone/Input.InputBase|Input}.
  *
  * @class InputDecorator
  * @hoc
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @mixes ui/Toggleable.Toggleable
  * @mixes ui/Changeable.Changeable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const InputDecorator = compose(
@@ -637,8 +637,8 @@ const InputDecorator = compose(
  * events.
  *
  * @class Input
- * @memberof sandstone/Input
- * @extends sandstone/Input.InputBase
+ * @memberof limestone/Input
+ * @extends limestone/Input.InputBase
  * @ui
  * @public
  */
@@ -664,8 +664,8 @@ const Input = InputDecorator(InputBase);
  * events.
  *
  * @class InputPopup
- * @memberof sandstone/Input
- * @extends sandstone/Input.InputPopupBase
+ * @memberof limestone/Input
+ * @extends limestone/Input.InputPopupBase
  * @ui
  * @public
  */

@@ -1,10 +1,10 @@
 {
-	"id": "com.webos.app.enactsandstoneqasampler",
+	"id": "com.webos.app.enactlimestoneqasampler",
 	"version": "1.0.0-alpha.4",
 	"vendor": "LGE-SVL",
 	"type": "web",
 	"main": "index.html",
-	"title": "Enact Sandstone QA Sampler",
+	"title": "Enact Limestone QA Sampler",
 	"icon": "icon.png",
 	"miniicon": "icon-mini.png",
 	"largeIcon": "icon-large.png",

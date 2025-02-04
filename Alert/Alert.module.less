@@ -14,12 +14,12 @@
 
 	&.fullscreen {
 		.alertImage {
-			margin-bottom: @sand-alert-fullscreen-image-spacing;
+			margin-bottom: @lime-alert-fullscreen-image-spacing;
 		}
 
 		.title,
 		.content {
-			max-width: @sand-alert-fullscreen-max-width;
+			max-width: @lime-alert-fullscreen-max-width;
 		}
 
 		.content {
@@ -30,34 +30,34 @@
 
 		&.noTitle {
 			.content {
-				.sand-font-size(@sand-alert-notitle-content-font-size, @sand-tallglyph-alert-notitle-content-font-size);
+				.lime-font-size(@lime-alert-notitle-content-font-size, @lime-tallglyph-alert-notitle-content-font-size);
 				.enact-locale-line-height();
 			}
 		}
 
 		&.maxButtons {
 			.buttonContainer {
-				margin-top: @sand-alert-max-buttons-margin-top;
+				margin-top: @lime-alert-max-buttons-margin-top;
 			}
 		}
 
 		.title {
-			.sand-font-size(@sand-alert-title-font-size, @sand-tallglyph-alert-title-font-size);
+			.lime-font-size(@lime-alert-title-font-size, @lime-tallglyph-alert-title-font-size);
 		}
 
 		.buttonContainer {
-			margin-top: @sand-alert-buttons-margin-top;
+			margin-top: @lime-alert-buttons-margin-top;
 
 			// Every buttonCell after the first one
 			.buttonCell + .buttonCell {
-				margin-top: @sand-alert-fullscreen-button-spacing;
+				margin-top: @lime-alert-fullscreen-button-spacing;
 			}
 		}
 	}
 
 	&.overlay {
 		.alertImage {
-			margin: @sand-alert-overlay-image-margin;
+			margin: @lime-alert-overlay-image-margin;
 		}
 
 		.buttonContainer {
@@ -65,24 +65,24 @@
 
 			// Every buttonCell after the first one
 			.buttonCell + .buttonCell {
-				margin-top: @sand-alert-overlay-button-spacing;
+				margin-top: @lime-alert-overlay-button-spacing;
 			}
 
 			&.full {
-				margin: @sand-alert-overlay-buttons-margin;
+				margin: @lime-alert-overlay-buttons-margin;
 				.margin-start-end(
-					.extract(@sand-alert-overlay-buttons-margin, left)[],
-					.extract(@sand-alert-overlay-buttons-margin, right)[]
+					.extract(@lime-alert-overlay-buttons-margin, left)[],
+					.extract(@lime-alert-overlay-buttons-margin, right)[]
 				);
 				:global(.enact-orientation-portrait) & {
-					margin: @sand-portrait-alert-overlay-buttons-margin;
-					.margin-start-end(.extract(@sand-portrait-alert-overlay-buttons-margin, left)[], .extract(@sand-portrait-alert-overlay-buttons-margin, right)[], parent);
+					margin: @lime-portrait-alert-overlay-buttons-margin;
+					.margin-start-end(.extract(@lime-portrait-alert-overlay-buttons-margin, left)[], .extract(@lime-portrait-alert-overlay-buttons-margin, right)[], parent);
 				}
 			}
 		}
 
 		.content {
-			.sand-alert-overlay-content();
+			.lime-alert-overlay-content();
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
@@ -91,24 +91,24 @@
 			}
 
 			&.full {
-				width: @sand-alert-overlay-content-width;
-				.margin-start-end(@sand-alert-overlay-image-text-gap, @sand-alert-overlay-text-button-gap);
+				width: @lime-alert-overlay-content-width;
+				.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-alert-overlay-text-button-gap);
 				margin-bottom: 0;
 
 				:global(.enact-orientation-portrait) & {
-					width: @sand-portrait-alert-overlay-content-width;
-					.margin-start-end(@sand-alert-overlay-image-text-gap, @sand-portrait-alert-overlay-text-button-gap, parent);
+					width: @lime-portrait-alert-overlay-content-width;
+					.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
 				}
 			}
 		}
 
 		&.noImage {
 			.content {
-				.margin-start-end(@sand-alert-overlay-noimage-text-gap, @sand-alert-overlay-text-button-gap);
+				.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-alert-overlay-text-button-gap);
 
 				:global(.enact-orientation-portrait) & {
-					width: @sand-portrait-alert-overlay-noimage-content-width;
-					.margin-start-end(@sand-alert-overlay-noimage-text-gap, @sand-portrait-alert-overlay-text-button-gap, parent);
+					width: @lime-portrait-alert-overlay-noimage-content-width;
+					.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
 				}
 
 			}
@@ -123,38 +123,38 @@
 		margin-right: auto;
 
 		.body {
-			padding-top: @sand-alert-overlay-padding-top-bottom;
-			padding-bottom: @sand-alert-overlay-padding-top-bottom;
-			.padding-start-end(@sand-alert-overlay-padding-left, @sand-alert-overlay-padding-right);
+			padding-top: @lime-alert-overlay-padding-top-bottom;
+			padding-bottom: @lime-alert-overlay-padding-top-bottom;
+			.padding-start-end(@lime-alert-overlay-padding-left, @lime-alert-overlay-padding-right);
 		}
 	}
 
 	.applySkins({
-		background-color: @sand-alert-bg-color;
+		background-color: @lime-alert-bg-color;
 
 		&.overlay {
-			margin-bottom: @sand-alert-overlay-margin-bottom;
-			border-radius: @sand-alert-overlay-border-radius;
+			margin-bottom: @lime-alert-overlay-margin-bottom;
+			border-radius: @lime-alert-overlay-border-radius;
 
 			/* Override colors inside overlay type Alert */
-			--sand-bg-color: @sand-alert-overlay-bg-color;
-			--sand-text-color: @sand-alert-overlay-text-color;
-			--sand-text-sub-color: @sand-alert-overlay-text-sub-color;
-			--sand-focus-text-color: @sand-alert-overlay-focus-text-color;
-			--sand-disabled-selected-color: @sand-alert-overlay-disabled-selected-color;
-			--sand-disabled-selected-bg-color: @sand-alert-overlay-disabled-selected-bg-color;
-			--sand-disabled-selected-focus-color: @sand-alert-overlay-disabled-selected-focus-color;
-			--sand-disabled-selected-focus-bg-color: @sand-alert-overlay-disabled-selected-focus-bg-color;
-			--sand-progress-color: @sand-alert-overlay-progress-color;
-			--sand-progress-bg-color: @sand-alert-overlay-progress-bg-color;
-			--sand-progress-bg-color-opacity: @sand-alert-overlay-progress-bg-color-opacity;
-			--sand-checkbox-color: @sand-alert-overlay-checkbox-color;
-			--sand-checkbox-disabled-selected-text-color: @sand-alert-overlay-checkbox-disabled-selected-text-color;
-			--sand-formcheckboxitem-focus-text-color: @sand-alert-overlay-formcheckboxitem-focus-text-color;
-			--sand-item-disabled-focus-bg-color: @sand-alert-overlay-item-disabled-focus-bg-color;
+			--lime-bg-color: @lime-alert-overlay-bg-color;
+			--lime-text-color: @lime-alert-overlay-text-color;
+			--lime-text-sub-color: @lime-alert-overlay-text-sub-color;
+			--lime-focus-text-color: @lime-alert-overlay-focus-text-color;
+			--lime-disabled-selected-color: @lime-alert-overlay-disabled-selected-color;
+			--lime-disabled-selected-bg-color: @lime-alert-overlay-disabled-selected-bg-color;
+			--lime-disabled-selected-focus-color: @lime-alert-overlay-disabled-selected-focus-color;
+			--lime-disabled-selected-focus-bg-color: @lime-alert-overlay-disabled-selected-focus-bg-color;
+			--lime-progress-color: @lime-alert-overlay-progress-color;
+			--lime-progress-bg-color: @lime-alert-overlay-progress-bg-color;
+			--lime-progress-bg-color-opacity: @lime-alert-overlay-progress-bg-color-opacity;
+			--lime-checkbox-color: @lime-alert-overlay-checkbox-color;
+			--lime-checkbox-disabled-selected-text-color: @lime-alert-overlay-checkbox-disabled-selected-text-color;
+			--lime-formcheckboxitem-focus-text-color: @lime-alert-overlay-formcheckboxitem-focus-text-color;
+			--lime-item-disabled-focus-bg-color: @lime-alert-overlay-item-disabled-focus-bg-color;
 
-			background-color: ~"color(from" @sand-alert-overlay-bg-color ~"srgb r g b /" @sand-alert-overlay-bg-color-opacity ~")";
-			box-shadow: @sand-alert-overlay-shadow;
+			background-color: ~"color(from" @lime-alert-overlay-bg-color ~"srgb r g b /" @lime-alert-overlay-bg-color-opacity ~")";
+			box-shadow: @lime-alert-overlay-shadow;
 
 			:global(.noAnimation) & {
 				box-shadow: none;

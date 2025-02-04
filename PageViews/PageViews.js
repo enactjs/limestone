@@ -33,14 +33,14 @@ import componentCss from './PageViews.module.less';
  *	</PageViews>
  *
  * @class PageViewsBase
- * @memberof sandstone/PageViews
+ * @memberof limestone/PageViews
  * @ui
  * @public
  */
 const PageViewsBase = kind({
 	name: 'PageViews',
 
-	propTypes: /** @lends sandstone/PageViews.PageViewsBase.prototype */ {
+	propTypes: /** @lends limestone/PageViews.PageViewsBase.prototype */ {
 		/**
 		 * Set of functions that control how the pages are transitioned into and out of the
 		 * viewport.
@@ -53,7 +53,7 @@ const PageViewsBase = kind({
 		arranger: shape,
 
 		/**
-		 * {@link sandstone/PageViews.Page|Page} to be rendered.
+		 * {@link limestone/PageViews.Page|Page} to be rendered.
 		 *
 		 * @type {Node}
 		 * @public
@@ -336,7 +336,7 @@ const PageViewsBase = kind({
  *
  * @name autoFocus
  * @type {('default-element'|'last-focused'|'none'|String)}
- * @memberof sandstone/PageViews.PageViews.prototype
+ * @memberof limestone/PageViews.PageViews.prototype
  * @default 'last-focused'
  * @public
  */
@@ -355,11 +355,11 @@ const PageViewsDecorator = compose(
 
 /**
  * A PageViews that can navigate through different pages.
- * Expects {@link sandstone/PageViews.Page|Page} as children.
+ * Expects {@link limestone/PageViews.Page|Page} as children.
  *
  * @class PageViews
- * @memberof sandstone/PageViews
- * @extends sandstone/PageViews.PageViewsBase
+ * @memberof limestone/PageViews
+ * @extends limestone/PageViews.PageViewsBase
  * @mixes ui/Changeable.Changeable
  * @ui
  * @public

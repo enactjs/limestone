@@ -8,7 +8,7 @@
 .radioIconColors (@color, @bg, @border) {
 	color: @color;
 	background-color: @bg;
-	box-shadow: 0 0 0 @sand-radioitem-indicator-border-width @border;
+	box-shadow: 0 0 0 @lime-radioitem-indicator-border-width @border;
 }
 
 .radioItem {
@@ -19,19 +19,19 @@
 	.applySkins({
 		.icon {
 			.radioIconColors(
-				@sand-radioitem-indicator-color,
-				@sand-radioitem-indicator-bg-color,
-				@sand-radioitem-indicator-border-color
+				@lime-radioitem-indicator-color,
+				@lime-radioitem-indicator-bg-color,
+				@lime-radioitem-indicator-border-color
 			);
-			border-radius: @sand-radioitem-indicator-border-radius;
+			border-radius: @lime-radioitem-indicator-border-radius;
 		}
 
 		&.selected {
 			.icon {
 				.radioIconColors(
-					@sand-radioitem-selected-indicator-color,
-					@sand-radioitem-selected-indicator-bg-color,
-					@sand-radioitem-selected-indicator-border-color
+					@lime-radioitem-selected-indicator-color,
+					@lime-radioitem-selected-indicator-bg-color,
+					@lime-radioitem-selected-indicator-border-color
 				);
 			}
 		}
@@ -40,9 +40,9 @@
 			&.selected {
 				.icon {
 					.radioIconColors(
-						@sand-radioitem-disabled-selected-color,
-						@sand-radioitem-disabled-selected-bg-color,
-						@sand-radioitem-disabled-selected-border-color
+						@lime-radioitem-disabled-selected-color,
+						@lime-radioitem-disabled-selected-bg-color,
+						@lime-radioitem-disabled-selected-border-color
 					);
 				}
 			}
@@ -51,18 +51,18 @@
 		.focus({
 			.icon {
 				.radioIconColors(
-					@sand-radioitem-focus-indicator-color,
-					@sand-radioitem-focus-indicator-bg-color,
-					@sand-radioitem-focus-indicator-border-color
+					@lime-radioitem-focus-indicator-color,
+					@lime-radioitem-focus-indicator-bg-color,
+					@lime-radioitem-focus-indicator-border-color
 				);
 			}
 
 			&.selected {
 				.icon {
 					.radioIconColors(
-						@sand-radioitem-selected-focus-indicator-color,
-						@sand-radioitem-selected-focus-indicator-bg-color,
-						@sand-radioitem-selected-focus-indicator-border-color
+						@lime-radioitem-selected-focus-indicator-color,
+						@lime-radioitem-selected-focus-indicator-bg-color,
+						@lime-radioitem-selected-focus-indicator-border-color
 					);
 				}
 			}
@@ -71,9 +71,9 @@
 				&.selected {
 					.icon {
 						.radioIconColors(
-							@sand-radioitem-focus-disabled-selected-color,
-							@sand-radioitem-focus-disabled-selected-bg-color,
-							@sand-radioitem-focus-disabled-selected-border-color
+							@lime-radioitem-focus-disabled-selected-color,
+							@lime-radioitem-focus-disabled-selected-bg-color,
+							@lime-radioitem-focus-disabled-selected-border-color
 						);
 					}
 				}

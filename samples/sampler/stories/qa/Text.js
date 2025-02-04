@@ -1,18 +1,18 @@
-import BodyText from '@enact/sandstone/BodyText';
-import {Button, ButtonBase} from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import {ContextualPopupDecorator} from '@enact/sandstone/ContextualPopupDecorator';
-import FormCheckboxItem from '@enact/sandstone/FormCheckboxItem';
-import Heading from '@enact/sandstone/Heading';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Input, {InputField} from '@enact/sandstone/Input';
-import Item, {ItemBase} from '@enact/sandstone/Item';
-import Marquee from '@enact/sandstone/Marquee';
-import {Header} from '@enact/sandstone/Panels';
-import Picker from '@enact/sandstone/Picker';
-import RadioItem from '@enact/sandstone/RadioItem';
-import Scroller from '@enact/sandstone/Scroller';
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import BodyText from '@enact/limestone/BodyText';
+import {Button, ButtonBase} from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import {ContextualPopupDecorator} from '@enact/limestone/ContextualPopupDecorator';
+import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
+import Heading from '@enact/limestone/Heading';
+import ImageItem from '@enact/limestone/ImageItem';
+import Input, {InputField} from '@enact/limestone/Input';
+import Item, {ItemBase} from '@enact/limestone/Item';
+import Marquee from '@enact/limestone/Marquee';
+import {Header} from '@enact/limestone/Panels';
+import Picker from '@enact/limestone/Picker';
+import RadioItem from '@enact/limestone/RadioItem';
+import Scroller from '@enact/limestone/Scroller';
+import SwitchItem from '@enact/limestone/SwitchItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -95,7 +95,7 @@ class ContextualPopupWithActivator extends Component {
 }
 
 export default {
-	title: 'Sandstone/Text',
+	title: 'Limestone/Text',
 	component: 'Text'
 };
 

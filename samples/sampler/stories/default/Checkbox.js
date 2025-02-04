@@ -1,4 +1,4 @@
-import Checkbox, {CheckboxBase} from '@enact/sandstone/Checkbox';
+import Checkbox, {CheckboxBase} from '@enact/limestone/Checkbox';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -9,7 +9,7 @@ Checkbox.displayName = 'Checkbox';
 const Config = mergeComponentMetadata('Checkbox', CheckboxBase, Checkbox);
 
 export default {
-	title: 'Sandstone/Checkbox',
+	title: 'Limestone/Checkbox',
 	component: 'Checkbox'
 };
 

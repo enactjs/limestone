@@ -1,4 +1,4 @@
-import RangePicker, {RangePickerBase} from '@enact/sandstone/RangePicker';
+import RangePicker, {RangePickerBase} from '@enact/limestone/RangePicker';
 import {mergeComponentMetadata, nullify} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, select, text} from '@enact/storybook-utils/addons/controls';
@@ -24,7 +24,7 @@ const parseIntOrNullify = (v) => {
 RangePicker.displayName = 'RangePicker';
 
 export default {
-	title: 'Sandstone/RangePicker',
+	title: 'Limestone/RangePicker',
 	component: 'RangePicker'
 };
 

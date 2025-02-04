@@ -1,10 +1,10 @@
 /**
- * Exports the {@link sandstone/internal/DateTime.DateTime},
- * {@link sandstone/internal/DateTime.DateTimeBase}
- * {@link sandstone/internal/DateTime.DatetimeDecorator}
+ * Exports the {@link limestone/internal/DateTime.DateTime},
+ * {@link limestone/internal/DateTime.DateTimeBase}
+ * {@link limestone/internal/DateTime.DatetimeDecorator}
  * components.
  *
- * @module sandstone/internal/DateTime
+ * @module limestone/internal/DateTime
  * @private
  */
 

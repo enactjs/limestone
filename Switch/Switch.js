@@ -1,10 +1,10 @@
 /**
- * Provides a Sandstone-themed pill-shaped toggle switch component.
+ * Provides a Limestone-themed pill-shaped toggle switch component.
  *
  * @example
  * <Switch />
  *
- * @module sandstone/Switch
+ * @module limestone/Switch
  * @exports Switch
  * @exports SwitchBase
  */
@@ -26,15 +26,15 @@ import componentCss from './Switch.module.less';
  * Renders the base level DOM structure of the component.
  *
  * @class SwitchBase
- * @memberof sandstone/Switch
- * @extends sandstone/Icon.Icon
+ * @memberof limestone/Switch
+ * @extends limestone/Icon.Icon
  * @ui
  * @public
  */
 const SwitchBase = kind({
 	name: 'Switch',
 
-	propTypes: /** @lends sandstone/Switch.SwitchBase.prototype */ {
+	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
 		children: PropTypes.string,
 
 		css: PropTypes.object,
@@ -115,7 +115,7 @@ const SwitchBase = kind({
  * Adds interactive functionality to `Switch`.
  *
  * @class SwitchDecorator
- * @memberof sandstone/Switch
+ * @memberof limestone/Switch
  * @mixes ui/Toggleable.Toggleable
  * @mixes spotlight/Spottable.Spottable
  * @hoc
@@ -129,15 +129,15 @@ const SwitchDecorator = compose(
 );
 
 /**
- * A Sandstone-styled component that looks like a toggle switch.
+ * A Limestone-styled component that looks like a toggle switch.
  *
  * `Switch` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
  * directly.
  *
  * @class Switch
- * @memberof sandstone/Switch
- * @extends sandstone/Switch.SwitchBase
- * @mixes sandstone/Switch.SwitchDecorator
+ * @memberof limestone/Switch
+ * @extends limestone/Switch.SwitchBase
+ * @mixes limestone/Switch.SwitchDecorator
  * @ui
  * @public
  */

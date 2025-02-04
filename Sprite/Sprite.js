@@ -15,7 +15,7 @@
  * />
  * ```
  *
- * @module sandstone/Sprite
+ * @module limestone/Sprite
  * @exports Sprite
  */
 
@@ -42,7 +42,7 @@ const createKeyframe = ({dimension, axis, vertical, offset}) => {
  * Renders a Sprite animation.
  *
  * @class Sprite
- * @memberof sandstone/Sprite
+ * @memberof limestone/Sprite
  * @ui
  * @public
  */
@@ -51,7 +51,7 @@ const SpriteBase = kind({
 
 	functional: true,
 
-	propTypes: /** @lends sandstone/Sprite.Sprite.prototype */ {
+	propTypes: /** @lends limestone/Sprite.Sprite.prototype */ {
 		/**
 		 * The amount of animation cells spread across the X (horizontal) axis.
 		 *
@@ -209,12 +209,12 @@ const SpriteBase = kind({
 	computed: {
 		style: ({offsetTop = 0, offsetLeft = 0, rows = 1, columns = 1, height = 120, width = 120, style}) => ({
 			...style,
-			'--sand-sprite-offset-top': scaleToRem(offsetTop),
-			'--sand-sprite-offset-left': scaleToRem(offsetLeft),
-			'--sand-sprite-rows': rows,
-			'--sand-sprite-columns': columns,
-			'--sand-sprite-height': scaleToRem(height),
-			'--sand-sprite-width': scaleToRem(width)
+			'--lime-sprite-offset-top': scaleToRem(offsetTop),
+			'--lime-sprite-offset-left': scaleToRem(offsetLeft),
+			'--lime-sprite-rows': rows,
+			'--lime-sprite-columns': columns,
+			'--lime-sprite-height': scaleToRem(height),
+			'--lime-sprite-width': scaleToRem(width)
 		})
 	},
 

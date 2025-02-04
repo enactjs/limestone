@@ -1,4 +1,4 @@
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import SwitchItem from '@enact/limestone/SwitchItem';
 import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 
 import eventCategory from '../../constants/eventCategory';

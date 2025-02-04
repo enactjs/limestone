@@ -1,5 +1,5 @@
 import kind from '@enact/core/kind';
-import Scroller from '@enact/sandstone/Scroller';
+import Scroller from '@enact/limestone/Scroller';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 

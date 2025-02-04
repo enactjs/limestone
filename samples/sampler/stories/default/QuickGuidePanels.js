@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import {Panel} from '@enact/sandstone/Panels';
-import Popup from '@enact/sandstone/Popup';
-import SwitchItem from '@enact/sandstone/SwitchItem';
-import QuickGuidePanels from '@enact/sandstone/QuickGuidePanels';
+import Button from '@enact/limestone/Button';
+import {Panel} from '@enact/limestone/Panels';
+import Popup from '@enact/limestone/Popup';
+import SwitchItem from '@enact/limestone/SwitchItem';
+import QuickGuidePanels from '@enact/limestone/QuickGuidePanels';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {number, select} from '@enact/storybook-utils/addons/controls';
 
@@ -15,7 +15,7 @@ const propOptions = {
 };
 
 export default {
-	title: 'Sandstone/QuickGuidePanels',
+	title: 'Limestone/QuickGuidePanels',
 	component: 'QuickGuidePanels'
 };
 
@@ -51,7 +51,7 @@ export const _QuickGuidePanels = (args) => {
 				>
 					<QuickGuidePanels.Panel>
 						<div className={css.guide}>
-							This is a guide to Sandstone components.<br />
+							This is a guide to Limestone components.<br />
 							This sample needs to be run with FHD or 4K dimensions.
 						</div>
 						<div className={css.svg}>
@@ -62,7 +62,7 @@ export const _QuickGuidePanels = (args) => {
 					</QuickGuidePanels.Panel>
 					<QuickGuidePanels.Panel>
 						<div className={css.guide}>
-							This is a Sandstone Button component.
+							This is a Limestone Button component.
 						</div>
 						<div className={css.svg}>
 							<svg width="100%" height="100%" fill="rgba(87, 94, 102, 0.3)">
@@ -72,7 +72,7 @@ export const _QuickGuidePanels = (args) => {
 					</QuickGuidePanels.Panel>
 					<QuickGuidePanels.Panel aria-label={'aria test'}>
 						<div className={css.guide}>
-							This is a Sandstone SwitchItem component.
+							This is a Limestone SwitchItem component.
 						</div>
 						<div className={css.svg}>
 							<svg width="100%" height="100%" fill="rgba(87, 94, 102, 0.3)">

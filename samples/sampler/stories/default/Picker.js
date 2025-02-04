@@ -1,4 +1,4 @@
-import {Picker, PickerBase} from '@enact/sandstone/Picker';
+import {Picker, PickerBase} from '@enact/limestone/Picker';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -33,7 +33,7 @@ const airports = [
 Picker.displayName = 'Picker';
 
 export default {
-	title: 'Sandstone/Picker',
+	title: 'Limestone/Picker',
 	component: 'Picker'
 };
 

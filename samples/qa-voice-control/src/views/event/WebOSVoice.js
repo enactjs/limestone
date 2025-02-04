@@ -1,5 +1,5 @@
-import Button from '@enact/sandstone/Button';
-import Heading from '@enact/sandstone/Heading';
+import Button from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
 import {VoiceControlDecorator} from '@enact/webos/speech';
 import {useCallback, useState} from 'react';
 

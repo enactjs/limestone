@@ -1,7 +1,7 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import {Panel, Header, HeaderBase} from '@enact/sandstone/Panels';
-import Steps from '@enact/sandstone/Steps';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import {Panel, Header, HeaderBase} from '@enact/limestone/Panels';
+import Steps from '@enact/limestone/Steps';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -32,7 +32,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Panels.Header',
+	title: 'Limestone/Panels.Header',
 	component: 'Header'
 };
 

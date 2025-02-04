@@ -1,7 +1,7 @@
 /**
- * Provides Sandstone-themed virtual list components and behaviors.
+ * Provides Limestone-themed virtual list components and behaviors.
  *
- * @module sandstone/VirtualList
+ * @module limestone/VirtualList
  * @exports VirtualGridList
  * @exports VirtualList
  */
@@ -50,10 +50,10 @@ const virtualListDefaultProps = {
 };
 
 /**
- * A Sandstone-styled scrollable and spottable virtual list component.
+ * A Limestone-styled scrollable and spottable virtual list component.
  *
  * @class VirtualList
- * @memberof sandstone/VirtualList
+ * @memberof limestone/VirtualList
  * @extends ui/VirtualList.VirtualListBasic
  * @ui
  * @public
@@ -125,7 +125,7 @@ let VirtualList = (props) => {
 
 VirtualList.displayName = 'VirtualList';
 
-VirtualList.propTypes = /** @lends sandstone/VirtualList.VirtualList.prototype */ {
+VirtualList.propTypes = /** @lends limestone/VirtualList.VirtualList.prototype */ {
 	/**
 	 * Size of an item for the VirtualList; valid value is a number generally.
 	 * For different item size, value is an object that has `minSize`
@@ -264,7 +264,7 @@ VirtualList.propTypes = /** @lends sandstone/VirtualList.VirtualList.prototype *
 	/**
 	 * Unique identifier for the component.
 	 *
-	 * When defined and when the `VirtualList` is within a {@link sandstone/Panels.Panel|Panel},
+	 * When defined and when the `VirtualList` is within a {@link limestone/Panels.Panel|Panel},
 	 * the `VirtualList` will store its scroll position and restore that position when returning to
 	 * the `Panel`.
 	 *
@@ -459,7 +459,7 @@ VirtualList.propTypes = /** @lends sandstone/VirtualList.VirtualList.prototype *
 	 *
 	 * It is a required prop to restore focus after remounting `VirtualList`.
 	 *
-	 * For example, with this prop specified, when a `VirtualList` is used in a {@link sandstone/Panels.Panel|Panel},
+	 * For example, with this prop specified, when a `VirtualList` is used in a {@link limestone/Panels.Panel|Panel},
 	 * the `Spotlight` will store the last focus information based on `SpotlightId` while navigating to another Panel.
 	 * And the `VirtualList` will restore the focus when it remounts while the navigation returns to the `Panel`.
 	 *
@@ -554,10 +554,10 @@ const virtualGridListDefaultProps = {
 };
 
 /**
- * A Sandstone-styled scrollable and spottable virtual grid list component.
+ * A Limestone-styled scrollable and spottable virtual grid list component.
  *
  * @class VirtualGridList
- * @memberof sandstone/VirtualList
+ * @memberof limestone/VirtualList
  * @extends ui/VirtualList.VirtualListBasic
  * @ui
  * @public
@@ -613,7 +613,7 @@ let VirtualGridList = (props) => {
 
 VirtualGridList.displayName = 'VirtualGridList';
 
-VirtualGridList.propTypes = /** @lends sandstone/VirtualList.VirtualGridList.prototype */ {
+VirtualGridList.propTypes = /** @lends limestone/VirtualList.VirtualGridList.prototype */ {
 	/**
 	 * Size of an item for the VirtualGridList; valid value is an object that has `minWidth`
 	 * and `minHeight` as properties.
@@ -754,7 +754,7 @@ VirtualGridList.propTypes = /** @lends sandstone/VirtualList.VirtualGridList.pro
 	/**
 	 * Unique identifier for the component.
 	 *
-	 * When defined and when the `VirtualGridList` is within a {@link sandstone/Panels.Panel|Panel},
+	 * When defined and when the `VirtualGridList` is within a {@link limestone/Panels.Panel|Panel},
 	 * the `VirtualGridList` will store its scroll position and restore that position when returning to
 	 * the `Panel`.
 	 *
@@ -951,7 +951,7 @@ VirtualGridList.propTypes = /** @lends sandstone/VirtualList.VirtualGridList.pro
 	 *
 	 * It is a required prop to restore focus after remounting `VirtualGridList`.
 	 *
-	 * For example, with this prop specified, when a `VirtualGridList` is used in a {@link sandstone/Panels.Panel|Panel},
+	 * For example, with this prop specified, when a `VirtualGridList` is used in a {@link limestone/Panels.Panel|Panel},
 	 * the `Spotlight` will store the last focus information based on `SpotlightId` while navigating to another Panel.
 	 * And the `VirtualGridList` will restore the focus when it remounts while the navigation returns to the `Panel`.
 	 *

@@ -1,4 +1,4 @@
-import ProgressBar, {ProgressBarTooltip} from '@enact/sandstone/ProgressBar';
+import ProgressBar, {ProgressBarTooltip} from '@enact/limestone/ProgressBar';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 
@@ -10,7 +10,7 @@ ProgressBar.displayName = 'ProgressBar';
 ProgressBarTooltip.displayName = 'ProgressBarTooltip';
 
 export default {
-	title: 'Sandstone/ProgressBar',
+	title: 'Limestone/ProgressBar',
 	component: 'ProgressBar'
 };
 

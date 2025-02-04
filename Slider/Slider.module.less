@@ -5,14 +5,14 @@
 @import "../styles/skin.less";
 
 .slider {
-	@knob-transform-resting: @sand-translate-center scale(@sand-slider-knob-resting-state-scale);
-	@knob-transform-active: @sand-translate-center scale(1);
+	@knob-transform-resting: @lime-translate-center scale(@lime-slider-knob-resting-state-scale);
+	@knob-transform-active: @lime-translate-center scale(1);
 
 	position: relative;
-	margin: 0 @sand-spotlight-outset;
+	margin: 0 @lime-spotlight-outset;
 	// Set both the V and H sizes here, so they can be easily overridden, both internally below and by component consumers.
-	height: @sand-slider-bar-height;
-	width: @sand-slider-bar-height;
+	height: @lime-slider-bar-height;
+	width: @lime-slider-bar-height;
 	box-sizing: content-box;
 	direction: ltr;
 	touch-action: none;
@@ -23,13 +23,13 @@
 		width: 100%;
 
 		.bar {
-			border-radius: @sand-progressbar-bar-border-radius;
+			border-radius: @lime-progressbar-bar-border-radius;
 			overflow: hidden;
 		}
 	}
 
 	.knob {
-		--sand-tooltip-offset: @sand-slider-tooltip-offset;
+		--lime-tooltip-offset: @lime-slider-tooltip-offset;
 
 		position: absolute;
 		will-change: transform;
@@ -37,11 +37,11 @@
 		&::before {
 			content: "";
 			position: absolute;
-			height: @sand-slider-knob-height;
-			width: @sand-slider-knob-width;
+			height: @lime-slider-knob-height;
+			width: @lime-slider-knob-width;
 			transform: @knob-transform-resting;
-			border-radius: (@sand-slider-knob-height / 2);
-			border: @sand-button-border-width solid transparent;
+			border-radius: (@lime-slider-knob-height / 2);
+			border: @lime-button-border-width solid transparent;
 			box-sizing: border-box;
 			will-change: transform;
 			transition: transform ease-out 100ms;
@@ -57,13 +57,13 @@
 			&::after {
 				content: "";
 				position: absolute;
-				transform: @sand-translate-center;
+				transform: @lime-translate-center;
 			}
 
 			&.horizontal {
 				&::after {
-					width: @sand-progressbar-anchor-width;
-					height: @sand-progressbar-anchor-height;
+					width: @lime-progressbar-anchor-width;
+					height: @lime-progressbar-anchor-height;
 					top: 50%;
 					left: ~"calc(var(--ui-progressbar-proportion-anchor) * 100%)";
 				}
@@ -71,8 +71,8 @@
 
 			&.vertical {
 				&::after {
-					width: @sand-progressbar-anchor-height;
-					height: @sand-progressbar-anchor-width;
+					width: @lime-progressbar-anchor-height;
+					height: @lime-progressbar-anchor-width;
 					bottom: ~"calc(var(--ui-progressbar-proportion-anchor) * 100%)";
 					left: 50%;
 					transform: translate(-50%, 50%);
@@ -85,17 +85,17 @@
 		touch-action: auto;
 	});
 
-	.sand-custom-text({
+	.lime-custom-text({
 		.knob::before {
-			height: @sand-slider-knob-height-large;
-			width: @sand-slider-knob-width-large;
-			border-radius: (@sand-slider-knob-height-large / 2);
+			height: @lime-slider-knob-height-large;
+			width: @lime-slider-knob-width-large;
+			border-radius: (@lime-slider-knob-height-large / 2);
 		}
 	});
 
 	&.horizontal {
-		@h-gap: (@sand-slider-knob-width / 2);
-		@v-gap: @sand-slider-knob-height - @sand-slider-bar-height;
+		@h-gap: (@lime-slider-knob-width / 2);
+		@v-gap: @lime-slider-knob-height - @lime-slider-bar-height;
 		width: auto;
 		padding: @v-gap @h-gap;
 
@@ -108,15 +108,15 @@
 			left: ~"calc(var(--ui-slider-proportion-end-knob) * 100%)";
 		}
 
-		.sand-custom-text({
-			@h-gap-large: (@sand-slider-knob-width-large / 2);
-			padding: ((@sand-slider-knob-height-large - @sand-slider-bar-height) / 2) @h-gap-large;
+		.lime-custom-text({
+			@h-gap-large: (@lime-slider-knob-width-large / 2);
+			padding: ((@lime-slider-knob-height-large - @lime-slider-bar-height) / 2) @h-gap-large;
 		});
 	}
 
 	&.vertical {
-		@h-gap: (@sand-slider-knob-height - @sand-slider-bar-height);
-		@v-gap: (@sand-slider-knob-width / 2);
+		@h-gap: (@lime-slider-knob-height - @lime-slider-bar-height);
+		@v-gap: (@lime-slider-knob-width / 2);
 		padding: @v-gap @h-gap;
 		min-height: 240px;
 		display: inline-block;
@@ -132,64 +132,64 @@
 			top: auto;
 		}
 
-		.sand-custom-text({
-			@v-gap-large: (@sand-slider-knob-width / 2);
-			padding: @v-gap-large ((@sand-slider-knob-height-large - @sand-slider-bar-height) / 2);
+		.lime-custom-text({
+			@v-gap-large: (@lime-slider-knob-width / 2);
+			padding: @v-gap-large ((@lime-slider-knob-height-large - @lime-slider-bar-height) / 2);
 		});
 	}
 
 	.applySkins({
 		.bar {
-			background-color: @sand-slider-bar-bg-color;
+			background-color: @lime-slider-bar-bg-color;
 		}
 
 		.fill {
-			background-color: @sand-slider-fill-bg-color;
+			background-color: @lime-slider-fill-bg-color;
 		}
 
 		.load {
-			background-color: @sand-slider-load-bg-color;
+			background-color: @lime-slider-load-bg-color;
 		}
 
 		.knob::before {
-			background-color: @sand-slider-knob-bg-color;
-			border-color: @sand-slider-knob-border-color;
+			background-color: @lime-slider-knob-bg-color;
+			border-color: @lime-slider-knob-border-color;
 		}
 
 		.focus({
 			background-color: transparent;
 
 			.bar {
-				background-color: @sand-slider-focus-bar-bg-color;
+				background-color: @lime-slider-focus-bar-bg-color;
 			}
 
 			.fill {
-				background-color: @sand-slider-focus-fill-bg-color;
+				background-color: @lime-slider-focus-fill-bg-color;
 			}
 
 			.load {
-				background-color: @sand-slider-focus-load-bg-color;
+				background-color: @lime-slider-focus-load-bg-color;
 			}
 
 			.knob::before {
-				background-color: @sand-slider-focus-knob-bg-color;
-				border-color: @sand-slider-focus-knob-border-color;
-				box-shadow: @sand-slider-focus-knob-shadow;
+				background-color: @lime-slider-focus-knob-bg-color;
+				border-color: @lime-slider-focus-knob-border-color;
+				box-shadow: @lime-slider-focus-knob-shadow;
 				transform: @knob-transform-resting;
 			}
 
 			&.active,
 			&.pressed {
 				.bar {
-					background-color: @sand-slider-active-bar-bg-color;
+					background-color: @lime-slider-active-bar-bg-color;
 				}
 
 				.fill {
-					background-color: @sand-slider-active-fill-bg-color;
+					background-color: @lime-slider-active-fill-bg-color;
 				}
 
 				.load {
-					background-color: @sand-slider-active-load-bg-color;
+					background-color: @lime-slider-active-load-bg-color;
 				}
 
 				.knob::before {
@@ -199,12 +199,12 @@
 
 			.disabled({
 				.bar {
-					opacity: @sand-slider-disabled-bar-opacity;
+					opacity: @lime-slider-disabled-bar-opacity;
 				}
 
 				.knob::before {
-					background-color: @sand-slider-disabled-focus-knob-bg-color;
-					border-color: @sand-slider-focus-knob-border-color;
+					background-color: @lime-slider-disabled-focus-knob-bg-color;
+					border-color: @lime-slider-focus-knob-border-color;
 					transform: @knob-transform-resting;
 				}
 			});
@@ -212,21 +212,21 @@
 
 		:global(.spotlight-input-touch) &.pressed {
 			.bar {
-				background-color: @sand-slider-active-bar-bg-color;
+				background-color: @lime-slider-active-bar-bg-color;
 			}
 
 			.fill {
-				background-color: @sand-slider-active-fill-bg-color;
+				background-color: @lime-slider-active-fill-bg-color;
 			}
 
 			.load {
-				background-color: @sand-slider-active-load-bg-color;
+				background-color: @lime-slider-active-load-bg-color;
 			}
 
 			.knob::before {
-				background-color: @sand-slider-focus-knob-bg-color;
-				border-color: @sand-slider-focus-knob-border-color;
-				box-shadow: @sand-slider-focus-knob-shadow;
+				background-color: @lime-slider-focus-knob-bg-color;
+				border-color: @lime-slider-focus-knob-border-color;
+				box-shadow: @lime-slider-focus-knob-shadow;
 				transform: @knob-transform-active;
 			}
 		}
@@ -257,18 +257,18 @@
 			opacity: 1;
 
 			.bar {
-				opacity: @sand-slider-disabled-bar-opacity;
+				opacity: @lime-slider-disabled-bar-opacity;
 			}
 
 			.knob::before {
-				background-color: @sand-slider-disabled-knob-bg-color;
-				border-color: @sand-slider-knob-border-color;
+				background-color: @lime-slider-disabled-knob-bg-color;
+				border-color: @lime-slider-knob-border-color;
 			}
 
 			&.showAnchor {
 				.progressBar {
 					&::after {
-						opacity: @sand-slider-disabled-bar-opacity;
+						opacity: @lime-slider-disabled-bar-opacity;
 					}
 				}
 			}
@@ -293,7 +293,7 @@
 		&.showAnchor {
 			.progressBar {
 				&::after {
-					background-color: @sand-progressbar-bar-bg-color;
+					background-color: @lime-progressbar-bar-bg-color;
 				}
 			}
 		}
@@ -304,11 +304,11 @@
 	// Offset tooltip origin because `.knob` centered tooltip within the progressbar (when tooltip original origin is at the edge of `.progressbar`).
 	&.horizontal {
 		&.above {
-			transform: translateY(@sand-slider-tooltip-above-offset);
+			transform: translateY(@lime-slider-tooltip-above-offset);
 		}
 
 		&.below {
-			transform: translateY(@sand-slider-tooltip-below-offset);
+			transform: translateY(@lime-slider-tooltip-below-offset);
 		}
 	}
 
@@ -316,13 +316,13 @@
 		&.left,
 		&.before,
 		:global(.enact-locale-right-to-left) &.after {
-			transform: translateX(@sand-slider-tooltip-before-offset);
+			transform: translateX(@lime-slider-tooltip-before-offset);
 		}
 
 		&.right,
 		&.after,
 		:global(.enact-locale-right-to-left) &.before {
-			transform: translateX(@sand-slider-tooltip-after-offset);
+			transform: translateX(@lime-slider-tooltip-after-offset);
 		}
 	}
 }

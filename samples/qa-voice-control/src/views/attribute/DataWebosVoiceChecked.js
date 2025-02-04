@@ -1,4 +1,4 @@
-import Heading from '@enact/sandstone/Heading';
+import Heading from '@enact/limestone/Heading';
 import {useCallback, useState} from 'react';
 
 import CommonView from '../../components/CommonView';

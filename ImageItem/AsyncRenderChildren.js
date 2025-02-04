@@ -11,7 +11,7 @@ const delayToRenderChildren = 600;
  * When `ImageItem` used in other components, it will render immediately.
  *
  * @class AsyncRenderChildren
- * @memberof sandstone/ImageItem
+ * @memberof limestone/ImageItem
  * @ui
  * @private
  */
@@ -39,7 +39,7 @@ function AsyncRenderChildren ({children, fallback = '', index}) {
 	return async ? fallback : children;
 }
 
-AsyncRenderChildren.propTypes = /** @lends sandstone/ImageItem.AsyncRenderChildren.prototype */ {
+AsyncRenderChildren.propTypes = /** @lends limestone/ImageItem.AsyncRenderChildren.prototype */ {
 	/**
 	 * The fallback element that shows before `children` render.
 	 *
@@ -49,7 +49,7 @@ AsyncRenderChildren.propTypes = /** @lends sandstone/ImageItem.AsyncRenderChildr
 	fallback: PropTypes.any,
 
 	/**
-	 * `data-index` of {@link sandstone/ImageItem|ImageItem}.
+	 * `data-index` of {@link limestone/ImageItem|ImageItem}.
 	 * Renders `children` asynchronously when this value changed.
 	 *
 	 * @type {Number}

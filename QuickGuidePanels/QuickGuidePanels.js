@@ -32,14 +32,14 @@ import css from './QuickGuidePanels.module.less';
  *	</QuickGuidePanels>
  *
  * @class QuickGuidePanelsBase
- * @memberof sandstone/QuickGuidePanels
+ * @memberof limestone/QuickGuidePanels
  * @ui
  * @public
  */
 const QuickGuidePanelsBase = kind({
 	name: 'QuickGuidePanels',
 
-	propTypes: /** @lends sandstone/QuickGuidePanels.QuickGuidePanelsBase.prototype */ {
+	propTypes: /** @lends limestone/QuickGuidePanels.QuickGuidePanelsBase.prototype */ {
 		/**
 		 * The aria-label for the Panel.
 		 *
@@ -425,11 +425,11 @@ const QuickGuidePanelsDecorator = compose(
 
 /**
  * A QuickGuidePanels that can step through different panels.
- * Expects {@link sandstone/QuickGuidePanels.Panel|Panel} as children.
+ * Expects {@link limestone/QuickGuidePanels.Panel|Panel} as children.
  *
  * @class QuickGuidePanels
- * @memberof sandstone/QuickGuidePanels
- * @extends sandstone/QuickGuidePanels.QuickGuidePanelsBase
+ * @memberof limestone/QuickGuidePanels
+ * @extends limestone/QuickGuidePanels.QuickGuidePanelsBase
  * @mixes ui/Changeable.Changeable
  * @ui
  * @public
@@ -443,7 +443,7 @@ const QuickGuidePanels = QuickGuidePanelsDecorator(QuickGuidePanelsBase);
  * not called, the index of the panel will be decremented unless `noPrevButton` is set.
  *
  * @name onBack
- * @memberof sandstone/QuickGuidePanels.QuickGuidePanels.prototype
+ * @memberof limestone/QuickGuidePanels.QuickGuidePanels.prototype
  * @type {Function}
  */
 

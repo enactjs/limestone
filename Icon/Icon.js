@@ -1,10 +1,10 @@
 /**
- * Provides Sandstone styled icon components and behaviors.
+ * Provides Limestone styled icon components and behaviors.
  *
  * @example
  * <Icon>plus</Icon>
  *
- * @module sandstone/Icon
+ * @module limestone/Icon
  * @exports Icon
  * @exports IconBase
  * @exports IconDecorator
@@ -26,10 +26,10 @@ import iconList from './IconList.js';
 import componentCss from './Icon.module.less';
 
 /**
- * Renders a sandstone-styled icon without any behavior.
+ * Renders a limestone-styled icon without any behavior.
  *
  * @class IconBase
- * @memberof sandstone/Icon
+ * @memberof limestone/Icon
  * @extends ui/Icon.Icon
  * @ui
  * @public
@@ -37,7 +37,7 @@ import componentCss from './Icon.module.less';
 const IconBase = kind({
 	name: 'Icon',
 
-	propTypes: /** @lends sandstone/Icon.IconBase.prototype */ {
+	propTypes: /** @lends limestone/Icon.IconBase.prototype */ {
 		/**
 		 * The icon content.
 		 *
@@ -139,7 +139,7 @@ const IconBase = kind({
 // Let's find a way to import this list directly, and bonus feature, render our icons in the docs
 // next to their names.
 /**
- * An object whose keys can be used as the child of an {@link sandstone/Icon.Icon|Icon} component.
+ * An object whose keys can be used as the child of an {@link limestone/Icon.Icon|Icon} component.
  *
  * List of Icons:
  * ```
@@ -399,18 +399,18 @@ const IconBase = kind({
  * ```
  *
  * @name iconList
- * @memberof sandstone/Icon
+ * @memberof limestone/Icon
  * @constant
  * @type {Object}
  * @public
  */
 
 /**
- * Sandstone-specific behaviors to apply to {@link sandstone/Icon.IconBase|IconBase}.
+ * Limestone-specific behaviors to apply to {@link limestone/Icon.IconBase|IconBase}.
  *
  * @hoc
- * @memberof sandstone/Icon
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/Icon
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const IconDecorator = compose(
@@ -420,12 +420,12 @@ const IconDecorator = compose(
 );
 
 /**
- * A Sandstone-styled icon.
+ * A Limestone-styled icon.
  *
  * @class Icon
- * @memberof sandstone/Icon
- * @extends sandstone/Icon.IconBase
- * @mixes sandstone/Icon.IconDecorator
+ * @memberof limestone/Icon
+ * @extends limestone/Icon.IconBase
+ * @mixes limestone/Icon.IconDecorator
  * @ui
  * @public
  */

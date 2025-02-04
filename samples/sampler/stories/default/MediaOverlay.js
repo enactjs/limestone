@@ -1,4 +1,4 @@
-import MediaOverlay, {MediaOverlayBase} from '@enact/sandstone/MediaOverlay';
+import MediaOverlay, {MediaOverlayBase} from '@enact/limestone/MediaOverlay';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, range, select, text} from '@enact/storybook-utils/addons/controls';
 
@@ -46,7 +46,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/MediaOverlay',
+	title: 'Limestone/MediaOverlay',
 	component: 'MediaOverlay'
 };
 

@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Button from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import {Header} from '@enact/sandstone/Panels';
-import {InputField as Input} from '@enact/sandstone/Input';
+import Button from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import {Header} from '@enact/limestone/Panels';
+import {InputField as Input} from '@enact/limestone/Input';
 import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';

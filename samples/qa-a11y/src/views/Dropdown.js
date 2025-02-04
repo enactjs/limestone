@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Dropdown from '@enact/sandstone/Dropdown';
+import Dropdown from '@enact/limestone/Dropdown';
 import {useState} from 'react';
 
 import Section from '../components/Section';

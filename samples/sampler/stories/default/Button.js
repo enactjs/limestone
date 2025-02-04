@@ -1,4 +1,4 @@
-import Button, {ButtonBase} from '@enact/sandstone/Button';
+import Button, {ButtonBase} from '@enact/limestone/Button';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -42,7 +42,7 @@ const threeWayBoolean = (value) => {
 };
 
 export default {
-	title: 'Sandstone/Button',
+	title: 'Limestone/Button',
 	component: 'Button'
 };
 

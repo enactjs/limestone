@@ -96,11 +96,11 @@ This document describes VirtualList, VirtualGridList, and Scroller.
 
 ### Items for VirtualGridList
 
-*   `ImageItem` components can be used as items of `VirtualGridList`. They have Sandstone styling applied and have a placeholder image as a background.
+*   `ImageItem` components can be used as items of `VirtualGridList`. They have Limestone styling applied and have a placeholder image as a background.
 
 *   `caption` and `subCaption` are supported.
 
-*   For showing Sandstone's selection overlay, set `selectionOverlayShowing` to `true`. (default is `false`)
+*   For showing Limestone's selection overlay, set `selectionOverlayShowing` to `true`. (default is `false`)
 
 *   `selected` prop shows item's status of selection.
 

@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import {FlexiblePopupPanels, Header, Panel} from '@enact/sandstone/FlexiblePopupPanels';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import {FlexiblePopupPanels, Header, Panel} from '@enact/limestone/FlexiblePopupPanels';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
+import Slider from '@enact/limestone/Slider';
 import ri from '@enact/ui/resolution';
 
 import Section from '../components/Section';

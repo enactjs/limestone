@@ -1,10 +1,10 @@
 /**
- * Sandstone styled button components and behaviors.
+ * Limestone styled button components and behaviors.
  *
  * @example
  * <Button>Hello Enact!</Button>
  *
- * @module sandstone/Button
+ * @module limestone/Button
  * @exports Button
  * @exports ButtonBase
  * @exports ButtonDecorator
@@ -32,10 +32,10 @@ import componentCss from './Button.module.less';
  * A button component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/Button.Button|Button}.
+ * is within {@link limestone/Button.Button|Button}.
  *
  * @class ButtonBase
- * @memberof sandstone/Button
+ * @memberof limestone/Button
  * @extends ui/Button.ButtonBase
  * @ui
  * @public
@@ -43,7 +43,7 @@ import componentCss from './Button.module.less';
 const ButtonBase = kind({
 	name: 'Button',
 
-	propTypes: /** @lends sandstone/Button.ButtonBase.prototype */ {
+	propTypes: /** @lends limestone/Button.ButtonBase.prototype */ {
 		/**
 		 * The background opacity of this button.
 		 *
@@ -64,11 +64,11 @@ const ButtonBase = kind({
 		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
 		 * defined.
 		 *
-		 * Use {@link sandstone/Button.ButtonBase.collapsed|collapsed} to toggle the collapsed state.
+		 * Use {@link limestone/Button.ButtonBase.collapsed|collapsed} to toggle the collapsed state.
 		 *
 		 * @type {Boolean}
 		 * @default false
-		 * @see {@link sandstone/Button.ButtonBase.collapsed}
+		 * @see {@link limestone/Button.ButtonBase.collapsed}
 		 * @private
 		 */
 		collapsable: PropTypes.bool,
@@ -76,12 +76,12 @@ const ButtonBase = kind({
 		/**
 		 * Toggles the collapsed state of this button, down to just its icon.
 		 *
-		 * This requires that {@link sandstone/Button.ButtonBase.collapsable|collapsable} is enabled
+		 * This requires that {@link limestone/Button.ButtonBase.collapsable|collapsable} is enabled
 		 * and both the text and {@link ui/Button.ButtonBase.icon|icon} are defined.
 		 *
 		 * @type {Boolean}
 		 * @default false
-		 * @see {@link sandstone/Button.ButtonBase.collapsable}
+		 * @see {@link limestone/Button.ButtonBase.collapsable}
 		 * @private
 		 */
 		collapsed: PropTypes.bool,
@@ -128,7 +128,7 @@ const ButtonBase = kind({
 		focusEffect: PropTypes.oneOf(['expand', 'static']),
 
 		/**
-		 * The component used to render the {@link sandstone/Button.ButtonBase.icon|icon}.
+		 * The component used to render the {@link limestone/Button.ButtonBase.icon|icon}.
 		 *
 		 * This component will receive the `icon` class to customize its styling.
 		 *
@@ -254,7 +254,7 @@ const ButtonBase = kind({
  * A higher-order component that determines if it is a button that only displays an icon.
  *
  * @class IconButtonDecorator
- * @memberof sandstone/Button
+ * @memberof limestone/Button
  * @hoc
  * @private
  */
@@ -275,15 +275,15 @@ const IconButtonDecorator = hoc((config, Wrapped) => {
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/Button.ButtonBase|Button} components.
+ * Applies Limestone specific behaviors to {@link limestone/Button.ButtonBase|Button} components.
  *
  * @hoc
- * @memberof sandstone/Button
- * @mixes sandstone/TooltipDecorator.TooltipDecorator
- * @mixes sandstone/Marquee.MarqueeDecorator
+ * @memberof limestone/Button
+ * @mixes limestone/TooltipDecorator.TooltipDecorator
+ * @mixes limestone/Marquee.MarqueeDecorator
  * @mixes ui/Button.ButtonDecorator
  * @mixes spotlight/Spottable.Spottable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ButtonDecorator = compose(
@@ -297,7 +297,7 @@ const ButtonDecorator = compose(
 );
 
 /**
- * A button component, ready to use in Sandstone applications.
+ * A button component, ready to use in Limestone applications.
  *
  * Usage:
  * ```
@@ -311,9 +311,9 @@ const ButtonDecorator = compose(
  * ```
  *
  * @class Button
- * @memberof sandstone/Button
- * @extends sandstone/Button.ButtonBase
- * @mixes sandstone/Button.ButtonDecorator
+ * @memberof limestone/Button
+ * @extends limestone/Button.ButtonBase
+ * @mixes limestone/Button.ButtonDecorator
  * @ui
  * @public
  */

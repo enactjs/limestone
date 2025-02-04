@@ -12,7 +12,7 @@
 	position: relative;
 	flex-grow: 1;
 	opacity: 1;
-	.margin-start-end(0, @sand-spotlight-outset);
+	.margin-start-end(0, @lime-spotlight-outset);
 
 	&.hidden {
 		transition: opacity 1000ms ease-in-out;
@@ -24,8 +24,8 @@
 		position: absolute;
 		bottom: -10px;
 		width: 100%;
-		.sand-text-base(@sand-video-player-title-size);
-		line-height: @sand-heading-title-line-height;
+		.lime-text-base(@lime-video-player-title-size);
+		line-height: @lime-heading-title-line-height;
 		transition: @badges-present-transition;
 		.font-kerning;
 
@@ -58,8 +58,8 @@
 		}
 
 		.badgeTextIcon {
-			font-family: @sand-font-family-bold;
-			font-size: @sand-video-player-badge-text-size;
+			font-family: @lime-font-family-bold;
+			font-size: @lime-video-player-badge-text-size;
 			text-align: center;
 			white-space: nowrap;
 			display: inline-block;
@@ -87,7 +87,7 @@
 	}
 	.applySkins({
 		.titleFrame {
-			color: @sand-video-player-title-color;
+			color: @lime-video-player-title-color;
 		}
 	})
 }

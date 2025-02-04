@@ -8,7 +8,7 @@ const SpotlightPlaceholder = Spottable('div');
  * ScrollbarPlaceholder component.
  *
  * @class ScrollbarPlaceholder
- * @memberof sandstone/useScroll
+ * @memberof limestone/useScroll
  * @ui
  * @private
  */

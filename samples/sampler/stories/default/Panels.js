@@ -1,13 +1,13 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import Icon from '@enact/sandstone/Icon';
-import {Image} from '@enact/sandstone/Image';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Item from '@enact/sandstone/Item';
-import {Header, Panels, Panel} from '@enact/sandstone/Panels';
-import {Scroller} from '@enact/sandstone/Scroller';
-import {TabLayout} from '@enact/sandstone/TabLayout';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import Icon from '@enact/limestone/Icon';
+import {Image} from '@enact/limestone/Image';
+import ImageItem from '@enact/limestone/ImageItem';
+import Item from '@enact/limestone/Item';
+import {Header, Panels, Panel} from '@enact/limestone/Panels';
+import {Scroller} from '@enact/limestone/Scroller';
+import {TabLayout} from '@enact/limestone/TabLayout';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -45,7 +45,7 @@ const renderItem = ({index, ...rest}) => {
 Panels.displayName = 'Panels';
 
 export default {
-	title: 'Sandstone/Panels',
+	title: 'Limestone/Panels',
 	component: 'Panels'
 };
 

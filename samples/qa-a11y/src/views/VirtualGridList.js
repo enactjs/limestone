@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-bind */
 
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import ImageItem from '@enact/sandstone/ImageItem';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import ImageItem from '@enact/limestone/ImageItem';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import Layout, {Cell} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 import {useState} from 'react';

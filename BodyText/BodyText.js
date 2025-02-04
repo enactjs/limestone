@@ -1,10 +1,10 @@
 /**
- * Sandstone styled text block components and behaviors.
+ * Limestone styled text block components and behaviors.
  *
  * @example
  * <BodyText centered>Hello Enact!</BodyText>
  *
- * @module sandstone/BodyText
+ * @module limestone/BodyText
  * @exports BodyText
  * @exports BodyTextBase
  * @exports BodyTextDecorator
@@ -28,10 +28,10 @@ const MarqueeBodyText = MarqueeDecorator(UiBodyText);
  * A simple text block component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/BodyText.BodyText|BodyText}.
+ * is within {@link limestone/BodyText.BodyText|BodyText}.
  *
  * @class BodyTextBase
- * @memberof sandstone/BodyText
+ * @memberof limestone/BodyText
  * @extends ui/BodyText.BodyText
  * @ui
  * @public
@@ -39,7 +39,7 @@ const MarqueeBodyText = MarqueeDecorator(UiBodyText);
 const BodyTextBase = kind({
 	name: 'BodyText',
 
-	propTypes: /** @lends sandstone/BodyText.BodyTextBase.prototype */ {
+	propTypes: /** @lends limestone/BodyText.BodyTextBase.prototype */ {
 		/**
 		 * Centers the contents.
 		 *
@@ -66,7 +66,7 @@ const BodyTextBase = kind({
 
 		/**
 		 * Toggles multi-line (`false`) vs single-line (`true`) behavior. `noWrap` mode
-		 * automatically enables {@link sandstone/Marquee} so long text isn't permanently occluded.
+		 * automatically enables {@link limestone/Marquee} so long text isn't permanently occluded.
 		 *
 		 * @type {Boolean}
 		 * @default false
@@ -125,11 +125,11 @@ const BodyTextBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/BodyText.BodyTextBase|BodyText}.
+ * Applies Limestone specific behaviors to {@link limestone/BodyText.BodyTextBase|BodyText}.
  *
  * @hoc
- * @memberof sandstone/BodyText
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/BodyText
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const BodyTextDecorator = compose(
@@ -138,10 +138,10 @@ const BodyTextDecorator = compose(
 );
 
 /**
- * A simple text block component, ready to use in Sandstone applications.
+ * A simple text block component, ready to use in Limestone applications.
  *
  * `BodyText` may be used to display a block of text and is sized and spaced appropriately for a
- * Sandstone application.
+ * Limestone application.
  *
  * Usage:
  * ```
@@ -151,9 +151,9 @@ const BodyTextDecorator = compose(
  * ```
  *
  * @class BodyText
- * @memberof sandstone/BodyText
- * @extends sandstone/BodyText.BodyTextBase
- * @mixes sandstone/BodyText.BodyTextDecorator
+ * @memberof limestone/BodyText
+ * @extends limestone/BodyText.BodyTextBase
+ * @mixes limestone/BodyText.BodyTextDecorator
  * @ui
  * @public
  */

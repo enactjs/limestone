@@ -1,7 +1,7 @@
 /**
  * Panels provides a way to manage different screens of an app.
  *
- * @module sandstone/Panels
+ * @module limestone/Panels
  * @exports Header
  * @exports Panel
  * @exports Panels
@@ -32,20 +32,20 @@ export {
 	 * @hoc
 	 * @name Routable
 	 * @extends ui/Routable.Routable
-	 * @memberof sandstone/Panels
+	 * @memberof limestone/Panels
 	 * @public
 	 */
 	Routable,
 
 	/**
-	 * Used with {@link sandstone/Panels.Routable} to define the `path` segment and the
+	 * Used with {@link limestone/Panels.Routable} to define the `path` segment and the
 	 * `component` to render.
 	 *
 	 * @see {@link ui/Routable.Route}
 	 * @ui
 	 * @name Route
 	 * @extends ui/Routable.Route
-	 * @memberof sandstone/Panels
+	 * @memberof limestone/Panels
 	 * @public
 	 */
 	Route

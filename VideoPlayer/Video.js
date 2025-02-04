@@ -14,14 +14,14 @@ import PropTypes from 'prop-types';
  * Adds support for preloading a video source for `VideoPlayer`.
  *
  * @class VideoBase
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @private
  */
 const VideoBase = class extends Component {
 	static displayName = 'Video';
 
-	static propTypes = /** @lends sandstone/VideoPlayer.Video.prototype */ {
+	static propTypes = /** @lends limestone/VideoPlayer.Video.prototype */ {
 		/**
 		 * Video plays automatically.
 		 *
@@ -59,7 +59,7 @@ const VideoBase = class extends Component {
 		 * * `pause()` - pause video
 		 * * `load()` - load video
 		 *
-		 * The {@link sandstone/VideoPlayer.Video.source|source} property is passed to
+		 * The {@link limestone/VideoPlayer.Video.source|source} property is passed to
 		 * the video component as a child node.
 		 *
 		 * @type {String|Component|Element}
@@ -311,7 +311,7 @@ const VideoDecorator = compose(
  *
  * @class Video
  * @mixes ui/Slottable.Slottable
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @public
  */

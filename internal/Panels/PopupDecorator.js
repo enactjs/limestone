@@ -19,9 +19,9 @@ const popupPropList = ['noAutoDismiss', 'onHide', 'onKeyDown', 'onShow', 'open',
 // TODO: Figure out how to document private sub-module members
 
 /**
- * Default config for {@link sandstone/Panels.PopupDecorator}
+ * Default config for {@link limestone/Panels.PopupDecorator}
  * @hocconfig
- * @memberof sandstone/Panels.PopupDecorator
+ * @memberof limestone/Panels.PopupDecorator
  * @private
  */
 const defaultConfig = {
@@ -30,7 +30,7 @@ const defaultConfig = {
 	 *
 	 * @type {String}
 	 * @default null
-	 * @memberof sandstone/Panels.PopupDecorator.defaultConfig
+	 * @memberof limestone/Panels.PopupDecorator.defaultConfig
 	 */
 	className: null,
 
@@ -39,7 +39,7 @@ const defaultConfig = {
 	 *
 	 * @type {Object}
 	 * @default null
-	 * @memberof sandstone/Panels.PopupDecorator.defaultConfig
+	 * @memberof limestone/Panels.PopupDecorator.defaultConfig
 	 */
 	css: null,
 
@@ -50,7 +50,7 @@ const defaultConfig = {
 	 *
 	 * @type {Boolean}
 	 * @default false
-	 * @memberof sandstone/Panels.PopupDecorator.defaultConfig
+	 * @memberof limestone/Panels.PopupDecorator.defaultConfig
 	 */
 	noAlertRole: false,
 
@@ -68,7 +68,7 @@ const defaultConfig = {
 	 *
 	 * @type {Object}
 	 * @default null
-	 * @memberof sandstone/Panels.PopupDecorator.defaultConfig
+	 * @memberof limestone/Panels.PopupDecorator.defaultConfig
 	 */
 	panelArranger: null
 };
@@ -81,7 +81,7 @@ const defaultConfig = {
  * @type {Function}
  * @hoc
  * @private
- * @memberof sandstone/Panels
+ * @memberof limestone/Panels
  */
 const PopupDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {className: cfgClassName, css, noAlertRole, noOutline, panelArranger, panelType} = config;
@@ -90,7 +90,7 @@ const PopupDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const Decorator = kind({
 		name: 'PopupDecorator',
 
-		propTypes: /** @lends sandstone/Panels.PopupDecorator.prototype */ {
+		propTypes: /** @lends limestone/Panels.PopupDecorator.prototype */ {
 			/**
 			 * An object containing properties to be passed to each child.
 			 *

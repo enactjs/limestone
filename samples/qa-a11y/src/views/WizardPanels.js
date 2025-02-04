@@ -1,9 +1,9 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import Icon from '@enact/sandstone/Icon';
-import Item from '@enact/sandstone/Item';
-import WizardPanels from '@enact/sandstone/WizardPanels';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import Icon from '@enact/limestone/Icon';
+import Item from '@enact/limestone/Item';
+import WizardPanels from '@enact/limestone/WizardPanels';
 import {useCallback, useState} from 'react';
 
 const WizardPanelsView = () => {

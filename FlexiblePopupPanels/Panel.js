@@ -15,12 +15,12 @@ function clamp (val, total) {
 }
 
 /**
- * The standard view container used inside a {@link sandstone/FlexiblePopupPanels.FlexiblePopupPanels|FlexiblePopupPanels} view
+ * The standard view container used inside a {@link limestone/FlexiblePopupPanels.FlexiblePopupPanels|FlexiblePopupPanels} view
  * manager instance.
  *
  * @class Panel
- * @extends sandstone/Panels.Panel
- * @memberof sandstone/FlexiblePopupPanels
+ * @extends limestone/Panels.Panel
+ * @memberof limestone/FlexiblePopupPanels
  * @ui
  * @public
  */
@@ -29,7 +29,7 @@ const PanelBase = kind({
 
 	contextType: PanelsStateContext,
 
-	propTypes: /** @lends sandstone/FlexiblePopupPanels.Panel.prototype */ {
+	propTypes: /** @lends limestone/FlexiblePopupPanels.Panel.prototype */ {
 
 		/**
 		 * The button to use in place of the standard next button.
@@ -38,7 +38,7 @@ const PanelBase = kind({
 		 *
 		 * If `false`, the button will not show. If set to a component, or `true`, the button will
 		 * show. This will override the setting of
-		 * {@link sandstone/FlexiblePopupPanels.FlexiblePopupPanels.nextButtonVisibility|nextButtonVisibility}.
+		 * {@link limestone/FlexiblePopupPanels.FlexiblePopupPanels.nextButtonVisibility|nextButtonVisibility}.
 		 *
 		 * Example:
 		 * ```
@@ -102,7 +102,7 @@ const PanelBase = kind({
 		 *
 		 * If `false`, the button will not show. If set to a component, or `true`, the button will
 		 * show. This will override the setting of
-		 * {@link sandstone/FlexiblePopupPanels.FlexiblePopupPanels.prevButtonVisibility|prevButtonVisibility}.
+		 * {@link limestone/FlexiblePopupPanels.FlexiblePopupPanels.prevButtonVisibility|prevButtonVisibility}.
 		 *
 		 * Example:
 		 * ```

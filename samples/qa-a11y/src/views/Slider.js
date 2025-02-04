@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Button from '@enact/sandstone/Button';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import Slider from '@enact/limestone/Slider';
 import PropTypes from 'prop-types';
 import {useState} from 'react';
 

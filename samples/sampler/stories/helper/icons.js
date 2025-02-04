@@ -3,7 +3,7 @@
 // Grouped into logical sets for easy consumption.
 //
 
-import {icons} from '@enact/sandstone/Icon';
+import {icons} from '@enact/limestone/Icon';
 
 export const decrementIcons = [
 	'backward',
