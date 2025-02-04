@@ -579,18 +579,18 @@ class Popup extends Component {
 	handleDismiss = (ev) => {
 		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, this.props);
 	};
-
+	
 	handlePopupHide = (ev) => {
 		forwardHide(ev, this.props);
-
+		
 		this.setState({
-			floatLayerOpen: false,
-			activator: null
+			floatLayerOpen: false
+		}, () => {
+			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === this.state.containerId) {
+				this.spotActivator(this.state.activator);
+			}
+			this.setState({activator: null});
 		});
-
-		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === this.state.containerId) {
-			this.spotActivator(this.state.activator);
-		}
 	};
 
 	handlePopupShow = (ev) => {
