@@ -39,94 +39,94 @@ const defaultConfig = {
  */
 const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {idProp, updateOnMount} = config;
-	
+
 	// eslint-disable-next-line no-shadow
 	const SharedStateDecorator = (props) => {
 		const context = useContext(SharedState);
 		const data = useRef({});
 		const [, setUpdateOnMountState] = useState(false);
-		
+
 		const isUpdatable = useCallback(() => {
 			const {[idProp]: id, noSharedState} = props;
-			
+
 			return !noSharedState && (id || id === 0);
 		}, [props]);
-		
+
 		const initSharedState = useCallback(() => {
 			return {
 				set: (key, value) => {
 					const {[idProp]: id} = props;
-					
+
 					if (isUpdatable()) {
 						data.current[id] = data.current[id] || {};
 						data.current[id][key] = value;
 					}
 				},
-				
+
 				get: (key) => {
 					const {[idProp]: id} = props;
-					
+
 					return (isUpdatable() && data.current[id]) ? data.current[id][key] : null;
 				},
-				
+
 				delete: (key) => {
 					const {[idProp]: id} = props;
-					
+
 					if (isUpdatable() && data.current[id]) {
 						delete data.current[id][key];
 					}
 				}
 			};
 		}, [isUpdatable, props]);
-		
+
 		const loadFromContext = useCallback(() => {
 			const {[idProp]: id, noSharedState} = props;
-			
+
 			if (!noSharedState && context && context.get) {
 				const contextData = context.get(id);
-				
+
 				if (contextData) {
 					data.current = contextData;
 				} else {
 					context.set(id, data.current);
 				}
-				
+
 				if (updateOnMount) {
 					setUpdateOnMountState(true);
 				}
 			}
 		}, [context, props]);
-		
+
 		const sharedState = useRef(initSharedState());
 		const prevProps = useRef(props);
-		
+
 		useEffect(() => {
 			loadFromContext();
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
-		
+
 		useEffect(() => {
 			if (!prevProps.current.noSharedState && props.noSharedState) {
 				data.current = {};
 			} else if (prevProps.current.noSharedState && !props.noSharedState) {
 				loadFromContext();
 			}
-			
+
 			prevProps.current = props;
 		}, [loadFromContext, props]);
-		
+
 		const {...wrappedComponentProps} = props;
 		delete wrappedComponentProps.noSharedState;
-		
+
 		return (
 			<SharedState.Provider value={sharedState.current}>
 				<Wrapped {...wrappedComponentProps} />
 			</SharedState.Provider>
 		);
 	};
-	
+
 	SharedStateDecorator.displayName = 'SharedStateDecorator';
-	
+
 	SharedStateDecorator.propTypes = {
 		/**
 		 * Prevents the component from setting or restoring any framework shared state.
@@ -137,7 +137,7 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 */
 		noSharedState: PropTypes.bool
 	};
-	
+
 	return SharedStateDecorator;
 });
 
