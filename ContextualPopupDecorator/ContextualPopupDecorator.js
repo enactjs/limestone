@@ -115,6 +115,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const snapshot = useRef(null);
 		const resizeObserver = useRef(null);
 
+		const keyDownRef = useRef(null);
+		const keyUpRef = useRef(null);
+
 		const MARGIN = ri.scale(noArrow ? 0 : 12);
 		const ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width.
 		const ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
@@ -381,7 +384,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					setContainerPosition(localContainerPosition);
 				}
 			}
-		}, [adjustDirection, arrowPosition, componentProps, containerPosition, direction, getArrowPosition, getContainerPosition]);
+		}, [adjustDirection, arrowPosition, calcOverflow, componentProps, containerPosition, direction, getArrowPosition, getContainerPosition]);
 
 		const getContainerNode = useCallback((node) => {
 			containerNode.current = node;
@@ -508,7 +511,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				containerWidth: getContainerNodeWidth()
 			};
 
-			if (!prevProps.current.open && componentProps.open) {
+			if (prevProps.current.open && !componentProps.open) {
 				const current = Spotlight.getCurrent();
 				localSnapshot.shouldSpotActivator = (
 					// isn't set
@@ -516,7 +519,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					// is on the activator, and we want to re-spot it so a11y read out can occur
 					current === activator ||
 					// is within the popup
-					containerNode.current.contains(current)
+					containerNode.current?.contains(current)
 				);
 			}
 
@@ -525,8 +528,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		useEffect(() => {
 			if (componentProps.open) {
-				on('keydown', handleKeyDown);
-				on('keyup', handleKeyUp);
+				on('keydown', keyDownRef.current);
+				on('keyup', keyUpRef.current);
 			}
 
 			if (typeof ResizeObserver === 'function') {
@@ -541,10 +544,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				});
 			}
 
-			snapshot.current = getSnapshotBeforeUpdate();
-		}, [componentProps, handleKeyDown, handleKeyUp, getSnapshotBeforeUpdate]);
+		}, [componentProps, positionContextualPopup]);
 
 		useEffect(() => {
+			snapshot.current = getSnapshotBeforeUpdate();
+
 			if (prevProps.current.direction !== componentProps.direction ||
 				snapshot.current.containerWidth !== getContainerNodeWidth() ||
 				(prevProps.current.open && componentProps.open)) {
@@ -554,29 +558,26 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			if (componentProps.open && !prevProps.current.open) {
-				on('keydown', handleKeyDown);
-				on('keyup', handleKeyUp);
+				on('keydown', keyDownRef.current);
+				on('keyup', keyUpRef.current);
 			} else if (!componentProps.open && prevProps.current.open) {
-				off('keydown', handleKeyDown);
-				off('keyup', handleKeyUp);
+				off('keydown', keyDownRef.current);
+				off('keyup', keyUpRef.current);
 				if (snapshot.current && snapshot.current.shouldSpotActivator) {
 					spotActivator(activator);
 				}
 			}
 
 			prevProps.current = componentProps;
-		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, handleKeyDown, handleKeyUp, positionContextualPopup, spotActivator]);
+		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
 
 		useEffect(() => {
-			// eslint-disable-next-line no-shadow
-			const id = containerId.current;
-
 			return () => {
 				if (componentProps.open) {
-					off('keydown', handleKeyDown);
-					off('keyup', handleKeyUp);
+					off('keydown', keyDownRef.current);
+					off('keyup', keyUpRef.current);
 				}
-				Spotlight.remove(id);
+				Spotlight.remove(containerId.current);
 
 				if (resizeObserver.current) {
 					resizeObserver.current.disconnect();
@@ -588,6 +589,21 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					mutationObserver.current = null;
 				}
 			};
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
+
+		useEffect(() => {
+			if (componentProps.open) {
+				if (handleKeyDown !== keyDownRef.current || handleKeyUp !== keyUpRef.current) {
+					off('keydown', keyDownRef.current);
+					off('keyup', keyUpRef.current);
+					keyDownRef.current = handleKeyDown;
+					keyUpRef.current = handleKeyUp;
+					on('keydown', keyDownRef.current);
+					on('keyup', keyUpRef.current);
+				}
+			}
 		}, [componentProps, handleKeyDown, handleKeyUp]);
 
 		const {'data-webos-voice-exclusive': voiceExclusive, popupComponent: PopupComponent, popupClassName, noAutoDismiss, open, offset, popupProps, skin, spotlightRestrict, ...rest} = componentProps;
