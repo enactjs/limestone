@@ -381,7 +381,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					setContainerPosition(localContainerPosition);
 				}
 			}
-		}, [adjustDirection, arrowPosition, calcOverflow, componentProps, containerPosition, direction, getArrowPosition, getContainerPosition]);
+		}, [adjustDirection, arrowPosition, componentProps, containerPosition, direction, getArrowPosition, getContainerPosition]);
 
 		const getContainerNode = useCallback((node) => {
 			containerNode.current = node;
@@ -516,7 +516,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					// is on the activator, and we want to re-spot it so a11y read out can occur
 					current === activator ||
 					// is within the popup
-					containerNode.current?.contains(current)
+					containerNode.current.contains(current)
 				);
 			}
 
@@ -542,8 +542,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			snapshot.current = getSnapshotBeforeUpdate();
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
+		}, [componentProps, handleKeyDown, handleKeyUp, getSnapshotBeforeUpdate]);
 
 		useEffect(() => {
 			if (prevProps.current.direction !== componentProps.direction ||
@@ -557,7 +556,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			if (componentProps.open && !prevProps.current.open) {
 				on('keydown', handleKeyDown);
 				on('keyup', handleKeyUp);
-				snapshot.current = getSnapshotBeforeUpdate();
 			} else if (!componentProps.open && prevProps.current.open) {
 				off('keydown', handleKeyDown);
 				off('keyup', handleKeyUp);
