@@ -1006,53 +1006,76 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		};
 
-		// getSnapshotBeforeUpdate (prevProps, prevState) {
-		// 	const snapshot = {
-		// 		containerWidth: this.getContainerNodeWidth()
-		// 	};
-		//
-		// 	if (prevProps.open && !this.props.open) {
-		// 		const current = Spotlight.getCurrent();
-		// 		snapshot.shouldSpotActivator = (
-		// 			// isn't set
-		// 			!current ||
-		// 			// is on the activator, and we want to re-spot it so a11y read out can occur
-		// 			current === prevState.activator ||
-		// 			// is within the popup
-		// 			this.containerNode.contains(current)
-		// 		);
-		// 	}
-		//
-		// 	return snapshot;
-		// }
-		//
-		// componentDidUpdate (prevProps, prevState, snapshot) {
-		// 	if (prevProps.direction !== this.props.direction ||
-		// 		snapshot.containerWidth !== this.getContainerNodeWidth() ||
-		// 		(prevProps.open && this.props.open)) {
-		// 		this.adjustedDirection = this.props.direction;
-		// 		// NOTE: `setState` is called and will cause re-render
-		// 		this.positionContextualPopup();
-		// 	}
-		//
-		// 	if (this.props.open && !prevProps.open) {
-		// 		on('keydown', this.handleKeyDown);
-		// 		on('keyup', this.handleKeyUp);
-		// 	} else if (!this.props.open && prevProps.open) {
-		// 		off('keydown', this.handleKeyDown);
-		// 		off('keyup', this.handleKeyUp);
-		// 		if (snapshot && snapshot.shouldSpotActivator) {
-		// 			this.spotActivator(prevState.activator);
-		// 		}
-		// 	}
-		// }
+		const getSnapshotBeforeUpdate = (prevProps, prevState) => {
+			const snapshot = {
+				containerWidth: this.getContainerNodeWidth()
+			};
+
+			if (prevProps.open && !this.props.open) {
+				const current = Spotlight.getCurrent();
+				snapshot.shouldSpotActivator = (
+					// isn't set
+					!current ||
+					// is on the activator, and we want to re-spot it so a11y read out can occur
+					current === prevState.activator ||
+					// is within the popup
+					this.containerNode.contains(current)
+				);
+			}
+
+			return snapshot;
+		}
+
+		const componentDidUpdate = (prevProps, prevState, snapshot) => {
+			if (prevProps.direction !== this.props.direction ||
+				snapshot.containerWidth !== this.getContainerNodeWidth() ||
+				(prevProps.open && this.props.open)) {
+				this.adjustedDirection = this.props.direction;
+				// NOTE: `setState` is called and will cause re-render
+				this.positionContextualPopup();
+			}
+
+			if (this.props.open && !prevProps.open) {
+				on('keydown', this.handleKeyDown);
+				on('keyup', this.handleKeyUp);
+			} else if (!this.props.open && prevProps.open) {
+				off('keydown', this.handleKeyDown);
+				off('keyup', this.handleKeyUp);
+				if (snapshot && snapshot.shouldSpotActivator) {
+					this.spotActivator(prevState.activator);
+				}
+			}
+		}
 
 		useEffect(() => {
-			adjustedDirection.current = direction;
+			if (adjustedDirection.current !== direction) {
+				adjustedDirection.current = direction;
+				// NOTE: `setState` is called and will cause re-render
+				positionContextualPopup();
+			}
 
+			if (open) {
+				on('keydown', handleKeyDown);
+				on('keyup', handleKeyUp);
+			} else if (!open) {
+				off('keydown', handleKeyDown);
+				off('keyup', handleKeyUp);
+				const current = Spotlight.getCurrent();
+				const shouldSpotActivator = (
+					// isn't set
+					!current ||
+					// is on the activator, and we want to re-spot it so a11y read out can occur
+					current === activator ||
+					// is within the popup
+					containerNode.current?.contains(current)
+				);
+				if (shouldSpotActivator) {
+					spotActivator(activator);
+				}
+			}
 			// get snapshot before update
 			// component did update
-		}, [direction]);
+		}, [activator, direction, open]);
 
 		const updateLeaveFor = (activator) => {
 			Spotlight.set(containerId, {
@@ -1347,7 +1370,6 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 
 		if (openProp) rest[openProp] = open;
 
-		console.log(stateDirection)
 		return (
 			<div aria-owns={idFloatLayer} className={css.contextualPopupDecorator}>
 				<FloatingLayer
