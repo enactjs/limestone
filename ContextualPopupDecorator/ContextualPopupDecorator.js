@@ -848,6 +848,7 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 		const adjustedDirection = useRef(direction);
 		const id = generateId();
 		const clientSiblingRef = useRef(null);
+		const snapshot = useRef({}); // new
 
 		// allCaps variables
 		const MARGIN = ri.scale(noArrow ? 0 : 12);
@@ -1006,25 +1007,25 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		};
 
-		const getSnapshotBeforeUpdate = (prevProps, prevState) => {
-			const snapshot = {
-				containerWidth: this.getContainerNodeWidth()
-			};
+		// new function
+		const createSnapshot = () => {
+			const containerWidth = getContainerNodeWidth();
+			let shouldSpotActivator;
 
-			if (prevProps.open && !this.props.open) {
+			if (!open) {
 				const current = Spotlight.getCurrent();
-				snapshot.shouldSpotActivator = (
+				shouldSpotActivator = (
 					// isn't set
 					!current ||
 					// is on the activator, and we want to re-spot it so a11y read out can occur
-					current === prevState.activator ||
+					current === activator ||
 					// is within the popup
-					this.containerNode.contains(current)
+					containerNode.current?.contains(current)
 				);
 			}
 
-			return snapshot;
-		}
+			return {containerWidth, shouldSpotActivator};
+		};
 
 		const componentDidUpdate = (prevProps, prevState, snapshot) => {
 			if (prevProps.direction !== this.props.direction ||
@@ -1048,7 +1049,9 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		useEffect(() => {
-			if (adjustedDirection.current !== direction) {
+			if (adjustedDirection.current !== direction ||
+				snapshot.current.containerWidth !== getContainerNodeWidth() ||
+				(open)) {
 				adjustedDirection.current = direction;
 				// NOTE: `setState` is called and will cause re-render
 				positionContextualPopup();
@@ -1060,22 +1063,14 @@ const Decorator2 = hoc(defaultConfig, (config, Wrapped) => {
 			} else if (!open) {
 				off('keydown', handleKeyDown);
 				off('keyup', handleKeyUp);
-				const current = Spotlight.getCurrent();
-				const shouldSpotActivator = (
-					// isn't set
-					!current ||
-					// is on the activator, and we want to re-spot it so a11y read out can occur
-					current === activator ||
-					// is within the popup
-					containerNode.current?.contains(current)
-				);
-				if (shouldSpotActivator) {
+				if (snapshot.current.shouldSpotActivator) {
 					spotActivator(activator);
 				}
 			}
+			snapshot.current = createSnapshot()
 			// get snapshot before update
 			// component did update
-		}, [activator, direction, open]);
+		}, [activator, createSnapshot, direction, open]);
 
 		const updateLeaveFor = (activator) => {
 			Spotlight.set(containerId, {
