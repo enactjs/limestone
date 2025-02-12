@@ -428,7 +428,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				() => Spotlight.getCurrent() === activator,
 				stop,
 				forwardCustom('onClose')
-			)
+			);
 		}, [activator]);
 
 		const handleOpen = useCallback((ev) => {
@@ -442,7 +442,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const handleClose = useCallback(() => {
 			updateLeaveFor(null);
-			setActivator(null)
+			setActivator(null);
 		}, [updateLeaveFor]);
 
 		const handleDismiss = useCallback(() => {
@@ -572,12 +572,15 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
 
 		useEffect(() => {
+			// eslint-disable-next-line no-shadow
+			const id = containerId.current;
+
 			return () => {
 				if (componentProps.open) {
 					off('keydown', keyDownRef.current);
 					off('keyup', keyUpRef.current);
 				}
-				Spotlight.remove(containerId.current);
+				Spotlight.remove(id);
 
 				if (resizeObserver.current) {
 					resizeObserver.current.disconnect();
