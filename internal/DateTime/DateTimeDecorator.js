@@ -1,7 +1,7 @@
 /**
- * Exports the {@link sandstone/internal/DateTimeDecorator.DateTimeDecorator} higher-order component
+ * Exports the {@link limestone/internal/DateTimeDecorator.DateTimeDecorator} higher-order component
  *
- * @module sandstone/internal/DateTimeDecorator
+ * @module limestone/internal/DateTimeDecorator
  * @private
  */
 
@@ -30,11 +30,11 @@ const toTime = (date) => {
 const isEnter = is('enter');
 
 /**
- * {@link sandstone/internal/DateTimeDecorator.DateTimeDecorator} provides common behavior for
- * {@link sandstone/DatePicker.DatePicker} and {@link sandstone/TimePicker.TimePicker}.
+ * {@link limestone/internal/DateTimeDecorator.DateTimeDecorator} provides common behavior for
+ * {@link limestone/DatePicker.DatePicker} and {@link limestone/TimePicker.TimePicker}.
  *
  * @class DateTimeDecorator
- * @memberof sandstone/internal/DateTimeDecorator
+ * @memberof limestone/internal/DateTimeDecorator
  * @mixes ui/Changeable.Changeable
  * @hoc
  * @private
@@ -199,7 +199,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 	};
 
 	Decorator.displayName = 'DateTimeDecorator';
-	Decorator.propTypes = /** @lends sandstone/internal/DateTimeDecorator.DateTimeDecorator.prototype */ {
+	Decorator.propTypes = /** @lends limestone/internal/DateTimeDecorator.DateTimeDecorator.prototype */ {
 		/**
 		 * The current locale as a
 		 * {@link https://tools.ietf.org/html/rfc5646|BCP 47 language tag}.
