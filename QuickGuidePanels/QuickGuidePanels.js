@@ -275,12 +275,11 @@ const QuickGuidePanelsBase = kind({
 	},
 
 	computed: {
-		stepHintAriaLabel: ({'aria-label': label, current, index}) => {
-			if (label) return label;
-
+		stepHintAriaLabel: ({'aria-label': label, current, index, totalPanels}) => {
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
-			const step = new IString($L('step {num}')).format({num: stepNum}) + ' ';
-			return `${step}`;
+			const step = new IString($L('Page {current} out of {total}')).format({current: stepNum, total: totalPanels}) + ' ';
+
+			return `${step} ${label || ''}`;
 		},
 		closeButton: ({closeButtonAriaLabel, onClose, totalPanels}) => {
 			return (
