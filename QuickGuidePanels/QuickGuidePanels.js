@@ -357,6 +357,7 @@ const QuickGuidePanelsBase = kind({
 		steps,
 		...rest
 	}) => {
+		delete rest['aria-label'];
 		delete rest.closeButtonAriaLabel;
 		delete rest.current;
 		delete rest.nextButton;
