@@ -2,8 +2,8 @@
 
 import classnames from 'classnames';
 import kind from '@enact/core/kind';
-import {Panels, Panel, Header} from '@enact/sandstone/Panels';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import {Panels, Panel, Header} from '@enact/limestone/Panels';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import LS2Request from '@enact/webos/LS2Request';
 import {platform} from '@enact/webos/platform';
 import PropTypes from 'prop-types';

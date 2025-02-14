@@ -1,4 +1,4 @@
-import DatePicker, {DatePickerBase} from '@enact/sandstone/DatePicker';
+import DatePicker, {DatePickerBase} from '@enact/limestone/DatePicker';
 import {mergeComponentMetadata, removeProps} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, text} from '@enact/storybook-utils/addons/controls';
@@ -11,7 +11,7 @@ removeProps(
 );
 
 export default {
-	title: 'Sandstone/DatePicker',
+	title: 'Limestone/DatePicker',
 	component: 'DatePicker'
 };
 

@@ -9,7 +9,7 @@ const defaultConfig = {
  * Wraps a component to be a scroll target when its descendants get focused.
  *
  * @hoc
- * @memberof sandstone/Scroller
+ * @memberof limestone/Scroller
  * @public
  */
 const ContentContainerDecorator = hoc(defaultConfig, (config, Wrapped) => {

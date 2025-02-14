@@ -1,4 +1,4 @@
-import Input, {InputBase} from '@enact/sandstone/Input';
+import Input, {InputBase} from '@enact/limestone/Input';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 
@@ -8,7 +8,7 @@ Input.displayName = 'Input';
 const Config = mergeComponentMetadata('Input', InputBase, Input);
 
 export default {
-	title: 'Sandstone/Input/Text/Overlay',
+	title: 'Limestone/Input/Text/Overlay',
 	component: 'InputField'
 };
 

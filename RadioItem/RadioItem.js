@@ -1,10 +1,10 @@
 /**
- * Provides a Sandstone-themed Item component with an interactive radio toggle icon.
+ * Provides a Limestone-themed Item component with an interactive radio toggle icon.
  *
  * @example
  * <RadioItem>Item</RadioItem>
  *
- * @module sandstone/RadioItem
+ * @module limestone/RadioItem
  * @exports RadioItem
  * @exports RadioItemBase
  */
@@ -27,18 +27,18 @@ const Item = ItemDecorator(ItemBase);
  * An item component with a radio toggle icon.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/RadioItem.RadioItem|RadioItem}.
+ * is within {@link limestone/RadioItem.RadioItem|RadioItem}.
  *
  * @class RadioItemBase
- * @memberof sandstone/RadioItem
- * @extends sandstone/Item.Item
+ * @memberof limestone/RadioItem
+ * @extends limestone/Item.Item
  * @ui
  * @public
  */
 const RadioItemBase = kind({
 	name: 'RadioItem',
 
-	propTypes: /** @lends sandstone/RadioItem.RadioItem.prototype */ {
+	propTypes: /** @lends limestone/RadioItem.RadioItem.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
@@ -57,7 +57,7 @@ const RadioItemBase = kind({
 		 *
 		 * @type {String}
 		 * @default 'circle'
-		 * @see {@link sandstone/Icon.Icon}
+		 * @see {@link limestone/Icon.Icon}
 		 */
 		icon: PropTypes.string,
 
@@ -109,10 +109,10 @@ const RadioItemBase = kind({
 });
 
 /**
- * Sandstone specific behaviors to apply to {@link sandstone/RadioItem.RadioItemBase|RadioItem}.
+ * Limestone specific behaviors to apply to {@link limestone/RadioItem.RadioItemBase|RadioItem}.
  *
  * @hoc
- * @memberof sandstone/RadioItem
+ * @memberof limestone/RadioItem
  * @mixes ui/Toggleable.Toggleable
  * @public
  */
@@ -125,9 +125,9 @@ const RadioItemDecorator = compose(
  * Renders an `Item` with a radio-dot component. Useful to show a selected state on an Item.
  *
  * @class RadioItem
- * @memberof sandstone/RadioItem
- * @extends sandstone/RadioItem.RadioItemBase
- * @mixes sandstone/RadioItem.RadioItemDecorator
+ * @memberof limestone/RadioItem
+ * @extends limestone/RadioItem.RadioItemBase
+ * @mixes limestone/RadioItem.RadioItemDecorator
  * @ui
  * @public
  */

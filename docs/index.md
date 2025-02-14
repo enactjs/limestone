@@ -1,7 +1,7 @@
 ---
-title: Sandstone UI Module
+title: Limestone UI Module
 ---
 
-The sandstone package includes the following documentation:
+The limestone package includes the following documentation:
 
 * [Using VirtualList, VirtualGridList and Scroller](./virtual-list-scroller.md)

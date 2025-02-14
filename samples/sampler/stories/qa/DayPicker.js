@@ -1,7 +1,7 @@
-import DayPicker, {getSelectedDayString} from '@enact/sandstone/DayPicker';
-import Heading from '@enact/sandstone/Heading';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
+import DayPicker, {getSelectedDayString} from '@enact/limestone/DayPicker';
+import Heading from '@enact/limestone/Heading';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
 import {Component} from 'react';
 
 DayPicker.displayName = 'DayPicker';
@@ -36,7 +36,7 @@ class DayPickerWithItem extends Component {
 }
 
 export default {
-	title: 'Sandstone/DayPicker',
+	title: 'Limestone/DayPicker',
 	component: 'DayPicker'
 };
 

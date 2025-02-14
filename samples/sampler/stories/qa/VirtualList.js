@@ -1,10 +1,10 @@
-import Button from '@enact/sandstone/Button';
-import Item from '@enact/sandstone/Item';
-import {Header, Panel, Panels} from '@enact/sandstone/Panels';
-import {FixedPopupPanels, Panel as FixedPopupPanel} from '@enact/sandstone/FixedPopupPanels';
-import Scroller from '@enact/sandstone/Scroller';
-import SwitchItem from '@enact/sandstone/SwitchItem';
-import VirtualList from '@enact/sandstone/VirtualList';
+import Button from '@enact/limestone/Button';
+import Item from '@enact/limestone/Item';
+import {Header, Panel, Panels} from '@enact/limestone/Panels';
+import {FixedPopupPanels, Panel as FixedPopupPanel} from '@enact/limestone/FixedPopupPanels';
+import Scroller from '@enact/limestone/Scroller';
+import SwitchItem from '@enact/limestone/SwitchItem';
+import VirtualList from '@enact/limestone/VirtualList';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
@@ -205,7 +205,7 @@ class VirtualListWithCBScrollTo extends Component {
 }
 
 export default {
-	title: 'Sandstone/VirtualList',
+	title: 'Limestone/VirtualList',
 	component: 'VirtualList'
 };
 

@@ -1,7 +1,7 @@
-import Button, {ButtonBase} from '@enact/sandstone/Button';
-import Heading from '@enact/sandstone/Heading';
+import Button, {ButtonBase} from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
 import {Row} from '@enact/ui/Layout';
-import Scroller from '@enact/sandstone/Scroller';
+import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -40,7 +40,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Button',
+	title: 'Limestone/Button',
 	component: 'Button'
 };
 

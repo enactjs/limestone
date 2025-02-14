@@ -22,7 +22,7 @@ const PanelsStateContext = createContext({});
  * The container for a set of Panels
  *
  * @class Viewport
- * @memberof sandstone/Panels
+ * @memberof limestone/Panels
  * @private
  */
 const ViewportBase = class extends Component {
@@ -30,7 +30,7 @@ const ViewportBase = class extends Component {
 
 	static contextType = SharedState;
 
-	static propTypes = /** @lends sandstone/Panels.Viewport.prototype */ {
+	static propTypes = /** @lends limestone/Panels.Viewport.prototype */ {
 
 		/**
 		 * A function that generates a globally-unique identifier for a panel index

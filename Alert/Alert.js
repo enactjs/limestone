@@ -1,7 +1,7 @@
 /**
- * Sandstone styled modal Alert components.
+ * Limestone styled modal Alert components.
  *
- * @module sandstone/Alert
+ * @module limestone/Alert
  * @exports Alert
  * @exports AlertBase
  * @exports AlertImage
@@ -29,17 +29,17 @@ import componentCss from './Alert.module.less';
  * A modal Alert component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/Alert.Alert|Alert}.
+ * is within {@link limestone/Alert.Alert|Alert}.
  *
  * @class AlertBase
- * @memberof sandstone/Alert
+ * @memberof limestone/Alert
  * @ui
  * @public
  */
 const AlertBase = kind({
 	name: 'Alert',
 
-	propTypes: /** @lends sandstone/Alert.AlertBase.prototype */ {
+	propTypes: /** @lends limestone/Alert.AlertBase.prototype */ {
 		/**
 		 * Buttons to be included under the component.
 		 *
@@ -57,7 +57,7 @@ const AlertBase = kind({
 		 * The contents of the body of the component.
 		 *
 		 * Only shown when `type="overlay"`. If `children` is text-only, it will be wrapped with
-		 * {@link sandstone/BodyText|BodyText}.
+		 * {@link limestone/BodyText|BodyText}.
 		 *
 		 * @type {Node}
 		 * @public
@@ -234,11 +234,11 @@ const AlertBase = kind({
 });
 
 /**
- * A modal Alert component, ready to use in Sandstone applications.
+ * A modal Alert component, ready to use in Limestone applications.
  *
  * `Alert` may be used to interrupt a workflow to receive feedback from the user.
  * The dialog consists of a title, a message, and an area for additional
- * {@link sandstone/Alert.Alert.buttons|buttons}.
+ * {@link limestone/Alert.Alert.buttons|buttons}.
  *
  * Usage:
  * ```
@@ -260,8 +260,8 @@ const AlertBase = kind({
  * ```
  *
  * @class Alert
- * @memberof sandstone/Alert
- * @extends sandstone/Alert.AlertBase
+ * @memberof limestone/Alert
+ * @extends limestone/Alert.AlertBase
  * @mixes ui/Slottable.Slottable
  * @ui
  * @public

@@ -1,5 +1,5 @@
 /**
- * Provides a Sandstone styled pages component with page indicator and navigation buttons.
+ * Provides a Limestone styled pages component with page indicator and navigation buttons.
  *
  * Usage:
  * ```
@@ -9,7 +9,7 @@
  *		</PageViews.Page>
  * </PageViews>
  * ```
- * @module sandstone/PageViews
+ * @module limestone/PageViews
  * @exports PageViews
  */
 
@@ -17,11 +17,11 @@ import {PageViews} from './PageViews';
 import Page from './Page';
 
 /**
- * A shortcut to access {@link sandstone/PageViews.Page}
+ * A shortcut to access {@link limestone/PageViews.Page}
  *
  * @name Page
  * @static
- * @memberof sandstone/PageViews.PageViews
+ * @memberof limestone/PageViews.PageViews
  */
 PageViews.Page = Page;
 

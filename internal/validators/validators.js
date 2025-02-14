@@ -1,7 +1,7 @@
 /**
  * Exports various utilities for performing dev-time validations
  *
- * @module sandstone/internal/validators
+ * @module limestone/internal/validators
  * @private
  */
 
@@ -12,7 +12,7 @@
  * @param {String} msg				Event name
  *
  * @returns {undefined}
- * @memberof sandstone/internal/validators
+ * @memberof limestone/internal/validators
  * @private
  */
 export const warn = (msg) => {
@@ -36,7 +36,7 @@ export const warn = (msg) => {
  * @param {String} [maxName='max'] The name of the max property
  *
  * @returns {undefined}
- * @memberof sandstone/internal/validators
+ * @memberof limestone/internal/validators
  * @private
  */
 export const validateRange = (value, min, max, component, valueName = 'value', minName = 'min', maxName = 'max') => {
@@ -84,7 +84,7 @@ export const validateRangeOnce = (thing, {component, valueName = 'value', minNam
  * @param {String} [stepName='step'] The name of the step property
  *
  * @returns {Boolean} `true` if warned
- * @memberof sandstone/internal/validators
+ * @memberof limestone/internal/validators
  * @private
  */
 export const validateStepped = (value, min, step, component, valueName = 'value', stepName = 'step') => {

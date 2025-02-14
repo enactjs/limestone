@@ -1,5 +1,5 @@
 /**
- * Sandstone styled key guide component and behaviors.
+ * Limestone styled key guide component and behaviors.
  *
  * @example
  * <KeyGuide
@@ -12,7 +12,7 @@
  *	]}
  * </KeyGuide>
  *
- * @module sandstone/KeyGuide
+ * @module limestone/KeyGuide
  * @exports KeyGuide
  * @exports KeyGuideBase
  * @exports KeyGuideDecorator
@@ -38,17 +38,17 @@ const colorKeys = ['red', 'green', 'yellow', 'blue'];
  * A Key Guide component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/KeyGuide.KeyGuide|KeyGuide}.
+ * is within {@link limestone/KeyGuide.KeyGuide|KeyGuide}.
  *
  * @class KeyGuideBase
- * @memberof sandstone/KeyGuide
+ * @memberof limestone/KeyGuide
  * @ui
  * @public
  */
 const KeyGuideBase = kind({
 	name: 'KeyGuide',
 
-	propTypes: /** @lends sandstone/KeyGuide.KeyGuideBase.prototype */ {
+	propTypes: /** @lends limestone/KeyGuide.KeyGuideBase.prototype */ {
 		/**
 		 * The items to be displayed in the `KeyGuide` when `open`.
 		 *
@@ -127,12 +127,12 @@ const KeyGuideBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/KeyGuide.KeyGuideBase|KeyGuide}.
+ * Applies Limestone specific behaviors to {@link limestone/KeyGuide.KeyGuideBase|KeyGuide}.
  *
  * @hoc
- * @memberof sandstone/KeyGuide
- * @mixes sandstone/Marquee.MarqueeController
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/KeyGuide
+ * @mixes limestone/Marquee.MarqueeController
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const KeyGuideDecorator = compose(
@@ -142,7 +142,7 @@ const KeyGuideDecorator = compose(
 );
 
 /**
- * A Key Guide component, ready to use in Sandstone applications.
+ * A Key Guide component, ready to use in Limestone applications.
  *
  * `KeyGuide' may be used to display list of text with icons to describe key behavior.
  *
@@ -160,9 +160,9 @@ const KeyGuideDecorator = compose(
  * ```
  *
  * @class KeyGuide
- * @memberof sandstone/KeyGuide
- * @extends sandstone/KeyGuide.KeyGuideBase
- * @mixes sandstone/KeyGuide.KeyGuideDecorator
+ * @memberof limestone/KeyGuide
+ * @extends limestone/KeyGuide.KeyGuideBase
+ * @mixes limestone/KeyGuide.KeyGuideDecorator
  * @ui
  * @public
  */

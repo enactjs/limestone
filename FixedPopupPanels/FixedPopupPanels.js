@@ -1,7 +1,7 @@
 /**
- * Provides Sandstone styled fixed-width, popup-styled Panels component.
+ * Provides Limestone styled fixed-width, popup-styled Panels component.
  *
- * @module sandstone/FixedPopupPanels
+ * @module limestone/FixedPopupPanels
  * @exports FixedPopupPanels
  * @exports FixedPopupPanelsBase
  * @exports FixedPopupPanelsDecorator
@@ -23,10 +23,10 @@ import DefaultHeader from '../Panels/Header';
 import css from './FixedPopupPanels.module.less';
 
 /**
- * Adds popup functionality and `rtl` prop to {@link sandstone/FixedPopupPanels|FixedPopupPanels}.
+ * Adds popup functionality and `rtl` prop to {@link limestone/FixedPopupPanels|FixedPopupPanels}.
  *
  * @class FixedPopupPanelsDecorator
- * @memberof sandstone/FixedPopupPanels
+ * @memberof limestone/FixedPopupPanels
  * @hoc
  * @public
  */
@@ -62,11 +62,11 @@ const fixedPopupPanelsHandlers = {
 };
 
 /**
- * A base panels component for {@link sandstone/FixedPopupPanels|FixedPopupPanels} that has
+ * A base panels component for {@link limestone/FixedPopupPanels|FixedPopupPanels} that has
  * left key handler to navigate panels.
  *
  * @class FixedPopupPanelsBase
- * @memberof sandstone/FixedPopupPanels
+ * @memberof limestone/FixedPopupPanels
  * @ui
  * @public
  */
@@ -76,14 +76,14 @@ const FixedPopupPanelsBase = (props) => {
 };
 
 /**
- * An instance of {@link sandstone/Panels.Panels|Panels} which restricts the `Panel` to the right
+ * An instance of {@link limestone/Panels.Panels|Panels} which restricts the `Panel` to the right
  * or left side of the screen inside a popup. Typically used for overlaying panels over other
  * content.
  *
  * @class FixedPopupPanels
- * @memberof sandstone/FixedPopupPanels
- * @extends sandstone/FixedPopupPanels.FixedPopupPanelsBase
- * @mixes sandstone/FixedPopupPanels.FixedPopupPanelsDecorator
+ * @memberof limestone/FixedPopupPanels
+ * @extends limestone/FixedPopupPanels.FixedPopupPanelsBase
+ * @mixes limestone/FixedPopupPanels.FixedPopupPanelsDecorator
  * @ui
  * @public
  */
@@ -92,7 +92,7 @@ const FixedPopupPanels = FixedPopupPanelsDecorator(FixedPopupPanelsBase);
 /**
  * Size of the popup.
  *
- * @memberof sandstone/FixedPopupPanels.FixedPopupPanels.prototype
+ * @memberof limestone/FixedPopupPanels.FixedPopupPanels.prototype
  * @name width
  * @type {('narrow'|'half')}
  * @default 'narrow'
@@ -101,22 +101,22 @@ const FixedPopupPanels = FixedPopupPanelsDecorator(FixedPopupPanelsBase);
 
 /**
  * The standard view container used inside a
- * {@link sandstone/FixedPopupPanels.FixedPopupPanels|FixedPopupPanels} view manager instance.
+ * {@link limestone/FixedPopupPanels.FixedPopupPanels|FixedPopupPanels} view manager instance.
  *
  * @class Panel
- * @extends sandstone/Panels.Panel
- * @memberof sandstone/FixedPopupPanels
+ * @extends limestone/Panels.Panel
+ * @memberof limestone/FixedPopupPanels
  * @ui
  * @public
  */
 const Panel = (props) => (<DefaultPanel {...props} css={css} hideChildren={false} />);
 
 /**
- * A shortcut to access {@link sandstone/FixedPopupPanels.Panel}
+ * A shortcut to access {@link limestone/FixedPopupPanels.Panel}
  *
  * @name Panel
  * @static
- * @memberof sandstone/FixedPopupPanels.FixedPopupPanels
+ * @memberof limestone/FixedPopupPanels.FixedPopupPanels
  */
 FixedPopupPanels.Panel = Panel;
 
@@ -125,8 +125,8 @@ FixedPopupPanels.Panel = Panel;
  * {@link ui/Slottable.Slottable|`slots`} for components.
  *
  * @class Header
- * @extends sandstone/Panels.Header
- * @memberof sandstone/FixedPopupPanels
+ * @extends limestone/Panels.Header
+ * @memberof limestone/FixedPopupPanels
  * @ui
  * @public
  */
@@ -135,11 +135,11 @@ const Header = (props) => (<DefaultHeader type="compact" {...props} css={css} />
 Header.defaultSlot = DefaultHeader.defaultSlot;
 
 /**
- * A shortcut to access {@link sandstone/FixedPopupPanels.Header}
+ * A shortcut to access {@link limestone/FixedPopupPanels.Header}
  *
  * @name Header
  * @static
- * @memberof sandstone/FixedPopupPanels.FixedPopupPanels
+ * @memberof limestone/FixedPopupPanels.FixedPopupPanels
  */
 FixedPopupPanels.Header = Header;
 

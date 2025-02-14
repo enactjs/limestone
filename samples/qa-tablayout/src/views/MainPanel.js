@@ -1,5 +1,5 @@
-import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
-import Button from '@enact/sandstone/Button';
+import TabLayout, {Tab} from '@enact/limestone/TabLayout';
+import Button from '@enact/limestone/Button';
 
 const MainPanel = () => (
 	<TabLayout>

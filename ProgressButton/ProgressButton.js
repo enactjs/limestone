@@ -1,10 +1,10 @@
 /**
- * Provides Sandstone-themed progress button component.
+ * Provides Limestone-themed progress button component.
  *
  * @example
  * <ProgressButton progress={0.5}>Progress</ProgressButton>
  *
- * @module sandstone/ProgressButton
+ * @module limestone/ProgressButton
  * @exports ProgressButton
  * @exports ProgressButtonBase
  * @exports ProgressButtonDecorator
@@ -20,19 +20,19 @@ import ProgressBar from '../ProgressBar';
 import componentCss from './ProgressButton.module.less';
 
 /**
- * Renders a sandstone-styled progress button.
+ * Renders a limestone-styled progress button.
  *
  * @class ProgressButtonBase
- * @memberof sandstone/ProgressButton
- * @extends sandstone/Button.ButtonBase
- * @extends sandstone/ProgressBar.ProgressBar
+ * @memberof limestone/ProgressButton
+ * @extends limestone/Button.ButtonBase
+ * @extends limestone/ProgressBar.ProgressBar
  * @ui
  * @public
  */
 const ProgressButtonBase = kind({
 	name: 'ProgressButton',
 
-	propTypes: /** @lends sandstone/ProgressButton.ProgressButtonBase.prototype */ {
+	propTypes: /** @lends limestone/ProgressButton.ProgressButtonBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
@@ -122,11 +122,11 @@ const ProgressButtonBase = kind({
 
 
 /**
- * The ready-to-use Sandstone-styled ProgressButton.
+ * The ready-to-use Limestone-styled ProgressButton.
  *
  * @class ProgressButton
- * @memberof sandstone/ProgressButton
- * @extends sandstone/ProgressButton.ProgressButtonBase
+ * @memberof limestone/ProgressButton
+ * @extends limestone/ProgressButton.ProgressButtonBase
  * @ui
  * @public
  */

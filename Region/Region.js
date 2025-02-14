@@ -5,7 +5,7 @@
  * <Region title="Select an Option">
  * </Region>
  *
- * @module sandstone/Region
+ * @module limestone/Region
  * @exports Region
  * @exports RegionBase
  */
@@ -19,16 +19,16 @@ import Heading from '../Heading';
  * A component for grouping other components.
  *
  * @class Region
- * @memberof sandstone/Region
+ * @memberof limestone/Region
  * @ui
  * @public
  */
 const RegionBase = kind({
 	name: 'Region',
 
-	propTypes: /** @lends sandstone/Region.Region.prototype */ {
+	propTypes: /** @lends limestone/Region.Region.prototype */ {
 		/**
-		 * Title placed within an instance of {@link sandstone/Heading.Heading|Heading} before the
+		 * Title placed within an instance of {@link limestone/Heading.Heading|Heading} before the
 		 * children.
 		 *
 		 * @type {String}
@@ -42,7 +42,7 @@ const RegionBase = kind({
 		 *
 		 * If unset, it defaults to the value of `title`
 		 *
-		 * @memberof sandstone/Region.Region.prototype
+		 * @memberof limestone/Region.Region.prototype
 		 * @type {String}
 		 * @public
 		 */

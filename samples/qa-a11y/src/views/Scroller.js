@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Scroller from '@enact/sandstone/Scroller';
-import ToggleButton from '@enact/sandstone/SwitchItem';
+import Scroller from '@enact/limestone/Scroller';
+import ToggleButton from '@enact/limestone/SwitchItem';
 import Layout, {Cell} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 import {useState} from 'react';

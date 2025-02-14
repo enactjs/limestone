@@ -144,7 +144,7 @@ function calcSelectedDayType (selected, state) {
  * Determines whether it should return "Every Day", "Every Weekend", "Every Weekday" or list of
  * days for a given selected day type.
  *
- * @memberof sandstone/DayPicker
+ * @memberof limestone/DayPicker
  * @param {(Number|Number[])?} selected Selected day(s)
  * @param {String} [noneText] String to be returned when no days are selected
  * @param {String} [dayNameLength] The format for names of days
@@ -196,12 +196,12 @@ const daySelectorDecoratorDefaultProps = {
 };
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/DayPicker.DayPicker|DayPicker}.
+ * Applies Limestone specific behaviors to {@link limestone/DayPicker.DayPicker|DayPicker}.
  *
  * @hoc
- * @memberof sandstone/DayPicker
+ * @memberof limestone/DayPicker
  * @mixes ui/Changeable.Changeable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @omit onChange
  * @omit value
  * @omit defaultValue
@@ -244,11 +244,11 @@ const DaySelectorDecorator = hoc((config, Wrapped) => {
 
 	DaySelector.displayName = 'DaySelectorDecorator';
 
-	DaySelector.propTypes = /** @lends sandstone/DayPicker.DaySelectorDecorator.prototype */ {
+	DaySelector.propTypes = /** @lends limestone/DayPicker.DaySelectorDecorator.prototype */ {
 		/**
 		 * The "aria-label" for the selector.
 		 *
-		 * @memberof sandstone/DayPicker.DaySelectorDecorator.prototype
+		 * @memberof limestone/DayPicker.DaySelectorDecorator.prototype
 		 * @type {String}
 		 * @private
 		 */

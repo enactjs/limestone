@@ -29,14 +29,14 @@ const hasChildren = (children) => (Children.toArray(children).filter(Boolean).le
  * {@link ui/Slottable.Slottable|slots} for components.
  *
  * @class Header
- * @memberof sandstone/Panels
+ * @memberof limestone/Panels
  * @ui
  * @public
  */
 const HeaderBase = kind({
 	name: 'Header',
 
-	propTypes: /** @lends sandstone/Panels.Header.prototype */ {
+	propTypes: /** @lends limestone/Panels.Header.prototype */ {
 		/**
 		 * The animation arranger used to transition title and subtitle changes.
 		 *
@@ -278,7 +278,7 @@ const HeaderBase = kind({
 		 *
 		 * This is a {@link ui/Slottable.Slottable|slot}, so it can be used as a tag-name inside
 		 * this component.
-		 * If {@link sandstone/Panels.Header.noSubtitle|noSubtitle} is `true`, this prop is ignored.
+		 * If {@link limestone/Panels.Header.noSubtitle|noSubtitle} is `true`, this prop is ignored.
 		 *
 		 * @type {String|String[]}
 		 */

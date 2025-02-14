@@ -40,18 +40,18 @@ const HeaderContainer = SpotlightContainerDecorator(Header);
  *	</WizardPanels>
  *
  * @class WizardPanelsBase
- * @memberof sandstone/WizardPanels
+ * @memberof limestone/WizardPanels
  * @ui
  * @public
  */
 const WizardPanelsBase = kind({
 	name: 'WizardPanels',
 
-	propTypes: /** @lends sandstone/WizardPanels.WizardPanelsBase.prototype */ {
+	propTypes: /** @lends limestone/WizardPanels.WizardPanelsBase.prototype */ {
 		/**
 		 * The "aria-label" for the Panel.
 		 *
-		 * By default, the panel will be labeled by its {@link sandstone/Panels.Header|Header}.
+		 * By default, the panel will be labeled by its {@link limestone/Panels.Header|Header}.
 		 * When `aria-label` is set, it will be used instead to provide an accessibility label for
 		 * the panel.
 		 *
@@ -246,7 +246,7 @@ const WizardPanelsBase = kind({
 		/**
 		* The subtitle to display.
 		*
-		* If {@link sandstone/WizardPanels.WizardPanelsBase.noSubtitle|noSubtitle} is `true`, this prop is ignored.
+		* If {@link limestone/WizardPanels.WizardPanelsBase.noSubtitle|noSubtitle} is `true`, this prop is ignored.
 		*
 		* @type {String}
 		* @public
@@ -479,11 +479,11 @@ const WizardPanelsDecorator = compose(
 
 /**
  * A WizardPanels that can step through different panels.
- * Expects {@link sandstone/WizardPanels.Panel|WizardPanel} as children.
+ * Expects {@link limestone/WizardPanels.Panel|WizardPanel} as children.
  *
  * @class WizardPanels
- * @memberof sandstone/WizardPanels
- * @extends sandstone/WizardPanels.WizardPanelsBase
+ * @memberof limestone/WizardPanels
+ * @extends limestone/WizardPanels.WizardPanelsBase
  * @mixes ui/Changeable.Changeable
  * @ui
  * @public
@@ -497,7 +497,7 @@ const WizardPanels = WizardPanelsDecorator(WizardPanelsBase);
  * not called, the index of the panel will be decremented unless `noPrevButton` is set.
  *
  * @name onBack
- * @memberof sandstone/WizardPanels.WizardPanels.prototype
+ * @memberof limestone/WizardPanels.WizardPanels.prototype
  * @type {Function}
  */
 

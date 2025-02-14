@@ -1,4 +1,4 @@
-// Sandstone
+// Limestone
 import ActionGuide from '../../../ActionGuide';
 import Alert from '../../../Alert';
 import BodyText from '../../../BodyText';

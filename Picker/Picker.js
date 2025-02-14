@@ -6,7 +6,7 @@
  * 	{['A', 'B', 'C']}
  * </Picker>
  *
- * @module sandstone/Picker
+ * @module limestone/Picker
  * @exports Picker
  * @exports PickerBase
  */
@@ -32,14 +32,14 @@ import componentCss from './Picker.module.less';
  * This version is not {@link spotlight/Spottable.Spottable|spottable}.
  *
  * @class PickerBase
- * @memberof sandstone/Picker
+ * @memberof limestone/Picker
  * @ui
  * @public
  */
 const PickerBase = kind({
 	name: 'Picker',
 
-	propTypes: /** @lends sandstone/Picker.PickerBase.prototype */ {
+	propTypes: /** @lends limestone/Picker.PickerBase.prototype */ {
 		/**
 		 * Picker value list.
 		 *
@@ -55,7 +55,7 @@ const PickerBase = kind({
 		 * By default, `aria-valuetext` is set to the current selected child text.
 		 *
 		 * @type {String}
-		 * @memberof sandstone/Picker.PickerBase.prototype
+		 * @memberof limestone/Picker.PickerBase.prototype
 		 * @public
 		 */
 		'aria-valuetext': PropTypes.string,
@@ -67,8 +67,8 @@ const PickerBase = kind({
 		 *  * `'arrow'` allows the user to use the left or right keys to adjust the picker's value.
 		 *
 		 * The default value for joined horizontal picker is `'enter'`.
-		 * If {@link sandstone/Picker.PickerBase.orientation|orientation} is `'vertical'` or
-		 * {@link sandstone/Picker.PickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
+		 * If {@link limestone/Picker.PickerBase.orientation|orientation} is `'vertical'` or
+		 * {@link limestone/Picker.PickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
 		 *
 		 * @type {('enter'|'arrow')}
 		 * @public
@@ -97,7 +97,7 @@ const PickerBase = kind({
 		 * set to an array of labels.
 		 *
 		 * @type {Number[]|String[]}
-		 * @memberof sandstone/Picker.PickerBase.prototype
+		 * @memberof limestone/Picker.PickerBase.prototype
 		 * @public
 		 */
 		'data-webos-voice-labels-ext': PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.arrayOf(PropTypes.string)]),
@@ -105,9 +105,9 @@ const PickerBase = kind({
 		/**
 		 * A custom icon for the decrementer.
 		 *
-		 * All strings supported by {@link sandstone/Icon.Icon|Icon} are supported. Without a
+		 * All strings supported by {@link limestone/Icon.Icon|Icon} are supported. Without a
 		 * custom icon, the default is used, and is automatically changed when the
-		 * {@link sandstone/Picker.PickerBase.orientation|orientation} is changed.
+		 * {@link limestone/Picker.PickerBase.orientation|orientation} is changed.
 		 *
 		 * @type {String}
 		 * @public
@@ -125,9 +125,9 @@ const PickerBase = kind({
 		/**
 		 * A custom icon for the incrementer.
 		 *
-		 * All strings supported by {@link sandstone/Icon.Icon|Icon} are supported. Without a
+		 * All strings supported by {@link limestone/Icon.Icon|Icon} are supported. Without a
 		 * custom icon, the default is used, and is automatically changed when the
-		 * {@link sandstone/Picker.PickerBase.orientation|orientation} is changed.
+		 * {@link limestone/Picker.PickerBase.orientation|orientation} is changed.
 		 *
 		 * @type {String}
 		 * @public
@@ -159,7 +159,7 @@ const PickerBase = kind({
 		 * Disables marqueeing of items.
 		 *
 		 * By default, each picker item is wrapped by a
-		 * {@link sandstone/Marquee.Marquee|Marquee}. When this is set, the items will
+		 * {@link limestone/Marquee.Marquee|Marquee}. When this is set, the items will
 		 * not be wrapped.
 		 *
 		 * @type {Boolean}
@@ -344,10 +344,10 @@ const PickerBase = kind({
  * supply a value to `value` at creation time and update it in response to `onChange` events.
  *
  * @class Picker
- * @memberof sandstone/Picker
- * @extends sandstone/Picker.PickerBase
+ * @memberof limestone/Picker
+ * @extends limestone/Picker.PickerBase
  * @mixes ui/Changeable.Changeable
- * @mixes sandstone/Marquee.MarqueeController
+ * @mixes limestone/Marquee.MarqueeController
  * @ui
  * @public
  */
@@ -366,7 +366,7 @@ const Picker = Pure(
  * *Note*: Changing `defaultValue` after initial render has no effect.
  *
  * @name defaultValue
- * @memberof sandstone/Picker.Picker.prototype
+ * @memberof limestone/Picker.Picker.prototype
  * @type {Number}
  * @public
  */

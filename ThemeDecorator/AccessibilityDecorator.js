@@ -9,7 +9,7 @@ import {Component} from 'react';
  * A higher-order component that classifies an application with a target set of font sizing rules.
  *
  * @class AccessibilityDecorator
- * @memberof sandstone/ThemeDecorator
+ * @memberof limestone/ThemeDecorator
  * @hoc
  * @public
  */
@@ -19,7 +19,7 @@ const AccessibilityDecorator = hoc((config, Wrapped) => {
 
 		static displayName = 'AccessibilityDecorator';
 
-		static propTypes =  /** @lends sandstone/ThemeDecorator.AccessibilityDecorator.prototype */ {
+		static propTypes =  /** @lends limestone/ThemeDecorator.AccessibilityDecorator.prototype */ {
 			/**
 			 * Enables additional features to help users visually differentiate components.
 			 *

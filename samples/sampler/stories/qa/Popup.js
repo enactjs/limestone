@@ -1,7 +1,7 @@
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
-import Alert from '@enact/sandstone/Alert';
-import Button from '@enact/sandstone/Button';
-import Popup from '@enact/sandstone/Popup';
+import Alert from '@enact/limestone/Alert';
+import Button from '@enact/limestone/Button';
+import Popup from '@enact/limestone/Popup';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import Toggleable from '@enact/ui/Toggleable';
@@ -28,7 +28,7 @@ const PopupFromSelfOnlyContainer = Toggleable(
 );
 
 export default {
-	title: 'Sandstone/Popup',
+	title: 'Limestone/Popup',
 	component: 'Popup'
 };
 

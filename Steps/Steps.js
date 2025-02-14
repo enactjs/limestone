@@ -1,5 +1,5 @@
 /**
- * Provides Sandstone styled component to indicate progress along a continuum.
+ * Provides Limestone styled component to indicate progress along a continuum.
  *
  * In the following example, 6 total steps will be displayed with the current step being the 3rd
  * step, having passed the previous 2 steps, with 3 more to go.
@@ -7,7 +7,7 @@
  * @example
  * <Steps total={6} current={3} />
  *
- * @module sandstone/Steps
+ * @module limestone/Steps
  * @exports Steps
  * @exports StepsBase
  * @exports StepsDecorator
@@ -32,17 +32,17 @@ const PageIndicator = ({className}) => {
 };
 
 /**
- * Renders a sandstone-styled steps component only basic behavior.
+ * Renders a limestone-styled steps component only basic behavior.
  *
  * @class StepsBase
- * @memberof sandstone/Steps
+ * @memberof limestone/Steps
  * @ui
  * @public
  */
 const StepsBase = kind({
 	name: 'Steps',
 
-	propTypes: /** @lends sandstone/Steps.StepsBase.prototype */ {
+	propTypes: /** @lends limestone/Steps.StepsBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
@@ -79,7 +79,7 @@ const StepsBase = kind({
 		/**
 		 * The icon to use for indicating the current step.
 		 *
-		 * This accepts any icon supported by {@link sandstone/Icon}, in addition to a special
+		 * This accepts any icon supported by {@link limestone/Icon}, in addition to a special
 		 * value: "numbers", which instead of a standard icon, shows the number of the step.
 		 *
 		 * @type {String}
@@ -91,7 +91,7 @@ const StepsBase = kind({
 		/**
 		 * The icon to use for indicating all steps following the current step.
 		 *
-		 * This accepts any icon supported by {@link sandstone/Icon}, in addition to a special
+		 * This accepts any icon supported by {@link limestone/Icon}, in addition to a special
 		 * value: "numbers", which instead of a standard icon, shows the number of the step.
 		 *
 		 * @type {String}
@@ -119,7 +119,7 @@ const StepsBase = kind({
 		 * receive the `children` and `size` props.
 		 *
 		 * @type {Component}
-		 * @default sandstone/Icon.Icon
+		 * @default limestone/Icon.Icon
 		 * @public
 		 */
 		iconComponent: EnactPropTypes.component,
@@ -127,7 +127,7 @@ const StepsBase = kind({
 		/**
 		 * The icon to use for indicating all steps preceding the current step.
 		 *
-		 * This accepts any icon supported by {@link sandstone/Icon}, in addition to a special
+		 * This accepts any icon supported by {@link limestone/Icon}, in addition to a special
 		 * value: "numbers", which instead of a standard icon, shows the number of the step.
 		 *
 		 * @type {String}
@@ -139,7 +139,7 @@ const StepsBase = kind({
 		/**
 		 * The size of the step icons.
 
-		 * This accepts any `size` supported by {@link sandstone/Icon}.
+		 * This accepts any `size` supported by {@link limestone/Icon}.
 		 *
 		 * @type {('large'|'medium'|'small'|'tiny'|Number)}
 		 * @default 'small'
@@ -163,7 +163,7 @@ const StepsBase = kind({
 		/**
 		 * The icon to use for any skipped steps, past or future.
 		 *
-		 * This accepts any icon supported by {@link sandstone/Icon}.
+		 * This accepts any icon supported by {@link limestone/Icon}.
 		 *
 		 * The current step will always show the `currentIcon` regardless of whether it has been
 		 * skipped. It's the developer's responsibility to not set `current` to a skipped step.
@@ -261,11 +261,11 @@ const StepsBase = kind({
 });
 
 /**
- * Sandstone-specific behaviors to apply to {@link sandstone/Steps.StepsBase|StepsBase}.
+ * Limestone-specific behaviors to apply to {@link limestone/Steps.StepsBase|StepsBase}.
  *
  * @hoc
- * @memberof sandstone/Steps
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/Steps
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const StepsDecorator = compose(
@@ -273,12 +273,12 @@ const StepsDecorator = compose(
 );
 
 /**
- * A full-featured Sandstone-styled step component.
+ * A full-featured Limestone-styled step component.
  *
  * @class Steps
- * @memberof sandstone/Steps
- * @extends sandstone/Steps.StepsBase
- * @mixes sandstone/Steps.StepsDecorator
+ * @memberof limestone/Steps
+ * @extends limestone/Steps.StepsBase
+ * @mixes limestone/Steps.StepsDecorator
  * @ui
  * @public
  */

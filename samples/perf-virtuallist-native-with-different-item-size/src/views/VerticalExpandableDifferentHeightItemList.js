@@ -1,9 +1,9 @@
-import Button from '@enact/sandstone/Button';
-import Icon from '@enact/sandstone/Icon';
+import Button from '@enact/limestone/Button';
+import Icon from '@enact/limestone/Icon';
 import PropTypes from 'prop-types';
 import {forwardRef, useCallback, useEffect, useRef, useState} from 'react';
 import ri from '@enact/ui/resolution';
-import {VirtualList} from '@enact/sandstone/VirtualList';
+import {VirtualList} from '@enact/limestone/VirtualList';
 
 const
 	languages = [

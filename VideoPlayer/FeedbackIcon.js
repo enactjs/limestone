@@ -10,17 +10,17 @@ import css from './Feedback.module.less';
 
 
 /**
- * Feedback Icon for {@link sandstone/VideoPlayer.Feedback}.
+ * Feedback Icon for {@link limestone/VideoPlayer.Feedback}.
  *
  * @class FeedbackIcon
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @private
  */
 const FeedbackIconBase = kind({
 	name: 'FeedbackIcon',
 
-	propTypes: /** @lends sandstone/VideoPlayer.FeedbackIcon.prototype */ {
+	propTypes: /** @lends limestone/VideoPlayer.FeedbackIcon.prototype */ {
 		/**
 		 * Refers to one of the following possible media playback states.
 		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,

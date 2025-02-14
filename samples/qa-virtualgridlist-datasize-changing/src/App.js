@@ -1,6 +1,6 @@
-import ImageItem from '@enact/sandstone/ImageItem';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import ImageItem from '@enact/limestone/ImageItem';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import Spottable from '@enact/spotlight/Spottable';
 import ri from '@enact/ui/resolution';
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';

@@ -1,10 +1,10 @@
 import kind from '@enact/core/kind';
 import $L from '@enact/i18n/$L';
 import Text from '@enact/i18n/Text';
-import BodyText from '@enact/sandstone/BodyText';
-import Heading from '@enact/sandstone/Heading';
-import {Panel, Header} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
+import BodyText from '@enact/limestone/BodyText';
+import Heading from '@enact/limestone/Heading';
+import {Panel, Header} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
 
 const MainPanel = kind({
 	name: 'MainPanel',

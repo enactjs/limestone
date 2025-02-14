@@ -54,7 +54,7 @@ const removeTooltipProps = ({...props}) => {
  */
 const defaultScreenEdgeKeepout = (24 + 24);
 
-// A hook to show Sandstone-styled tooltip components.
+// A hook to show Limestone-styled tooltip components.
 const useTooltip = (props) => {
 	const {
 		screenEdgeKeepout = defaultScreenEdgeKeepout,

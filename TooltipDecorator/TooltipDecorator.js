@@ -1,7 +1,7 @@
 /**
- * Sandstone styled tooltip components.
+ * Limestone styled tooltip components.
  *
- * @module sandstone/TooltipDecorator
+ * @module limestone/TooltipDecorator
  * @exports Tooltip
  * @exports TooltipBase
  * @exports TooltipDecorator
@@ -15,9 +15,9 @@ import {Tooltip, TooltipBase} from './Tooltip';
 import {defaultScreenEdgeKeepout, useTooltip} from './useTooltip';
 
 /**
- * Default config for {@link sandstone/TooltipDecorator.TooltipDecorator|TooltipDecorator}
+ * Default config for {@link limestone/TooltipDecorator.TooltipDecorator|TooltipDecorator}
  *
- * @memberof sandstone/TooltipDecorator.TooltipDecorator
+ * @memberof limestone/TooltipDecorator.TooltipDecorator
  * @hocconfig
  */
 const defaultConfig = {
@@ -26,12 +26,12 @@ const defaultConfig = {
 	 * flipping to an alternate orientation or adjusting its offset to remain on screen.
 	 * The default of 48 is derived from a standard 24px screen-keepout size plus the standard
 	 * Spotlight-outset (24px) margin/padding value which keeps elements and text aligned inside a
-	 * {@link sandstone/Panels.Panel|Panel}. Note: This value will be scaled according to the
+	 * {@link limestone/Panels.Panel|Panel}. Note: This value will be scaled according to the
 	 * resolution.
 	 *
 	 * @type {Number}
 	 * @default 48
-	 * @memberof sandstone/TooltipDecorator.TooltipDecorator.defaultConfig
+	 * @memberof limestone/TooltipDecorator.TooltipDecorator.defaultConfig
 	 */
 	screenEdgeKeepout: defaultScreenEdgeKeepout,
 
@@ -44,13 +44,13 @@ const defaultConfig = {
 	 *
 	 * @type {String}
 	 * @default 'children'
-	 * @memberof sandstone/TooltipDecorator.TooltipDecorator.defaultConfig
+	 * @memberof limestone/TooltipDecorator.TooltipDecorator.defaultConfig
 	 */
 	tooltipDestinationProp: 'children'
 };
 
 /**
- * A higher-order component which positions {@link sandstone/TooltipDecorator.Tooltip|Tooltip} in
+ * A higher-order component which positions {@link limestone/TooltipDecorator.Tooltip|Tooltip} in
  * relation to the wrapped component.
  *
  * The tooltip is automatically displayed when the decorated component is focused after a set
@@ -61,7 +61,7 @@ const defaultConfig = {
  * Note that the direction of tooltip will be flipped horizontally in RTL locales.
  *
  * @class TooltipDecorator
- * @memberof sandstone/TooltipDecorator
+ * @memberof limestone/TooltipDecorator
  * @hoc
  * @public
  */
@@ -85,7 +85,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	Decorator.displayName = 'TooltipDecorator';
 
-	Decorator.propTypes = /** @lends sandstone/TooltipDecorator.TooltipDecorator.prototype */ {
+	Decorator.propTypes = /** @lends limestone/TooltipDecorator.TooltipDecorator.prototype */ {
 		/**
 		 * Disables the component but does not affect tooltip operation.
 		 *
@@ -115,7 +115,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		/**
 		 * Allows the tooltip to marquee.
 		 *
-		 * Specifying a {@link sandstone/TooltipDecorator.TooltipDecorator.tooltipWidth|tooltipWidth}
+		 * Specifying a {@link limestone/TooltipDecorator.TooltipDecorator.tooltipWidth|tooltipWidth}
 		 * restricts the marquee to that size.
 		 *
 		 * @type {Boolean}

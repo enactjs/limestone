@@ -25,10 +25,10 @@ const SpotlightAccelerator = new Accelerator();
 const SpottableDiv = Spottable('div');
 
 /**
- * A Sandstone-styled scrollbar track with sandstone behavior
+ * A Limestone-styled scrollbar track with limestone behavior
  *
  * @class ScrollbarTrack
- * @memberof sandstone/useScroll
+ * @memberof limestone/useScroll
  * @ui
  * @private
  */
@@ -133,9 +133,9 @@ const ScrollbarTrack = forwardRef((props, ref) => {
 
 ScrollbarTrack.displayName = 'ScrollbarTrack';
 
-ScrollbarTrack.propTypes = /** @lends sandstone/useScroll.ScrollbarTrack.prototype */ {
+ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototype */ {
 	/**
-	 * Called when {@link sandstone/useScroll.ScrollbarTrack|ScrollbarTrack} is updated.
+	 * Called when {@link limestone/useScroll.ScrollbarTrack|ScrollbarTrack} is updated.
 	 *
 	 * @type {Function}
 	 * @private

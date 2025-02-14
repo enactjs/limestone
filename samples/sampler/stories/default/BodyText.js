@@ -1,4 +1,4 @@
-import BodyText, {BodyTextBase} from '@enact/sandstone/BodyText';
+import BodyText, {BodyTextBase} from '@enact/limestone/BodyText';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, text, select} from '@enact/storybook-utils/addons/controls';
 import UiBodyText, {BodyTextBase as UiBodyTextBase} from '@enact/ui/BodyText';
@@ -13,7 +13,7 @@ const Config = mergeComponentMetadata(
 );
 
 export default {
-	title: 'Sandstone/BodyText',
+	title: 'Limestone/BodyText',
 	component: 'BodyText'
 };
 

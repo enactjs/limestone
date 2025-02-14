@@ -1,8 +1,8 @@
 import {add, is} from '@enact/core/keymap';
-import Button from '@enact/sandstone/Button';
-import IconItem from '@enact/sandstone/IconItem';
-import Scroller from '@enact/sandstone/Scroller';
-import $L from '@enact/sandstone/internal/$L';
+import Button from '@enact/limestone/Button';
+import IconItem from '@enact/limestone/IconItem';
+import Scroller from '@enact/limestone/Scroller';
+import $L from '@enact/limestone/internal/$L';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
@@ -436,6 +436,6 @@ select('verticalScrollbar', EditableIconWithLongPress, prop.scrollbarOption, Scr
 EditableIconWithLongPress.storyName = 'with editable scroller trigger by long press';
 
 export default {
-	title: 'Sandstone/IconItem',
+	title: 'Limestone/IconItem',
 	component: 'IconItem'
 };

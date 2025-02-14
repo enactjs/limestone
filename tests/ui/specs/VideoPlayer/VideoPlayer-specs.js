@@ -287,7 +287,7 @@ describe('VideoPlayer', function () {
 		it('should have title', async function () {
 			await Page.delay(1000);
 
-			expect(await videoPlayerProps.title.getText()).toBe('Sandstone VideoPlayer Sample Video');
+			expect(await videoPlayerProps.title.getText()).toBe('Limestone VideoPlayer Sample Video');
 		});
 
 		it('should hide title after 1 second', async function () {

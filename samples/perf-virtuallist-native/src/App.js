@@ -1,6 +1,6 @@
-import Item from '@enact/sandstone/Item';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
-import {VirtualList} from '@enact/sandstone/VirtualList';
+import Item from '@enact/limestone/Item';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
+import {VirtualList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
 import {useCallback, useEffect, useRef} from 'react';
 

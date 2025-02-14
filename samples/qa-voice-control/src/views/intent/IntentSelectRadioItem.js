@@ -1,5 +1,5 @@
-import Heading from '@enact/sandstone/Heading';
-import RadioItem from '@enact/sandstone/RadioItem';
+import Heading from '@enact/limestone/Heading';
+import RadioItem from '@enact/limestone/RadioItem';
 import Group from '@enact/ui/Group';
 import {useCallback, useState} from 'react';
 

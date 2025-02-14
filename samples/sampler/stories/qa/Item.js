@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import Heading from '@enact/sandstone/Heading';
-import Icon from '@enact/sandstone/Icon';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
+import Button from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
+import Icon from '@enact/limestone/Icon';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
 import {scale} from '@enact/ui/resolution';
@@ -41,7 +41,7 @@ Icon.displayName = 'Icon';
 const KsIcon = <Icon size="small">notification</Icon>;
 
 export default {
-	title: 'Sandstone/Item',
+	title: 'Limestone/Item',
 	component: 'Item'
 };
 

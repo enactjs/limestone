@@ -1,17 +1,17 @@
 {
-  "name": "sandstone-sampler",
+  "name": "limestone-sampler",
   "version": "3.0.0-alpha.4",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
-      "name": "sandstone-sampler",
+      "name": "limestone-sampler",
       "version": "3.0.0-alpha.4",
       "license": "Apache-2.0",
       "dependencies": {
         "@enact/core": "^5.0.0-alpha.4",
         "@enact/i18n": "^5.0.0-alpha.4",
-        "@enact/sandstone": "../../",
+        "@enact/limestone": "../../",
         "@enact/spotlight": "^5.0.0-alpha.4",
         "@enact/storybook-utils": "^6.0.0-rc.3",
         "@enact/ui": "^5.0.0-alpha.4",
@@ -29,7 +29,7 @@
       }
     },
     "../..": {
-      "name": "@enact/sandstone",
+      "name": "@enact/limestone",
       "version": "3.0.0-alpha.4",
       "license": "Apache-2.0",
       "dependencies": {
@@ -335,7 +335,7 @@
         "ilib": "^14.20.0 || ^14.20.0-webos1"
       }
     },
-    "node_modules/@enact/sandstone": {
+    "node_modules/@enact/limestone": {
       "resolved": "../..",
       "link": true
     },

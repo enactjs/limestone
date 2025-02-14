@@ -1,5 +1,5 @@
-import Heading from '@enact/sandstone/Heading';
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import Heading from '@enact/limestone/Heading';
+import SwitchItem from '@enact/limestone/SwitchItem';
 
 import CommonView from '../../components/CommonView';
 

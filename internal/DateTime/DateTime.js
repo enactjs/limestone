@@ -6,19 +6,19 @@ import Heading from '../../Heading';
 import componentCss from './DateTime.module.less';
 
 /**
- * {@link sandstone/internal/DateTime.DateTime} provides the surrounding
- * markup and styling for a {@link sandstone/DatePicker} and
- * {@link sandstone/TimePicker}.
+ * {@link limestone/internal/DateTime.DateTime} provides the surrounding
+ * markup and styling for a {@link limestone/DatePicker} and
+ * {@link limestone/TimePicker}.
  *
  * @class DateTime
- * @memberof sandstone/internal/DateTime
+ * @memberof limestone/internal/DateTime
  * @ui
  * @private
  */
 const DateTimeBase = kind({
 	name: 'DateTime',
 
-	propTypes:  /** @lends sandstone/internal/DateTime.DateTime.prototype */ {
+	propTypes:  /** @lends limestone/internal/DateTime.DateTime.prototype */ {
 		css: PropTypes.object,
 
 		/**

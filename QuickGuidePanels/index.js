@@ -1,5 +1,5 @@
 /**
- * Provides a Sandstone styled panels component for full screen size content panel with steps.
+ * Provides a Limestone styled panels component for full screen size content panel with steps.
  *
  * Usage:
  * ```
@@ -9,7 +9,7 @@
  *		</QuickGuidePanels.Panel>
  * </QuickGuidePanels>
  * ```
- * @module sandstone/QuickGuidePanels
+ * @module limestone/QuickGuidePanels
  * @exports Panel
  * @exports QuickGuidePanels
  */
@@ -18,11 +18,11 @@ import {QuickGuidePanels} from './QuickGuidePanels';
 import {Panel} from './Panel';
 
 /**
- * A shortcut to access {@link sandstone/QuickGuidePanels.Panel}
+ * A shortcut to access {@link limestone/QuickGuidePanels.Panel}
  *
  * @name Panel
  * @static
- * @memberof sandstone/QuickGuidePanels.QuickGuidePanels
+ * @memberof limestone/QuickGuidePanels.QuickGuidePanels
  */
 QuickGuidePanels.Panel = Panel;
 

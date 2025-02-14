@@ -1,4 +1,4 @@
-import Steps, {StepsBase} from '@enact/sandstone/Steps';
+import Steps, {StepsBase} from '@enact/limestone/Steps';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
 
@@ -18,7 +18,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Steps',
+	title: 'Limestone/Steps',
 	component: 'Steps'
 };
 

@@ -1,5 +1,5 @@
-import Button from '@enact/sandstone/Button';
-import FormCheckboxItem from '@enact/sandstone/FormCheckboxItem';
+import Button from '@enact/limestone/Button';
+import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
 import {Component} from 'react';
 
 class FormCheckboxItemView extends Component {
@@ -31,7 +31,7 @@ class FormCheckboxItemView extends Component {
 }
 
 export default {
-	title: 'Sandstone/FormCheckboxItem',
+	title: 'Limestone/FormCheckboxItem',
 	component: 'FormCheckboxItem'
 };
 

@@ -1,7 +1,7 @@
 /**
- * Provides a Sandstone-themed TabLayout.
+ * Provides a Limestone-themed TabLayout.
  *
- * @module sandstone/TabLayout
+ * @module limestone/TabLayout
  * @exports TabLayout
  * @exports TabLayoutBase
  * @exports TabLayoutContext
@@ -59,14 +59,14 @@ const isTouchMode = () => (getLastInputType() === 'touch');
  * ```
  *
  * @class TabLayout
- * @memberof sandstone/TabLayout
+ * @memberof limestone/TabLayout
  * @ui
  * @public
  */
 const TabLayoutBase = kind({
 	name: 'TabLayout',
 
-	propTypes: /** @lends sandstone/TabLayout.TabLayout.prototype */ {
+	propTypes: /** @lends limestone/TabLayout.TabLayout.prototype */ {
 		/**
 		 * Sets where this component should attach its tabs and animations.
 		 *
@@ -81,7 +81,7 @@ const TabLayoutBase = kind({
 		anchorTo: PropTypes.oneOf(['left', 'right', 'start', 'end']),
 
 		/**
-		 * Collection of {@link sandstone/TabLayout.Tab|Tabs} to render.
+		 * Collection of {@link limestone/TabLayout.Tab|Tabs} to render.
 		 *
 		 * @type {Node}
 		 * @public
@@ -462,12 +462,12 @@ const TabLayoutDecorator = compose(
 const TabLayout = TabLayoutDecorator(TabLayoutBase);
 
 /**
- * A shortcut to access {@link sandstone/TabLayout.Tab}
+ * A shortcut to access {@link limestone/TabLayout.Tab}
  *
  * @name Tab
- * @type {sandstone/TabLayout.Tab}
+ * @type {limestone/TabLayout.Tab}
  * @static
- * @memberof sandstone/TabLayout.TabLayout
+ * @memberof limestone/TabLayout.TabLayout
  */
 TabLayout.Tab = Tab;
 
