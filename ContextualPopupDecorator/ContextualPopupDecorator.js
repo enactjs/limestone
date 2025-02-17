@@ -14,7 +14,7 @@ import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
-import {extractAriaProps} from '@enact/core/util';
+import {extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -22,7 +22,7 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
-import {Component, createRef} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
 import HolePunchScrim from './HolePunchScrim';
@@ -77,6 +77,16 @@ const defaultConfig = {
 	openProp: 'selected'
 };
 
+const contextualPopupDecoratorDefaultProps = {
+	'data-webos-voice-exclusive': true,
+	direction: 'below center',
+	noAutoDismiss: false,
+	offset: 'small',
+	open: false,
+	scrimType: 'none',
+	spotlightRestrict: 'self-first'
+};
+
 const ContextualPopupContainer = SpotlightContainerDecorator(
 	{enterTo: 'default-element', preserveId: true},
 	ContextualPopup
@@ -86,310 +96,57 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {noArrow, noSkin, openProp} = config;
 	const WrappedWithRef = WithRef(Wrapped);
 
-	return class extends Component {
-		static displayName = 'ContextualPopupDecorator';
+	// eslint-disable-next-line no-shadow
+	const ContextualPopupDecorator = (props) => {
+		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 
-		static propTypes = /** @lends limestone/ContextualPopupDecorator.ContextualPopupDecorator.prototype */ {
-			/**
-			 * The component rendered within the
-			 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
-			 *
-			 * @type {Component}
-			 * @required
-			 * @public
-			 */
-			popupComponent: EnactPropTypes.component.isRequired,
+		const [activator, setActivator] = useState(null);
+		const [arrowPosition, setArrowPosition] = useState({top: 0, left: 0});
+		const [containerPosition, setContainerPosition] = useState({top: 0, left: 0, right: 0});
+		const [direction, setDirection] = useState('');
 
-			/**
-			 * Limits the range of voice control to the popup.
-			 *
-			 * @memberof limestone/ContextualPopupDecorator.ContextualPopupDecorator.prototype
-			 * @type {Boolean}
-			 * @default true
-			 * @public
-			 */
-			'data-webos-voice-exclusive': PropTypes.bool,
+		const adjustedDirection = useRef(componentProps.direction);
+		const containerId = useRef(Spotlight.add(componentProps.popupSpotlightId));
+		const containerNode = useRef(null);
+		const clientSiblingRef = useRef(null);
+		const overflow = useRef({});
+		const mutationObserver = useRef(null);
+		const prevProps = useRef(componentProps);
+		const snapshot = useRef(null);
+		const resizeObserver = useRef(null);
 
-			/**
-			 * Direction of popup with respect to the wrapped component.
-			 *
-			 * @type {('above'|'above center'|'above left'|'above right'|'below'|'below center'|'below left'|'below right'|'left middle'|'left top'|'left bottom'|'right middle'|'right top'|'right bottom')}
-			 * @default 'below center'
-			 * @public
-			 */
-			direction: PropTypes.oneOf(['above', 'above center', 'above left', 'above right', 'below', 'below center', 'below left', 'below right', 'left middle', 'left top', 'left bottom', 'right middle', 'right top', 'right bottom']),
+		const keyDownRef = useRef(null);
+		const keyUpRef = useRef(null);
 
-			/**
-			 * Disables closing the popup when the user presses the cancel/back (e.g. `ESC`) key or taps outside the
-			 * popup.
-			 *
-			 * @type {Boolean}
-			 * @default false
-			 * @public
-			 */
-			noAutoDismiss: PropTypes.bool,
+		const MARGIN = ri.scale(noArrow ? 0 : 12);
+		const ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width.
+		const ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
+		const KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
 
-			/**
-			 * Offset from the activator to apply to the position of the popup.
-			 *
-			 * Only applies when `noArrow` is `true`.
-			 *
-			 * @type {('none'|'overlap'|'small')}
-			 * @default 'small'
-			 * @public
-			 */
-			offset: PropTypes.oneOf(['none', 'overlap', 'small']),
-
-			/**
-			 * Called when the user has attempted to close the popup.
-			 *
-			 * This may occur either when the close button is clicked or when spotlight focus
-			 * moves outside the boundary of the popup. Setting `spotlightRestrict` to `'self-only'`
-			 * will prevent Spotlight focus from leaving the popup.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onClose: PropTypes.func,
-
-			/**
-			 * Called when the popup is opened.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onOpen: PropTypes.func,
-
-			/**
-			 * Displays the contextual popup.
-			 *
-			 * @type {Boolean}
-			 * @default false
-			 * @public
-			 */
-			open: PropTypes.bool,
-
-			/**
-			 * CSS class name to pass to the
-			 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
-			 *
-			 * This is commonly used to set width and height of the popup.
-			 *
-			 * @type {String}
-			 * @public
-			 */
-			popupClassName: PropTypes.string,
-
-			/**
-			 * An object containing properties to be passed to popup component.
-			 *
-			 * @type {Object}
-			 * @public
-			 */
-			popupProps: PropTypes.object,
-
-			/**
-			 * The container ID to use with Spotlight.
-			 *
-			 * The spotlight container for the popup isn't created until it is open. To configure
-			 * the container using `Spotlight.set()`, handle the `onOpen` event which is fired after
-			 * the popup has been created and opened.
-			 *
-			 * @type {String}
-			 * @public
-			 */
-			popupSpotlightId: PropTypes.string,
-
-			/**
-			 * Indicates the content's text direction is right-to-left.
-			 *
-			 * @type {Boolean}
-			 * @private
-			 */
-			rtl: PropTypes.bool,
-
-			/**
-			 * Set the type of scrim to use
-			 *
-			 * @type {('holepunch'|'translucent'|'transparent'|'none')}
-			 * @default 'none'
-			 * @private
-			 */
-			scrimType: PropTypes.oneOf(['holepunch', 'translucent', 'transparent', 'none']),
-
-			/**
-			 * Registers the ContextualPopupDecorator component with an
-			 * {@link core/internal/ApiDecorator.ApiDecorator|ApiDecorator}.
-			 *
-			 * @type {Function}
-			 * @private
-			 */
-			setApiProvider: PropTypes.func,
-
-			/**
-			 * The current skin for this component.
-			 *
-			 * When `noSkin` is set on the config object, `skin` will only be applied to the
-			 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup} and not
-			 * to the popup's activator component.
-			 *
-			 * @see {@link limestone/Skinnable.Skinnable.skin}
-			 * @type {String}
-			 * @public
-			 */
-			skin: PropTypes.string,
-
-			/**
-			 * Restricts or prioritizes spotlight navigation.
-			 *
-			 * Allowed values are:
-			 * * `'none'` - Spotlight can move freely within and beyond the popup
-			 * * `'self-first'` - Spotlight should prefer components within the popup over
-			 *   components beyond the popup, or
-			 * * `'self-only'` - Spotlight can only be set within the popup
-			 *
-			 * @type {('none'|'self-first'|'self-only')}
-			 * @default 'self-first'
-			 * @public
-			 */
-			spotlightRestrict: PropTypes.oneOf(['none', 'self-first', 'self-only'])
-		};
-
-		static defaultProps = {
-			'data-webos-voice-exclusive': true,
-			direction: 'below center',
-			noAutoDismiss: false,
-			offset: 'small',
-			open: false,
-			scrimType: 'none',
-			spotlightRestrict: 'self-first'
-		};
-
-		constructor (props) {
-			super(props);
-			this.state = {
-				arrowPosition: {top: 0, left: 0},
-				containerPosition: {top: 0, left: 0, right: 0},
-				containerId: Spotlight.add(this.props.popupSpotlightId),
-				activator: null
-			};
-
-			this.resizeObserver = null;
-			this.overflow = {};
-			this.adjustedDirection = this.props.direction;
-			this.id = this.generateId();
-			this.clientSiblingRef = createRef(null);
-
-			this.MARGIN = ri.scale(noArrow ? 0 : 12);
-			this.ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width. used for arrow positioning
-			this.ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
-			this.KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
-
-			if (props.setApiProvider) {
-				props.setApiProvider(this);
-			}
+		if (componentProps.setApiProvider) {
+			componentProps.setApiProvider();
 		}
 
-		componentDidMount () {
-			if (this.props.open) {
-				on('keydown', this.handleKeyDown);
-				on('keyup', this.handleKeyUp);
-			}
-
-			if (typeof ResizeObserver === 'function') {
-				this.resizeObserver = new ResizeObserver(() => {
-					this.positionContextualPopup();
-				});
-			}
-
-			if (typeof MutationObserver === 'function') {
-				this.mutationObserver = new MutationObserver(() => {
-					this.positionContextualPopup();
-				});
-			}
-		}
-
-		getSnapshotBeforeUpdate (prevProps, prevState) {
-			const snapshot = {
-				containerWidth: this.getContainerNodeWidth()
-			};
-
-			if (prevProps.open && !this.props.open) {
-				const current = Spotlight.getCurrent();
-				snapshot.shouldSpotActivator = (
-					// isn't set
-					!current ||
-					// is on the activator, and we want to re-spot it so a11y read out can occur
-					current === prevState.activator ||
-					// is within the popup
-					this.containerNode.contains(current)
-				);
-			}
-
-			return snapshot;
-		}
-
-		componentDidUpdate (prevProps, prevState, snapshot) {
-			if (prevProps.direction !== this.props.direction ||
-				snapshot.containerWidth !== this.getContainerNodeWidth() ||
-				(prevProps.open && this.props.open)) {
-				this.adjustedDirection = this.props.direction;
-				// NOTE: `setState` is called and will cause re-render
-				this.positionContextualPopup();
-			}
-
-			if (this.props.open && !prevProps.open) {
-				on('keydown', this.handleKeyDown);
-				on('keyup', this.handleKeyUp);
-			} else if (!this.props.open && prevProps.open) {
-				off('keydown', this.handleKeyDown);
-				off('keyup', this.handleKeyUp);
-				if (snapshot && snapshot.shouldSpotActivator) {
-					this.spotActivator(prevState.activator);
-				}
-			}
-		}
-
-		componentWillUnmount () {
-			if (this.props.open) {
-				off('keydown', this.handleKeyDown);
-				off('keyup', this.handleKeyUp);
-			}
-			Spotlight.remove(this.state.containerId);
-
-			if (this.resizeObserver) {
-				this.resizeObserver.disconnect();
-				this.resizeObserver = null;
-			}
-
-			if (this.mutationObserver) {
-				this.mutationObserver.disconnect();
-				this.mutationObserver = null;
-			}
-		}
-
-		generateId = () => {
+		const generateId = useCallback(() => {
 			return Math.random().toString(36).substring(2, 10);
-		};
+		}, []);
 
-		getContainerNodeWidth () {
-			return this.containerNode && this.containerNode.getBoundingClientRect().width || 0;
-		}
+		const id = useRef(generateId());
 
-		updateLeaveFor (activator) {
-			Spotlight.set(this.state.containerId, {
-				leaveFor: {
-					up: activator,
-					down: activator,
-					left: activator,
-					right: activator
-				}
-			});
-		}
+		const adjustRTL = useCallback((position) => {
+			let pos = position;
+			if (componentProps.rtl) {
+				const tmpLeft = pos.left;
+				pos.left = pos.right;
+				pos.right = tmpLeft;
+			}
+			return pos;
+		}, [componentProps]);
 
-		getContainerAdjustedPosition = () => {
-			const position = this.adjustedDirection;
-			const arr = this.adjustedDirection.split(' ');
+		const getContainerAdjustedPosition = useCallback(() => {
+			const position = adjustedDirection.current;
+			const arr = adjustedDirection.current.split(' ');
+			// eslint-disable-next-line no-shadow
 			let direction = null;
 			let anchor = null;
 
@@ -400,41 +157,21 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return {anchor, direction};
-		};
+		}, []);
 
-		getContainerPosition (containerNode, clientNode) {
-			const position = this.centerContainerPosition(containerNode, clientNode);
-			const {direction} = this.getContainerAdjustedPosition();
-
-			switch (direction) {
-				case 'above':
-					position.top = clientNode.top - this.ARROW_OFFSET - containerNode.height - this.MARGIN;
-					break;
-				case 'below':
-					position.top = clientNode.bottom + this.ARROW_OFFSET + this.MARGIN;
-					break;
-				case 'right':
-					position.left = this.props.rtl ? clientNode.left - containerNode.width - this.ARROW_OFFSET - this.MARGIN : clientNode.right + this.ARROW_OFFSET + this.MARGIN;
-					break;
-				case 'left':
-					position.left = this.props.rtl ? clientNode.right + this.ARROW_OFFSET + this.MARGIN : clientNode.left - containerNode.width - this.ARROW_OFFSET - this.MARGIN;
-					break;
-			}
-
-			return this.adjustRTL(position);
-		}
-
-		centerContainerPosition (containerNode, clientNode) {
+		// eslint-disable-next-line no-shadow
+		const centerContainerPosition = useCallback((containerNode, clientNode) => {
 			const pos = {};
-			const {anchor, direction} = this.getContainerAdjustedPosition();
+			// eslint-disable-next-line no-shadow
+			const {anchor, direction} = getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
-				if (this.overflow.isOverLeft) {
+				if (overflow.current.isOverLeft) {
 					// anchor to the left of the screen
-					pos.left = this.KEEPOUT;
-				} else if (this.overflow.isOverRight) {
+					pos.left = KEEPOUT;
+				} else if (overflow.current.isOverRight) {
 					// anchor to the right of the screen
-					pos.left = window.innerWidth - containerNode.width - this.KEEPOUT;
+					pos.left = window.innerWidth - containerNode.width - KEEPOUT;
 				} else if (anchor) {
 					if (anchor === 'center') {
 						// center horizontally
@@ -453,12 +190,12 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				}
 
 			} else if (direction === 'left' || direction === 'right') {
-				if (this.overflow.isOverTop) {
+				if (overflow.current.isOverTop) {
 					// anchor to the top of the screen
-					pos.top = this.KEEPOUT;
-				} else if (this.overflow.isOverBottom) {
+					pos.top = KEEPOUT;
+				} else if (overflow.current.isOverBottom) {
 					// anchor to the bottom of the screen
-					pos.top = window.innerHeight - containerNode.height - this.KEEPOUT;
+					pos.top = window.innerHeight - containerNode.height - KEEPOUT;
 				} else if (anchor === 'middle') {
 					// center vertically
 					pos.top = clientNode.top - (containerNode.height - clientNode.height) / 2;
@@ -472,59 +209,103 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return pos;
-		}
+		}, [KEEPOUT, getContainerAdjustedPosition]);
 
-		getArrowPosition (containerNode, clientNode) {
+		const getContainerNodeWidth = useCallback(() => {
+			return containerNode.current && containerNode.current.getBoundingClientRect().width || 0;
+		}, []);
+
+		// eslint-disable-next-line no-shadow
+		const updateLeaveFor = useCallback((activator) => {
+			Spotlight.set(containerId.current, {
+				leaveFor: {
+					up: activator,
+					down: activator,
+					left: activator,
+					right: activator
+				}
+			});
+		}, []);
+
+		// eslint-disable-next-line no-shadow
+		const getContainerPosition = useCallback((containerNode, clientNode) => {
+			// eslint-disable-next-line no-shadow
+			const position = centerContainerPosition(containerNode, clientNode);
+			// eslint-disable-next-line no-shadow
+			const {direction} = getContainerAdjustedPosition();
+
+			switch (direction) {
+				case 'above':
+					position.top = clientNode.top - ARROW_OFFSET - containerNode.height - MARGIN;
+					break;
+				case 'below':
+					position.top = clientNode.bottom + ARROW_OFFSET + MARGIN;
+					break;
+				case 'right':
+					position.left = componentProps.rtl ? clientNode.left - containerNode.width - ARROW_OFFSET - MARGIN : clientNode.right + ARROW_OFFSET + MARGIN;
+					break;
+				case 'left':
+					position.left = componentProps.rtl ? clientNode.right + ARROW_OFFSET + MARGIN : clientNode.left - containerNode.width - ARROW_OFFSET - MARGIN;
+					break;
+			}
+
+			return adjustRTL(position);
+		}, [ARROW_OFFSET, MARGIN, adjustRTL, centerContainerPosition, componentProps, getContainerAdjustedPosition]);
+
+		// eslint-disable-next-line no-shadow
+		const getArrowPosition = useCallback((containerNode, clientNode) => {
 			const position = {};
-			const {anchor, direction} = this.getContainerAdjustedPosition();
+			// eslint-disable-next-line no-shadow
+			const {anchor, direction} = getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
-				if (this.overflow.isOverRight && !this.overflow.isOverLeft) {
-					position.left = window.innerWidth - ((containerNode.width + this.ARROW_WIDTH) / 2) - this.KEEPOUT;
-				} else if (!this.overflow.isOverRight && this.overflow.isOverLeft) {
-					position.left = ((containerNode.width - this.ARROW_WIDTH) / 2) + this.KEEPOUT;
+				if (overflow.current.isOverRight && !overflow.current.isOverLeft) {
+					position.left = window.innerWidth - ((containerNode.width + ARROW_WIDTH) / 2) - KEEPOUT;
+				} else if (!overflow.current.isOverRight && overflow.current.isOverLeft) {
+					position.left = ((containerNode.width - ARROW_WIDTH) / 2) + KEEPOUT;
 				} else if (anchor === 'left') {
-					position.left = clientNode.left + (containerNode.width - this.ARROW_WIDTH) / 2;
+					position.left = clientNode.left + (containerNode.width - ARROW_WIDTH) / 2;
 				} else if (anchor === 'right') {
-					position.left = clientNode.right - containerNode.width + (containerNode.width - this.ARROW_WIDTH) / 2;
+					position.left = clientNode.right - containerNode.width + (containerNode.width - ARROW_WIDTH) / 2;
 				} else {
-					position.left = clientNode.left + (clientNode.width - this.ARROW_WIDTH) / 2;
+					position.left = clientNode.left + (clientNode.width - ARROW_WIDTH) / 2;
 				}
-			} else if (this.overflow.isOverBottom && !this.overflow.isOverTop) {
-				position.top = window.innerHeight - ((containerNode.height + this.ARROW_WIDTH) / 2) - this.KEEPOUT;
-			} else if (!this.overflow.isOverBottom && this.overflow.isOverTop) {
-				position.top = ((containerNode.height - this.ARROW_WIDTH) / 2) + this.KEEPOUT;
+			} else if (overflow.current.isOverBottom && !overflow.current.isOverTop) {
+				position.top = window.innerHeight - ((containerNode.height + ARROW_WIDTH) / 2) - KEEPOUT;
+			} else if (!overflow.current.isOverBottom && overflow.current.isOverTop) {
+				position.top = ((containerNode.height - ARROW_WIDTH) / 2) + KEEPOUT;
 			} else if (anchor === 'top') {
-				position.top = clientNode.top + (containerNode.height - this.ARROW_WIDTH) / 2;
+				position.top = clientNode.top + (containerNode.height - ARROW_WIDTH) / 2;
 			} else if (anchor === 'bottom') {
-				position.top = clientNode.bottom - containerNode.height + (containerNode.height - this.ARROW_WIDTH) / 2;
+				position.top = clientNode.bottom - containerNode.height + (containerNode.height - ARROW_WIDTH) / 2;
 			} else {
-				position.top = clientNode.top + (clientNode.height - this.ARROW_WIDTH) / 2;
+				position.top = clientNode.top + (clientNode.height - ARROW_WIDTH) / 2;
 			}
 
 			switch (direction) {
 				case 'above':
-					position.top = clientNode.top - this.ARROW_WIDTH - this.MARGIN;
+					position.top = clientNode.top - ARROW_WIDTH - MARGIN;
 					break;
 				case 'below':
-					position.top = clientNode.bottom + this.MARGIN;
+					position.top = clientNode.bottom + MARGIN;
 					break;
 				case 'left':
-					position.left = this.props.rtl ? clientNode.left + clientNode.width + this.MARGIN : clientNode.left - this.ARROW_WIDTH - this.MARGIN;
+					position.left = componentProps.rtl ? clientNode.left + clientNode.width + MARGIN : clientNode.left - ARROW_WIDTH - MARGIN;
 					break;
 				case 'right':
-					position.left = this.props.rtl ? clientNode.left - this.ARROW_WIDTH - this.MARGIN : clientNode.left + clientNode.width + this.MARGIN;
+					position.left = componentProps.rtl ? clientNode.left - ARROW_WIDTH - MARGIN : clientNode.left + clientNode.width + MARGIN;
 					break;
 				default:
 					return {};
 			}
 
-			return this.adjustRTL(position);
-		}
+			return adjustRTL(position);
+		}, [ARROW_WIDTH, KEEPOUT, MARGIN, adjustRTL, componentProps, getContainerAdjustedPosition]);
 
-		calcOverflow (container, client) {
+		const calcOverflow = useCallback((container, client) => {
 			let containerHeight, containerWidth;
-			const {anchor, direction} = this.getContainerAdjustedPosition();
+			// eslint-disable-next-line no-shadow
+			const {anchor, direction} = getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
 				containerHeight = container.height;
@@ -534,45 +315,36 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				containerWidth = container.width;
 			}
 
-			this.overflow = {
+			overflow.current = {
 				isOverTop: anchor === 'top' && (direction === 'left' || direction === 'right') ?
-					!(client.top > this.KEEPOUT) :
-					client.top - containerHeight - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT < 0,
+					!(client.top > KEEPOUT) :
+					client.top - containerHeight - ARROW_OFFSET - MARGIN - KEEPOUT < 0,
 				isOverBottom: anchor === 'bottom' && (direction === 'left' || direction === 'right') ?
-					client.bottom + this.KEEPOUT > window.innerHeight :
-					client.bottom + containerHeight + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerHeight,
+					client.bottom + KEEPOUT > window.innerHeight :
+					client.bottom + containerHeight + ARROW_OFFSET + MARGIN + KEEPOUT > window.innerHeight,
 				isOverLeft: anchor === 'left' && (direction === 'above' || direction === 'below') ?
-					!(client.left > this.KEEPOUT) :
-					client.left - containerWidth - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT < 0,
+					!(client.left > KEEPOUT) :
+					client.left - containerWidth - ARROW_OFFSET - MARGIN - KEEPOUT < 0,
 				isOverRight: anchor === 'right' && (direction === 'above' || direction === 'below') ?
-					client.right + this.KEEPOUT > window.innerWidth :
-					client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerWidth
+					client.right + KEEPOUT > window.innerWidth :
+					client.right + containerWidth + ARROW_OFFSET + MARGIN + KEEPOUT > window.innerWidth
 			};
-		}
+		}, [ARROW_OFFSET, KEEPOUT, MARGIN, getContainerAdjustedPosition]);
 
-		adjustDirection () {
-			const {anchor, direction} = this.getContainerAdjustedPosition();
+		const adjustDirection = useCallback(() => {
+			// eslint-disable-next-line no-shadow
+			const {anchor, direction} = getContainerAdjustedPosition();
 
-			if (this.overflow.isOverTop && !this.overflow.isOverBottom && direction === 'above') {
-				this.adjustedDirection = anchor ? `below ${anchor}` : 'below';
-			} else if (this.overflow.isOverBottom && !this.overflow.isOverTop && direction === 'below') {
-				this.adjustedDirection = anchor ? `above ${anchor}` : 'above';
-			} else if (this.overflow.isOverLeft && !this.overflow.isOverRight && direction === 'left' && !this.props.rtl) {
-				this.adjustedDirection = anchor ? `right ${anchor}` : 'right';
-			} else if (this.overflow.isOverRight && !this.overflow.isOverLeft && direction === 'right' && !this.props.rtl) {
-				this.adjustedDirection = anchor ? `left ${anchor}` : 'left';
+			if (overflow.current.isOverTop && !overflow.current.isOverBottom && direction === 'above') {
+				adjustedDirection.current = anchor ? `below ${anchor}` : 'below';
+			} else if (overflow.current.isOverBottom && !overflow.current.isOverTop && direction === 'below') {
+				adjustedDirection.current = anchor ? `above ${anchor}` : 'above';
+			} else if (overflow.current.isOverLeft && !overflow.current.isOverRight && direction === 'left' && !componentProps.rtl) {
+				adjustedDirection.current = anchor ? `right ${anchor}` : 'right';
+			} else if (overflow.current.isOverRight && !overflow.current.isOverLeft && direction === 'right' && !componentProps.rtl) {
+				adjustedDirection.current = anchor ? `left ${anchor}` : 'left';
 			}
-		}
-
-		adjustRTL (position) {
-			let pos = position;
-			if (this.props.rtl) {
-				const tmpLeft = pos.left;
-				pos.left = pos.right;
-				pos.right = tmpLeft;
-			}
-			return pos;
-		}
+		}, [componentProps, getContainerAdjustedPosition]);
 
 		/**
 		 * Position the popup in relation to the activator.
@@ -585,234 +357,497 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @public
 		 * @returns {undefined}
 		 */
-		positionContextualPopup = () => {
-			if (this.containerNode && this.clientSiblingRef?.current) {
-				const containerNode = this.containerNode.getBoundingClientRect();
-				const {top, left, bottom, right, width, height} = this.clientSiblingRef.current.getBoundingClientRect();
+		const positionContextualPopup = useCallback(() => {
+			if (containerNode.current && clientSiblingRef?.current) {
+				const localContainerNode = containerNode.current.getBoundingClientRect();
+				const {top, left, bottom, right, width, height} = clientSiblingRef.current.getBoundingClientRect();
 				const clientNode = {top, left, bottom, right, width, height};
 
-				clientNode.left = this.props.rtl ? window.innerWidth - right : left;
-				clientNode.right = this.props.rtl ? window.innerWidth - left : right;
+				clientNode.left = componentProps.rtl ? window.innerWidth - right : left;
+				clientNode.right = componentProps.rtl ? window.innerWidth - left : right;
 
-				this.calcOverflow(containerNode, clientNode);
-				this.adjustDirection();
+				calcOverflow(localContainerNode, clientNode);
+				adjustDirection();
 
-				const arrowPosition = this.getArrowPosition(containerNode, clientNode),
-					containerPosition = this.getContainerPosition(containerNode, clientNode);
+				const localArrowPosition = getArrowPosition(localContainerNode, clientNode),
+					localContainerPosition = getContainerPosition(localContainerNode, clientNode);
 
-				if ((this.state.direction !== this.adjustedDirection) ||
-					(this.state.arrowPosition.left !== arrowPosition.left) ||
-					(this.state.arrowPosition.top !== arrowPosition.top) ||
-					(this.state.containerPosition.left !== containerPosition.left) ||
-					(this.state.containerPosition.right !== containerPosition.right) ||
-					(this.state.containerPosition.top !== containerPosition.top)
+				if ((direction !== adjustedDirection.current) ||
+					(arrowPosition.left !== localArrowPosition.left) ||
+					(arrowPosition.top !== localArrowPosition.top) ||
+					(containerPosition.left !== localContainerPosition.left) ||
+					(containerPosition.right !== localContainerPosition.right) ||
+					(containerPosition.top !== localContainerPosition.top)
 				) {
-					this.setState({
-						direction: this.adjustedDirection,
-						arrowPosition,
-						containerPosition
-					});
+					setDirection(adjustedDirection.current);
+					setArrowPosition(localArrowPosition);
+					setContainerPosition(localContainerPosition);
 				}
 			}
-		};
+		}, [adjustDirection, arrowPosition, calcOverflow, componentProps, containerPosition, direction, getArrowPosition, getContainerPosition]);
 
-		getContainerNode = (node) => {
-			this.containerNode = node;
+		const getContainerNode = useCallback((node) => {
+			containerNode.current = node;
 
-			if (this.resizeObserver) {
+			if (resizeObserver.current) {
 				if (node) {
 					// It is not easy to trigger changed position of activator,
 					// so we chose to observe the `div` element's size that has the real size below the root of floatLayer.
 					// This implementation is dependent on the current structure of FloatingLayer,
 					// so if the structure have changed, below code needs to be changed accordingly.
-					this.resizeObserver.observe(node?.parentElement?.parentElement);
+					resizeObserver.current.observe(node?.parentElement?.parentElement);
 				} else {
-					this.resizeObserver.disconnect();
+					resizeObserver.current.disconnect();
 				}
 			}
 
-			if (this.mutationObserver) {
+			if (mutationObserver.current) {
 				if (node) {
-					this.mutationObserver.observe(document.body, {attributes: false, childList: true, subtree: true});
+					mutationObserver.current.observe(document.body, {attributes: false, childList: true, subtree: true});
 				} else {
-					this.mutationObserver.disconnect();
+					mutationObserver.current.disconnect();
 				}
 			}
-		};
+		}, []);
 
-		handle = handle.bind(this);
+		const spotPopupContent = useCallback(() => {
+			const spottableDescendants = Spotlight.getSpottableDescendants(containerId.current);
+			if (componentProps.spotlightRestrict === 'self-only' && spottableDescendants.length && Spotlight.getCurrent()) {
+				Spotlight.getCurrent().blur();
+			}
 
-		handleKeyUp = this.handle(
-			forProp('open', true),
-			forKey('enter'),
-			() => Spotlight.getCurrent() === this.state.activator,
-			stop,
-			forwardCustom('onClose')
-		);
+			if (!Spotlight.focus(containerId.current)) {
+				Spotlight.setActiveContainer(containerId.current);
+			}
+		}, [componentProps]);
 
-		handleOpen = (ev) => {
-			forward('onOpen', ev, this.props);
-			this.positionContextualPopup();
+		const handleKeyUp = useCallback(() => {
+			return handle(
+				forProp('open', true),
+				forKey('enter'),
+				() => Spotlight.getCurrent() === activator,
+				stop,
+				forwardCustom('onClose')
+			);
+		}, [activator]);
+
+		const handleOpen = useCallback((ev) => {
+			forward('onOpen', ev, componentProps);
+			positionContextualPopup();
 			const current = Spotlight.getCurrent();
-			this.updateLeaveFor(current);
-			this.setState({
-				activator: current
-			});
-			this.spotPopupContent();
-		};
+			updateLeaveFor(current);
+			setActivator(current);
+			spotPopupContent();
+		}, [componentProps, positionContextualPopup, spotPopupContent, updateLeaveFor]);
 
-		handleClose = () => {
-			this.updateLeaveFor(null);
-			this.setState({
-				activator: null
-			});
-		};
+		const handleClose = useCallback(() => {
+			updateLeaveFor(null);
+			setActivator(null);
+		}, [updateLeaveFor]);
 
-		handleDismiss = () => {
-			forwardCustom('onClose')(null, this.props);
-		};
+		const handleDismiss = useCallback(() => {
+			forwardCustom('onClose')(null, componentProps);
+		}, [componentProps]);
 
-		handleDirectionalKey (ev) {
+		const handleDirectionalKey = useCallback((ev) => {
 			// prevent default page scrolling
 			ev.preventDefault();
 			// stop propagation to prevent default spotlight behavior
 			ev.stopPropagation();
 			// set the pointer mode to false on keydown
 			Spotlight.setPointerMode(false);
-		}
+		}, []);
 
 		// handle key event from outside (i.e. the activator) to the popup container
-		handleKeyDown = (ev) => {
-			const {activator, containerId} = this.state;
-			const {spotlightRestrict} = this.props;
+		const handleKeyDown = useCallback((ev) => {
 			const current = Spotlight.getCurrent();
+			// eslint-disable-next-line no-shadow
 			const direction = getDirection(ev.keyCode);
-
 			if (!direction) return;
 
-			const hasSpottables = Spotlight.getSpottableDescendants(containerId).length > 0;
-			const spotlessSpotlightModal = spotlightRestrict === 'self-only' && !hasSpottables;
-			const shouldSpotPopup = current === activator && direction === PositionToDirection[this.adjustedDirection.split(' ')[0]] && hasSpottables;
+			const hasSpottables = Spotlight.getSpottableDescendants(containerId.current).length > 0;
+			const spotlessSpotlightModal = componentProps.spotlightRestrict === 'self-only' && !hasSpottables;
+			const shouldSpotPopup = current === activator && direction === PositionToDirection[adjustedDirection.current.split(' ')[0]] && hasSpottables;
 
 			if (shouldSpotPopup || spotlessSpotlightModal) {
-				this.handleDirectionalKey(ev);
+				handleDirectionalKey(ev);
 
 				// we guard against attempting a focus change by verifying the case where a
 				// spotlightModal popup contains no spottable components
 				if (!spotlessSpotlightModal && shouldSpotPopup) {
-					this.spotPopupContent();
+					spotPopupContent();
 				}
 			}
-		};
+		}, [activator, componentProps, handleDirectionalKey, spotPopupContent]);
 
 		// handle key event from contextual popup and closes the popup
-		handleContainerKeyDown = (ev) => {
+		const handleContainerKeyDown = useCallback((ev) => {
 			// Note: Container will be only rendered if `open`ed, therefore no need to check for `open`
+			// eslint-disable-next-line no-shadow
 			const direction = getDirection(ev.keyCode);
 
 			if (!direction) return;
 
-			this.handleDirectionalKey(ev);
+			handleDirectionalKey(ev);
 
 			// if focus moves outside the popup's container, issue the `onClose` event
-			if (Spotlight.move(direction) && !this.containerNode.contains(Spotlight.getCurrent())) {
-				forwardCustom('onClose')(null, this.props);
+			if (Spotlight.move(direction) && !containerNode.current.contains(Spotlight.getCurrent())) {
+				forwardCustom('onClose')(null, componentProps);
 			}
-		};
+		}, [componentProps, handleDirectionalKey]);
 
-		spotActivator = (activator) => {
+		// eslint-disable-next-line no-shadow
+		const spotActivator = useCallback((activator) => {
 			if (!Spotlight.getPointerMode() && activator && activator === Spotlight.getCurrent()) {
 				activator.blur();
 			}
 			if (!Spotlight.focus(activator)) {
 				Spotlight.focus();
 			}
-		};
+		}, []);
 
-		spotPopupContent = () => {
-			const {spotlightRestrict} = this.props;
-			const {containerId} = this.state;
-			const spottableDescendants = Spotlight.getSpottableDescendants(containerId);
-			if (spotlightRestrict === 'self-only' && spottableDescendants.length && Spotlight.getCurrent()) {
-				Spotlight.getCurrent().blur();
+		const getSnapshotBeforeUpdate = useCallback(() =>  {
+			const localSnapshot = {
+				containerWidth: getContainerNodeWidth()
+			};
+
+			if (prevProps.current.open && !componentProps.open) {
+				const current = Spotlight.getCurrent();
+				localSnapshot.shouldSpotActivator = (
+					// isn't set
+					!current ||
+					// is on the activator, and we want to re-spot it so a11y read out can occur
+					current === activator ||
+					// is within the popup
+					containerNode.current?.contains(current)
+				);
 			}
 
-			if (!Spotlight.focus(containerId)) {
-				Spotlight.setActiveContainer(containerId);
-			}
-		};
+			return localSnapshot;
+		}, [activator, componentProps, getContainerNodeWidth]);
 
-		render () {
-			const {'data-webos-voice-exclusive': voiceExclusive, popupComponent: PopupComponent, popupClassName, noAutoDismiss, open, offset, popupProps, skin, spotlightRestrict, ...rest} = this.props;
-			const idFloatLayer = `${this.id}_floatLayer`;
-			let scrimType = rest.scrimType;
-			delete rest.scrimType;
-
-			// 'holepunch' scrimType is specific to this component, not supported by floating layer
-			// so it must be swapped-out for one that FloatingLayer does support.
-			const holepunchScrim = (scrimType === 'holepunch');
-			if ((spotlightRestrict === 'self-only' && scrimType === 'none') || holepunchScrim) {
-				scrimType = 'transparent';
+		useEffect(() => {
+			if (componentProps.open) {
+				on('keydown', keyDownRef.current);
+				on('keyup', keyUpRef.current);
 			}
 
-			const popupPropsRef = Object.assign({}, popupProps);
-			const ariaProps = extractAriaProps(popupPropsRef);
-
-			if (!noSkin) {
-				rest.skin = skin;
+			if (typeof ResizeObserver === 'function') {
+				resizeObserver.current = new ResizeObserver(() => {
+					positionContextualPopup();
+				});
 			}
 
-			let holeBounds;
-			if (this.clientSiblingRef?.current && holepunchScrim) {
-				holeBounds = this.clientSiblingRef.current.getBoundingClientRect();
+			if (typeof MutationObserver === 'function') {
+				mutationObserver.current = new MutationObserver(() => {
+					positionContextualPopup();
+				});
 			}
 
-			delete rest.direction;
-			delete rest.onClose;
-			delete rest.onOpen;
-			delete rest.popupSpotlightId;
-			delete rest.rtl;
-			delete rest.setApiProvider;
+		}, [componentProps, positionContextualPopup]);
 
-			if (openProp) rest[openProp] = open;
+		useEffect(() => {
+			snapshot.current = getSnapshotBeforeUpdate();
 
-			return (
-				<div aria-owns={idFloatLayer} className={css.contextualPopupDecorator}>
-					<FloatingLayer
-						id={idFloatLayer}
-						noAutoDismiss={noAutoDismiss}
-						onClose={this.handleClose}
-						onDismiss={this.handleDismiss}
-						onOpen={this.handleOpen}
-						open={open}
-						scrimType={scrimType}
-					>
-						<div>
-							{holepunchScrim ? <HolePunchScrim holeBounds={holeBounds} /> : null}
-							<ContextualPopupContainer
-								{...ariaProps}
-								className={popupClassName}
-								onKeyDown={this.handleContainerKeyDown}
-								direction={this.state.direction}
-								arrowPosition={this.state.arrowPosition}
-								containerPosition={this.state.containerPosition}
-								containerRef={this.getContainerNode}
-								data-webos-voice-exclusive={voiceExclusive}
-								offset={noArrow ? offset : 'none'}
-								showArrow={!noArrow}
-								skin={skin}
-								spotlightId={this.state.containerId}
-								spotlightRestrict={spotlightRestrict}
-							>
-								<PopupComponent {...popupPropsRef} />
-							</ContextualPopupContainer>
-						</div>
-					</FloatingLayer>
-					<WrappedWithRef {...rest} outermostRef={this.clientSiblingRef} referrerName="ContextualPopup" />
-				</div>
-			);
+			if (prevProps.current.direction !== componentProps.direction ||
+				snapshot.current.containerWidth !== getContainerNodeWidth() ||
+				(prevProps.current.open && componentProps.open)) {
+				adjustedDirection.current = componentProps.direction;
+				// NOTE: `setState` is called and will cause re-render
+				positionContextualPopup();
+			}
+
+			if (componentProps.open && !prevProps.current.open) {
+				on('keydown', keyDownRef.current);
+				on('keyup', keyUpRef.current);
+			} else if (!componentProps.open && prevProps.current.open) {
+				off('keydown', keyDownRef.current);
+				off('keyup', keyUpRef.current);
+				if (snapshot.current && snapshot.current.shouldSpotActivator) {
+					spotActivator(activator);
+				}
+			}
+
+			prevProps.current = componentProps;
+		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
+
+		useEffect(() => {
+			// eslint-disable-next-line no-shadow
+			const id = containerId.current;
+
+			return () => {
+				if (componentProps.open) {
+					off('keydown', keyDownRef.current);
+					off('keyup', keyUpRef.current);
+				}
+				Spotlight.remove(id);
+
+				if (resizeObserver.current) {
+					resizeObserver.current.disconnect();
+					resizeObserver.current = null;
+				}
+
+				if (mutationObserver.current) {
+					mutationObserver.current.disconnect();
+					mutationObserver.current = null;
+				}
+			};
+
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
+
+		useEffect(() => {
+			if (componentProps.open) {
+				if (handleKeyDown !== keyDownRef.current || handleKeyUp !== keyUpRef.current) {
+					off('keydown', keyDownRef.current);
+					off('keyup', keyUpRef.current);
+					keyDownRef.current = handleKeyDown;
+					keyUpRef.current = handleKeyUp;
+					on('keydown', keyDownRef.current);
+					on('keyup', keyUpRef.current);
+				}
+			}
+		}, [componentProps, handleKeyDown, handleKeyUp]);
+
+		const {'data-webos-voice-exclusive': voiceExclusive, popupComponent: PopupComponent, popupClassName, noAutoDismiss, open, offset, popupProps, skin, spotlightRestrict, ...rest} = componentProps;
+		const idFloatLayer = `${id.current}_floatLayer`;
+		let scrimType = rest.scrimType;
+		delete rest.scrimType;
+
+		// 'holepunch' scrimType is specific to this component, not supported by floating layer
+		// so it must be swapped-out for one that FloatingLayer does support.
+		const holepunchScrim = (scrimType === 'holepunch');
+		if ((spotlightRestrict === 'self-only' && scrimType === 'none') || holepunchScrim) {
+			scrimType = 'transparent';
 		}
+
+		const popupPropsRef = Object.assign({}, popupProps);
+		const ariaProps = extractAriaProps(popupPropsRef);
+
+		if (!noSkin) {
+			rest.skin = skin;
+		}
+
+		let holeBounds;
+		if (clientSiblingRef?.current && holepunchScrim) {
+			holeBounds = clientSiblingRef.current.getBoundingClientRect();
+		}
+
+		delete rest.direction;
+		delete rest.onClose;
+		delete rest.onOpen;
+		delete rest.popupSpotlightId;
+		delete rest.rtl;
+		delete rest.setApiProvider;
+
+		if (openProp) rest[openProp] = open;
+
+		return (
+			<div aria-owns={idFloatLayer} className={css.contextualPopupDecorator}>
+				<FloatingLayer
+					id={idFloatLayer}
+					noAutoDismiss={noAutoDismiss}
+					onClose={handleClose}
+					onDismiss={handleDismiss}
+					onOpen={handleOpen}
+					open={open}
+					scrimType={scrimType}
+				>
+					<div>
+						{holepunchScrim ? <HolePunchScrim holeBounds={holeBounds} /> : null}
+						<ContextualPopupContainer
+							{...ariaProps}
+							className={popupClassName}
+							onKeyDown={handleContainerKeyDown}
+							direction={direction}
+							arrowPosition={arrowPosition}
+							containerPosition={containerPosition}
+							containerRef={getContainerNode}
+							data-webos-voice-exclusive={voiceExclusive}
+							offset={noArrow ? offset : 'none'}
+							showArrow={!noArrow}
+							skin={skin}
+							spotlightId={containerId.current}
+							spotlightRestrict={spotlightRestrict}
+						>
+							<PopupComponent {...popupPropsRef} />
+						</ContextualPopupContainer>
+					</div>
+				</FloatingLayer>
+				<WrappedWithRef {...rest} outermostRef={clientSiblingRef} referrerName="ContextualPopup" />
+			</div>
+		);
 	};
+
+	ContextualPopupDecorator.displayName = 'ContextualPopupDecorator';
+
+	ContextualPopupDecorator.propTypes = /** @lends limestone/ContextualPopupDecorator.ContextualPopupDecorator.prototype */ {
+		/**
+		 * The component rendered within the
+		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
+		 *
+		 * @type {Component}
+		 * @required
+		 * @public
+		 */
+		popupComponent: EnactPropTypes.component.isRequired,
+
+		/**
+		 * Limits the range of voice control to the popup.
+		 *
+		 * @memberof limestone/ContextualPopupDecorator.ContextualPopupDecorator.prototype
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
+		'data-webos-voice-exclusive': PropTypes.bool,
+
+		/**
+		 * Direction of popup with respect to the wrapped component.
+		 *
+		 * @type {('above'|'above center'|'above left'|'above right'|'below'|'below center'|'below left'|'below right'|'left middle'|'left top'|'left bottom'|'right middle'|'right top'|'right bottom')}
+		 * @default 'below center'
+		 * @public
+		 */
+		direction: PropTypes.oneOf(['above', 'above center', 'above left', 'above right', 'below', 'below center', 'below left', 'below right', 'left middle', 'left top', 'left bottom', 'right middle', 'right top', 'right bottom']),
+
+		/**
+		 * Disables closing the popup when the user presses the cancel/back (e.g. `ESC`) key or taps outside the
+		 * popup.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		noAutoDismiss: PropTypes.bool,
+
+		/**
+		 * Offset from the activator to apply to the position of the popup.
+		 *
+		 * Only applies when `noArrow` is `true`.
+		 *
+		 * @type {('none'|'overlap'|'small')}
+		 * @default 'small'
+		 * @public
+		 */
+		offset: PropTypes.oneOf(['none', 'overlap', 'small']),
+
+		/**
+		 * Called when the user has attempted to close the popup.
+		 *
+		 * This may occur either when the close button is clicked or when spotlight focus
+		 * moves outside the boundary of the popup. Setting `spotlightRestrict` to `'self-only'`
+		 * will prevent Spotlight focus from leaving the popup.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onClose: PropTypes.func,
+
+		/**
+		 * Called when the popup is opened.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onOpen: PropTypes.func,
+
+		/**
+		 * Displays the contextual popup.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		open: PropTypes.bool,
+
+		/**
+		 * CSS class name to pass to the
+		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
+		 *
+		 * This is commonly used to set width and height of the popup.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		popupClassName: PropTypes.string,
+
+		/**
+		 * An object containing properties to be passed to popup component.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		popupProps: PropTypes.object,
+
+		/**
+		 * The container ID to use with Spotlight.
+		 *
+		 * The spotlight container for the popup isn't created until it is open. To configure
+		 * the container using `Spotlight.set()`, handle the `onOpen` event which is fired after
+		 * the popup has been created and opened.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		popupSpotlightId: PropTypes.string,
+
+		/**
+		 * Indicates the content's text direction is right-to-left.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		rtl: PropTypes.bool,
+
+		/**
+		 * Set the type of scrim to use
+		 *
+		 * @type {('holepunch'|'translucent'|'transparent'|'none')}
+		 * @default 'none'
+		 * @private
+		 */
+		scrimType: PropTypes.oneOf(['holepunch', 'translucent', 'transparent', 'none']),
+
+		/**
+		 * Registers the ContextualPopupDecorator component with an
+		 * {@link core/internal/ApiDecorator.ApiDecorator|ApiDecorator}.
+		 *
+		 * @type {Function}
+		 * @private
+		 */
+		setApiProvider: PropTypes.func,
+
+		/**
+		 * The current skin for this component.
+		 *
+		 * When `noSkin` is set on the config object, `skin` will only be applied to the
+		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup} and not
+		 * to the popup's activator component.
+		 *
+		 * @see {@link limestone/Skinnable.Skinnable.skin}
+		 * @type {String}
+		 * @public
+		 */
+		skin: PropTypes.string,
+
+		/**
+		 * Restricts or prioritizes spotlight navigation.
+		 *
+		 * Allowed values are:
+		 * * `'none'` - Spotlight can move freely within and beyond the popup
+		 * * `'self-first'` - Spotlight should prefer components within the popup over
+		 *   components beyond the popup, or
+		 * * `'self-only'` - Spotlight can only be set within the popup
+		 *
+		 * @type {('none'|'self-first'|'self-only')}
+		 * @default 'self-first'
+		 * @public
+		 */
+		spotlightRestrict: PropTypes.oneOf(['none', 'self-first', 'self-only'])
+	};
+
+	return ContextualPopupDecorator;
 });
 
 /**
