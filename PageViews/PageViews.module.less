@@ -26,6 +26,11 @@
 		height: @lime-button-height;
 		top: ~"calc(50% - "@lime-button-height / 2 ~")";
 		z-index: 10;
+		pointer-events: none;
+
+		& [role='button'] {
+			pointer-events: auto;
+		}
 	}
 
 	&.number .navButtonCell {
@@ -65,6 +70,11 @@
 
 	&.fullContents.indicatorBottom .stepsRow {
 		bottom: @lime-pageviews-full-contents-bottom-steps-bottom;
+		pointer-events: none;
+
+		& [role='button'] {
+			pointer-events: auto;
+		}
 	}
 
 	.contentsArea {
