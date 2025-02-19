@@ -52,6 +52,7 @@ export const _Button = (args) => (
 			onClick={action('onClick')}
 			onTap={action('onTap')}
 			backgroundOpacity={args['backgroundOpacity']}
+			bordered={args['bordered']}
 			color={args['color']}
 			disabled={args['disabled']}
 			icon={args['icon']}
@@ -71,6 +72,7 @@ export const _Button = (args) => (
 );
 
 select('backgroundOpacity', _Button, prop.backgroundOpacity, Config);
+boolean('bordered', _Button, Config);
 select('color', _Button, prop.color, Config);
 boolean('disabled', _Button, Config);
 select('icon', _Button, prop.icons, Config);

@@ -59,6 +59,14 @@ const ButtonBase = kind({
 		backgroundOpacity: PropTypes.oneOf(['opaque', 'transparent']),
 
 		/**
+		 * Adds a border to the button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		bordered: PropTypes.bool,
+
+		/**
 		 * Enables the `collapsed` feature.
 		 *
 		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
@@ -117,15 +125,6 @@ const ButtonBase = kind({
 		// internally for its design guidelines. Same for `pressed` which is used by Dropdown to
 		// nullify the key-press activate animation.
 		css: PropTypes.object,
-
-		/**
-		 * Set the visual effect applied to the button when focused.
-		 *
-		 * @type {('expand'|'static')}
-		 * @default 'expand'
-		 * @private
-		 */
-		focusEffect: PropTypes.oneOf(['expand', 'static']),
 
 		/**
 		 * The component used to render the {@link limestone/Button.ButtonBase.icon|icon}.
@@ -197,7 +196,6 @@ const ButtonBase = kind({
 		backgroundOpacity: null,
 		collapsable: false,
 		collapsed: false,
-		focusEffect: 'expand',
 		iconComponent: Icon,
 		iconOnly: false,
 		iconPosition: 'before',
@@ -211,18 +209,18 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
+		className: ({backgroundOpacity, bordered, collapsable, collapsed, color, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
-				hasColor: color,
-				iconOnly,
+				bordered,
 				collapsable,
 				collapsed,
+				hasColor: color,
+				iconOnly,
 				roundBorder,
 				shadowed: shadowed && (backgroundOpacity ? backgroundOpacity === 'transparent' : iconOnly)
 			},
 			backgroundOpacity || (iconOnly ? 'transparent' : 'opaque'), // Defaults to opaque, unless otherwise specified
 			color,
-			`focus${cap(focusEffect)}`,
 			// iconBefore/iconAfter only applies when using text and an icon
 			!iconOnly && `icon${cap(iconPosition)}`,
 			size
@@ -232,12 +230,12 @@ const ButtonBase = kind({
 
 	render: ({css, ...rest}) => {
 		delete rest.backgroundOpacity;
+		delete rest.bordered;
 		delete rest.color;
 		delete rest.collapsable;
 		delete rest.collapsed;
 		delete rest.iconOnly;
 		delete rest.iconPosition;
-		delete rest.focusEffect;
 		delete rest.roundBorder;
 		delete rest.shadowed;
 

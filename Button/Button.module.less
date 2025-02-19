@@ -25,14 +25,6 @@
 		--button-height: $height;
 	});
 
-	&.focusStatic {
-		/* Defined to prevent global export */
-	}
-
-	&.focusExpand {
-		margin: @lime-button-focusexpand-margin;
-	}
-
 	.client {
 		padding: @lime-button-border-width 0;	// We account for the button border-width here, since that is applied to .bg, not .client. Having these match means the text doesn't overlap the border
 		border-radius: inherit;
@@ -130,10 +122,6 @@
 		padding-right: @lime-button-small-h-padding;
 		--button-height: $height;
 
-		&.focusExpand {
-			margin: @lime-button-small-focusexpand-margin;
-		}
-
 		// Standard Button Scenario
 		&.minWidth {
 			min-width: @lime-button-small-min-width;
@@ -159,7 +147,7 @@
 			.client::before {
 				bottom: @lime-button-small-colordot-bottom;
 				width: @lime-button-small-colordot-width;
-				height: @lime-button-colordot-height;
+				height: @lime-button-small-colordot-height;
 			}
 
 			// Standard Button Scenario
@@ -294,6 +282,13 @@
 			border-radius: @lime-button-border-radius;
 		}
 
+		&.bordered {
+			.bg {
+				background-color: @lime-button-bordered-bg-color;
+				border: @lime-button-bordered-border-width solid @lime-button-bordered-border-color;
+			}
+		}
+
 		&.opaque {
 			color: @lime-button-text-color;
 
@@ -317,12 +312,15 @@
 		&.red .client::before {
 			background-color: @lime-remote-button-red-color;
 		}
+
 		&.green .client::before {
 			background-color: @lime-remote-button-green-color;
 		}
+
 		&.yellow .client::before {
 			background-color: @lime-remote-button-yellow-color;
 		}
+
 		&.blue .client::before {
 			background-color: @lime-remote-button-blue-color;
 		}
@@ -349,6 +347,12 @@
 
 			.bg {
 				.lime-button-selected-colors();
+			}
+
+			&.bordered {
+				.bg {
+					border: @lime-button-bordered-border-width solid @lime-button-bordered-selected-border-color;
+				}
 			}
 
 			&.opaque {
@@ -380,45 +384,12 @@
 					background-color: @lime-button-focus-icononly-bg-color;
 				}
 			}
-
-			&.focusExpand {
-				.bg {
-					.lime-bg-colors({
-						transform: @lime-button-focusexpand-focus-bg-transform;
-					});
-				}
-
-				&.small .bg {
-					.lime-bg-colors({
-						transform: @lime-button-small-focusexpand-focus-bg-transform;
-					});
-				}
-			}
 		});
 
 		// Button-non-disabled rules
 		&:not([disabled]) {
 			.focus({
 				z-index: 1;
-
-				&.focusExpand {
-					&.pressed,
-					&:active {
-						.bg {
-							.lime-bg-colors({
-								transform: @lime-button-focusexpand-pressed-bg-transform;
-							});
-						}
-
-						&.small {
-							.bg {
-								.lime-bg-colors({
-									transform: @lime-button-small-focusexpand-pressed-bg-transform;
-								});
-							}
-						}
-					}
-				}
 			});
 		}
 
@@ -428,37 +399,6 @@
 					.lime-button-focus-bg-colors(@shadow: {
 						box-shadow: none;
 					});
-				}
-
-				&.focusExpand {
-					.bg {
-						.lime-bg-colors({
-							transform: none;
-						});
-					}
-
-					&.small .bg {
-						.lime-bg-colors({
-							transform: none;
-						});
-					}
-
-					&.pressed,
-					&:active {
-						.bg {
-							.lime-bg-colors({
-								transform: none;
-							});
-						}
-
-						&.small {
-							.bg {
-								.lime-bg-colors({
-									transform: none;
-								});
-							}
-						}
-					}
 				}
 			});
 		}
