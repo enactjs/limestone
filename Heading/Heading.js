@@ -78,7 +78,7 @@ const HeadingBase = kind({
 	},
 
 	defaultProps: {
-		spacing: 'small'
+		spacing: 'none'
 	},
 
 	styles: {

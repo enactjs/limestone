@@ -176,9 +176,8 @@ const AlertBase = kind({
 				return BodyText;
 			}
 		},
-		className: ({buttons, image, title, type, styler}) => styler.append(
+		className: ({image, title, type, styler}) => styler.append(
 			{
-				maxButtons: (buttons && Children.toArray(buttons).filter(Boolean).length > 2),
 				noImage: !image,
 				noTitle: (type === 'fullscreen') && !title
 			},
