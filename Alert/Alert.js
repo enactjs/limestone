@@ -15,7 +15,6 @@ import ri from '@enact/ui/resolution';
 import Slottable from '@enact/ui/Slottable';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import {Children} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
