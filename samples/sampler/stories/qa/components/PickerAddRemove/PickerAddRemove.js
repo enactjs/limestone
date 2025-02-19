@@ -1,9 +1,9 @@
 import {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import Button from '@enact/sandstone/Button';
-import Input from '@enact/sandstone/Input';
-import Picker from '@enact/sandstone/Picker';
+import Button from '@enact/limestone/Button';
+import Input from '@enact/limestone/Input';
+import Picker from '@enact/limestone/Picker';
 
 class PickerAddRemove extends Component {
 	static displayName = 'PickerAddRemove';

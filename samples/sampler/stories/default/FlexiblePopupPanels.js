@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Button from '@enact/sandstone/Button';
-import {FlexiblePopupPanelsBase, FlexiblePopupPanels, Panel, PanelBase, Header} from '@enact/sandstone/FlexiblePopupPanels';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import {FlexiblePopupPanelsBase, FlexiblePopupPanels, Panel, PanelBase, Header} from '@enact/limestone/FlexiblePopupPanels';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
+import Slider from '@enact/limestone/Slider';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -21,7 +21,7 @@ const Config = mergeComponentMetadata('FlexiblePopupPanels', FlexiblePopupPanels
 const PanelConfig = mergeComponentMetadata('Panel', PanelBase, Panel);
 
 export default {
-	title: 'Sandstone/FlexiblePopupPanels',
+	title: 'Limestone/FlexiblePopupPanels',
 	component: 'FlexiblePopupPanels'
 };
 

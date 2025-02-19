@@ -8,7 +8,7 @@ import {memo} from 'react';
  * @param   {Object}    props    Props object
  *
  * @returns {Object}             voice control related props
- * @memberof sandstone/internal/util
+ * @memberof limestone/internal/util
  * @private
  */
 const extractVoiceProps = function (props) {
@@ -31,7 +31,7 @@ const extractVoiceProps = function (props) {
 *  @param   {children}    b    children props
  *
  * @returns {Boolean}          `true` if same
- * @memberof sandstone/internal/util
+ * @memberof limestone/internal/util
  * @private
  */
 const compareChildren = (a, b) => {
@@ -60,7 +60,7 @@ const compareChildren = (a, b) => {
 *  @param   {Array}  propKeys   Prop keys to compare
  *
  * @returns {any}               Conditionally memoized component
- * @memberof sandstone/internal/util
+ * @memberof limestone/internal/util
  * @private
  */
 const onlyUpdateForProps = (wrapped, propKeys) => memo(wrapped, (prevProps, nextProps) => {

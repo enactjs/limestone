@@ -1,5 +1,5 @@
 /**
- * Sandstone styled Dropdown components
+ * Limestone styled Dropdown components
  *
  * @example
  * <Dropdown
@@ -10,7 +10,7 @@
  *   {['Option 1', 'Option 2', 'Option 3', 'Option 4']}
  * </Dropdown>
  *
- * @module sandstone/Dropdown
+ * @module limestone/Dropdown
  * @exports Dropdown
  * @exports DropdownBase
  * @exports DropdownBaseDecorator
@@ -84,9 +84,9 @@ DropdownButton.displayName = 'DropdownButton';
  * A stateless Dropdown component.
  *
  * @class DropdownBase
- * @memberof sandstone/Dropdown
- * @extends sandstone/Button.Button
- * @extends sandstone/ContextualPopupDecorator.ContextualPopupDecorator
+ * @memberof limestone/Dropdown
+ * @extends limestone/Button.Button
+ * @extends limestone/ContextualPopupDecorator.ContextualPopupDecorator
  * @omit popupComponent
  * @ui
  * @public
@@ -94,7 +94,7 @@ DropdownButton.displayName = 'DropdownButton';
 const DropdownBase = kind({
 	name: 'Dropdown',
 
-	propTypes: /** @lends sandstone/Dropdown.DropdownBase.prototype */ {
+	propTypes: /** @lends limestone/Dropdown.DropdownBase.prototype */ {
 		/**
 		 * The "aria-label" for the Dropdown.
 		 *
@@ -212,7 +212,7 @@ const DropdownBase = kind({
 		selected: PropTypes.number,
 
 		/**
-		 * The size of the Dropdown's {@link sandstone/Button.Button|Button} component.
+		 * The size of the Dropdown's {@link limestone/Button.Button|Button} component.
 		 *
 		 * @type {('large'|'small')}
 		 * @default 'small'
@@ -361,11 +361,11 @@ const DropdownBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors and functionality to
- * {@link sandstone/Dropdown.DropdownBase|DropdownBase}.
+ * Applies Limestone specific behaviors and functionality to
+ * {@link limestone/Dropdown.DropdownBase|DropdownBase}.
  *
  * @hoc
- * @memberof sandstone/Dropdown
+ * @memberof limestone/Dropdown
  * @mixes ui/Changeable.Changeable
  * @mixes ui/Toggleable.Toggleable
  * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
@@ -407,7 +407,7 @@ const DropdownDecorator = compose(
  * Displays the items.
  *
  * @name open
- * @memberof sandstone/Dropdown.DropdownDecorator.prototype
+ * @memberof limestone/Dropdown.DropdownDecorator.prototype
  * @type {Boolean}
  * @default false
  * @public
@@ -417,7 +417,7 @@ const DropdownDecorator = compose(
  * Index of the selected item.
  *
  * @name selected
- * @memberof sandstone/Dropdown.DropdownDecorator.prototype
+ * @memberof limestone/Dropdown.DropdownDecorator.prototype
  * @type {Number}
  * @public
  */
@@ -426,13 +426,13 @@ const DropdownDecorator = compose(
  * The initial selected index when `selected` is not defined.
  *
  * @name defaultSelected
- * @memberof sandstone/Dropdown.DropdownDecorator.prototype
+ * @memberof limestone/Dropdown.DropdownDecorator.prototype
  * @type {Number}
  * @public
  */
 
 /**
- * A Sandstone Dropdown component.
+ * A Limestone Dropdown component.
  *
  * By default, `Dropdown` maintains the state of its `selected` property. Supply the
  * `defaultSelected` property to control its initial value. If you wish to directly control updates
@@ -440,8 +440,8 @@ const DropdownDecorator = compose(
  * `onSelect` events.
  *
  * @class Dropdown
- * @memberof sandstone/Dropdown
- * @extends sandstone/Dropdown.DropdownBase
+ * @memberof limestone/Dropdown
+ * @extends limestone/Dropdown.DropdownBase
  * @ui
  * @public
  */

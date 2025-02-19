@@ -1,19 +1,19 @@
-import Button from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import DatePicker from '@enact/sandstone/DatePicker';
-import Heading from '@enact/sandstone/Heading';
-import FormCheckboxItem from '@enact/sandstone/FormCheckboxItem';
-import Input from '@enact/sandstone/Input';
-import Item from '@enact/sandstone/Item';
-import Image from '@enact/sandstone/Image';
-import Picker from '@enact/sandstone/Picker';
-import Popup from '@enact/sandstone/Popup';
-import RadioItem from '@enact/sandstone/RadioItem';
-import Skinnable from '@enact/sandstone/Skinnable';
-import SwitchItem from '@enact/sandstone/SwitchItem';
-import TimePicker from '@enact/sandstone/TimePicker';
-import Scroller from '@enact/sandstone/Scroller';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import DatePicker from '@enact/limestone/DatePicker';
+import Heading from '@enact/limestone/Heading';
+import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
+import Input from '@enact/limestone/Input';
+import Item from '@enact/limestone/Item';
+import Image from '@enact/limestone/Image';
+import Picker from '@enact/limestone/Picker';
+import Popup from '@enact/limestone/Popup';
+import RadioItem from '@enact/limestone/RadioItem';
+import Skinnable from '@enact/limestone/Skinnable';
+import SwitchItem from '@enact/limestone/SwitchItem';
+import TimePicker from '@enact/limestone/TimePicker';
+import Scroller from '@enact/limestone/Scroller';
+import Slider from '@enact/limestone/Slider';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -293,7 +293,7 @@ class FocusedAndDisabled extends Component {
 }
 
 export default {
-	title: 'Sandstone/Spotlight',
+	title: 'Limestone/Spotlight',
 	component: 'Spotlight'
 };
 

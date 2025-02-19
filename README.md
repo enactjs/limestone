@@ -1,15 +1,15 @@
-# @enact/sandstone [![npm (scoped)](https://img.shields.io/npm/v/@enact/sandstone.svg?style=flat-square)](https://www.npmjs.com/package/@enact/sandstone)
+# @enact/limestone [![npm (scoped)](https://img.shields.io/npm/v/@enact/limestone.svg?style=flat-square)](https://www.npmjs.com/package/@enact/limestone)
 
 > The set of components for an Enact-based application targeting smart TVs.
 
-![image](https://github.com/enactjs/sandstone/assets/4288375/169e675e-7e82-41d2-a83e-94a83f2b8f8d)
+![image](https://github.com/enactjs/limestone/assets/4288375/169e675e-7e82-41d2-a83e-94a83f2b8f8d)
 
 ## Usage
 
 ```
 import kind from '@enact/core/kind';
-import Button from '@enact/sandstone/Button';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import Button from '@enact/limestone/Button';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import React from 'react';
 
 const MyApp = kind({
@@ -17,18 +17,18 @@ const MyApp = kind({
 	render: () => (<Button>Hello, Enact!</Button>)
 });
 
-const MySandstoneApp = ThemeDecorator(MyApp);
+const MyLimestoneApp = ThemeDecorator(MyApp);
 
-export default MySandstoneApp;
+export default MyLimestoneApp;
 ```
 
-> Note: The `@enact/sandstone/ThemeDecorator` must be applied to the base component. This decorator also applies
+> Note: The `@enact/limestone/ThemeDecorator` must be applied to the base component. This decorator also applies
 `@enact/i18n/I18nDecorator`, `@enact/spotlight` and `@enact/ui/resolution` decorators.
 
 ## Install
 
 ```
-npm install --save @enact/sandstone
+npm install --save @enact/limestone
 ```
 
 ## Test
@@ -40,8 +40,8 @@ npm test
 ```
 
 ## Links
-* [Sandstone API Docs](https://enactjs.com/docs/modules/sandstone/ActionGuide/)
-* [Sandstone Component Sampler](https://enactjs.com/sampler)
+* [Limestone API Docs](https://enactjs.com/docs/modules/limestone/ActionGuide/)
+* [Limestone Component Sampler](https://enactjs.com/sampler)
 
 ## Copyright and License Information
 

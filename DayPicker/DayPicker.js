@@ -1,5 +1,5 @@
 /**
- * Sandstone styled day picker components.
+ * Limestone styled day picker components.
  *
  * @example
  * <DayPicker
@@ -7,7 +7,7 @@
  *   onSelect={console.log}
  * />
  *
- * @module sandstone/DayPicker
+ * @module limestone/DayPicker
  * @exports DayPicker
  * @exports DayPickerBase
  * @exports getSelectedDayString
@@ -32,10 +32,10 @@ import css from './DayPicker.module.less';
  * A day of the week selection component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/DayPicker.DayPicker|DayPicker}.
+ * is within {@link limestone/DayPicker.DayPicker|DayPicker}.
  *
  * @class DayPickerBase
- * @memberof sandstone/DayPicker
+ * @memberof limestone/DayPicker
  * @extends ui/Group.Group
  * @omit children
  * @ui
@@ -44,7 +44,7 @@ import css from './DayPicker.module.less';
 const DayPickerBase = kind({
 	name: 'DayPicker',
 
-	propTypes: /** @lends sandstone/DayPicker.DayPicker.prototype */ {
+	propTypes: /** @lends limestone/DayPicker.DayPicker.prototype */ {
 		/**
 		 * Disables all days in this picker.
 		 *
@@ -111,7 +111,7 @@ const DayPickerDecorator = compose(
 );
 
 /**
- * A day of the week selection component, ready to use in Sandstone applications.
+ * A day of the week selection component, ready to use in Limestone applications.
  *
  * By default, `DayPicker` maintains the state of its `selected` property. Supply the
  * `selected` property to control its initial value. If you wish to directly control updates
@@ -127,8 +127,8 @@ const DayPickerDecorator = compose(
  * ```
  *
  * @class DayPicker
- * @memberof sandstone/DayPicker
- * @extends sandstone/DayPicker.DayPickerBase
+ * @memberof limestone/DayPicker
+ * @extends limestone/DayPicker.DayPickerBase
  * @mixes ui/Changeable.Changeable
  * @omit onChange
  * @omit value
@@ -146,7 +146,7 @@ const DayPicker = DayPickerDecorator(DayPickerBase);
  *
  * @name aria-label
  * @type {String}
- * @memberof sandstone/DayPicker.DayPicker.prototype
+ * @memberof limestone/DayPicker.DayPicker.prototype
  * @public
  */
 
@@ -155,7 +155,7 @@ const DayPicker = DayPickerDecorator(DayPickerBase);
  *
  * @name selected
  * @type {Number|Number[]}
- * @memberof sandstone/DayPicker.DayPicker.prototype
+ * @memberof limestone/DayPicker.DayPicker.prototype
  * @public
  */
 
@@ -165,7 +165,7 @@ const DayPicker = DayPickerDecorator(DayPickerBase);
  * @name disabled
  * @type {Boolean}
  * @default false
- * @memberof sandstone/DayPicker.DayPicker.prototype
+ * @memberof limestone/DayPicker.DayPicker.prototype
  * @public
  */
 

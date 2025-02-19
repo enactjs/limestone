@@ -2,13 +2,13 @@
 
 import {is} from '@enact/core/keymap';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import Button from '@enact/sandstone/Button';
-import Item from '@enact/sandstone/Item';
-import Popup, {PopupBase} from '@enact/sandstone/Popup';
-import PopupTabLayout, {Tab, TabPanels, TabPanel} from '@enact/sandstone/PopupTabLayout';
-import {Header} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import TabLayout, {TabLayoutBase} from '@enact/sandstone/TabLayout';
+import Button from '@enact/limestone/Button';
+import Item from '@enact/limestone/Item';
+import Popup, {PopupBase} from '@enact/limestone/Popup';
+import PopupTabLayout, {Tab, TabPanels, TabPanel} from '@enact/limestone/PopupTabLayout';
+import {Header} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import TabLayout, {TabLayoutBase} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -37,7 +37,7 @@ const navNext = (callback, value) => () => {
 };
 
 export default {
-	title: 'Sandstone/PopupTabLayout',
+	title: 'Limestone/PopupTabLayout',
 	component: 'PopupTabLayout'
 };
 

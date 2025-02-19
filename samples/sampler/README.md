@@ -1,6 +1,6 @@
-# Sandstone Sampler
+# Limestone Sampler
 
-> A sampler showing off Sandstone components
+> A sampler showing off Limestone components
 
 It uses [React Storybook](https://getstorybook.io/). Component properties can be adjusted using the
 `Knobs` tab. Click the `?` in the upper right to see more information on each sample.

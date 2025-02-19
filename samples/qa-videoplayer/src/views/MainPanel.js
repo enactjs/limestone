@@ -1,7 +1,7 @@
 import kind from '@enact/core/kind';
-import Button from '@enact/sandstone/Button';
-import {MediaControls} from '@enact/sandstone/MediaPlayer';
-import VideoPlayer from '@enact/sandstone/VideoPlayer';
+import Button from '@enact/limestone/Button';
+import {MediaControls} from '@enact/limestone/MediaPlayer';
+import VideoPlayer from '@enact/limestone/VideoPlayer';
 import {useCallback, useRef, useState} from 'react';
 
 const SelectableVideoPlayer = (props) => {

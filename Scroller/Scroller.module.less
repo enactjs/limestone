@@ -15,14 +15,14 @@
 		content: '';
 		position: absolute;
 		.position(0);
-		border-radius: @sand-scroll-focusablebody-focus-border-radius;
+		border-radius: @lime-scroll-focusablebody-focus-border-radius;
 		opacity: 0;
 	}
 
 	.focus({
 		:global(.spotlight-input-key)& {
 			&::before {
-				background-color: @sand-scroll-focusablebody-focus-bg-color;
+				background-color: @lime-scroll-focusablebody-focus-bg-color;
 				opacity: 1;
 			}
 		}
@@ -30,19 +30,19 @@
 }
 
 .verticalFadeout {
-	padding: @sand-scroll-vertical-fade-out-padding;
-	mask-image: linear-gradient(transparent, #000 @sand-scroll-fade-out-size, #000 calc(100% - @sand-scroll-fade-out-size), transparent 100%);
+	padding: @lime-scroll-vertical-fade-out-padding;
+	mask-image: linear-gradient(transparent, #000 @lime-scroll-fade-out-size, #000 calc(100% - @lime-scroll-fade-out-size), transparent 100%);
 
 	.focusableBody & {
-		padding: @sand-scroll-focusablebody-padding;
+		padding: @lime-scroll-focusablebody-padding;
 		.enact-locale-rtl({
-			padding: @sand-scroll-focusablebody-padding-rtl;
+			padding: @lime-scroll-focusablebody-padding-rtl;
 		});
-		mask-image: linear-gradient(transparent @sand-scroll-fade-out-offset, #000 calc(@sand-scroll-fade-out-offset + @sand-scroll-fade-out-size), #000 calc(100% - @sand-scroll-fade-out-size - @sand-scroll-fade-out-offset), transparent calc(100% - @sand-scroll-fade-out-offset));
+		mask-image: linear-gradient(transparent @lime-scroll-fade-out-offset, #000 calc(@lime-scroll-fade-out-offset + @lime-scroll-fade-out-size), #000 calc(100% - @lime-scroll-fade-out-size - @lime-scroll-fade-out-offset), transparent calc(100% - @lime-scroll-fade-out-offset));
 	}
 }
 
 .horizontalFadeout {
-	padding: @sand-scroll-horizontal-fade-out-padding;
-	mask-image: linear-gradient(to right, transparent, #000 @sand-scroll-fade-out-size, #000 calc(100% - @sand-scroll-fade-out-size), transparent 100%);
+	padding: @lime-scroll-horizontal-fade-out-padding;
+	mask-image: linear-gradient(to right, transparent, #000 @lime-scroll-fade-out-size, #000 calc(100% - @lime-scroll-fade-out-size), transparent 100%);
 }

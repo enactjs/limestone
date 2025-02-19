@@ -1,6 +1,6 @@
-import Icon from '@enact/sandstone/Icon';
-import Item, {ItemBase} from '@enact/sandstone/Item';
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import Icon from '@enact/limestone/Icon';
+import Item, {ItemBase} from '@enact/limestone/Item';
+import SwitchItem from '@enact/limestone/SwitchItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -11,7 +11,7 @@ SwitchItem.displayName = 'SwitchItem';
 const Config = mergeComponentMetadata('SwitchItem', ItemBase, Item, SwitchItem);
 
 export default {
-	title: 'Sandstone/SwitchItem',
+	title: 'Limestone/SwitchItem',
 	component: 'SwitchItem'
 };
 

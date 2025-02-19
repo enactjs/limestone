@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Button from '@enact/sandstone/Button';
-import ProgressBar from '@enact/sandstone/ProgressBar';
+import Button from '@enact/limestone/Button';
+import ProgressBar from '@enact/limestone/ProgressBar';
 import {useState} from 'react';
 
 import Section from '../components/Section';

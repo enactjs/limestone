@@ -3,7 +3,7 @@ import VideoPlayer from '../../../../VideoPlayer';
 import posterUrl from '../../images/poster.png';
 import videoUrl from '../../videos/movie_90.mp4';
 
-const videoTitle = 'Sandstone VideoPlayer Sample Video';
+const videoTitle = 'Limestone VideoPlayer Sample Video';
 
 const commonVideoPlayer = (props) => (
 	<div

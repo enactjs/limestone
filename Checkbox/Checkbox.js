@@ -1,10 +1,10 @@
 /**
- * Sandstone styled checkbox components.
+ * Limestone styled checkbox components.
  *
  * @example
  * <Checkbox onToggle={console.log} />
  *
- * @module sandstone/Checkbox
+ * @module limestone/Checkbox
  * @exports Checkbox
  * @exports CheckboxBase
  */
@@ -22,10 +22,10 @@ import Skinnable from '../Skinnable';
 import componentCss from './Checkbox.module.less';
 
 /**
- * A checkbox component, ready to use in Sandstone applications.
+ * A checkbox component, ready to use in Limestone applications.
  *
  * `Checkbox` may be used independently to represent a toggleable state but is more commonly used as
- * part of {@link sandstone/CheckboxItem|CheckboxItem}.
+ * part of {@link limestone/CheckboxItem|CheckboxItem}.
  *
  * Usage:
  * ```
@@ -33,26 +33,26 @@ import componentCss from './Checkbox.module.less';
  * ```
  *
  * @class CheckboxBase
- * @memberof sandstone/Checkbox
- * @extends sandstone/Icon.Icon
+ * @memberof limestone/Checkbox
+ * @extends limestone/Icon.Icon
  * @ui
  * @public
  */
 const CheckboxBase = kind({
 	name: 'Checkbox',
 
-	propTypes: /** @lends sandstone/Checkbox.CheckboxBase.prototype */ {
+	propTypes: /** @lends limestone/Checkbox.CheckboxBase.prototype */ {
 		/**
 		 * The icon displayed when `selected`.
 		 *
 		 * May be specified as either:
 		 *
-		 * * A string that represents an icon from the {@link sandstone/Icon.iconList|iconList},
+		 * * A string that represents an icon from the {@link limestone/Icon.iconList|iconList},
 		 * * An HTML entity string, Unicode reference or hex value (in the form '0x...'),
 		 * * A URL specifying path to an icon image, or
 		 * * An object representing a resolution independent resource (See {@link ui/resolution})
 		 *
-		 * @see {@link sandstone/Icon.IconBase.children}
+		 * @see {@link limestone/Icon.IconBase.children}
 		 * @type {String|Object}
 		 * @default	'check'
 		 * @public
@@ -102,7 +102,7 @@ const CheckboxBase = kind({
 		 *
 		 * May be specified as either:
 		 *
-		 * * A string that represents an icon from the {@link sandstone/Icon.Icon.iconList|iconList},
+		 * * A string that represents an icon from the {@link limestone/Icon.Icon.iconList|iconList},
 		 * * An HTML entity string, Unicode reference or hex value (in the form '0x...'),
 		 * * A URL specifying path to an icon image, or
 		 * * An object representing a resolution independent resource (See {@link ui/resolution})
@@ -178,9 +178,9 @@ const CheckboxBase = kind({
  * Adds interactive functionality to `Checkbox`.
  *
  * @class CheckboxDecorator
- * @memberof sandstone/Checkbox
+ * @memberof limestone/Checkbox
  * @mixes ui/Toggleable.Toggleable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @mixes spotlight/Spottable.Spottable
  * @hoc
  * @public
@@ -193,15 +193,15 @@ const CheckboxDecorator = compose(
 );
 
 /**
- * A Sandstone-styled checkbox component.
+ * A Limestone-styled checkbox component.
  *
  * `Checkbox` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
  * directly.
  *
  * @class Checkbox
- * @memberof sandstone/Checkbox
- * @extends sandstone/Checkbox.CheckboxBase
- * @mixes sandstone/Checkbox.CheckboxDecorator
+ * @memberof limestone/Checkbox
+ * @extends limestone/Checkbox.CheckboxBase
+ * @mixes limestone/Checkbox.CheckboxDecorator
  * @ui
  * @public
  */

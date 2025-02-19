@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import {InputField} from '@enact/sandstone/Input';
-import Item from '@enact/sandstone/Item';
-import {Panel, Header} from '@enact/sandstone/Panels';
-import {Scroller} from '@enact/sandstone/Scroller';
-import TabLayout, {TabLayoutBase, Tab} from '@enact/sandstone/TabLayout';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import {InputField} from '@enact/limestone/Input';
+import Item from '@enact/limestone/Item';
+import {Panel, Header} from '@enact/limestone/Panels';
+import {Scroller} from '@enact/limestone/Scroller';
+import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
 import {Component, useState} from 'react';
@@ -67,7 +67,7 @@ class AddingTabSample extends Component {
 }
 
 export default {
-	title: 'Sandstone/TabLayout',
+	title: 'Limestone/TabLayout',
 	component: 'TabLayout'
 };
 
@@ -422,7 +422,7 @@ export const WithControlledIndex = (args) => {
 
 	return (
 		<Panel>
-			<Header title="Sandstone TabLayout" subtitle="Controlled Index" />
+			<Header title="Limestone TabLayout" subtitle="Controlled Index" />
 			<TabLayout
 				index={selected}
 				onSelect={({index}) => setSelected(index)}

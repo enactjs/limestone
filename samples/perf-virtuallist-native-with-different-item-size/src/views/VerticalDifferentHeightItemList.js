@@ -1,7 +1,7 @@
-import Item from '@enact/sandstone/Item';
+import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import ri from '@enact/ui/resolution';
-import {VirtualList} from '@enact/sandstone/VirtualList';
+import {VirtualList} from '@enact/limestone/VirtualList';
 import {useCallback, useEffect, useState} from 'react';
 
 const

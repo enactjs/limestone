@@ -1,5 +1,5 @@
 /**
- * Provides Sandstone-themed scroller components and behaviors.
+ * Provides Limestone-themed scroller components and behaviors.
  *
  * @example
  * <Scroller>
@@ -12,7 +12,7 @@
  * 	</div>
  * </Scroller>
  *
- * @module sandstone/Scroller
+ * @module limestone/Scroller
  * @exports Scroller
  */
 
@@ -64,7 +64,7 @@ const scrollerDefaultProps = {
 };
 
 /**
- * A Sandstone-styled Scroller, useScroll applied.
+ * A Limestone-styled Scroller, useScroll applied.
  *
  * Usage:
  * ```
@@ -72,7 +72,7 @@ const scrollerDefaultProps = {
  * ```
  *
  * @class Scroller
- * @memberof sandstone/Scroller
+ * @memberof limestone/Scroller
  * @extends ui/Scroller.ScrollerBasic
  * @ui
  * @public
@@ -148,7 +148,7 @@ let Scroller = (props) => {
 
 Scroller.displayName = 'Scroller';
 
-Scroller.propTypes = /** @lends sandstone/Scroller.Scroller.prototype */ {
+Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	/**
 	 * The "aria-label" for the Scroller.
 	 *
@@ -251,9 +251,9 @@ Scroller.propTypes = /** @lends sandstone/Scroller.Scroller.prototype */ {
 	/**
 	 * Enables editing items in the scroller.
 	 * You can specify props for editable scroller as an object.
-	 * See the details in {@link sandstone/Scroller.EditableShape|EditableShape}
+	 * See the details in {@link limestone/Scroller.EditableShape|EditableShape}
 	 *
-	 * @type {sandstone/Scroller.EditableShape}
+	 * @type {limestone/Scroller.EditableShape}
 	 * @public
 	 */
 	editable: EditableShape,
@@ -313,7 +313,7 @@ Scroller.propTypes = /** @lends sandstone/Scroller.Scroller.prototype */ {
 	/**
 	 * Unique identifier for the component.
 	 *
-	 * When defined and when the `Scroller` is within a {@link sandstone/Panels.Panel|Panel}, the
+	 * When defined and when the `Scroller` is within a {@link limestone/Panels.Panel|Panel}, the
 	 * `Scroller` will store its scroll position and restore that position when returning to the
 	 * `Panel`.
 	 *

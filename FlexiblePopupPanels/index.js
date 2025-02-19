@@ -1,7 +1,7 @@
 /**
- * Provides a Sandstone styled flexible-width, popup-styled Panels component.
+ * Provides a Limestone styled flexible-width, popup-styled Panels component.
  *
- * @module sandstone/FlexiblePopupPanels
+ * @module limestone/FlexiblePopupPanels
  * @exports FlexiblePopupPanels
  * @exports Header
  * @exports Panel
@@ -12,20 +12,20 @@ import Header from './Header';
 import Panel, {PanelBase} from './Panel';
 
 /**
- * A shortcut to access {@link sandstone/FlexiblePopupPanels.Panel}
+ * A shortcut to access {@link limestone/FlexiblePopupPanels.Panel}
  *
  * @name Panel
  * @static
- * @memberof sandstone/FlexiblePopupPanels.FlexiblePopupPanels
+ * @memberof limestone/FlexiblePopupPanels.FlexiblePopupPanels
  */
 FlexiblePopupPanels.Panel = Panel;
 
 /**
- * A shortcut to access {@link sandstone/FlexiblePopupPanels.Header}
+ * A shortcut to access {@link limestone/FlexiblePopupPanels.Header}
  *
  * @name Header
  * @static
- * @memberof sandstone/FlexiblePopupPanels.FlexiblePopupPanels
+ * @memberof limestone/FlexiblePopupPanels.FlexiblePopupPanels
  */
 FlexiblePopupPanels.Header = Header;
 

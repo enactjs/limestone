@@ -1,5 +1,5 @@
 /**
- * Sandstone styled labeled Heading components and behaviors
+ * Limestone styled labeled Heading components and behaviors
  *
  * @example
  * <Heading
@@ -9,7 +9,7 @@
  *   A Content Section Heading
  * </Heading>
  *
- * @module sandstone/Heading
+ * @module limestone/Heading
  * @exports Heading
  * @exports HeadingBase
  * @exports HeadingDecorator
@@ -30,17 +30,17 @@ import componentCss from './Heading.module.less';
  * A labeled Heading component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/Heading.Heading|Heading}.
+ * is within {@link limestone/Heading.Heading|Heading}.
  *
  * @class HeadingBase
- * @memberof sandstone/Heading
+ * @memberof limestone/Heading
  * @ui
  * @public
  */
 const HeadingBase = kind({
 	name: 'Heading',
 
-	propTypes: /** @lends sandstone/Heading.HeadingBase.prototype */ {
+	propTypes: /** @lends limestone/Heading.HeadingBase.prototype */ {
 		css: PropTypes.object,
 
 		/**
@@ -99,12 +99,12 @@ const HeadingBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/Heading.HeadingBase|HeadingBase}.
+ * Applies Limestone specific behaviors to {@link limestone/Heading.HeadingBase|HeadingBase}.
  *
  * @hoc
- * @memberof sandstone/Heading
- * @mixes sandstone/Marquee.MarqueeDecorator
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/Heading
+ * @mixes limestone/Marquee.MarqueeDecorator
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const HeadingDecorator = compose(
@@ -114,7 +114,7 @@ const HeadingDecorator = compose(
 );
 
 /**
- * A labeled Heading component, ready to use in Sandstone applications.
+ * A labeled Heading component, ready to use in Limestone applications.
  *
  * `Heading` may be used as a header to group related components.
  *
@@ -130,9 +130,9 @@ const HeadingDecorator = compose(
  * ```
  *
  * @class Heading
- * @memberof sandstone/Heading
- * @extends sandstone/Heading.HeadingBase
- * @mixes sandstone/Heading.HeadingDecorator
+ * @memberof limestone/Heading
+ * @extends limestone/Heading.HeadingBase
+ * @mixes limestone/Heading.HeadingDecorator
  * @ui
  * @public
  */
@@ -148,8 +148,8 @@ const Heading = HeadingDecorator(HeadingBase);
  * @name marqueeOn
  * @type {('hover'|'render')}
  * @default 'render'
- * @memberof sandstone/Heading.Heading.prototype
- * @see {@link sandstone/Marquee.Marquee}
+ * @memberof limestone/Heading.Heading.prototype
+ * @see {@link limestone/Marquee.Marquee}
  * @public
  */
 

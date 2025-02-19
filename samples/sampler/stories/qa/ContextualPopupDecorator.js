@@ -1,7 +1,7 @@
-import Button from '@enact/sandstone/Button';
-import {ContextualPopupDecorator} from '@enact/sandstone/ContextualPopupDecorator';
-import Heading from '@enact/sandstone/Heading';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import {ContextualPopupDecorator} from '@enact/limestone/ContextualPopupDecorator';
+import Heading from '@enact/limestone/Heading';
+import Slider from '@enact/limestone/Slider';
 import {select} from '@enact/storybook-utils/addons/controls';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import ri from '@enact/ui/resolution';
@@ -83,7 +83,7 @@ class ContextualPopupWithActivator extends Component {
 }
 
 export default {
-	title: 'Sandstone/ContextualPopupDecorator',
+	title: 'Limestone/ContextualPopupDecorator',
 	component: 'ContextualPopupDecorator'
 };
 

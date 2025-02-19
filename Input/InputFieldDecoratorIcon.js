@@ -5,17 +5,17 @@ import Icon from '../Icon';
 import {onlyUpdateForProps} from '../internal/util';
 
 /**
- * The stateless functional base component for {@link sandstone/Input.InputDecoratorIcon}.
+ * The stateless functional base component for {@link limestone/Input.InputDecoratorIcon}.
  *
  * @class InputDecoratorIconBase
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @ui
  * @private
  */
 const InputDecoratorIconBase = kind({
 	name: 'InputDecoratorIcon',
 
-	propTypes: /** @lends sandstone/Input.InputDecoratorIconBase.prototype */ {
+	propTypes: /** @lends limestone/Input.InputDecoratorIconBase.prototype */ {
 		/**
 		 * The position of the icon.
 		 *
@@ -27,7 +27,7 @@ const InputDecoratorIconBase = kind({
 		/**
 		 * Icon to be displayed.
 		 *
-		 * @see {@link sandstone/Icon.IconBase.children}
+		 * @see {@link limestone/Icon.IconBase.children}
 		 * @type {String|Object}
 		 */
 		children: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
@@ -43,10 +43,10 @@ const InputDecoratorIconBase = kind({
 });
 
 /**
- * An icon displayed either before or after the input field of an {@link sandstone/Input.Input}.
+ * An icon displayed either before or after the input field of an {@link limestone/Input.Input}.
  *
  * @class InputDecoratorIcon
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @ui
  * @private
  */

@@ -1,6 +1,6 @@
-import Item from '@enact/sandstone/Item';
-import Slider from '@enact/sandstone/Slider';
-import VirtualList from '@enact/sandstone/VirtualList';
+import Item from '@enact/limestone/Item';
+import Slider from '@enact/limestone/Slider';
+import VirtualList from '@enact/limestone/VirtualList';
 import {number} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
@@ -95,7 +95,7 @@ class SliderList extends Component {
 }
 
 export default {
-	title: 'Sandstone/Slider',
+	title: 'Limestone/Slider',
 	component: 'Slider'
 };
 

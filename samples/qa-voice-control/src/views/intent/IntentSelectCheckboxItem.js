@@ -1,6 +1,6 @@
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import FormCheckboxItem from '@enact/sandstone/FormCheckboxItem';
-import Heading from '@enact/sandstone/Heading';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
+import Heading from '@enact/limestone/Heading';
 import Group from '@enact/ui/Group';
 import {useCallback, useState} from 'react';
 

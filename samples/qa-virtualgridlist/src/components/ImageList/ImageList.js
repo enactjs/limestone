@@ -1,4 +1,4 @@
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
 import {useCallback, useContext} from 'react';
 import PropTypes from 'prop-types';

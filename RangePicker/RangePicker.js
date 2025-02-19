@@ -4,7 +4,7 @@
  * @example
  * <RangePicker defaultValue={70} min={0} max={100}></RangePicker>
  *
- * @module sandstone/RangePicker
+ * @module limestone/RangePicker
  * @exports RangePicker
  * @exports RangePickerBase
  */
@@ -34,19 +34,19 @@ const digits = (num) => {
  * RangePicker base component.
  *
  * @class RangePickerBase
- * @memberof sandstone/RangePicker
+ * @memberof limestone/RangePicker
  * @ui
  * @public
  */
 const RangePickerBase = kind({
 	name: 'RangePicker',
 
-	propTypes: /** @lends sandstone/RangePicker.RangePickerBase.prototype */ {
+	propTypes: /** @lends limestone/RangePicker.RangePickerBase.prototype */ {
 		/**
 		 * The maximum value selectable by the picker (inclusive).
 		 *
 		 * The range between `min` and `max` should be evenly divisible by
-		 * {@link sandstone/RangePicker.RangePickerBase.step|step}.
+		 * {@link limestone/RangePicker.RangePickerBase.step|step}.
 		 *
 		 * @type {Number}
 		 * @required
@@ -58,7 +58,7 @@ const RangePickerBase = kind({
 		 * The minimum value selectable by the picker (inclusive).
 		 *
 		 * The range between `min` and `max` should be evenly divisible by
-		 * {@link sandstone/RangePicker.RangePickerBase.step|step}.
+		 * {@link limestone/RangePicker.RangePickerBase.step|step}.
 		 *
 		 * @type {Number}
 		 * @required
@@ -81,7 +81,7 @@ const RangePickerBase = kind({
 		 * By default, `aria-valuetext` is set to the current selected child value.
 		 *
 		 * @type {String}
-		 * @memberof sandstone/RangePicker.RangePickerBase.prototype
+		 * @memberof limestone/RangePicker.RangePickerBase.prototype
 		 * @public
 		 */
 		'aria-valuetext': PropTypes.string,
@@ -93,8 +93,8 @@ const RangePickerBase = kind({
 		 *  * `'arrow'` allows the user to use the left or right keys to adjust the picker's value.
 		 *
 		 * The default value for joined horizontal picker is `'enter'`.
-		 * If {@link sandstone/RangePicker.RangePickerBase.orientation|orientation} is `'vertical'` or
-		 * {@link sandstone/RangePicker.RangePickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
+		 * If {@link limestone/RangePicker.RangePickerBase.orientation|orientation} is `'vertical'` or
+		 * {@link limestone/RangePicker.RangePickerBase.joined|joined} is undefined or is `false`, this prop is ignored.
 		 *
 		 * @type {('enter'|'arrow')}
 		 * @public
@@ -134,9 +134,9 @@ const RangePickerBase = kind({
 		/**
 		 * A custom icon for the decrementer.
 		 *
-		 * All strings supported by {@link sandstone/Icon.Icon|Icon} are supported. Without a
+		 * All strings supported by {@link limestone/Icon.Icon|Icon} are supported. Without a
 		 * custom icon, the default is used, and is automatically changed when the
-		 * {@link sandstone/RangePicker.RangePickerBase.orientation|orientation} is changed.
+		 * {@link limestone/RangePicker.RangePickerBase.orientation|orientation} is changed.
 		 *
 		 * @type {string}
 		 * @public
@@ -154,9 +154,9 @@ const RangePickerBase = kind({
 		/**
 		 * A custom icon for the incrementer.
 		 *
-		 * All strings supported by {@link sandstone/Icon.Icon|Icon} are supported. Without a
+		 * All strings supported by {@link limestone/Icon.Icon|Icon} are supported. Without a
 		 * custom icon, the default is used, and is automatically changed when the
-		 * {@link sandstone/RangePicker.RangePickerBase.orientation|orientation} is changed.
+		 * {@link limestone/RangePicker.RangePickerBase.orientation|orientation} is changed.
 		 *
 		 * @type {String}
 		 * @public
@@ -332,7 +332,7 @@ const RangePickerBase = kind({
  * supply a value to `value` at creation time and update it in response to `onChange` events.
  *
  * @class RangePicker
- * @memberof sandstone/RangePicker
+ * @memberof limestone/RangePicker
  * @mixes ui/Changeable.Changeable
  * @ui
  * @public
@@ -347,7 +347,7 @@ const RangePicker = Pure(
  * Default value
  *
  * @name defaultValue
- * @memberof sandstone/RangePicker.RangePicker.prototype
+ * @memberof limestone/RangePicker.RangePicker.prototype
  * @type {Number}
  * @public
  */

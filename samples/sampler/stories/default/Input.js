@@ -1,4 +1,4 @@
-import Input, {InputBase, InputPopup, InputPopupBase} from '@enact/sandstone/Input';
+import Input, {InputBase, InputPopup, InputPopupBase} from '@enact/limestone/Input';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range, select, text} from '@enact/storybook-utils/addons/controls';
@@ -17,7 +17,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Input',
+	title: 'Limestone/Input',
 	component: 'Input'
 };
 

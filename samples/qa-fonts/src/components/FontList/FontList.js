@@ -1,5 +1,5 @@
-import Heading from '@enact/sandstone/Heading';
-import Item from '@enact/sandstone/Item';
+import Heading from '@enact/limestone/Heading';
+import Item from '@enact/limestone/Item';
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 

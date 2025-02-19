@@ -1,7 +1,7 @@
-import Button from '@enact/sandstone/Button';
-import BodyText from '@enact/sandstone/BodyText';
-import {FixedPopupPanels, Panel, Header} from '@enact/sandstone/FixedPopupPanels';
-import Item from '@enact/sandstone/Item';
+import Button from '@enact/limestone/Button';
+import BodyText from '@enact/limestone/BodyText';
+import {FixedPopupPanels, Panel, Header} from '@enact/limestone/FixedPopupPanels';
+import Item from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
@@ -15,7 +15,7 @@ Config.defaultProps.spotlightRestrict = 'self-only';
 Config.defaultProps.width = 'narrow';
 
 export default {
-	title: 'Sandstone/FixedPopupPanels',
+	title: 'Limestone/FixedPopupPanels',
 	component: 'FixedPopupPanels'
 };
 

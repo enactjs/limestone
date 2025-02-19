@@ -1,5 +1,5 @@
-import Button from '@enact/sandstone/Button';
-import TooltipDecorator, {Tooltip, TooltipBase} from '@enact/sandstone/TooltipDecorator';
+import Button from '@enact/limestone/Button';
+import TooltipDecorator, {Tooltip, TooltipBase} from '@enact/limestone/TooltipDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, number, select, text} from '@enact/storybook-utils/addons/controls';
 
@@ -30,7 +30,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/TooltipDecorator',
+	title: 'Limestone/TooltipDecorator',
 	component: 'TooltipDecorator'
 };
 

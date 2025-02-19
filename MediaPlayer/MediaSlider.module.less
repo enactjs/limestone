@@ -4,10 +4,10 @@
 @import "../styles/skin.less";
 
 .sliderFrame {
-	@knob-transform-active: @sand-translate-center scale(1);
-	@knob-transform-resting: @sand-translate-center scale(@sand-mediaplayer-slider-knob-resting-state-scale);
-	@slider-padding-v: ((@sand-mediaplayer-slider-tap-area - @sand-mediaplayer-slider-height) / 2);
-	@slider-padding-h: @sand-mediaplayer-slider-knob-size;
+	@knob-transform-active: @lime-translate-center scale(1);
+	@knob-transform-resting: @lime-translate-center scale(@lime-mediaplayer-slider-knob-resting-state-scale);
+	@slider-padding-v: ((@lime-mediaplayer-slider-tap-area - @lime-mediaplayer-slider-height) / 2);
+	@slider-padding-h: @lime-mediaplayer-slider-knob-size;
 	flex: 1 0 auto;
 
 	&.hidden {
@@ -18,13 +18,13 @@
 	.mediaSlider {
 		margin: 0 @slider-padding-h;
 		padding: @slider-padding-v 0;
-		height: @sand-mediaplayer-slider-height;
+		height: @lime-mediaplayer-slider-height;
 
 		// Add a tap area that extends to the edges of the screen, to make the slider more accessible
 		&::before {
 			content: "";
 			position: absolute;
-			.position(0, -(@sand-video-player-padding-side));
+			.position(0, -(@lime-video-player-padding-side));
 		}
 
 		// Grow the knob when the Slider gets spotted
@@ -59,10 +59,10 @@
 		//transition: transform @slide-transition-function 0.2s;
 
 		&::before {
-			width: @sand-mediaplayer-slider-knob-size;
-			height: @sand-mediaplayer-slider-knob-size;
+			width: @lime-mediaplayer-slider-knob-size;
+			height: @lime-mediaplayer-slider-knob-size;
 			border-width: 0;
-			border-radius: @sand-mediaplayer-slider-knob-size;
+			border-radius: @lime-mediaplayer-slider-knob-size;
 			transform: @knob-transform-resting;
 			opacity: 0;
 			will-change: transform, opacity;
@@ -81,54 +81,54 @@
 	.sliderFrame {
 		.slider {
 			.bar {
-				background-color: @sand-mediaslider-bar-bg-color;
+				background-color: @lime-mediaslider-bar-bg-color;
 			}
 
 			.fill {
-				background-color: @sand-mediaslider-fill-bg-color;
+				background-color: @lime-mediaslider-fill-bg-color;
 			}
 
 			.knob {
 				&::before {
-					background-color: @sand-mediaplayer-slider-knob-color;
+					background-color: @lime-mediaplayer-slider-knob-color;
 				}
 			}
 
 			.focus({
 				.bar {
-					background-color: @sand-mediaslider-bar-bg-color;
+					background-color: @lime-mediaslider-bar-bg-color;
 				}
 
 				.fill {
-					background-color: @sand-mediaslider-fill-bg-color;
+					background-color: @lime-mediaslider-fill-bg-color;
 				}
 
 				.disabled({
 					.bar {
-						opacity: @sand-mediaslider-disabled-bar-opacity;
+						opacity: @lime-mediaslider-disabled-bar-opacity;
 					}
 				});
 			});
 
 			:global(.spotlight-input-touch) &.pressed {
 				.bar {
-					background-color: @sand-mediaslider-bar-bg-color;
+					background-color: @lime-mediaslider-bar-bg-color;
 				}
 
 				.fill {
-					background-color: @sand-mediaslider-fill-bg-color;
+					background-color: @lime-mediaslider-fill-bg-color;
 				}
 
 				.knob {
 					&::before {
-						background-color: @sand-mediaplayer-slider-knob-color;
+						background-color: @lime-mediaplayer-slider-knob-color;
 					}
 				}
 			}
 
 			.disabled({
 				.bar {
-					opacity: @sand-mediaslider-disabled-bar-opacity;
+					opacity: @lime-mediaslider-disabled-bar-opacity;
 				}
 			});
 		}

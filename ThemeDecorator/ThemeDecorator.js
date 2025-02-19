@@ -1,7 +1,7 @@
 /**
- * Exports the {@link sandstone/ThemeDecorator.ThemeDecorator} HOC
+ * Exports the {@link limestone/ThemeDecorator.ThemeDecorator} HOC
  *
- * @module sandstone/ThemeDecorator
+ * @module limestone/ThemeDecorator
  * @exports ThemeDecorator
  */
 
@@ -30,10 +30,10 @@ import css from './ThemeDecorator.module.less';
 /**
  * Default config for `ThemeDecorator`.
  *
- * @memberof sandstone/ThemeDecorator.ThemeDecorator
+ * @memberof limestone/ThemeDecorator.ThemeDecorator
  * @hocconfig
  */
-const defaultConfig = /** @lends sandstone/ThemeDecorator.ThemeDecorator.defaultConfig */ {
+const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.defaultConfig */ {
 	/**
 	 * Applies AccessibilityDecorator.
 	 *
@@ -41,7 +41,7 @@ const defaultConfig = /** @lends sandstone/ThemeDecorator.ThemeDecorator.default
 	 *
 	 * @type {Boolean}
 	 * @default true
-	 * @see {@link sandstone/ThemeDecorator.AccessibilityDecorator}
+	 * @see {@link limestone/ThemeDecorator.AccessibilityDecorator}
 	 * @public
 	 */
 	accessible: true,
@@ -125,7 +125,7 @@ const defaultConfig = /** @lends sandstone/ThemeDecorator.ThemeDecorator.default
 	 *
 	 * @type {Boolean}
 	 * @default true
-	 * @see {@link sandstone/Skinnable}
+	 * @see {@link limestone/Skinnable}
 	 * @public
 	 */
 	skin: true,
@@ -144,28 +144,28 @@ const defaultConfig = /** @lends sandstone/ThemeDecorator.ThemeDecorator.default
 };
 
 /**
- * A higher-order component that applies Sandstone theming to an application.
+ * A higher-order component that applies Limestone theming to an application.
  *
  * It also applies {@link ui/FloatingLayer.FloatingLayerDecorator|floating layer},
  * {@link ui/resolution.ResolutionDecorator|resolution independence},
- * {@link sandstone/Skinnable|skin support}, {@link spotlight.SpotlightRootDecorator|spotlight}, and
+ * {@link limestone/Skinnable|skin support}, {@link spotlight.SpotlightRootDecorator|spotlight}, and
  * {@link i18n/I18nDecorator.I18nDecorator|internationalization support}.
  * It is meant to be applied to the root element of an app.
  *
- * {@link sandstone/Skinnable|Skins} provide a way to change the coloration of your app. The
- * currently supported skins for Sandstone are "sandstone" (the default, dark skin) and
- * "sandstone-light". Use the `skin` property to assign a skin. Ex: `<DecoratedApp skin="light" />`
+ * {@link limestone/Skinnable|Skins} provide a way to change the coloration of your app. The
+ * currently supported skins for Limestone are "limestone" (the default, dark skin) and
+ * "limestone-light". Use the `skin` property to assign a skin. Ex: `<DecoratedApp skin="light" />`
  *
  * Note: This HoC passes `className` to the wrapped component. It must be passed to the main DOM
  * node.
  *
  * @class ThemeDecorator
- * @memberof sandstone/ThemeDecorator
+ * @memberof limestone/ThemeDecorator
  * @mixes ui/FloatingLayer.FloatingLayerDecorator
  * @mixes ui/resolution.ResolutionDecorator
  * @mixes spotlight/SpotlightRootDecorator.SpotlightRootDecorator
- * @mixes sandstone/Skinnable.Skinnable
- * @mixes sandstone/ThemeDecorator.AccessibilityDecorator
+ * @mixes limestone/Skinnable.Skinnable
+ * @mixes limestone/ThemeDecorator.AccessibilityDecorator
  * @hoc
  * @public
  */
@@ -247,7 +247,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const Decorator = (props) => {
 		const {skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
-		const className = classNames(css.root, props.className, 'sandstone-theme', 'enact-unselectable', {
+		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {
 			[bgClassName]: !float,
 			'enact-fit': !disableFullscreen,
 			noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION
@@ -283,7 +283,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	};
 
 	Decorator.displayName = 'ThemeDecorator';
-	Decorator.propTypes = /** @lends sandstone/ThemeDecorator.prototype */ {
+	Decorator.propTypes = /** @lends limestone/ThemeDecorator.prototype */ {
 		/**
 		 * Assign a skin.
 		 *

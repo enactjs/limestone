@@ -5,12 +5,12 @@
 @import "../styles/skin.less";
 
 // Module level variables, for use only in this file
-@popupTabLayout-max-height: ~"calc(100vh -" (.extract(@sand-popuptablayout-margin, top)[] + .extract(@sand-popuptablayout-margin, bottom)[])~")";
+@popupTabLayout-max-height: ~"calc(100vh -" (.extract(@lime-popuptablayout-margin, top)[] + .extract(@lime-popuptablayout-margin, bottom)[])~")";
 
 .popupTabLayout {
 	// Override Popup (more precedence)
 	&.popup {
-		margin: @sand-popuptablayout-margin;
+		margin: @lime-popuptablayout-margin;
 		max-height: @popupTabLayout-max-height;
 	}
 	// Override TabLayout (more precedence)
@@ -53,8 +53,8 @@
 	}
 
 	.tabs {
-		padding: @sand-popuptablayout-tabs-padding;
-		margin-right: @sand-popuptablayout-tabs-content-spacing;
+		padding: @lime-popuptablayout-tabs-padding;
+		margin-right: @lime-popuptablayout-tabs-content-spacing;
 	}
 
 	.tabsExpanded {
@@ -62,7 +62,7 @@
 	}
 
 	.content {
-		margin-top: @sand-popuptablayout-content-margin; // Overrides a TabLayout style
+		margin-top: @lime-popuptablayout-content-margin; // Overrides a TabLayout style
 		height: 100%;
 	}
 
@@ -78,12 +78,12 @@
 
 		.tabs,
 		.content .panels::before {
-			border-radius: @sand-popuptablayout-tabs-content-border-radius;
-			box-shadow: @sand-popuptablayout-shadow;
-			outline-color: @sand-overlay-outline-color;
-			outline-width: @sand-overlay-outline-width;
-			outline-style: @sand-overlay-outline-style;
-			outline-offset: -@sand-overlay-outline-width;
+			border-radius: @lime-popuptablayout-tabs-content-border-radius;
+			box-shadow: @lime-popuptablayout-shadow;
+			outline-color: @lime-overlay-outline-color;
+			outline-width: @lime-overlay-outline-width;
+			outline-style: @lime-overlay-outline-style;
+			outline-offset: -@lime-overlay-outline-width;
 		}
 
 		:global(.noAnimation) & {
@@ -96,7 +96,7 @@
 		&.scrimTranslucent {
 			.tabs,
 			.content .panels::before {
-				background-color: @sand-popuptablayout-bg-color;
+				background-color: @lime-popuptablayout-bg-color;
 			}
 		}
 
@@ -104,7 +104,7 @@
 		&.scrimTransparent {
 			.tabs,
 			.content .panels::before {
-				background-color: @sand-popuptablayout-scrimtransparent-bg-color;
+				background-color: @lime-popuptablayout-scrimtransparent-bg-color;
 			}
 		}
 	});
@@ -147,7 +147,7 @@
 		display: flex;
 		flex-direction: column;
 		flex: 0 1 auto;  // Allow this node to vertically shrink to fit the content but not extend larger than the container.
-		padding: @sand-popuptablayout-panel-body-padding;
+		padding: @lime-popuptablayout-panel-body-padding;
 	}
 }
 

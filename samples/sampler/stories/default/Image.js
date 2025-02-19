@@ -1,4 +1,4 @@
-import Image, {ImageBase, ImageDecorator} from '@enact/sandstone/Image';
+import Image, {ImageBase, ImageDecorator} from '@enact/limestone/Image';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {object, select} from '@enact/storybook-utils/addons/controls';
@@ -16,7 +16,7 @@ const Config = mergeComponentMetadata('Image', UiImageBase, ImageBase, Image, Im
 Image.displayName = 'Image';
 
 export default {
-	title: 'Sandstone/Image',
+	title: 'Limestone/Image',
 	component: 'Image'
 };
 

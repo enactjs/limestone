@@ -1,6 +1,6 @@
-import Heading from '@enact/sandstone/Heading';
-import Picker from '@enact/sandstone/Picker';
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import Heading from '@enact/limestone/Heading';
+import Picker from '@enact/limestone/Picker';
+import SwitchItem from '@enact/limestone/SwitchItem';
 import {useCallback, useContext} from 'react';
 
 import eventCategory from '../../../constants/eventCategory';

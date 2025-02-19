@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
-import {Panels} from '@enact/sandstone/Panels';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
+import {Panels} from '@enact/limestone/Panels';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import {useContext} from 'react';
 
 import {

@@ -1,7 +1,7 @@
-import Item from '@enact/sandstone/Item';
+import Item from '@enact/limestone/Item';
 import ri from '@enact/ui/resolution';
-import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
-import VirtualList from '@enact/sandstone/VirtualList';
+import ThemeDecorator from '@enact/limestone/ThemeDecorator';
+import VirtualList from '@enact/limestone/VirtualList';
 import {useCallback, useEffect, useRef} from 'react';
 
 const

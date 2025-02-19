@@ -1,5 +1,5 @@
-import Button from '@enact/sandstone/Button';
-import {Header, Panel} from '@enact/sandstone/Panels';
+import Button from '@enact/limestone/Button';
+import {Header, Panel} from '@enact/limestone/Panels';
 import {Cell} from '@enact/ui/Layout';
 
 const HeaderView = () => (

@@ -81,10 +81,10 @@ const useThemeScrollbar = (props) => {
 };
 
 /**
- * A Sandstone-styled scrollbar base component.
+ * A Limestone-styled scrollbar base component.
  *
  * @class ScrollbarBase
- * @memberof sandstone/useScroll
+ * @memberof limestone/useScroll
  * @ui
  * @private
  */
@@ -105,7 +105,7 @@ const ScrollbarBase = memo(({css = componentCss, minThumbSize = 120, vertical = 
 
 ScrollbarBase.displayName = 'ScrollbarBase';
 
-ScrollbarBase.propTypes = /** @lends sandstone/useScroll.Scrollbar.prototype */ {
+ScrollbarBase.propTypes = /** @lends limestone/useScroll.Scrollbar.prototype */ {
 	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the
 	 * corresponding internal elements and states of this component.
@@ -153,10 +153,10 @@ ScrollbarBase.propTypes = /** @lends sandstone/useScroll.Scrollbar.prototype */ 
 };
 
 /**
- * A Sandstone-styled scroll bar.
+ * A Limestone-styled scroll bar.
  *
  * @class Scrollbar
- * @memberof sandstone/useScroll
+ * @memberof limestone/useScroll
  * @ui
  * @private
  */

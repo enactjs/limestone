@@ -1,29 +1,29 @@
-// Sandstone Base App styles
+// Limestone Base App styles
 //
 
 // Core Rules
 @import "~@enact/ui/styles/core.less";
 @import "~@enact/ui/styles/mixins.less";
 
-// Sandstone Internal Rules
+// Limestone Internal Rules
 @import "../styles/internal/fonts.less";
 
-// Sandstone Rules
+// Limestone Rules
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .applySkins({
-	color: @sand-text-color;
+	color: @lime-text-color;
 
 	::selection {
-		color: @sand-selection-color;
-		background-color: @sand-selection-bg-color;
+		color: @lime-selection-color;
+		background-color: @lime-selection-bg-color;
 	}
 
 	// Disabled Components
 	.disabled({
-		.sand-disabled-colors();
+		.lime-disabled-colors();
 
 		cursor: default;
 
@@ -35,7 +35,7 @@
 });
 
 .root {
-	.sand-text-base(@sand-base-font-size, self);
+	.lime-text-base(@lime-base-font-size, self);
 	font-weight: normal;
 	font-style: normal;
 	letter-spacing: normal;
@@ -44,7 +44,7 @@
 
 	&.bg,
 	& > .bg {
-		padding: @sand-app-keepout;
+		padding: @lime-app-keepout;
 	}
 
 	.enact-locale-rtl({
@@ -65,6 +65,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: @sand-bg-color;
+		background-color: @lime-bg-color;
 	}
 });

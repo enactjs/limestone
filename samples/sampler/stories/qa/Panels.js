@@ -1,12 +1,12 @@
 import {is} from '@enact/core/keymap';
-import Button from '@enact/sandstone/Button';
-import IconItem from '@enact/sandstone/IconItem';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Item from '@enact/sandstone/Item';
-import {Header, Panel, Panels} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
-import $L from '@enact/sandstone/internal/$L';
+import Button from '@enact/limestone/Button';
+import IconItem from '@enact/limestone/IconItem';
+import ImageItem from '@enact/limestone/ImageItem';
+import Item from '@enact/limestone/Item';
+import {Header, Panel, Panels} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
+import $L from '@enact/limestone/internal/$L';
 import Spotlight from '@enact/spotlight';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
@@ -15,7 +15,6 @@ import ri from '@enact/ui/resolution';
 import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import compose from 'ramda/src/compose';
 import {useCallback, useState, useRef, useLayoutEffect} from 'react';
 
@@ -143,7 +142,7 @@ export const WithAutoFocusControl = (args) => {
 select('autoFocus for Panel 0', WithAutoFocusControl, ['none', 'last-focused', 'default-element'], Config, 'none');
 
 export default {
-	title: 'Sandstone/Panels',
+	title: 'Limestone/Panels',
 	component: 'Panels'
 };
 
@@ -198,7 +197,6 @@ for (let i = 0; i < 20; i++) {
 	itemsArr.push(populateItems({index: i}));
 }
 
-const ContainerDivWithLeaveForConfig = SpotlightContainerDecorator({leaveFor: {left: '', right: ''}}, 'div');
 const TouchableDiv = Touchable('div');
 
 export const WithEditableScroller = (args) => {
@@ -401,11 +399,11 @@ export const WithEditableScroller = (args) => {
 							iconItems.map((item, index) => {
 								return (
 									<div key={item.index} className={classNames(css.itemWrapper, {[css.hidden]: item.hidden})} aria-label={`Icon ${item.index}`} data-index={item.index} style={{order: index + 1}} disabled={item.iconItemProps['disabled'] || item.hidden}>
-										<ContainerDivWithLeaveForConfig className={css.removeButtonContainer}>
+										<div className={css.removeButtonContainer}>
 											{item.hidden ? null : <Button aria-label="Delete" className={css.removeButton} onClick={onClickRemoveButton} icon="trash" />}
 											{item.hidden ? null : <Button aria-label="Hide" className={css.removeButton} onClick={onClickHideButton} icon="minus" />}
 											{item.hidden ? <Button aria-label="Show" className={css.removeButton} onClick={onClickShowButton} icon="plus" /> : null}
-										</ContainerDivWithLeaveForConfig>
+										</div>
 										<IconItem
 											{...item.iconItemProps}
 											spotlightId={`item_${index}`}

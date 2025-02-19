@@ -6,11 +6,11 @@ import {Component as ReactComponent, cloneElement, useEffect} from 'react';
 
 import ThemeDecorator from '../../../ThemeDecorator';
 
-import {components, testMetadata} from './SandstoneComponents';
+import {components, testMetadata} from './LimestoneComponents';
 import imports from './importer';
 import {LoremString} from './components/utils';
 
-import css from './Sandstone-View.module.less';
+import css from './Limestone-View.module.less';
 
 const url = new URL(window.location.href);
 

@@ -3,7 +3,7 @@
 @import "../styles/variables.less";
 
 // Module level variables, for use only in this file
-@fixedpopuppanels-max-height: ~"calc(100vh -" (.extract(@sand-fixedpopuppanels-margin, top)[] + .extract(@sand-fixedpopuppanels-margin, bottom)[])~")";
+@fixedpopuppanels-max-height: ~"calc(100vh -" (.extract(@lime-fixedpopuppanels-margin, top)[] + .extract(@lime-fixedpopuppanels-margin, bottom)[])~")";
 
 .fixedPopupPanels {
 	// Overrides for Panels - the & just refers to this element. Using a block here to visually compartmentalize the overrides apart from the general styles.
@@ -26,11 +26,11 @@
 	}
 
 	&.narrow {
-		width: @sand-fixedpopuppanels-width;
+		width: @lime-fixedpopuppanels-width;
 	}
 
 	&.half {
-		width: @sand-fixedpopuppanels-half-width;
+		width: @lime-fixedpopuppanels-half-width;
 	}
 
 	> .body {
@@ -48,12 +48,12 @@
 
 		// Overrides for Viewport
 		.viewport {
-			border-radius: @sand-fixedpopuppanels-border-radius;
-			box-shadow: @sand-fixedpopuppanels-shadow;
-			outline-color: @sand-overlay-outline-color;
-			outline-style: @sand-overlay-outline-style;
-			outline-width: @sand-overlay-outline-width;
-			outline-offset: -@sand-overlay-outline-width;
+			border-radius: @lime-fixedpopuppanels-border-radius;
+			box-shadow: @lime-fixedpopuppanels-shadow;
+			outline-color: @lime-overlay-outline-color;
+			outline-style: @lime-overlay-outline-style;
+			outline-width: @lime-overlay-outline-width;
+			outline-offset: -@lime-overlay-outline-width;
 
 			:global(.noAnimation) & {
 				box-shadow: none;
@@ -62,14 +62,14 @@
 
 		&.scrimTranslucent {
 			.viewport {
-				background-color: @sand-fixedpopuppanels-bg-color;
+				background-color: @lime-fixedpopuppanels-bg-color;
 			}
 		}
 
 		&.scrimNone,
 		&.scrimTransparent {
 			.viewport {
-				background-color: @sand-fixedpopuppanels-scrimtransparent-bg-color;
+				background-color: @lime-fixedpopuppanels-scrimtransparent-bg-color;
 			}
 		}
 	});
@@ -77,13 +77,13 @@
 
 // Overrides for Panel
 .panel {
-	padding: @sand-fixedpopuppanels-panel-padding;
+	padding: @lime-fixedpopuppanels-panel-padding;
 	max-height: @fixedpopuppanels-max-height;
 
 	> .body {
 		display: flex;
 		flex-direction: column;
-		padding: @sand-fixedpopuppanels-panel-body-padding;
+		padding: @lime-fixedpopuppanels-panel-body-padding;
 		flex: 1 1 auto;
 	}
 }

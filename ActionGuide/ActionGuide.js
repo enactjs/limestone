@@ -1,10 +1,10 @@
 /**
- * Sandstone styled action guide component and behaviors.
+ * Limestone styled action guide component and behaviors.
  *
  * @example
  * <ActionGuide icon="arrowlargedown">Hello</ActionGuide>
  *
- * @module sandstone/ActionGuide
+ * @module limestone/ActionGuide
  * @exports ActionGuide
  * @exports ActionGuideBase
  * @exports ActionGuideDecorator
@@ -26,17 +26,17 @@ import componentCss from './ActionGuide.module.less';
  * An Action Guide component.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/ActionGuide.ActionGuide|ActionGuide}.
+ * is within {@link limestone/ActionGuide.ActionGuide|ActionGuide}.
  *
  * @class ActionGuideBase
- * @memberof sandstone/ActionGuide
+ * @memberof limestone/ActionGuide
  * @ui
  * @public
  */
 const ActionGuideBase = kind({
 	name: 'ActionGuide',
 
-	propTypes: /** @lends sandstone/ActionGuide.ActionGuideBase.prototype */ {
+	propTypes: /** @lends limestone/ActionGuide.ActionGuideBase.prototype */ {
 		/**
 		 * The "aria-label" for the button.
 		 *
@@ -114,11 +114,11 @@ const ActionGuideBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/ActionGuide.ActionGuideBase|ActionGuide}.
+ * Applies Limestone specific behaviors to {@link limestone/ActionGuide.ActionGuideBase|ActionGuide}.
  *
  * @hoc
- * @memberof sandstone/ActionGuide
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/ActionGuide
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ActionGuideDecorator = compose(
@@ -127,7 +127,7 @@ const ActionGuideDecorator = compose(
 );
 
 /**
- * An Action Guide component, ready to use in Sandstone applications.
+ * An Action Guide component, ready to use in Limestone applications.
  *
  * `ActionGuide` may be used to display text and icon to describe an action.
  *
@@ -137,9 +137,9 @@ const ActionGuideDecorator = compose(
  * ```
  *
  * @class ActionGuide
- * @memberof sandstone/ActionGuide
- * @extends sandstone/ActionGuide.ActionGuideBase
- * @mixes sandstone/ActionGuide.ActionGuideDecorator
+ * @memberof limestone/ActionGuide
+ * @extends limestone/ActionGuide.ActionGuideBase
+ * @mixes limestone/ActionGuide.ActionGuideDecorator
  * @ui
  * @public
  */

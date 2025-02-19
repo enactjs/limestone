@@ -1,4 +1,4 @@
-import {Panel} from '@enact/sandstone/Panels';
+import {Panel} from '@enact/limestone/Panels';
 import {VoiceControlDecorator} from '@enact/webos/speech';
 import {useState, useCallback} from 'react';
 

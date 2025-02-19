@@ -19,11 +19,11 @@ const hours12 = [
 ];
 
 /**
- * {@link sandstone/TimePicker/TimePickerBase.HourPicker} is a utility component to prevent the
+ * {@link limestone/TimePicker/TimePickerBase.HourPicker} is a utility component to prevent the
  * animation of the picker when the display text doesn't change for 12-hour locales.
  *
  * @class HourPicker
- * @memberof sandstone/TimePicker/TimePickerBase
+ * @memberof limestone/TimePicker/TimePickerBase
  * @ui
  * @private
  */
@@ -56,19 +56,19 @@ HourPicker.propTypes = {
 };
 
 /**
-* {@link sandstone/TimePicker.TimePickerBase} is the stateless functional time picker
+* {@link limestone/TimePicker.TimePickerBase} is the stateless functional time picker
 * component. Should not be used directly but may be composed within another component as it is
-* within {@link sandstone/TimePicker.TimePicker}.
+* within {@link limestone/TimePicker.TimePicker}.
 *
 * @class TimePickerBase
-* @memberof sandstone/TimePicker
+* @memberof limestone/TimePicker
 * @ui
 * @public
 */
 const TimePickerBase = kind({
 	name: 'TimePickerBase',
 
-	propTypes: /** @lends sandstone/TimePicker.TimePickerBase.prototype */ {
+	propTypes: /** @lends limestone/TimePicker.TimePickerBase.prototype */ {
 		/**
 		 * The `hour` component of the time.
 		 *
@@ -111,7 +111,7 @@ const TimePickerBase = kind({
 		 * Disables voice control.
 		 *
 		 * @type {Boolean}
-		 * @memberof sandstone/TimePicker.TimePickerBase.prototype
+		 * @memberof limestone/TimePicker.TimePickerBase.prototype
 		 * @public
 		 */
 		'data-webos-voice-disabled': PropTypes.bool,
@@ -407,7 +407,7 @@ const TimePickerBase = kind({
  * Called when `Enter` key down on the last picker
  *
  * @name onComplete
- * @memberof sandstone/TimePicker.TimePickerBase.prototype
+ * @memberof limestone/TimePicker.TimePickerBase.prototype
  * @type {Function}
  * @public
  */
