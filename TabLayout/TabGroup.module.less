@@ -1,11 +1,13 @@
 // TabGroup.module.less
 //
+@import "../styles/colors.less";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .tab {
-	font-size: @lime-tablayout-tab-font-size;
+	font-size: @lime-tablayout-tab-font-size-large;
+	margin: @lime-tablayout-tab-horizontal-margin;
 
 	&.horizontal {
 		&.button {
@@ -13,6 +15,13 @@
 			margin: @lime-tablayout-tab-horizontal-margin;
 			padding: @lime-tablayout-tab-horizontal-padding;
 			height: @lime-tablayout-tab-horizontal-button-height;
+			line-height: @lime-tablayout-tab-horizontal-button-line-height;
+
+			&.small {
+				font-size: @lime-tablayout-tab-font-size;
+				height: @lime-tablayout-tab-horizontal-small-button-height;
+				line-height: @lime-tablayout-tab-horizontal-small-button-line-height;
+			}
 
 			.client {
 				.lime-spotlight-margin();
@@ -30,13 +39,16 @@
 	}
 
 	&.vertical {
-		margin-bottom: @lime-tablayout-tab-vertical-margin-bottom;
-
 		&.button {
 			display: block;
 			height: @lime-tablayout-tab-vertical-button-height;
+
+			&.collapsed {
+				width: @lime-tablayout-tab-vertical-button-height;
+			}
+
 			.lime-custom-text({
-				font-size: @lime-tablayout-tab-font-size;
+				font-size: @lime-tablayout-tab-font-size-large;
 				min-width: @lime-button-height;
 			})
 		}
@@ -51,6 +63,14 @@
 	}
 
 	.applySkins({
+		&.button {
+			&.selected {
+				&:not(:focus) {
+					color: @lime-tablayout-tab-selected-text-color;
+				}
+			}
+		}
+
 		&.horizontal {
 			&.button {
 				&.selected {
@@ -60,7 +80,7 @@
 				}
 
 				.client::after {
-					background-color: @lime-tablayout-tab-horizontal-selected-border-color;
+					background-color: @lime-tablayout-tab-selected-text-color;
 				}
 
 				.focus({
@@ -79,11 +99,28 @@
 
 .applySkins({
 	.tabGroup {
-		.horizontalLine {
-			width: 100%;
-			margin: 0;
-			border: 0 none transparent;
-			border-bottom: @lime-tablayout-tab-horizontal-border-width solid @lime-tablayout-tab-horizontal-border-color;
+		background-color: @lime-tablayout-tabs-background-color;
+		border-radius: @lime-tablayout-border-radius;
+
+		.tabs {
+			display: flex;
+		}
+
+		&.horizontal {
+			padding: @lime-tablayout-horizontal-tabs-padding;
+
+			.tabs {
+				gap: @lime-tablayout-horizontal-tabs-spacing;
+			}
+		}
+
+		&.vertical {
+			padding: @lime-tablayout-vertical-tabs-padding;
+
+			.tabs {
+				flex-direction: column;
+				gap: @lime-tablayout-vertical-tabs-spacing;
+			}
 		}
 
 		.tab {

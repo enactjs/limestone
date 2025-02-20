@@ -164,7 +164,8 @@
 @lime-steps-step-number-font-size:  54px;
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
-@lime-tablayout-tab-font-size:      66px;
+@lime-tablayout-tab-font-size:      48px;
+@lime-tablayout-tab-font-size-large: 60px;
 @lime-tooltip-label-font-size:      54px;
 
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
@@ -826,7 +827,7 @@
 // PopupTabLayout
 // ---------------------------------------
 @lime-popuptablayout-margin: 120px 60px;
-@lime-popuptablayout-tabs-padding: @lime-component-spacing 0 (@lime-component-spacing - @lime-tablayout-tab-vertical-margin-bottom) 0;
+@lime-popuptablayout-tabs-padding: @lime-component-spacing 0 (@lime-component-spacing - @lime-tablayout-vertical-tabs-spacing) 0;
 @lime-popuptablayout-tabs-content-spacing: 36px;
 @lime-popuptablayout-tabs-content-border-radius: @lime-popup-border-radius;
 @lime-popuptablayout-content-margin: 0;
@@ -970,13 +971,20 @@
 
 // TabLayout
 // ---------------------------------------
+@lime-tablayout-border-radius: 36px;
 @lime-tablayout-collapse-duration: 250ms;
 @lime-tablayout-vertical-content-margin-top: 0;
 @lime-tablayout-horizontal-content-margin-top: 96px;
 @lime-tablayout-horizontal-tabs-margin: 0 @lime-component-spacing;
+@lime-tablayout-horizontal-tabs-padding: 12px;
+@lime-tablayout-horizontal-tabs-spacing: calc(4 * @lime-tablayout-horizontal-tabs-padding);
+@lime-tablayout-vertical-tabs-padding: 36px;
+@lime-tablayout-vertical-tabs-spacing: @lime-tablayout-vertical-tabs-padding;
 @lime-tablayout-tab-vertical-button-height: 156px;
-@lime-tablayout-tab-vertical-margin-bottom: 24px;
-@lime-tablayout-tab-horizontal-button-height: 132px;
+@lime-tablayout-tab-horizontal-button-height: 108px;
+@lime-tablayout-tab-horizontal-small-button-height: 96px;
+@lime-tablayout-tab-horizontal-button-line-height: 84px;
+@lime-tablayout-tab-horizontal-small-button-line-height: 60px;
 @lime-tablayout-tab-horizontal-margin: 0;
 @lime-tablayout-tab-horizontal-padding: 0;
 @lime-tablayout-tab-horizontal-border-width: ~"calc(" 6px ~"/ 3)"; // foolishness to get a correctly scalable 2px at 4k

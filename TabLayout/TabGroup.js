@@ -24,7 +24,7 @@ const MAX_TABS_BEFORE_SCROLLING = 7;
 
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 // eslint-disable-next-line enact/prop-types
-const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
+const TabButton = ({tabButtonSize: size, ...rest}) => (<Button size={size} {...rest} css={componentCss} />);
 
 const TabBase = kind({
 	name: 'Tab',
@@ -38,9 +38,10 @@ const TabBase = kind({
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
 		selected: PropTypes.bool,
-		size: PropTypes.number,
+		size: PropTypes.string,
 		sprite: PropTypes.object,
-		stopped: PropTypes.bool
+		stopped: PropTypes.bool,
+		tabSize: PropTypes.number
 	},
 
 	defaultProps: {
@@ -76,7 +77,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, orientation, size, ...rest}) => {
+	render: ({children, collapsed, css, orientation, size, tabSize, ...rest}) => {
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
@@ -87,6 +88,7 @@ const TabBase = kind({
 
 		const commonProps = {
 			backgroundOpacity: 'transparent',
+			tabButtonSize: size,
 			children,
 			collapsable: true,
 			css,
@@ -101,7 +103,7 @@ const TabBase = kind({
 				return (
 					<Cell
 						{...rest}
-						size={size}
+						size={tabSize}
 						component={TabButton}
 						{...commonProps}
 					/>
@@ -161,6 +163,7 @@ const TabGroupBase = kind({
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
 		selectedIndex: PropTypes.number,
+		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
 		spotlightId: PropTypes.string,
 		tabSize: PropTypes.number
@@ -180,11 +183,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, tabSize]);
+		const itemProps = useMemo(() => ({css, collapsed, orientation, size, tabSize}), [css, collapsed, orientation, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
@@ -254,7 +257,6 @@ const TabGroupBase = kind({
 						</GroupComponent>
 					</div>
 				)}
-				{isHorizontal ? <hr className={componentCss.horizontalLine} /> : null}
 			</Component>
 		);
 	}

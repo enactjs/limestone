@@ -380,7 +380,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -413,6 +413,7 @@ const TabLayoutBase = kind({
 							collapsed={isVertical}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
 							tabSize={!isVertical ? tabSize : null}
+							size={size}
 							spotlightDisabled={!collapsed && isVertical}
 						/>
 					</Cell>
