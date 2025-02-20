@@ -215,7 +215,7 @@ const DropdownBase = kind({
 		 * The size of the Dropdown's {@link limestone/Button.Button|Button} component.
 		 *
 		 * @type {('large'|'small')}
-		 * @default 'small'
+		 * @default 'large'
 		 * @public
 		 */
 		size: PropTypes.oneOf(['large', 'small']),
@@ -244,7 +244,7 @@ const DropdownBase = kind({
 	defaultProps: {
 		direction: 'below',
 		open: false,
-		size: 'small',
+		size: 'large',
 		width: 'medium'
 	},
 
@@ -341,7 +341,7 @@ const DropdownBase = kind({
 					direction={direction}
 					disabled={hasChildren ? disabled : true}
 					focusEffect="static"
-					icon={openDropdown ? 'arrowlargeup' : 'arrowlargedown'}
+					icon={openDropdown ? 'triangleup' : 'triangledown'}
 					popupProps={popupProps}
 					popupComponent={DropdownList}
 					onClick={onOpen}
