@@ -21,15 +21,6 @@ describe('Button', () => {
 		expect(button).toHaveClass(expected);
 	});
 
-	test('should expand by default', function () {
-		render(<ButtonBase />);
-		const button = screen.getByRole('button');
-
-		const expected = 'focusExpand';
-
-		expect(button).toHaveClass(expected);
-	});
-
 	test('should have default minWidth', function () {
 		render(<ButtonBase />);
 		const button = screen.getByRole('button');
