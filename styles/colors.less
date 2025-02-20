@@ -7,7 +7,7 @@
 
 // Remote button colors
 // ---------------------------------------
-@lime-remote-button-red-color:     #e1777e; // #ff6d78; // #da3c3c; // #e71b1c;
+@lime-remote-button-red-color:     #ff6d78; // #e1777e; // #da3c3c; // #e71b1c;
 @lime-remote-button-green-color:   #7fd563; // #6ff467; // #21c171; // #339966;
 @lime-remote-button-yellow-color:  #d3b85f; // #ffc600; // #dac139; // #fddb24;
 @lime-remote-button-blue-color:    #5185c1; // #0084ff; // #5677d0; // #4764b4;
@@ -23,9 +23,9 @@
 @lime-text-sub-color: var(--lime-text-sub-color, #abaeb3);
 @lime-shadow-base-color: var(--lime-shadow-color, #000000);
 @lime-shadow-color: ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.3)";
-@lime-component-text-color: var(--lime-component-text-color, #e6e6e6);
+@lime-component-text-color: var(--lime-component-text-color, #ffffff);
 @lime-component-text-sub-color: var(--lime-component-text-sub-color, #abaeb3);
-@lime-component-bg-color: var(--lime-component-bg-color, #7d848c);
+@lime-component-bg-color: var(--lime-component-bg-color, #5b5d66);
 @lime-component-active-indicator-bg-color: var(--lime-component-active-indicator-bg-color, #e6e6e6);
 @lime-component-inactive-indicator-bg-color: var(--lime-component-inactive-indicator-bg-color, #9da2a7);
 
@@ -37,7 +37,7 @@
 
 @lime-selected-color: var(--lime-selected-color, #e6e6e6);
 @lime-selected-text-color: var(--lime-selected-text-color, @lime-text-color);
-@lime-selected-bg-color: var(--lime-selected-bg-color, #ffffff1a);
+@lime-selected-bg-color: var(--lime-selected-bg-color, #26282b);
 
 //@lime-selected-focus-text-color: var(--lime-selected-focus-text-color);
 //@lime-selected-focus-bg-color: var(--lime-selected-focus-bg-color);
@@ -120,11 +120,11 @@
 
 // Disabled Opacity
 // ---------------------------------------
-@lime-disabled-opacity: 0.28;  // This value brings the standard text-color to the disabled text color specs
+@lime-disabled-opacity: 0.3;  // This value brings the standard text-color to the disabled text color specs
 @lime-disabled-bg-opacity: @lime-disabled-opacity;
 @lime-disabled-focus-content-opacity: 0.4;
 @lime-disabled-focus-content-color-opacity: 0.4;
-@lime-disabled-focus-bg-opacity: 0.585;  // This value brings the standard focus-background-color to the disabled+focus color specs
+@lime-disabled-focus-bg-opacity: 0.7;  // This value brings the standard focus-background-color to the disabled+focus color specs
 
 
 // Spotlight and State
@@ -419,10 +419,8 @@
 
 // TabLayout
 // ---------------------------------------
-@lime-tablayout-tab-horizontal-border-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.5)";
-@lime-tablayout-tab-horizontal-selected-border-color: @lime-selected-color;
 @lime-tablayout-tab-selected-text-color: #fd312e;
-@lime-tablayout-tabs-background-color: @lime-selected-bg-color;
+@lime-tablayout-tabs-background-color: #ffffff1a;
 
 // Tooltip
 // ---------------------------------------

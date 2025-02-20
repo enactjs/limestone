@@ -64,9 +64,15 @@
 
 	.applySkins({
 		&.button {
+			color: @lime-component-text-color;
+
 			&.selected {
 				&:not(:focus) {
 					color: @lime-tablayout-tab-selected-text-color;
+				}
+
+				.bg {
+					background-color: @lime-tablayout-tabs-background-color;
 				}
 			}
 		}
