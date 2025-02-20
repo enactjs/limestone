@@ -205,6 +205,15 @@ const TabLayoutBase = kind({
 		rtl: PropTypes.bool,
 
 		/**
+		 * The size of the horizontal tab.
+		 *
+		 * @type {('small'|'large')}
+		 * @default 'large'
+		 * @public
+		 */
+		size: PropTypes.oneOf(['small', 'large']),
+
+		/**
 		 * Assign a custom size to horizontal tabs.
 		 *
 		 * Tabs in the horizontal orientation automatically stretch to fill the available width.

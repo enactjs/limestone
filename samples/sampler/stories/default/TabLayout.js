@@ -11,8 +11,6 @@ import {range, select} from '@enact/storybook-utils/addons/controls';
 import {scaleToRem} from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
-import spriteGear2k from '../../images/sprite-gear-2k.png';
-import spriteGear4k from '../../images/sprite-gear-4k.png';
 
 TabLayout.displayName = 'TabLayout';
 const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
@@ -87,7 +85,7 @@ export const _TabLayout = (args) => {
 };
 
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
-select('size', _TabLayout, ['small', 'large'], Config, 'small');
+select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
 range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);
 
