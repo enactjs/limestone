@@ -90,7 +90,6 @@ const TabBase = kind({
 			children,
 			collapsable: true,
 			css,
-			focusEffect: 'static',
 			minWidth: false,
 			role: 'tab'
 		};

@@ -302,7 +302,6 @@ const QuickGuidePanelsBase = kind({
 					backgroundOpacity="transparent"
 					className={css.navigationButton}
 					component={nextButton}
-					focusEffectIconOnly
 					icon="arrowlargeright"
 					iconFlip="auto"
 					iconPosition="after"
@@ -322,7 +321,6 @@ const QuickGuidePanelsBase = kind({
 					backgroundOpacity="transparent"
 					className={css.navigationButton}
 					component={prevButton}
-					focusEffectIconOnly
 					icon="arrowlargeleft"
 					iconFlip="auto"
 					minWidth={false}

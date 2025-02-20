@@ -30,15 +30,6 @@ describe('Button', () => {
 		expect(button).toHaveClass(expected);
 	});
 
-	test('should be able to disable the expand focus effect', () => {
-		render(<ButtonBase focusEffect="static" />);
-		const button = screen.getByRole('button');
-
-		const expected = 'focusStatic';
-
-		expect(button).toHaveClass(expected);
-	});
-
 	test('should have default minWidth', function () {
 		render(<ButtonBase />);
 		const button = screen.getByRole('button');

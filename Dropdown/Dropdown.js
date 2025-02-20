@@ -340,7 +340,6 @@ const DropdownBase = kind({
 					aria-label={(ariaLabel || placeholder) + ` ${$L('Dropdown')}`}
 					direction={direction}
 					disabled={hasChildren ? disabled : true}
-					focusEffect="static"
 					icon={openDropdown ? 'arrowlargeup' : 'arrowlargedown'}
 					popupProps={popupProps}
 					popupComponent={DropdownList}

@@ -16,12 +16,11 @@ const NavigationButton = kind({
 			PropTypes.element,
 			PropTypes.func
 		]),
-		focusEffectIconOnly: PropTypes.bool,
 		onClick: PropTypes.func,
 		visible: PropTypes.bool
 	},
 
-	render: ({component, focusEffectIconOnly, visible, ...rest}) => {
+	render: ({component, visible, ...rest}) => {
 
 		if (isValidElement(component)) {
 			extractAriaProps(rest);
@@ -38,7 +37,7 @@ const NavigationButton = kind({
 
 			const Type = component.type;
 			return (
-				<Type css={focusEffectIconOnly ? componentCss : null} {...rest} />
+				<Type {...rest} />
 			);
 		} else if (
 			// Explicitly disabled via false/null or visible is set to false
@@ -52,7 +51,7 @@ const NavigationButton = kind({
 		const Component = (typeof component === 'function') ? component : Button;
 
 		return (
-			<Component css={focusEffectIconOnly ? componentCss : null} {...rest} />
+			<Component {...rest} />
 		);
 	}
 });

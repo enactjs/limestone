@@ -59,7 +59,6 @@ const prop = {
 	contextualPopupDirection: [
 		'above', 'above center', 'above left', 'above right', 'below', 'below center', 'below left', 'below right', 'left middle', 'left top', 'left bottom', 'right middle', 'right top', 'right bottom'],
 	icons: ['', ...iconNames],
-	focusEffect: ['expand', 'static'],
 	pickerOrientation: ['horizontal', 'vertical'],
 	pickerWidth: [null, 'small', 'medium', 'large'],
 	tallText: ['नरेंद्र मोदी', 'ଇନପୁଟଗୁଡିକ', 'ฟิ้ ไั ஒ து ඒ', 'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ', 'តន្ត្រី', 'ÁÉÍÓÚÑÜ', 'Bản văn']
@@ -120,7 +119,6 @@ export const TallGlyphSupportInComponents = (args) => {
 							onClick={action('onClick')}
 							backgroundOpacity={args['backgroundOpacity']}
 							disabled={args['disabled (Button)']}
-							focusEffect={args['focusEffect']}
 							icon={args['icon']}
 							minWidth={args['minWidth'] ? void 0 : false}
 							selected={args['selected']}
@@ -219,7 +217,6 @@ export const TallGlyphSupportInComponents = (args) => {
 select('text', TallGlyphSupportInComponents, prop.tallText, {groupId: 'Text'}, prop.tallText[0]);
 select('backgroundOpacity', TallGlyphSupportInComponents, prop.backgroundOpacity, ButtonConfig);
 boolean('disabled (Button)', TallGlyphSupportInComponents, ButtonConfig);
-select('focusEffect', TallGlyphSupportInComponents, prop.focusEffect, ButtonConfig);
 select('icon', TallGlyphSupportInComponents, prop.icons, ButtonConfig);
 boolean('minWidth', TallGlyphSupportInComponents, ButtonConfig, true);
 boolean('selected', TallGlyphSupportInComponents, ButtonConfig);
