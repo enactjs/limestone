@@ -63,7 +63,7 @@ const ImageItemBase = kind({
 		/**
 		 * The primary caption displayed with the image.
 		 *
-		 * @type {String|Object}
+		 * @type {String|Node}
 		 * @public
 		 */
 		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
