@@ -40,7 +40,7 @@ const DropdownListBase = kind({
 	name: 'DropdownListBase',
 
 	propTypes: {
-		/*
+		/**
 		 * The selections for Dropdown
 		 *
 		 * @type {String[]|Array.<{key: (Number|String), children: (String|Component)}>}
@@ -61,28 +61,28 @@ const DropdownListBase = kind({
 		 */
 		id: PropTypes.string,
 
-		/*
+		/**
 		 * Called when an item is selected.
 		 *
 		 * @type {Function}
 		 */
 		onSelect: PropTypes.func,
 
-		/*
+		/**
 		 * Callback function that will receive the scroller's scrollTo() method
 		 *
 		 * @type {Function}
 		 */
 		scrollTo: PropTypes.func,
 
-		/*
+		/**
 		 * Index of the selected item.
 		 *
 		 * @type {Number}
 		 */
 		selected: PropTypes.number,
 
-		/*
+		/**
 		 * State of possible skin variants.
 		 *
 		 * Used to scale the `itemSize` of the `VirtualList` based on large-text mode
@@ -91,7 +91,16 @@ const DropdownListBase = kind({
 		 */
 		skinVariants: PropTypes.object,
 
-		/*
+		/**
+		 * Specifies how to show vertical scrollbar.
+		 *
+		 * @type {('auto'|'visible'|'hidden')}
+		 * @default 'auto'
+		 * @public
+		 */
+		verticalScrollbar: PropTypes.oneOf(['auto', 'visible', 'hidden']),
+
+		/**
 		 * The width of DropdownList.
 		 *
 		 * @type {('huge'|'x-large'|'large'|'medium'|'small'|'tiny')|number}

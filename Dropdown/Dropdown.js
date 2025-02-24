@@ -229,6 +229,15 @@ const DropdownBase = kind({
 		title: PropTypes.string,
 
 		/**
+		 * Specifies how to show vertical scrollbar.
+		 *
+		 * @type {('auto'|'visible'|'hidden')}
+		 * @default 'auto'
+		 * @public
+		 */
+		verticalScrollbar: PropTypes.oneOf(['auto', 'visible', 'hidden']),
+
+		/**
 		 * Width of the Dropdown.
 		 *
 		 * @type {('huge'|'large'|'x-large'|'medium'|'small'|'tiny')|number}
