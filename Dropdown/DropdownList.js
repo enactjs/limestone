@@ -91,7 +91,7 @@ const DropdownListBase = kind({
 		 */
 		skinVariants: PropTypes.object,
 
-		/**
+		/*
 		 * Specifies how to show vertical scrollbar.
 		 *
 		 * @type {('auto'|'visible'|'hidden')}
