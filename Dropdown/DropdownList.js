@@ -143,7 +143,7 @@ const DropdownListBase = kind({
 		itemSize: () => 126
 	},
 
-	render: ({dataSize, id, itemSize, scrollTo, width, ...rest}) => {
+	render: ({dataSize, id, itemSize, scrollTo, verticalScrollbar, width, ...rest}) => {
 		delete rest.children;
 		delete rest.onSelect;
 		delete rest.selected;
@@ -162,6 +162,7 @@ const DropdownListBase = kind({
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}
+					verticalScrollbar={verticalScrollbar}
 				/>
 			</div>
 		);
