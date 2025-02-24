@@ -254,6 +254,7 @@ const DropdownBase = kind({
 		direction: 'below',
 		open: false,
 		size: 'large',
+		verticalScrollbar: 'auto',
 		width: 'medium'
 	},
 

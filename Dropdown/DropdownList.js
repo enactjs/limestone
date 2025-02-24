@@ -95,12 +95,10 @@ const DropdownListBase = kind({
 		 * Specifies how to show vertical scrollbar.
 		 *
 		 * @type {('auto'|'visible'|'hidden')}
-		 * @default 'auto'
-		 * @public
 		 */
 		verticalScrollbar: PropTypes.oneOf(['auto', 'visible', 'hidden']),
 
-		/**
+		/*
 		 * The width of DropdownList.
 		 *
 		 * @type {('huge'|'x-large'|'large'|'medium'|'small'|'tiny')|number}
