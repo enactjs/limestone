@@ -35,9 +35,9 @@ function useContextAsDefaults (props) {
 
 	const provideContextAsDefaults = (children) => {
 		return (
-			<PanelsStateContext.Provider value={contextProps}>
+			<PanelsStateContext value={contextProps}>
 				{children}
-			</PanelsStateContext.Provider>
+			</PanelsStateContext>
 		);
 	};
 
