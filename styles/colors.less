@@ -20,7 +20,7 @@
 @lime-bg-color: var(--lime-bg-color, #000000);
 
 @lime-text-color: var(--lime-text-color, #ffffff);
-@lime-text-sub-color: var(--lime-text-sub-color, #abaeb3);
+@lime-text-sub-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.3)";
 @lime-shadow-base-color: var(--lime-shadow-color, #000000);
 @lime-shadow-color: ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.3)";
 @lime-component-text-color: var(--lime-component-text-color, #ffffff);
@@ -46,7 +46,7 @@
 //@lime-disabled-bg-color: var(--lime-disabled-bg-color);
 
 //@lime-disabled-focus-text-color: var(--lime-disabled-focus-text-color);
-@lime-disabled-focus-bg-color: var(--lime-disabled-focus-bg-color, #abaeb3);
+@lime-disabled-focus-bg-color: var(--lime-disabled-focus-bg-color, #b3b3b3);
 
 @lime-disabled-selected-color: var(--lime-disabled-selected-color, #4c5059);
 //@lime-disabled-selected-text-color: var(--lime-disabled-selected-text-color);
