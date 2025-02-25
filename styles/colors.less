@@ -8,9 +8,9 @@
 // Remote button colors
 // ---------------------------------------
 @lime-remote-button-red-color:     #ff6d78; // #e1777e; // #da3c3c; // #e71b1c;
-@lime-remote-button-green-color:   #7fd563; // #6ff467; // #21c171; // #339966;
-@lime-remote-button-yellow-color:  #d3b85f; // #ffc600; // #dac139; // #fddb24;
-@lime-remote-button-blue-color:    #5185c1; // #0084ff; // #5677d0; // #4764b4;
+@lime-remote-button-green-color:   #93d371; // #6ff467; // #21c171; // #339966;
+@lime-remote-button-yellow-color:  #ffc600; // #d3b85f; // #dac139; // #fddb24;
+@lime-remote-button-blue-color:    #0084ff; // #5185c1; // #5677d0; // #4764b4;
 
 
 // UI Conceptual Colors
@@ -31,7 +31,7 @@
 
 @lime-focus-text-color: var(--lime-focus-text-color, #ffffff);
 @lime-focus-bg-color: var(--lime-focus-bg-color, #ffffff);
-@lime-component-focus-text-color: var(--lime-component-focus-text-color, #4c5059);
+@lime-component-focus-text-color: var(--lime-component-focus-text-color, #262626);
 @lime-component-focus-active-indicator-bg-color: var(--lime-component-focus-active-indicator-bg-color, #4c5059);
 @lime-component-focus-inactive-indicator-bg-color: var(--lime-component-focus-inactive-indicator-bg-color, #b8b9bb);
 
@@ -47,7 +47,7 @@
 //@lime-disabled-bg-color: var(--lime-disabled-bg-color);
 
 //@lime-disabled-focus-text-color: var(--lime-disabled-focus-text-color);
-@lime-disabled-focus-bg-color: var(--lime-disabled-focus-bg-color, #abaeb3);
+@lime-disabled-focus-bg-color: var(--lime-disabled-focus-bg-color, #b3b3b3);
 
 @lime-disabled-selected-color: var(--lime-disabled-selected-color, #4c5059);
 //@lime-disabled-selected-text-color: var(--lime-disabled-selected-text-color);
@@ -154,9 +154,8 @@
 @lime-button-text-color: @lime-component-text-color;
 @lime-button-bg-color: @lime-component-bg-color;
 @lime-button-bordered-bg-color: ~"color(from" @lime-component-bg-color ~"srgb r g b / 0.5)";
-@lime-button-border-color: transparent;
-@lime-button-bordered-border-color: @lime-focus-bg-color; // TBD whether this will replace @lime-button-border-color
-@lime-button-bordered-selected-border-color: @lime-selected-border-color;
+@lime-button-border-color: @lime-focus-bg-color;
+@lime-button-selected-border-color: @lime-selected-border-color;
 @lime-button-focus-bg-color: @lime-focus-bg-color;
 @lime-button-selected-text-color: @lime-component-text-color;
 @lime-button-selected-bg-color: @lime-selected-bg-color;

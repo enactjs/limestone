@@ -13,8 +13,8 @@
 	max-width: @lime-button-max-width;
 	padding: 0 @lime-button-h-padding;
 	margin: @lime-button-margin;
-	text-align: center;
-	vertical-align: middle;
+	display: inline-flex;
+	justify-content: center;
 	--button-height: $height;
 
 	.lime-custom-text({
@@ -55,6 +55,7 @@
 	&.yellow,
 	&.blue {
 		.padding-start-end(@lime-button-colordot-padding-start, @lime-button-h-padding);
+		justify-content: start;
 
 		// IconButton-like Button scenario
 		.client::before {
@@ -285,7 +286,7 @@
 		&.bordered {
 			.bg {
 				background-color: @lime-button-bordered-bg-color;
-				border: @lime-button-bordered-border-width solid @lime-button-bordered-border-color;
+				border: @lime-button-border-width solid @lime-button-border-color;
 			}
 		}
 
@@ -351,7 +352,7 @@
 
 			&.bordered {
 				.bg {
-					border: @lime-button-bordered-border-width solid @lime-button-bordered-selected-border-color;
+					border: @lime-button-border-width solid @lime-button-selected-border-color;
 				}
 			}
 

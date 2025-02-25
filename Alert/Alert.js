@@ -187,7 +187,7 @@ const AlertBase = kind({
 		overflow: ({buttons}) => {
 			if (typeof window !== 'undefined' && buttons) {
 				const contentWidth = ri.scale(1200); // If you will change this value, please change @lime-alert-overlay-content-width too.
-				const buttonsWidth = ri.scale(540 + 126); // If you will change this value, please change @lime-button-min-width + @lime-alert-overlay-buttons-margin too.
+				const buttonsWidth = ri.scale(840 + 126); // If you will change this value, please change @lime-button-min-width + @lime-alert-overlay-buttons-margin too.
 
 				return window.innerWidth < contentWidth + buttonsWidth;
 			}
