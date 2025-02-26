@@ -138,7 +138,7 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	 * The aria label for the component.
 	 *
 	 * @type {String}
-	 * @public
+	 * @private
 	 */
 	'aria-label': PropTypes.string,
 
@@ -170,7 +170,7 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	 * Forwards a reference to the DOM element.
 	 *
 	 * @type {Object}
-	 * @public
+	 * @private
 	 */
 	ref: PropTypes.shape({current: PropTypes.any}),
 
