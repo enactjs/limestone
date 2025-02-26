@@ -159,20 +159,20 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	onInteractionForScroll: PropTypes.func,
 
 	/**
-	 * `true` if rtl, `false` if ltr.
-	 *
-	 * @type {Boolean}
-	 * @private
-	 */
-	rtl: PropTypes.bool,
-
-	/**
 	 * Forwards a reference to this component.
 	 *
 	 * @type {Object}
 	 * @public
 	 */
 	ref: PropTypes.shape({current: PropTypes.any}),
+
+	/**
+	 * `true` if rtl, `false` if ltr.
+	 *
+	 * @type {Boolean}
+	 * @private
+	 */
+	rtl: PropTypes.bool,
 
 	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the
