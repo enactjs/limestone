@@ -167,6 +167,14 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	rtl: PropTypes.bool,
 
 	/**
+	 * Forwards a reference to this component.
+	 *
+	 * @type {Object}
+	 * @public
+	 */
+	ref: PropTypes.shape({current: PropTypes.any}),
+
+	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the
 	 * corresponding internal elements and states of this component.
 	 *
