@@ -135,6 +135,14 @@ ScrollbarTrack.displayName = 'ScrollbarTrack';
 
 ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototype */ {
 	/**
+	 * The aria label for the component.
+	 *
+	 * @type {String}
+	 * @public
+	 */
+	'aria-label': PropTypes.string,
+
+	/**
 	 * Called when {@link limestone/useScroll.ScrollbarTrack|ScrollbarTrack} is updated.
 	 *
 	 * @type {Function}
@@ -159,7 +167,7 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	onInteractionForScroll: PropTypes.func,
 
 	/**
-	 * Forwards a reference to this component.
+	 * Forwards a reference to the DOM element.
 	 *
 	 * @type {Object}
 	 * @public
