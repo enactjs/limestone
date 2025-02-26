@@ -19,8 +19,8 @@
 // common colors
 @lime-bg-color: var(--lime-bg-color, #000000);
 
-@lime-text-color: var(--lime-text-color, #e6e6e6); // #e6e6e6
-@lime-text-sub-color: var(--lime-text-sub-color, #abaeb3);
+@lime-text-color: var(--lime-text-color, #ffffff); // #ffffff
+@lime-text-sub-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.3)";
 @lime-shadow-base-color: var(--lime-shadow-color, #000000);
 @lime-shadow-color: ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.3)";
 @lime-component-text-color: var(--lime-component-text-color, #ffffff);
@@ -125,13 +125,13 @@
 @lime-disabled-bg-opacity: @lime-disabled-opacity;
 @lime-disabled-focus-content-opacity: 0.4;
 @lime-disabled-focus-content-color-opacity: 0.4;
-@lime-disabled-focus-bg-opacity: 0.7;  // This value brings the standard focus-background-color to the disabled+focus color specs
+@lime-disabled-focus-bg-opacity: 0.585;  // This value brings the standard focus-background-color to the disabled+focus color specs
 
 
 // Spotlight and State
 // ---------------------------------------
 @lime-spotlight-text-color:           @lime-component-focus-text-color; // Used in color-mixins.less, QA Sampler Marquee
-@lime-spotlight-bg-color:             @lime-focus-bg-color; // If this changes, update Button bg-color mixins in color-mixins.less; UPDATE: @lime-focus-bg-color changed from #e6e6e6 to #ffffff
+@lime-spotlight-bg-color:             @lime-focus-bg-color; // If this changes, update Button bg-color mixins in color-mixins.less
 @lime-spotlight-focus-shadow:         0 36px 36px @lime-shadow-color; // Used in color-mixins.less
 
 
@@ -401,7 +401,7 @@
 // ---------------------------------------
 @lime-spinner-head-color: @lime-spinner-color;
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
-@lime-spinner-bg-color: #7d848c; // #7d848c is the old value of @lime-component-bg-color which changed to #5b5d66;
+@lime-spinner-bg-color: @lime-component-bg-color;
 @lime-spinner-text-color: @lime-component-text-color;
 @lime-spinner-text-shadow-color: @lime-shadow-color;
 
