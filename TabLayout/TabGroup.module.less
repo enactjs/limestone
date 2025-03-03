@@ -12,7 +12,6 @@
 	&.horizontal {
 		&.button {
 			display: block;
-			margin: @lime-tablayout-tab-horizontal-margin;
 			padding: @lime-tablayout-tab-horizontal-padding;
 			height: @lime-tablayout-tab-horizontal-button-height;
 			line-height: @lime-tablayout-tab-horizontal-button-line-height;
@@ -22,19 +21,6 @@
 				height: @lime-tablayout-tab-horizontal-small-button-height;
 				line-height: @lime-tablayout-tab-horizontal-small-button-line-height;
 			}
-
-			.client {
-				.lime-spotlight-margin();
-			}
-
-			&.selected {
-				.client::after {
-					content: "";
-					position: absolute;
-					.position(auto, 0, 0, 0);
-					height: @lime-tablayout-tab-horizontal-selected-border-width;
-				}
-			}
 		}
 	}
 
@@ -42,6 +28,7 @@
 		&.button {
 			display: block;
 			height: @lime-tablayout-tab-vertical-button-height;
+			text-align: left;
 
 			&.collapsed {
 				width: @lime-tablayout-tab-vertical-button-height;
@@ -52,14 +39,6 @@
 				min-width: @lime-button-height;
 			})
 		}
-
-		.client {
-			text-align: left;
-
-			.enact-locale-rtl({
-				text-align: right;
-			});
-		}
 	}
 
 	.applySkins({
@@ -67,38 +46,18 @@
 			color: @lime-component-text-color;
 
 			&.selected {
-				&:not(:focus) {
-					color: @lime-tablayout-tab-selected-text-color;
-				}
+				background-color: @lime-tablayout-tab-selected-background-color;
 
 				.bg {
-					background-color: @lime-tablayout-tabs-background-color;
+					opacity: 0;
 				}
 			}
-		}
 
-		&.horizontal {
-			&.button {
-				&.selected {
-					.bg {
-						opacity: 0;
-					}
+			.focus({
+				.bg {
+					opacity: 1;
 				}
-
-				.client::after {
-					background-color: @lime-tablayout-tab-selected-text-color;
-				}
-
-				.focus({
-					.bg {
-						opacity: 1;
-					}
-
-					.client::after {
-						background-color: unset;
-					}
-				});
-			}
+			});
 		}
 	});
 }
