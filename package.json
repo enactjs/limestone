@@ -48,6 +48,7 @@
     "@enact/ui": "^5.0.0-alpha.4",
     "@enact/webos": "^5.0.0-alpha.4",
     "classnames": "^2.5.1",
+    "design-tokens": "enactjs/design-tokens",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.30.1",

@@ -1,0 +1,40 @@
+/* colors-alias.css */
+
+@import "~design-tokens/css/colors/brand.css";
+
+:root {
+	--lime-alias-color-surface-full: var(--ref-color-base-0);
+	--lime-alias-color-surface-overlay: var(--ref-color-secondary-15);
+	--lime-alias-color-surface-popup: var(--ref-color-base-90);
+
+	--lime-alias-color-accent: var(--ref-color-primary-50);
+	--lime-alias-color-accent-green: var(--ref-color-green-50);
+	--lime-alias-color-accent-sub: var(--ref-color-primary-70);
+	--lime-alias-color-invalid: var(--ref-color-red-50);
+
+	/* Container */
+	--lime-alias-color-container-group: var(--ref-color-base-100-a10);
+	--lime-alias-color-container-group-on-image: var(--ref-color-base-0-a50);
+	--lime-alias-color-container-normal: var(--ref-color-secondary-30);
+	--lime-alias-color-container-normal-alpha: var(--ref-color-secondary-30-a50);
+	--lime-alias-color-container-focused: var(--ref-color-base-100);
+	--lime-alias-color-container-selected: var(--ref-color-secondary-10);
+	--lime-alias-color-container-selected-alpha10: var(--ref-color-base-100-a10);
+	--lime-alias-color-container-selected-alpha20: var(--ref-color-base-100-a20);
+	--lime-alias-color-container-disabled-focused: var(--ref-color-base-70);
+
+	/* On */
+	--lime-alias-color-on-surface-main: var(--ref-color-base-100);
+	--lime-alias-color-on-container-main: var(--ref-color-base-100);
+	--lime-alias-color-on-popup-main: var(--ref-color-base-10);
+	--lime-alias-color-on-focused: var(--ref-color-base-10);
+	--lime-alias-color-on-selected: var(--ref-color-base-100);
+	--lime-alias-color-on-sub: var(--ref-color-base-100-a70);
+	--lime-alias-color-on-sub-focused: var(--ref-color-base-0-a70);
+	--lime-alias-color-on-sub-selected: var(--ref-color-base-50);
+	--lime-alias-color-on-index: var(--ref-color-base-70);
+	--lime-alias-color-on-keyguide: var(--ref-color-base-50);
+	--lime-alias-color-on-border-full: var(--ref-color-base-100);
+	--lime-alias-color-on-border-overlay: var(--ref-color-secondary-30);
+	--lime-alias-color-on-border-selected: var(--ref-color-secondary-40);
+}
