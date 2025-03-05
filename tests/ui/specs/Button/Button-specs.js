@@ -10,7 +10,7 @@ describe('Button', function () {
 		buttonDefault,
 		buttonDisabled,
 		buttonSizeSmall,
-		iconButton
+		buttonFalseMinWidth
 	} = Page.components;
 
 	describe('5-way', function () {
@@ -20,9 +20,9 @@ describe('Button', function () {
 			expect(await buttonDisabled.self.isFocused()).toBe(true);
 		});
 
-		it('should focus buttonSizeSmall button on 5-way left', async function () {
-			await iconButton.focus();
-			await Page.spotlightLeft();
+		it('should focus buttonSizeSmall button on 5-way right', async function () {
+			await buttonFalseMinWidth.focus();
+			await Page.spotlightRight();
 			expect(await buttonSizeSmall.self.isFocused()).toBe(true);
 		});
 	});
