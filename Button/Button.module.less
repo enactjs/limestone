@@ -25,6 +25,12 @@
 		--button-height: $height;
 	});
 
+	&.centered {
+		.marquee {
+			flex-grow: 0;
+		}
+	}
+
 	.client {
 		padding: @lime-button-border-width 0;	// We account for the button border-width here, since that is applied to .bg, not .client. Having these match means the text doesn't overlap the border
 		border-radius: inherit;

@@ -67,6 +67,16 @@ const ButtonBase = kind({
 		bordered: PropTypes.bool,
 
 		/**
+		 * Centers the contents.
+		 *
+		 * Applies the `centered` CSS class.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		centered: PropTypes.bool,
+
+		/**
 		 * Enables the `collapsed` feature.
 		 *
 		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
@@ -209,9 +219,10 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, bordered, collapsable, collapsed, color, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
+		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
 				bordered,
+				centered,
 				collapsable,
 				collapsed,
 				hasColor: color,
@@ -231,6 +242,7 @@ const ButtonBase = kind({
 	render: ({css, ...rest}) => {
 		delete rest.backgroundOpacity;
 		delete rest.bordered;
+		delete rest.centered;
 		delete rest.color;
 		delete rest.collapsable;
 		delete rest.collapsed;
