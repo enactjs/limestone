@@ -13,8 +13,8 @@
 	max-width: @lime-button-max-width;
 	padding: 0 @lime-button-h-padding;
 	margin: @lime-button-margin;
-	display: inline-flex;
-	justify-content: center;
+	text-align: center;
+	vertical-align: middle;
 	--button-height: $height;
 
 	.lime-custom-text({
@@ -24,6 +24,14 @@
 		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
 	});
+
+	&.focusStatic {
+		/* Defined to prevent global export */
+	}
+
+	&.focusExpand {
+		margin: @lime-button-focusexpand-margin;
+	}
 
 	&.centered {
 		.marquee {
@@ -61,7 +69,6 @@
 	&.yellow,
 	&.blue {
 		.padding-start-end(@lime-button-colordot-padding-start, @lime-button-h-padding);
-		justify-content: start;
 
 		// IconButton-like Button scenario
 		.client::before {
@@ -128,6 +135,10 @@
 		padding-left: @lime-button-small-h-padding;
 		padding-right: @lime-button-small-h-padding;
 		--button-height: $height;
+
+		&.focusExpand {
+			margin: @lime-button-small-focusexpand-margin;
+		}
 
 		// Standard Button Scenario
 		&.minWidth {
@@ -391,12 +402,45 @@
 					background-color: @lime-button-focus-icononly-bg-color;
 				}
 			}
+
+			&.focusExpand {
+				.bg {
+					.lime-bg-colors({
+						transform: @lime-button-focusexpand-focus-bg-transform;
+					});
+				}
+
+				&.small .bg {
+					.lime-bg-colors({
+						transform: @lime-button-small-focusexpand-focus-bg-transform;
+					});
+				}
+			}
 		});
 
 		// Button-non-disabled rules
 		&:not([disabled]) {
 			.focus({
 				z-index: 1;
+
+				&.focusExpand {
+					&.pressed,
+					&:active {
+						.bg {
+							.lime-bg-colors({
+								transform: @lime-button-focusexpand-pressed-bg-transform;
+							});
+						}
+
+						&.small {
+							.bg {
+								.lime-bg-colors({
+									transform: @lime-button-small-focusexpand-pressed-bg-transform;
+								});
+							}
+						}
+					}
+				}
 			});
 		}
 
@@ -406,6 +450,37 @@
 					.lime-button-focus-bg-colors(@shadow: {
 						box-shadow: none;
 					});
+				}
+
+				&.focusExpand {
+					.bg {
+						.lime-bg-colors({
+							transform: none;
+						});
+					}
+
+					&.small .bg {
+						.lime-bg-colors({
+							transform: none;
+						});
+					}
+
+					&.pressed,
+					&:active {
+						.bg {
+							.lime-bg-colors({
+								transform: none;
+							});
+						}
+
+						&.small {
+							.bg {
+								.lime-bg-colors({
+									transform: none;
+								});
+							}
+						}
+					}
 				}
 			});
 		}

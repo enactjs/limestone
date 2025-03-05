@@ -137,6 +137,15 @@ const ButtonBase = kind({
 		css: PropTypes.object,
 
 		/**
+		 * Set the visual effect applied to the button when focused.
+		 *
+		 * @type {('expand'|'static')}
+		 * @default 'static'
+		 * @private
+		 */
+		focusEffect: PropTypes.oneOf(['expand', 'static']),
+
+		/**
 		 * The component used to render the {@link limestone/Button.ButtonBase.icon|icon}.
 		 *
 		 * This component will receive the `icon` class to customize its styling.
@@ -206,6 +215,7 @@ const ButtonBase = kind({
 		backgroundOpacity: null,
 		collapsable: false,
 		collapsed: false,
+		focusEffect: 'static',
 		iconComponent: Icon,
 		iconOnly: false,
 		iconPosition: 'before',
@@ -219,7 +229,7 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
+		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
 				bordered,
 				centered,
@@ -232,6 +242,7 @@ const ButtonBase = kind({
 			},
 			backgroundOpacity || (iconOnly ? 'transparent' : 'opaque'), // Defaults to opaque, unless otherwise specified
 			color,
+			`focus${cap(focusEffect)}`,
 			// iconBefore/iconAfter only applies when using text and an icon
 			!iconOnly && `icon${cap(iconPosition)}`,
 			size
@@ -246,6 +257,7 @@ const ButtonBase = kind({
 		delete rest.color;
 		delete rest.collapsable;
 		delete rest.collapsed;
+		delete rest.focusEffect;
 		delete rest.iconOnly;
 		delete rest.iconPosition;
 		delete rest.roundBorder;

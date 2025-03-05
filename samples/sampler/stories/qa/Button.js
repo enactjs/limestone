@@ -25,6 +25,7 @@ const prop = {
 		'transparent (Default for icon-only buttons)': 'transparent'
 	},
 	color: ['', 'red', 'green', 'yellow', 'blue'],
+	focusEffect: ['expand', 'static'],
 	longText: {
 		'A Loooooooooooooooooog Button': 'A Loooooooooooooooooog Button',
 		'BUTTON   WITH   EXTRA   SPACES': 'BUTTON   WITH   EXTRA   SPACES'
@@ -48,6 +49,7 @@ export const WithLongText = (args) => (
 		onClick={action('onClick')}
 		backgroundOpacity={args['backgroundOpacity']}
 		disabled={args['disabled']}
+		focusEffect={args['focusEffect']}
 		icon={args['icon']}
 		minWidth={args['minWidth'] ? void 0 : false}
 		selected={args['selected']}
@@ -59,6 +61,7 @@ export const WithLongText = (args) => (
 
 select('backgroundOpacity', WithLongText, prop.backgroundOpacity, Config);
 boolean('disabled', WithLongText, Config);
+select('focusEffect', WithLongText, prop.focusEffect, Config);
 select('icon', WithLongText, prop.icons, Config);
 boolean('minWidth', WithLongText, Config, true);
 boolean('selected', WithLongText, Config);
@@ -72,6 +75,7 @@ export const WithTallCharacters = (args) => (
 		onClick={action('onClick')}
 		backgroundOpacity={args['backgroundOpacity']}
 		disabled={args['disabled']}
+		focusEffect={args['focusEffect']}
 		icon={args['icon']}
 		minWidth={args['minWidth'] ? void 0 : false}
 		selected={args['selected']}
@@ -83,6 +87,7 @@ export const WithTallCharacters = (args) => (
 
 select('backgroundOpacity', WithTallCharacters, prop.backgroundOpacity, Config);
 boolean('disabled', WithTallCharacters, Config);
+select('focusEffect', WithTallCharacters, prop.focusEffect, Config);
 select('icon', WithTallCharacters, prop.icons, Config);
 boolean('minWidth', WithTallCharacters, Config, true);
 boolean('selected', WithTallCharacters, Config);
@@ -96,6 +101,7 @@ export const ToValidateMinWidthWithASingleCharacter = (args) => (
 		onClick={action('onClick')}
 		backgroundOpacity={args['backgroundOpacity']}
 		disabled={args['disabled']}
+		focusEffect={args['focusEffect']}
 		icon={args['icon']}
 		minWidth={args['minWidth'] ? void 0 : false}
 		selected={args['selected']}
@@ -107,6 +113,7 @@ export const ToValidateMinWidthWithASingleCharacter = (args) => (
 
 select('backgroundOpacity', ToValidateMinWidthWithASingleCharacter, prop.backgroundOpacity, Config);
 boolean('disabled', ToValidateMinWidthWithASingleCharacter, Config);
+select('focusEffect', ToValidateMinWidthWithASingleCharacter, prop.focusEffect, Config);
 select('icon', ToValidateMinWidthWithASingleCharacter, prop.icons, Config);
 boolean('minWidth', ToValidateMinWidthWithASingleCharacter, Config, false);
 boolean('selected', ToValidateMinWidthWithASingleCharacter, Config);
@@ -121,6 +128,7 @@ export const ToTestIfTheParentElementsBackgroundCausesOcclusion = (args) => (
 			onClick={action('onClick')}
 			backgroundOpacity={args['backgroundOpacity']}
 			disabled={args['disabled']}
+			focusEffect={args['focusEffect']}
 			icon={args['icon']}
 			minWidth={args['minWidth'] ? void 0 : false}
 			selected={args['selected']}
@@ -133,6 +141,7 @@ export const ToTestIfTheParentElementsBackgroundCausesOcclusion = (args) => (
 
 select('backgroundOpacity', ToTestIfTheParentElementsBackgroundCausesOcclusion, prop.backgroundOpacity, Config);
 boolean('disabled', ToTestIfTheParentElementsBackgroundCausesOcclusion, Config);
+select('focusEffect', ToTestIfTheParentElementsBackgroundCausesOcclusion, prop.focusEffect, Config);
 select('icon', ToTestIfTheParentElementsBackgroundCausesOcclusion, prop.icons, Config);
 boolean('minWidth', ToTestIfTheParentElementsBackgroundCausesOcclusion, Config, true);
 boolean('selected', ToTestIfTheParentElementsBackgroundCausesOcclusion, Config);
@@ -282,20 +291,21 @@ export const KitchenSink = () => (
 				</Button>
 			</Section>
 
-			<Section title="Static Focus Effect Text" size="50%">
-				<Button size="small" alt="Small">
+			<Section title="Expand Focus Effect Text" size="50%">
+				<Button focusEffect="expand" size="small" alt="Small">
 					Button
 				</Button>
-				<Button roundBorder size="small" alt=" Small Round Border">
+				<Button focusEffect="expand" roundBorder size="small" alt=" Small Round Border">
 					Button
 				</Button>
-				<Button size="large" alt="Large">
+				<Button focusEffect="expand" size="large" alt="Large">
 					Button
 				</Button>
-				<Button roundBorder size="large" alt="Large Round Border">
+				<Button focusEffect="expand" roundBorder size="large" alt="Large Round Border">
 					Button
 				</Button>
 				<Button
+					focusEffect="expand"
 					backgroundOpacity="transparent"
 					size="small"
 					alt="Small Transparent"
@@ -303,6 +313,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
+					focusEffect="expand"
 					backgroundOpacity="transparent"
 					roundBorder
 					size="small"
@@ -311,6 +322,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
+					focusEffect="expand"
 					backgroundOpacity="transparent"
 					size="large"
 					alt="Large Transparent"
@@ -318,6 +330,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
+					focusEffect="expand"
 					backgroundOpacity="transparent"
 					roundBorder
 					size="large"
@@ -327,11 +340,11 @@ export const KitchenSink = () => (
 				</Button>
 			</Section>
 
-			<Section title="Static Focus Effect Icon" size="50%">
-				<Button size="small" icon="play" alt="Small" />
-				<Button roundBorder size="small" icon="play" alt="Small Round Border" />
-				<Button size="large" icon="play" alt="Large" />
-				<Button roundBorder size="large" icon="play" alt="Large Round Border" />
+			<Section title="Expand Focus Effect Icon" size="50%">
+				<Button focusEffect="expand" size="small" icon="play" alt="Small" />
+				<Button focusEffect="expand" roundBorder size="small" icon="play" alt="Small Round Border" />
+				<Button focusEffect="expand" size="large" icon="play" alt="Large" />
+				<Button focusEffect="expand" roundBorder size="large" icon="play" alt="Large Round Border" />
 			</Section>
 		</Row>
 	</Scroller>
