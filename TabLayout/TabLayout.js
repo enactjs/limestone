@@ -205,6 +205,14 @@ const TabLayoutBase = kind({
 		rtl: PropTypes.bool,
 
 		/**
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
+		scrollByWheel: PropTypes.bool,
+
+		/**
 		 * Assign a custom size to horizontal tabs.
 		 *
 		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
@@ -380,7 +388,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollByWheel, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -399,6 +407,7 @@ const TabLayoutBase = kind({
 			onFocusTab: onSelect,
 			onSelect,
 			orientation,
+			scrollByWheel,
 			selectedIndex: index,
 			tabs
 		};

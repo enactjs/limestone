@@ -37,6 +37,7 @@ const TabBase = kind({
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
+		scrollByWheel: PropTypes.bool,
 		selected: PropTypes.bool,
 		size: PropTypes.number,
 		sprite: PropTypes.object,
@@ -64,6 +65,23 @@ const TabBase = kind({
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
 			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
+		),
+		onWheel: handle(
+			forward('onWheel'),
+			forwardCustom('onWheelScroll', (ev, props) => {
+				const {deltaY} = ev;
+				const {orientation, scrollByWheel} = props;
+				const moveTo = orientation === 'horizontal' ? ['right', 'left'] : ['up', 'down'];
+
+				if (!scrollByWheel) return;
+
+				Spotlight.setPointerMode(false);
+				if (deltaY < 0) {
+					Spotlight.move(moveTo[0]);
+				} else if (deltaY > 0) {
+					Spotlight.move(moveTo[1]);
+				}
+			})
 		)
 	},
 
@@ -80,6 +98,7 @@ const TabBase = kind({
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
+		delete rest.scrollByWheel;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -160,6 +179,7 @@ const TabGroupBase = kind({
 		onFocusTab: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
+		scrollByWheel: PropTypes.bool,
 		selectedIndex: PropTypes.number,
 		spotlightDisabled: PropTypes.bool,
 		spotlightId: PropTypes.string,
@@ -180,11 +200,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, scrollByWheel, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, tabSize]);
+		const itemProps = useMemo(() => ({css, collapsed, orientation, scrollByWheel, size: tabSize}), [css, collapsed, orientation, scrollByWheel, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
