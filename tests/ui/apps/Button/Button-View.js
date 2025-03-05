@@ -34,33 +34,33 @@ const app = (props) => <div {...props}>
 		<Button
 			id="button5"
 			icon="check"
-			centered
-		>
-			Button icon centered content
-		</Button>
-		<Button
-			id="button6"
-			icon="check"
 			iconPosition="after"
 		>
 			Button icon position after
 		</Button>
 		<Button
-			id="button7"
+			id="button6"
 			minWidth={false}
 		>
 			Button minWidth false
 		</Button>
 		<Button
-			id="button8"
+			id="button7"
 			size="small"
 		>
 			Button size small
 		</Button>
 		<Button
-			id="button9"
+			id="button8"
 			icon="home"
 		/>
+		<Button
+			id="button9"
+			icon="check"
+			centered
+		>
+			Button icon centered content
+		</Button>
 	</div>
 </div>;
 

@@ -64,22 +64,22 @@ class ButtonPage extends Page {
 		const buttonDisabled = new ButtonInterface('button2');
 		const buttonTransparent = new ButtonInterface('button3');
 		const buttonWithCheckIcon = new ButtonInterface('button4');
-		const buttonCenteredWithIcon = new ButtonInterface('button5');
-		const buttonWithIconAfter = new ButtonInterface('button6');
-		const buttonFalseMinWidth = new ButtonInterface('button7');
-		const buttonSizeSmall = new ButtonInterface('button8');
-		const iconButton = new ButtonInterface('button9');
+		const buttonWithIconAfter = new ButtonInterface('button5');
+		const buttonFalseMinWidth = new ButtonInterface('button6');
+		const buttonSizeSmall = new ButtonInterface('button7');
+		const iconButton = new ButtonInterface('button8');
+		const buttonCenteredWithIcon = new ButtonInterface('button9');
 
 		this.components = {
 			buttonDefault,
 			buttonDisabled,
 			buttonTransparent,
 			buttonWithCheckIcon,
-			buttonCenteredWithIcon,
 			buttonWithIconAfter,
 			buttonFalseMinWidth,
 			buttonSizeSmall,
-			iconButton
+			iconButton,
+			buttonCenteredWithIcon
 		};
 	}
 
