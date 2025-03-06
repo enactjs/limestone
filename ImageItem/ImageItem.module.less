@@ -198,14 +198,14 @@
 				color: inherit;
 			}
 
-
-			&.horizontal:before {
+			&.horizontal {
 				transform: @lime-imageitem-vertical-focus-image-transform;
-				box-shadow: @lime-imageitem-focus-bg-shadow;
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 			}
-			&.horizontal .image {
-				transform: @lime-imageitem-vertical-focus-image-transform;
+
+			&.horizontal > .caption {
+				transform: scale(calc(1/1.1));
+				transform-origin: left;
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 			}
 
