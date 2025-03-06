@@ -140,7 +140,8 @@
 			.lime-spotlight-resting-bg-colors();
 		}
 		&.horizontal {
-			background-color: grey;
+			background-color: rgba(91, 93, 102, 0.5);
+			border-radius: @lime-imageitem-border-radius;
 		}
 		.selectionContainer::after {
 			border-color: @lime-imageitem-image-border-color;
@@ -201,10 +202,11 @@
 			&.horizontal:before {
 				transform: @lime-imageitem-vertical-focus-image-transform;
 				box-shadow: @lime-imageitem-focus-bg-shadow;
-
+				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 			}
 			&.horizontal .image {
 				transform: @lime-imageitem-vertical-focus-image-transform;
+				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 			}
 
 			&.selected {
