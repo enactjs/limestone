@@ -57,7 +57,7 @@
 
 	&.overlay {
 		.alertImage {
-			margin: @lime-alert-overlay-image-margin;
+			margin-bottom: @lime-alert-overlay-image-margin-bottom;
 		}
 
 		.buttonContainer {
@@ -118,14 +118,13 @@
 
 .popup {
 	&.overlay {
-		width: fit-content;
+		width: 1128px;
 		margin-left: auto;
 		margin-right: auto;
 
 		.body {
-			padding-top: @lime-alert-overlay-padding-top-bottom;
-			padding-bottom: @lime-alert-overlay-padding-top-bottom;
-			.padding-start-end(@lime-alert-overlay-padding-left, @lime-alert-overlay-padding-right);
+			padding: @lime-alert-overlay-padding;
+			max-height: 2028px;
 		}
 	}
 
