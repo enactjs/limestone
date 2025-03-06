@@ -139,7 +139,9 @@
 		&::before {
 			.lime-spotlight-resting-bg-colors();
 		}
-
+		&.horizontal {
+			background-color: grey;
+		}
 		.selectionContainer::after {
 			border-color: @lime-imageitem-image-border-color;
 		}
@@ -195,11 +197,14 @@
 				color: inherit;
 			}
 
-			&.vertical {
-				&.fullImage .image {
-					transform: @lime-imageitem-vertical-focus-image-transform;
-					box-shadow: @lime-imageitem-focus-bg-shadow;
-				}
+
+			&.horizontal:before {
+				transform: @lime-imageitem-vertical-focus-image-transform;
+				box-shadow: @lime-imageitem-focus-bg-shadow;
+
+			}
+			&.horizontal .image, .caption:before{
+				transform: @lime-imageitem-vertical-focus-image-transform;
 			}
 
 			&.selected {
