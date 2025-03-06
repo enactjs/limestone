@@ -24,10 +24,7 @@ const MAX_TABS_BEFORE_SCROLLING = 7;
 
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 // eslint-disable-next-line enact/prop-types
-const TabButton = ({buttonSize, ...rest}) => {
-	console.log(rest, 'rest')
-	return <Button size={buttonSize} {...rest} css={componentCss}/>;
-};
+const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
 
 const TabBase = kind({
 	name: 'Tab',
