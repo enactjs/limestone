@@ -1,4 +1,4 @@
-/* global ILIB_SANDSTONE_PATH */
+/* global ILIB_LIMESTONE_PATH */
 
 import {getIStringFromBundle} from '@enact/i18n/src/resBundle';
 import ResBundle from 'ilib/lib/ResBundle';
@@ -25,8 +25,8 @@ function getResBundle () {
 function createResBundle (options) {
 	let opts = options;
 
-	if (typeof ILIB_SANDSTONE_PATH !== 'undefined') {
-		opts.basePath = ILIB_SANDSTONE_PATH;
+	if (typeof ILIB_LIMESTONE_PATH !== 'undefined') {
+		opts.basePath = ILIB_LIMESTONE_PATH;
 	}
 
 	if (!opts.onLoad) return;
