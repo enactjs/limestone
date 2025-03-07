@@ -228,16 +228,16 @@ const TabGroupBase = kind({
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
-		// Only vertical with more than MAX_TABS should use scroller
-		const useScroller = (!isHorizontal && children.length > MAX_TABS_BEFORE_SCROLLING);
-		const scrollerProps = useScroller ? {
+
+		const scrollerProps = {
+			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
-			verticalScrollbar: 'hidden'
-		} : null;
-		const Component = useScroller ? Scroller : 'div';
+			verticalScrollbar: 'hidden',
+			noScrollByWheel: true
+		};
 
 		return (
-			<Component
+			<Scroller
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
@@ -275,7 +275,7 @@ const TabGroupBase = kind({
 					</div>
 				)}
 				{isHorizontal ? <hr className={componentCss.horizontalLine} /> : null}
-			</Component>
+			</Scroller>
 		);
 	}
 });
