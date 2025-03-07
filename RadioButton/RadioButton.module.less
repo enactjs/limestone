@@ -1,0 +1,85 @@
+// RadioButton.module.less
+//
+@import "../styles/variables.less";
+@import "../styles/mixins.less";
+@import "../styles/skin.less";
+
+// Local mixin to make rule application more consistent.
+.radioIconColors (@color, @bg, @border) {
+	color: @color;
+	background-color: @bg;
+	box-shadow: 0 0 0 @lime-radioitem-indicator-border-width @border;
+}
+
+.radioButton {
+	padding: 0;
+
+	.icon {
+		margin: 0;
+	}
+
+	.applySkins({
+		.icon {
+			.radioIconColors(
+					@lime-radioitem-indicator-color,
+					@lime-radioitem-indicator-bg-color,
+					@lime-radioitem-indicator-border-color
+			);
+			border-radius: @lime-radioitem-indicator-border-radius;
+		}
+
+		&.selected {
+			.icon {
+				.radioIconColors(
+						@lime-radioitem-selected-indicator-color,
+						@lime-radioitem-selected-indicator-bg-color,
+						@lime-radioitem-selected-indicator-border-color
+				);
+			}
+		}
+
+		.disabled({
+			&.selected {
+				.icon {
+					.radioIconColors(
+							@lime-radioitem-disabled-selected-color,
+							@lime-radioitem-disabled-selected-bg-color,
+							@lime-radioitem-disabled-selected-border-color
+					);
+				}
+			}
+		});
+
+		.focus({
+			.icon {
+				.radioIconColors(
+						@lime-radioitem-focus-indicator-color,
+						@lime-radioitem-focus-indicator-bg-color,
+						@lime-radioitem-focus-indicator-border-color
+				);
+			}
+
+			&.selected {
+				.icon {
+					.radioIconColors(
+							@lime-radioitem-selected-focus-indicator-color,
+							@lime-radioitem-selected-focus-indicator-bg-color,
+							@lime-radioitem-selected-focus-indicator-border-color
+					);
+				}
+			}
+
+			.disabled({
+				&.selected {
+					.icon {
+						.radioIconColors(
+								@lime-radioitem-focus-disabled-selected-color,
+								@lime-radioitem-focus-disabled-selected-bg-color,
+								@lime-radioitem-focus-disabled-selected-border-color
+						);
+					}
+				}
+			});
+		});
+	});
+}
