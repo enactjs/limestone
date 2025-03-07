@@ -25,12 +25,6 @@
 		--button-height: $height;
 	});
 
-	&.centered {
-		.marquee {
-			flex-grow: 0;
-		}
-	}
-
 	&.focusStatic {
 		/* Defined to prevent global export */
 	}
@@ -110,6 +104,13 @@
 	//*/
 	.marquee {
 		flex-grow: 1;
+	}
+
+	// Center the text if there is also icon, but no color.
+	&.centered:not(.hasColor) {
+		.marquee {
+			flex-grow: 0;
+		}
 	}
 
 	// Only center the text if there is no icon and no color. We'll explicitly override Marquee's

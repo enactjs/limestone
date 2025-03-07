@@ -61,6 +61,9 @@ const ButtonBase = kind({
 		/**
 		 * Centers the contents.
 		 *
+		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
+		 * defined.
+		 *
 		 * Applies the `centered` CSS class.
 		 *
 		 * @type {Boolean}
