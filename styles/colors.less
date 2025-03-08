@@ -18,25 +18,40 @@
 
 // common colors
 @lime-alias-color-surface-full: var(--lime-bg-color, var(--lime-alias-color-surface-full));
+@lime-bg-color: @lime-alias-color-surface-full;
 
 @lime-alias-color-on-surface-main: var(--lime-text-color, var(--lime-alias-color-on-surface-main)); // #ffffff
-@lime-alias-color-on-sub: var(--lime-text-sub-color, var(--lime-alias-color-on-sub));
-@lime-shadow-color: var(--lime-shadow-color, var(--lime-alias-color-shadow));
+@lime-text-color: @lime-alias-color-on-surface-main;
+@lime-alias-color-on-surface-sub: var(--lime-text-sub-color, var(--lime-alias-color-on-surface-sub));
+@lime-text-sub-color: @lime-alias-color-on-surface-sub;
+@lime-alias-color-shadow: var(--lime-shadow-color, var(--lime-alias-color-shadow));
+@lime-shadow-color: @lime-alias-color-shadow;
 @lime-alias-color-on-container-main: var(--lime-component-text-color, var(--lime-alias-color-on-container-main));
-@lime-component-text-sub-color: var(--lime-component-text-sub-color, var(--lime-alias-color-on-sub));
+@lime-component-text-color: @lime-alias-color-on-container-main;
+@lime-alias-color-on-container-sub: var(--lime-component-text-sub-color, var(--lime-alias-color-on-container-sub));
+@lime-component-text-sub-color: @lime-alias-color-on-container-sub;
 @lime-alias-color-container-normal: var(--lime-component-bg-color, var(--lime-alias-color-container-normal));
+@lime-component-bg-color: @lime-alias-color-container-normal;
 @lime-alias-color-indicator-icon-active: var(--lime-component-active-indicator-bg-color, var(--lime-alias-color-indicator-icon-active));
+@lime-componet-active-indicator-bg-color: @lime-alias-color-indicator-icon-active;
 @lime-alias-color-indicator-icon-inactive: var(--lime-component-inactive-indicator-bg-color, var(--lime-alias-color-indicator-icon-inactive));
+@lime-component-inactive-indicator-bg-color: @lime-alias-color-indicator-icon-inactive;
 
-@lime-focus-text-color: var(--lime-focus-text-color, #ffffff); // Same as on-surface-main
+@lime-focus-text-color: var(--lime-focus-text-color, @lime-alias-color-on-surface-main); // Same as on-surface-main
 @lime-alias-color-container-focused: var(--lime-focus-bg-color, var(--lime-alias-color-container-focused));
+@lime-focus-bg-color: @lime-alias-color-container-focused;
 @lime-alias-color-on-focused: var(--lime-component-focus-text-color, var(--lime-alias-color-on-focused));
+@lime-component-focus-text-color: @lime-alias-color-on-focused;
 @lime-alias-color-indicator-icon-active-focused: var(--lime-component-focus-active-indicator-bg-color, var(--lime-alias-color-indicator-icon-active-focused));
+@lime-component-focus-active-indicator-bg-color: @lime-alias-color-indicator-icon-active-focused;
 @lime-alias-color-indicator-icon-inactive-focused: var(--lime-component-focus-inactive-indicator-bg-color, var(--lime-alias-color-indicator-icon-inactive-focused));
+@lime-component-focus-inactive-indicator-bg-color: @lime-alias-color-indicator-icon-inactive-focused;
 
 @lime-alias-color-on-selected: var(--lime-selected-color, var(--lime-alias-color-on-selected));
+@lime-selected-color: @lime-alias-color-on-selected;
 @lime-selected-text-color: var(--lime-selected-text-color, var(--lime-alias-color-on-selected));
 @lime-alias-color-container-selected: var(--lime-selected-bg-color, var(--lime-alias-color-container-selected));
+@lime-selected-bg-color: @lime-alias-color-container-selected;
 
 //@lime-selected-focus-text-color: var(--lime-selected-focus-text-color);
 //@lime-selected-focus-bg-color: var(--lime-selected-focus-bg-color);
@@ -46,6 +61,7 @@
 
 //@lime-disabled-focus-text-color: var(--lime-disabled-focus-text-color);
 @lime-alias-color-container-disabled-focused: var(--lime-disabled-focus-bg-color, var(--lime-alias-color-container-disabled-focused));
+@lime-disabled-focus-bg-color: @lime-alias-color-container-disabled-focused;
 
 @lime-disabled-selected-color: var(--lime-disabled-selected-color, var(--ref-color-base-30)); // No Alias
 //@lime-disabled-selected-text-color: var(--lime-disabled-selected-text-color);
@@ -62,13 +78,11 @@
 
 // In Limestone, overlay should only covers overlay panels.
 // Contextual Popup has different color.
-@lime-overlay-text-shadow: 0 4px 4px @lime-shadow-color;
+@lime-overlay-text-shadow: 0 4px 4px @lime-alias-color-shadow;
 @lime-alias-color-surface-overlay: var(--lime-overlay-bg-color, var(--lime-alias-color-surface-overlay));
+@lime-overlay-bg-color: @lime-alias-color-surface-overlay;
 @lime-overlay-outline-color: var(--lime-overlay-outline-color, transparent);
 @lime-overlay-outline-style: var(--lime-overlay-outline-style, none);
-
-@lime-selection-color: var(--lime-selection-color, #4c5059); // TBD
-@lime-selection-bg-color: var(--lime-selection-bg-color, #3399ff); // TBD
 
 // To be moved to component colors, we should add selection alias color
 @lime-toggle-off-color: var(--lime-toggle-off-color, var(--ref-color-base-70));
@@ -134,7 +148,7 @@
 // ---------------------------------------
 @lime-spotlight-text-color:           @lime-alias-color-on-focused; // Used in color-mixins.less, QA Sampler Marquee
 @lime-spotlight-bg-color:             @lime-alias-color-container-focused; // If this changes, update Button bg-color mixins in color-mixins.less
-@lime-spotlight-focus-shadow:         0 36px 36px @lime-shadow-color; // Used in color-mixins.less
+@lime-spotlight-focus-shadow:         0 36px 36px @lime-alias-color-shadow; // Used in color-mixins.less
 
 
 // ---------------------------------------
@@ -144,12 +158,12 @@
 // ActionGuide
 // ---------------------------------------
 @lime-actionguide-icon-color: @lime-actionguide-label-color;
-@lime-actionguide-label-color: @lime-alias-color-on-sub;
+@lime-actionguide-label-color: @lime-alias-color-on-surface-sub;
 
 // Alert
 // ---------------------------------------
 @lime-alert-bg-color: @lime-fullscreen-bg-color;
-@lime-alert-overlay-shadow: 0 36px 36px @lime-shadow-color;
+@lime-alert-overlay-shadow: 0 36px 36px @lime-alias-color-shadow;
 
 // Button
 // ---------------------------------------
@@ -195,24 +209,24 @@
 // ContextualPopup
 // ---------------------------------------
 @lime-contextualpopup-bg-color: @lime-alias-color-surface-overlay;
-@lime-contextualpopup-shadow: 0 24px 60px @lime-shadow-color;
+@lime-contextualpopup-shadow: 0 24px 60px @lime-alias-color-shadow;
 
 // Dropdown
 // ---------------------------------------
-@lime-dropdown-title-color: @lime-alias-color-on-sub;
+@lime-dropdown-title-color: @lime-alias-color-on-surface-sub;
 @lime-dropdown-selected-text-color: @lime-selected-text-color;
 
 // FixedPopupPanels
 // ---------------------------------------
 @lime-fixedpopuppanels-bg-color: @lime-popup-bg-color;
 @lime-fixedpopuppanels-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-fixedpopuppanels-shadow: 0 36px 36px @lime-shadow-color;
+@lime-fixedpopuppanels-shadow: 0 36px 36px @lime-alias-color-shadow;
 
 // FlexiblePopupPanels
 // ---------------------------------------
 @lime-flexiblepopuppanels-panel-bg-color: @lime-popup-bg-color;
 @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-shadow-color;
+@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-alias-color-shadow;
 
 // FormCheckboxItem
 // ---------------------------------------
@@ -221,13 +235,13 @@
 
 // Header
 // ---------------------------------------
-@lime-header-text-shadow: 6px 12px 12px @lime-shadow-color;
+@lime-header-text-shadow: 6px 12px 12px @lime-alias-color-shadow;
 
 // Heading
 // ---------------------------------------
 @lime-heading-text-color: @lime-alias-color-on-surface-main;
 @lime-heading-border-color: @lime-heading-text-color;
-@lime-heading-subtitle-text-color: @lime-alias-color-on-sub;
+@lime-heading-subtitle-text-color: @lime-alias-color-on-surface-sub;
 
 // HolePunchScrim
 // ---------------------------------------
@@ -242,11 +256,11 @@
 // ImageItem
 // ---------------------------------------
 @lime-imageitem-caption-color: @lime-alias-color-on-surface-main;
-@lime-imageitem-label-color: @lime-alias-color-on-sub;
+@lime-imageitem-label-color: @lime-alias-color-on-surface-sub;
 @lime-imageitem-image-border-color: transparent;
 @lime-imageitem-selection-icon-color: transparent;
 @lime-imageitem-selection-icon-bg-color: transparent;
-@lime-imageitem-focus-bg-shadow: 0 36px 36px @lime-shadow-color;
+@lime-imageitem-focus-bg-shadow: 0 36px 36px @lime-alias-color-shadow;
 @lime-imageitem-focus-selection-icon-color: @lime-imageitem-selection-icon-color;
 @lime-imageitem-focus-selection-icon-bg-color: @lime-imageitem-selection-icon-bg-color;
 @lime-imageitem-selected-selection-icon-color: @lime-alias-color-on-selected;
@@ -263,6 +277,8 @@
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
 @lime-input-numberfield-disabled-color: ~"color(from" @lime-alias-color-on-focused ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
 @lime-input-numberfield-disabled-opacity: @lime-disabled-focus-bg-opacity;
+@lime-input-selection-color: #4c5059;
+@lime-input-selection-bg-color: #3399ff;
 
 // InputField
 // ---------------------------------------
@@ -276,14 +292,14 @@
 
 // Item
 // ---------------------------------------
-@lime-item-label-color: @lime-alias-color-on-sub;
+@lime-item-label-color: @lime-alias-color-on-surface-sub;
 @lime-item-focus-label-color: inherit;
 @lime-item-focus-background: '';
 
 // KeyGuide
 // ---------------------------------------
 @lime-keyguide-bg-color: @lime-keyguide-bg-base-color;
-@lime-keyguide-item-color: @lime-alias-color-on-sub;
+@lime-keyguide-item-color: @lime-alias-color-on-surface-sub;
 @lime-keyguide-colordot-red-color: @lime-remote-button-red-color;
 @lime-keyguide-colordot-green-color: @lime-remote-button-green-color;
 @lime-keyguide-colordot-yellow-color: @lime-remote-button-yellow-color;
@@ -292,7 +308,7 @@
 // MediaOverlay
 // ---------------------------------------
 @lime-mediaoverlay-caption-color: @lime-alias-color-on-surface-main;
-@lime-mediaoverlay-subtitle-color: @lime-alias-color-on-sub;
+@lime-mediaoverlay-subtitle-color: @lime-alias-color-on-surface-sub;
 
 // MediaPlayer
 // ---------------------------------------
@@ -315,7 +331,7 @@
 @lime-picker-joined-horizontal-text-color: @lime-alias-color-on-container-main;
 @lime-picker-joined-horizontal-bg-color: @lime-alias-color-container-normal;
 @lime-picker-joined-text-color: @lime-alias-color-on-surface-main;
-@lime-picker-joined-incrementer-color: ~"color(from" @lime-component-text-sub-color ~"srgb r g b / 0.5)";
+@lime-picker-joined-incrementer-color: ~"color(from" @lime-alias-color-on-container-sub ~"srgb r g b / 0.5)";
 @lime-picker-joined-focus-incrementer-color: @lime-alias-color-on-focused;
 @lime-picker-joined-focus-disabled-text-color: @lime-picker-indicator-active-focus-bg-color;
 @lime-picker-joined-focus-disabled-indicator-bg-color: @lime-picker-indicator-active-focus-bg-color;
@@ -331,7 +347,7 @@
 // ---------------------------------------
 @lime-popuptablayout-bg-color: @lime-popup-bg-color;
 @lime-popuptablayout-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-popuptablayout-shadow: 0 42px 24px @lime-shadow-color;
+@lime-popuptablayout-shadow: 0 42px 24px @lime-alias-color-shadow;
 
 // ProgressBar
 // ---------------------------------------
@@ -342,7 +358,7 @@
 
 // ProgressButton
 // ---------------------------------------
-@lime-progressbutton-bar-color: @lime-component-text-sub-color;
+@lime-progressbutton-bar-color: @lime-alias-color-on-container-sub;
 @lime-progressbutton-focus-fill-color: @lime-alias-color-on-focused;
 
 // RadioItem
@@ -372,7 +388,7 @@
 @lime-scrollbar-thumb-bg-color: ~"color(from" @lime-progress-color ~"srgb r g b / 0.6)";
 @lime-scrollbar-thumb-focus-bg-color: @lime-alias-color-container-focused;
 @lime-scrollbar-thumb-focus-direction-indicator-color: ~"color(from" @lime-alias-color-on-focused ~"srgb r g b / 0.4)";
-@lime-scrollbar-thumb-focus-box-shadow-color: @lime-shadow-color;
+@lime-scrollbar-thumb-focus-box-shadow-color: @lime-alias-color-shadow;
 
 // Scroller
 // ---------------------------------------
@@ -390,7 +406,7 @@
 @lime-slider-focus-fill-bg-color: @lime-alias-color-container-focused;
 @lime-slider-focus-knob-bg-color: @lime-slider-focus-fill-bg-color;
 @lime-slider-focus-knob-border-color: @lime-slider-knob-border-color;
-@lime-slider-focus-knob-shadow: 0 6px 12px @lime-shadow-color;
+@lime-slider-focus-knob-shadow: 0 6px 12px @lime-alias-color-shadow;
 @lime-slider-active-bar-bg-color: @lime-slider-focus-bar-bg-color;
 @lime-slider-active-load-bg-color: @lime-slider-focus-load-bg-color;
 @lime-slider-active-fill-bg-color: @lime-slider-focus-fill-bg-color;
@@ -403,7 +419,7 @@
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
 @lime-spinner-bg-color: @lime-alias-color-container-normal;
 @lime-spinner-text-color: @lime-alias-color-on-container-main;
-@lime-spinner-text-shadow-color: @lime-shadow-color;
+@lime-spinner-text-shadow-color: @lime-alias-color-shadow;
 
 // Steps
 // ---------------------------------------
@@ -429,7 +445,7 @@
 // ---------------------------------------
 @lime-tooltip-bg-color:               @lime-alias-color-container-focused;
 @lime-tooltip-text-color:             @lime-alias-color-on-focused;
-@lime-tooltip-shadow:                 0 18px 12px @lime-shadow-color;
+@lime-tooltip-shadow:                 0 18px 12px @lime-alias-color-shadow;
 
 // VideoPlayer
 // ---------------------------------------
@@ -439,5 +455,5 @@
 @lime-video-slider-tooltip-thumbnail-border-color: @lime-alias-color-on-surface-main;
 @lime-video-player-bottom-bg-color: transparent;
 @lime-video-player-title-color: @lime-focus-text-color;
-@lime-video-player-title-text-shadow: 0 4px 4px @lime-shadow-color;
+@lime-video-player-title-text-shadow: 0 4px 4px @lime-alias-color-shadow;
 @lime-video-player-scrim-gradient-color: linear-gradient(180deg, transparent 0%, #000 100%);
