@@ -5,6 +5,9 @@ import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 
 import {svgGenerator} from '../helper/svg';
+import ImageItem from "@enact/limestone/ImageItem";
+import ri from "@enact/ui/resolution";
+import Scroller from "@enact/limestone/Scroller";
 
 Alert.displayName = 'Alert';
 AlertImage.displayName = 'AlertImage';
@@ -63,7 +66,7 @@ select('buttons', _Alert, ['no buttons', '1 button', '2 buttons', '3 buttons'], 
 text('title', _Alert, Config, 'Fullscreen Alert Title');
 select('type', _Alert, ['fullscreen', 'overlay'], Config);
 select('overlayAlertPosition', _Alert, ['center', 'bottomLeft', 'bottomRight', 'topLeft', 'topRight'], Config);
-text('children', _Alert, Config, 'Additional text content for Alert');
+text('children', _Alert, Config, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
 boolean('image', _Alert, ImageConfig);
 select('type (image)', _Alert, ['icon', 'thumbnail'], ImageConfig, 'icon');
 text('src', _Alert, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
