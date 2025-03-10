@@ -73,7 +73,7 @@ const PopupTabLayoutSamplesBase = ({args, rtl}) => {
 
 	return (
 		<div>
-			<Button onClick={toggleOpen}>
+			<Button focusEffect="static" onClick={toggleOpen}>
 				Open PopupTabLayout
 			</Button>
 

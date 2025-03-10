@@ -28,7 +28,7 @@ export const _QuickGuidePanels = (args) => {
 	const Story = () => (
 		<div>
 			<Panel css={css}>
-				<Button css={css} size="small">Button</Button>
+				<Button css={css} focusEffect="static" size="small">Button</Button>
 				<br />
 				<SwitchItem inline>item</SwitchItem>
 			</Panel>

@@ -143,7 +143,7 @@ const ButtonBase = kind({
 		 * Set the visual effect applied to the button when focused.
 		 *
 		 * @type {('expand'|'static')}
-		 * @default 'static'
+		 * @default 'expand'
 		 * @private
 		 */
 		focusEffect: PropTypes.oneOf(['expand', 'static']),
@@ -218,7 +218,7 @@ const ButtonBase = kind({
 		backgroundOpacity: null,
 		collapsable: false,
 		collapsed: false,
-		focusEffect: 'static',
+		focusEffect: 'expand',
 		iconComponent: Icon,
 		iconOnly: false,
 		iconPosition: 'before',

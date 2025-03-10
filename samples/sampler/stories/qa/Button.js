@@ -291,21 +291,21 @@ export const KitchenSink = () => (
 				</Button>
 			</Section>
 
-			<Section title="Expand Focus Effect Text" size="50%">
-				<Button focusEffect="expand" size="small" alt="Small">
+			<Section title="Static Focus Effect Text" size="50%">
+				<Button focusEffect="static" size="small" alt="Small">
 					Button
 				</Button>
-				<Button focusEffect="expand" roundBorder size="small" alt=" Small Round Border">
+				<Button focusEffect="static" roundBorder size="small" alt=" Small Round Border">
 					Button
 				</Button>
-				<Button focusEffect="expand" size="large" alt="Large">
+				<Button focusEffect="static" size="large" alt="Large">
 					Button
 				</Button>
-				<Button focusEffect="expand" roundBorder size="large" alt="Large Round Border">
+				<Button focusEffect="static" roundBorder size="large" alt="Large Round Border">
 					Button
 				</Button>
 				<Button
-					focusEffect="expand"
+					focusEffect="static"
 					backgroundOpacity="transparent"
 					size="small"
 					alt="Small Transparent"
@@ -313,7 +313,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
-					focusEffect="expand"
+					focusEffect="static"
 					backgroundOpacity="transparent"
 					roundBorder
 					size="small"
@@ -322,7 +322,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
-					focusEffect="expand"
+					focusEffect="static"
 					backgroundOpacity="transparent"
 					size="large"
 					alt="Large Transparent"
@@ -330,7 +330,7 @@ export const KitchenSink = () => (
 					Button
 				</Button>
 				<Button
-					focusEffect="expand"
+					focusEffect="static"
 					backgroundOpacity="transparent"
 					roundBorder
 					size="large"
@@ -340,11 +340,11 @@ export const KitchenSink = () => (
 				</Button>
 			</Section>
 
-			<Section title="Expand Focus Effect Icon" size="50%">
-				<Button focusEffect="expand" size="small" icon="play" alt="Small" />
-				<Button focusEffect="expand" roundBorder size="small" icon="play" alt="Small Round Border" />
-				<Button focusEffect="expand" size="large" icon="play" alt="Large" />
-				<Button focusEffect="expand" roundBorder size="large" icon="play" alt="Large Round Border" />
+			<Section title="Static Focus Effect Icon" size="50%">
+				<Button focusEffect="static" size="small" icon="play" alt="Small" />
+				<Button focusEffect="static" roundBorder size="small" icon="play" alt="Small Round Border" />
+				<Button focusEffect="static" size="large" icon="play" alt="Large" />
+				<Button focusEffect="static" roundBorder size="large" icon="play" alt="Large Round Border" />
 			</Section>
 		</Row>
 	</Scroller>

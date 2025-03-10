@@ -21,20 +21,20 @@ describe('Button', () => {
 		expect(button).toHaveClass(expected);
 	});
 
-	test('should be static by default', function () {
+	test('should expand by default', function () {
 		render(<ButtonBase />);
 		const button = screen.getByRole('button');
 
-		const expected = 'focusStatic';
+		const expected = 'focusExpand';
 
 		expect(button).toHaveClass(expected);
 	});
 
-	test('should be able to enable the expand focus effect', () => {
-		render(<ButtonBase focusEffect="expand" />);
+	test('should be able to disable the expand focus effect', () => {
+		render(<ButtonBase focusEffect="static" />);
 		const button = screen.getByRole('button');
 
-		const expected = 'focusExpand';
+		const expected = 'focusStatic';
 
 		expect(button).toHaveClass(expected);
 	});
