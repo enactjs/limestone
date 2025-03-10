@@ -62,7 +62,7 @@ export const _TabLayout = (args) => {
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
-				scrollByWheel={args['scrollByWheel']}
+				noScrollByWheel={args['noScrollByWheel']}
 				tabSize={args['tabSize'] || null}
 			>
 				<Tab title={tabSelections[tabs][0].title} icon={tabSelections[tabs][0].icon}>
@@ -95,7 +95,7 @@ export const _TabLayout = (args) => {
 	);
 };
 
-boolean('scrollByWheel', _TabLayout, Config, true);
+boolean('noScrollByWheel', _TabLayout, Config, false);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
 range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);

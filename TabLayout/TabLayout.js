@@ -152,6 +152,15 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
+		 * Prevents scroll by wheeling on the scroller.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
+		noScrollByWheel: PropTypes.bool,
+
+		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -203,14 +212,6 @@ const TabLayoutBase = kind({
 		 * @private
 		 */
 		rtl: PropTypes.bool,
-
-		/**
-		 *
-		 * @type {Boolean}
-		 * @default true
-		 * @public
-		 */
-		scrollByWheel: PropTypes.bool,
 
 		/**
 		 * Assign a custom size to horizontal tabs.
@@ -388,7 +389,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollByWheel, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, noScrollByWheel, onCollapse, onSelect, orientation, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -402,12 +403,12 @@ const TabLayoutBase = kind({
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
+			noScrollByWheel,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,
 			onSelect,
 			orientation,
-			scrollByWheel,
 			selectedIndex: index,
 			tabs
 		};

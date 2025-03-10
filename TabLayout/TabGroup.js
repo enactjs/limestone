@@ -32,10 +32,10 @@ const TabBase = kind({
 		css: PropTypes.object,
 		icon: PropTypes.string,
 		index: PropTypes.number,
+		noScrollByWheel: PropTypes.bool,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
-		scrollByWheel: PropTypes.bool,
 		selected: PropTypes.bool,
 		size: PropTypes.number,
 		sprite: PropTypes.object,
@@ -82,12 +82,12 @@ const TabBase = kind({
 			forward('onWheel'),
 			forwardCustom('onWheelScroll', (ev, props) => {
 				const {deltaY} = ev;
-				const {orientation, rtl, scrollByWheel} = props;
+				const {noScrollByWheel, orientation, rtl} = props;
 				const horizontalMoveTo = rtl ? ['right', 'left'] : ['left', 'right'];
 				const moveTo = orientation === 'horizontal' ? horizontalMoveTo : ['up', 'down'];
 				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
 
-				if (!scrollByWheel) return;
+				if (noScrollByWheel) return;
 
 				Spotlight.setPointerMode(false);
 				Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
@@ -112,9 +112,9 @@ const TabBase = kind({
 
 	render: ({children, collapsed, css, orientation, size, ...rest}) => {
 		delete rest.index;
+		delete rest.noScrollByWheel;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
-		delete rest.scrollByWheel;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -189,13 +189,13 @@ const TabGroupBase = kind({
 		collapsed: PropTypes.bool,
 		css: PropTypes.object,
 		id: PropTypes.string,
+		noScrollByWheel: PropTypes.bool,
 		onBlur: PropTypes.func,
 		onBlurList: PropTypes.func,
 		onFocus: PropTypes.func,
 		onFocusTab: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
-		scrollByWheel: PropTypes.bool,
 		selectedIndex: PropTypes.number,
 		spotlightDisabled: PropTypes.bool,
 		spotlightId: PropTypes.string,
@@ -216,11 +216,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, scrollByWheel, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, noScrollByWheel, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({css, collapsed, orientation, scrollByWheel, size: tabSize}), [css, collapsed, orientation, scrollByWheel, tabSize]);
+		const itemProps = useMemo(() => ({css, collapsed, noScrollByWheel, orientation, size: tabSize}), [css, collapsed, noScrollByWheel, orientation, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
@@ -248,8 +248,8 @@ const TabGroupBase = kind({
 		const scrollerProps = {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
-			verticalScrollbar: 'hidden',
-			noScrollByWheel: true
+			noScrollByWheel: true,
+			verticalScrollbar: 'hidden'
 		};
 
 		return (
