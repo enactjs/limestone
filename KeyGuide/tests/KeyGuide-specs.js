@@ -105,4 +105,74 @@ describe('KeyGuide Specs', () => {
 
 		expect(actual).not.toHaveClass(expected);
 	});
+
+	test('should have `image` if type is `image`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open type="image">
+					{[{src: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a', key: 'a'}]}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const image = screen.getAllByRole('img')[0];
+
+		expect(image).toBeInTheDocument();
+	});
+
+	test('should have `imageGuide` className if type is `image`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open type="image">
+					{[{src: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a', key: 'a'}]}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByRole('list');
+
+		const expected = 'imageGuide';
+		expect(keyGuide).toHaveClass(expected);
+	});
+
+	test('should have `topArrow` className when arrowPosition is set to `top`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open arrowPosition="top" type="image">
+					{[{src: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a', key: 'a'}]}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByRole('list');
+
+		const expected = 'topArrow';
+		expect(keyGuide).toHaveClass(expected);
+	});
+
+	test('should have `noArrow` className when arrowPosition is set to `none`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open arrowPosition="none" type="image">
+					{[{src: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a', key: 'a'}]}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+
+		const keyGuide = screen.getByRole('list');
+
+		const expected = 'noArrow';
+		expect(keyGuide).toHaveClass(expected);
+	});
+
+	test('should have style top and left when position is set', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open position={{top: 100, left: 100}} type="image">
+					{[{src: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a', key: 'a'}]}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByRole('list');
+
+		const expected = '100px';
+		expect(keyGuide).toHaveStyle({top: expected, left: expected});
+	});
 });
