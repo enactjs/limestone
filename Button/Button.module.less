@@ -9,7 +9,7 @@
 	.lime-large-button-text();
 	height: @lime-button-height;
 	line-height: (@lime-button-height - (2 * @lime-button-border-width));
-	min-width: @lime-button-height;
+	min-width: @lime-button-min-width;
 	max-width: @lime-button-max-width;
 	padding: 0 @lime-button-h-padding;
 	margin: @lime-button-margin;
@@ -129,13 +129,13 @@
 	}
 
 	&.minWidth {
-		min-width: @lime-button-min-width;
+		min-width: @lime-button-minWidth-default;
 	}
 
 	&.small {
 		.lime-small-button-text();
 		height: @lime-button-small-height;
-		min-width: @lime-button-small-height;
+		min-width: @lime-button-small-min-width;
 		max-width: @lime-button-small-max-width;
 		line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
 		margin: @lime-button-small-margin;
@@ -149,7 +149,7 @@
 
 		// Standard Button Scenario
 		&.minWidth {
-			min-width: @lime-button-small-min-width;
+			min-width: @lime-button-small-minWidth-default;
 		}
 
 		.icon {
@@ -207,13 +207,15 @@
 			--button-height: $height;
 
 			&.minWidth {
-				min-width: @lime-button-small-min-width;
+				min-width: @lime-button-small-minWidth-default;
 			}
 		});
 	}
 
 	// IconButton rules
 	&.iconOnly {
+		min-width: @lime-button-height;
+
 		.client {
 			padding: 0;
 
@@ -226,6 +228,7 @@
 		&.iconBefore,
 		&.large,
 		&.small {
+			min-width: @lime-button-small-height;
 			padding: @lime-button-icon-small-padding;
 			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
 
