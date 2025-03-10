@@ -146,7 +146,8 @@ const KeyGuideBase = kind({
 
 	defaultProps: {
 		arrowPosition: 'none',
-		position: {top: 0, left: 0}
+		position: {top: 0, left: 0},
+		type: 'icon'
 	},
 
 	computed: {
@@ -181,6 +182,8 @@ const KeyGuideBase = kind({
 	},
 
 	render: ({className, css, open, position, type, ...rest}) => {
+		delete rest.arrowPosition;
+
 		return (
 			<FloatingLayer
 				noAutoDismiss
