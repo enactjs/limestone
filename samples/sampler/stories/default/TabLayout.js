@@ -95,7 +95,7 @@ export const _TabLayout = (args) => {
 	);
 };
 
-boolean('scrollByWheel', _TabLayout, Config, true) ;
+boolean('scrollByWheel', _TabLayout, Config, true);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
 range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);

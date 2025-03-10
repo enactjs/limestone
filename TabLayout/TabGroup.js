@@ -20,8 +20,6 @@ import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
 
-const MAX_TABS_BEFORE_SCROLLING = 7;
-
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 // eslint-disable-next-line enact/prop-types
 const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
@@ -64,18 +62,36 @@ const TabBase = kind({
 			forward('onFocus'),
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
-			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
+			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
+				if (orientation === 'horizontal') {
+					ev.target.scrollIntoView({behavior: 'smooth'});
+				}
+
+				return {selected: index};
+			})
+		),
+		onKeyDown: handle(
+			forwardCustom('onKeyDown', (ev, props) => {
+				const {orientation} = props;
+				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
+
+				Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
+			})
 		),
 		onWheel: handle(
 			forward('onWheel'),
 			forwardCustom('onWheelScroll', (ev, props) => {
 				const {deltaY} = ev;
-				const {orientation, scrollByWheel} = props;
-				const moveTo = orientation === 'horizontal' ? ['right', 'left'] : ['up', 'down'];
+				const {orientation, rtl, scrollByWheel} = props;
+				const horizontalMoveTo = rtl ? ['right', 'left'] : ['left', 'right'];
+				const moveTo = orientation === 'horizontal' ? horizontalMoveTo : ['up', 'down'];
+				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
 
 				if (!scrollByWheel) return;
 
 				Spotlight.setPointerMode(false);
+				Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
+
 				if (deltaY < 0) {
 					Spotlight.move(moveTo[0]);
 				} else if (deltaY > 0) {
