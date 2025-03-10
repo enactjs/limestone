@@ -18,6 +18,7 @@ export const _RadioButton = (args) => (
 		disabled={args['disabled']}
 		label={args['label']}
 		onToggle={action('onToggle')}
+		selected={args['selected']}
 	>
 		{args['children']}
 	</RadioButton>
@@ -26,6 +27,7 @@ export const _RadioButton = (args) => (
 select('children', _RadioButton, ['', ...iconNames], Config);
 boolean('disabled', _RadioButton, Config);
 text('label', _RadioButton, Config, 'RadioButton label');
+boolean('selected', _RadioButton, Config);
 
 _RadioButton.storyName = 'RadioButton';
 _RadioButton.parameters = {

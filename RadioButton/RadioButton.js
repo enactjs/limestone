@@ -124,6 +124,8 @@ const RadioButtonBase = kind({
 					{...rest}
 					aria-checked={selected}
 					aria-disabled={disabled}
+					backgroundOpacity="transparent"
+					css={css}
 					disabled={disabled}
 					minWidth={false}
 					role="checkbox"
