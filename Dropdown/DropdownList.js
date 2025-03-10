@@ -146,8 +146,8 @@ const DropdownListBase = kind({
 		className: ({width, styler}) => styler.append(typeof width === 'string' ? width : null),
 		dataSize: ({children}) => children ? children.length : 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
-		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 126 : 126)
-		itemSize: () => 126
+		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 156 : 156)
+		itemSize: () => 156
 	},
 
 	render: ({dataSize, id, itemSize, scrollTo, verticalScrollbar, width, ...rest}) => {
@@ -245,7 +245,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				animate: false,
 				focus: true,
 				index: selected,
-				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
+				offset: ri.scale(156 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
 				stickTo: 'start' // offset from the top of the dropdown
 			});
 
