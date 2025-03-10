@@ -63,13 +63,13 @@
 @lime-alias-color-container-disabled-focused: var(--lime-disabled-focus-bg-color, var(--lime-alias-color-container-disabled-focused));
 @lime-disabled-focus-bg-color: @lime-alias-color-container-disabled-focused;
 
-@lime-disabled-selected-color: var(--lime-disabled-selected-color, var(--ref-color-base-30)); // No Alias
+@lime-disabled-selected-color: var(--lime-disabled-selected-color, var(--lime-alias-color-on-selection-icon-selected-disabled));
 //@lime-disabled-selected-text-color: var(--lime-disabled-selected-text-color);
-@lime-disabled-selected-bg-color: var(--lime-disabled-selected-bg-color, var(--ref-color-base-20)); // No Alias
+@lime-disabled-selected-bg-color: var(--lime-disabled-selected-bg-color, var(--lime-alias-color-on-selection-bg-active-disabled));
 
-@lime-disabled-selected-focus-color: var(--lime-disabled-selected-focus-color, var(--ref-color-base-65)); // No Alias
+@lime-disabled-selected-focus-color: var(--lime-disabled-selected-focus-color, var(--lime-alias-color-on-selection-icon-selected-disabled-focused));
 //@lime-disabled-selected-focus-text-color: var(--lime-disabled-selected-focus-text-color);
-@lime-disabled-selected-focus-bg-color: var(--lime-disabled-selected-focus-bg-color, var(--ref-color-base-60)); // No Alias
+@lime-disabled-selected-focus-bg-color: var(--lime-disabled-selected-focus-bg-color, var(--lime-alias-color-on-selection-bg-active-disabled-focused));
 
 //@lime-fullscreen-text-color: var(--lime-fullscreen-text-color);
 @lime-fullscreen-bg-color: var(--lime-fullscreen-bg-color, @lime-alias-color-surface-full);
@@ -193,7 +193,7 @@
 @lime-checkbox-focus-bg-color: @lime-checkbox-bg-color;
 @lime-checkbox-focus-border-color: @lime-alias-color-on-focused;
 @lime-checkbox-selected-text-color: @lime-alias-color-on-selected;
-@lime-checkbox-selected-bg-color: @lime-toggle-on-bg-color;
+@lime-checkbox-selected-bg-color: var(--lime-alias-color-on-selection-bg-active);
 @lime-checkbox-selected-border-color: @lime-checkbox-selected-bg-color;
 @lime-checkbox-selected-focus-text-color: @lime-checkbox-selected-text-color;
 @lime-checkbox-selected-focus-bg-color: @lime-checkbox-selected-bg-color;
