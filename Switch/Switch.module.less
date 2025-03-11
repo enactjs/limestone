@@ -18,19 +18,22 @@
 	}
 
 	.icon {
+		border-radius: 50%;
 		visibility: visible;
-		left: 0;
+		height: @lime-switch-icon-height;
 		width: @lime-switch-icon-height;
-		height: inherit;
 		font-size: @lime-switch-icon-font-size;
 		line-height: @lime-switch-icon-line-height;
 		margin: 0;
+		position: relative;
 		vertical-align: top;
+		top: @lime-switch-icon-top;
+		left: @lime-switch-icon-top;
 	}
 
 	&.selected {
 		.icon {
-			left: (@lime-switch-width - @lime-switch-height);
+			left: (@lime-switch-width - @lime-switch-icon-height - @lime-switch-icon-top);
 		}
 	}
 
@@ -62,8 +65,7 @@
 		}
 
 		.icon {
-			background-color: transparent;
-			color: @lime-switch-color;
+			background-color: @lime-switch-icon-bg-color;
 		}
 
 		&.selected {
@@ -72,20 +74,48 @@
 			}
 
 			.icon {
-				color: @lime-switch-selected-color;
+				background-color: @lime-switch-selected-color;
 			}
 		}
 
 		.disabled({
+			.client {
+				background-color: @lime-switch-disabled-bg-color;
+			}
+
+			.icon {
+				background-color: @lime-switch-disabled-icon-bg-color;
+			}
+
 			&.selected {
 				.client {
 					background-color: @lime-switch-disabled-selected-bg-color;
 				}
 
 				.icon {
-					color: @lime-switch-disabled-selected-color;
+					background-color: @lime-switch-disabled-icon-selected-bg-color;
 				}
 			}
+
+			.focus({
+				.bg {
+					.lime-spotlight-focus-bg-colors();
+				}
+
+				.icon {
+					background-color: @lime-switch-focus-color;
+				}
+
+				&.selected {
+					.bg {
+						.lime-spotlight-focus-bg-colors();
+					}
+
+					.icon {
+						background-color: @lime-switch-selected-focus-color;
+					}
+				}
+			});
 		});
 
 		// Standalone Switch
@@ -104,12 +134,12 @@
 			}
 
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-focus-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-selected-focus-color;
 				}
 			}
 		});
@@ -122,20 +152,20 @@
 			})
 		}
 
-		.lime-disabled({
-			.client {
-				.lime-disabled-colors();
-			}
-
-			.focus({
-				.bg {
-					.lime-disabled-focus-bg-colors();
-				}
-				.client {
-					.lime-disabled-focus-content-colors();
-				}
-			});
-		});
+		//.lime-disabled({
+		//	//.client {
+		//	//	.lime-disabled-colors();
+		//	//}
+		//
+		//	.focus({
+		//		.bg {
+		//			.lime-disabled-focus-bg-colors();
+		//		}
+		//		.client {
+		//			.lime-disabled-focus-content-colors();
+		//		}
+		//	});
+		//});
 
 	});
 }
@@ -145,30 +175,14 @@
 	.focus({
 		.switch {
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-focus-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-selected-focus-color;
 				}
 			}
 		}
 	}, parent);
-});
-
-.applySkins({
-	.disabled({
-		.switch {
-			&.selected {
-				.client {
-					background-color: @lime-switch-disabled-selected-bg-color;
-				}
-
-				.icon {
-					color: @lime-switch-disabled-selected-color;
-				}
-			}
-		}
-	});
 });

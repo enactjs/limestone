@@ -35,7 +35,7 @@
 @lime-component-focus-active-indicator-bg-color: var(--lime-component-focus-active-indicator-bg-color, #4c5059);
 @lime-component-focus-inactive-indicator-bg-color: var(--lime-component-focus-inactive-indicator-bg-color, #b8b9bb);
 
-@lime-selected-color: var(--lime-selected-color, #e6e6e6);
+@lime-selected-color: var(--lime-selected-color, #ffffff);
 @lime-selected-text-color: var(--lime-selected-text-color, @lime-text-color);
 @lime-selected-bg-color: var(--lime-selected-bg-color, #26282b);
 
@@ -68,10 +68,10 @@
 @lime-selection-color: var(--lime-selection-color, #4c5059);
 @lime-selection-bg-color: var(--lime-selection-bg-color, #3399ff);
 
-@lime-toggle-off-color: var(--lime-toggle-off-color, #aeaeae);
-@lime-toggle-off-bg-color: var(--lime-toggle-off-bg-color, #777777);
+@lime-toggle-off-color: var(--lime-toggle-off-color, #b3b3b3);
+@lime-toggle-off-bg-color: var(--lime-toggle-off-bg-color, #737373);
 @lime-toggle-on-color: var(--lime-toggle-on-color, @lime-selected-color);
-@lime-toggle-on-bg-color: var(--lime-toggle-on-bg-color, #30ad6b);
+@lime-toggle-on-bg-color: var(--lime-toggle-on-bg-color, #3dbf94);
 
 @lime-progress-color: var(--lime-progress-color, #e6e6e6);
 @lime-progress-bg-color: var(--lime-progress-bg-color, #373a41);
@@ -408,14 +408,16 @@
 
 // Switch
 // ---------------------------------------
-@lime-switch-color: @lime-toggle-off-color;
+@lime-switch-icon-bg-color: @lime-toggle-off-color;
 @lime-switch-bg-color: @lime-toggle-off-bg-color;
-@lime-switch-focus-color: @lime-switch-color;
+@lime-switch-focus-color: @lime-switch-icon-bg-color;
 @lime-switch-selected-color: @lime-toggle-on-color;
 @lime-switch-selected-bg-color: @lime-toggle-on-bg-color;
 @lime-switch-selected-focus-color: @lime-switch-selected-color;
-@lime-switch-disabled-selected-color: @lime-switch-color;
-@lime-switch-disabled-selected-bg-color: @lime-switch-bg-color;
+@lime-switch-disabled-bg-color: #333333;
+@lime-switch-disabled-icon-bg-color: #454545;
+@lime-switch-disabled-icon-selected-bg-color: @lime-switch-disabled-icon-bg-color;
+@lime-switch-disabled-selected-bg-color: @lime-switch-disabled-bg-color;
 
 // TabLayout
 // ---------------------------------------
