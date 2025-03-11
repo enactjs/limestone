@@ -58,7 +58,7 @@ export const _Alert = (args) => (
 			</image>
 		) : null}
 		{prop.buttons[args['buttons']]}
-		<Scroller verticalScrollbar="visible" className={css.scroller} style={{height: ri.scaleToRem(1100)}}>
+		<Scroller verticalScrollbar="visible" className={css.scroller} style={{height: ri.scaleToRem(900)}}>
 			{args['children']}
 		</Scroller>
 	</Alert>

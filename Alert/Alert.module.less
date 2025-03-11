@@ -62,22 +62,11 @@
 
 		.buttonContainer {
 			box-sizing: border-box;
+			margin-top: @lime-alert-overlay-buttons-margin-top;
 
 			// Every buttonCell after the first one
 			.buttonCell + .buttonCell {
 				margin-top: @lime-alert-overlay-button-spacing;
-			}
-
-			&.full {
-				margin: @lime-alert-overlay-buttons-margin;
-				.margin-start-end(
-					.extract(@lime-alert-overlay-buttons-margin, left)[],
-					.extract(@lime-alert-overlay-buttons-margin, right)[]
-				);
-				:global(.enact-orientation-portrait) & {
-					margin: @lime-portrait-alert-overlay-buttons-margin;
-					.margin-start-end(.extract(@lime-portrait-alert-overlay-buttons-margin, left)[], .extract(@lime-portrait-alert-overlay-buttons-margin, right)[], parent);
-				}
 			}
 		}
 
@@ -89,17 +78,6 @@
 			:global(.enact-locale-zh) & {
 				overflow-wrap: normal;
 				word-break: normal;
-			}
-
-			&.full {
-				width: @lime-alert-overlay-content-width;
-				.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-alert-overlay-text-button-gap);
-				margin-bottom: 0;
-
-				:global(.enact-orientation-portrait) & {
-					width: @lime-portrait-alert-overlay-content-width;
-					.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
-				}
 			}
 		}
 
