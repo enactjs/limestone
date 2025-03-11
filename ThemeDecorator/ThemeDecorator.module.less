@@ -14,7 +14,7 @@
 @import "../styles/variables.less";
 
 .applySkins({
-	color: @lime-alias-color-on-surface-main;
+	color: var(--lime-alias-color-on-surface-main);
 
 	::selection {
 		color: @lime-input-selection-color;
@@ -65,6 +65,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: @lime-alias-color-surface-full;
+		background-color: var(--lime-alias-color-surface-full);
 	}
 });

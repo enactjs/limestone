@@ -8,7 +8,10 @@
 // UI Conceptual Colors
 // ---------------------------------------
 
-@lime-alias-color-surface-overlay: var(--lime-overlay-bg-color, #000000);
+& {
+    --lime-alias-color-surface-overlay: var(--ref-color-base-0);
+}
+
 @lime-overlay-outline-color: var(--lime-overlay-outline-color, #7c848b);
 @lime-overlay-outline-style: var(--lime-overlay-outline-style, solid);
 
@@ -36,7 +39,7 @@
 
 // Input
 // ---------------------------------------
-@lime-input-fullscreen-background-color: @lime-alias-color-surface-overlay; // different from neutral
+@lime-input-fullscreen-background-color: var(--lime-alias-color-surface-overlay); // different from neutral
 
 // KeyGuide
 // ---------------------------------------
@@ -44,5 +47,5 @@
 
 // Popup
 // ---------------------------------------
-@lime-popup-bg-color: @lime-alias-color-surface-overlay; // opaque
-@lime-popup-scrimtransparent-bg-color: @lime-alias-color-surface-overlay; // opaque
+@lime-popup-bg-color: var(--lime-alias-color-surface-overlay); // opaque
+@lime-popup-scrimtransparent-bg-color: var(--lime-alias-color-surface-overlay); // opaque

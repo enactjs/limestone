@@ -10,15 +10,17 @@
 // ---------------------------------------
 
 // common colors
-@lime-alias-color-surface-full: var(--lime-bg-color, #cacbcc);
-@lime-alias-color-on-surface-main: var(--lime-text-color, #2e3239);
-@lime-alias-color-on-surface-sub: var(--lime-text-sub-color, #2e3239);
-@lime-focus-text-color: var(--lime-focus-text-color, #575e66);
-@lime-disabled-selected-color: var(--lime-disabled-selected-color, #ffffff);
-@lime-disabled-selected-bg-color: var(--lime-disabled-selected-bg-color, #788688);
-@lime-disabled-selected-focus-color: var(--lime-disabled-selected-focus-color, #e6e6e6);
-@lime-disabled-selected-focus-bg-color: var(--lime-disabled-selected-focus-bg-color, #4c5059);
-@lime-alias-color-surface-overlay: var(--lime-alert-overlay-bg-color, #bbbbbb);
+& {
+    --lime-alias-color-surface-full: var(--ref-color-base-85);
+    --lime-alias-color-on-surface-main: var(--ref-color-base-10);
+    --lime-alias-color-on-surface-sub: var(--ref-color-base-35);
+    --lime-alias-color-on-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
+    --lime-alias-color-on-selection-icon-selected-disabled: var(--ref-color-base-65);
+    --lime-alias-color-on-selection-bg-active-disabled: var(--ref-color-base-60);
+    --lime-alias-color-on-selection-bg-active-disabled-focused: var(--ref-color-base-60);
+    --lime-alias-color-surface-overlay: var(--ref-color-secondary-85);
+}
+
 @lime-progress-color: var(--lime-progress-color, #373a41);
 @lime-progress-bg-color: var(--lime-progress-bg-color, #a1a1a1);
 @lime-progress-bg-color-opacity: var(--lime-progress-bg-color-opacity, 0.4);
