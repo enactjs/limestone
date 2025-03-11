@@ -16,16 +16,6 @@ const AlertImage = kind({
 	name: 'AlertImage',
 	propTypes: /** @lends limestone/Alert.AlertImage.prototype */ {
 		/**
-		 * Size of the image when `type` is set to `icon`
-		 *
-		 *
-		 * @type {('small'|'large')}
-		 * @public
-		 * @default 'large'
-		 */
-		iconSize: PropTypes.oneOf(['small', 'large']),
-		
-		/**
 		 * String value or Object of values used to determine which image will appear for
 		 * a specific component size.
 		 *
@@ -58,23 +48,33 @@ const AlertImage = kind({
 		 * @type {Object}
 		 * @private
 		 */
-		css: PropTypes.object
+		css: PropTypes.object,
+
+		/**
+		 * Size of the image when `type` is set to `icon`
+		 *
+		 *
+		 * @type {('small'|'large')}
+		 * @public
+		 * @default 'large'
+		 */
+		iconSize: PropTypes.oneOf(['small', 'large'])
 	},
-	
+
 	defaultProps: {
-		iconSize: 'large',
+		iconSize: 'large'
 	},
-	
+
 	styles: {
 		className: 'alertImage',
 		css: componentCss,
 		publicClassNames: ['alertImage', 'icon', 'thumbnail']
 	},
-	
+
 	computed: {
 		className: ({iconSize, type, styler}) => styler.append(iconSize, type)
 	},
-	
+
 	render: ({css, src, ...rest}) => {
 		delete rest.type;
 		return (

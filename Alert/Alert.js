@@ -17,12 +17,10 @@ import PropTypes from 'prop-types';
 import BodyText from '../BodyText';
 import Heading from '../Heading';
 import Popup from '../Popup';
-import Scroller from '../Scroller';
 
 import AlertImage from './AlertImage';
 
 import componentCss from './Alert.module.less';
-import ri from "@enact/ui/resolution";
 
 /**
  * A modal Alert component.
@@ -219,9 +217,7 @@ const AlertBase = kind({
 						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
 						{showTitle ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
-							<Scroller style={{height: ri.scaleToRem(780)}}>
-								{children}
-							</Scroller>
+							{children}
 						</Cell>
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>

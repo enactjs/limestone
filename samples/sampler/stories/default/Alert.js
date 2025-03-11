@@ -1,13 +1,14 @@
 import Alert, {AlertBase, AlertImage} from '@enact/limestone/Alert';
+import Scroller from '@enact/limestone/Scroller';
 import Button from '@enact/limestone/Button';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
+import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
-import ImageItem from "@enact/limestone/ImageItem";
-import ri from "@enact/ui/resolution";
-import Scroller from "@enact/limestone/Scroller";
+
+import css from './Alert.module.less';
 
 Alert.displayName = 'Alert';
 AlertImage.displayName = 'AlertImage';
@@ -57,7 +58,9 @@ export const _Alert = (args) => (
 			</image>
 		) : null}
 		{prop.buttons[args['buttons']]}
-		{args['children']}
+		<Scroller verticalScrollbar="visible" className={css.scroller} style={{height: ri.scaleToRem(1100)}}>
+			{args['children']}
+		</Scroller>
 	</Alert>
 );
 
