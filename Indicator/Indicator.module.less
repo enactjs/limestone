@@ -1,0 +1,51 @@
+// Indicator.module.less
+//
+@import "../styles/mixins.less";
+@import '../styles/skin.less';
+@import "../styles/variables.less";
+
+.indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: @lime-indicator-height;
+  gap: @lime-indicator-gap;
+
+  .step {
+    margin: 0;
+  }
+
+  .applySkins({
+    .step {
+      &.current {
+        color: @lime-indicator-current-dot-color;
+      }
+
+      &.inactive {
+        color: @lime-indicator-inactive-dot-color;
+      }
+    }
+  });
+}
+
+.pageIndicator {
+  width: @lime-page-indicator-width;
+
+  .iconButton {
+    margin: 0;
+    padding: 0;
+  }
+
+  .numberIndicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: @lime-number-indicator-gap;
+    max-width: @lime-number-indicator-max-width;
+    //font-weight: @lime-body-font-weight;
+
+    .divider {
+      margin: @lime-number-indicator-divider-margin;
+    }
+  }
+}
