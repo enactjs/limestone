@@ -80,7 +80,7 @@ const MainView = () => {
 					<br />
 					<RadioItem> FirstLongTextWithSpace FirstLongTextWithSpace FirstLongTextWithSpace FirstLongTextWithSpace </RadioItem>
 					<RadioItem disabled> Default disabled Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Text </RadioItem>
-					<Group childComponent={Item} itemProps={{inline: 'true'}} >
+					<Group childComponent={Item}>
 						{itemData}
 					</Group>
 					<TimePicker
