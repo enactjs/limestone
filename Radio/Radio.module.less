@@ -1,0 +1,221 @@
+// Radio.module.less
+//
+@import "../styles/variables.less";
+@import "../styles/mixins.less";
+@import "../styles/skin.less";
+
+// Assign the colors all in one place
+.radio-colors (@color, @bg, @border) {
+	.icon {
+		color: @color;
+		background-color: @bg;
+		box-shadow: 0 0 0 @lime-radio-border-width @border;
+	}
+}
+
+// Generate all states (and selectors) for the radio
+.radio-states (@resting, @selected) {
+	@resting();
+
+	&.selected {
+		@selected();
+	}
+}
+
+
+.label {
+	display: inline-flex;
+}
+
+
+// Standalone version of the Radio (Also used when Radio has been wrapped with Spottable)
+@radio-standalone-rules: {
+	.bg {
+		position: absolute;
+		.position(@lime-radio-container-position);
+		border-radius: @lime-radio-container-border-radius;
+		.lime-spotlight-resting-bg-colors();
+	}
+}
+
+// Resting States
+@radio-resting: {
+	.radio-states(
+		.radio-colors(
+			@lime-radio-text-color,
+			@lime-radio-bg-color,
+			@lime-radio-border-color
+		);
+		.radio-colors(
+			@lime-radio-selected-text-color,
+			@lime-radio-selected-bg-color,
+			@lime-radio-selected-border-color
+		);
+	);
+};
+
+// Focus States
+@radio-focus: {
+	.radio-states(
+		// Gathered rules into a rules-set to include the .bg selector in the resting block
+	{
+		.radio-colors(
+			@lime-radio-focus-text-color,
+			@lime-radio-focus-bg-color,
+			@lime-radio-focus-border-color
+		);
+		.bg {
+			.lime-spotlight-focus-bg-colors();
+		}
+	};
+		.radio-colors(
+			@lime-radio-selected-focus-text-color,
+			@lime-radio-selected-focus-bg-color,
+			@lime-radio-selected-focus-border-color
+		);
+	);
+};
+
+// Disabled
+@radio-disabled-resting: {
+	.radio-states(
+	{
+		// No custom rules for this state
+	};
+		.radio-colors(
+			@lime-radio-disabled-selected-text-color,
+			@lime-radio-disabled-selected-bg-color,
+			@lime-radio-disabled-selected-border-color
+		);
+	);
+};
+
+// Disabled + Focus States
+@radio-disabled-focus: {
+	.radio-states(
+		{
+			// No custom rules for this state
+			.bg {
+				background-color: @lime-radio-standalone-bg-disabled-focus-bg-color;
+			}
+		};
+		.radio-colors(
+				@lime-radio-focus-disabled-selected-text-color,
+				@lime-radio-focus-disabled-selected-bg-color,
+				@lime-radio-focus-disabled-selected-border-color
+		);
+	);
+};
+
+
+.radio {
+	display: inline-block;
+	position: relative;
+	line-height: 0;
+	margin-inline-end: @lime-component-spacing;
+
+	.icon {
+		margin: 0;	// Needed to apply here instead of on `.radio` due to .icon.size precedence :(
+		border-radius: @lime-radio-border-radius;
+		position: relative;
+		text-align: center;
+	}
+
+	//
+	// Radio supports several states, each of which has a different set of colors.
+	// All supported states are as follows:
+	//
+	// standalone
+	// standalone selected
+	// standalone disabled
+	// standalone disabled selected
+	// asChild
+	// asChild selected
+	// asChild disabled
+	// asChild disabled selected
+	//
+	// Standalone is represented below as .standalone. This handles focus and disabled states.
+	// asChild depends on the status of the parent for focus and disabled states.
+	//
+
+	.applySkins({
+		// Set up the background for standalone (and independently spottable) versions
+		&.standalone {
+			@radio-standalone-rules();
+		}
+		// Spottable version of the Radio
+		.spottable(@radio-standalone-rules);
+
+		// Resting
+		@radio-resting();
+
+		// Focus
+		.focus({
+			@radio-focus();
+		});
+
+		:global(.noAnimation) & {
+			.focus({
+				.bg {
+					box-shadow: none;
+				}
+			})
+		}
+
+		// Disabled
+		.lime-disabled({
+			.icon {
+				.lime-disabled-focus-content-colors();
+			}
+
+			@radio-disabled-resting();
+
+			// Disabled + Focus
+			.focus({
+				@radio-disabled-focus();
+			});
+		});
+	});
+}
+
+// The following target instances where the radio is inside another component and that
+// component is receiving the disabled/focused etc states, rather than radio directly.
+.applySkins({
+	.focus({
+		& .radio {
+			@radio-focus();
+		}
+	});
+
+	:global(.noAnimation) & {
+		.focus({
+			& .radio .bg {
+				box-shadow: none;
+			}
+		});
+	}
+});
+
+.applySkins({
+	.disabled({
+		& .radio {
+			@radio-disabled-resting();
+		}
+	});
+});
+
+.applySkins({
+	.focus({
+		.disabled({
+			& .radio {
+				@radio-disabled-focus();
+
+				&.standalone {
+					.icon {
+						.lime-disabled-focus-content-colors();
+					}
+				}
+			}
+		});
+	});
+});

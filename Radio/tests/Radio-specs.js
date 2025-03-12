@@ -2,19 +2,20 @@ import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import RadioButton, {RadioButtonBase} from '../RadioButton';
+import Radio, {RadioBase} from '.././Radio';
 
-describe('RadioButton Specs', () => {
+describe('Radio Specs', () => {
 
 	test('should not include the selected class when not selected', () => {
-		render(<RadioButtonBase />);
-		const radioButtonElement = screen.getByRole('checkbox');
+		render(<RadioBase />);
 
-		expect(radioButtonElement).not.toHaveClass('selected');
+		const radioElement = screen.getByRole('checkbox');
+
+		expect(radioElement).not.toHaveClass('selected');
 	});
 
 	test('should not be checked', () => {
-		render(<RadioButtonBase />);
+		render(<RadioBase />);
 
 		const actual = screen.getByRole('checkbox');
 
@@ -22,25 +23,25 @@ describe('RadioButton Specs', () => {
 	});
 
 	test('should add the selected class when given the selected prop', () => {
-		render(<RadioButtonBase selected />);
-		const checkboxElement = screen.getByRole('checkbox');
+		render(<RadioBase selected />);
 
+		const radioElement = screen.getByRole('checkbox');
 		const expected = 'selected';
 
-		expect(checkboxElement).toHaveClass(expected);
+		expect(radioElement).toHaveClass(expected);
 	});
 
 	test('should be checked when initiated with `selected` prop', () => {
-		render(<RadioButtonBase selected />);
+		render(<RadioBase selected />);
 
 		const actual = screen.getByRole('checkbox');
 
 		expect(actual).toHaveAttribute('aria-checked', 'true');
 	});
 
-	test('should check the radioButton with one click', async () => {
+	test('should check the radio with one click', async () => {
 		const user = userEvent.setup();
-		render(<RadioButton />);
+		render(<Radio />);
 
 		const actual = screen.getByRole('checkbox');
 		const expected = 'selected';
@@ -50,9 +51,9 @@ describe('RadioButton Specs', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should uncheck the radioButton with two clicks', async () => {
+	test('should uncheck the radio with two clicks', async () => {
 		const user = userEvent.setup();
-		render(<RadioButton />);
+		render(<Radio />);
 
 		const actual = screen.getByRole('checkbox');
 		const expected = 'selected';

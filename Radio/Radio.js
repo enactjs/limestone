@@ -1,49 +1,49 @@
 /**
- * Limestone styled RadioButton component.
+ * Limestone styled Radio component.
  *
  * @example
- * <RadioButton onToggle={console.log} />
+ * <Radio onToggle={console.log} />
  *
- * @module limestone/RadioButton
- * @exports RadioButton
- * @exports RadioButtonBase
+ * @module limestone/Radio
+ * @exports Radio
+ * @exports RadioBase
  */
 
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
-import Layout, {Cell} from '@enact/ui/Layout';
+import {Cell} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import Touchable from '@enact/ui/Touchable';
 import compose from 'ramda/src/compose';
 
-import Button from '../Button';
 import Icon from '../Icon';
+import Marquee from '../Marquee';
 import Skinnable from '../Skinnable';
 
-import componentCss from './RadioButton.module.less';
+import componentCss from './Radio.module.less';
 
 /**
- * A RadioButton component, ready to use in Limestone applications.
+ * A Radio component, ready to use in Limestone applications.
  *
- * `RadioButton` may be used independently to represent a selectable state but is more commonly used as
+ * `Radio` may be used independently to represent a selectable state but is more commonly used as
  * part of {@link limestone/RadioItem|RadioItem}.
  *
  * Usage:
  * ```
- * <RadioButton selected />
+ * <Radio selected />
  * ```
  *
- * @class RadioButtonBase
- * @memberof limestone/RadioButton
+ * @class RadioBase
+ * @memberof limestone/Radio
  * @extends limestone/Icon.Icon
  * @ui
  * @public
  */
-const RadioButtonBase = kind({
-	name: 'RadioButton',
+const RadioBase = kind({
+	name: 'Radio',
 
-	propTypes: /** @lends limestone/RadioButton.RadioButtonBase.prototype */ {
+	propTypes: /** @lends limestone/Radio.RadionBase.prototype */ {
 		/**
 		 * The icon displayed when `selected`.
 		 *
@@ -67,7 +67,7 @@ const RadioButtonBase = kind({
 		 *
 		 * The following classes are supported:
 		 *
-		 * * `radioButton` - The root class name
+		 * * `radio` - The root class name
 		 * * `selected` - Applied when the `selected` prop is true
 		 *
 		 * @type {Object}
@@ -76,7 +76,7 @@ const RadioButtonBase = kind({
 		css: PropTypes.object,
 
 		/**
-		 * Disables RadioButton and becomes non-interactive.
+		 * Disables Radio and becomes non-interactive.
 		 *
 		 * @type {Boolean}
 		 * @default false
@@ -85,7 +85,7 @@ const RadioButtonBase = kind({
 		disabled: PropTypes.bool,
 
 		/**
-		 * The label of the `RadioButton`.
+		 * The label of the `Radio`.
 		 *
 		 * @type {String}
 		 * @public
@@ -99,7 +99,16 @@ const RadioButtonBase = kind({
 		 * @default false
 		 * @public
 		 */
-		selected: PropTypes.bool
+		selected: PropTypes.bool,
+
+
+		/**
+		 * Sets standalone rules to show spotlight background color.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		standalone: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -109,57 +118,52 @@ const RadioButtonBase = kind({
 
 	styles: {
 		css: componentCss,
-		className: 'radioButton',
-		publicClassNames: ['radioButton', 'selected']
+		className: 'radio',
+		publicClassNames: ['radio', 'selected']
 	},
 
 	computed: {
-		className: ({selected, styler}) => styler.append({selected})
+		className: ({selected, standalone, styler}) => styler.append({selected, standalone})
 	},
 
 	render: ({children, css, disabled, label, selected, ...rest}) => {
+		delete rest.standalone;
+
 		return (
-			<Layout>
-				<Button
+			<>
+				<div
 					{...rest}
 					aria-checked={selected}
 					aria-disabled={disabled}
-					backgroundOpacity="transparent"
-					css={css}
 					disabled={disabled}
-					minWidth={false}
 					role="checkbox"
-					selected={selected}
 				>
-					<div className={css.bg} />
+					<div className={css.bg}/>
 					<Icon
 						size="tiny"
 						className={css.icon}
 					>
 						{children}
 					</Icon>
-				</Button>
-				<Cell align="center" className={css.label}>
-					{label}
-				</Cell>
-			</Layout>
-
+				</div>
+				{label ? <Cell className={css.label} component={Marquee} marqueeOn="render" shrink>{label}</Cell> : null}
+			</>
 		);
 	}
 });
 
 /**
- * Adds interactive functionality to `RadioButton`.
+ * Adds interactive functionality to `Radio`.
  *
- * @class RadioButtonDecorator
- * @memberof limestone/RadioButton
+ * @class RadioDecorator
+ * @memberof limestone/Radio
  * @mixes ui/Toggleable.Toggleable
  * @mixes limestone/Skinnable.Skinnable
  * @mixes spotlight/Spottable.Spottable
  * @hoc
  * @public
  */
-const RadioButtonDecorator = compose(
+const RadioDecorator = compose(
 	Toggleable({toggleProp: 'onClick'}),
 	Touchable,
 	Spottable,
@@ -167,23 +171,23 @@ const RadioButtonDecorator = compose(
 );
 
 /**
- * A Limestone-styled RadioButton component.
+ * A Limestone-styled Radio component.
  *
- * `RadioButton` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
+ * `Radio` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
  * directly.
  *
- * @class RadioButton
- * @memberof limestone/RadioButton
- * @extends limestone/RadioButton.RadioButtonBase
- * @mixes limestone/RadioButton.RadioButtonDecorator
+ * @class Radio
+ * @memberof limestone/Radio
+ * @extends limestone/Radio.RadioBase
+ * @mixes limestone/Radio.RadioDecorator
  * @ui
  * @public
  */
-const RadioButton = RadioButtonDecorator(RadioButtonBase);
+const Radio = RadioDecorator(RadioBase);
 
-export default RadioButton;
+export default Radio;
 export {
-	RadioButton,
-	RadioButtonBase,
-	RadioButtonDecorator
+	Radio,
+	RadioBase,
+	RadioDecorator
 };

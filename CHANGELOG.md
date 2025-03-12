@@ -6,7 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `RadioButton` component
+- `Radio` component
 
 ### Changed
 

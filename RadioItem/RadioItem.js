@@ -16,12 +16,16 @@ import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
-import Icon from '../Icon';
+import {RadioBase} from '../Radio';
 import {ItemBase, ItemDecorator} from '../Item';
 
 import componentCss from './RadioItem.module.less';
+import Skinnable from "../Skinnable";
 
 const Item = ItemDecorator(ItemBase);
+
+const Radio = Skinnable(RadioBase);
+Radio.displayName = 'Radio';
 
 /**
  * An item component with a radio toggle icon.
@@ -99,7 +103,12 @@ const RadioItemBase = kind({
 				selected={selected}
 			>
 				<slotBefore>
-					<Icon className={css.icon} size="tiny">{icon}</Icon>
+					<Radio
+						className={slotBefore ? css.radio : null}
+						selected={selected}
+					>
+						{icon}
+					</Radio>
 					{slotBefore}
 				</slotBefore>
 				{children}

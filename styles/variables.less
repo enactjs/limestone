@@ -869,13 +869,15 @@
 @lime-quickguidepanels-steps-margin-top: 90px;
 @lime-quickguidepanels-steps-min-height: 48px;
 
-// RadioItem
+// Radio
 // ---------------------------------------
-@lime-radioitem-indicator-border-width: 4px; // ### Exceptional Case ###
-	// 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
-	// this value must be specifically considered as to not impose layout issues related to, for
-	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
-@lime-radioitem-indicator-border-radius: @lime-common-circular-corners;
+@lime-radio-border-radius: @lime-common-circular-corners;
+@lime-radio-border-width: 4px; // ### Exceptional Case ###
+// 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
+// this value must be specifically considered as to not impose layout issues related to, for
+// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
+@lime-radio-container-position: ((@lime-icon-tiny-size - 120px) / 2);  // Container's total dimensions should be `120px` defined in the GUI spec
+@lime-radio-container-border-radius: @lime-item-border-radius;
 
 // Scrim
 // ---------------------------------------
