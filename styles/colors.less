@@ -1,51 +1,23 @@
 // colors.less (neutral skin)
 //
-@import "./colors-alias.css";
 // ---------------------------------------
 // Universal Color Definitions
 // ---------------------------------------
 
 // Remote button colors
 // ---------------------------------------
-@lime-remote-button-red-color:     #e1777e; // #ff6d78; // #da3c3c; // #e71b1c;
-@lime-remote-button-green-color:   #7fd563; // #6ff467; // #21c171; // #339966;
-@lime-remote-button-yellow-color:  #d3b85f; // #ffc600; // #dac139; // #fddb24;
-@lime-remote-button-blue-color:    #5185c1; // #0084ff; // #5677d0; // #4764b4;
-
+@lime-remote-button-red-color:     #ff6d78;
+@lime-remote-button-green-color:   #93d371;
+@lime-remote-button-yellow-color:  #ffc600;
+@lime-remote-button-blue-color:    #0084ff;
 
 // UI Conceptual Colors
 // ---------------------------------------
 
-// In Limestone, overlay should only covers overlay panels.
-// Contextual Popup has different color.
-@lime-overlay-text-shadow: 0 4px 4px var(--lime-alias-color-shadow);
 @lime-overlay-outline-color: var(--lime-overlay-outline-color, transparent);
 @lime-overlay-outline-style: var(--lime-overlay-outline-style, none);
 
-// To be moved to switch component colors
-@lime-toggle-off-color: var(--lime-toggle-off-color, var(--ref-color-base-70));
-@lime-toggle-off-bg-color: var(--lime-toggle-off-bg-color, var(--ref-color-base-45));
-@lime-toggle-on-color: var(--lime-toggle-on-color, var(--lime-alias-color-on-container-main));
-@lime-toggle-on-bg-color: var(--lime-toggle-on-bg-color, var(--lime-alias-color-accent-green));
-
-// No Aliases for progress colors
-@lime-progress-color: var(--lime-progress-color, var(--lime-alias-color-accent));
-@lime-progress-bg-color: var(--lime-progress-bg-color, var(--ref-color-base-40-a70));
-@lime-progress-bg-color-opacity: var(--lime-progress-bg-color-opacity, 1);
-@lime-progress-highlighted-color: var(--lime-progress-highlighted-color, var(--ref-color-base-100));
-@lime-progress-slider-color: var(--lime-progress-slider-color, @lime-progress-color); // To be removed
-
 @lime-invalid-color: #ff0000; // TBD
-@lime-invalid-sub-color: var(--lime-alias-color-invalid);
-
-// component colors
-@lime-iconitem-border-color: var(--lime-iconitem-border-color, var(--ref-color-base-100-a30));
-@lime-item-disabled-focus-bg-color: var(--lime-item-disabled-focus-bg-color, var(--lime-alias-color-container-disabled-focused));
-@lime-keyguide-bg-base-color: var(--lime-keyguide-bg-color, var(--lime-alias-color-surface-overlay));
-@lime-slider-disabled-knob-bg-color: var(--lime-slider-disabled-knob-bg-color, var(--lime-alias-color-accent-sub));
-@lime-spinner-color: var(--lime-spinner-color, var(--ref-color-base-100));
-@lime-steps-pageindicator-bg-color: var(--lime-steps-pageindicator-bg-color, var(--ref-color-secondary-60));
-@lime-full-scroll-bar: var(--ref-color-base-25);
 
 // Overlay Alert
 // ---------------------------------------
@@ -168,6 +140,7 @@
 // ---------------------------------------
 @lime-formcheckboxitem-disabled-text-color: inherit;
 @lime-formcheckboxitem-disabled-focus-text-color: @lime-formcheckboxitem-disabled-text-color;
+@lime-formcheckboxitem-focus-text-color: var(--lime-alias-color-on-surface-main);
 
 // Header
 // ---------------------------------------
@@ -188,6 +161,7 @@
 @lime-iconitem-disabled-opacity: 0.4;
 @lime-iconitem-label-color: var(--lime-alias-color-on-surface-main);
 @lime-iconitem-label-dark-color: var(--lime-alias-color-on-focused);
+@lime-iconitem-border-color: var(--ref-color-base-100-a30);
 
 // ImageItem
 // ---------------------------------------
@@ -200,7 +174,7 @@
 @lime-imageitem-focus-selection-icon-color: @lime-imageitem-selection-icon-color;
 @lime-imageitem-focus-selection-icon-bg-color: @lime-imageitem-selection-icon-bg-color;
 @lime-imageitem-selected-selection-icon-color: var(--lime-alias-color-on-selected);
-@lime-imageitem-selected-selection-icon-bg-color: @lime-toggle-on-bg-color;
+@lime-imageitem-selected-selection-icon-bg-color: var(--lime-alias-color-accent-green);
 @lime-imageitem-selected-image-border-color: ~"color(from" var(--lime-alias-color-on-selected) ~"srgb r g b / 0.7)";
 @lime-imageitem-selected-focus-selection-icon-color: @lime-imageitem-selected-selection-icon-color;
 @lime-imageitem-selected-focus-selection-icon-bg-color: @lime-imageitem-selected-selection-icon-bg-color;
@@ -224,17 +198,18 @@
 @lime-inputfield-focus-text-color: var(--lime-alias-color-on-focused);
 @lime-inputfield-disabled-text-color: inherit;
 @lime-inputfield-invalid-color: @lime-invalid-color;
-@lime-inputfield-invalid-tooltip-color: @lime-invalid-sub-color;
+@lime-inputfield-invalid-tooltip-color: var(--lime-alias-color-invalid);
 
 // Item
 // ---------------------------------------
 @lime-item-label-color: var(--lime-alias-color-on-surface-sub);
 @lime-item-focus-label-color: inherit;
 @lime-item-focus-background: '';
+@lime-item-disabled-focus-bg-color: var(--lime-alias-color-container-disabled-focused);
 
 // KeyGuide
 // ---------------------------------------
-@lime-keyguide-bg-color: @lime-keyguide-bg-base-color;
+@lime-keyguide-bg-color: var(--lime-alias-color-surface-overlay);
 @lime-keyguide-item-color: var(--lime-alias-color-on-surface-sub);
 @lime-keyguide-colordot-red-color: @lime-remote-button-red-color;
 @lime-keyguide-colordot-green-color: @lime-remote-button-green-color;
@@ -248,14 +223,14 @@
 
 // MediaPlayer
 // ---------------------------------------
-@lime-mediaplayer-slider-knob-color: @lime-progress-color;
-@lime-mediaplayer-slider-tooltip-text-shadow: @lime-overlay-text-shadow;
+@lime-mediaplayer-slider-knob-color: var(--lime-alias-color-progress-bar);
+@lime-mediaplayer-slider-tooltip-text-shadow: 0 4px 4px var(--lime-alias-color-shadow);
 
 // MediaSlider
 // ---------------------------------------
-@lime-mediaslider-bar-bg-color: ~"color(from" @lime-progress-color ~"srgb r g b / 0.3)";
+@lime-mediaslider-bar-bg-color: ~"color(from" var(--lime-alias-color-progress-bar) ~"srgb r g b / 0.3)";
 @lime-mediaslider-disabled-bar-opacity: 0.3;
-@lime-mediaslider-fill-bg-color: @lime-progress-color;
+@lime-mediaslider-fill-bg-color: var(--lime-alias-color-progress-bar);
 
 // Picker
 // ---------------------------------------
@@ -287,10 +262,10 @@
 
 // ProgressBar
 // ---------------------------------------
-@lime-progressbar-bar-bg-color: ~"color(from" @lime-progress-bg-color ~"srgb r g b /" @lime-progress-bg-color-opacity ~")";
+@lime-progressbar-bar-bg-color: var(--lime-alias-color-progress-bg);
 @lime-progressbar-load-bg-color: var(--ref-color-base-60);
-@lime-progressbar-fill-bg-color: @lime-progress-color;
-@lime-progressbar-highlighted-fill-bg-color: @lime-progress-highlighted-color;
+@lime-progressbar-fill-bg-color: var(--lime-alias-color-progress-bar);
+@lime-progressbar-highlighted-fill-bg-color: var(--ref-color-base-100);
 
 // ProgressButton
 // ---------------------------------------
@@ -321,7 +296,7 @@
 // Scrollbar
 // ---------------------------------------
 @lime-scrollbar-track-bg-color: transparent;
-@lime-scrollbar-thumb-bg-color: @lime-full-scroll-bar;
+@lime-scrollbar-thumb-bg-color: var(--ref-color-base-25);
 @lime-scrollbar-thumb-focus-bg-color: var(--lime-alias-color-container-focused);
 @lime-scrollbar-thumb-focus-direction-indicator-color: ~"color(from" var(--lime-alias-color-on-focused) ~"srgb r g b / 0.4)";
 @lime-scrollbar-thumb-focus-box-shadow-color: var(--lime-alias-color-shadow);
@@ -334,7 +309,7 @@
 // ---------------------------------------
 @lime-slider-bar-bg-color: @lime-progressbar-bar-bg-color;
 @lime-slider-load-bg-color: @lime-progressbar-load-bg-color;
-@lime-slider-fill-bg-color: @lime-progress-slider-color;
+@lime-slider-fill-bg-color: var(--lime-alias-color-progress-bar);
 @lime-slider-knob-bg-color: @lime-slider-fill-bg-color;
 @lime-slider-knob-border-color: transparent;
 @lime-slider-focus-bar-bg-color: @lime-slider-bar-bg-color;
@@ -348,9 +323,11 @@
 @lime-slider-active-fill-bg-color: @lime-slider-focus-fill-bg-color;
 @lime-slider-disabled-bar-opacity: 0.4;
 @lime-slider-disabled-focus-knob-bg-color: @lime-slider-focus-knob-bg-color;
+@lime-slider-disabled-knob-bg-color: var(--lime-alias-color-accent-sub);
 
 // Spinner
 // ---------------------------------------
+@lime-spinner-color: var(--ref-color-base-100);
 @lime-spinner-head-color: @lime-spinner-color;
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
 @lime-spinner-bg-color: var(--lime-alias-color-container-normal);
@@ -359,15 +336,16 @@
 
 // Steps
 // ---------------------------------------
+@lime-steps-pageindicator-bg-color: var(--ref-color-secondary-60);
 @lime-steps-pageindicator-current-bg-color: var(--lime-alias-color-on-container-main);
 
 // Switch
 // ---------------------------------------
-@lime-switch-color: @lime-toggle-off-color;
-@lime-switch-bg-color: @lime-toggle-off-bg-color;
+@lime-switch-color: var(--ref-color-base-70);
+@lime-switch-bg-color: var(--ref-color-base-45);
 @lime-switch-focus-color: @lime-switch-color;
-@lime-switch-selected-color: @lime-toggle-on-color;
-@lime-switch-selected-bg-color: @lime-toggle-on-bg-color;
+@lime-switch-selected-color: var(--lime-alias-color-on-container-main);
+@lime-switch-selected-bg-color: var(--lime-alias-color-accent-green);
 @lime-switch-selected-focus-color: @lime-switch-selected-color;
 @lime-switch-disabled-selected-color: @lime-switch-color;
 @lime-switch-disabled-selected-bg-color: @lime-switch-bg-color;

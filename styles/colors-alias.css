@@ -12,10 +12,6 @@
 	--lime-alias-color-accent-sub: var(--ref-color-primary-70);
 	--lime-alias-color-invalid: var(--ref-palette-red-50);
 	--lime-alias-color-shadow: var(--ref-color-base-0-a35);
-	--lime-alias-color-indicator-icon-inactive: var(--ref-color-secondary-60);
-	--lime-alias-color-indicator-icon-inactive-focused: var(--ref-color-secondary-60);
-	--lime-alias-color-indicator-icon-active: var(--ref-color-base-100);
-	--lime-alias-color-indicator-icon-active-focused: var(--ref-color-base-10);
 
 	/* Container */
 	--lime-alias-color-container-group: var(--ref-color-base-100-a10);
@@ -45,6 +41,18 @@
 	--lime-alias-color-on-border-overlay: var(--ref-color-secondary-30);
 	--lime-alias-color-on-border-selected: var(--ref-color-secondary-40);
 
+	/* Indicator */
+	--lime-alias-color-indicator-icon-inactive: var(--ref-color-secondary-60);
+	--lime-alias-color-indicator-icon-inactive-focused: var(--ref-color-secondary-60);
+	--lime-alias-color-indicator-icon-active: var(--ref-color-base-100);
+	--lime-alias-color-indicator-icon-active-focused: var(--ref-color-base-10);
+
+	/* Progress */
+	--lime-alias-color-progress-bar: var(--lime-alias-color-accent);
+	--lime-alias-color-progress-bg: var(--ref-color-base-40-a70);
+	--lime-ailas-color-progress-buffer: var(--ref-color-base-60);
+
+	/* Selection */
 	--lime-alias-color-on-selection-icon-selected: var(--lime-alias-color-on-selected);
 	--lime-alias-color-on-selection-icon-selected-disabled: var(--ref-color-base-30);
 	--lime-alias-color-on-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
