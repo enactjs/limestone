@@ -1,8 +1,11 @@
 # @enact/limestone [![npm (scoped)](https://img.shields.io/npm/v/@enact/limestone.svg?style=flat-square)](https://www.npmjs.com/package/@enact/limestone)
 
-> The set of components for an Enact-based application targeting smart TVs.
+The set of components for an Enact-based application targeting smart TVs.
 
-![image](https://github.com/enactjs/limestone/assets/4288375/169e675e-7e82-41d2-a83e-94a83f2b8f8d)
+<!--
+TODO
+Insert Limestone settings app image here
+-->
 
 ## Usage
 
