@@ -43,7 +43,7 @@
 		}
 
 		.icon {
-			transition: left 200ms, color 200ms;
+			transition: left 200ms, background-color 200ms;
 		}
 	}
 
@@ -79,6 +79,8 @@
 		}
 
 		.disabled({
+			opacity: 1;
+
 			.client {
 				background-color: @lime-switch-disabled-bg-color;
 			}
@@ -93,26 +95,28 @@
 				}
 
 				.icon {
-					background-color: @lime-switch-disabled-icon-selected-bg-color;
+					background-color: @lime-switch-disabled-selected-icon-bg-color;
 				}
 			}
 
 			.focus({
-				.bg {
-					.lime-spotlight-focus-bg-colors();
+				.client {
+					background-color: @lime-switch-disabled-focus-bg-color;
+					transition: background-color 0ms;
 				}
 
 				.icon {
-					background-color: @lime-switch-focus-color;
+					background-color: @lime-switch-disabled-focus-icon-bg-color;
+					transition: background-color 0ms;
 				}
 
 				&.selected {
-					.bg {
-						.lime-spotlight-focus-bg-colors();
+					.client {
+						background-color: @lime-switch-disabled-focus-bg-color;
 					}
 
 					.icon {
-						background-color: @lime-switch-selected-focus-color;
+						background-color: @lime-switch-disabled-focus-icon-bg-color;
 					}
 				}
 			});
@@ -151,22 +155,6 @@
 				}
 			})
 		}
-
-		//.lime-disabled({
-		//	//.client {
-		//	//	.lime-disabled-colors();
-		//	//}
-		//
-		//	.focus({
-		//		.bg {
-		//			.lime-disabled-focus-bg-colors();
-		//		}
-		//		.client {
-		//			.lime-disabled-focus-content-colors();
-		//		}
-		//	});
-		//});
-
 	});
 }
 
