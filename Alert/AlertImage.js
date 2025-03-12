@@ -77,6 +77,8 @@ const AlertImage = kind({
 
 	render: ({css, src, ...rest}) => {
 		delete rest.type;
+		delete rest.iconSize;
+		
 		return (
 			<Image
 				{...rest}

@@ -58,6 +58,7 @@
 	&.overlay {
 		.alertImage {
 			margin-bottom: @lime-alert-overlay-image-margin-bottom;
+			padding: @lime-alert-overlay-image-padding;
 		}
 
 		.buttonContainer {
@@ -72,7 +73,8 @@
 
 		.content {
 			.lime-alert-overlay-content();
-			width: 100%;
+			.padding-start-end(@lime-alert-overlay-body-padding);
+			margin: 0;
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
