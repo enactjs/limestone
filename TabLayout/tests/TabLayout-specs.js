@@ -1,4 +1,5 @@
 import Spotlight from '@enact/spotlight';
+import {ScrollerBasic} from '@enact/ui/Scroller';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -150,6 +151,7 @@ describe('TabLayout specs', () => {
 	test('should call \'onSelect\' with \'onSelect\' type when clicking on a tab', async () => {
 		const spy = jest.fn();
 		const user = userEvent.setup();
+		jest.spyOn(ScrollerBasic.prototype, 'scrollToPosition').mockImplementation(() => {});
 		render(
 			<TabLayout onSelect={spy} orientation="vertical">
 				<Tab icon="home" title="Home">
