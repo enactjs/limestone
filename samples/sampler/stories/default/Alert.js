@@ -1,5 +1,4 @@
 import Alert, {AlertBase, AlertImage} from '@enact/limestone/Alert';
-import Scroller from '@enact/limestone/Scroller';
 import Button from '@enact/limestone/Button';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
