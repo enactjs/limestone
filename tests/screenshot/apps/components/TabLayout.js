@@ -16,6 +16,21 @@ const tabs = [
 	SimpleTab({title: 'Six'})
 ];
 
+const tabsForScroll = [
+	SimpleTab({title: 'One'}),
+	SimpleTab({title: 'Two'}),
+	SimpleTab({title: 'Three'}),
+	SimpleTab({title: 'Four'}),
+	SimpleTab({title: 'Five'}),
+	SimpleTab({title: 'Six'}),
+	SimpleTab({title: 'Seven'}),
+	SimpleTab({title: 'Eight'}),
+	SimpleTab({title: 'Nine'}),
+	SimpleTab({title: 'Ten'}),
+	SimpleTab({title: 'Eleven'}),
+	SimpleTab({title: 'Twelve'})
+];
+
 const tabsWithIcons = [
 	SimpleTab({title: 'One', icon: 'star'}),
 	SimpleTab({title: 'Two', icon: 'home'}),
@@ -198,6 +213,12 @@ const TabLayoutTests = [
 			</TabLayout.Tab>
 		))}
 	</TabLayout>,
+	<TabLayout index={9}>
+		{tabsForScroll}
+	</TabLayout>,
+	<TabLayout index={9} orientation="horizontal">
+		{tabsForScroll}
+	</TabLayout>,
 	// end of [QWTC-2616]
 	// *************************************************************
 	// RTL
@@ -221,6 +242,16 @@ const TabLayoutTests = [
 	{
 		locale: 'ar-SA',
 		component: <TabLayout orientation="horizontal" selected={1}>{tabs}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		locale: 'ar-SA',
+		component: 	<TabLayout index={9}>{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		locale: 'ar-SA',
+		component: 	<TabLayout index={9} orientation="vertical">{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	}
 ];
