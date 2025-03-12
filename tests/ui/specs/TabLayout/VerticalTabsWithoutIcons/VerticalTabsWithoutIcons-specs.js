@@ -61,10 +61,10 @@ describe('TabLayout', function () {
 					// Step 4-1: Hover and Click on ImageItem 1. In this test view, imageitem is replaced with button.
 					await $('#button1').moveTo();
 					// Step 4-2: Hover over the hamburger icon.
-					await $('.TabLayout_TabLayout_tabGroup').moveTo();
+					await $('[data-webos-voice-intent=Select]').moveTo();
 					await Page.delay(500);
 					// Step 4-3: Click on Home tab.
-					await $$('.TabLayout_TabLayout_tabGroup')[1].click();
+					await (await Page.tabLayout.tabItems())[0].click();
 					// Step 4-4: Hover on ImageItem 1 again.
 					await $('#button1').moveTo();
 					// step 4 Verify: Spotlight is on ImageItem 1.

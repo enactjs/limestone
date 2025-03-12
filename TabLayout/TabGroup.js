@@ -253,48 +253,45 @@ const TabGroupBase = kind({
 		};
 
 		return (
-			<div
+			<Scroller
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
+				{...scrollerProps}
 			>
-				<Scroller
-					{...scrollerProps}
-				>
-					{noIcons ? (
-						<TabBase
-							icon="list"
-							collapsed
-							disabled={tabsDisabled}
-							onSpotlightDisappear={onBlurList}
-							spotlightDisabled={tabsSpotlightDisabled}
-						/>
-					) : (
-						<div role="region" aria-labelledby={`${id}_tabgroup`}>
-							<GroupComponent
-								id={`${id}_tabgroup`}
-								childComponent={Tab}
-								aria-label={`${new IString($L('{total} items in total')).format({'total': tabs.length})}`}
-								className={componentCss.tabs}
-								component={groupComponent}
-								indexProp="index"
-								itemProps={itemProps}
-								onSelect={onSelect}
-								orientation={orientation}
-								role="tablist"
-								select="radio"
-								selected={selectedIndex}
-								selectedProp="selected"
-								spotlightId={spotlightId}
-								spotlightDisabled={spotlightDisabled}
-							>
-								{children}
-							</GroupComponent>
-						</div>
-					)}
-					{isHorizontal ? <hr className={componentCss.horizontalLine} /> : null}
-				</Scroller>
-			</div>
+				{noIcons ? (
+					<TabBase
+						icon="list"
+						collapsed
+						disabled={tabsDisabled}
+						onSpotlightDisappear={onBlurList}
+						spotlightDisabled={tabsSpotlightDisabled}
+					/>
+				) : (
+					<div role="region" aria-labelledby={`${id}_tabgroup`}>
+						<GroupComponent
+							id={`${id}_tabgroup`}
+							childComponent={Tab}
+							aria-label={`${new IString($L('{total} items in total')).format({'total': tabs.length})}`}
+							className={componentCss.tabs}
+							component={groupComponent}
+							indexProp="index"
+							itemProps={itemProps}
+							onSelect={onSelect}
+							orientation={orientation}
+							role="tablist"
+							select="radio"
+							selected={selectedIndex}
+							selectedProp="selected"
+							spotlightId={spotlightId}
+							spotlightDisabled={spotlightDisabled}
+						>
+							{children}
+						</GroupComponent>
+					</div>
+				)}
+				{isHorizontal ? <hr className={componentCss.horizontalLine} /> : null}
+			</Scroller>
 		);
 	}
 });

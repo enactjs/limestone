@@ -104,7 +104,7 @@ describe('TabGroup specs', () => {
 				]}
 			/>
 		);
-		const iconList = screen.getByTestId('tabGroup').children.item(0);
+		const iconList = screen.getByTestId('tabGroup').children.item(0).children.item(0);
 
 		expect(iconList).toHaveAttribute('aria-disabled', 'true');
 	});
@@ -122,7 +122,7 @@ describe('TabGroup specs', () => {
 				]}
 			/>
 		);
-		const iconList = screen.getByTestId('tabGroup').children.item(0);
+		const iconList = screen.getByTestId('tabGroup').children.item(0).children.item(0);
 
 		expect(iconList).toHaveAttribute('aria-disabled', 'false');
 	});
