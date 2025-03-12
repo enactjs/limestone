@@ -71,8 +71,6 @@ const ChipBase = (props) => {
 				buttonPosition.top = (-clientNode.height);
 				buttonPosition.left = clientNode.width;
 				break;
-			default:
-				buttonPosition = {};
 		}
 		return buttonPosition;
 	};
@@ -157,7 +155,7 @@ const ChipBase = (props) => {
 
 ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	/**
-	 * Direction of delete button.
+	 * Direction of the delete button.
 	 *
 	 * @type {('top'|'bottom'|'right')}
 	 * @default 'right'
@@ -175,7 +173,7 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	disabled: PropTypes.bool,
 
 	/**
-	 * Delete button to delete the chip
+	 * Whether it has a delete button.
 	 *
 	 * @type {Boolean}
 	 * @public
@@ -229,10 +227,11 @@ const ChipDecorator = compose(
  *
  * Usage:
  * ```
- * <IconItem
- *   background="#1b1b1b"
- *   bordered
+ * <Chip
+ *   label="Label"
  *   icon="usb"
+ *   direction="top"
+ * 	 hasDeleteButton={true}
  * />
  * ```
  *

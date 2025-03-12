@@ -23,7 +23,7 @@ export const _Chip = (args) => {
 				hasDeleteButton={args['hasDeleteButton']}
 			/>
 		</div>
-	)
+	);
 };
 
 select('icon', _Chip, ['', ...iconNames], Config, 'check');
