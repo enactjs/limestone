@@ -1,0 +1,73 @@
+// Chip.module.less
+//
+@import '../styles/mixins.less';
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.chip {
+	position: relative;
+    display: inline-block;
+
+	.bg {
+		position: absolute;
+		.position(0);
+		border-radius: @lime-chip-border-radius;
+	}
+
+	.content {
+		display: flex;
+		position: relative;
+		box-sizing: border-box;
+        align-items: center;
+		justify-content: center;
+		height: @lime-chip-content-height;
+		border-radius: @lime-chip-border-radius;
+        padding: 0 @lime-chip-h-padding;
+	}
+
+	.icon {
+		margin: @lime-chip-icon-margin;
+	}
+
+	.labelContainer {
+        font-family: @lime-chip-font-family;
+        font-weight: @lime-chip-font-weight;
+        font-size: @lime-chip-label-font-size;
+        line-height: @lime-chip-label-line-height;
+        letter-spacing: @lime-chip-letter-spacing;
+		padding: @lime-chip-label-padding;
+		text-align: center;
+	}
+
+	.deleteButtonContainer {
+		position: absolute;
+		display: none;
+	}
+	
+	.deleteButton {
+		border-radius: @lime-chip-border-radius;
+	}
+
+	.focused {
+		display: block;
+	}
+	
+	// Skin colors
+	.applySkins({
+		.content {
+			background-color: @lime-chip-bg-color;
+		}
+
+		.focus({
+			.lime-spotlight-focus-text-colors();
+
+			.bg {
+				.lime-spotlight-focus-bg-colors();
+			}
+
+			.content {
+				background-color: @lime-focus-bg-color;
+			}			
+		});
+	})
+}
