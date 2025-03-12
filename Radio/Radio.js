@@ -138,7 +138,7 @@ const RadioBase = kind({
 					disabled={disabled}
 					role="checkbox"
 				>
-					<div className={css.bg}/>
+					<div className={css.bg} />
 					<Icon
 						size="tiny"
 						className={css.icon}
