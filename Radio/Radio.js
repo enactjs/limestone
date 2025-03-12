@@ -43,7 +43,7 @@ import componentCss from './Radio.module.less';
 const RadioBase = kind({
 	name: 'Radio',
 
-	propTypes: /** @lends limestone/Radio.RadionBase.prototype */ {
+	propTypes: /** @lends limestone/Radio.RadioBase.prototype */ {
 		/**
 		 * The icon displayed when `selected`.
 		 *
@@ -59,7 +59,7 @@ const RadioBase = kind({
 		 * @default	'circle'
 		 * @public
 		 */
-		children: PropTypes.string,
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
