@@ -174,3 +174,19 @@
 		}
 	}, parent);
 });
+
+.applySkins({
+	.disabled({
+		.switch {
+			&.selected {
+				.client {
+					background-color: @lime-switch-disabled-selected-bg-color;
+				}
+
+				.icon {
+					background-color: @lime-switch-disabled-selected-icon-bg-color;
+				}
+			}
+		}
+	});
+});
