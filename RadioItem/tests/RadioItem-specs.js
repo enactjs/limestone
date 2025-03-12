@@ -7,10 +7,10 @@ describe('RadioItem Specs', () => {
 
 	test('should support a custom icon', () => {
 		render(<RadioItemBase icon="check" selected>Hello RadioItem</RadioItemBase>);
-		const radioItemElement = screen.getByRole('checkbox');
+		const radioItemElement = screen.getAllByRole('checkbox');
 
 		const expected = '✓';
-		const actual = radioItemElement.children.item(1).textContent;
+		const actual = radioItemElement[1].children.item(1).textContent;
 
 		expect(actual).toBe(expected);
 	});
@@ -25,9 +25,12 @@ describe('RadioItem Specs', () => {
 
 	test('should render a disabled RadioItem when `disabled` is true', () => {
 		render(<RadioItemBase disabled>Hello RadioItem</RadioItemBase>);
-		const radioItem = screen.getByRole('checkbox');
+		const radioItem = screen.getAllByRole('checkbox');
 
-		expect(radioItem).toHaveAttribute('disabled');
+		const expected = 'disabled';
+		const actual = radioItem[0];
+
+		expect(actual).toHaveAttribute(expected);
 	});
 
 	test('should render a `slot before`', () => {
