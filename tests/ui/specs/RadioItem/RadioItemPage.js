@@ -1,8 +1,6 @@
 'use strict';
 const {getText, componentSelector, hasClass, Page} = require('@enact/ui-test-utils/utils');
 
-const isSelected = hasClass(componentSelector({component: 'RadioItem', child: 'selected'}));
-
 class RadioItemInterface {
 	constructor (id) {
 		this.id = id;
@@ -19,7 +17,7 @@ class RadioItemInterface {
 		return getText($(`#${this.id} > div .enact_ui_Marquee_Marquee_text`));
 	}
 	get isSelected () {
-		return isSelected(this.self);
+		return $(`#${this.id} .Radio_Radio_selected`).isExisting();
 	}
 	get isInline () {
 		return $(`#${this.id}.Item_Item_inline`).isExisting();
