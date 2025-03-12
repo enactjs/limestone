@@ -7,8 +7,9 @@
 .focusableBody {
 	display: flex;
 	flex-direction: column;
-	width: 100%;
-	height: 100%;
+	width: calc(100% - 2 * @lime-scroll-focusablebody-margin);
+	height: calc(100% - 2 * @lime-scroll-focusablebody-margin);
+	margin: @lime-scroll-focusablebody-margin;
 	overflow: inherit;
 
 	&::before {
@@ -26,6 +27,8 @@
 				opacity: 1;
 			}
 		}
+		background-color: #454545;
+		border-radius: 36px;
 	})
 }
 
