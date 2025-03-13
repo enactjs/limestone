@@ -42,7 +42,7 @@ const ChipDefaultProps = {
  * A Limestone styled base component for {@link limestone/Chip.Chip|ChipBase}.
  *
  * @class ChipBase
- * @memberof limestone/ChipBase
+ * @memberof limestone/Chip
  * @ui
  * @public
  */
@@ -148,6 +148,8 @@ const ChipBase = (props) => {
 	);
 };
 
+ChipBase.displayName = 'Chip';
+
 ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	/**
 	 * Direction of the delete button.
@@ -239,8 +241,6 @@ const ChipDecorator = compose(
  * @public
  */
 const Chip = ChipDecorator(ChipBase);
-
-Chip.displayName = 'Chip';
 
 export default Chip;
 export {
