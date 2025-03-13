@@ -21,11 +21,14 @@ const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
 
 const tabsWithIcons = [
 	{title: 'Home', icon: 'home'},
-	{title: 'Button', icon: 'gear'},
-	{title: 'Item', icon: 'trash'}
+	{title: 'Settings', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Button', icon: 'accessibility'},
+	{title: 'Control', icon: 'contrast'}
 ];
 
-const tabsWithoutIcons = [{title: 'Home'}, {title: 'Button'}, {title: 'Item'}];
+const tabsWithoutIcons = [
+	{title: 'Home'}, {title: 'Settings'}, {title: 'Item'}, {title: 'Control'}, {title: 'Button'}];
 
 const tabSelections = {
 	'with icons': tabsWithIcons,
@@ -90,6 +93,16 @@ export const _TabLayout = (args) => {
 				<Tab title={tabSelections[tabs][2].title} icon={tabSelections[tabs][2].icon}>
 					<Item slotBefore={<Icon>playcircle</Icon>}>Single Item</Item>
 				</Tab>
+				<Tab title={tabSelections[tabs][3].title} icon={tabSelections[tabs][3].icon}>
+					<Item slotBefore={<Icon>download</Icon>}>Download</Item>
+					{images[0]}
+				</Tab>
+				<Tab title={tabSelections[tabs][4].title} icon={tabSelections[tabs][4].icon}>
+					<Item slotBefore={<Icon>arrowsmallleft</Icon>}>Control Left</Item>
+					<Item slotBefore={<Icon>arrowsmallright</Icon>}>Control Right</Item>
+					<Item slotBefore={<Icon>arrowsmalldown</Icon>}>Control Down</Item>
+					<Item slotBefore={<Icon>arrowsmallup</Icon>}>Control Up</Item>
+				</Tab>
 			</TabLayout>
 		</Panel>
 	);
@@ -98,7 +111,7 @@ export const _TabLayout = (args) => {
 boolean('noScrollByWheel', _TabLayout, Config, false);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
-range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);
+range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 600);
 
 _TabLayout.storyName = 'TabLayout';
 _TabLayout.parameters = {
