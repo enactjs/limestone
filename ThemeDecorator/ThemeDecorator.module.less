@@ -57,7 +57,7 @@
 		outline: none;
 	}
 
-	/* Light Theme */
+	/* Light Skin */
 	&:global(.light) {
 		--lime-alias-color-surface-full: var(--ref-color-base-85);
 		--lime-alias-color-on-surface-main: var(--ref-color-base-10);
@@ -69,6 +69,11 @@
 		--lime-alias-color-surface-overlay: var(--ref-color-secondary-85);
 		--lime-alias-color-progress-bar: var(--lime-alias-color-accent);
 		--lime-alias-color-progress-bg: var(--ref-color-base-40-a70);
+	}
+
+	/* High Contrast */
+	&:global(.enact-a11y-high-contrast):global(.highContrast) {
+		--lime-alias-color-surface-overlay: var(--ref-color-base-0);
 	}
 }
 
