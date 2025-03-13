@@ -163,11 +163,11 @@ const PopupBase = kind({
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top'|'bottomLeft'|'bottomRight'|'topLeft'|'topRight')}
+		 * @type {('bottom'|'bottomLeft'|'bottomRight'|'center'|'fullscreen'|'left'|'right'|'top'|'topLeft'|'topRight')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top', 'bottomLeft', 'bottomRight', 'topLeft', 'topRight']),
+		position: PropTypes.oneOf(['bottom', 'bottomLeft', 'bottomRight', 'center', 'fullscreen', 'left', 'right', 'top', 'topLeft', 'topRight']),
 
 		/**
 		 * The ARIA role for the Popup.
@@ -382,11 +382,11 @@ class Popup extends Component {
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top'|'bottomLeft'|'bottomRight'|'topLeft'|'topRight')}
+		 * @type {('bottom'|'bottomLeft'|'bottomRight'|'center'|'fullscreen'|'left'|'right'|'top'|'topLeft'|'topRight')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top', 'bottomLeft', 'bottomRight', 'topLeft', 'topRight']),
+		position: PropTypes.oneOf(['bottom', 'bottomLeft', 'bottomRight', 'center', 'fullscreen', 'left', 'right', 'top', 'topLeft', 'topRight']),
 
 		/**
 		 * Scrim type.

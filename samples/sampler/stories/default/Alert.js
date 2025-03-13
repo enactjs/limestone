@@ -44,7 +44,7 @@ export const _Alert = (args) => (
 	<Alert
 		open={args['open']}
 		onClose={action('onClose')}
-		overlayAlertPosition={args['overlayAlertPosition']}
+		overlayPosition={args['overlayPosition']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -62,7 +62,7 @@ boolean('open', _Alert, Config);
 select('buttons', _Alert, ['no buttons', '1 button', '2 buttons', '3 buttons'], Config, '2 buttons');
 text('title', _Alert, Config, 'Fullscreen Alert Title');
 select('type', _Alert, ['fullscreen', 'overlay'], Config);
-select('overlayAlertPosition', _Alert, ['center', 'bottomLeft', 'bottomRight', 'topLeft', 'topRight'], Config);
+select('overlayPosition', _Alert, ['bottomLeft', 'bottomRight', 'center', 'topLeft', 'topRight'], Config);
 text('children', _Alert, Config, 'Additional text content for Alert');
 boolean('image', _Alert, ImageConfig);
 select('type (image)', _Alert, ['icon', 'thumbnail'], ImageConfig, 'icon');

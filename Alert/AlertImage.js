@@ -51,7 +51,7 @@ const AlertImage = kind({
 		css: PropTypes.object,
 
 		/**
-		 * Size of the image when `type` is set to `icon`
+		 * Size of the image when `type` is set to `icon`.
 		 *
 		 *
 		 * @type {('small'|'large')}

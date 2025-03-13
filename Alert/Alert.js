@@ -129,12 +129,15 @@ const AlertBase = kind({
 		 *
 		 * * `center` - Popup in the center of the screen
 		 * * `bottomLeft` - Popup in the bottom left of the screen
+		 * * `bottomRight` - Popup in the bottom right of the screen
+		 * * `topLeft` - Popup in the top left of the screen
+		 * * `bottomRight` - Popup in the top right of the screen
 		 *
-		 * @type {('center'|'bottomLeft'|'bottomLeft'|'bottomRight'|'topLeft'|'topRight')}
+		 * @type {('bottomLeft'|'bottomRight'|'center'|'topLeft'|'topRight')}
 		 * @default 'center'
 		 * @public
 		 */
-		overlayAlertPosition: PropTypes.oneOf(['center', 'bottomLeft', 'bottomRight', 'topLeft', 'topRight']),
+		overlayPosition: PropTypes.oneOf(['bottomLeft', 'bottomRight', 'center', 'topLeft', 'topRight']),
 
 		/**
 		 * The primary text displayed.
@@ -163,7 +166,7 @@ const AlertBase = kind({
 
 	defaultProps: {
 		open: false,
-		overlayAlertPosition: 'center',
+		overlayPosition: 'center',
 		type: 'fullscreen'
 	},
 
@@ -197,9 +200,9 @@ const AlertBase = kind({
 		)
 	},
 
-	render: ({buttons, contentComponent, children, css, id, image, overlayAlertPosition, title, type, ...rest}) => {
+	render: ({buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
-		const position = (type === 'overlay' ? overlayAlertPosition : type);
+		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
 
