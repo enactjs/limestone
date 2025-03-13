@@ -1,5 +1,7 @@
 import spotlight from '@enact/spotlight';
+import Layout from '@enact/ui/Layout';
 
+import Button from '../../../../../Button';
 import TabLayout from '../../../../../TabLayout';
 import ThemeDecorator from '../../../../../ThemeDecorator';
 
@@ -10,12 +12,15 @@ import {tabsForScroll} from '../TabComponents';
 spotlight.setPointerMode(false);
 
 const app = (props) => (
-	<TabLayout
-		{...props}
-		id="tabLayout"
-	>
-		{tabsForScroll}
-	</TabLayout>
+	<Layout {...props} orientation="vertical">
+		<Button>Button 1</Button>
+		<TabLayout
+			id="tabLayout"
+		>
+			{tabsForScroll}
+		</TabLayout>
+		<Button>Button 2</Button>
+	</Layout>
 );
 
 export default ThemeDecorator(app);
