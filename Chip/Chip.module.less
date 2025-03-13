@@ -67,7 +67,13 @@
 
 			.content {
 				background-color: @lime-focus-bg-color;
-			}			
+				transform: scale(1.1);
+				transition: transform 200ms ease-out;
+			}
 		});
+
+		.disabled({
+			opacity: @lime-disabled-opacity;
+		})
 	})
 }

@@ -87,17 +87,13 @@ const ChipBase = (props) => {
 	}, []);
 
 	const handleMouseLeave = useCallback((ev) => {
-		const {target} = ev;
-
-		if (target.classList[0].includes('Chip')) {
+		if (ev.target.classList[0].includes('Chip')) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, []);
 
 	const handleFocus = useCallback((ev) => {
-		const {target} = ev;
-
-		if (target === clientRef.current) {
+		if (ev.target === clientRef.current) {
 			buttonRef.current.classList.add(css.focused);
 		}
 	}, []);

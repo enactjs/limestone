@@ -54,4 +54,13 @@ describe('Chip', () => {
 		expect(chip).toHaveClass(expected);
 	});
 
+	test('should not apply `.focused` when hasDeleteButton prop is `true`', () => {
+		const hasDeleteButton = true;
+		render(<ChipBase data-testid="chip" hasDeleteButton={hasDeleteButton} />);
+
+		const expected = 'focused';
+		const chip = screen.getByTestId('chip');
+
+		expect(chip).not.toHaveClass(expected);
+	});
 });
