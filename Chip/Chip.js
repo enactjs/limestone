@@ -13,7 +13,6 @@
  * @exports Chip
  * @exports ChipBase
  * @exports ChipDecorator
- * @public
  */
 
 import {is} from '@enact/core/keymap';
