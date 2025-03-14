@@ -10,7 +10,7 @@
 	--lime-alias-color-accent: var(--ref-color-primary-50);
 	--lime-alias-color-accent-green: var(--ref-palette-green-50);
 	--lime-alias-color-accent-sub: var(--ref-color-primary-70);
-	--lime-alias-color-invalid: var(--ref-palette-red-50);
+	--lime-alias-color-invalid: var(--ref-palette-orange-50);
 	--lime-alias-color-shadow: var(--ref-color-base-0-a35);
 
 	/* Container */
@@ -32,7 +32,7 @@
 	--lime-alias-color-on-selected: var(--ref-color-base-100);
 	--lime-alias-color-on-surface-sub: var(--ref-color-base-100-a70);
 	--lime-alias-color-on-container-sub: var(--ref-color-base-100-a70);
-	--lime-alias-color-on-popup-sub: var(--ref-color-base-100-a70);
+	--lime-alias-color-on-popup-sub: var(--ref-color-base-0-a70);
 	--lime-alias-color-on-sub-focused: var(--ref-color-base-0-a70);
 	--lime-alias-color-on-sub-selected: var(--ref-color-base-50);
 	--lime-alias-color-on-index: var(--ref-color-base-70);
