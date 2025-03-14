@@ -12,7 +12,7 @@
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
-import {Cell} from '@enact/ui/Layout';
+import Layout, {Cell} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import Touchable from '@enact/ui/Touchable';
 import compose from 'ramda/src/compose';
@@ -131,22 +131,42 @@ const RadioBase = kind({
 
 		return (
 			<>
-				<div
-					{...rest}
-					aria-checked={selected}
-					aria-disabled={disabled}
-					disabled={disabled}
-					role="checkbox"
-				>
-					<div className={css.bg} />
-					<Icon
-						size="tiny"
-						className={css.icon}
+				{label ?
+					<Layout>
+						<div
+							{...rest}
+							aria-checked={selected}
+							aria-disabled={disabled}
+							disabled={disabled}
+							role="checkbox"
+						>
+							<div className={css.bg}/>
+							<Icon
+								size="tiny"
+								className={css.icon}
+							>
+								{children}
+							</Icon>
+						</div>
+						<Cell className={css.label} component={Marquee} marqueeOn="render" shrink>{label}</Cell>
+					</Layout>
+					:
+					<div
+						{...rest}
+						aria-checked={selected}
+						aria-disabled={disabled}
+						disabled={disabled}
+						role="checkbox"
 					>
-						{children}
-					</Icon>
-				</div>
-				{label ? <Cell className={css.label} component={Marquee} marqueeOn="render" shrink>{label}</Cell> : null}
+						<div className={css.bg}/>
+						<Icon
+							size="tiny"
+							className={css.icon}
+						>
+							{children}
+						</Icon>
+					</div>
+				}
 			</>
 		);
 	}

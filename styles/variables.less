@@ -161,6 +161,7 @@
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             54px;
 @lime-picker-joined-font-size:      66px;
+@lime-radio-label-font-size:        60px;
 @lime-steps-step-number-font-size:  54px;
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
@@ -876,8 +877,9 @@
 // 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
 // this value must be specifically considered as to not impose layout issues related to, for
 // example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
-@lime-radio-container-position: ((@lime-icon-tiny-size - 120px) / 2);  // Container's total dimensions should be `120px` defined in the GUI spec
-@lime-radio-container-border-radius: @lime-item-border-radius;
+@lime-radio-container-position: ((@lime-icon-tiny-size - 132px) / 2);  // Container's total dimensions should be `132px` defined in the GUI spec
+@lime-radio-container-border-radius: 24px;
+@lime-radio-label-spacing: 12px;
 
 // Scrim
 // ---------------------------------------
