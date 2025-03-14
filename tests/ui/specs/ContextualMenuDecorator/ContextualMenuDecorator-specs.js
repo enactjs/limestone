@@ -76,7 +76,7 @@ describe('ContextualMenuDecorator', function () {
 
 			it('should not keep Spotlight on button when menu opens with pointer - [QWTC-1914]', async function () {
 				await button2.self.moveTo();
-				await $('.ContextualPopupDecorator_HolePunchScrim_holePunchScrim').click({x: -150, y: 150});	// Click on scrim to close popup (note -150 offset is important to get away from button)
+				await $('.ContextualPopupDecorator_HolePunchScrim_holePunchScrim').click({x: -100, y: 100});	// Click on scrim to close popup (note -100 offset is important to get away from button)
 				// this will close menu2
 				expect(await menu2.isMenuExist).toBe(false);
 
@@ -85,7 +85,7 @@ describe('ContextualMenuDecorator', function () {
 				expect(await menu1.isMenuExist).toBe(true);  // (verify step 4)
 				expect(await menu1.item(0).isFocused()).toBe(false);  // Spotlight is not on the first item. (verify step 3)
 
-				await $('.ContextualPopupDecorator_HolePunchScrim_holePunchScrim').click({x: -150, y: 150});	// Click on scrim to close popup
+				await $('.ContextualPopupDecorator_HolePunchScrim_holePunchScrim').click({x: -100, y: 100});	// Click on scrim to close popup
 				// this will close menu1
 				expect(await menu1.isMenuExist).toBe(false); 	// (verify step 5)
 			});
