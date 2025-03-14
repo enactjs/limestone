@@ -140,7 +140,7 @@ const RadioBase = kind({
 							disabled={disabled}
 							role="checkbox"
 						>
-							<div className={css.bg}/>
+							<div className={css.bg} />
 							<Icon
 								size="tiny"
 								className={css.icon}
@@ -149,8 +149,7 @@ const RadioBase = kind({
 							</Icon>
 						</div>
 						<Cell className={css.label} component={Marquee} marqueeOn="render" shrink>{label}</Cell>
-					</Layout>
-					:
+					</Layout> :
 					<div
 						{...rest}
 						aria-checked={selected}
@@ -158,7 +157,7 @@ const RadioBase = kind({
 						disabled={disabled}
 						role="checkbox"
 					>
-						<div className={css.bg}/>
+						<div className={css.bg} />
 						<Icon
 							size="tiny"
 							className={css.icon}
