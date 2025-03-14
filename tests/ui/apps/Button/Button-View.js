@@ -54,6 +54,13 @@ const app = (props) => <div {...props}>
 			id="button8"
 			icon="home"
 		/>
+		<Button
+			id="button9"
+			icon="check"
+			centered
+		>
+			Button icon centered content
+		</Button>
 	</div>
 </div>;
 
