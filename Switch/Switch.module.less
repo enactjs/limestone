@@ -100,8 +100,12 @@
 			}
 
 			.focus({
-				.client {
+				.bg {
 					background-color: @lime-switch-disabled-focus-bg-color;
+				}
+
+				.client {
+					background-color: @lime-switch-disabled-focus-client-bg-color;
 					transition: background-color 0ms;
 				}
 
@@ -112,7 +116,7 @@
 
 				&.selected {
 					.client {
-						background-color: @lime-switch-disabled-focus-bg-color;
+						background-color: @lime-switch-disabled-focus-client-bg-color;
 					}
 
 					.icon {
