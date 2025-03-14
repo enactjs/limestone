@@ -149,7 +149,7 @@ const ImageItemBase = kind({
 		 * The layout orientation of the component.
 		 *
 		 * @type {('horizontal'|'vertical')}
-		 * @default 'vertical'
+		 * @default 'horizontal'
 		 * @public
 		 */
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
@@ -217,7 +217,7 @@ const ImageItemBase = kind({
 	defaultProps: {
 		'data-webos-voice-intent': 'Select',
 		imageIconComponent: Image,
-		orientation: 'vertical',
+		orientation: 'horizontal',
 		placeholder: defaultPlaceholder
 	},
 
