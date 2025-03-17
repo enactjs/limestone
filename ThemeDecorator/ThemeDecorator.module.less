@@ -12,13 +12,14 @@
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
+@import "../styles/alias-tokens.css";
 
 .applySkins({
-	color: @lime-text-color;
+	color: var(--lime-alias-color-on-surface-main);
 
 	::selection {
-		color: @lime-selection-color;
-		background-color: @lime-selection-bg-color;
+		color: @lime-input-selection-color;
+		background-color:@lime-input-selection-bg-color;
 	}
 
 	// Disabled Components
@@ -55,6 +56,25 @@
 		// Prevent Chrome's default focus treatment
 		outline: none;
 	}
+
+	/* Light Skin */
+	&:global(.light) {
+		--lime-alias-color-surface-full: var(--ref-color-base-85);
+		--lime-alias-color-on-surface-main: var(--ref-color-base-10);
+		--lime-alias-color-on-surface-sub: var(--ref-color-base-35);
+		--lime-alias-color-on-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
+		--lime-alias-color-on-selection-icon-selected-disabled: var(--ref-color-base-65);
+		--lime-alias-color-on-selection-bg-active-disabled: var(--ref-color-base-60);
+		--lime-alias-color-on-selection-bg-active-disabled-focused: var(--ref-color-base-60);
+		--lime-alias-color-surface-overlay: var(--ref-color-secondary-85);
+		--lime-alias-color-progress-bar: var(--lime-alias-color-accent);
+		--lime-alias-color-progress-bg: var(--ref-color-base-40-a70);
+	}
+
+	/* High Contrast */
+	&:global(.enact-a11y-high-contrast):global(.highContrast) {
+		--lime-alias-color-surface-overlay: var(--ref-color-base-0);
+	}
 }
 
 // Skin colors
@@ -65,6 +85,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: @lime-bg-color;
+		background-color: var(--lime-alias-color-surface-full);
 	}
 });
