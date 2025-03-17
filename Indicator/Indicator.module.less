@@ -5,11 +5,12 @@
 @import "../styles/variables.less";
 
 .indicator {
+  gap: @lime-indicator-gap;
+  height: @lime-indicator-height;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  height: @lime-indicator-height;
-  gap: @lime-indicator-gap;
 
   .step {
     margin: 0;
@@ -29,6 +30,7 @@
 }
 
 .pageIndicator {
+  height: @lime-page-indicator-height;
   width: @lime-page-indicator-width;
 
   .iconButton {
@@ -37,15 +39,19 @@
   }
 
   .numberIndicator {
+    gap: @lime-number-indicator-gap;
+    margin: @lime-number-indicator-margin;
+    max-width: @lime-number-indicator-max-width;
+
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: @lime-number-indicator-gap;
-    max-width: @lime-number-indicator-max-width;
-    //font-weight: @lime-body-font-weight;
 
     .divider {
-      margin: @lime-number-indicator-divider-margin;
+      width: @lime-page-indicator-divider-width;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
