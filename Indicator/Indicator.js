@@ -30,10 +30,10 @@ import {useCallback} from "react";
 const PageIndicator = ({className, current = 1, onChange = null, total = 1, ...rest}) => {
 	const mergedClasses = classNames(componentCss.pageIndicator, className);
 	const handleDecrement = useCallback(() => {
-		if (onChange && current !== 1) onChange({type: 'decrement', value: current - 1});
+		if (onChange && current > 1) onChange({type: 'decrement', value: current - 1});
 	}, [current, onChange]);
 	const handleIncrement = useCallback(() => {
-		if (onChange && current !== total) onChange({type: 'increment', value: current + 1});
+		if (onChange && current < total) onChange({type: 'increment', value: current + 1});
 	}, [current, onChange, total]);
 
 	return (
