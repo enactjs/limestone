@@ -382,11 +382,11 @@ class Popup extends Component {
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'bottomLeft'|'bottomRight'|'center'|'fullscreen'|'left'|'right'|'top'|'topLeft'|'topRight')}
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'bottomLeft', 'bottomRight', 'center', 'fullscreen', 'left', 'right', 'top', 'topLeft', 'topRight']),
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
 
 		/**
 		 * Scrim type.

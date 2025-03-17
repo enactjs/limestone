@@ -128,10 +128,10 @@ const AlertBase = kind({
 		 * There are five types:
 		 *
 		 * * `center` - Popup in the center of the screen
-		 * * `bottomLeft` - Popup in the bottom left of the screen
-		 * * `bottomRight` - Popup in the bottom right of the screen
-		 * * `topLeft` - Popup in the top left of the screen
-		 * * `topRight` - Popup in the top right of the screen
+		 * * `bottom left` - Popup in the bottom left of the screen
+		 * * `bottom right` - Popup in the bottom right of the screen
+		 * * `top left` - Popup in the top left of the screen
+		 * * `top right` - Popup in the top right of the screen
 		 *
 		 * @type {('bottom left'|'bottom right'|'center'|'top left'|'top right')}
 		 * @default 'center'
