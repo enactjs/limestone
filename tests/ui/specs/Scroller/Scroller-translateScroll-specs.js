@@ -52,6 +52,8 @@ describe('Scroller', function () {
 
 			// Step 7: Press 5-Way Up.
 			await ScrollerPage.spotlightUp();
+			await ScrollerPage.spotlightUp();
+			await ScrollerPage.spotlightUp();
 			// Step 7 Verify: Spotlight is on the (x) button.
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
 

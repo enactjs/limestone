@@ -6,7 +6,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.open();
 	});
 
-	it('Should not scroll to abnormal position by 5-way navigation)', async function () {
+	it('Should not scroll to abnormal position by 5-way navigation', async function () {
 		const scrollAnimationTimeout = 500;
 
 		// Set minHeight to 1300 to make itemSize + affordance bigger than viewport
@@ -19,6 +19,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.numPad(3);
 		await Page.numPad(0);
 		await Page.numPad(0);
+		await Page.spotlightDown();
 		await Page.spotlightDown();
 
 		// check the first item
@@ -68,6 +69,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.numPad(3);
 		await Page.numPad(0);
 		await Page.numPad(0);
+		await Page.spotlightDown();
 		await Page.spotlightDown();
 
 		// check the first item
