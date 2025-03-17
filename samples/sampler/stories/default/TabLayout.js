@@ -11,6 +11,8 @@ import {range, select} from '@enact/storybook-utils/addons/controls';
 import {scaleToRem} from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
+import spriteGear2k from '../../images/sprite-gear-2k.png';
+import spriteGear4k from '../../images/sprite-gear-4k.png';
 
 TabLayout.displayName = 'TabLayout';
 const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
@@ -69,6 +71,15 @@ export const _TabLayout = (args) => {
 				<Tab
 					title={tabSelections[tabs][1].title}
 					icon={tabSelections[tabs][1].icon}
+					sprite={{
+						columns: 6,
+						rows: 5,
+						iterations: 1,
+						src: {
+							fhd: spriteGear2k,
+							uhd: spriteGear4k
+						}
+					}}
 				>
 					<Button icon="demosync">Button 1</Button>
 					<Button icon="demosync">Button 2</Button>

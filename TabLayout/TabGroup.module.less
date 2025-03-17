@@ -6,18 +6,19 @@
 @import "../styles/variables.less";
 
 .tab {
-	font-size: @lime-tablayout-tab-font-size-large;
+	font-size: @lime-tablayout-tab-font-size;
 	margin: @lime-tablayout-tab-horizontal-margin;
 
 	&.horizontal {
 		&.button {
 			display: block;
-			padding: @lime-tablayout-tab-horizontal-padding;
 			height: @lime-tablayout-tab-horizontal-button-height;
 			line-height: @lime-tablayout-tab-horizontal-button-line-height;
+			margin: @lime-tablayout-tab-horizontal-margin;
+			.padding-start-end(@lime-tablayout-tab-horizontal-padding);
 
 			&.small {
-				font-size: @lime-tablayout-tab-font-size;
+				font-size: @lime-tablayout-tab-small-font-size;
 				height: @lime-tablayout-tab-horizontal-small-button-height;
 				line-height: @lime-tablayout-tab-horizontal-small-button-line-height;
 			}
@@ -26,16 +27,24 @@
 
 	&.vertical {
 		&.button {
-			display: block;
 			height: @lime-tablayout-tab-vertical-button-height;
 			text-align: left;
+			.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 			&.collapsed {
 				width: @lime-tablayout-tab-vertical-button-height;
 			}
 
+			&.hasIcon:not(&.collapsed) {
+				.padding-start-end(@lime-tablayout-tab-vertical-padding-left, @lime-tablayout-tab-vertical-padding-right);
+
+				.icon {
+					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
+				}
+			}
+
 			.lime-custom-text({
-				font-size: @lime-tablayout-tab-font-size-large;
+				font-size: @lime-tablayout-tab-font-size;
 				min-width: @lime-button-height;
 			})
 		}
@@ -53,8 +62,15 @@
 
 			.focus({
 				.bg {
+					background-color: @lime-tablayout-tab-focused-background-color;
 					opacity: 1;
 				}
+
+				.lime-disabled({
+					.bg {
+						background-color: @lime-tablayout-tab-disabled-background-color;
+					}
+				});
 			});
 		}
 	});
