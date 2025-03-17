@@ -1,6 +1,6 @@
 import Indicator, {IndicatorBase} from '@enact/limestone/Indicator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {range, select} from '@enact/storybook-utils/addons/controls';
+import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 import {action} from '@enact/storybook-utils/addons/actions';
 import BodyText from '../../../../BodyText';
 
@@ -23,6 +23,7 @@ export const _Indicator = (args) => (
 		</BodyText>
 		<Indicator
 			current={args['current']}
+			hideButtons={args['hideButtons']}
 			onChange={action('onChange')}
 			total={args['total']}
 			type={args['type']}
@@ -31,6 +32,7 @@ export const _Indicator = (args) => (
 );
 
 range('current', _Indicator, Config, {min: 1, max: 10}, 3);
+boolean('hideButtons', _Indicator, Config, false);
 range('total', _Indicator, Config, {min: 2, max: 10}, 5);
 select('type', _Indicator, prop.types, Config);
 

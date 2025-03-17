@@ -98,5 +98,14 @@ describe('Indicator', () => {
 
 			expect(handleClick).not.toBeCalled();
 		});
+
+		test('should not display buttons if `hideButtons` is set `true`', () => {
+			render(<Indicator current={1} hideButtons total={total} type="numbers" />);
+
+			const actual = screen.queryAllByRole('button').length;
+			const expected = 0;
+
+			expect(actual).toBe(expected);
+		});
 	});
 });

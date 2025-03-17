@@ -27,7 +27,7 @@ import Skinnable from '../Skinnable';
 import componentCss from './Indicator.module.less';
 import {useCallback} from "react";
 
-const PageIndicator = ({className, current = 1, onChange = null, total = 1, ...rest}) => {
+const PageIndicator = ({className, current, hideButtons, onChange = null, total, ...rest}) => {
 	const mergedClasses = classNames(componentCss.pageIndicator, className);
 	const handleDecrement = useCallback(() => {
 		if (onChange && current > 1) onChange({type: 'decrement', value: current - 1});
@@ -38,19 +38,20 @@ const PageIndicator = ({className, current = 1, onChange = null, total = 1, ...r
 
 	return (
 		<Row className={mergedClasses} {...rest}>
-			<Button className={componentCss.iconButton} iconOnly icon="arrowsmallleft" onClick={handleDecrement} />
+			{!hideButtons && <Button className={componentCss.iconButton} iconOnly icon="arrowsmallleft" onClick={handleDecrement} />}
 			<div className={componentCss.numberIndicator}>
 				{current}
 				<div className={componentCss.divider}> / </div>
 				{total}
 			</div>
-			<Button className={componentCss.iconButton} iconOnly icon="arrowsmallright" onClick={handleIncrement} />
+			{!hideButtons && <Button className={componentCss.iconButton} iconOnly icon="arrowsmallright" onClick={handleIncrement} />}
 		</Row>
 	);
 };
 
 PageIndicator.propTypes = {
 	current: PropTypes.number,
+	hideButtons: PropTypes.bool,
 	onChange: PropTypes.func,
 	total: PropTypes.number
 };
@@ -95,6 +96,15 @@ const IndicatorBase = kind({
 		current: PropTypes.number,
 
 		/**
+		 * Indicate if `PageIndicator` displays buttons.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		hideButtons: PropTypes.bool,
+
+		/**
          * Function called when the navigation buttons are pressed
          *
          * @type {Function}
@@ -119,6 +129,7 @@ const IndicatorBase = kind({
 
 	defaultProps: {
 		current: 1,
+		hideButtons: false,
 		total: 2,
 		type: 'dots'
 	},
@@ -147,7 +158,7 @@ const IndicatorBase = kind({
 		}
 	},
 
-	render: ({current, onChange, steps, total, type, ...rest}) => {
+	render: ({current, hideButtons, onChange, steps, total, type, ...rest}) => {
 		return (
 			<>
 				{type === 'dots' ?
@@ -157,8 +168,8 @@ const IndicatorBase = kind({
 						childComponent={Icon}
 					>
 						{steps}
-					</Repeater>                :
-					<PageIndicator current={current} total={total} onChange={onChange} {...rest} />
+					</Repeater> :
+					<PageIndicator current={current} hideButtons={hideButtons} total={total} onChange={onChange} {...rest} />
 				}
 
 			</>
