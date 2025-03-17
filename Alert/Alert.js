@@ -125,19 +125,19 @@ const AlertBase = kind({
 		/**
 		 * Position of the Alert when type=`overlay`.
 		 *
-		 * There are two types:
+		 * There are five types:
 		 *
 		 * * `center` - Popup in the center of the screen
 		 * * `bottomLeft` - Popup in the bottom left of the screen
 		 * * `bottomRight` - Popup in the bottom right of the screen
 		 * * `topLeft` - Popup in the top left of the screen
-		 * * `bottomRight` - Popup in the top right of the screen
+		 * * `topRight` - Popup in the top right of the screen
 		 *
-		 * @type {('bottomLeft'|'bottomRight'|'center'|'topLeft'|'topRight')}
+		 * @type {('bottom left'|'bottom right'|'center'|'top left'|'top right')}
 		 * @default 'center'
 		 * @public
 		 */
-		overlayPosition: PropTypes.oneOf(['bottomLeft', 'bottomRight', 'center', 'topLeft', 'topRight']),
+		overlayPosition: PropTypes.oneOf(['bottom left', 'bottom right', 'center', 'top left', 'top right']),
 
 		/**
 		 * The primary text displayed.

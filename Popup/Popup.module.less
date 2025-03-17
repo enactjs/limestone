@@ -34,6 +34,10 @@
 
 	&.top {
 		margin: @lime-popup-position-top-margin;
+
+		&.left, &.right {
+			margin: @lime-popup-position-corner-distance
+		}
 	}
 
 	&.right {
@@ -43,6 +47,10 @@
 
 	&.bottom {
 		margin: @lime-popup-position-bottom-margin;
+
+		&.left, &.right {
+			margin: @lime-popup-position-corner-distance
+		}
 	}
 
 	&.left {
@@ -86,12 +94,16 @@
 
 	&.bottom,
 	&.top {
-		width: 100%;
+		&:not(.left, .right){
+			width: 100%;
+		}
 	}
 
 	&.left,
 	&.right {
-		height: 100%;
+		&:not(.bottom, .top) {
+			height: 100%;
+		}
 
 		.inner {
 			height: 100%;
@@ -112,26 +124,6 @@
 
 	&.top {
 		top: 0;
-	}
-
-	&.bottomLeft {
-		bottom: @lime-popup-position-corner-distance;
-		left: @lime-popup-position-corner-distance;
-	}
-
-	&.bottomRight {
-		bottom: @lime-popup-position-corner-distance;
-		right: @lime-popup-position-corner-distance;
-	}
-
-	&.topLeft {
-		top: @lime-popup-position-corner-distance;
-		left: @lime-popup-position-corner-distance;
-	}
-
-	&.topRight {
-		top: @lime-popup-position-corner-distance;
-		right: @lime-popup-position-corner-distance;
 	}
 
 	&.center,
