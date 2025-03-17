@@ -50,32 +50,8 @@ const PageIndicator = ({className, current = 1, onChange = null, total = 1, ...r
 };
 
 PageIndicator.propTypes = {
-	/**
-     * Indicate the current step.
-     *
-     * This is 1-based, not 0-based; as in the first step is `1`.
-     *
-     * @type {Number}
-     * @default 1
-     * @public
-     */
 	current: PropTypes.number,
-
-	/**
-     * Function called when the navigation buttons are pressed
-     *
-     * @type {Function}
-     * @public
-     */
 	onChange: PropTypes.func,
-
-	/**
-     * Indicate the total number of steps.
-     *
-     * @type {Number}
-     * @default 2
-     * @public
-     */
 	total: PropTypes.number
 };
 
