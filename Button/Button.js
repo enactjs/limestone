@@ -220,7 +220,7 @@ const ButtonBase = kind({
 
 	styles: {
 		css: componentCss,
-		publicClassNames: ['button', 'bg', 'client', 'hasIcon', 'icon', 'iconAfter', 'iconBefore', 'large', 'pressed', 'selected', 'small']
+		publicClassNames: ['button', 'bg', 'client', 'hasIcon', 'icon', 'iconAfter', 'iconBefore', 'iconColor', 'large', 'pressed', 'selected', 'small']
 	},
 
 	computed: {

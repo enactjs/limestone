@@ -356,3 +356,16 @@ KitchenSink.parameters = {
 		hideNoControlsWarning: true
 	}
 };
+
+export const WithColoredIcon = (args) => (
+	<Button
+		css={css}
+		icon={args['icon']}
+	>
+		Click me!
+	</Button>
+);
+
+select('icon', WithColoredIcon, prop.icons, Config, "heart");
+
+WithColoredIcon.storyName = 'with colored icon';
