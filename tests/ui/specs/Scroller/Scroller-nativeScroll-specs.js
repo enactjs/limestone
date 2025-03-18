@@ -50,6 +50,8 @@ describe('Scroller', function () {
 
 			// Step 7: Press 5-Way Up.
 			await ScrollerPage.spotlightUp();
+			await ScrollerPage.spotlightUp();
+			await ScrollerPage.spotlightUp();
 			// Step 7 Verify: Spotlight is on the (x) button.
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
 
@@ -90,8 +92,8 @@ describe('Scroller', function () {
 			// Step 4 Verify: Spotlight is on the (x) button.
 
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
-			// Step 5: Press 5-Way Down.
-			await ScrollerPage.spotlightDown();
+			// Step 5: Press 5-Way Right.
+			await ScrollerPage.spotlightRight();
 			// Step 5 Verify: Spotlight is on the Scroll thumb in vertical scrollbar track.
 			expect(await ScrollerPage.verticalScrollThumb.isFocused()).toBe(true);
 
@@ -108,24 +110,28 @@ describe('Scroller', function () {
 			// Step 7: Press any 5-Way direction key.
 			// Step 7 Verify: Spotlight is on the Scroll thumb in vertical scrollbar track.
 			await ScrollerPage.spotlightLeft();
+			await ScrollerPage.spotlightLeft();
 			expect(await ScrollerPage.buttonLeft.isFocused()).toBe(true);
 			await ScrollerPage.spotlightRight();
+			await ScrollerPage.spotlightUp();
 			expect(await ScrollerPage.verticalScrollThumb.isFocused()).toBe(true);
-			await ScrollerPage.spotlightRight();
-			expect(await ScrollerPage.buttonRight.isFocused()).toBe(true);
 			await ScrollerPage.spotlightLeft();
+			expect(await ScrollerPage.buttonRight.isFocused()).toBe(true);
+			await ScrollerPage.spotlightUp();
 			expect(await ScrollerPage.verticalScrollThumb.isFocused()).toBe(true);
 			await ScrollerPage.spotlightUp();
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
-			await ScrollerPage.spotlightDown();
+			await ScrollerPage.spotlightRight();
 			expect(await ScrollerPage.verticalScrollThumb.isFocused()).toBe(true);
 
 			// Step 8: Press Back key (or 'esc' with Chrome) or 5-way Select.
 			await ScrollerPage.backKey();
-			// Step 8 Verify: Spolight is on the box surrounding the item and scrollbars.
+			// Step 8 Verify: Spotlight is on the box surrounding the item and scrollbars.
 			expect(await ScrollerPage.focusableBody.isFocused()).toBe(true);
 
 			// Step 9: Press 5-Way Up.
+			await ScrollerPage.spotlightUp();
+			await ScrollerPage.spotlightUp();
 			await ScrollerPage.spotlightUp();
 			// Step 9 Verify: Spotlight is on the (x) button.
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
