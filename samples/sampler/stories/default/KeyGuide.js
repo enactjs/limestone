@@ -1,6 +1,6 @@
 import KeyGuide from '@enact/limestone/KeyGuide';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, object, range, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, range, select, text} from '@enact/storybook-utils/addons/controls';
 
 import css from './KeyGuide.module.less';
 
@@ -29,7 +29,7 @@ export const _KeyGuide = (args) => {
 	];
 	const children = args['guide type'] === 'image' ? {imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'Remote control use guide. text text text text text text.'} : items.slice(0, itemCount);
 
-	return <KeyGuide arrowPosition={args['arrowPosition']} position={args['position']} css={css} type={args['type']} open={args['open']}>{children}</KeyGuide>;
+	return <KeyGuide arrowPosition={args['arrowPosition']} css={css} open={args['open']}>{children}</KeyGuide>;
 };
 
 select('guide type', _KeyGuide, prop.type, Config, 'icon');
@@ -37,7 +37,6 @@ range('items', _KeyGuide, Config, {min: 0, max: 4}, 3);
 select('first item icon', _KeyGuide, prop.icon, Config, prop.icon[0]);
 text('Item 1 children', _KeyGuide, Config, 'This is long name item');
 select('arrowPosition', _KeyGuide, prop.arrowPosition, Config, prop.arrowPosition[0]);
-object('position', _KeyGuide, Config, {top: 600, left: 300});
 boolean('open', _KeyGuide, Config, true);
 
 _KeyGuide.storyName = 'KeyGuide';
