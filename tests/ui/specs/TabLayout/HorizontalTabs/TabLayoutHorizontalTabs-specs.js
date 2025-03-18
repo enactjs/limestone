@@ -10,7 +10,7 @@ describe('TabLayout', function () {
 		describe('scrolling behavior', function () {
 			describe('5-way interaction', function () {
 				it('should focus the last Spottable tab and it should be visible', async function () {
-					await Page.delay(500);
+					const tabs = await (await Page.tabLayout.tabsFromScroller());
 					// Step 1: 5-way right 15 times to reach the last Spottable tab
 					for (let i = 0; i < 15; i++) {
 						await Page.spotlightRight();
@@ -20,11 +20,11 @@ describe('TabLayout', function () {
 					// Step 3: Check if the last tab is selected
 					expect(await Page.tabLayout.isSelectedTab(14)).toBe(true);
 					// Step 4: Check if the selected tab is visible in the viewport
-					expect(await $$('.TabLayout_TabGroup_tab')[14]).toBeDisplayedInViewport();
+					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
 				});
 
 				it('should focus the first Spottable tab and it should be visible', async function () {
-					await Page.delay(500);
+					const tabs = await (await Page.tabLayout.tabsFromScroller());
 					// Step 1: 5-way right 15 times to reach the last Spottable tab
 					for (let i = 0; i < 15; i++) {
 						await Page.spotlightRight();
@@ -34,7 +34,7 @@ describe('TabLayout', function () {
 					// Step 3: Check if the last tab is selected
 					expect(await Page.tabLayout.isSelectedTab(14)).toBe(true);
 					// Step 4: Check if the selected tab is visible in the viewport
-					await expect(await $$('.TabLayout_TabGroup_tab')[14]).toBeDisplayedInViewport();
+					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
 					// Step 5: 5-way left 15 times to reach the first tab
 					for (let i = 0; i < 15; i++) {
 						await Page.spotlightLeft();
@@ -44,30 +44,41 @@ describe('TabLayout', function () {
 					// Step 7: Check if the first tab is selected
 					expect(await Page.tabLayout.isSelectedTab(0)).toBe(true);
 					// Step 8: Check if the selected tab is visible in the viewport
-					expect(await $$('.TabLayout_TabGroup_tab')[0]).toBeDisplayedInViewport();
+					expect(await tabs[0].isDisplayed({withinViewport: true})).toBe(true);
 				});
 			});
 
 			describe('pointer interaction', function () {
 				it('should scroll to the last Spottable tab', async function () {
-					const tabs = await (await Page.tabLayout.horizontalTabsFromScroller());
+					const tabs = await (await Page.tabLayout.tabsFromScroller());
+					// Step 1: Scroll to the 5th tab to make it visible
 					tabs[4].scrollIntoView();
+					// Step 2: Move the pointer to the 5th tab
 					tabs[4].moveTo();
+					// Step 3: Wait for the scrolling animation to complete
 					await Page.delay(4000);
-					expect(tabs[14]).toBeDisplayedInViewport();
+					// Step 4: Verify that the 15th tab is visible within the viewport
+					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
 				});
 
 				it('should scroll to the first Spottable tab', async function () {
-					const tabs = await (await Page.tabLayout.horizontalTabsFromScroller());
+					const tabs = await (await Page.tabLayout.tabsFromScroller());
+					// Step 1: Scroll to the 5th tab to make it visible
 					tabs[4].scrollIntoView();
+					// Step 2: Move the pointer to the 5th tab
 					tabs[4].moveTo();
+					// Step 3: Wait for the scrolling animation to complete
 					await Page.delay(4000);
-					expect(tabs[14]).toBeDisplayedInViewport();
-
+					// Step 4: Verify that the 15th tab is visible within the viewport
+					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
+					// Step 5: Scroll to the 11th tab to make it visible
 					tabs[10].scrollIntoView();
+					// Step 6: Move the pointer to the 11th tab
 					tabs[10].moveTo();
+					// Step 7: Wait for the scrolling animation to complete
 					await Page.delay(4000);
-					expect(tabs[0]).toBeDisplayedInViewport();
+					// Step 8: Verify that the 1st tab is visible within the viewport
+					expect(await tabs[0].isDisplayed({withinViewport: true})).toBe(true);
 				});
 			});
 		});

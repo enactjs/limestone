@@ -225,7 +225,6 @@ const TabGroupBase = kind({
 			noScrollByWheel: true,
 			verticalScrollbar: 'hidden'
 		} : null;
-
 		const Component = useScroller ? Scroller : 'div';
 
 		return (
