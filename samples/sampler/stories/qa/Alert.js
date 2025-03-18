@@ -178,7 +178,7 @@ export const WithThumbnailAndScroller = (args) => (
 			<Button>Button</Button>
 		</buttons>
 		<Row>
-			<AlertImage iconSize="small" src={args['src']} type='icon' />
+			<AlertImage iconSize="small" src={args['src']} type="icon" />
 			<Scroller className={css.scroller}>
 				<div style={{height: ri.scaleToRem(1600)}}>
 					{args['children']}
