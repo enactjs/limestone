@@ -20,6 +20,9 @@ import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
 
+const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
+
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 // eslint-disable-next-line enact/prop-types
 const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
@@ -32,11 +35,9 @@ const TabBase = kind({
 		css: PropTypes.object,
 		icon: PropTypes.string,
 		index: PropTypes.number,
-		noScrollByWheel: PropTypes.bool,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
-		rtl: PropTypes.bool,
 		selected: PropTypes.bool,
 		size: PropTypes.number,
 		sprite: PropTypes.object,
@@ -70,35 +71,6 @@ const TabBase = kind({
 
 				return {selected: index};
 			})
-		),
-		onKeyDown: handle(
-			forwardCustom('onKeyDown', (ev, props) => {
-				const {orientation} = props;
-				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
-
-				Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
-			})
-		),
-		onWheel: handle(
-			forward('onWheel'),
-			forwardCustom('onWheelScroll', (ev, props) => {
-				const {deltaY} = ev;
-				const {noScrollByWheel, orientation, rtl} = props;
-				const horizontalMoveTo = rtl ? ['right', 'left'] : ['left', 'right'];
-				const moveTo = orientation === 'horizontal' ? horizontalMoveTo : ['up', 'down'];
-				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
-
-				if (noScrollByWheel) return;
-
-				Spotlight.setPointerMode(false);
-				Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
-
-				if (deltaY < 0) {
-					Spotlight.move(moveTo[0]);
-				} else if (deltaY > 0) {
-					Spotlight.move(moveTo[1]);
-				}
-			})
 		)
 	},
 
@@ -113,10 +85,8 @@ const TabBase = kind({
 
 	render: ({children, collapsed, css, orientation, size, ...rest}) => {
 		delete rest.index;
-		delete rest.noScrollByWheel;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
-		delete rest.rtl;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -191,14 +161,12 @@ const TabGroupBase = kind({
 		collapsed: PropTypes.bool,
 		css: PropTypes.object,
 		id: PropTypes.string,
-		noScrollByWheel: PropTypes.bool,
 		onBlur: PropTypes.func,
 		onBlurList: PropTypes.func,
 		onFocus: PropTypes.func,
 		onFocusTab: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
-		rtl: PropTypes.bool,
 		selectedIndex: PropTypes.number,
 		spotlightDisabled: PropTypes.bool,
 		spotlightId: PropTypes.string,
@@ -219,11 +187,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, noScrollByWheel, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, rtl, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({css, collapsed, noScrollByWheel, orientation, rtl, size: tabSize}), [css, collapsed, noScrollByWheel, orientation, rtl, tabSize]);
+		const itemProps = useMemo(() => ({css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
@@ -247,16 +215,21 @@ const TabGroupBase = kind({
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
+		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
-		const scrollerProps = {
+		const useScroller = (children.length > maxTabs);
+		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
+			hoverToScroll: true,
 			noScrollByWheel: true,
 			verticalScrollbar: 'hidden'
-		};
+		} : null;
+
+		const Component = useScroller ? Scroller : 'div';
 
 		return (
-			<Scroller
+			<Component
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
@@ -294,7 +267,7 @@ const TabGroupBase = kind({
 					</div>
 				)}
 				{isHorizontal ? <hr className={componentCss.horizontalLine} /> : null}
-			</Scroller>
+			</Component>
 		);
 	}
 });

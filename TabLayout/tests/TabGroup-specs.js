@@ -1,4 +1,3 @@
-import {ScrollerBasic} from '@enact/ui/Scroller';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -105,7 +104,7 @@ describe('TabGroup specs', () => {
 				]}
 			/>
 		);
-		const iconList = screen.getByTestId('tabGroup').children.item(0).children.item(0);
+		const iconList = screen.getByTestId('tabGroup').children.item(0);
 
 		expect(iconList).toHaveAttribute('aria-disabled', 'true');
 	});
@@ -123,7 +122,7 @@ describe('TabGroup specs', () => {
 				]}
 			/>
 		);
-		const iconList = screen.getByTestId('tabGroup').children.item(0).children.item(0);
+		const iconList = screen.getByTestId('tabGroup').children.item(0);
 
 		expect(iconList).toHaveAttribute('aria-disabled', 'false');
 	});
@@ -131,7 +130,6 @@ describe('TabGroup specs', () => {
 	test('should fire `onTabClick` with `onTabClick` type when a tab is clicked', async () => {
 		const handleTabClick = jest.fn();
 		const user = userEvent.setup();
-		jest.spyOn(ScrollerBasic.prototype, 'scrollToPosition').mockImplementation(() => {});
 		render(
 			<TabGroup
 				tabs={[

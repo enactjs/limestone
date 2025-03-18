@@ -7,7 +7,7 @@ import Scroller from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
+import {range, select} from '@enact/storybook-utils/addons/controls';
 import {scaleToRem} from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
@@ -21,14 +21,11 @@ const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
 
 const tabsWithIcons = [
 	{title: 'Home', icon: 'home'},
-	{title: 'Settings', icon: 'gear'},
-	{title: 'Item', icon: 'trash'},
-	{title: 'Button', icon: 'accessibility'},
-	{title: 'Control', icon: 'contrast'}
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'}
 ];
 
-const tabsWithoutIcons = [
-	{title: 'Home'}, {title: 'Settings'}, {title: 'Item'}, {title: 'Control'}, {title: 'Button'}];
+const tabsWithoutIcons = [{title: 'Home'}, {title: 'Button'}, {title: 'Item'}];
 
 const tabSelections = {
 	'with icons': tabsWithIcons,
@@ -65,7 +62,6 @@ export const _TabLayout = (args) => {
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
-				noScrollByWheel={args['noScrollByWheel']}
 				tabSize={args['tabSize'] || null}
 			>
 				<Tab title={tabSelections[tabs][0].title} icon={tabSelections[tabs][0].icon}>
@@ -93,25 +89,14 @@ export const _TabLayout = (args) => {
 				<Tab title={tabSelections[tabs][2].title} icon={tabSelections[tabs][2].icon}>
 					<Item slotBefore={<Icon>playcircle</Icon>}>Single Item</Item>
 				</Tab>
-				<Tab title={tabSelections[tabs][3].title} icon={tabSelections[tabs][3].icon}>
-					<Item slotBefore={<Icon>download</Icon>}>Download</Item>
-					{images[0]}
-				</Tab>
-				<Tab title={tabSelections[tabs][4].title} icon={tabSelections[tabs][4].icon}>
-					<Item slotBefore={<Icon>arrowsmallleft</Icon>}>Control Left</Item>
-					<Item slotBefore={<Icon>arrowsmallright</Icon>}>Control Right</Item>
-					<Item slotBefore={<Icon>arrowsmalldown</Icon>}>Control Down</Item>
-					<Item slotBefore={<Icon>arrowsmallup</Icon>}>Control Up</Item>
-				</Tab>
 			</TabLayout>
 		</Panel>
 	);
 };
 
-boolean('noScrollByWheel', _TabLayout, Config, false);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
-range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 600);
+range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);
 
 _TabLayout.storyName = 'TabLayout';
 _TabLayout.parameters = {

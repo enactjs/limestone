@@ -1,6 +1,5 @@
 import spotlight from '@enact/spotlight';
 
-import Button from '../../../../../Button';
 import TabLayout from '../../../../../TabLayout';
 import ThemeDecorator from '../../../../../ThemeDecorator';
 
@@ -12,7 +11,6 @@ spotlight.setPointerMode(false);
 
 const app = (props) => (
 	<div {...props} style={{display: 'flex', flexDirection: 'row', overflow: 'scroll'}}>
-		<Button>Button 1</Button>
 		<TabLayout
 			id="tabLayout"
 			orientation="horizontal"
@@ -20,7 +18,6 @@ const app = (props) => (
 		>
 			{tabsForScroll}
 		</TabLayout>
-		<Button>2</Button>
 	</div>
 );
 

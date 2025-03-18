@@ -1,5 +1,4 @@
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
-import {ScrollerBasic} from '@enact/ui/Scroller';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -90,7 +89,6 @@ describe('PopupTabLayout specs', () => {
 
 	test('should display items from second tab', async () => {
 		const user = userEvent.setup();
-		jest.spyOn(ScrollerBasic.prototype, 'scrollToPosition').mockImplementation(() => {});
 		render(
 			<FloatingLayerController>
 				<PopupTabLayout open>

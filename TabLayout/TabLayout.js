@@ -152,15 +152,6 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
-		 * Prevents scroll by wheeling on the scroller.
-		 *
-		 * @type {Boolean}
-		 * @default true
-		 * @public
-		 */
-		noScrollByWheel: PropTypes.bool,
-
-		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -389,10 +380,11 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, noScrollByWheel, onCollapse, onSelect, orientation, rtl, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
+		delete rest.rtl;
 
 		const contentSize = (collapsed ? dimensions.content.expanded : dimensions.content.normal);
 		const isVertical = orientation === 'vertical';
@@ -402,13 +394,11 @@ const TabLayoutBase = kind({
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
-			noScrollByWheel,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,
 			onSelect,
 			orientation,
-			rtl,
 			selectedIndex: index,
 			tabs
 		};

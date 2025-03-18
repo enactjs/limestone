@@ -1,5 +1,4 @@
 import Spotlight from '@enact/spotlight';
-import {ScrollerBasic} from '@enact/ui/Scroller';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -151,7 +150,6 @@ describe('TabLayout specs', () => {
 	test('should call \'onSelect\' with \'onSelect\' type when clicking on a tab', async () => {
 		const spy = jest.fn();
 		const user = userEvent.setup();
-		jest.spyOn(ScrollerBasic.prototype, 'scrollToPosition').mockImplementation(() => {});
 		render(
 			<TabLayout onSelect={spy} orientation="vertical">
 				<Tab icon="home" title="Home">
@@ -424,85 +422,5 @@ describe('TabLayout specs', () => {
 		tab.focus();
 
 		expect(tab.scrollIntoView).toHaveBeenCalled();
-	});
-
-	test('should scroll Tab by wheel on vertical', async () => {
-		Spotlight.move = jest.fn();
-
-		render(
-			<TabLayout
-				tabSize={3000}
-			>
-				<Tab icon="home" title="Home">
-					<div>Home</div>
-				</Tab>
-				<Tab icon="gear" title="Button">
-					<div>Home</div>
-				</Tab>
-			</TabLayout>
-		);
-
-		const homeTab = screen.getByRole('tab', {name: 'Home'});
-		const buttonTab = screen.getByRole('tab', {name: 'Button'});
-
-		fireEvent.wheel(homeTab, {deltaY: 1});
-		expect(Spotlight.move).toHaveBeenCalledWith('down');
-
-		fireEvent.wheel(buttonTab, {deltaY: -1});
-		expect(Spotlight.move).toHaveBeenCalledWith('up');
-	});
-
-	test('should scroll Tab by wheel on horizontal', async () => {
-		Spotlight.move = jest.fn();
-
-		render(
-			<TabLayout
-				orientation="horizontal"
-				tabSize={3000}
-			>
-				<Tab icon="home" title="Home">
-					<div>Home</div>
-				</Tab>
-				<Tab icon="gear" title="Button">
-					<div>Home</div>
-				</Tab>
-			</TabLayout>
-		);
-
-		const homeTab = screen.getByRole('tab', {name: 'Home'});
-		const buttonTab = screen.getByRole('tab', {name: 'Button'});
-
-		fireEvent.wheel(homeTab, {deltaY: 1});
-		expect(Spotlight.move).toHaveBeenCalledWith('right');
-
-		fireEvent.wheel(buttonTab, {deltaY: -1});
-		expect(Spotlight.move).toHaveBeenCalledWith('left');
-	});
-
-	test('should not scroll Tab by wheel', async () => {
-		Spotlight.move = jest.fn();
-
-		render(
-			<TabLayout
-				noScrollByWheel
-				tabSize={3000}
-			>
-				<Tab icon="home" title="Home">
-					<div>Home</div>
-				</Tab>
-				<Tab icon="gear" title="Button">
-					<div>Home</div>
-				</Tab>
-			</TabLayout>
-		);
-
-		const homeTab = screen.getByRole('tab', {name: 'Home'});
-		const buttonTab = screen.getByRole('tab', {name: 'Button'});
-
-		fireEvent.wheel(homeTab, {deltaY: 1});
-		expect(Spotlight.move).not.toHaveBeenCalled();
-
-		fireEvent.wheel(buttonTab, {deltaY: -1});
-		expect(Spotlight.move).not.toHaveBeenCalled();
 	});
 });

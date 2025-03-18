@@ -47,6 +47,9 @@ class TabLayoutInterface {
 
 		return await $(`#${this.id} .TabLayout_TabLayout_tabsExpanded`);
 	}
+	async horizontalTabsFromScroller () {
+		return await $$('.TabLayout_TabGroup_tab');
+	}
 	get tabsScroller () {
 		return getScroller(this.self);
 	}
