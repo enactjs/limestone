@@ -129,20 +129,18 @@ const KeyGuideBase = kind({
 
 	computed: {
 		children: ({children, css}) => {
-			if (Array.isArray(children)) {
+			if (children?.imageSrc) {
+				return children;
+			} else {
 				return children ? children.map(({icon, ...child}) => {
 					const isColorKey = colorKeys.includes(icon);
 					return {
 						...child,
 						slotBefore: isColorKey ? (
 							<div className={css[icon]} />
-						) : (
-							<Icon className={css.icon}>{icon}</Icon>
-						)
+						) : <Icon className={css.icon}>{icon}</Icon>
 					};
 				}) : [];
-			} else if (children.imageSrc) {
-				return children;
 			}
 		},
 		className: ({arrowPosition, children, styler}) => styler.append(
@@ -158,7 +156,7 @@ const KeyGuideBase = kind({
 		publicClassNames: ['keyGuide', 'imageGuide']
 	},
 
-	render: ({className, css, open, ...rest}) => {
+	render: ({className, css, children, open, ...rest}) => {
 		delete rest.arrowPosition;
 
 		return (
@@ -167,20 +165,19 @@ const KeyGuideBase = kind({
 				open={open}
 				scrimType="none"
 			>
-				{Array.isArray(rest.children) ? (
+				{Array.isArray(children) ? (
 					<Repeater
 						{...rest}
 						component="div"
 						className={className}
 						childComponent={ItemBase}
 						itemProps={{css, marqueeOn: 'render'}}
-					/>
+					>
+						{children}
+					</Repeater>
 				) : (
-					<div className={className}>
-						<ImageItemBase
-							{...rest.children}
-							css={css}
-						/>
+					<div {...rest} className={className}>
+						<ImageItemBase {...children} />
 					</div>
 				)}
 			</FloatingLayer>
