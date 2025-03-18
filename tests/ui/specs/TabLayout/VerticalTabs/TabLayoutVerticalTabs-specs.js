@@ -51,8 +51,8 @@ describe('TabLayout', function () {
 			describe('pointer interaction', function () {
 				it('should scroll to the last Spottable tab', async function () {
 					const tabs = await (await Page.tabLayout.tabsFromScroller());
-					// Step 1: Move the pointer to the 12th tab
-					tabs[12].moveTo();
+					// Step 1: Move the pointer to the 13th tab
+					tabs[13].moveTo();
 					// Step 2: Wait for the scrolling animation to complete
 					await Page.delay(1000);
 					// Step 3: Verify that the 15th tab is visible within the viewport
@@ -61,8 +61,8 @@ describe('TabLayout', function () {
 
 				it('should scroll to the first Spottable tab', async function () {
 					const tabs = await (await Page.tabLayout.tabsFromScroller());
-					// Step 1: Move the pointer to the 12th tab
-					tabs[12].moveTo();
+					// Step 1: Move the pointer to the 13th tab
+					tabs[13].moveTo();
 					// Step 2: Wait for the scrolling animation to complete
 					await Page.delay(1000);
 					// Step 3: Verify that the 15th tab is visible within the viewport
