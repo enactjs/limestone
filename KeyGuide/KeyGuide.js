@@ -147,7 +147,7 @@ const KeyGuideBase = kind({
 		},
 		className: ({arrowPosition, children, styler}) => styler.append(
 			Array.isArray(children) ? 'iconGuide' : 'imageGuide',
-			arrowPosition === 'none' ? 'noArrow' : `${arrowPosition}Arrow`
+			arrowPosition === 'none' || Array.isArray(children) ? 'noArrow' : `${arrowPosition}Arrow`
 		),
 		open: ({children, open}) => (children && (children.imageSrc || children.length > 0) && open)
 	},
