@@ -67,8 +67,8 @@ describe('TabLayout', function () {
 					await Page.delay(1000);
 					// Step 3: Verify that the 15th tab is visible within the viewport
 					expect(await tabs[15].isDisplayed({withinViewport: true})).toBe(true);
-					// Step 4: Move the pointer to the 6th tab
-					tabs[6].moveTo();
+					// Step 4: Move the pointer to the 5th tab
+					tabs[5].moveTo();
 					// Step 5: Wait for the scrolling animation to complete
 					await Page.delay(1000);
 					// Step 6: Verify that the 1st tab is visible within the viewport
