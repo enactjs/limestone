@@ -21,9 +21,9 @@
 import kind from '@enact/core/kind';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import FloatingLayer from '@enact/ui/FloatingLayer';
+import Pure from '@enact/ui/internal/Pure';
 import {Cell, Row} from '@enact/ui/Layout';
 import Repeater from '@enact/ui/Repeater';
-import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
@@ -38,22 +38,20 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = ({children, src}) => {
+const ImageItemBase = ({children, imageSrc}) => {
 	return (
-		<div>
-			<Row className={componentCss.imageItem}>
-				<Cell shrink className={componentCss.image} src={src} component={Image} />
-				<Cell shrink={false} className={componentCss.text}>
-					<BodyText className={componentCss.bodyText}>{children}</BodyText>
-				</Cell>
-			</Row>
-		</div>
+		<Row className={componentCss.imageItem}>
+			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
+			<Cell shrink={false} className={componentCss.text}>
+				<BodyText className={componentCss.bodyText}>{children}</BodyText>
+			</Cell>
+		</Row>
 	);
 };
 
 ImageItemBase.propTypes = {
 	children: PropTypes.node,
-	src: PropTypes.string
+	imageSrc: PropTypes.string
 };
 
 /**
@@ -97,9 +95,11 @@ const KeyGuideBase = kind({
 		children: PropTypes.arrayOf(PropTypes.shape({
 			children: EnactPropTypes.renderable.isRequired,
 			key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-		})),
+			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		})) || PropTypes.shape({
+			children: EnactPropTypes.renderable.isRequired,
+			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		}),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -120,39 +120,16 @@ const KeyGuideBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		open: PropTypes.bool,
-
-		/**
-		 * The position of the KeyGuide.
-		 * The object should contain `top` and `left` properties.
-		 * Used only when `type` is `'image'`.
-		 *
-		 * @type {Object}
-		 * @public
-		 */
-		position: PropTypes.object,
-
-		/**
-		 * The type of the KeyGuide.
-		 * If `'icon'`, the KeyGuide will show icons.
-		 * If `'image'`, the KeyGuide will show images.
-		 *
-		 * @type {String}
-		 * @public
-		 * @default 'icon'
-		 */
-		type: PropTypes.oneOf(['icon', 'image'])
+		open: PropTypes.bool
 	},
 
 	defaultProps: {
-		arrowPosition: 'none',
-		position: {top: 0, left: 0},
-		type: 'icon'
+		arrowPosition: 'none'
 	},
 
 	computed: {
-		children: ({children, css, type}) => {
-			if (type === 'icon') {
+		children: ({children, css}) => {
+			if (Array.isArray(children)) {
 				return children ? children.map(({icon, ...child}) => {
 					const isColorKey = colorKeys.includes(icon);
 					return {
@@ -164,24 +141,24 @@ const KeyGuideBase = kind({
 						)
 					};
 				}) : [];
-			} else if (type === 'image') {
+			} else if (children.imageSrc) {
 				return children;
 			}
 		},
-		className: ({arrowPosition, type, styler}) => styler.append(
-			`${type}Guide`,
+		className: ({arrowPosition, children, styler}) => styler.append(
+			Array.isArray(children) ? 'iconGuide' : 'imageGuide',
 			arrowPosition === 'none' ? 'noArrow' : `${arrowPosition}Arrow`
 		),
-		open: ({children, open}) => (children && children.length > 0 && open)
+		open: ({children, open}) => (children && (children.imageSrc || children.length > 0) && open)
 	},
 
 	styles: {
 		css: componentCss,
 		className: 'keyGuide',
-		publicClassNames: ['keyGuide']
+		publicClassNames: ['keyGuide', 'imageGuide']
 	},
 
-	render: ({className, css, open, position, type, ...rest}) => {
+	render: ({className, css, open, ...rest}) => {
 		delete rest.arrowPosition;
 
 		return (
@@ -190,14 +167,22 @@ const KeyGuideBase = kind({
 				open={open}
 				scrimType="none"
 			>
-				<Repeater
-					{...rest}
-					component="div"
-					className={className}
-					style={type === 'image' ? {top: position.top, left: position.left} : null}
-					childComponent={type === 'image' ? ImageItemBase : ItemBase}
-					itemProps={{css, marqueeOn: 'render'}}
-				/>
+				{Array.isArray(rest.children) ? (
+					<Repeater
+						{...rest}
+						component="div"
+						className={className}
+						childComponent={ItemBase}
+						itemProps={{css, marqueeOn: 'render'}}
+					/>
+				) : (
+					<div className={className}>
+						<ImageItemBase
+							{...rest.children}
+							css={css}
+						/>
+					</div>
+				)}
 			</FloatingLayer>
 		);
 	}
