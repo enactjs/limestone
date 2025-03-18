@@ -70,6 +70,7 @@ const AlertBase = kind({
 		 * * `alert` - The root class name
 		 * * `content` - The content component class
 		 * * `fullscreen` - Applied to a `type='fullscreen'` alert
+		 * * `overlay` - Applied to a `type='overlay'` alert
 		 * * `title` - The title component class
 		 *
 		 * @type {Object}
@@ -173,7 +174,7 @@ const AlertBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'alert',
-		publicClassNames: ['alert', 'content', 'fullscreen', 'title']
+		publicClassNames: ['alert', 'content', 'fullscreen', 'overlay', 'title']
 	},
 
 	computed: {
