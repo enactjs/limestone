@@ -29,9 +29,11 @@ import {useCallback} from "react";
 
 const PageIndicator = ({className, current, hideButtons, onChange = null, total, ...rest}) => {
 	const mergedClasses = classNames(componentCss.pageIndicator, className);
+	
 	const handleDecrement = useCallback(() => {
 		if (onChange && current > 1) onChange({type: 'decrement', value: current - 1});
 	}, [current, onChange]);
+	
 	const handleIncrement = useCallback(() => {
 		if (onChange && current < total) onChange({type: 'increment', value: current + 1});
 	}, [current, onChange, total]);
@@ -57,7 +59,7 @@ PageIndicator.propTypes = {
 };
 
 /**
- * Renders a limestone-styled steps component only basic behavior.
+ * Renders a limestone-styled indicator component only basic behavior.
  *
  * @class IndicatorBase
  * @memberof limestone/Indicator
@@ -96,7 +98,7 @@ const IndicatorBase = kind({
 		current: PropTypes.number,
 
 		/**
-		 * Indicate if `PageIndicator` displays buttons.
+		 * Indicates if `PageIndicator` displays buttons.
 		 *
 		 * @type {Boolean}
 		 * @default false
@@ -191,7 +193,7 @@ const IndicatorDecorator = compose(
 );
 
 /**
- * A full-featured Limestone-styled step component.
+ * A full-featured Limestone-styled indicator component.
  *
  * @class Indicator
  * @memberof limestone/Indicator
