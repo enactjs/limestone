@@ -5,50 +5,48 @@
 @import "../styles/variables.less";
 
 .indicator {
-  gap: @lime-indicator-gap;
-  height: @lime-indicator-height;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	gap: @lime-indicator-gap;
+	height: @lime-indicator-height;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  .step {
-    margin: 0;
-  }
+	.step {
+		margin: 0;
+	}
 
-  .applySkins({
-    .step {
-      &.current {
-        color: @lime-indicator-current-dot-color;
-      }
+	.applySkins({
+		.step {
+			color: @lime-indicator-dot-color;
 
-      &.inactive {
-        color: @lime-indicator-inactive-dot-color;
-      }
-    }
-  });
+			&.inactive {
+				opacity: @lime-indicator-dot-inactive-opacity;
+			}
+		}
+	});
 }
 
 .pageIndicator {
-  height: auto;
-  width: @lime-page-indicator-width;
+	height: auto;
+	width: @lime-page-indicator-width;
 
-  .iconButton {
-    margin: 0;
-    padding: 0;
-  }
+	.iconButton {
+		margin: 0;
+		padding: 0;
+	}
 
-  .numberIndicator {
-    gap: @lime-number-indicator-gap;
-    margin: @lime-number-indicator-margin;
-    width: @lime-number-indicator-width;
-    display: flex;
-    justify-content: center;
+	.numberIndicator {
+		gap: @lime-number-indicator-gap;
+		margin: @lime-number-indicator-margin;
+		width: @lime-number-indicator-width;
+		display: flex;
+		justify-content: center;
 
-    .divider {
-      width: @lime-page-indicator-divider-width;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+		.divider {
+			width: @lime-page-indicator-divider-width;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
 }
