@@ -307,7 +307,7 @@ const DropdownBase = kind({
 				};
 			});
 		},
-		className: ({width, title, styler}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
+		className: ({styler, title, width}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
 		direction: ({direction}) => `${direction} center`,
 		handleSpotlightPause: () => (pauseSpotlight),
 		placeholder: ({children, placeholder = $L('No Selection'), selected}) => {
