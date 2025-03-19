@@ -47,7 +47,7 @@ describe('Scroller', function () {
 
 			// Step 6: Press Back key (or 'esc' with Chrome) or 5-way Select.
 			await ScrollerPage.backKey();
-			// Step 6 Verify: Spolight is on the box surrounding the item and scrollbars.
+			// Step 6 Verify: Spotlight is on the box surrounding the item and scrollbars.
 			expect(await ScrollerPage.focusableBody.isFocused()).toBe(true);
 
 			// Step 7: Press 5-Way Up.
