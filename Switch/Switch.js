@@ -26,7 +26,6 @@ import componentCss from './Switch.module.less';
  *
  * @class SwitchBase
  * @memberof limestone/Switch
- * @extends limestone/Icon.Icon
  * @ui
  * @public
  */

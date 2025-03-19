@@ -79,16 +79,6 @@
 		}
 
 		.disabled({
-			opacity: 1;
-
-			.client {
-				background-color: @lime-switch-disabled-bg-color;
-			}
-
-			.icon {
-				background-color: @lime-switch-disabled-icon-bg-color;
-			}
-
 			&.selected {
 				.client {
 					background-color: @lime-switch-disabled-selected-bg-color;
@@ -98,32 +88,6 @@
 					background-color: @lime-switch-disabled-selected-icon-bg-color;
 				}
 			}
-
-			.focus({
-				.bg {
-					background-color: @lime-switch-disabled-focus-bg-color;
-				}
-
-				.client {
-					background-color: @lime-switch-disabled-focus-client-bg-color;
-					transition: background-color 0ms;
-				}
-
-				.icon {
-					background-color: @lime-switch-disabled-focus-icon-bg-color;
-					transition: background-color 0ms;
-				}
-
-				&.selected {
-					.client {
-						background-color: @lime-switch-disabled-focus-client-bg-color;
-					}
-
-					.icon {
-						background-color: @lime-switch-disabled-focus-icon-bg-color;
-					}
-				}
-			});
 		});
 
 		// Standalone Switch
@@ -159,6 +123,22 @@
 				}
 			})
 		}
+
+
+		.lime-disabled({
+			.client {
+				.lime-disabled-colors();
+			}
+
+			.focus({
+				.bg {
+					.lime-disabled-focus-bg-colors();
+				}
+				.client {
+					.lime-disabled-focus-content-colors();
+				}
+			});
+		});
 	});
 }
 
