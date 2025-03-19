@@ -210,7 +210,7 @@ describe('Scroller', function () {
 			// Step 10-3 Verify: Scroll thumb's position is on the extreme left of the horizontalScrollbar track.
 			expect((await ScrollerPage.getScrollThumbPosition()).horizontal).toBe('0');
 		});
-		
+
 		it('Content animates with Click on scrollbar [QWTC-2386]', async function () {
 			// Step 3-3: Knobs > Scroller > focusableScrollbar > true
 			await ScrollerPage.dropdownFocusableScrollbar.moveTo();
@@ -233,7 +233,6 @@ describe('Scroller', function () {
 			await ScrollerPage.clickScrollTrack('horizontal', 'Right');
 			await ScrollerPage.delay(1000);
 			// Step 6-1 Verify: The Scroller scrolls Left to Right.
-			await ScrollerPage.delay(3000);
 			expect((await ScrollerPage.getScrollThumbPosition()).horizontal > initialHorizontalScrollThumbPosition).toBe(true);
 			// Step 7: Click on the Bottom Padding area of the horizontalScrollbar and to the Left of the Scroll thumb.
 			await ScrollerPage.clickScrollTrack('horizontal', 'Left');
@@ -242,7 +241,7 @@ describe('Scroller', function () {
 			expect((await ScrollerPage.getScrollThumbPosition()).horizontal).toBe('0');
 		});
 	});
-	
+
 	describe('RTL Locale', function () {
 		beforeEach(async function () {
 			await ScrollerPage.open('', '?locale=ar-SA');
