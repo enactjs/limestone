@@ -73,6 +73,7 @@ const KeyGuideBase = kind({
 		 * The direction of the arrow.
 		 * If `'none'`, no arrow is shown.
 		 * `'bottom'`, `'left'`, `'right'` and `'top'` can be used to position the arrow.
+		 * Arrow is only displayed in image-based guides.
 		 *
 		 * @type {String}
 		 * @public
@@ -83,11 +84,12 @@ const KeyGuideBase = kind({
 		/**
 		 * The items to be displayed in the `KeyGuide` when `open`.
 		 *
-		 * Takes an array of objects. The properties will be passed onto an `Item` component.
+		 * For icon-based guides, takes an array of objects. The properties will be passed onto an `Item` component.
 		 * The object requires `children`, and a unique `key` property. If the `icon` property is one
 		 * of `'red'`, `'green'`, `'yellow'` or '`blue'`, a corresponding color bar is shown.
-		 * The `icon` property is used only when `type` is `'icon'`.
-		 * The `src` property is used only when `type` is `'image'`. It is the URL of the image.
+		 *
+		 * For image-based guides, takes an object. The object requires `children` and `imageSrc` properties.
+		 * The `children` property is the text to be displayed and the `imageSrc` property is the path to the image to display.
 
 		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>}
 		 * @public
@@ -98,7 +100,7 @@ const KeyGuideBase = kind({
 			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 		})) || PropTypes.shape({
 			children: EnactPropTypes.renderable.isRequired,
-			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
 		}),
 
 		/**
@@ -108,6 +110,7 @@ const KeyGuideBase = kind({
 		 * The following classes are supported:
 		 *
 		 * * `keyGuide` - The root component class
+		 * * `imageGuide` - Applied to a image-based keyGuide
 		 *
 		 * @type {Object}
 		 * @public
