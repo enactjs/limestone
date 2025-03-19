@@ -32,9 +32,9 @@ export const _Indicator = (args) => (
 );
 
 range('current', _Indicator, Config, {min: 1, max: 10}, 3);
-boolean('hideButtons', _Indicator, Config, false);
 range('total', _Indicator, Config, {min: 2, max: 10}, 5);
 select('type', _Indicator, prop.types, Config);
+boolean('hideButtons', _Indicator, Config, false);
 
 _Indicator.storyName = 'Indicator';
 _Indicator.parameters = {

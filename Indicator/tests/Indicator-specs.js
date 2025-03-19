@@ -16,7 +16,7 @@ describe('Indicator', () => {
 
 			expect(actual).toBe(expected);
 		});
-		
+
 		test('should display the proper current', () => {
 			const {rerender} = render(<Indicator current={current} total={total} />);
 
@@ -32,7 +32,7 @@ describe('Indicator', () => {
 			expect(actual).toHaveClass(expected);
 		});
 	});
-	
+
 	describe('with type numbers', () => {
 		test('should render the proper values for `current` and `total`', () => {
 			render(<Indicator current={current} total={total} type="numbers" />);
@@ -42,7 +42,7 @@ describe('Indicator', () => {
 
 			expect(actual).toBe(expected);
 		});
-		
+
 		test('should update value for `current`', () => {
 			const {rerender} = render(<Indicator current={current} total={total} type="numbers" />);
 
@@ -58,7 +58,7 @@ describe('Indicator', () => {
 
 			expect(actual).toBe(expected);
 		});
-		
+
 		test('should call `onChange` for button press', async () => {
 			const handleClick = jest.fn();
 			const user = userEvent.setup();

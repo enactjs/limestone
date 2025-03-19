@@ -1,11 +1,14 @@
 /**
- * Provides Limestone styled component to indicate progress along a continuum.
+ * Provides Limestone styled component to indicate progress along a continuum. The component has 2 types.
  *
- * In the following example, 6 total steps will be displayed with the current step being the 3rd
+ * In the first example we use dots, 6 total steps will be displayed with the current step being the 3rd
  * step, having passed the previous 2 steps, with 3 more to go.
  *
+ * In the second example we use numbers, the indicator will display `< 3 / 6 >`.
+ *
  * @example
- * <Indicator total={6} current={3} />
+ * <Indicator current={3} total={6} />
+ * <Indicator current={3} total={6} type="numbers" />
  *
  * @module limestone/Indicator
  * @exports Indicator
@@ -19,21 +22,21 @@ import Repeater from '@enact/ui/Repeater';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {useCallback} from 'react';
 
 import Button from '../Button';
 import Icon from '../Icon';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Indicator.module.less';
-import {useCallback} from "react";
 
 const PageIndicator = ({className, current, hideButtons, onChange = null, total, ...rest}) => {
 	const mergedClasses = classNames(componentCss.pageIndicator, className);
-	
+
 	const handleDecrement = useCallback(() => {
 		if (onChange && current > 1) onChange({type: 'decrement', value: current - 1});
 	}, [current, onChange]);
-	
+
 	const handleIncrement = useCallback(() => {
 		if (onChange && current < total) onChange({type: 'increment', value: current + 1});
 	}, [current, onChange, total]);
@@ -52,9 +55,41 @@ const PageIndicator = ({className, current, hideButtons, onChange = null, total,
 };
 
 PageIndicator.propTypes = {
+	/*
+	 * Indicate the current step.
+	 *
+	 * This is 1-based, not 0-based; as in the first step is `1`.
+	 *
+	 * @type {Number}
+	 * @default 1
+	 * @public
+	 */
 	current: PropTypes.number,
+
+	/*
+	 * Indicates if `PageIndicator` displays buttons.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @public
+	 */
 	hideButtons: PropTypes.bool,
+
+	/*
+	 * Function called when the navigation buttons are pressed
+	 *
+	 * @type {Function}
+	 * @public
+	 */
 	onChange: PropTypes.func,
+
+	/*
+	 * Indicate the total number of steps.
+	 *
+	 * @type {Number}
+	 * @default 2
+	 * @public
+	 */
 	total: PropTypes.number
 };
 
@@ -71,30 +106,30 @@ const IndicatorBase = kind({
 
 	propTypes: /** @lends limestone/Indicator.IndicatorBase.prototype */ {
 		/**
-         * Customizes the component by mapping the supplied collection of CSS class names to the
-         * corresponding internal elements and states of this component.
-         *
-         * The following classes are supported:
-         *
-         * * `indicator` - The root class name
-         * * `step` - Applied to each individual step
-         * * `current` - Applied to the current step
-         * * `inactive` - Applied to the all steps that are not current
-         *
-         * @type {Object}
-         * @public
-         */
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `indicator` - The root class name
+		 * * `step` - Applied to each individual step
+		 * * `current` - Applied to the current step
+		 * * `inactive` - Applied to the all steps that are not current
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object,
 
 		/**
-         * Indicate the current step.
-         *
-         * This is 1-based, not 0-based; as in the first step is `1`.
-         *
-         * @type {Number}
-         * @default 1
-         * @public
-         */
+		 * Indicate the current step.
+		 *
+		 * This is 1-based, not 0-based; as in the first step is `1`.
+		 *
+		 * @type {Number}
+		 * @default 1
+		 * @public
+		 */
 		current: PropTypes.number,
 
 		/**
@@ -107,25 +142,25 @@ const IndicatorBase = kind({
 		hideButtons: PropTypes.bool,
 
 		/**
-         * Function called when the navigation buttons are pressed
-         *
-         * @type {Function}
-         * @public
-         */
+		 * Function called when the navigation buttons are pressed
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onChange: PropTypes.func,
 
 		/**
-         * Indicate the total number of steps.
-         *
-         * @type {Number}
-         * @default 2
-         * @public
-         */
+		 * Indicate the total number of steps.
+		 *
+		 * @type {Number}
+		 * @default 2
+		 * @public
+		 */
 		total: PropTypes.number,
 
 		/**
-         *
-         */
+		 *
+		 */
 		type: PropTypes.oneOf(['dots', 'numbers'])
 	},
 
