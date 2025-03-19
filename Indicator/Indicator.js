@@ -56,7 +56,7 @@ const PageIndicator = ({className, current, hideButtons, onChange = null, total,
 
 PageIndicator.propTypes = {
 	/*
-	 * Indicate the current step.
+	 * Indicates the current step.
 	 *
 	 * This is 1-based, not 0-based; as in the first step is `1`.
 	 *
@@ -76,7 +76,7 @@ PageIndicator.propTypes = {
 	hideButtons: PropTypes.bool,
 
 	/*
-	 * Function called when the navigation buttons are pressed
+	 * Function called when the navigation buttons are pressed.
 	 *
 	 * @type {Function}
 	 * @public
@@ -122,7 +122,7 @@ const IndicatorBase = kind({
 		css: PropTypes.object,
 
 		/**
-		 * Indicate the current step.
+		 * Indicates the current step.
 		 *
 		 * This is 1-based, not 0-based; as in the first step is `1`.
 		 *
@@ -142,7 +142,7 @@ const IndicatorBase = kind({
 		hideButtons: PropTypes.bool,
 
 		/**
-		 * Function called when the navigation buttons are pressed
+		 * Function called when the navigation buttons are pressed.
 		 *
 		 * @type {Function}
 		 * @public

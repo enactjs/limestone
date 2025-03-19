@@ -1,8 +1,8 @@
+import BodyText from '@enact/limestone/BodyText';
 import Indicator, {IndicatorBase} from '@enact/limestone/Indicator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 import {action} from '@enact/storybook-utils/addons/actions';
-import BodyText from '@enact/limestone/BodyText';
 
 Indicator.displayName = 'Indicator';
 const Config = mergeComponentMetadata('Indicator', IndicatorBase, Indicator);
