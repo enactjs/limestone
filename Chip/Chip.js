@@ -3,11 +3,15 @@
  *
  * @example
  * <Chip
- *   label="Label"
- *   icon="usb"
- *   direction="top"
- * 	 hasDeleteButton={true}
- * />
+ *   icon="check"
+ *   direction="right"
+ *   deleteButton={{
+ *     icon: 'closex',
+ *     position: 'right'
+ *   }}
+ * >
+ *  Label
+ * </Chip>
  *
  * @module limestone/Chip
  * @exports Chip
@@ -18,23 +22,19 @@
 import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {getDirection} from '@enact/spotlight';
-import Spottable from '@enact/spotlight/Spottable';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useState, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 import Button from '../Button';
-import Icon from '../Icon';
 import Skinnable from '../Skinnable';
 
 import css from './Chip.module.less';
 
 const ChipDefaultProps = {
-	direction: 'right',
-	label: 'chip',
-	hasDeleteButton: false,
+	icon: 'check',
 	disabled: false
 };
 
@@ -48,71 +48,42 @@ const ChipDefaultProps = {
  */
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {icon, className, label, direction, disabled, hasDeleteButton, onDeleteClick, ...rest} = chipProps;
-	const [position, setPosition] = useState({top: 0, left: 0});
-	const chipClassName = classnames(css.chip, className, direction);
-	const buttonClassName = classnames(css.deleteButtonContainer, css.focused);
+	const {icon, children, className, deleteButton, disabled, ...rest} = chipProps;
+	const chipClassName = classnames(css.chip, className, deleteButton?.position);
+	const buttonClassName = classnames(css.deleteButtonContainer, css.focused, css[deleteButton?.position || 'right']);
 	const clientRef = useRef(null);
 	const buttonRef = useRef(null);
-
-	const getPosition = (clientNode, buttonDirection) => {
-		let buttonPosition = {};
-
-		switch (buttonDirection) {
-			case 'top':
-				buttonPosition.top = (-clientNode.height * 2);
-				buttonPosition.left = clientNode.width / 3.5;
-				break;
-			case 'bottom':
-				buttonPosition.left = clientNode.width / 3.5;
-				break;
-			case 'right':
-				buttonPosition.top = (-clientNode.height);
-				buttonPosition.left = clientNode.width;
-				break;
-		}
-		return buttonPosition;
-	};
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
-			if (nextTarget !== clientRef.current && !nextTarget.classList.contains(css.deleteButton)) {
+			if (nextTarget !== null && nextTarget !== clientRef.current.firstChild && nextTarget !== buttonRef.current.firstChild) {
 				buttonRef.current.classList.remove(css.focused);
 			}
 		}
 	}, []);
 
 	const handleMouseLeave = useCallback((ev) => {
-		if (ev.target.classList[0].includes('Chip')) {
+		if (clientRef.current.contains(ev.target)) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, []);
 
 	const handleFocus = useCallback((ev) => {
-		if (ev.target === clientRef.current) {
+		if (ev.target === clientRef.current.firstChild) {
 			buttonRef.current.classList.add(css.focused);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (!clientRef.current) return;
-
-		const clientNode = clientRef.current.getBoundingClientRect();
-		const buttonPosition = getPosition(clientNode, direction);
-
-		setPosition(buttonPosition);
-	}, [direction, hasDeleteButton]);
-
-	useEffect(() => {
-		if (buttonRef.current && hasDeleteButton) {
+		if (buttonRef.current && deleteButton && Object.keys(deleteButton).length !== 0) {
 			buttonRef.current.classList.remove(css.focused);
 		}
-	}, [hasDeleteButton]);
+	}, [deleteButton]);
 
-	delete rest.hasDeleteButton;
+	delete rest.deleteButton;
 
 	return (
 		<div
@@ -124,23 +95,16 @@ const ChipBase = (props) => {
 			onMouseLeave={handleMouseLeave}
 			onFocus={handleFocus}
 		>
-			<div className={css.chip} >
-				<div className={css.bg} />
-				<div className={css.content}>
-					{icon && <Icon className={css.icon} size="large">{icon}</Icon>}
-					<div className={css.labelContainer}>{label}</div>
-				</div>
-			</div>
-			{hasDeleteButton &&
+			<Button icon={icon ? icon : 'check'} size="small" css={css}>{children}</Button>
+			{deleteButton && Object.keys(deleteButton).length !== 0 &&
 				<div ref={buttonRef} className={buttonClassName}>
 					<Button
 						backgroundOpacity="transparent"
 						className={css.deleteButton}
 						disabled={disabled}
-						icon="closex"
+						icon={deleteButton?.icon || 'closex'}
 						size="small"
-						style={position}
-						onClick={onDeleteClick}
+						onClick={deleteButton.onClick}
 					/>
 				</div>
 			}
@@ -152,13 +116,24 @@ ChipBase.displayName = 'Chip';
 
 ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	/**
-	 * Direction of the delete button.
+	 * A label displayed in the chip content.
 	 *
-	 * @type {('top'|'bottom'|'right')}
-	 * @default 'right'
+	 * @type {String}
 	 * @public
 	 */
-	direction: PropTypes.oneOf(['top', 'bottom', 'right']),
+	children: PropTypes.string,
+
+	/**
+	 * Define the icon, click handler, and position to be placed in the delete button.
+	 *
+	 * @type {Object}
+	 * @public
+	 */
+	deleteButton: PropTypes.shape({
+		icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		onClick: PropTypes.func,
+		position: PropTypes.oneOf(['top', 'bottom', 'right'])
+	}),
 
 	/**
 	 * Disables Chip and becomes non-interactive.
@@ -170,14 +145,6 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	disabled: PropTypes.bool,
 
 	/**
-	 * Whether it has a delete button.
-	 *
-	 * @type {Boolean}
-	 * @public
-	 */
-	hasDeleteButton: PropTypes.bool,
-
-	/**
 	 * The icon content in the chip content.
 	 * If this is specified, {@link limestone/Icon.Icon|Icon} will be shown as the content.
 	 *
@@ -185,23 +152,7 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	 * @type {String|Object}
 	 * @public
 	 */
-	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-
-	/**
-	 * A label displayed in the chip content.
-	 *
-	 * @type {String}
-	 * @public
-	 */
-	label: PropTypes.string,
-
-	/**
-	 * Called when the delete button clicked.
-	 *
-	 * @type {Function}
-	 * @public
-	 */
-	onDeleteClick: PropTypes.func
+	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 /**
@@ -210,26 +161,28 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
  *
  * @hoc
  * @memberof limestone/Chip
- * @mixes spotlight/Spottable.Spottable
  * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ChipDecorator = compose(
-	Spottable,
 	Skinnable
 );
 
 /**
- * A limestone-styled chip and Spottable applied.
+ * A limestone-styled chip.
  *
  * Usage:
  * ```
  * <Chip
- *   label="Label"
- *   icon="usb"
- *   direction="top"
- * 	 hasDeleteButton={true}
- * />
+ *   icon="check"
+ *   direction="right"
+ *   deleteButton={{
+ *     icon: 'closex',
+ *     position: 'right',
+ *   }}
+ * >
+ *  Label
+ * </Chip>
  * ```
  *
  * @class Chip

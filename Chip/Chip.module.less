@@ -8,40 +8,37 @@
 	position: relative;
 	display: inline-block;
 
-	.bg {
-		position: absolute;
-		.position(0);
-		border-radius: @lime-chip-border-radius;
-	}
+	.button {
+		&.small {
+			margin-right: auto;
+		}
 
-	.content {
-		display: flex;
-		position: relative;
-		box-sizing: border-box;
-		align-items: center;
-		justify-content: center;
-		height: @lime-chip-content-height;
-		border-radius: @lime-chip-border-radius;
-		padding: 0 @lime-chip-h-padding;
-	}
-
-	.icon {
-		margin: @lime-chip-icon-margin;
-	}
-
-	.labelContainer {
-		font-family: @lime-chip-font-family;
-		font-weight: @lime-chip-font-weight;
-		font-size: @lime-chip-label-font-size;
-		line-height: @lime-chip-label-line-height;
-		letter-spacing: @lime-chip-letter-spacing;
-		padding: @lime-chip-label-padding;
-		text-align: center;
+		.bg {
+			border-radius: @lime-chip-border-radius;
+		}
 	}
 
 	.deleteButtonContainer {
 		position: absolute;
 		display: none;
+
+		&.right {
+			top: 0;
+			right: 0;
+			transform: translateX(100%);
+		}
+
+		&.bottom {
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%, 100%);
+		}
+
+		&.top {
+			top: -100%;
+			left: 50%;
+			transform: translateX(-50%);
+		}
 	}
 	
 	.deleteButton {
@@ -51,24 +48,14 @@
 	.focused {
 		display: block;
 	}
-	
+
 	// Skin colors
 	.applySkins({
-		.content {
-			background-color: @lime-chip-bg-color;
-		}
-
 		.focus({
 			.lime-spotlight-focus-text-colors();
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
-			}
-
-			.content {
-				background-color: @lime-focus-bg-color;
-				transform: scale(1.1);
-				transition: transform 200ms ease-out;
 			}
 		});
 

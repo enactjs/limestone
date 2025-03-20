@@ -1,6 +1,6 @@
 import {Chip, ChipBase} from '@enact/limestone/Chip';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {select, text, boolean} from '@enact/storybook-utils/addons/controls';
+import {select, text, boolean, object} from '@enact/storybook-utils/addons/controls';
 
 import iconNames from '../helper/icons';
 
@@ -17,19 +17,23 @@ export const _Chip = (args) => {
 		<div style={{position: 'relative', top: '24px', width: '100%', height: '100%'}}>
 			<Chip
 				icon={args['icon']}
-				label={args['label']}
-				direction={args['direction']}
 				disabled={args['disabled']}
-				hasDeleteButton={args['hasDeleteButton']}
-			/>
+				deleteButton={args['deleteButton']}
+			>
+				{args['children']}
+			</Chip>
 		</div>
 	);
 };
 
+const deleteButtonProps = {
+	icon: 'closex',
+	position: 'right'
+};
+
 select('icon', _Chip, ['', ...iconNames], Config, 'check');
-text('label', _Chip, Config, 'chip');
-select('direction', _Chip, ['top', 'right', 'bottom'], Config, 'right');
-boolean('hasDeleteButton', _Chip, Config, true);
+text('children', _Chip, Config, 'chip');
+object('deleteButton', _Chip, Config, deleteButtonProps);
 boolean('disabled', _Chip, Config, false);
 
 _Chip.storyName = 'Chip';
