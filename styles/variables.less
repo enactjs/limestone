@@ -336,12 +336,12 @@
 
 // Button
 // ---------------------------------------
-@lime-button-border-width: 3px;
+@lime-button-border-width: 6px;
 @lime-button-bg-opacity: 1;
 @lime-button-transparent-bg-opacity: 0;
 @lime-button-transparent-selected-bg-opacity: 1;
 @lime-button-margin: 0 @lime-component-spacing;
-@lime-button-focusexpand-margin: 6px .extract(@lime-button-margin, right)[]; // 6px provides enough space for the expanded focus state
+@lime-button-focusexpand-margin: 9px .extract(@lime-button-margin, right)[]; // 9px provides enough space for the expanded focus state
 @lime-button-h-padding: 60px;
 @lime-button-with-icon-h-padding: @lime-spotlight-outset;
 @lime-button-height-large: 192px;
@@ -360,8 +360,8 @@
 @lime-button-icon-small-padding: 0 ((@lime-button-small-height - @lime-icon-small-size) / 2);
 @lime-button-max-width: 1200px;
 @lime-button-min-width: 300px;
-@lime-button-minWidth-default: 840px; // If this changes, update `overflow` computed value from Alert.js
-@lime-button-focusexpand-focus-bg-transform: scale(1.05);
+@lime-button-minWidth-default: 840px;
+@lime-button-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-focusexpand-pressed-bg-transform: scale(1.02);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
 @lime-button-small-margin: @lime-button-margin;
@@ -371,7 +371,7 @@
 @lime-button-small-height: 108px;
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
-@lime-button-small-minWidth-default: 660px;
+@lime-button-small-minWidth-default: 720px;
 @lime-button-small-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-small-focusexpand-pressed-bg-transform: scale(1.04);
 @lime-button-colordot-bottom: 18px;
