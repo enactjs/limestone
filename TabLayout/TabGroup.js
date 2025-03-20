@@ -222,7 +222,6 @@ const TabGroupBase = kind({
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
-			noScrollByWheel: true,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
