@@ -82,6 +82,7 @@ const PickerButtonBase = kind({
 				<Button
 					{...rest}
 					backgroundOpacity="transparent"
+					css={css}
 					disabled={disabled}
 					icon={icon}
 					size="small"

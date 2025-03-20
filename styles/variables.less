@@ -160,7 +160,7 @@
 @lime-mediaplayer-times-min-width:    186px;
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             54px;
-@lime-picker-joined-font-size:      66px;
+@lime-picker-joined-font-size:      var(--ref-font-size-66);
 @lime-steps-step-number-font-size:  54px;
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
@@ -291,7 +291,7 @@
 @lime-tallglyph-item-small-label-line-height: @lime-tallglyph-item-small-line-height;
 
 // Picker
-@lime-picker-line-height: 1.5em;
+@lime-picker-line-height: 90px;
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
 @lime-picker-joined-font-weight: @lime-spottable-font-weight;
 
@@ -781,35 +781,33 @@
 @lime-picker-title-margin-left: .extract(@lime-heading-margin, left)[] + .extract(@lime-button-margin, left)[] + .extract(@lime-button-icon-small-padding, left)[];
 @lime-picker-title-max-width: 480px;
 @lime-picker-margin: 0 @lime-component-spacing;
-@lime-picker-item-padding: 0 @lime-spotlight-outset;
+@lime-picker-item-padding: 0 36px;
 @lime-picker-joined-vertical-border-radius: 24px;
 @lime-picker-focus-duration: @lime-spotlight-focus-animation-duration;
-@lime-picker-value-height: (@lime-picker-font-size * @lime-picker-line-height); // Determine the height of the item given the font size and relative (em) line height.
-@lime-picker-joined-value-height: (@lime-picker-joined-font-size * @lime-picker-line-height); // Determine the height of the item given the font size and relative (em) line height.
+@lime-picker-value-height: var(--ref-font-size-54);
+@lime-picker-joined-large-value-width: 696px;
+@lime-picker-joined-value-height: @lime-picker-line-height;
 @lime-picker-vertical-height: 362px;
-@lime-picker-joined-horizontal-border-radius: 960px;
+@lime-picker-joined-horizontal-border-radius: var(--ref-border-radius-full);
 @lime-picker-joined-horizontal-height: 210px;
-@lime-picker-joined-horizontal-padding: 0 @lime-icon-small-size;
+@lime-picker-joined-horizontal-padding: var(--ref-spacing-48);
 @lime-picker-joined-horizontal-value-line-height: (@lime-picker-joined-horizontal-height - 30px);
 @lime-picker-small-value-width: (@lime-icon-large-size + (@lime-spotlight-outset * 3));
 @lime-picker-medium-value-width: 360px;
-@lime-picker-large-value-width: 696px;
+@lime-picker-large-value-width: 466px;
+@lime-picker-incrementer-icon-size: 84px;
+@lime-picker-incrementer-width: 120px;
 @lime-picker-indicator-width: 24px;
 @lime-picker-indicator-height: 24px;
 @lime-picker-indicator-border-radius: @lime-picker-indicator-width;
 @lime-picker-indicator-inactive-scale: 0.75;
 @lime-picker-indicator-active-scale: 1;
-@lime-picker-indicator-margin: 21px 12px 0 12px;
+@lime-picker-indicator-margin: var(--ref-spacing-30) var(--ref-spacing-12) 0;
 // Math to calculate the difference in GUI guide spec for the item and the DOM size for the item.
 // Divide by 2 to get the difference of just one edge from the corrosponding edge,
 // since the two are center aligned vertically.
 @lime-picker-joined-horizontal-vedge-gap: ((@lime-picker-joined-horizontal-height - @lime-picker-joined-horizontal-value-line-height) / 2);
-// Math to find the margin-bottom of the item given the height of the item and the
-// desired distance from the top.
-@lime-picker-joined-horizontal-value-offset: ((
-	(48px - @lime-picker-joined-horizontal-vedge-gap) - // 48px - 15px = 33px
-	((@lime-picker-joined-value-height - 78px) / 2) // (78px - 99px / 2) = 10.5px
-) * 2);
+@lime-picker-joined-horizontal-value-offset: var(--ref-spacing-48);
 
 // @lime-picker-indicator-bottom: -(@lime-picker-joined-horizontal-height - 30px - @lime-picker-joined-horizontal-value-line-height);  // Yes, this looks awkward, but it allows us to define how far from the bottom edge of the picker the dots should be, rather than needing to manually account for the hieight or vertical-centering of the text. Just set the number to a new value to update.
 

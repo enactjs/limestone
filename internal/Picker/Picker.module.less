@@ -31,20 +31,14 @@
 	}
 
 	.valueWrapper {
-		margin-left: auto;
-		margin-right: auto;
 		height: @lime-picker-value-height;
-		line-height: @lime-picker-value-height;
 		position: relative;
+		padding: @lime-picker-item-padding;
 
 		.enact-locale-tallglyph({
 			height: @lime-tallglyph-picker-line-height;
 			line-height: @lime-tallglyph-picker-line-height;
 		});
-	}
-
-	.item {
-		padding: @lime-picker-item-padding;
 	}
 
 	// Special rules for small size for a more compact view
@@ -87,6 +81,18 @@
 		.enact-locale-rtl({
 			flex-direction: row-reverse;
 		});
+
+		.decrementer,
+		.incrementer {
+			width: @lime-picker-incrementer-width;
+			height: @lime-picker-incrementer-width;
+			margin: 0;
+
+			.icon {
+				font-size: @lime-picker-incrementer-icon-size;
+				line-height: @lime-picker-incrementer-icon-size;
+			}
+		}
 
 		.incrementer {
 			order: 3;
@@ -166,6 +172,10 @@
 					}
 				}
 			}
+
+			&.large .valueWrapper {
+				width: @lime-picker-joined-large-value-width;
+			}
 		}
 
 		&.horizontal.arrow, &.vertical {
@@ -218,10 +228,11 @@
 				}
 
 				.indicator {
-					background-color: @lime-picker-indicator-inactive-bg-color;
+					background-color: @lime-picker-indicator-active-bg-color;
+					opacity: 0.4;
 
 					&.active {
-						background-color: @lime-picker-indicator-active-bg-color;
+						opacity: 1;
 					}
 				}
 			}
@@ -242,15 +253,7 @@
 				:global(.spotlight-input-mouse)& {
 					.lime-spotlight-focus-text-colors();
 
-					&.horizontal:not(.arrow) {
-						&::before {
-							.lime-spotlight-focus-bg-colors();
-							background-color: @lime-picker-joined-horizontal-bg-color; // We use the resting colors here and augment the color using a filter so it can be animated smoothly
-							filter+_: saturate(0) brightness(1.89);
-						}
-					}
-
-					&.horizontal.arrow, &.vertical {
+					&.horizontal, &.vertical {
 						&::before {
 							.lime-spotlight-focus-bg-colors();
 						}
@@ -283,10 +286,11 @@
 					});
 
 					.indicator {
-						background-color: @lime-picker-indicator-inactive-focus-bg-color;
+						background-color: @lime-picker-indicator-active-focus-bg-color;
+						opacity: 0.4;
 
 						&.active {
-							background-color: @lime-picker-indicator-active-focus-bg-color;
+							opacity: 1;
 						}
 					}
 				}
