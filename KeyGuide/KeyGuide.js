@@ -84,14 +84,14 @@ const KeyGuideBase = kind({
 		/**
 		 * The items to be displayed in the `KeyGuide` when `open`.
 		 *
-		 * For icon-based guides, takes an array of objects. The properties will be passed onto an `Item` component.
+		 * For icon-based guides, it takes an array of objects. The properties will be passed onto an `Item` component.
 		 * The object requires `children`, and a unique `key` property. If the `icon` property is one
 		 * of `'red'`, `'green'`, `'yellow'` or '`blue'`, a corresponding color bar is shown.
 		 *
-		 * For image-based guides, takes an object. The object requires `children` and `imageSrc` properties.
+		 * For image-based guides, it takes an object. The object requires `children` and `imageSrc` properties.
 		 * The `children` property is the text to be displayed and the `imageSrc` property is the path to the image to display.
 
-		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>}
+		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>|Object.<{children: (String|Component), imageSrc: (String|Object)}>}
 		 * @public
 		 */
 		children: PropTypes.arrayOf(PropTypes.shape({
@@ -110,7 +110,7 @@ const KeyGuideBase = kind({
 		 * The following classes are supported:
 		 *
 		 * * `keyGuide` - The root component class
-		 * * `imageGuide` - Applied to a image-based keyGuide
+		 * * `imageGuide` - Applied to an image-based keyGuide
 		 *
 		 * @type {Object}
 		 * @public
