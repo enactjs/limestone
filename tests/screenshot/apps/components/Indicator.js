@@ -18,13 +18,13 @@ const IndicatorTests = [
 	<Indicator current={5} total={10} type="numbers" />,
 	<Indicator current={13} total={25} type="numbers" />,
 	// Numbers with no buttons
-	<Indicator hideButtons={true} type="numbers" />,
-	<Indicator hideButtons={true} total={5} type="numbers" />,
-	<Indicator hideButtons={true} total={10} type="numbers" />,
-	<Indicator hideButtons={true} total={25} type="numbers" />,
-	<Indicator current={3} hideButtons={true} total={5} type="numbers" />,
-	<Indicator current={5} hideButtons={true} total={10} type="numbers" />,
-	<Indicator current={13} hideButtons={true} total={25} type="numbers" />
+	<Indicator hideButtons type="numbers" />,
+	<Indicator hideButtons total={5} type="numbers" />,
+	<Indicator hideButtons total={10} type="numbers" />,
+	<Indicator hideButtons total={25} type="numbers" />,
+	<Indicator current={3} hideButtons total={5} type="numbers" />,
+	<Indicator current={5} hideButtons total={10} type="numbers" />,
+	<Indicator current={13} hideButtons total={25} type="numbers" />
 ];
 
 export default IndicatorTests;
