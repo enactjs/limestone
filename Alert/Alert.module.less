@@ -56,61 +56,33 @@
 	}
 
 	&.overlay {
+		overflow: hidden;
+
 		.alertImage {
-			margin: @lime-alert-overlay-image-margin;
+			margin-bottom: @lime-alert-overlay-image-margin-bottom;
+			padding: @lime-alert-overlay-image-padding;
 		}
 
 		.buttonContainer {
 			box-sizing: border-box;
+			margin-top: @lime-alert-overlay-buttons-margin-top;
 
 			// Every buttonCell after the first one
 			.buttonCell + .buttonCell {
 				margin-top: @lime-alert-overlay-button-spacing;
 			}
-
-			&.full {
-				margin: @lime-alert-overlay-buttons-margin;
-				.margin-start-end(
-					.extract(@lime-alert-overlay-buttons-margin, left)[],
-					.extract(@lime-alert-overlay-buttons-margin, right)[]
-				);
-				:global(.enact-orientation-portrait) & {
-					margin: @lime-portrait-alert-overlay-buttons-margin;
-					.margin-start-end(.extract(@lime-portrait-alert-overlay-buttons-margin, left)[], .extract(@lime-portrait-alert-overlay-buttons-margin, right)[], parent);
-				}
-			}
 		}
 
 		.content {
+			align-self: stretch;
 			.lime-alert-overlay-content();
+			padding: @lime-alert-overlay-body-padding;
+			margin: 0;
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
 				overflow-wrap: normal;
 				word-break: normal;
-			}
-
-			&.full {
-				width: @lime-alert-overlay-content-width;
-				.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-alert-overlay-text-button-gap);
-				margin-bottom: 0;
-
-				:global(.enact-orientation-portrait) & {
-					width: @lime-portrait-alert-overlay-content-width;
-					.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
-				}
-			}
-		}
-
-		&.noImage {
-			.content {
-				.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-alert-overlay-text-button-gap);
-
-				:global(.enact-orientation-portrait) & {
-					width: @lime-portrait-alert-overlay-noimage-content-width;
-					.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
-				}
-
 			}
 		}
 	}
@@ -118,14 +90,13 @@
 
 .popup {
 	&.overlay {
-		width: fit-content;
+		width: @lime-alert-overlay-width;
 		margin-left: auto;
 		margin-right: auto;
 
 		.body {
-			padding-top: @lime-alert-overlay-padding-top-bottom;
-			padding-bottom: @lime-alert-overlay-padding-top-bottom;
-			.padding-start-end(@lime-alert-overlay-padding-left, @lime-alert-overlay-padding-right);
+			padding: @lime-alert-overlay-padding;
+			max-height: @lime-alert-overlay-max-height;
 		}
 	}
 
@@ -133,7 +104,6 @@
 		background-color: @lime-alert-bg-color;
 
 		&.overlay {
-			margin-bottom: @lime-alert-overlay-margin-bottom;
 			border-radius: @lime-alert-overlay-border-radius;
 
 			/* Override colors inside overlay type Alert */

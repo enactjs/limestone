@@ -71,7 +71,7 @@
 // Alert
 // ---------------------------------------
 @lime-alert-bg-color: var(--lime-alias-color-surface-full);
-@lime-alert-overlay-shadow: 0 36px 36px var(--lime-alias-color-shadow);
+@lime-alert-overlay-shadow: 0 36px 48px 0 var(--lime-alias-color-shadow);
 
 // Button
 // ---------------------------------------
@@ -344,14 +344,15 @@
 
 // Switch
 // ---------------------------------------
-@lime-switch-color: var(--ref-color-base-70);
+@lime-switch-icon-bg-color: var(--ref-color-base-70);
 @lime-switch-bg-color: var(--ref-color-base-45);
-@lime-switch-focus-color: @lime-switch-color;
-@lime-switch-selected-color: var(--lime-alias-color-on-container-main);
+@lime-switch-focus-icon-bg-color: @lime-switch-icon-bg-color;
+@lime-switch-selected-icon-bg-color: var(--lime-alias-color-on-container-main);
 @lime-switch-selected-bg-color: var(--lime-alias-color-accent-green);
-@lime-switch-selected-focus-color: @lime-switch-selected-color;
-@lime-switch-disabled-selected-color: @lime-switch-color;
-@lime-switch-disabled-selected-bg-color: @lime-switch-bg-color;
+@lime-switch-selected-focus-icon-bg-color: @lime-switch-selected-icon-bg-color;
+@lime-switch-disabled-selected-bg-color: #303030;
+@lime-switch-disabled-selected-icon-bg-color: var(--ref-color-base-25);
+
 
 // TabLayout
 // ---------------------------------------
