@@ -21,6 +21,7 @@ import Icon from './components/Icon';
 import IconItem from './components/IconItem';
 import Image from './components/Image';
 import ImageItem from './components/ImageItem';
+import Indicator from './components/Indicator';
 import Input from './components/Input';
 import InputField from './components/InputField';
 import Item from './components/Item';
@@ -76,6 +77,7 @@ const components = {
 	IconItem,
 	Image,
 	ImageItem,
+	Indicator,
 	Input,
 	InputField,
 	Item,

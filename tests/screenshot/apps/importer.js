@@ -17,6 +17,7 @@ import Heading from '../../../Heading';
 import Icon from '../../../Icon';
 import Image from '../../../Image';
 import ImageItem from '../../../ImageItem';
+import Indicator from '../../../Indicator';
 import Input, {InputField} from '../../../Input';
 import Item from '../../../Item';
 import KeyGuide from '../../../KeyGuide';
@@ -65,6 +66,7 @@ const components = {
 	Icon,
 	Image,
 	ImageItem,
+	Indicator,
 	Input,
 	InputField,
 	Item,
