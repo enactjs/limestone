@@ -52,12 +52,13 @@ export const _Alert = (args) => (
 	<Alert
 		open={args['open']}
 		onClose={action('onClose')}
+		overlayPosition={args['overlayPosition']}
 		title={args['title']}
 		type={args['type']}
 	>
 		{args['image'] ? (
 			<image>
-				<AlertImage src={args['src']} type={args['type (image)']} />
+				<AlertImage iconSize={args['iconSize']} src={args['src']} type={args['type (image)']} />
 			</image>
 		) : null}
 		{prop.buttons[args['buttons']]}
@@ -69,9 +70,11 @@ boolean('open', _Alert, Config);
 select('buttons', _Alert, ['no buttons', '1 button', '2 buttons', '3 buttons', '4 buttons'], Config, '2 buttons');
 text('title', _Alert, Config, 'Fullscreen Alert Title');
 select('type', _Alert, ['fullscreen', 'overlay'], Config);
+select('overlayPosition', _Alert, ['bottom left', 'bottom right', 'center', 'top left', 'top right'], Config);
 text('children', _Alert, Config, 'Additional text content for Alert');
 boolean('image', _Alert, ImageConfig);
 select('type (image)', _Alert, ['icon', 'thumbnail'], ImageConfig, 'icon');
+select('iconSize', _Alert, ['small', 'large'], ImageConfig, 'large');
 text('src', _Alert, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
 
 _Alert.storyName = 'Alert';

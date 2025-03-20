@@ -34,7 +34,7 @@ boolean('open', _Popup, Config);
 select(
 	'position',
 	_Popup,
-	['bottom', 'center', 'fullscreen', 'left', 'right', 'top'],
+	['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right'],
 	Config,
 	'bottom'
 );
