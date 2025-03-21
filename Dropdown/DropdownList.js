@@ -92,13 +92,6 @@ const DropdownListBase = kind({
 		skinVariants: PropTypes.object,
 
 		/*
-		 * Specifies how to show vertical scrollbar.
-		 *
-		 * @type {('auto'|'visible'|'hidden')}
-		 */
-		verticalScrollbar: PropTypes.oneOf(['auto', 'visible', 'hidden']),
-
-		/*
 		 * The width of DropdownList.
 		 *
 		 * @type {('huge'|'x-large'|'large'|'medium'|'small'|'tiny')|number}
@@ -143,9 +136,9 @@ const DropdownListBase = kind({
 	},
 
 	computed: {
-		className: ({styler, verticalScrollbar, width}) => styler.append(
+		className: ({children, styler, width}) => styler.append(
 			typeof width === 'string' ? width : null,
-			{verticalScrollbar: (verticalScrollbar === 'visible') || (verticalScrollbar === 'auto')}
+			{verticalScrollbar: children.length > 5}
 		),
 		dataSize: ({children}) => children ? children.length : 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
@@ -153,7 +146,7 @@ const DropdownListBase = kind({
 		itemSize: () => 156
 	},
 
-	render: ({dataSize, id, itemSize, scrollTo, verticalScrollbar, width, ...rest}) => {
+	render: ({dataSize, id, itemSize, scrollTo, width, ...rest}) => {
 		delete rest.children;
 		delete rest.onSelect;
 		delete rest.selected;
@@ -172,7 +165,6 @@ const DropdownListBase = kind({
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}
-					verticalScrollbar={verticalScrollbar}
 				/>
 			</div>
 		);

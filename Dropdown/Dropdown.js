@@ -229,19 +229,10 @@ const DropdownBase = kind({
 		title: PropTypes.string,
 
 		/**
-		 * Specifies how to show vertical scrollbar.
-		 *
-		 * @type {('auto'|'visible'|'hidden')}
-		 * @default 'auto'
-		 * @public
-		 */
-		verticalScrollbar: PropTypes.oneOf(['auto', 'visible', 'hidden']),
-
-		/**
 		 * Width of the Dropdown.
 		 *
 		 * @type {('huge'|'large'|'x-large'|'medium'|'small'|'tiny')|number}
-		 * @default 'medium'
+		 * @default 'large'
 		 * @public
 		 */
 		width: PropTypes.oneOfType([
@@ -254,7 +245,6 @@ const DropdownBase = kind({
 		direction: 'below',
 		open: false,
 		size: 'large',
-		verticalScrollbar: 'auto',
 		width: 'large'
 	},
 
@@ -330,12 +320,12 @@ const DropdownBase = kind({
 		)
 	},
 
-	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, verticalScrollbar, width, ...rest}) => {
+	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
 		delete rest.rtl;
 
 		const ariaProps = extractAriaProps(rest);
 		const calcAriaProps = ariaLabel != null ? null : {role: 'region', 'aria-labelledby': ariaLabelledBy};
-		const popupProps = {'aria-live': null, children, handleSpotlightPause, onSelect, selected, verticalScrollbar, width, role: null};
+		const popupProps = {'aria-live': null, children, handleSpotlightPause, onSelect, selected, width, role: null};
 		const voiceProps = extractVoiceProps(rest);
 
 		// `ui/Group`/`ui/Repeater` will throw an error if empty so we disable the Dropdown and
