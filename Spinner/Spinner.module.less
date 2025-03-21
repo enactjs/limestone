@@ -167,20 +167,24 @@
 
 		.decorator {
 			// Ideal way, but won't be supported until Chrome 69
-			//background: conic-gradient(@lime-spinner-empty-color 80%, @lime-spinner-color 87.5%);
-			background: conic-gradient(from 90deg,rgba(255, 255, 255, 0) 0deg,rgba(255, 255, 255, 1) 207.347deg,rgba(255, 255, 255, 0) 360deg);
+			background: conic-gradient(@lime-spinner-empty-color 80%, @lime-spinner-color 87.5%);
+			//background: conic-gradient(from 90deg,rgba(255, 255, 255, 0) 0deg,rgba(255, 255, 255, 1) 207.347deg,rgba(255, 255, 255, 0) 360deg);
 				//radial-gradient(circle at 0% 0%, @lime-spinner-color 20%, @lime-spinner-empty-color 40%), // Visible gradient
 				//radial-gradient(circle at 35% 8%, @lime-spinner-color 15%, transparent 15%); // Filler between the closest fan and center of gradient
+
+			// background: conic-gradient(#FFF 207.34685897827148deg, rgba(255, 255, 255, 0.00) 360deg);
+
+			//background: conic-gradient(#FFF 57.59%, rgba(255, 255, 255, 0.00) 100%);
 
 
 			.fan1,
 			.fan2,
 			.fan3,
 			.fan4 {
-				background-color: @lime-spinner-color;
+				//background-color: @lime-spinner-color;
 			}
 			.cap {
-				background-color: @lime-spinner-head-color;
+				//background-color: @lime-spinner-head-color;
 			}
 		}
 
