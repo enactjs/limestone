@@ -43,6 +43,10 @@
 		});
 	}
 
+	.item {
+		padding: @lime-picker-item-padding;
+	}
+
 	// Special rules for small size for a more compact view
 	&.small {
 		.sizingPlaceholder,
@@ -84,6 +88,10 @@
 			flex-direction: row-reverse;
 		});
 
+		.item {
+			padding: 0;
+		}
+
 		.decrementer,
 		.incrementer {
 			width: @lime-picker-incrementer-width;
@@ -110,6 +118,10 @@
 
 	&.vertical {
 		height: @lime-picker-vertical-height;
+
+		&.large .valueWrapper {
+			width: @lime-picker-vertical-large-value-width;
+		}
 	}
 
 	&.joined {
