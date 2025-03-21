@@ -28,7 +28,9 @@ const tabsForScroll = [
 	SimpleTab({title: 'Nine'}),
 	SimpleTab({title: 'Ten'}),
 	SimpleTab({title: 'Eleven'}),
-	SimpleTab({title: 'Twelve'})
+	SimpleTab({title: 'Twelve'}),
+	SimpleTab({title: 'Thirteen'}),
+	SimpleTab({title: 'Fourteen'})
 ];
 
 const tabsWithIcons = [
@@ -216,7 +218,7 @@ const TabLayoutTests = [
 	<TabLayout index={9}>
 		{tabsForScroll}
 	</TabLayout>,
-	<TabLayout index={9} orientation="horizontal">
+	<TabLayout index={9} orientation="horizontal" tabSize={900}>
 		{tabsForScroll}
 	</TabLayout>,
 	// end of [QWTC-2616]
@@ -251,7 +253,7 @@ const TabLayoutTests = [
 	},
 	{
 		locale: 'ar-SA',
-		component: <TabLayout index={9} orientation="vertical">{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={9} orientation="horizontal" tabSize={900}>{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	}
 ];
