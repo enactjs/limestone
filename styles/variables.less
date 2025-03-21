@@ -616,27 +616,36 @@
 // ImageItem
 // ---------------------------------------
 @lime-imageitem-margin: 0;
-@lime-imageitem-border-radius: 12px;
+@lime-imageitem-border-radius: var(--ref-border-radius-12);
 @lime-imageitem-image-border-width: 6px;
 @lime-imageitem-caption-line-height: 72px;
 @lime-imageitem-label-line-height: 60px;
-@lime-imageitem-label-margin-top: 6px;
+@lime-imageitem-label-margin-top: var(--ref-spacing-6);
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
-@lime-imageitem-horizontal-padding: 48px;
+@lime-imageitem-horizontal-captions-height: 144px;
+@lime-imageitem-horizontal-captions-margin: var(--ref-spacing-36) 0;
+@lime-imageitem-horizontal-padding: var(--ref-spacing-48);
 @lime-imageitem-horizontal-image-width: 180px;
 @lime-imageitem-horizontal-image-height: @lime-imageitem-horizontal-image-width;
-@lime-imageitem-horizontal-image-margin: 0 48px 0 0;
-@lime-imageitem-horizontal-image-margin-rtl: 0 0 0 48px;
+@lime-imageitem-horizontal-image-margin: 0 var(--ref-spacing-48) 0 0;
+@lime-imageitem-horizontal-image-margin-rtl: 0 0 0 var(--ref-spacing-48);
 @lime-imageitem-horizontal-selection-icon-size: 90px;
-@lime-imageitem-vertical-padding: 24px 24px 30px;
-@lime-imageitem-vertical-full-image-padding: 84px; // 48px(for expanding) + 36px(for showing shadow)
-@lime-imageitem-vertical-captions-margin-top: 30px;
+@lime-imageitem-horizontal-height: 276px;
+@lime-imageitem-horizontal-width: 1464px;
+@lime-imageitem-horizontal-wideimage-height: 336px;
+@lime-imageitem-horizontal-wideimage-image-height: 240px;
+@lime-imageitem-horizontal-wideimage-image-width: 426px;
+@lime-imageitem-vertical-padding: var(--ref-spacing-24)  var(--ref-spacing-30);
+@lime-imageitem-vertical-full-border-radius: var(--ref-border-radius-24);
+@lime-imageitem-vertical-captions-margin-top: var(--ref-spacing-30);
 @lime-imageitem-vertical-label-height: 60px;
 @lime-imageitem-vertical-focus-image-transform: scale(1.2);
-@lime-imageitem-vertical-image-icon-margin: 0 24px 0 0;
+@lime-imageitem-vertical-image-icon-margin: 0 var(--ref-spacing-24) 0 0;
 @lime-imageitem-vertical-image-icon-size: 132px;
 @lime-imageitem-vertical-selection-icon-size: 120px;
+@lime-imageitem-vertical-height: 432px;
+@lime-imageitem-vertical-width: @lime-imageitem-vertical-height;
 
 // Input
 // ---------------------------------------

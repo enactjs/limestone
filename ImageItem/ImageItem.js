@@ -149,7 +149,7 @@ const ImageItemBase = kind({
 		 * The layout orientation of the component.
 		 *
 		 * @type {('horizontal'|'vertical')}
-		 * @default 'horizontal'
+		 * @default 'vertical'
 		 * @public
 		 */
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
@@ -211,14 +211,24 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * Changes the image from a square to a rectangle
+		 *
+		 * @type {Boolean}
+		 * @default 'false'
+		 * @public
+		 */
+		wideImage: PropTypes.bool
 	},
 
 	defaultProps: {
 		'data-webos-voice-intent': 'Select',
 		imageIconComponent: Image,
-		orientation: 'horizontal',
-		placeholder: defaultPlaceholder
+		orientation: 'vertical',
+		placeholder: defaultPlaceholder,
+		wideImage: false,
 	},
 
 	styles: {
@@ -264,8 +274,9 @@ const ImageItemBase = kind({
 					captions
 			);
 		},
-		className: ({children, imageIconSrc, label, orientation, styler}) => styler.append({
-			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc
+		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
+			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
+			wideImage
 		})
 	},
 
@@ -274,6 +285,7 @@ const ImageItemBase = kind({
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
 		delete rest.label;
+		delete rest.wideImage;
 
 		if (showSelection) {
 			rest['role'] = 'checkbox';

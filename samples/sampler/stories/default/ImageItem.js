@@ -33,25 +33,21 @@ export const _ImageItem = (args) => (
 		selected={args['selected']}
 		showSelection={args['showSelection']}
 		src={args['src']}
-		style={{
-			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1464),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 588 : 276)
-		}}
+		wideImage={args['wideImage']}
 	>
 		{args['children']}
 	</ImageItem>
 );
 
+select('orientation', _ImageItem, prop.orientation, Config);
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
-text('label', _ImageItem, Config, 'ImageItem label');
-select('orientation', _ImageItem, prop.orientation, Config);
 boolean('selected', _ImageItem, Config);
 boolean('showSelection', _ImageItem, Config);
+boolean('wideImage', _ImageItem, Config);
+text('children', _ImageItem, Config, 'Item Label');
+text('label', _ImageItem, Config, 'Description label');
 object('src', _ImageItem, Config, src);
-select('orientation', _ImageItem, prop.orientation, Config);
-text('children', _ImageItem, Config, 'ImageItem Caption');
 
 _ImageItem.storyName = 'ImageItem';
 _ImageItem.parameters = {

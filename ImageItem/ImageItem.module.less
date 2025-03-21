@@ -67,15 +67,24 @@
 	}
 
 	&.vertical {
-		&.fullImage {
-			padding: @lime-imageitem-vertical-full-image-padding;
+		height: @lime-imageitem-vertical-height;
+		width: @lime-imageitem-vertical-width;
 
+		&.fullImage {
 			.image {
+				border-radius: @lime-imageitem-vertical-full-border-radius;
+
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 				will-change: transform, box-shadow;
 
 				.selectionIcon {
 					transition: transform 200ms ease-in-out;
+				}
+			}
+
+			&.selected {
+				.selectionContainer::after {
+					border-radius: @lime-imageitem-vertical-full-border-radius;
 				}
 			}
 		}
@@ -115,13 +124,12 @@
 	}
 
 	&.horizontal {
+		height: @lime-imageitem-horizontal-height;
+		width: @lime-imageitem-horizontal-width;
+
 		.captions {
-			display: flex;
-			justify-content: flex-start;
-			align-content: center;
-			height: 144px;
-			width: 1116px;
-			margin: 36px 0;
+			height: @lime-imageitem-horizontal-captions-height;
+			margin: @lime-imageitem-horizontal-captions-margin;
 		}
 
 		.lime-spotlight-padding(@lime-imageitem-horizontal-padding);
@@ -141,6 +149,15 @@
 			width: @lime-imageitem-horizontal-selection-icon-size;
 			height: @lime-imageitem-horizontal-selection-icon-size;
 			line-height: @lime-imageitem-horizontal-selection-icon-size;
+		}
+
+		&.wideImage {
+			height: @lime-imageitem-horizontal-wideimage-height;
+
+			.image {
+				height: @lime-imageitem-horizontal-wideimage-image-height;
+				width: @lime-imageitem-horizontal-wideimage-image-width;
+			}
 		}
 	}
 
