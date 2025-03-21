@@ -246,12 +246,12 @@ const TabLayoutTests = [
 	},
 	{
 		locale: 'ar-SA',
-		component: 	<TabLayout index={9}>{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={9}>{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	},
 	{
 		locale: 'ar-SA',
-		component: 	<TabLayout index={9} orientation="vertical">{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={9} orientation="vertical">{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	}
 ];
