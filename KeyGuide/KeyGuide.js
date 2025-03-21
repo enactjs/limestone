@@ -72,7 +72,7 @@ const KeyGuideBase = kind({
 		/**
 		 * The direction of the arrow.
 		 * If `'none'`, no arrow is shown.
-		 * `'bottom'`, `'left'`, `'right'` and `'top'` can be used to position the arrow.
+		 * `'bottom'`, `'left'`, `'right'`, and `'top'` can be used to position the arrow.
 		 * Arrow is only displayed in image-based guides.
 		 *
 		 * @type {String}
@@ -85,7 +85,7 @@ const KeyGuideBase = kind({
 		 * The items to be displayed in the `KeyGuide` when `open`.
 		 *
 		 * For icon-based guides, it takes an array of objects. The properties will be passed onto an `Item` component.
-		 * The object requires `children`, and a unique `key` property. If the `icon` property is one
+		 * The object requires `children` and a unique `key` property. If the `icon` property is one
 		 * of `'red'`, `'green'`, `'yellow'` or '`blue'`, a corresponding color bar is shown.
 		 *
 		 * For image-based guides, it takes an object. The object requires `children` and `imageSrc` properties.
