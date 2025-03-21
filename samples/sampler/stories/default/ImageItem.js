@@ -9,9 +9,9 @@ const Config = mergeComponentMetadata('ImageItem', UiImageItem, ImageItemBase, I
 ImageItem.displayName = 'ImageItem';
 
 const src = {
-	hd: svgGenerator(180, 180, '7ed31d', 'ffffff', '180 X 180'),
-	fhd: svgGenerator(270, 270, '7ed31d', 'ffffff', '270 X 270'),
-	uhd: svgGenerator(540, 540, '7ed31d', 'ffffff', '540 X 540')
+	hd: svgGenerator(200, 200, '7ed31d', 'ffffff', '200 X 200'),
+	fhd: svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300'),
+	uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
 };
 
 const prop = {
