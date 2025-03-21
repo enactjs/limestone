@@ -181,7 +181,7 @@ describe('ImageItem', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should not support `wideImage` prop with vertical', () => {
+	test('should not apply `wideImage` with vertical', () => {
 		render(<ImageItemBase wideImage />);
 
 		const expected = 'wideImage';
