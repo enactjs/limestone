@@ -59,13 +59,7 @@ const SpinnerCore = kind({
 	render: ({children, css, ...rest}) => (
 		<div aria-live="off" role="alert" {...rest}>
 			<div className={css.bg}>
-				<div className={css.decorator}>
-					<div className={css.fan1} />
-					<div className={css.fan2} />
-					<div className={css.fan3} />
-					<div className={css.fan4} />
-					<div className={css.cap} />
-				</div>
+				<div className={css.decorator} />
 			</div>
 			{children ?
 				<Marquee className={css.client} marqueeOn="render" alignment="center">

@@ -12,22 +12,6 @@
 	85%   { transform: rotate(0.75turn + @turn-offset); }
 	100%  { transform: rotate(1turn + @turn-offset); }
 }
-@keyframes rotate1 {
-	0%, 100% { transform: rotate(0turn); }
-	33% { transform: rotate((1turn / 8)); }
-}
-@keyframes rotate2 {
-	0%, 100% { transform: rotate(0turn); }
-	33% { transform: rotate((2turn / 8)); }
-}
-@keyframes rotate3 {
-	0%, 100% { transform: rotate(0turn); }
-	33% { transform: rotate((3turn / 8)); }
-}
-@keyframes rotate4 {
-	0%, 100% { transform: rotate(0turn); }
-	33% { transform: rotate((4turn / 8)); }
-}
 
 .spinner {
 	line-height: @lime-body-line-height;
@@ -38,7 +22,6 @@
 		border-radius: 999px;
 		width: @lime-spinner-size;
 		height: @lime-spinner-size;
-		padding: @lime-spinner-line-margin;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -55,54 +38,14 @@
 		animation: none @lime-spinner-time linear infinite;
 		animation-name: spin;
 		animation-play-state: paused;
-
-		.fan1,
-		.fan2,
-		.fan3,
-		.fan4 {
-			content: "";
-			top: 0;
-			right: 50%;
-			bottom: 50%;
-			left: 0;
-			clip-path: polygon(100% 0, 0 3%, 100% 100%); // Cut each segment into a 1/8th wedge, with a little overhang to avoid a subpixel gap from rounding error
-			transform-origin: bottom right;
-		}
-		.fan1,
-		.fan2,
-		.fan3,
-		.fan4,
-		.cap {
-			position: absolute;
-			animation: none @lime-spinner-time linear infinite;
-			animation-name: rotate1;
-			animation-play-state: paused;
-			animation-fill-mode: both;
-		}
-		.fan2 {
-			animation-name: rotate2;
-		}
-		.fan3 {
-			animation-name: rotate3;
-		}
-		.fan4,
-		.cap {
-			animation-name: rotate4;
-		}
-		.cap {
-			top: 0;
-			right: 0;
-			bottom: 50%;
-			left: 0;
-			clip-path: circle((@lime-spinner-line-width / 2) at 50% (@lime-spinner-line-width / 2));
-			transform-origin: bottom;
-		}
 	}
 
 	.client {
 		.lime-body-text();
+		align-content: center;
+		height: @lime-spinner-client-height;
 		font-weight: @lime-spinner-font-weight;
-		margin-top: @lime-spotlight-outset;
+		line-height: @lime-spinner-client-line-height;
 		max-width: 696px;
 	}
 
@@ -121,10 +64,6 @@
 
 		.decorator {
 			-webkit-mask-image: radial-gradient(transparent (@lime-spinner-small-size / 2 - @lime-spinner-small-line-width - 1px), black (@lime-spinner-small-size / 2 - @lime-spinner-small-line-width));
-
-			.cap {
-				clip-path: circle((@lime-spinner-small-line-width / 2) at 50% (@lime-spinner-small-line-width / 2));
-			}
 		}
 
 		// Large-text mode support
@@ -146,15 +85,7 @@
 	}
 
 	&.running .decorator {
-		// Apply the following rules to the above selector and all of these children
-		&,
-		.fan1,
-		.fan2,
-		.fan3,
-		.fan4,
-		.cap {
 			animation-play-state: running;
-		}
 	}
 
 	// Skin colors
@@ -166,26 +97,7 @@
 		}
 
 		.decorator {
-			// Ideal way, but won't be supported until Chrome 69
-			background: conic-gradient(@lime-spinner-empty-color 80%, @lime-spinner-color 87.5%);
-			//background: conic-gradient(from 90deg,rgba(255, 255, 255, 0) 0deg,rgba(255, 255, 255, 1) 207.347deg,rgba(255, 255, 255, 0) 360deg);
-				//radial-gradient(circle at 0% 0%, @lime-spinner-color 20%, @lime-spinner-empty-color 40%), // Visible gradient
-				//radial-gradient(circle at 35% 8%, @lime-spinner-color 15%, transparent 15%); // Filler between the closest fan and center of gradient
-
-			// background: conic-gradient(#FFF 207.34685897827148deg, rgba(255, 255, 255, 0.00) 360deg);
-
-			//background: conic-gradient(#FFF 57.59%, rgba(255, 255, 255, 0.00) 100%);
-
-
-			.fan1,
-			.fan2,
-			.fan3,
-			.fan4 {
-				//background-color: @lime-spinner-color;
-			}
-			.cap {
-				//background-color: @lime-spinner-head-color;
-			}
+			background: conic-gradient(@lime-spinner-empty-color 207deg, @lime-spinner-color 360deg);
 		}
 
 		&.transparent {
