@@ -31,9 +31,11 @@
 	}
 
 	.valueWrapper {
+		margin-left: auto;
+		margin-right: auto;
 		height: @lime-picker-value-height;
+		line-height: @lime-picker-value-height;
 		position: relative;
-		padding: @lime-picker-item-padding;
 
 		.enact-locale-tallglyph({
 			height: @lime-tallglyph-picker-line-height;
@@ -90,14 +92,15 @@
 
 			.icon {
 				font-size: @lime-picker-incrementer-icon-size;
-				line-height: @lime-picker-incrementer-icon-size;
 			}
 		}
 
 		.incrementer {
+			margin-left: @lime-picker-incrementer-margin;
 			order: 3;
 		}
 		.decrementer {
+			margin-right: @lime-picker-incrementer-margin;
 			order: 1;
 		}
 		.valueWrapper {
