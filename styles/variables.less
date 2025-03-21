@@ -426,11 +426,11 @@
 @lime-dropdown-list-large-width: (@lime-dropdown-large-width - @lime-button-border-width);
 @lime-dropdown-list-x-large-width: (@lime-dropdown-x-large-width - @lime-button-border-width);
 @lime-dropdown-list-huge-width: (@lime-dropdown-huge-width - @lime-button-border-width);
-@lime-dropdown-max-items: 10;
+@lime-dropdown-max-items: 5;
 @lime-dropdown-list-min-width: @lime-dropdown-min-width;
-@lime-dropdown-list-max-height: (@lime-dropdown-max-items * @lime-item-small-height + @lime-item-shadow-height);
-@lime-dropdown-list-max-height-large: (@lime-dropdown-max-items * @lime-item-small-height-large + @lime-item-shadow-height);
-@lime-dropdown-list-scroller-padding: 24px;
+@lime-dropdown-list-max-height: (@lime-dropdown-max-items * @lime-item-height + @lime-item-shadow-height);
+@lime-dropdown-list-min-padding: 0 @lime-component-spacing;
+@lime-dropdown-list-scroller-padding: 60px;
 @lime-dropdown-title-font-style: italic;
 @lime-non-italic-dropdown-title-font-style: normal;
 
@@ -707,7 +707,7 @@
 @lime-item-border-radius: 12px;
 @lime-item-slotafter-spacing: 54px;
 @lime-item-slotbefore-spacing: 54px;
-@lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
+@lime-item-margin: 0;
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;

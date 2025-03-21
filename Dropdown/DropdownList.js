@@ -136,7 +136,7 @@ const DropdownListBase = kind({
 					data-selected={isSelected}
 					// eslint-disable-next-line react/jsx-no-bind
 					onClick={() => forward('onSelect', {data, selected: index}, props)}
-					size="small"
+					size="large"
 				/>
 			);
 		}
