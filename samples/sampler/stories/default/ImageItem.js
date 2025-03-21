@@ -2,7 +2,6 @@ import {ImageItem, ImageItemBase} from '@enact/limestone/ImageItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
-import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
 

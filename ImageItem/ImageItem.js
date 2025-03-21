@@ -214,7 +214,7 @@ const ImageItemBase = kind({
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
-		 * Changes the image from a square to a rectangle
+		 * Changes the image from a scale `1:1` to `16:9` in horizontal orientation.
 		 *
 		 * @type {Boolean}
 		 * @default 'false'
@@ -228,7 +228,7 @@ const ImageItemBase = kind({
 		imageIconComponent: Image,
 		orientation: 'vertical',
 		placeholder: defaultPlaceholder,
-		wideImage: false,
+		wideImage: false
 	},
 
 	styles: {
@@ -276,7 +276,7 @@ const ImageItemBase = kind({
 		},
 		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
-			wideImage
+			wideImage: orientation === 'horizontal' && wideImage
 		})
 	},
 
