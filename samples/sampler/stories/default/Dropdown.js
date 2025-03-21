@@ -41,7 +41,6 @@ export const _Dropdown = (args) => {
 			placeholder={args['placeholder']}
 			size={args['size']}
 			title={args['title']}
-			verticalScrollbar={args['verticalScrollbar']}
 			width={width}
 		>
 			{items}
@@ -58,7 +57,6 @@ boolean('disabled', _Dropdown, Config);
 text('placeholder', _Dropdown, Config);
 select('size', _Dropdown, ['small', 'large'], Config);
 text('title', _Dropdown, Config, 'Options');
-select('verticalScrollbar', _Dropdown, ['auto', 'hidden', 'visible'], Config);
 
 _Dropdown.storyName = 'Dropdown';
 _Dropdown.parameters = {
