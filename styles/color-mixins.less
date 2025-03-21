@@ -143,17 +143,10 @@
 .lime-button-resting-bg-color () {
 	background-color: @lime-button-bg-color;
 }
-
 .lime-button-selected-bg-color () {
 	background-color: @lime-button-selected-bg-color;
 	filter+_: @lime-button-selected-filter;
 }
-
-.lime-item-selected-bg-color () {
-	background-color: @lime-item-selected-bg-color;
-	filter+_: @lime-item-selected-filter;
-}
-
 .lime-button-focus-bg-color () {
 	background-color: @lime-button-focus-bg-color;
 	filter+_: @lime-button-focus-filter;
@@ -182,13 +175,4 @@
 		.lime-button-focus-bg-color();
 		@bg();
 	}, @shadow);
-}
-
-// Item state mixins
-.lime-item-selected-colors (@bg: {}, @shadow: {}) {
-	.lime-bg-colors({
-		.lime-item-selected-bg-color();
-		@bg();
-		@shadow();
-	});
 }
