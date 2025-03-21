@@ -178,6 +178,7 @@ describe('TimePicker', function () {
 					await timePicker.minute.click();
 					await browser.waitUntil(async () => await timePicker.minute.isFocused(), {timeout: 1500,  interval: 100});
 					await timePicker.incrementer('minute').click();
+					await Page.delay(200);
 					const {minute: value} = await extractValues(timePicker);
 					const expected = minute !== 59 ? minute + 1 : 0;
 					expect(value).toBe(expected);
