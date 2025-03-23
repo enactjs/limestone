@@ -9,6 +9,8 @@ import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 
+import css from './AlertImage.module.less';
+
 import {svgGenerator} from '../helper/svg';
 
 import css from './Alert.module.less';
@@ -196,3 +198,25 @@ select('type (image)', WithThumbnailAndScroller, ['icon', 'thumbnail'], ImageCon
 text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
 
 WithThumbnailAndScroller.storyName = 'with thumbnail and scroller';
+export const WithCustomSizeImage = (args) => (
+	<Alert
+		open={args['open']}
+		onClose={action('onClose')}
+		title="Fullscreen Alert Title"
+		type={args['type']}
+	>
+		<image>
+			<AlertImage src={args['src']} type="thumbnail" css={css}/>
+		</image>
+		<buttons>
+			<Button>Yes</Button>
+			<Button>No</Button>
+		</buttons>
+		Additional text content for Alert
+	</Alert>
+);
+
+boolean('open', WithCustomSizeImage, Config);
+text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
+
+WithCustomSizeImage.storyName = 'with custom size image';
