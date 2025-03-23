@@ -9,8 +9,6 @@ import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 
-import css from './AlertImage.module.less';
-
 import {svgGenerator} from '../helper/svg';
 
 import css from './Alert.module.less';
@@ -206,7 +204,7 @@ export const WithCustomSizeImage = (args) => (
 		type={args['type']}
 	>
 		<image>
-			<AlertImage src={args['src']} type="thumbnail" css={css}/>
+			<AlertImage src={args['src']} type="thumbnail" css={css} />
 		</image>
 		<buttons>
 			<Button>Yes</Button>
