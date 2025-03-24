@@ -1,0 +1,201 @@
+// Card.module.less
+//
+@import '../styles/mixins.less';
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.selected-border(@color: white, @z-index: 1) {
+	&::before {
+		content: '';
+		position: absolute;
+		.position(0);
+		border: 6px solid @color;
+		z-index: @z-index;
+	}
+}
+
+.card {
+	// TODO: margin
+	position: relative;
+
+	.image {
+		position: relative;
+	}
+
+	.selectionContainer {
+		pointer-events: none;
+		position: absolute;
+		.position(0);
+		border-color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border-width: 6px;
+		border-style: solid;
+
+		.selectionIcon {
+			width: 90px;
+			height: 90px;
+			border-radius: 50%;
+			margin: 0;
+			line-height: 90px;
+		}
+	}
+
+	.primaryBadge, .secondaryBadge {
+		position: absolute;
+		width: 108px;
+		height: 108px;
+		margin: 0;
+		top: 24px;
+	}
+	.primaryBadge {
+		left: 24px;
+	}
+	.secondaryBadge {
+		right: 24px;
+	}
+
+	&.vertical {
+		.captions {
+			padding: 36px 0;
+			display: flex;
+			align-items: center;
+			gap: 48px;
+			align-self: stretch;
+		}
+
+		.imageIcon {
+			height: 180px;
+			width: 180px;
+			margin: 0;
+		}
+
+		&.roundedImage {
+			border-radius: 36px;
+
+			.selectionContainer, .image {
+				border-radius: 36px;
+			}
+		}
+
+		&.captionOverlay .captions {
+			padding: 48px;
+		}
+
+		&.hasContainer {
+			.captions {
+				padding: 36px 48px;
+			}
+
+			&.roundedImage {
+				.image {
+					border-bottom-left-radius: unset;
+					border-bottom-right-radius: unset;
+				}
+
+				&.selected::before {
+					border-radius: 36px;
+				}
+			}
+		}
+	}
+
+	&.horizontal {
+		border-radius: 36px;
+
+		.captions {
+			padding: 48px;
+		}
+
+		.image {
+			border-top-left-radius: 36px;
+			border-bottom-left-radius: 36px;
+		}
+
+		&.selected::before {
+			border-radius: 36px;
+		}
+	}
+
+	// Skin colors
+	.applySkins({
+		.selectionContainer {
+			border-color: transparent;
+			.selectionIcon {
+				color: transparent;
+			}
+		}
+
+		&.selected .selectionIcon {
+			background-color: red;
+			color: white;
+		}
+
+		&.vertical {
+			&.hasContainer {
+				background-color: rgba(255, 255, 255, 0.1);
+
+				&.selected {
+					.selected-border(white, 7);
+				}
+			}
+
+			&.selected:not(.hasContainer) .selectionContainer {
+				border-color: white;
+				z-index: 5;
+			}
+		}
+
+		&.horizontal {
+			background-color: rgba(255, 255, 255, 0.1);
+
+			&.selected {
+				.selected-border(white, 1);
+			}
+		}
+
+		.focus({
+			.selectionIcon {
+				color: transparent;
+			}
+
+			&.selected .selectionIcon {
+				color: white;
+			}
+
+			&.vertical {
+				&:not(.captionOverlay):not(.hasContainer) .image,
+				&.captionOverlay,
+				&.hasContainer {
+					transform: scale(1.1);
+				}
+
+				&.hasContainer {
+					background-color: white;
+					.selected-border(white, 7);
+
+					&.roundedImage::before {
+						border-radius: 36px;
+					}
+				}
+
+				&:not(.hasContainer) .selectionContainer {
+					z-index: 5;
+					border-color: white;
+				}
+			}
+
+			&.horizontal {
+				transform: scale(1.1);
+				background-color: white;
+				.selected-border(white, 1);
+
+				&::before {
+					border-radius: 36px;
+				}
+			}
+		})
+	})
+}
