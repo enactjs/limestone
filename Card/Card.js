@@ -21,12 +21,14 @@ import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Row} from '@enact/ui/Layout';
 import compose from 'ramda/src/compose';
+import ri from '@enact/ui/resolution';
 import Icon from '../Icon';
 import Image from '../Image';
 import Skinnable from '../Skinnable';
 import {Marquee, MarqueeController} from '../Marquee';
 
 import componentCss from './Card.module.less';
+import AsyncRenderChildren from '../internal/AsyncRendererChildren/AsyncRenderChildren';
 
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
@@ -73,6 +75,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		css: PropTypes.object,
+
+		/**
+		 * Used internally to render `children` asynchronously.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		'data-index': PropTypes.number,
 
 		/**
 		 * Disable Card and becomes non-interactive.
@@ -122,6 +132,10 @@ const CardBase = kind({
 		 * A placeholder image to be displayed before the image is loaded.
 		 *
 		 * @type {String}
+		 * @default 'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
+		 * '9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0cm9rZT0iIzU1NSIgZmlsbD0iI2FhYSIg' +
+		 * 'ZmlsbC1vcGFjaXR5PSIwLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjgiIHN0cm9rZS13aWR0aD0iNiIgLz48L3N2Zz' +
+		 * '4NCg=='
 		 * @public
 		 */
 		placeholder: PropTypes.string,
@@ -188,9 +202,17 @@ const CardBase = kind({
 	},
 
 	computed: {
-		children: ({centered, children, css, label, imageIconSrc, orientation}) => {
+		children: ({centered, children, css, 'data-index': index, label, imageIconSrc, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
+			let placeholderCaptionHeight, placeholderLabelHeight;
+
+			if (imageIconSrc) {
+				placeholderCaptionHeight = ri.scale(label ? 138 : 276);
+			} else {
+				placeholderCaptionHeight = ri.scale(label ? 108 : 156);
+			}
+			placeholderLabelHeight = ri.scale(imageIconSrc ? 138 : 108);
 
 			const captions = (
 				<Row className={css.captions}>
@@ -203,13 +225,25 @@ const CardBase = kind({
 						/>
 					) : null}
 					<Cell>
-						<Marquee {...alignment} marqueeOn="hover">{children}</Marquee>
-						{typeof label !== 'undefined' ? <Marquee {...alignment} marqueeOn="hover">{label}</Marquee> : null}
+						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
+						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
 					</Cell>
 				</Row>
-
 			);
-			return captions;
+
+			return (
+				typeof index !== 'undefined' ?
+					<AsyncRenderChildren
+						fallback={<>
+							<div style={{height: placeholderCaptionHeight}} />
+							{typeof label !== 'undefined' ? <div style={{height: placeholderLabelHeight}} /> : null}
+						</>}
+						index={index}
+					>
+						{captions}
+					</AsyncRenderChildren> :
+					captions
+			);
 		},
 		className: ({captionOverlay, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
