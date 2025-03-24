@@ -1,3 +1,20 @@
+/**
+ * Provides Limestone styled card components and behaviors.
+ *
+ * @example
+ * <Card
+ *   src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
+ *   label="A secondary caption"
+ * >
+ *  The primary caption
+ * </Card>
+ *
+ * @module limestone/Card
+ * @exports Card
+ * @exports CardBase
+ * @exports CardDecorator
+ */
+
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
@@ -11,24 +28,153 @@ import {Marquee, MarqueeController} from '../Marquee';
 
 import componentCss from './Card.module.less';
 
+/**
+ * A Limestone styled base component for {@link limestone/Card.Card|Card}.
+ *
+ * @class CardBase
+ * @extends ui/Card.Card
+ * @memberof limestone/Card
+ * @ui
+ * @public
+ */
 const CardBase = kind({
 	name: 'Card',
 	propTypes: {
+		/**
+		 * Determines whether the caption will be placed over the image or not.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		captionOverlay: PropTypes.bool,
+
+		/**
+		 * Centers the cations when `imageIconSrc` is not provided.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		centered: PropTypes.bool,
+
+		/**
+		 * The primary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		children: PropTypes.string,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object,
+
+		/**
+		 * Disable Card and becomes non-interactive.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Set to `true` to display the image with a base color overlay.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		hasContainer: PropTypes.bool,
+
+		/**
+		 * Source for the image icon.
+		 *
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * A secondary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		label: PropTypes.string,
+
+		/**
+		 * The layout orientation of the component.
+		 *
+		 * @type {('horizontal'|'vertical')}
+		 * @default 'vertical'
+		 * @public
+		 */
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+
+		/**
+		 * A placeholder image to be displayed before the image is loaded.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		placeholder: PropTypes.string,
+
+		/**
+		 * The primary badge image source.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+
 		primaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * Set to `true` to display the image with rounded corners.
+		 * This prop is only used when `hasContainer` is `false` .
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		roundedImage: PropTypes.bool,
+
+		/**
+		 * The secondary badge image source.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		secondaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * Applies a selected visual effect to the image, but ony if `showSelection` is also `true`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		selected: PropTypes.bool,
+
+		/**
+		 * Shows a selection icon. When `true`, a checkmark is displayed on the image.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		showSelection: PropTypes.bool,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 	},
 	defaultProps: {
@@ -73,6 +219,11 @@ const CardBase = kind({
 		delete rest.hasContainer;
 		delete rest.roundedImage;
 
+		if (showSelection) {
+			rest['role'] = 'checkbox';
+			rest['aria-checked'] = rest.selected;
+		}
+
 		return (
 			<UiCard
 				{...rest}
@@ -97,12 +248,44 @@ const CardBase = kind({
 	}
 });
 
+/**
+ * Limestone-specific card behaviors to apply to
+ * {@link limestone/Card.Card|Card}.
+ *
+ * @hoc
+ * @memberof limestone/Card
+ * @mixes ui/Marquee.MarqueeController
+ * @mixes spotlight/Spottable
+ * @mixes limestone/Skinnable
+ * @public
+ */
 const CardDecorator = compose(
 	MarqueeController({marqueeOnFocus: true}),
 	Spottable,
 	Skinnable
 );
 
+/**
+ * A limestone Card component.
+ *
+ * Usage:
+ * ```
+ * <Card
+ * 	 src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
+ *   label="A secondary caption"
+ * >
+ *  The primary caption
+ * </Card>
+ * ```
+ *
+ * @class Card
+ * @memberof limestone/Card
+ * @extends limestone/Card.CardBase
+ * @mixes limestone/Card.CardDecorator
+ * @see {@link limestone/Card.CardBase}
+ * @ui
+ * @public
+ */
 const Card = CardDecorator(CardBase);
 
 Card.displayName = 'Card';
