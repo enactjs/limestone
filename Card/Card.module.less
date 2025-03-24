@@ -9,7 +9,9 @@
 		content: '';
 		position: absolute;
 		.position(0);
-		border: 6px solid @color;
+		border-width: @lime-card-image-border-width;
+		border-style: solid;
+		border-color: @color;
 		z-index: @z-index;
 	}
 }
@@ -23,8 +25,8 @@
 }
 
 .card {
-	// TODO: margin
 	position: relative;
+	margin: @lime-card-margin;
 
 	.image {
 		position: relative;
@@ -34,75 +36,74 @@
 		pointer-events: none;
 		position: absolute;
 		.position(0);
-		border-color: white;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
-		border-width: 6px;
+		border-width: @lime-card-image-border-width;
 		border-style: solid;
 
 		.selectionIcon {
-			width: 90px;
-			height: 90px;
-			border-radius: 50%;
-			margin: 0;
-			line-height: 90px;
+			width: @lime-card-selection-icon-size;
+			height: @lime-card-selection-icon-size;
+			border-radius: @lime-card-selection-icon-border-radius;
+			margin: @lime-card-selection-icon-margin;
+			line-height: @lime-card-selection-icon-line-height;
 		}
 	}
 
 	.primaryBadge, .secondaryBadge {
 		position: absolute;
-		width: 108px;
-		height: 108px;
-		margin: 0;
-		top: 24px;
+		width: @lime-card-badge-size;
+		height: @lime-card-badge-size;
+		margin: @lime-card-badge-margin;
+		top: @lime-card-badge-top;
 	}
 	.primaryBadge {
-		left: 24px;
+		left: @lime-card-badge-left;
 	}
 	.secondaryBadge {
-		right: 24px;
+		right: @lime-card-badge-right;
 	}
 
 	.caption {
-		line-height: 84px;
+		line-height: @lime-card-caption-line-height;
 	}
 
 	.label {
-		line-height: 60px;
+		line-height: @lime-card-label-line-height;
 	}
 
 	&.vertical {
 		.captions {
-			padding: 36px 0;
+			padding: @lime-card-vertical-captions-padding;
 			display: flex;
 			align-items: center;
-			gap: 48px;
+			gap: @lime-card-vertical-catpions-gap;
 			align-self: stretch;
 		}
 
 		.imageIcon {
-			height: 180px;
-			width: 180px;
-			margin: 0;
+			height: @lime-card-vertical-image-icon-size;
+			width: @lime-card-vertical-image-icon-size;
+			margin: @lime-card-vertical-image-icon-margin;
 		}
 
 		&.roundedImage {
-			border-radius: 36px;
+			border-radius: @lime-card-border-radius;
 
 			.selectionContainer, .image {
-				border-radius: 36px;
+				border-radius: @lime-card-border-radius;
 			}
 		}
 
 		&.captionOverlay .captions {
-			padding: 48px;
+			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
 		&.hasContainer {
 			.captions {
-				padding: 36px 48px;
+				padding: @lime-card-vertical-has-container-captions-padding;
 			}
 
 			&.roundedImage {
@@ -112,7 +113,7 @@
 				}
 
 				&.selected::before {
-					border-radius: 36px;
+					border-radius:  @lime-card-border-radius;
 				}
 			}
 		}
@@ -123,7 +124,7 @@
 			}
 
 			&.roundedImage .image::after {
-				border-radius: 36px;
+				border-radius:  @lime-card-border-radius;
 			}
 
 			&.hasContainer.roundedImage .image::after {
@@ -134,24 +135,24 @@
 	}
 
 	&.horizontal {
-		border-radius: 36px;
+		border-radius: @lime-card-border-radius;
 
 		.captions {
-			padding: 48px;
+			padding: @lime-card-horizontal-captions-padding;
 		}
 
 		.image {
-			border-top-left-radius: 36px;
-			border-bottom-left-radius: 36px;
+			border-top-left-radius: @lime-card-border-radius;
+			border-bottom-left-radius: @lime-card-border-radius;
 		}
 
 		&.selected::before {
-			border-radius: 36px;
+			border-radius: @lime-card-border-radius;
 		}
 
 		&.selected .image::after {
 			.image-scrim();
-			border-radius: 36px;
+			border-radius: @lime-card-border-radius;
 			border-top-right-radius: unset;
 			border-bottom-right-radius: unset;
 		}
@@ -215,7 +216,7 @@
 					.selected-border(white, 7);
 
 					&.roundedImage::before {
-						border-radius: 36px;
+						border-radius: @lime-card-border-radius;
 					}
 				}
 
@@ -231,7 +232,7 @@
 				.selected-border(white, 7);
 
 				&::before {
-					border-radius: 36px;
+					border-radius: @lime-card-border-radius;
 				}
 			}
 		})
