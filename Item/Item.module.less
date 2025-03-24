@@ -5,13 +5,12 @@
 @import "../styles/variables.less";
 
 .item {
-	.selected {
+	&.selected {
 		/* Available for customization */
 	}
 
 	font-size: @lime-item-font-size;
-	.lime-spotlight-padding(@lime-item-vertical-padding);
-
+	padding: @lime-item-padding;
 	font-weight: @lime-item-font-weight;
 	.enact-locale-line-height(@lime-item-line-height, @lime-tallglyph-item-line-height);
 	height: @lime-item-height;
@@ -29,6 +28,7 @@
 	.slotAfter,
 	.slotBefore {
 		line-height: 0;  // Attempt to get the children of this to always vertically-align their middles with the text
+		margin: 0;
 
 		> * {
 			// vertically align all direct children
@@ -55,6 +55,7 @@
 
 	&.hasLabel {
 		height: @lime-item-withlabel-height;
+		padding: @lime-item-withlabel-padding;
 
 		.itemContent {
 			&.labelAfter,
@@ -160,6 +161,17 @@
 			}
 		});
 
+		&.selected {
+			.bg {
+				.lime-spotlight-resting-bg-colors(@opacity: 1);
+				background-color: @lime-item-selected-bg-color;
+			}
+
+			.label {
+				color: @lime-item-selected-label-color;
+			}
+		}
+
 		:global(.noAnimation) & {
 			.focus({
 				.bg {
@@ -177,7 +189,6 @@
 
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors();
 					background-color: @lime-item-disabled-focus-bg-color;
 				}
 
