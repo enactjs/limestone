@@ -41,11 +41,10 @@ describe('Scroller List Of Things', function () {
 		await ScrollerPage.buttonTop.moveTo();
 		await ScrollerPage.spotlightDown();
 		// Step 6-2: 5-way Spot Item 99.
-		for (let i = 0; i < 19; i++) {
+		for (let i = 0; i < 16; i++) {
 			await ScrollerPage.pageDown();
 			await ScrollerPage.delay(700);
 		}
-		await ScrollerPage.spotlightUp();
 		await expectFocusedItem(99);
 		// Step 6-3: 5-way Down.
 		await ScrollerPage.spotlightDown();
