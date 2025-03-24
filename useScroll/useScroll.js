@@ -18,7 +18,7 @@ import {getRect, intersects} from '@enact/spotlight/src/utils';
 import {assignPropertiesOf, constants, useScrollBase} from '@enact/ui/useScroll';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import utilEvent from '@enact/ui/useScroll/utilEvent';
-import {use, useRef} from 'react';
+import {useContext, useRef} from 'react';
 
 import $L from '../internal/$L';
 import {SharedState} from '../internal/SharedStateDecorator';
@@ -65,7 +65,7 @@ const getTargetInViewByDirectionFromPosition = (direction, position, container) 
 const useThemeScroll = (props, instances) => {
 	const {scrollbarTrackCss, scrollMode} = props;
 	const {themeScrollContentHandle, scrollContentRef, scrollContainerHandle, scrollContainerRef} = instances;
-	const contextSharedState = use(SharedState);
+	const contextSharedState = useContext(SharedState);
 
 	// Mutable value
 

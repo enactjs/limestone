@@ -9,11 +9,11 @@ export const IndexProvider = ({children}) => {
 	const [state, dispatch] = useReducer(indexReducer, initialData);
 
 	return (
-		<IndexContext value={state}>
-			<IndexDispatchContext value={dispatch}>
+		<IndexContext.Provider value={state}>
+			<IndexDispatchContext.Provider value={dispatch}>
 				{children}
-			</IndexDispatchContext>
-		</IndexContext>
+			</IndexDispatchContext.Provider>
+		</IndexContext.Provider>
 	);
 };
 

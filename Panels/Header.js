@@ -10,7 +10,7 @@ import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, use, useState} from 'react';
+import {Children, useContext, useState} from 'react';
 
 import $L from '../internal/$L';
 import Button from '../Button';
@@ -514,7 +514,7 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
-		const {type: panelsType} = use(PanelsStateContext);
+		const {type: panelsType} = useContext(PanelsStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
 
