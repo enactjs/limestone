@@ -188,8 +188,9 @@ const CardBase = kind({
 	},
 
 	computed: {
-		children: ({children, css, label, imageIconSrc, orientation}) => {
+		children: ({centered, children, css, label, imageIconSrc, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
+			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
 
 			const captions = (
 				<Row className={css.captions}>
@@ -202,8 +203,8 @@ const CardBase = kind({
 						/>
 					) : null}
 					<Cell>
-						<Marquee>{children}</Marquee>
-						<Marquee>{label}</Marquee>
+						<Marquee {...alignment} marqueeOn="hover">{children}</Marquee>
+						{typeof label !== 'undefined' ? <Marquee {...alignment} marqueeOn="hover">{label}</Marquee> : null}
 					</Cell>
 				</Row>
 
