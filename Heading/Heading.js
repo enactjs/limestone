@@ -71,7 +71,7 @@ const HeadingBase = kind({
 		 * * `'none'` - No spacing at all. Neighboring elements will directly touch the Heading.
 		 *
 		 * @type {('auto'|'large'|'medium'|'small'|'none')}
-		 * @default 'small'
+		 * @default 'none'
 		 * @public
 		 */
 		spacing: PropTypes.oneOf(['auto', 'large', 'medium', 'small', 'none'])
