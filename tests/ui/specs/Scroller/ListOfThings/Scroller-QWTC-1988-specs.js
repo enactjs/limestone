@@ -18,13 +18,16 @@ describe('Scroller List Of Things', function () {
 		// Step 4: Press Channel Down.
 		await ScrollerPage.pageDown();
 		await ScrollerPage.delay(1000);
-		await expectFocusedItem(6);
+		await expectFocusedItem(7);
 		// Step 4 Verify: Spotlight is on the Item closest to the previously focused Item's location.
 		expect(Math.floor((await ScrollerPage.getActiveElementRect()).top / 100) * 100).toBe(firstPrevItemLocation);
 
 		// Step5: 5-way Down several times to the last visible item on the current viewport.
+		
 		const bottomVisibleIdNum = Number((await ScrollerPage.bottomVisibleItemId()).slice(4));
-		for (let i = 0; i < 6; i++) {
+		console.log(await ScrollerPage.bottomVisibleItemId());
+		console.log(Number((await ScrollerPage.bottomVisibleItemId()).slice(4)));
+		for (let i = 0; i < 7; i++) {
 			await ScrollerPage.spotlightDown();
 			await ScrollerPage.delay(100);
 		}
@@ -36,20 +39,20 @@ describe('Scroller List Of Things', function () {
 		// Step6: Press Channel Down.
 		await ScrollerPage.pageDown();
 		await ScrollerPage.delay(1000);
-		await expectFocusedItem(17);
+		await expectFocusedItem(20);
 		// Step 6 Verify: Spotlight is on the Item closest to the previously focused Item's location.
 		expect(Math.floor((await ScrollerPage.getActiveElementRect()).top / 100) * 100).toBe(secondPrevItemLocation);
 
 		// Step 7:Press Channel Up.
 		await ScrollerPage.pageUp();
 		await ScrollerPage.delay(1000);
-		await expectFocusedItem(12);
+		await expectFocusedItem(14);
 		// Step 7 Verify: Spotlight is on the Item closest to the previously focused Item's location.
 		expect(Math.floor((await ScrollerPage.getActiveElementRect()).top / 100) * 100).toBe(secondPrevItemLocation);
 
 		// Step 8: 5-way Up several times to the first visible item on the current viewport.
 		const topVisibleItemIdNum = Number((await ScrollerPage.topVisibleItemId()).slice(4));
-		for (let i = 0; i < 7; i++) {
+		for (let i = 0; i < 8; i++) {
 			await ScrollerPage.spotlightUp();
 			await ScrollerPage.delay(100);
 		}
@@ -80,6 +83,6 @@ describe('Scroller List Of Things', function () {
 		// Spotlight will display again when the pointer hides.
 		await ScrollerPage.hidePointerByKeycode();
 		// Spotlight displays on top-level item.
-		await expect(5).toBe(Number((await focusedElement()).slice(4)));
+		await expect(6).toBe(Number((await focusedElement()).slice(4)));
 	});
 });

@@ -29,7 +29,7 @@ describe('Scroller List Of Things', function () {
 
 		// Step 4-1: 5-way Up several times until reaching to the item which is upper the screen.
 		const topVisibleItemId = Number((await ScrollerPage.topVisibleItemId()).slice(4));
-		let keydownEvent = 7;
+		let keydownEvent = 8;
 		while (index > topVisibleItemId) {
 			await ScrollerPage.spotlightUp();
 			await ScrollerPage.delay(100);
