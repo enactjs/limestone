@@ -39,7 +39,8 @@ import componentCss from './Card.module.less';
  */
 const CardBase = kind({
 	name: 'Card',
-	propTypes: {
+
+	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
 		 * Determines whether the caption will be placed over the image or not.
 		 *
@@ -180,10 +181,12 @@ const CardBase = kind({
 	defaultProps: {
 		orientation: 'vertical'
 	},
+
 	styles: {
 		css: componentCss,
 		publicClassNames: true
 	},
+
 	computed: {
 		children: ({children, css, label, imageIconSrc, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
@@ -213,6 +216,7 @@ const CardBase = kind({
 			hasContainer: hasContainer && !captionOverlay
 		})
 	},
+
 	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, showSelection, ...rest}) => {
 		delete rest.label;
 		delete rest.imageIconSrc;
@@ -254,9 +258,9 @@ const CardBase = kind({
  *
  * @hoc
  * @memberof limestone/Card
- * @mixes ui/Marquee.MarqueeController
- * @mixes spotlight/Spottable
- * @mixes limestone/Skinnable
+ * @mixes limestone/Marquee.MarqueeController
+ * @mixes spotlight/Spottable.Spottable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const CardDecorator = compose(
@@ -266,7 +270,7 @@ const CardDecorator = compose(
 );
 
 /**
- * A limestone Card component.
+ * A Limestone-styled Card.
  *
  * Usage:
  * ```
