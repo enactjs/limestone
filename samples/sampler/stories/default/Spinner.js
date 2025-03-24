@@ -82,7 +82,7 @@ select('blockClickOn', _Spinner, [null, 'container', 'screen'], Config);
 boolean('centered', _Spinner, Config);
 boolean('paused', _Spinner, Config);
 boolean('scrim', _Spinner, Config);
-select('size', _Spinner, [null, 'medium', 'small'], Config);
+select('size', _Spinner, [null, 'large', 'small'], Config);
 boolean('transparent', _Spinner, Config);
 text('content', _Spinner, Config, '');
 
