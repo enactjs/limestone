@@ -16,14 +16,6 @@
 	}
 }
 
-.image-scrim() {
-	content: '';
-	position: absolute;
-	.position(0);
-	background: rgba(0, 0, 0, 0.5);
-	z-index: 1;
-}
-
 .card {
 	position: relative;
 	margin: @lime-card-margin;
@@ -36,6 +28,7 @@
 		pointer-events: none;
 		position: absolute;
 		.position(0);
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -117,21 +110,6 @@
 				}
 			}
 		}
-
-		&.selected {
-			.image::after {
-				.image-scrim();
-			}
-
-			&.roundedImage .image::after {
-				border-radius:  @lime-card-border-radius;
-			}
-
-			&.hasContainer.roundedImage .image::after {
-				border-bottom-left-radius: unset;
-				border-bottom-right-radius: unset;
-			}
-		}
 	}
 
 	&.horizontal {
@@ -149,17 +127,18 @@
 		&.selected::before {
 			border-radius: @lime-card-border-radius;
 		}
-
-		&.selected .image::after {
-			.image-scrim();
-			border-radius: @lime-card-border-radius;
-			border-top-right-radius: unset;
-			border-bottom-right-radius: unset;
-		}
 	}
 
 	// Skin colors
 	.applySkins({
+		.image-scrim() {
+			content: '';
+			position: absolute;
+			.position(0);
+			background: @lime-card-scrim-bg-color;
+			z-index: 1;
+		}
+
 		.selectionContainer {
 			border-color: transparent;
 			.selectionIcon {
@@ -168,40 +147,62 @@
 		}
 
 		&.selected .selectionIcon {
-			background-color: red;
-			color: white;
+			background-color: @lime-card-selected-selection-icon-bg-color;
+			color: @lime-card-selected-selection-icon-color;
 		}
 
 		&.vertical {
 			&.hasContainer {
-				background-color: rgba(255, 255, 255, 0.1);
+				background-color: @lime-card-bg;
 
 				&.selected {
-					.selected-border(white, 7);
+					.selected-border(@lime-card-selected-image-border-color, 7);
 				}
 			}
 
 			&.selected:not(.hasContainer) .selectionContainer {
-				border-color: white;
+				border-color: @lime-card-selected-image-border-color;
 				z-index: 5;
+			}
+
+			&.selected {
+				.image::after {
+					.image-scrim();
+				}
+
+				&.roundedImage .image::after {
+					border-radius:  @lime-card-border-radius;
+				}
+
+				&.hasContainer.roundedImage .image::after {
+					border-bottom-left-radius: unset;
+					border-bottom-right-radius: unset;
+				}
 			}
 		}
 
 		&.horizontal {
-			background-color: rgba(255, 255, 255, 0.1);
+			background-color: @lime-card-bg;
 
 			&.selected {
-				.selected-border(white, 7);
+				.selected-border(@lime-card-selected-image-border-color, 7);
+			}
+
+			&.selected .image::after {
+				.image-scrim();
+				border-radius: @lime-card-border-radius;
+				border-top-right-radius: unset;
+				border-bottom-right-radius: unset;
 			}
 		}
 
 		.focus({
 			.selectionIcon {
-				color: transparent;
+				color: @lime-card-selection-icon-color;
 			}
 
 			&.selected .selectionIcon {
-				color: white;
+				color: @lime-card-selected-selection-icon-color;
 			}
 
 			&.vertical {
@@ -212,8 +213,8 @@
 				}
 
 				&.hasContainer {
-					background-color: white;
-					.selected-border(white, 7);
+					background-color: @lime-card-focused-bg-color;
+					.selected-border(@lime-card-focused-image-border-color, 7);
 
 					&.roundedImage::before {
 						border-radius: @lime-card-border-radius;
@@ -221,15 +222,15 @@
 				}
 
 				&:not(.hasContainer) .selectionContainer {
-					z-index: 5;
-					border-color: white;
+					z-index: 7;
+					border-color: @lime-card-focused-image-border-color;
 				}
 			}
 
 			&.horizontal {
 				transform: scale(1.1);
-				background-color: white;
-				.selected-border(white, 7);
+				background-color: @lime-card-focused-bg-color;
+				.selected-border(@lime-card-focused-image-border-color, 7);
 
 				&::before {
 					border-radius: @lime-card-border-radius;
