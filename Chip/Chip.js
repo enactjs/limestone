@@ -34,7 +34,6 @@ import Skinnable from '../Skinnable';
 import css from './Chip.module.less';
 
 const ChipDefaultProps = {
-	icon: 'check',
 	disabled: false
 };
 
@@ -48,11 +47,11 @@ const ChipDefaultProps = {
  */
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {icon, children, className, deleteButton, disabled, ...rest} = chipProps;
+	const {icon, children, className, deleteButton, disabled, ref, ...rest} = chipProps;
 	const chipClassName = classnames(css.chip, className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css.focused, css[deleteButton?.position || 'right']);
-	const clientRef = useRef(null);
 	const buttonRef = useRef(null);
+	const clientRef = ref || useRef(null);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
@@ -78,7 +77,7 @@ const ChipBase = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (buttonRef.current && deleteButton && Object.keys(deleteButton).length !== 0) {
+		if (buttonRef.current && deleteButton) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, [deleteButton]);
@@ -95,8 +94,8 @@ const ChipBase = (props) => {
 			onMouseLeave={handleMouseLeave}
 			onFocus={handleFocus}
 		>
-			<Button icon={icon ? icon : 'check'} size="small" css={css}>{children}</Button>
-			{deleteButton && Object.keys(deleteButton).length !== 0 &&
+			<Button icon={icon ? icon : null} size="small" css={css}>{children}</Button>
+			{deleteButton &&
 				<div ref={buttonRef} className={buttonClassName}>
 					<Button
 						backgroundOpacity="transparent"
@@ -126,20 +125,20 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	/**
 	 * Define the icon, click handler, and position to be placed in the delete button.
 	 *
-	 * @type {Object}
+	 * @type {{icon: (String|Object>), onClick: (Function), position: ('top'|'bottom'|'right')} | Boolean}
 	 * @public
 	 */
-	deleteButton: PropTypes.shape({
-		icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		onClick: PropTypes.func,
-		position: PropTypes.oneOf(['top', 'bottom', 'right'])
-	}),
+	deleteButton: PropTypes.oneOf([
+		PropTypes.shape({
+			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+			onClick: PropTypes.func,
+			position: PropTypes.oneOf(['top', 'bottom', 'right'])})
+		], [PropTypes.bool]),
 
 	/**
 	 * Disables Chip and becomes non-interactive.
 	 *
 	 * @type {Boolean}
-	 * @default false
 	 * @public
 	 */
 	disabled: PropTypes.bool,
@@ -156,8 +155,7 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 };
 
 /**
- * Limestone-specific Chip behaviors to apply to
- * {@link limestone/Chip.Chip|Chip}.
+ * Limestone-specific Chip behaviors to apply to {@link limestone/Chip.Chip|Chip}.
  *
  * @hoc
  * @memberof limestone/Chip

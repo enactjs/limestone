@@ -10,7 +10,7 @@
 
 	.button {
 		&.small {
-			margin-right: auto;
+			.margin-start-end(0, 0);
 		}
 
 		.bg {
@@ -43,6 +43,8 @@
 	
 	.deleteButton {
 		border-radius: @lime-chip-border-radius;
+		margin-left: @lime-chip-delete-button-margin;
+		margin-right: @lime-chip-delete-button-margin;
 	}
 
 	.focused {
