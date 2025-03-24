@@ -39,17 +39,18 @@ describe('spotlight size compare', function () {
 		await Page.backSpace();
 		await Page.backSpace();
 		await Page.backSpace();
-		await Page.numPad(5);
+		await Page.numPad(1);
+		await Page.numPad(0);
 		await Page.numPad(0);
 		await Page.backKey();
 		// Verify item size
 		const newItemSize = await Page.getItemSize();
-		expect(newItemSize.height).toBe(25);
+		expect(newItemSize.height).toBe(50);
 		expect(newItemSize.width).toBe(defaultItemSize.width);
 		await Page.spotlightDown();
 		await (await Page.item(4)).moveTo();
 		await expectFocusedItem(4);
 		const newSpotlightSize = await Page.spotlightSize();
-		expect(newSpotlightSize).toBe(25);
+		expect(newSpotlightSize).toBe(50);
 	});
 });
