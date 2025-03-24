@@ -51,30 +51,31 @@ const ChipBase = (props) => {
 	const chipClassName = classnames(css.chip, className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css.focused, css[deleteButton?.position || 'right']);
 	const buttonRef = useRef(null);
-	const clientRef = ref || useRef(null);
+	const clientRef = useRef(null);
+	const chipRef = ref || clientRef;
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
-			if (nextTarget !== null && nextTarget !== clientRef.current.firstChild && nextTarget !== buttonRef.current.firstChild) {
+			if (nextTarget !== null && nextTarget !== chipRef.current.firstChild && nextTarget !== buttonRef.current.firstChild) {
 				buttonRef.current.classList.remove(css.focused);
 			}
 		}
-	}, []);
+	}, [chipRef]);
 
 	const handleMouseLeave = useCallback((ev) => {
-		if (clientRef.current.contains(ev.target)) {
+		if (chipRef.current.contains(ev.target)) {
 			buttonRef.current.classList.remove(css.focused);
 		}
-	}, []);
+	}, [chipRef]);
 
 	const handleFocus = useCallback((ev) => {
-		if (ev.target === clientRef.current.firstChild) {
+		if (ev.target === chipRef.current.firstChild) {
 			buttonRef.current.classList.add(css.focused);
 		}
-	}, []);
+	}, [chipRef]);
 
 	useEffect(() => {
 		if (buttonRef.current && deleteButton) {
@@ -89,7 +90,7 @@ const ChipBase = (props) => {
 			{...rest}
 			className={chipClassName}
 			disabled={disabled}
-			ref={clientRef}
+			ref={chipRef}
 			onKeyDown={handleKeyDown}
 			onMouseLeave={handleMouseLeave}
 			onFocus={handleFocus}
@@ -133,7 +134,7 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 			onClick: PropTypes.func,
 			position: PropTypes.oneOf(['top', 'bottom', 'right'])})
-		], [PropTypes.bool]),
+	], [PropTypes.bool]),
 
 	/**
 	 * Disables Chip and becomes non-interactive.
