@@ -23,6 +23,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
 - `limestone/ContextualPopupDecorator` to focus content only after the state has been updated when popup opens
 - `limestone/Scroller` with `editable` prop to not move hidden items
 
