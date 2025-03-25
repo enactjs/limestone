@@ -1,12 +1,13 @@
 /* alias-tokens.css */
 
-@import "~design-tokens/css/colors/brand.css";
-@import "~design-tokens/css/fonts/sizes.css";
-@import "~design-tokens/css/fonts/weights.css";
-@import "~design-tokens/css/styles/border-radius.css";
-@import "~design-tokens/css/styles/spacing.css";
-
 :root {
+	@import-json "../node_modules/design-tokens/json/colors/palette.json";
+	@import-json "../node_modules/design-tokens/json/colors/brand.json";
+	@import-json "../node_modules/design-tokens/json/fonts/sizes.json";
+	@import-json "../node_modules/design-tokens/json/fonts/weights.json";
+	@import-json "../node_modules/design-tokens/json/styles/border-radius.json";
+	@import-json "../node_modules/design-tokens/json/styles/spacing.json";
+
 	/* Colors Alias Tokens */
 	--lime-alias-color-surface-full: var(--ref-color-base-0);
 	--lime-alias-color-surface-overlay: var(--ref-color-secondary-15);
