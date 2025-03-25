@@ -174,7 +174,7 @@ const CardBase = kind({
 		 * Shows a selection icon. When `true`, a checkmark is displayed on the image.
 		 *
 		 * @type {Boolean}
-		 * @public
+		 * @private
 		 */
 		showSelection: PropTypes.bool,
 
@@ -189,6 +189,7 @@ const CardBase = kind({
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 	},
 	defaultProps: {
+		showSelection: true,
 		orientation: 'vertical'
 	},
 
@@ -271,11 +272,9 @@ const CardBase = kind({
 						{secondaryBadgeSrc ? (
 							<Image className={css.secondaryBadge} src={secondaryBadgeSrc} />
 						) : null}
-						{showSelection ? (
-							<div className={css.selectionContainer}>
-								<Icon className={css.selectionIcon}>check</Icon>
-							</div>
-						) : null}
+						<div className={css.selectionContainer}>
+							<Icon className={css.selectionIcon}>check</Icon>
+						</div>
 					</Image>
 				}
 			/>
