@@ -27,11 +27,7 @@ const renderItem = ({index, ...rest}) => {
 			id={`item${index}`}
 			label={subText}
 			src={source}
-			style={{
-				height: '291px',
-				margin: 0,
-				width: '330px'
-			}}
+			style={{margin: 0}}
 		>
 			{text}
 		</ImageItem>

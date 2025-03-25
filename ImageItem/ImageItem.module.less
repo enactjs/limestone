@@ -67,24 +67,14 @@
 	}
 
 	&.vertical {
-		height: @lime-imageitem-vertical-height;
-		width: @lime-imageitem-vertical-width;
-
 		&.fullImage {
+			padding: @lime-imageitem-vertical-full-image-padding;
 			.image {
-				border-radius: @lime-imageitem-vertical-full-border-radius;
-
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 				will-change: transform, box-shadow;
 
 				.selectionIcon {
 					transition: transform 200ms ease-in-out;
-				}
-			}
-
-			&.selected {
-				.selectionContainer::after {
-					border-radius: @lime-imageitem-vertical-full-border-radius;
 				}
 			}
 		}
