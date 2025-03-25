@@ -50,6 +50,7 @@
 
 	.caption {
 		font-size: @lime-imageitem-caption-font-size;
+		font-weight: @lime-imageitem-caption-font-weight;
 		line-height: @lime-imageitem-caption-line-height;
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-imageitem-caption-font-size;
@@ -60,7 +61,6 @@
 		font-size: @lime-imageitem-label-font-size;
 		font-weight: @lime-imageitem-label-font-weight;
 		line-height: @lime-imageitem-label-line-height;
-		margin-top: @lime-imageitem-label-margin-top;
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-imageitem-label-font-size;
 		});
@@ -114,16 +114,12 @@
 	}
 
 	&.horizontal {
+		align-items: center;
 		height: @lime-imageitem-horizontal-height;
-		width: @lime-imageitem-horizontal-width;
-
-		.captions {
-			height: @lime-imageitem-horizontal-captions-height;
-			margin: @lime-imageitem-horizontal-captions-margin;
-		}
-
-		padding: @lime-imageitem-horizontal-padding;
 		margin: @lime-imageitem-margin;
+		min-height: @lime-imageitem-horizontal-min-height;
+		padding: @lime-imageitem-horizontal-padding;
+		width: @lime-imageitem-horizontal-width;
 
 		.image {
 			width: @lime-imageitem-horizontal-image-width;
@@ -135,12 +131,6 @@
 			});
 		}
 
-		.selectionIcon {
-			width: @lime-imageitem-horizontal-selection-icon-size;
-			height: @lime-imageitem-horizontal-selection-icon-size;
-			line-height: @lime-imageitem-horizontal-selection-icon-size;
-		}
-
 		&.wideImage {
 			height: @lime-imageitem-horizontal-wideimage-height;
 
@@ -148,6 +138,12 @@
 				height: @lime-imageitem-horizontal-wideimage-image-height;
 				width: @lime-imageitem-horizontal-wideimage-image-width;
 			}
+		}
+
+		.selectionIcon {
+			width: @lime-imageitem-horizontal-selection-icon-size;
+			height: @lime-imageitem-horizontal-selection-icon-size;
+			line-height: @lime-imageitem-horizontal-selection-icon-size;
 		}
 	}
 
@@ -160,10 +156,6 @@
 		&::before {
 			.lime-spotlight-resting-bg-colors();
 		}
-
-		.disabled ({
-			opacity: @lime-disabled-opacity;
-		});
 
 		.selectionContainer::after {
 			border-color: @lime-imageitem-image-border-color;
@@ -208,7 +200,7 @@
 		.focus({
 			.lime-spotlight-focus-text-colors();
 
-			.disabled ({
+			.disabled({
 				opacity: @lime-disabled-focus-content-opacity;
 
 				.caption,

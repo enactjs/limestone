@@ -134,8 +134,8 @@
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
 @lime-iconitem-label-font-size:     42px;
 @lime-iconitem-title-font-size:     36px;
-@lime-imageitem-caption-font-size:  60px;
-@lime-imageitem-label-font-size:    48px;
+@lime-imageitem-caption-font-size:  var(--ref-font-size-60);
+@lime-imageitem-label-font-size:    var(--ref-font-size-48);
 @lime-input-font-size:              78px;
 @lime-input-fullscreen-title-font-size: 144px;
 @lime-input-fullscreen-numbercell-font-size:  126px;
@@ -260,8 +260,9 @@
 @lime-icon-other-font-family: "LG Icons";
 
 // ImageItem
+@lime-imageitem-caption-font-weight: var(--ref-font-weight-semibold);
 @lime-imageitem-font-weight: @lime-spottable-font-weight;
-@lime-imageitem-label-font-weight: 400;
+@lime-imageitem-label-font-weight: var(--ref-font-weight-regular);
 
 // Input
 @lime-input-invalid-tooltip-font-weight: @lime-inputfield-invalid-tooltip-font-weight;
@@ -611,13 +612,10 @@
 @lime-imageitem-margin: @lime-item-margin;
 @lime-imageitem-border-radius: var(--lime-alias-radius-container);
 @lime-imageitem-image-border-width: 6px;
-@lime-imageitem-caption-line-height: 72px;
+@lime-imageitem-caption-line-height: 84px;
 @lime-imageitem-label-line-height: 60px;
-@lime-imageitem-label-margin-top: var(--ref-spacing-6);
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
-@lime-imageitem-horizontal-captions-height: 144px;
-@lime-imageitem-horizontal-captions-margin: var(--ref-spacing-36) 0;
 @lime-imageitem-horizontal-padding: var(--ref-spacing-48) var(--ref-spacing-60);
 @lime-imageitem-horizontal-image-width: 180px;
 @lime-imageitem-horizontal-image-height: @lime-imageitem-horizontal-image-width;
@@ -625,6 +623,7 @@
 @lime-imageitem-horizontal-image-margin-rtl: 0 0 0 var(--ref-spacing-48);
 @lime-imageitem-horizontal-selection-icon-size: 90px;
 @lime-imageitem-horizontal-height: 240px;
+@lime-imageitem-horizontal-min-height: @lime-imageitem-horizontal-height;
 @lime-imageitem-horizontal-width: 1464px;
 @lime-imageitem-horizontal-wideimage-height: 336px;
 @lime-imageitem-horizontal-wideimage-image-height: 240px;
