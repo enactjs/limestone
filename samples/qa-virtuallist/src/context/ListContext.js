@@ -9,11 +9,11 @@ export const ListProvider = ({children}) => {
 	const [state, dispatch] = useReducer(listReducer, initialData);
 
 	return (
-		<ListContext value={state}>
-			<ListDispatchContext value={dispatch}>
+		<ListContext.Provider value={state}>
+			<ListDispatchContext.Provider value={dispatch}>
 				{children}
-			</ListDispatchContext>
-		</ListContext>
+			</ListDispatchContext.Provider>
+		</ListContext.Provider>
 	);
 };
 

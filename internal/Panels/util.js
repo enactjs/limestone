@@ -1,5 +1,5 @@
 import hoc from '@enact/core/hoc';
-import {createContext, use} from 'react';
+import {createContext, useContext} from 'react';
 import pick from 'ramda/src/pick';
 import omit from 'ramda/src/omit';
 
@@ -29,15 +29,15 @@ const deleteSharedProps = (props) => {
 };
 
 function useContextAsDefaults (props) {
-	const ctx = use(PanelsStateContext);
+	const ctx = useContext(PanelsStateContext);
 
 	const contextProps = {...ctx, ...getSharedProps(props)};
 
 	const provideContextAsDefaults = (children) => {
 		return (
-			<PanelsStateContext value={contextProps}>
+			<PanelsStateContext.Provider value={contextProps}>
 				{children}
-			</PanelsStateContext>
+			</PanelsStateContext.Provider>
 		);
 	};
 
