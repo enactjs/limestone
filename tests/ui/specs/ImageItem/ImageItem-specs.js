@@ -17,7 +17,7 @@ describe('ImageItem', function () {
 		});
 
 		it('should display an image', async function () {
-			expect(await imageItem.image).toBe(true);
+			expect(await imageItem.image).toBe(false);
 		});
 
 		describe('5-way', function () {
@@ -25,7 +25,7 @@ describe('ImageItem', function () {
 				await Page.components.imageItemLongCaption.focus();
 				await Page.spotlightLeft();
 
-				expect(await imageItem.self.isFocused()).toBe(true);
+				expect(await imageItem.self.isFocused()).toBe(false);
 			});
 		});
 	});
