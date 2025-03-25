@@ -16,19 +16,20 @@
  */
 
 import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Row} from '@enact/ui/Layout';
-import compose from 'ramda/src/compose';
 import ri from '@enact/ui/resolution';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+
 import Icon from '../Icon';
 import Image from '../Image';
-import Skinnable from '../Skinnable';
+import AsyncRenderChildren from '../internal/AsyncRendererChildren/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
+import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
-import AsyncRenderChildren from '../internal/AsyncRendererChildren/AsyncRenderChildren';
 
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.

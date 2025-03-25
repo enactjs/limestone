@@ -1,10 +1,10 @@
 import {Card, CardBase} from '@enact/limestone/Card';
-import {Card as UiCard} from '@enact/ui/Card';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
+import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {Card as UiCard} from '@enact/ui/Card';
 import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 
 const Config = mergeComponentMetadata('Card', UiCard, CardBase, Card);
 Card.displayName = 'Card';
