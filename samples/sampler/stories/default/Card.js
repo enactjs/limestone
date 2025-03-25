@@ -9,10 +9,12 @@ import {boolean, object, select, text} from '@enact/storybook-utils/addons/contr
 const Config = mergeComponentMetadata('Card', UiCard, CardBase, Card);
 Card.displayName = 'Card';
 
-const src = {
-	hd: svgGenerator(200, 200, '7ed31d', 'ffffff', '200 X 200'),
-	fhd: svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300'),
-	uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
+const generateImageSrc = (color) => {
+	return {
+		hd: svgGenerator(200, 200, color, 'ffffff', '200 X 200'),
+		fhd: svgGenerator(300, 300, color, 'ffffff', '300 X 300'),
+		uhd: svgGenerator(600, 600, color, 'ffffff', '600 X 600')
+	};
 };
 
 const prop = {
@@ -29,17 +31,20 @@ export const _Card = (args) => (
 		captionOverlay={args['captionOverlay']}
 		centered={args['centered']}
 		disabled={args['disabled']}
+		imageIconSrc={args['imageIconSrc']}
 		hasContainer={args['hasContainer']}
 		label={args['label']}
 		orientation={args['orientation']}
+		primaryBadgeSrc={args['primaryBadgeSrc']}
 		roundedImage={args['roundedImage']}
+		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		selected={args['selected']}
 		showSelection={args['showSelection']}
 		src={args['src']}
 		style={{
 			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1020),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 588 : 240)
+			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1500),
+			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 708 : 336)
 		}}
 	>
 		{args['children']}
@@ -49,13 +54,16 @@ export const _Card = (args) => (
 boolean('captionOverlay', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
+object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
 boolean('hasContainer', _Card, Config);
 text('label', _Card, Config, 'Card label');
 select('orientation', _Card, prop.orientation, Config);
+object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
 boolean('roundedImage', _Card, Config);
+object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 boolean('selected', _Card, Config);
 boolean('showSelection', _Card, Config);
-object('src', _Card, Config, src);
+object('src', _Card, Config, generateImageSrc('93d371'));
 text('children', _Card, Config, 'Card Caption');
 
 _Card.storyName = 'Card';
