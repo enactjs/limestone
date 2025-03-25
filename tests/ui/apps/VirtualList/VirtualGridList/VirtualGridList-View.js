@@ -28,7 +28,7 @@ const renderItem = ({index, ...rest}) => {
 			label={subText}
 			src={source}
 			style={{
-				height: '270px',
+				height: '291px',
 				margin: 0,
 				width: '330px'
 			}}
