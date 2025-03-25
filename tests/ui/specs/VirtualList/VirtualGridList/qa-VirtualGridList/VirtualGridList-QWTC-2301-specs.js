@@ -16,7 +16,7 @@ describe('qa-VirtualGridList', function () {
 		await expectFocusedItem(1);
 
 		// Step 3: Keep pressing 5-way Down until the list reaches to the bottom.
-		for (let i =  0; i < 21; i++) {
+		for (let i =  0; i < 20; i++) {
 			await Page.spotlightDown();
 			await Page.delay(200);
 		}

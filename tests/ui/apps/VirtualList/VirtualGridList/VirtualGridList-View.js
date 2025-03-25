@@ -28,7 +28,7 @@ const renderItem = ({index, ...rest}) => {
 			label={subText}
 			src={source}
 			style={{
-				height: '300px',
+				height: '270px',
 				margin: 0,
 				width: '330px'
 			}}
@@ -75,7 +75,7 @@ class app extends Component {
 			horizontal: false,
 			noLabel: false,
 			numItems: 100,
-			minHeight: 600,
+			minHeight: 500,
 			minWidth: 650,
 			spacing: 24,
 			spotlightDisabled: false,
