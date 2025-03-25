@@ -19,6 +19,7 @@
 .card {
 	position: relative;
 	margin: @lime-card-margin;
+	font-weight: @lime-card-font-weight;
 
 	.image {
 		position: relative;
@@ -60,10 +61,12 @@
 	}
 
 	.caption {
+		font-size: @lime-card-caption-font-size;
 		line-height: @lime-card-caption-line-height;
 	}
 
 	.label {
+		font-size: @lime-card-label-font-size;
 		line-height: @lime-card-label-line-height;
 	}
 
@@ -151,6 +154,14 @@
 			color: @lime-card-selected-selection-icon-color;
 		}
 
+		.caption {
+			color: @lime-card-caption-color;
+		}
+
+		.label {
+			color: @lime-card-label-color;
+		}
+
 		&.vertical {
 			&.hasContainer {
 				background-color: @lime-card-bg;
@@ -203,6 +214,14 @@
 
 			&.selected .selectionIcon {
 				color: @lime-card-selected-selection-icon-color;
+			}
+
+			&.hasContainer .caption, &.horizontal .caption {
+				color: @lime-card-focus-caption-color;
+			}
+
+			&.hasContainer .label, &.horizontal .label {
+				color: @lime-card-focus-label-color;
 			}
 
 			&.vertical {
