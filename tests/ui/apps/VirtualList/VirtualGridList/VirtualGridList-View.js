@@ -75,7 +75,7 @@ class app extends Component {
 			horizontal: false,
 			noLabel: false,
 			numItems: 100,
-			minHeight: 500,
+			minHeight: 600,
 			minWidth: 650,
 			spacing: 24,
 			spotlightDisabled: false,
