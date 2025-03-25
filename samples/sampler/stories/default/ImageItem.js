@@ -2,6 +2,7 @@ import {ImageItem, ImageItemBase} from '@enact/limestone/ImageItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
+import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -32,6 +33,11 @@ export const _ImageItem = (args) => (
 		selected={args['selected']}
 		showSelection={args['showSelection']}
 		src={args['src']}
+		style={{
+			position: 'absolute',
+			width: args['orientation'] === 'vertical' && ri.scaleToRem(768),
+			height: args['orientation'] === 'vertical' && ri.scaleToRem(588)
+		}}
 		wideImage={args['wideImage']}
 	>
 		{args['children']}
