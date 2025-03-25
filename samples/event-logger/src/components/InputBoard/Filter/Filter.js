@@ -1,7 +1,7 @@
 import Heading from '@enact/limestone/Heading';
 import Picker from '@enact/limestone/Picker';
 import SwitchItem from '@enact/limestone/SwitchItem';
-import {useCallback, use} from 'react';
+import {useCallback, useContext} from 'react';
 
 import eventCategory from '../../../constants/eventCategory';
 import {EventLoggerContext, EventLoggerDispatchContext} from '../../../context/EventLoggerContext';
@@ -13,9 +13,9 @@ import {setTimerIndex as setTimerIndexAction} from '../../../reducer/timerIndexR
 import css from './Filter.module.less';
 
 const Filter = () => {
-	const dispatch = use(EventLoggerDispatchContext);
+	const dispatch = useContext(EventLoggerDispatchContext);
 
-	const {activeEventsReducer, eventCapturingOnReducer, syntheticEventOnReducer, timerIndexReducer} = use(EventLoggerContext);
+	const {activeEventsReducer, eventCapturingOnReducer, syntheticEventOnReducer, timerIndexReducer} = useContext(EventLoggerContext);
 
 	const {activeEvents} = activeEventsReducer;
 	const {eventCapturingOn} = eventCapturingOnReducer;
