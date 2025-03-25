@@ -298,7 +298,7 @@ const ViewportBase = class extends Component {
 
 		delete rest.className;
 		return (
-			<PanelsStateContext value={panelsContext}>
+			<PanelsStateContext.Provider value={panelsContext}>
 				<ViewManager
 					{...rest}
 					arranger={arranger}
@@ -316,7 +316,7 @@ const ViewportBase = class extends Component {
 				>
 					{mappedChildren}
 				</ViewManager>
-			</PanelsStateContext>
+			</PanelsStateContext.Provider>
 		);
 	}
 };
