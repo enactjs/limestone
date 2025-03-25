@@ -104,7 +104,7 @@ const ChipBase = (props) => {
 						disabled={disabled}
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
-						onClick={deleteButton.onClick}
+						onClick={deleteButton?.onClick}
 					/>
 				</div>
 			}
@@ -133,8 +133,8 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 		PropTypes.shape({
 			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 			onClick: PropTypes.func,
-			position: PropTypes.oneOf(['top', 'bottom', 'right'])})
-	], [PropTypes.bool]),
+			position: PropTypes.oneOf(['top', 'bottom', 'right'])}),
+		PropTypes.bool]),
 
 	/**
 	 * Disables Chip and becomes non-interactive.
