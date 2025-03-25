@@ -196,6 +196,7 @@ select('type (image)', WithThumbnailAndScroller, ['icon', 'thumbnail'], ImageCon
 text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
 
 WithThumbnailAndScroller.storyName = 'with thumbnail and scroller';
+
 export const WithCustomSizeImage = (args) => (
 	<Alert
 		open={args['open']}
