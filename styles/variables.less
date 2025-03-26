@@ -116,9 +116,9 @@
 @lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
 @lime-alert-title-font-size:        @lime-header-wizard-title-font-size;
 @lime-alert-notitle-content-font-size: 90px;
-@lime-base-font-size:               60px;
+@lime-base-font-size:               var(--ref-font-size-60);
 @lime-body-font-size:               @lime-base-font-size;
-@lime-body-small-font-size:         54px;
+@lime-body-small-font-size:         var(--ref-font-size-54);
 @lime-button-font-size-large:       96px;
 @lime-button-font-size:             78px;
 @lime-button-small-font-size-large: 72px;
@@ -169,9 +169,9 @@
 
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
 @lime-tallglyph-alert-notitle-content-font-size: @lime-alert-notitle-content-font-size;
-@lime-non-latin-body-font-size:         54px;
-@lime-non-latin-body-small-font-size:   48px;
-@lime-tallglyph-body-small-font-size:   48px;
+@lime-non-latin-body-font-size:         var(--ref-font-size-54);
+@lime-non-latin-body-small-font-size:   var(--ref-font-size-48);
+@lime-tallglyph-body-small-font-size:   var(--ref-font-size-48);
 @lime-non-latin-button-large-font-size: 72px;
 @lime-non-latin-button-small-font-size: 54px;
 @lime-non-latin-header-compact-title-font-size: @lime-header-compact-title-font-size;
@@ -208,8 +208,10 @@
 // Body
 @lime-body-font-family: @lime-font-family;
 @lime-body-font-style: normal;
-@lime-body-font-weight: normal;
-@lime-body-line-height: @lime-body-font-size + 6;
+@lime-body-font-weight: 600;
+@lime-body-small-font-weight: 400;
+@lime-body-line-height: 84px;
+@lime-body-small-line-height: 72px;
 @lime-non-latin-body-font-weight: @lime-non-latin-font-weight-light;
 @lime-non-latin-body-font-style: @lime-body-font-style;
 @lime-tallglyph-body-line-height: 1.7em;
@@ -331,7 +333,7 @@
 
 // BodyText
 // ---------------------------------------
-@lime-bodytext-margin: 0 @lime-component-spacing @lime-body-font-size @lime-component-spacing;
+@lime-bodytext-margin-bottom: @lime-body-font-size;
 @lime-bodytext-padding: 0;
 
 // Button

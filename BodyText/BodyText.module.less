@@ -5,14 +5,14 @@
 
 .bodyText {
 	.lime-body-text();
-	margin: @lime-bodytext-margin;
+	margin-bottom: @lime-bodytext-margin-bottom;
 	padding: @lime-bodytext-padding;
 	white-space: normal;
 
 	&.large { /* Needed to prevent global class being added in the DOM */ }
 
 	&.small {
-		font-size: @lime-body-small-font-size;
+		.lime-body-text-small();
 
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-body-small-font-size;
