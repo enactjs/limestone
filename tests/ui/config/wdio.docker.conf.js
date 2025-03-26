@@ -1,3 +1,3 @@
-import {config} from '@enact/ui-test-utils/ui/wdio.docker.conf.js';
+import {uiDockerconfig} from '@enact/ui-test-utils/ui/wdio.docker.conf.js';
 
-export default config;
+export default uiDockerconfig;
