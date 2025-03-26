@@ -23,7 +23,6 @@ describe('Scroller List Of Things', function () {
 		expect(Math.floor((await ScrollerPage.getActiveElementRect()).top / 100) * 100).toBe(firstPrevItemLocation);
 
 		// Step5: 5-way Down several times to the last visible item on the current viewport.
-
 		const bottomVisibleIdNum = Number((await ScrollerPage.bottomVisibleItemId()).slice(4));
 		for (let i = 0; i < 7; i++) {
 			await ScrollerPage.spotlightDown();
