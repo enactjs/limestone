@@ -25,6 +25,7 @@
 		.content {
 			margin: 0;
 			overflow: hidden;
+			padding: @lime-alert-fullscreen-content-padding;
 			max-height: 60%; // Set a reasonable cutoff for a maximum bound
 		}
 
@@ -32,12 +33,6 @@
 			.content {
 				.lime-font-size(@lime-alert-notitle-content-font-size, @lime-tallglyph-alert-notitle-content-font-size);
 				.enact-locale-line-height();
-			}
-		}
-
-		&.maxButtons {
-			.buttonContainer {
-				margin-top: @lime-alert-max-buttons-margin-top;
 			}
 		}
 
