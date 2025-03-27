@@ -276,10 +276,12 @@
 
 // Item
 @lime-item-font-weight: @lime-spottable-font-weight;
-@lime-item-line-height: @lime-common-line-height;
+@lime-item-label-font-weight: 400;
+@lime-item-line-height: 1.4em;
 @lime-item-line-height-large: @lime-item-line-height;
-@lime-item-label-line-height: @lime-item-line-height;
+@lime-item-label-line-height: 1.25em;
 @lime-item-small-font-weight: @lime-item-font-weight;
+@lime-item-small-label-font-weight: @lime-item-label-font-weight;
 @lime-item-small-line-height: @lime-common-line-height;
 @lime-item-small-line-height-large: @lime-item-small-line-height;
 @lime-item-small-label-line-height: @lime-item-small-line-height;
@@ -607,7 +609,7 @@
 
 // ImageItem
 // ---------------------------------------
-@lime-imageitem-margin: @lime-item-margin;
+@lime-imageitem-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
 @lime-imageitem-border-radius: 12px;
 @lime-imageitem-image-border-width: 6px;
 @lime-imageitem-caption-line-height: 72px;
@@ -703,10 +705,9 @@
 @lime-item-withlabel-height: 240px;
 @lime-item-withlabel-padding: var(--ref-spacing-48) var(--ref-spacing-60);
 @lime-item-inline-max-width: 480px;
-@lime-item-border-radius: var(--ref-border-radius-36);
+@lime-item-border-radius: var(--lime-alias-radius-container);
 @lime-item-slotafter-spacing: var(--ref-spacing-36);
 @lime-item-slotbefore-spacing: var(--ref-spacing-36);
-@lime-item-margin: 0;
 @lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-60);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;

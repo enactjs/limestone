@@ -17,7 +17,6 @@
 	display: flex;
 	position: relative;
 	color: inherit;
-	margin: @lime-item-margin;
 
 	.bg {
 		position: absolute;
@@ -93,7 +92,7 @@
 	// Text
 	.label {
 		font-size: @lime-item-label-font-size;
-		font-weight: inherit;
+		font-weight: @lime-item-label-font-weight;
 		.enact-locale-line-height(@lime-item-label-line-height, @lime-tallglyph-item-label-line-height);
 	}
 
@@ -110,7 +109,6 @@
 
 	&.small {
 		font-size: @lime-item-small-font-size;
-
 		font-weight: @lime-item-small-font-weight;
 		height: @lime-item-small-height;
 		.enact-locale-line-height(@lime-item-small-line-height, @lime-tallglyph-item-small-line-height);
@@ -121,8 +119,7 @@
 
 		.label {
 			font-size: @lime-item-small-label-font-size;
-
-			font-weight: inherit;
+			font-weight: @lime-item-small-label-font-weight;
 			line-height: @lime-item-small-label-line-height;
 		}
 
