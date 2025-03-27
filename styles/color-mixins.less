@@ -66,7 +66,6 @@
 	.lime-bg-colors({
 		// @pseudo-element-setup();
 
-		background-color: @lime-spotlight-bg-color;
 		// transition+: @transition-filter;
 		will-change+: box-shadow;
 
@@ -78,9 +77,8 @@
 // Establish rules assignment for after focus has happened
 .lime-spotlight-focus-bg-colors (@bg: {}, @shadow: {}) {
 	opacity: 1;
+
 	.lime-bg-colors({
-		background-color: @lime-spotlight-bg-color;
-		box-shadow: @lime-spotlight-focus-shadow;
 		@bg();
 		@shadow();
 	});
