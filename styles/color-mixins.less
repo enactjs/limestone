@@ -18,22 +18,17 @@
 	opacity: @opacity;
 
 	// Background coloration
-	.lime-bg-colors({
-		will-change+: box-shadow;
-
-		@bg();
-		@shadow();
-	});
+	will-change+: box-shadow;
+	@bg();
+	@shadow();
 }
 
 // Establish rules assignment for after focus has happened
 .lime-spotlight-focus-bg-colors (@bg: {}, @shadow: {}) {
 	opacity: 1;
 
-	.lime-bg-colors({
-		@bg();
-		@shadow();
-	});
+	@bg();
+	@shadow();
 }
 
 .lime-spotlight-focus-text-colors () {
@@ -64,10 +59,8 @@
 .lime-disabled-focus-bg-colors (@bg: {}, @shadow: {}) {
 	opacity: @lime-disabled-focus-bg-opacity;
 
-	.lime-bg-colors({
-		@bg();
-		@shadow();
-	});
+	@bg();
+	@shadow();
 }
 
 // The technique below is special handling for opaque buttons, which have an opaque
