@@ -313,6 +313,7 @@ const DropdownBase = kind({
 				className={css.title}
 				id={`${id}_title`}
 				size="tiny"
+				spacing="small"
 				style={{width: typeof width === 'number' ? ri.scaleToRem(width) : null}}
 			>
 				{title}
