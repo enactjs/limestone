@@ -3,12 +3,11 @@
  *
  * @example
  * <Chip
- *   icon="check"
- *   direction="right"
  *   deleteButton={{
  *     icon: 'closex',
  *     position: 'right'
  *   }}
+ *   icon="check"
  * >
  *  Label
  * </Chip>
@@ -47,7 +46,7 @@ const ChipDefaultProps = {
  */
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {icon, children, className, deleteButton, disabled, ref, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
 	const chipClassName = classnames(css.chip, className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css.focused, css[deleteButton?.position || 'right']);
 	const buttonRef = useRef(null);
@@ -124,9 +123,9 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	children: PropTypes.string,
 
 	/**
-	 * Define the icon, click handler, and position to be placed in the delete button.
+	 * Define the icon, click handler, and position for the delete button.
 	 *
-	 * @type {{icon: (String|Object>), onClick: (Function), position: ('top'|'bottom'|'right')} | Boolean}
+	 * @type {Object.<{icon: (String|Object), onClick: (Function), position: ('top'|'bottom'|'right')}>|Boolean}
 	 * @public
 	 */
 	deleteButton: PropTypes.oneOf([
@@ -173,12 +172,11 @@ const ChipDecorator = compose(
  * Usage:
  * ```
  * <Chip
- *   icon="check"
- *   direction="right"
  *   deleteButton={{
  *     icon: 'closex',
  *     position: 'right',
  *   }}
+ *   icon="check"
  * >
  *  Label
  * </Chip>

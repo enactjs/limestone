@@ -1,6 +1,7 @@
 import {Chip, ChipBase} from '@enact/limestone/Chip';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {select, text, boolean, object} from '@enact/storybook-utils/addons/controls';
+import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import ri from '@enact/ui/resolution';
 
 import iconNames from '../helper/icons';
 
@@ -14,15 +15,14 @@ export default {
 
 export const _Chip = (args) => {
 	return (
-		<div style={{position: 'relative', top: '24px', width: '100%', height: '100%'}}>
-			<Chip
-				icon={args['icon']}
-				disabled={args['disabled']}
-				deleteButton={args['deleteButton']}
-			>
-				{args['children']}
-			</Chip>
-		</div>
+		<Chip
+			deleteButton={args['deleteButton']}
+			disabled={args['disabled']}
+			icon={args['icon']}
+			style={{marginLeft: ri.scaleToRem(36)}}
+		>
+			{args['children']}
+		</Chip>
 	);
 };
 
