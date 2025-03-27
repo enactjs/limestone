@@ -1,10 +1,10 @@
-import {use, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 
 import {SharedState} from '../internal/SharedStateDecorator/SharedStateDecorator';
 
 const useSpotlightRestore = (props, instances) => {
 	const {scrollContainerHandle} = instances;
-	const context = use(SharedState);
+	const context = useContext(SharedState);
 
 	// Hooks
 
