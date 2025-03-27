@@ -72,7 +72,7 @@
 	--lime-alias-color-on-selection-bg-active: var(--lime-alias-color-accent);
 	--lime-alias-color-on-selection-bg-active-disabled: var(--ref-color-base-20);
 	--lime-alias-color-on-selection-bg-active-disabled-focused: var(--ref-color-base-60);
-	
+
 	/* Styles Alias Tokens */
 	--lime-alias-radius-button: var(--ref-border-radius-24);
 	--lime-alias-radius-container: var(--ref-border-radius-36);
