@@ -29,6 +29,8 @@
 // Standalone version of the Checkbox (Also used when Checkbox has been wrapped with Spottable)
 @checkbox-standalone-rules: {
 	.bg {
+		height: 132px;
+		width: 132px;
 		position: absolute;
 		.position(@lime-checkbox-container-position);
 		border-radius: @lime-checkbox-container-border-radius;
@@ -84,23 +86,6 @@
 	);
 };
 
-// Disabled
-@checkbox-disabled-resting: {
-	.checkbox-states(
-		{
-			// No custom rules for this state
-		};
-		.checkbox-colors(
-			@lime-checkbox-disabled-selected-text-color,
-			@lime-checkbox-disabled-selected-bg-color,
-			@lime-checkbox-disabled-selected-border-color
-		);
-		{
-			// No custom rules for this state
-		}
-	);
-};
-
 // Disabled + Focus States
 @checkbox-disabled-focus: {
 	.checkbox-states(
@@ -110,11 +95,9 @@
 				background-color: @lime-checkbox-standalone-bg-disabled-focus-bg-color;
 			}
 		};
-		.checkbox-colors(
-			@lime-checkbox-focus-disabled-selected-text-color,
-			@lime-checkbox-focus-disabled-selected-bg-color,
-			@lime-checkbox-focus-disabled-selected-border-color
-		);
+		{
+			// No custom rules for this state
+		};
 		{
 			// No custom rules for this state
 		};
@@ -128,6 +111,8 @@
 	line-height: 0;
 
 	.icon {
+		height: 60px;
+		width: 60px;
 		margin: 0;	// Needed to apply here instead of on `.checkbox` due to .icon.size precedence :(
 		border-radius: @lime-checkbox-border-radius;
 		position: relative;
@@ -182,14 +167,16 @@
 		// Disabled
 		.lime-disabled({
 			.icon {
-				.lime-disabled-focus-content-colors();
+				.lime-disabled-colors();
 			}
-
-			@checkbox-disabled-resting();
 
 			// Disabled + Focus
 			.focus({
 				@checkbox-disabled-focus();
+
+				.icon {
+					.lime-disabled-focus-content-colors();
+				}
 			});
 		});
 	});
@@ -211,14 +198,6 @@
 			}
 		});
 	}
-});
-
-.applySkins({
-	.disabled({
-		& .checkbox {
-			@checkbox-disabled-resting();
-		}
-	});
 });
 
 .applySkins({
