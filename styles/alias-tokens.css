@@ -58,20 +58,20 @@
 	--lime-ailas-color-progress-buffer: var(--ref-color-base-60);
 
 	/* Selection */
-	--lime-alias-color-on-selection-icon-selected: var(--lime-alias-color-on-selected);
-	--lime-alias-color-on-selection-icon-selected-disabled: var(--ref-color-base-30);
-	--lime-alias-color-on-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
-	--lime-alias-color-on-selection-border: var(--lime-alias-color-on-surface-main);
-	--lime-alias-color-on-selection-border-focused: var(--lime-alias-color-on-focused);
-	--lime-alias-color-on-selection-border-disabled: var(--ref-color-base-30);
-	--lime-alias-color-on-selection-border-disabled-focused: var(--ref-color-base-65);
-	--lime-alias-color-on-selection-border-indeterminate: var(--lime-alias-color-on-surface-main);
-	--lime-alias-color-on-selection-border-indeterminate-focused: var(--lime-alias-color-on-focused);
-	--lime-alias-color-on-selection-border-indeterminate-disabled: var(--ref-color-base-30);
-	--lime-alias-color-on-selection-border-indeterminate-disabled-focused: var(--ref-color-base-65);
-	--lime-alias-color-on-selection-bg-active: var(--lime-alias-color-accent);
-	--lime-alias-color-on-selection-bg-active-disabled: var(--ref-color-base-20);
-	--lime-alias-color-on-selection-bg-active-disabled-focused: var(--ref-color-base-60);
+	--lime-alias-color-selection-icon-selected: var(--lime-alias-color-on-selected);
+	--lime-alias-color-selection-icon-selected-disabled: var(--ref-color-base-30);
+	--lime-alias-color-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
+	--lime-alias-color-selection-border: var(--lime-alias-color-on-surface-main);
+	--lime-alias-color-selection-border-focused: var(--lime-alias-color-on-focused);
+	--lime-alias-color-selection-border-disabled: var(--ref-color-base-30);
+	--lime-alias-color-selection-border-disabled-focused: var(--ref-color-base-65);
+	--lime-alias-color-selection-border-indeterminate: var(--lime-alias-color-on-surface-main);
+	--lime-alias-color-selection-border-indeterminate-focused: var(--lime-alias-color-on-focused);
+	--lime-alias-color-selection-border-indeterminate-disabled: var(--ref-color-base-30);
+	--lime-alias-color-selection-border-indeterminate-disabled-focused: var(--ref-color-base-65);
+	--lime-alias-color-selection-bg-active: var(--lime-alias-color-accent);
+	--lime-alias-color-selection-bg-active-disabled: var(--ref-color-base-20);
+	--lime-alias-color-selection-bg-active-disabled-focused: var(--ref-color-base-60);
 
 	/* Styles Alias Tokens */
 	--lime-alias-radius-button: var(--ref-border-radius-24);
