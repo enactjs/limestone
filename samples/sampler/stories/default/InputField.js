@@ -23,14 +23,15 @@ export default {
 export const _InputField = (args) => (
 	<InputField
 		autoFocus={args['autoFocus']}
-		onBeforeChange={action('onBeforeChange')}
-		onChange={action('onChange')}
+		centered={args['centered']}
 		disabled={args['disabled']}
 		dismissOnEnter={args['dismissOnEnter']}
 		iconAfter={args['iconAfter']}
 		iconBefore={args['iconBefore']}
 		invalid={args['invalid']}
 		invalidMessage={args['invalidMessage']}
+		onBeforeChange={action('onBeforeChange')}
+		onChange={action('onChange')}
 		placeholder={args['placeholder']}
 		size={args['size']}
 		type={args['type']}
@@ -38,6 +39,7 @@ export const _InputField = (args) => (
 );
 
 boolean('autoFocus', _InputField, Config);
+boolean('centered', _InputField, Config);
 boolean('disabled', _InputField, Config);
 boolean('dismissOnEnter', _InputField, Config);
 select('iconAfter', _InputField, iconNames, Config);

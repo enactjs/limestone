@@ -54,11 +54,22 @@
 	box-sizing: border-box;
 	vertical-align: middle;
 	align-items: center;
+	height: @lime-inputfield-height;
+	width: @lime-inputfield-width;
 
 	.bg {
 		position: absolute;
 		.position(0);
 		border-radius: @lime-inputfield-border-radius;
+	}
+
+	&.centered .input{
+		text-align: center;
+	}
+
+	.icon {
+		width: 106px;
+		height: 106px;
 	}
 
 	.input,
@@ -77,13 +88,19 @@
 
 	.input.passwordtel {
 		-webkit-text-security: disc;
+		letter-spacing: 27px;
+		width: 100%;
+	}
+
+	.input.password {
+		letter-spacing: 27px;
+		width: 100%;
 	}
 
 	.inputHighlight {
 		position: absolute;
 		top: 0;
 		height: @lime-inputfield-highlight-height;
-		max-width: @lime-inputfield-highlight-max-width;
 		overflow: hidden;
 		letter-spacing: 0.1px;
 		pointer-events: none;
@@ -97,6 +114,12 @@
 
 	&.small {
 		height: @lime-inputfield-small-height;
+		width: @lime-inputfield-small-width;
+
+		.icon {
+			width: 84px;
+			height: 84px;
+		}
 
 		.input {
 			font-size: @lime-inputfield-small-font-size;
@@ -107,7 +130,6 @@
 		.inputHighlight {
 			line-height: @lime-inputfield-small-height;
 			height: @lime-inputfield-small-height;
-			max-width: @lime-inputfield-highlight-small-max-width;
 		}
 	}
 
@@ -135,10 +157,13 @@
 
 	// Skin colors
 	.applySkins({
+		caret-color: @lime-inputfield-caret-color;
 		color: @lime-inputfield-text-color;
 
 		.bg {
-			.lime-spotlight-resting-bg-colors(@lime-inputfield-bg-opacity);
+			.lime-spotlight-focus-bg-colors(@bg: {
+					background-color: var(--ref-color-base-40);
+				});
 		}
 
 		.input {
@@ -221,8 +246,8 @@
 		.lime-disabled({
 			.bg {
 				.lime-disabled-focus-bg-colors(@bg: {
-					filter+_: brightness(0.28);  // Adjusting the background color to match the gui designs. Filter-shift the color.
-				}); // Apply a proper opacity to the disabled background, according to the designs.
+					opacity: @lime-inputfield-bg-opacity
+				});
 			}
 
 			.input {
@@ -232,12 +257,10 @@
 
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors();
-					filter: unset;
-				}
-
-				.input {
-					.lime-disabled-focus-content-colors();
+					.lime-bg-colors({
+						background-color: @lime-inputfield-disabled-focus-bg-color;
+						filter: unset;
+					});
 				}
 			});
 		});

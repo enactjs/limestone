@@ -47,6 +47,15 @@ const InputFieldBase = kind({
 		announce: PropTypes.func,
 
 		/**
+		 * Center the text inside InputField.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		centered: PropTypes.bool,
+
+		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
 		 *
@@ -233,6 +242,7 @@ const InputFieldBase = kind({
 	},
 
 	defaultProps: {
+		centered: false,
 		disabled: false,
 		dismissOnEnter: false,
 		invalid: false,
@@ -268,7 +278,7 @@ const InputFieldBase = kind({
 			const title = (value == null || value === '') ? placeholder : '';
 			return calcAriaLabel(title, type, value);
 		},
-		className: ({invalid, size, styler}) => styler.append({invalid}, size),
+		className: ({centered, invalid, size, styler}) => styler.append({centered, invalid}, size),
 		dir: ({value, placeholder}) => isRtlText(value || placeholder) ? 'rtl' : 'ltr',
 		invalidTooltip: ({css, invalid, invalidMessage = $L('Please enter a valid value.')}) => {
 			if (invalid && invalidMessage) {
@@ -286,13 +296,19 @@ const InputFieldBase = kind({
 	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, size, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
+		const isPassword = type === 'password';
 		const isPasswordtel = type === 'passwordtel';
+		const className = classnames(css.input, {
+			[css.passwordtel]: isPasswordtel,
+			[css.password]: isPassword
+		});
 
 		if (type === 'password' || type === 'passwordtel') {
 			inputProps.spellCheck = false;
 		}
 
 		delete rest.announce;
+		delete rest.centered;
 		delete rest.dismissOnEnter;
 		delete rest.invalid;
 		delete rest.invalidMessage;
@@ -306,13 +322,13 @@ const InputFieldBase = kind({
 				disabled={disabled}
 			>
 				<div className={css.bg} />
-				<InputFieldDecoratorIcon position="before" size={size}>{iconBefore}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.icon} position="before" size={size}>{iconBefore}</InputFieldDecoratorIcon>
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
 					{...voiceProps}
 					aria-hidden={isPasswordtel}
-					className={classnames(css.input, {[css.passwordtel]: isPasswordtel})}
+					className={className}
 					dir={dir}
 					disabled={disabled}
 					onChange={onChange}

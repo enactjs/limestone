@@ -193,11 +193,14 @@
 
 // InputField
 // ---------------------------------------
+@lime-inputfield-caret-color: @lime-invalid-color;
+@lime-inputfield-bg-color: var(--ref-color-base-40);
 @lime-inputfield-text-color: var(--lime-alias-color-on-surface-main);
-@lime-inputfield-placeholder-color: ~"color(from" var(--lime-alias-color-on-container-main) ~"srgb r g b / 0.2)";
+@lime-inputfield-placeholder-color: ~"color(from" var(--lime-alias-color-on-container-main) ~"srgb r g b / 0.4)";
 @lime-inputfield-placeholder-active-color: ~"color(from" var(--lime-alias-color-on-focused) ~"srgb r g b / 0.4)";
 @lime-inputfield-focus-text-color: var(--lime-alias-color-on-focused);
 @lime-inputfield-disabled-text-color: inherit;
+@lime-inputfield-disabled-focus-bg-color: var(--lime-alias-color-container-disabled-focused);
 @lime-inputfield-invalid-color: @lime-invalid-color;
 @lime-inputfield-invalid-tooltip-color: var(--lime-alias-color-invalid);
 
