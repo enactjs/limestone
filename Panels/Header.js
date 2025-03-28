@@ -18,7 +18,7 @@ import Heading from '../Heading';
 import Skinnable from '../Skinnable';
 
 import {PanelsStateContext} from '../internal/Panels';
-import {useAsDefaults} from '../internal/Panels/util';
+import {useContextAsDefaults} from '../internal/Panels/util';
 
 import componentCss from './Header.module.less';
 
@@ -513,7 +513,7 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
-		const {contextProps, provideContextAsDefaults} = useAsDefaults(props);
+		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
