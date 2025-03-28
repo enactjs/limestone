@@ -10,11 +10,11 @@ export const RecordProvider = ({children}) => {
 	const [state, dispatch] = useReducer(recordReducer, initialData);
 
 	return (
-		<RecordContext value={state}>
-			<RecordDispatchContext value={dispatch}>
+		<RecordContext.Provider value={state}>
+			<RecordDispatchContext.Provider value={dispatch}>
 				{children}
-			</RecordDispatchContext>
-		</RecordContext>
+			</RecordDispatchContext.Provider>
+		</RecordContext.Provider>
 	);
 };
 

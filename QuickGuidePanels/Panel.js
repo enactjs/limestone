@@ -1,4 +1,4 @@
-import {use, useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 
 import {PanelsContext} from '../internal/Panels/PanelsRouter';
 
@@ -17,7 +17,7 @@ function Panel ({
 	nextButton,
 	prevButton
 }) {
-	const set = use(PanelsContext);
+	const set = useContext(PanelsContext);
 
 	useEffect(() => {
 		if (set) {

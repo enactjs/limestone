@@ -127,7 +127,7 @@ let Scroller = (props) => {
 
 	// Render
 	return (
-		<ResizeContext {...resizeContextProps}>
+		<ResizeContext.Provider {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
 				<ScrollBody {...focusableBodyProps}>
 					{rest.focusableScrollbar ? <ScrollbarPlaceholder /> : null}
@@ -142,7 +142,7 @@ let Scroller = (props) => {
 					{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
 				</ScrollBody>
 			</ScrollContentWrapper>
-		</ResizeContext>
+		</ResizeContext.Provider>
 	);
 };
 
