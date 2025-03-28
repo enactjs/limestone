@@ -366,6 +366,6 @@ export const WithColoredIcon = (args) => (
 	</Button>
 );
 
-select('icon', WithColoredIcon, prop.icons, Config, "heart");
+select('icon', WithColoredIcon, prop.icons, Config, 'heart');
 
 WithColoredIcon.storyName = 'with colored icon';
