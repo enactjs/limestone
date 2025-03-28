@@ -29,8 +29,8 @@
 // Standalone version of the Checkbox (Also used when Checkbox has been wrapped with Spottable)
 @checkbox-standalone-rules: {
 	.bg {
-		height: 132px;
-		width: 132px;
+		height: @lime-checkbox-standalone-size;
+		width: @lime-checkbox-standalone-size;
 		position: absolute;
 		.position(@lime-checkbox-container-position);
 		border-radius: @lime-checkbox-container-border-radius;
@@ -111,8 +111,8 @@
 	line-height: 0;
 
 	.icon {
-		height: 60px;
-		width: 60px;
+		height: @lime-icon-tiny-size;
+		width: @lime-icon-tiny-size;
 		margin: 0;	// Needed to apply here instead of on `.checkbox` due to .icon.size precedence :(
 		border-radius: @lime-checkbox-border-radius;
 		position: relative;
