@@ -1,5 +1,6 @@
 import {Chip, ChipBase} from '@enact/limestone/Chip';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
+import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 
@@ -28,7 +29,8 @@ export const _Chip = (args) => {
 
 const deleteButtonProps = {
 	icon: 'closex',
-	position: 'right'
+	position: 'right',
+	onClick: action('onClick')
 };
 
 select('icon', _Chip, ['', ...iconNames], Config, 'check');
