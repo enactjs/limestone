@@ -127,9 +127,9 @@ const AccessibilityDecorator = hoc((config, Wrapped) => {
 			if (focusRing) variants.focusRing = true;
 
 			return (
-				<ResizeContext value={this.resizeRegistry.register}>
+				<ResizeContext.Provider value={this.resizeRegistry.register}>
 					<Wrapped className={combinedClassName} skinVariants={variants} {...props} />
-				</ResizeContext>
+				</ResizeContext.Provider>
 			);
 		}
 	};

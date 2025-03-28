@@ -1,5 +1,5 @@
 import SwitchItem from '@enact/limestone/SwitchItem';
-import {useCallback, use, useEffect, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 
 import eventCategory from '../../constants/eventCategory';
 import {EventLoggerContext, EventLoggerDispatchContext} from '../../context/EventLoggerContext';
@@ -58,14 +58,14 @@ function usePrevious (value) {
 const InputBoard = ({className}) => {
 	const isCapturingEvent = true;
 
-	const dispatch = use(EventLoggerDispatchContext);
+	const dispatch = useContext(EventLoggerDispatchContext);
 	const {
 		activeEventsReducer,
 		eventCapturingOnReducer,
 		eventLogsReducer,
 		syntheticEventOnReducer,
 		timerIndexReducer
-	} = use(EventLoggerContext);
+	} = useContext(EventLoggerContext);
 
 	const {activeEvents} = activeEventsReducer;
 	const {eventCapturingOn} = eventCapturingOnReducer;

@@ -1,6 +1,6 @@
 import {VirtualGridList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
-import {useCallback, use} from 'react';
+import {useCallback, useContext} from 'react';
 import PropTypes from 'prop-types';
 
 import ImageListItem from '../ImageListItem';
@@ -9,7 +9,7 @@ import {RecordContext} from '../../context/RecordContext';
 import css from './ImageList.module.less';
 
 const ImageList = (props) => {
-	const {dataOrder, minHeight, minWidth, spacing} = use(RecordContext);
+	const {dataOrder, minHeight, minWidth, spacing} = useContext(RecordContext);
 
 	const calculateOfSize = (size) => ri.scale(parseInt(size) || 0);
 
