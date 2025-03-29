@@ -125,9 +125,10 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	 * A label displayed in the chip content.
 	 *
 	 * @type {String}
+	 * @required
 	 * @public
 	 */
-	children: PropTypes.string,
+	children: PropTypes.string.isRequired,
 
 	/**
 	 * Define the icon, delete handler, and position for the delete button.
