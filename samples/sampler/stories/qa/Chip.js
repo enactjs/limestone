@@ -1,4 +1,7 @@
 import Chip from '@enact/limestone/Chip';
+import {action} from '@enact/storybook-utils/addons/actions';
+import {select} from '@enact/storybook-utils/addons/controls';
+import {Column, Row} from '@enact/ui/Layout';
 import {useState} from 'react';
 
 Chip.displayName = 'Chip';
@@ -15,29 +18,34 @@ const defaultChips = [
 	{id:3, children:'chip4', icon: 'ai'}
 ];
 
-export const WithDeleted = () => {
+export const WithDeleteButton = (args) => {
 	const [chips, setChips] = useState(defaultChips);
+	const Layout = args['layout'] === 'horizontal' ? Row : Column;
 
 	const handleDelete = (id) => {
+		action('onDelete')();
 		setChips(chips.filter(chip => chip.id !== id));
 	};
 
 	return (
-		<div>
-			{chips.map((chip, index) => {
-				const deleteButton = {icon: 'closex', position: 'bottom', onClick: () => handleDelete(chip.id)};
+		<Layout inline>
+			{chips.map(({id, icon, children}, index) => {
+				const deleteButton = {position: Layout === Row ? 'bottom' : 'right', onDelete: () => handleDelete(id)};
 				return (
 					<Chip
 						key={index}
-						icon={chip.icon}
+						icon={icon}
 						deleteButton={deleteButton}
+						onClick={action('onClick')}
 					>
-						{chip.children}
+						{children}
 					</Chip>
 				);
 			})}
-		</div>
+		</Layout>
 	);
 };
 
-WithDeleted.storyName = 'with deleted';
+select('layout', WithDeleteButton, ['horizontal', 'vertical']);
+
+WithDeleteButton.storyName = 'with delete button';

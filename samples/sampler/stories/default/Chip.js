@@ -30,7 +30,7 @@ export const _Chip = (args) => {
 const deleteButtonProps = {
 	icon: 'closex',
 	position: 'right',
-	onClick: action('onClick')
+	onDelete: action('onDelete')
 };
 
 select('icon', _Chip, ['', ...iconNames], Config, 'check');

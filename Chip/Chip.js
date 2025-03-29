@@ -76,6 +76,13 @@ const ChipBase = (props) => {
 		}
 	}, [chipRef]);
 
+	const handleDelete = useCallback((ev) => {
+		ev.stopPropagation();
+		if (deleteButton && deleteButton.onDelete) {
+			deleteButton.onDelete(ev);
+		}
+	}, [deleteButton]);
+
 	useEffect(() => {
 		if (buttonRef.current && deleteButton) {
 			buttonRef.current.classList.remove(css.focused);
@@ -103,7 +110,7 @@ const ChipBase = (props) => {
 						disabled={disabled}
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
-						onClick={deleteButton?.onClick}
+						onClick={handleDelete}
 					/>
 				</div>
 			}
@@ -123,15 +130,15 @@ ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
 	children: PropTypes.string,
 
 	/**
-	 * Define the icon, click handler, and position for the delete button.
+	 * Define the icon, delete handler, and position for the delete button.
 	 *
-	 * @type {Object.<{icon: (String|Object), onClick: (Function), position: ('top'|'bottom'|'right')}>|Boolean}
+	 * @type {Object.<{icon: (String|Object), onDelete: (Function), position: ('top'|'bottom'|'right')}>|Boolean}
 	 * @public
 	 */
 	deleteButton: PropTypes.oneOf([
 		PropTypes.shape({
 			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			onClick: PropTypes.func,
+			onDelete: PropTypes.func,
 			position: PropTypes.oneOf(['top', 'bottom', 'right'])}),
 		PropTypes.bool]),
 
