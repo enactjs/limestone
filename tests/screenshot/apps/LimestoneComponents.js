@@ -8,6 +8,7 @@ import Button from './components/Button';
 import Card from './components/Card';
 import Checkbox from './components/Checkbox';
 import CheckboxItem from './components/CheckboxItem';
+import Chip from './components/Chip';
 import ContextualMenuDecorator from './components/ContextualMenuDecorator';
 import ContextualPopupDecorator from './components/ContextualPopupDecorator';
 import DatePicker from './components/DatePicker';
@@ -64,6 +65,7 @@ const components = {
 	Card,
 	Checkbox,
 	CheckboxItem,
+	Chip,
 	ContextualMenuDecorator,
 	ContextualPopupDecorator,
 	DatePicker,
