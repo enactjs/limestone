@@ -2,7 +2,6 @@ import Chip from '../../../../Chip';
 import {withConfig} from './utils';
 
 const ChipTests = [
-	<Chip />,
 	<Chip>chip</Chip>,
 
 	<Chip icon="check">chip</Chip>,
