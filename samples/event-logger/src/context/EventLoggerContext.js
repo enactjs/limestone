@@ -47,10 +47,10 @@ export const EventLoggerProvider = ({children}) => {
 	}), initialData);
 
 	return (
-		<EventLoggerContext value={state}>
-			<EventLoggerDispatchContext value={dispatch}>
+		<EventLoggerContext.Provider value={state}>
+			<EventLoggerDispatchContext.Provider value={dispatch}>
 				{children}
-			</EventLoggerDispatchContext>
-		</EventLoggerContext>
+			</EventLoggerDispatchContext.Provider>
+		</EventLoggerContext.Provider>
 	);
 };
