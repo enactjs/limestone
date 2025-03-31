@@ -57,20 +57,4 @@ describe('Card', () => {
 
 		expect(actual).toBe(expected);
 	});
-
-	test ('should have `checkbox` role when `showSelection` prop is true', () => {
-		render(<CardBase showSelection />);
-
-		const actual = screen.getByRole('checkbox');
-
-		expect(actual).toBeInTheDocument();
-	});
-
-	test('should be `checked` when `showSelection` and `selected` props are true', () => {
-		render(<CardBase selected showSelection />);
-
-		const actual = screen.getByRole('checkbox');
-
-		expect(actual).toBeChecked();
-	});
 });

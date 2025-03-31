@@ -163,20 +163,12 @@ const CardBase = kind({
 		secondaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
-		 * Applies a selected visual effect to the image, but ony if `showSelection` is also `true`.
+		 * Applies a selected visual effect to the image.
 		 *
 		 * @type {Boolean}
 		 * @public
 		 */
 		selected: PropTypes.bool,
-
-		/**
-		 * Shows a selection icon. When `true`, a checkmark is displayed on the image.
-		 *
-		 * @type {Boolean}
-		 * @private
-		 */
-		showSelection: PropTypes.bool,
 
 		/**
 		 * Source for the image.
@@ -189,7 +181,6 @@ const CardBase = kind({
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 	},
 	defaultProps: {
-		showSelection: true,
 		orientation: 'vertical'
 	},
 
@@ -249,16 +240,11 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, showSelection, ...rest}) => {
+	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, ...rest}) => {
 		delete rest.label;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
-
-		if (showSelection) {
-			rest['role'] = 'checkbox';
-			rest['aria-checked'] = rest.selected;
-		}
 
 		return (
 			<UiCard
