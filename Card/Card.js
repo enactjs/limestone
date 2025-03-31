@@ -235,7 +235,7 @@ const CardBase = kind({
 		className: ({captionOverlay, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			roundedImage: roundedImage || captionOverlay,
-			hasContainer: hasContainer && !captionOverlay
+			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
 		})
 	},
 

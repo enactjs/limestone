@@ -150,6 +150,14 @@
 			}
 		}
 
+		&.hasContainer {
+			background-color: @lime-card-bg;
+
+			&.selected {
+				.selected-border(@lime-card-selected-image-border-color, 7);
+			}
+		}
+
 		&.selected .selectionIcon {
 			background-color: @lime-card-selected-selection-icon-bg-color;
 			color: @lime-card-selected-selection-icon-color;
@@ -164,14 +172,6 @@
 		}
 
 		&.vertical {
-			&.hasContainer {
-				background-color: @lime-card-bg;
-
-				&.selected {
-					.selected-border(@lime-card-selected-image-border-color, 7);
-				}
-			}
-
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-selected-image-border-color;
 				z-index: 5;
@@ -194,12 +194,6 @@
 		}
 
 		&.horizontal {
-			background-color: @lime-card-bg;
-
-			&.selected {
-				.selected-border(@lime-card-selected-image-border-color, 7);
-			}
-
 			&.selected .image::after {
 				.image-scrim();
 				border-radius: @lime-card-border-radius;
@@ -225,17 +219,20 @@
 				color: @lime-card-focus-label-color;
 			}
 
+			&.hasContainer {
+				transform: scale(1.1);
+
+				background-color: @lime-card-focused-bg-color;
+				.selected-border(@lime-card-focused-image-border-color, 7);
+			}
+
 			&.vertical {
 				&:not(.captionOverlay):not(.hasContainer) .image,
-				&.captionOverlay,
-				&.hasContainer {
+				&.captionOverlay {
 					transform: scale(1.1);
 				}
 
 				&.hasContainer {
-					background-color: @lime-card-focused-bg-color;
-					.selected-border(@lime-card-focused-image-border-color, 7);
-
 					&.roundedImage::before {
 						border-radius: @lime-card-border-radius;
 					}
@@ -248,10 +245,6 @@
 			}
 
 			&.horizontal {
-				transform: scale(1.1);
-				background-color: @lime-card-focused-bg-color;
-				.selected-border(@lime-card-focused-image-border-color, 7);
-
 				&::before {
 					border-radius: @lime-card-border-radius;
 				}
