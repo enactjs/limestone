@@ -161,14 +161,10 @@
 		}
 
 		.focus({
-			color: @lime-item-text-focused;
+			.lime-spotlight-focus-text-colors();
 
 			.bg {
-				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-item-bg-focused;
-				}, @shadow: {
-					box-shadow: @lime-item-shadow-focused;
-				});
+				.lime-spotlight-focus-bg-colors();
 			}
 
 			.label {
@@ -193,9 +189,8 @@
 
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors(@bg: {
-						background-color: @lime-item-bg-disabled-focused
-					});
+					.lime-disabled-focus-bg-colors();
+					background-color: @lime-item-bg-disabled-focused;
 				}
 
 				.slotBefore,
