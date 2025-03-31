@@ -46,7 +46,7 @@
 		);
 		.checkbox-colors(
 			@lime-checkbox-icon-selected,
-			@lime-checkbox-bg-active,
+			@lime-checkbox-bg-selected,
 			@lime-checkbox-border-selected
 		);
 		.checkbox-colors(
@@ -63,8 +63,8 @@
 		// Gathered rules into a rules-set to include the .bg selector in the resting block
 		{
 			.checkbox-colors(
-				@lime-checkbox-icon,
-				@lime-checkbox-bg,
+				@lime-checkbox-icon-focused,
+				@lime-checkbox-bg-focused,
 				@lime-checkbox-border-focused
 			);
 			.bg {
@@ -72,13 +72,13 @@
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-icon-selected,
-			@lime-checkbox-bg-active,
-			@lime-checkbox-border-selected
+			@lime-checkbox-icon-selected-focused,
+			@lime-checkbox-bg-selected-focused,
+			@lime-checkbox-border-selected-focused
 		);
 		.checkbox-colors(
 			@lime-checkbox-icon-indeterminate-focused,
-			@lime-checkbox-bg-indeterminate,
+			@lime-checkbox-bg-indeterminate-focused,
 			@lime-checkbox-border-indeterminate-focused
 		);
 	);
@@ -92,7 +92,7 @@
 		};
 		.checkbox-colors(
 			@lime-checkbox-icon-selected-disabled,
-			@lime-checkbox-bg-active-disabled,
+			@lime-checkbox-bg-selected-disabled,
 			@lime-checkbox-border-selected-disabled
 		);
 		{
@@ -107,12 +107,12 @@
 		{
 			// No custom rules for this state
 			.bg {
-				background-color: @lime-item-bg-disabled-focused;
+				background-color: @lime-checkbox-bg-standalone-disabled-focused;
 			}
 		};
 		.checkbox-colors(
 			@lime-checkbox-icon-selected-disabled-focused,
-			@lime-checkbox-bg-active-disabled-focused,
+			@lime-checkbox-bg-selected-disabled-focused,
 			@lime-checkbox-border-selected-disabled-focused
 		);
 		{
