@@ -1,0 +1,66 @@
+// Chip.module.less
+//
+@import '../styles/mixins.less';
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.chip {
+	position: relative;
+	display: inline-block;
+
+	.button {
+		&.small {
+			margin: @lime-chip-margin;
+		}
+
+		.bg {
+			border-radius: @lime-chip-border-radius;
+		}
+	}
+
+	.deleteButtonContainer {
+		position: absolute;
+		display: none;
+
+		&.right {
+			top: 0;
+			right: 0;
+			transform: translateX(100% - @lime-chip-margin);
+		}
+
+		&.bottom {
+			bottom: @lime-chip-margin;
+			left: 50%;
+			transform: translate(-50%, 100%);
+		}
+
+		&.top {
+			top: -100% + @lime-chip-margin;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.deleteButton {
+			margin: @lime-chip-delete-button-margin;
+		}
+	}
+
+	.focused {
+		display: block;
+	}
+
+	// Skin colors
+	.applySkins({
+		.focus({
+			.lime-spotlight-focus-text-colors();
+
+			.bg {
+				.lime-spotlight-focus-bg-colors();
+			}
+		});
+
+		.disabled({
+			opacity: @lime-disabled-opacity;
+		})
+	})
+}
