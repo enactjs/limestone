@@ -12,10 +12,10 @@
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
-@import "../styles/alias-tokens.css";
+@import "~design-tokens/packages/webos-tokens/css/alias.css";
 
 .applySkins({
-	color: var(--lime-alias-color-on-surface-main);
+	color: var(--alias-color-on-surface-main);
 
 	::selection {
 		color: @lime-input-selection-color;
@@ -59,21 +59,21 @@
 
 	/* Light Skin */
 	&:global(.light) {
-		--lime-alias-color-surface-full: var(--ref-color-base-85);
-		--lime-alias-color-on-surface-main: var(--ref-color-base-10);
-		--lime-alias-color-on-surface-sub: var(--ref-color-base-35);
-		--lime-alias-color-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
-		--lime-alias-color-selection-icon-selected-disabled: var(--ref-color-base-65);
-		--lime-alias-color-selection-bg-active-disabled: var(--ref-color-base-60);
-		--lime-alias-color-selection-bg-active-disabled-focused: var(--ref-color-base-60);
-		--lime-alias-color-surface-overlay: var(--ref-color-secondary-85);
-		--lime-alias-color-progress-bar: var(--lime-alias-color-accent);
-		--lime-alias-color-progress-bg: var(--ref-color-base-40-a70);
+		--alias-color-surface-full: var(--ref-color-base-85);
+		--alias-color-on-surface-main: var(--ref-color-base-10);
+		--alias-color-on-surface-sub: var(--ref-color-base-35);
+		--alias-color-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
+		--alias-color-selection-icon-selected-disabled: var(--ref-color-base-65);
+		--alias-color-selection-bg-active-disabled: var(--ref-color-base-60);
+		--alias-color-selection-bg-active-disabled-focused: var(--ref-color-base-60);
+		--alias-color-surface-overlay: var(--ref-color-secondary-85);
+		--alias-color-progress-bar: var(--alias-color-accent);
+		--alias-color-progress-bg: var(--ref-color-base-40-a70);
 	}
 
 	/* High Contrast */
 	&:global(.enact-a11y-high-contrast):global(.highContrast) {
-		--lime-alias-color-surface-overlay: var(--ref-color-base-0);
+		--alias-color-surface-overlay: var(--ref-color-base-0);
 	}
 }
 
@@ -85,6 +85,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: var(--lime-alias-color-surface-full);
+		background-color: var(--alias-color-surface-full);
 	}
 });
