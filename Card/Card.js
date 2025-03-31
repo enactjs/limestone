@@ -25,7 +25,7 @@ import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
 import Image from '../Image';
-import AsyncRenderChildren from '../internal/AsyncRendererChildren/AsyncRenderChildren';
+import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
@@ -86,7 +86,7 @@ const CardBase = kind({
 		'data-index': PropTypes.number,
 
 		/**
-		 * Disable Card and becomes non-interactive.
+		 * Disables Card and becomes non-interactive.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -94,7 +94,7 @@ const CardBase = kind({
 		disabled: PropTypes.bool,
 
 		/**
-		 * Set to `true` to display the image with a base color overlay.
+		 * Set to `true` to display a container with background color.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -143,7 +143,6 @@ const CardBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-
 		primaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
@@ -306,7 +305,7 @@ const CardDecorator = compose(
  * Usage:
  * ```
  * <Card
- * 	 src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
+ *   src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
  *   label="A secondary caption"
  * >
  *  The primary caption

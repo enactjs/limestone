@@ -11,8 +11,6 @@ const delayToRenderChildren = 600;
  * When `ImageItem` used in other components, it will render immediately.
  *
  * @class AsyncRenderChildren
- * @memberof limestone/ImageItem
- * @memberof limestone/Card
  * @ui
  * @private
  */
