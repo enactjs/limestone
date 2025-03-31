@@ -20,7 +20,8 @@ import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
 
-const MAX_TABS_BEFORE_SCROLLING = 7;
+const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
 
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 // eslint-disable-next-line enact/prop-types
@@ -64,7 +65,13 @@ const TabBase = kind({
 			forward('onFocus'),
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
-			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
+			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
+				if (orientation === 'horizontal') {
+					ev.target.scrollIntoView({behavior: 'smooth'});
+				}
+
+				return {selected: index};
+			})
 		)
 	},
 
@@ -212,10 +219,13 @@ const TabGroupBase = kind({
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
-		// Only vertical with more than MAX_TABS should use scroller
-		const useScroller = (!isHorizontal && children.length > MAX_TABS_BEFORE_SCROLLING);
+		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
+
+		const useScroller = (children.length > maxTabs);
 		const scrollerProps = useScroller ? {
+			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
+			hoverToScroll: true,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';

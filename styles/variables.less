@@ -69,7 +69,7 @@
 		standard-subtitle-line-height: 70px;
 
 		wizard-padding: 108px 150px 66px 150px;
-		wizard-title-font-size: 144px;
+		wizard-title-font-size: 108px;
 		wizard-title-line-height: 169px;
 		wizard-titles-gap: 12px;
 	}
@@ -203,8 +203,8 @@
 
 // Alert
 @lime-alert-font-family: @lime-font-family;
-@lime-alert-font-weight: normal;
-@lime-alert-line-height: normal;
+@lime-alert-font-weight: 600;
+@lime-alert-line-height: 84px;
 
 // Body
 @lime-body-font-family: @lime-font-family;
@@ -237,7 +237,7 @@
 @lime-heading-line-height: @lime-common-line-height;
 @lime-heading-font-style: normal;
 @lime-heading-title-font-family: @lime-alt-font-family;
-@lime-heading-title-font-weight: normal;
+@lime-heading-title-font-weight: 600;
 @lime-heading-title-line-height: @lime-heading-line-height;
 @lime-heading-subtitle-font-family: @lime-font-family;
 @lime-heading-subtitle-font-weight: normal;
@@ -309,33 +309,26 @@
 
 // Alert
 // ---------------------------------------
-@lime-alert-buttons-margin-top: 180px;
-@lime-alert-max-buttons-margin-top: 300px;
-@lime-alert-fullscreen-button-spacing: 60px;
-@lime-alert-fullscreen-image-spacing: 30px;
-@lime-alert-fullscreen-max-width: 2028px;
-@lime-alert-overlay-button-spacing: 30px;
-@lime-alert-overlay-buttons-margin: 0 0 0 126px; // If this changes, update `overflow` computed value from Alert.js
-@lime-alert-overlay-noimage-text-gap: 30px;
-@lime-alert-overlay-image-text-gap: @lime-alert-overlay-noimage-text-gap + 18px;
-@lime-alert-overlay-text-button-gap: (198px - .extract(@lime-alert-overlay-buttons-margin, left)[] - .extract(@lime-button-margin, right)[]);
-@lime-alert-overlay-content-width: 1200px; // If this changes, update `overflow` computed value from Alert.js
-@lime-alert-overlay-image-margin: 0;
-@lime-alert-overlay-margin-bottom: 360px;
-@lime-alert-overlay-padding-top-bottom: 60px;
-@lime-alert-overlay-padding-left: 60px;
-@lime-alert-overlay-padding-right: (90px - .extract(@lime-button-margin, right)[]);
-@lime-portrait-alert-overlay-noimage-content-width: 1020px;
-@lime-portrait-alert-overlay-content-width: 822px;
-@lime-portrait-alert-overlay-buttons-margin: 0 0 0 78px;
-@lime-portrait-alert-overlay-text-button-gap: (150px - .extract(@lime-portrait-alert-overlay-buttons-margin, left)[] - .extract(@lime-button-margin, right)[]);
+@lime-alert-buttons-margin-top: 120px;
+@lime-alert-fullscreen-button-spacing: 72px;
+@lime-alert-fullscreen-content-padding: 36px 48px;
+@lime-alert-fullscreen-image-spacing: 60px;
+@lime-alert-fullscreen-max-width: 2400px;
+@lime-alert-overlay-buttons-margin-top: 60px;
+@lime-alert-overlay-button-spacing: 48px;
+@lime-alert-overlay-max-height: 2028px;
+@lime-alert-overlay-image-margin-bottom: @lime-component-spacing;
+@lime-alert-overlay-padding: 84px 0;
+@lime-alert-overlay-body-padding: 0 84px;
+@lime-alert-overlay-image-padding: 0 84px;
+@lime-alert-overlay-width: 1128px;
 
 // AlertImage
 // ---------------------------------------
-@lime-alert-image-thumbnail-width: 450px;
-@lime-alert-image-thumbnail-height: 252px;
-@lime-alert-image-icon-size: 240px;
-@lime-alert-image-icon-border-radius: 12px;
+@lime-alert-image-thumbnail-width: 960px;
+@lime-alert-image-thumbnail-height: 540px;
+@lime-alert-image-icon-large-size: 252px;
+@lime-alert-image-icon-small-size: 180px;
 
 // BodyText
 // ---------------------------------------
@@ -400,6 +393,12 @@
 @lime-checkbox-border-width: 4px;
 @lime-checkbox-container-position: ((@lime-icon-tiny-size - 120px) / 2);  // Container's total dimensions should be `120px` defined in the GUI spec
 @lime-checkbox-container-border-radius: @lime-item-border-radius;
+
+// Chip
+// ---------------------------------------
+@lime-chip-border-radius: @lime-common-circular-corners;
+@lime-chip-margin: 18px;
+@lime-chip-delete-button-margin: 12px;
 
 // ContextualMenu
 // ---------------------------------------
@@ -580,7 +579,7 @@
 // ---------------------------------------
 @lime-heading-border-width: 1px;
 @lime-heading-margin: 0 @lime-component-spacing (1.5 * @lime-spotlight-outset) @lime-component-spacing;
-@lime-heading-padding: 0 0 18px 0;
+@lime-heading-padding: 0;
 @lime-heading-spacing-title: 0;
 @lime-heading-spacing-subtitle: 0;
 @lime-heading-spacing-large: 78px;
@@ -725,12 +724,20 @@
 @lime-keyguide-colordot-margin: 0 ((@lime-icon-small-size - @lime-keyguide-colordot-width) / 2); // Keep this centered by adapting its margins
 @lime-keyguide-colordot-width: 60px;
 @lime-keyguide-colordot-border-radius: 6px;
-@lime-keyguide-icon-margin-right: 48px;
-@lime-keyguide-padding: 24px 0;
-@lime-keyguide-position-bottom: 120px;
-@lime-keyguide-position-right: 150px;
-@lime-keyguide-width: 750px;
+@lime-keyguide-icon-icon-margin-right: 48px;
+@lime-keyguide-icon-padding: 24px 0;
+@lime-keyguide-icon-position-bottom: 120px;
+@lime-keyguide-icon-position-right: 150px;
+@lime-keyguide-icon-width: 750px;
+@lime-keyguide-image-padding: 32px 42px;
+@lime-keyguide-image-margin: 0;
 @lime-keyguide-item-height: 120px;
+@lime-keyguide-image-item-height: 252px;
+@lime-keyguide-image-item-width: 856px;
+@lime-keyguide-image-image-width: 180px;
+@lime-keyguide-image-image-height: 180px;
+@lime-keyguide-image-image-margin-right: 48px;
+@lime-keyguide-arrow-border-width: 30px;
 
 // MediaOverlay
 // ---------------------------------------
@@ -823,6 +830,7 @@
 @lime-popup-position-right-margin: 120px 60px 120px @lime-component-spacing;
 @lime-popup-position-bottom-margin: 0 120px 150px 120px;
 @lime-popup-position-left-margin: 120px @lime-component-spacing 120px 60px;
+@lime-popup-position-corner-margin: 60px;
 
 // PopupTabLayout
 // ---------------------------------------
@@ -954,19 +962,19 @@
 
 // Switch
 // ---------------------------------------
-@lime-switch-border-radius: 960px;
+@lime-switch-border-radius: 30px;
 @lime-switch-height: 60px;
-@lime-switch-width: 114px;
-@lime-switch-icon-height: @lime-switch-height;
+@lime-switch-width: 120px;
+@lime-switch-icon-height: 48px;
 @lime-switch-icon-line-height: @lime-switch-height;
 @lime-switch-height-large: @lime-icon-small-size-large;
 @lime-switch-width-large: 162px;
 @lime-switch-icon-height-large: @lime-icon-small-size-large;
 @lime-switch-icon-line-height-large: @lime-switch-icon-height-large;
-@lime-switch-spottable-margin: 18px (@lime-component-spacing + 30px);
-@lime-switch-spottable-border-radius: @lime-item-border-radius;
-@lime-switch-spottable-position-top-bottom: -18px; // These correlate with the numbers from 'margin" above
-@lime-switch-spottable-position-left-right: -30px; // These correlate with the numbers from 'margin" above
+@lime-switch-icon-top: ((@lime-switch-height - @lime-switch-icon-height) / 2);
+@lime-switch-spottable-margin: @lime-component-spacing;
+@lime-switch-spottable-border-radius: 24px;
+@lime-switch-spottable-position: -@lime-component-spacing; // These correlate with the numbers from 'margin" above
 
 // TabLayout
 // ---------------------------------------
