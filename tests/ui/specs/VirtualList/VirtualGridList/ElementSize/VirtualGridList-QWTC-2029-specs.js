@@ -26,7 +26,7 @@ describe('Change Spacing', function () {
 
 		// Step 4: Knobs > VirtualGridList > spacing > 2
 		await Page.spotlightDown();
-		await Page.spotlightLeft();
+		await Page.spotlightRight();
 		await Page.spotlightSelect();
 		await Page.backSpace();
 		await Page.backSpace();

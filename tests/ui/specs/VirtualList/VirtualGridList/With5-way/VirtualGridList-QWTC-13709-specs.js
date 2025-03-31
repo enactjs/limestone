@@ -20,7 +20,6 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.numPad(0);
 		await Page.numPad(0);
 		await Page.spotlightDown();
-		await Page.spotlightDown();
 
 		// check the first item
 		await Page.delay(scrollAnimationTimeout);
@@ -52,7 +51,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		expect(await Page.getScrollPositionNative()).toBe(0);
 	});
 
-	it('Should not scroll to abnormal position by 5-way navigation with translate mode)', async function () {
+	it('Should not scroll to abnormal position by 5-way navigation with translate mode', async function () {
 		const scrollAnimationTimeout = 1000;
 
 		// Set translate mode
@@ -69,7 +68,6 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.numPad(3);
 		await Page.numPad(0);
 		await Page.numPad(0);
-		await Page.spotlightDown();
 		await Page.spotlightDown();
 
 		// check the first item
