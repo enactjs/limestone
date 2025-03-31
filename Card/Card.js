@@ -147,7 +147,6 @@ const CardBase = kind({
 
 		/**
 		 * Set to `true` to display the image with rounded corners.
-		 * This prop is only used when `hasContainer` is `false` .
 		 *
 		 * @type {Boolean}
 		 * @public

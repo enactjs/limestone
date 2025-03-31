@@ -39,7 +39,6 @@ export const _Card = (args) => (
 		roundedImage={args['roundedImage']}
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		selected={args['selected']}
-		showSelection={args['showSelection']}
 		src={args['src']}
 		style={{
 			position: 'absolute',
@@ -62,7 +61,6 @@ object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 boolean('selected', _Card, Config);
-boolean('showSelection', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
 text('children', _Card, Config, 'Card Caption');
 
