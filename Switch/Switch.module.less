@@ -18,19 +18,22 @@
 	}
 
 	.icon {
+		border-radius: 50%;
 		visibility: visible;
-		left: 0;
+		height: @lime-switch-icon-height;
 		width: @lime-switch-icon-height;
-		height: inherit;
 		font-size: @lime-switch-icon-font-size;
 		line-height: @lime-switch-icon-line-height;
 		margin: 0;
+		position: absolute;
 		vertical-align: top;
+		top: @lime-switch-icon-top;
+		left: @lime-switch-icon-top;
 	}
 
 	&.selected {
 		.icon {
-			left: (@lime-switch-width - @lime-switch-height);
+			left: (@lime-switch-width - @lime-switch-icon-height - @lime-switch-icon-top);
 		}
 	}
 
@@ -40,7 +43,7 @@
 		}
 
 		.icon {
-			transition: left 200ms, color 200ms;
+			transition: left 200ms, background-color 200ms;
 		}
 	}
 
@@ -50,7 +53,7 @@
 
 		.bg {
 			position: absolute;
-			.position(@lime-switch-spottable-position-top-bottom, @lime-switch-spottable-position-left-right);
+			.position(@lime-switch-spottable-position);
 			z-index: -1;
 		}
 	});
@@ -62,8 +65,7 @@
 		}
 
 		.icon {
-			background-color: transparent;
-			color: @lime-switch-color;
+			background-color: @lime-switch-icon-bg-color;
 		}
 
 		&.selected {
@@ -72,7 +74,7 @@
 			}
 
 			.icon {
-				color: @lime-switch-selected-color;
+				background-color: @lime-switch-selected-icon-bg-color;
 			}
 		}
 
@@ -83,7 +85,7 @@
 				}
 
 				.icon {
-					color: @lime-switch-disabled-selected-color;
+					background-color: @lime-switch-disabled-selected-icon-bg-color;
 				}
 			}
 		});
@@ -104,12 +106,12 @@
 			}
 
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-focus-icon-bg-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-selected-focus-icon-bg-color;
 				}
 			}
 		});
@@ -136,7 +138,6 @@
 				}
 			});
 		});
-
 	});
 }
 
@@ -145,12 +146,12 @@
 	.focus({
 		.switch {
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-focus-icon-bg-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-selected-focus-icon-bg-color;
 				}
 			}
 		}
@@ -166,7 +167,7 @@
 				}
 
 				.icon {
-					color: @lime-switch-disabled-selected-color;
+					background-color: @lime-switch-disabled-selected-icon-bg-color;
 				}
 			}
 		}

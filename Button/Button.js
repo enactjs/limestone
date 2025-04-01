@@ -59,6 +59,19 @@ const ButtonBase = kind({
 		backgroundOpacity: PropTypes.oneOf(['opaque', 'transparent']),
 
 		/**
+		 * Centers the contents.
+		 *
+		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
+		 * defined.
+		 *
+		 * Applies the `centered` CSS class.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		centered: PropTypes.bool,
+
+		/**
 		 * Enables the `collapsed` feature.
 		 *
 		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
@@ -211,12 +224,13 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
+		className: ({backgroundOpacity, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
-				hasColor: color,
-				iconOnly,
+				centered,
 				collapsable,
 				collapsed,
+				hasColor: color,
+				iconOnly,
 				roundBorder,
 				shadowed: shadowed && (backgroundOpacity ? backgroundOpacity === 'transparent' : iconOnly)
 			},
@@ -232,6 +246,7 @@ const ButtonBase = kind({
 
 	render: ({css, ...rest}) => {
 		delete rest.backgroundOpacity;
+		delete rest.centered;
 		delete rest.color;
 		delete rest.collapsable;
 		delete rest.collapsed;
