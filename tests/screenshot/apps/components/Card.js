@@ -2,7 +2,7 @@ import ri from '@enact/ui/resolution';
 
 import Card from '../../../../Card';
 
-import {withProps} from './utils';
+import {withConfig, withProps} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -12,25 +12,43 @@ const horizontalStyle = {height: ri.scale(336), width: ri.scale(1500)};
 const defaultCardTests = [
 	// Vertical
 	<Card src={img} style={verticalStyle} orientation="vertical">Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short">Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" selected>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" roudedImage>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" roudedImage selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img}>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img} selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img}>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} roundedImage>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} roundedImage selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer roundedImage>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer  selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} captionOverlay>Short</Card>,
-	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" showSelection selected>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
 
 	// Horizontal
 	<Card src={img} style={horizontalStyle} orientation="horizontal">Short</Card>,
+	<Card src={img} style={horizontalStyle} orientation="horizontal" selected>Short</Card>,
 	<Card src={img} style={horizontalStyle} orientation="horizontal" label="Short">Short</Card>,
-	<Card src={img} style={horizontalStyle} orientation="horizontal" label="short" showSelection selected>Short</Card>
+	<Card src={img} style={horizontalStyle} orientation="horizontal" label="short" selected>Short</Card>,
+	<Card src={img} style={horizontalStyle} orientation="horizontal" label="Short" roundedImage>Short</Card>,
+	<Card src={img} style={horizontalStyle} orientation="horizontal" label="Short" roundedImage selected>Short</Card>
 ];
 
 const CardTests = [
 	...defaultCardTests,
 
 	// Disabled
-	...withProps({disabled: true}, defaultCardTests)
+	...withProps({disabled: true}, defaultCardTests),
+
+	// Centered
+	...withProps({centered: true}, defaultCardTests),
+
+	// Focused
+	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests)
 ];
 
 export default CardTests;
