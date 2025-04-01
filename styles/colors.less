@@ -51,12 +51,11 @@
 @lime-disabled-focus-content-color-opacity: 0.4;
 @lime-disabled-focus-bg-opacity: 0.585;  // This value brings the standard focus-background-color to the disabled+focus color specs
 
-
 // Spotlight and State
 // ---------------------------------------
 @lime-spotlight-text-color:           var(--alias-color-on-focused); // Used in color-mixins.less, QA Sampler Marquee
 @lime-spotlight-bg-color:             var(--alias-color-container-focused); // If this changes, update Button bg-color mixins in color-mixins.less
-@lime-spotlight-focus-shadow:         0 36px 36px var(--alias-color-shadow); // Used in color-mixins.less
+@lime-spotlight-focus-shadow:         0 24px 36px var(--alias-color-shadow); // Used in color-mixins.less
 
 
 // ---------------------------------------
@@ -104,31 +103,35 @@
 
 // Checkbox
 // ---------------------------------------
-@lime-checkbox-text-color: transparent;
-@lime-checkbox-bg-color: transparent;
-@lime-checkbox-border-color: var(--alias-color-on-surface-main);
-@lime-checkbox-disabled-selected-text-color: var(--alias-color-selection-icon-selected-disabled);
-@lime-checkbox-disabled-selected-bg-color: var(--alias-color-selection-bg-active-disabled);
-@lime-checkbox-disabled-selected-border-color: @lime-checkbox-disabled-selected-bg-color;
-@lime-checkbox-focus-disabled-selected-text-color: var(--alias-color-selection-icon-selected-disabled-focused);
-@lime-checkbox-focus-disabled-selected-bg-color: var(--alias-color-selection-bg-active-disabled-focused);
-@lime-checkbox-focus-disabled-selected-border-color: @lime-checkbox-focus-disabled-selected-bg-color;
-@lime-checkbox-focus-text-color: @lime-checkbox-text-color;
-@lime-checkbox-focus-bg-color: @lime-checkbox-bg-color;
-@lime-checkbox-focus-border-color: var(--alias-color-on-focused);
-@lime-checkbox-selected-text-color: var(--alias-color-on-selected);
-@lime-checkbox-selected-bg-color: var(--alias-color-selection-bg-active);
-@lime-checkbox-selected-border-color: @lime-checkbox-selected-bg-color;
-@lime-checkbox-selected-focus-text-color: @lime-checkbox-selected-text-color;
-@lime-checkbox-selected-focus-bg-color: @lime-checkbox-selected-bg-color;
-@lime-checkbox-selected-focus-border-color: @lime-checkbox-selected-focus-bg-color;
-@lime-checkbox-indeterminate-text-color: @lime-checkbox-border-color;
-@lime-checkbox-indeterminate-bg-color: @lime-checkbox-bg-color;
-@lime-checkbox-indeterminate-border-color: @lime-checkbox-border-color;
-@lime-checkbox-indeterminate-focus-text-color: var(--alias-color-on-focused);
-@lime-checkbox-indeterminate-focus-bg-color: @lime-checkbox-focus-bg-color;
-@lime-checkbox-indeterminate-focus-border-color: @lime-checkbox-focus-border-color;
-@lime-checkbox-standalone-bg-disabled-focus-bg-color: var(--alias-color-container-disabled-focused);
+@lime-checkbox-bg: transparent;
+@lime-checkbox-bg-focused: @lime-checkbox-bg;
+@lime-checkbox-bg-selected: var(--alias-color-accent);
+@lime-checkbox-bg-selected-focused: @lime-checkbox-bg-selected;
+@lime-checkbox-bg-selected-disabled: var(--alias-color-selection-bg-active-disabled);
+@lime-checkbox-bg-selected-disabled-focused: var(--alias-color-selection-bg-active-disabled-focused);
+@lime-checkbox-bg-indeterminate: @lime-checkbox-bg;
+@lime-checkbox-bg-indeterminate-focused: @lime-checkbox-bg-indeterminate;
+@lime-checkbox-bg-standalone-disabled-focused: @lime-item-bg-disabled-focused;
+@lime-checkbox-icon: transparent;
+@lime-checkbox-icon-focused: @lime-checkbox-icon;
+@lime-checkbox-icon-selected: var(--alias-color-on-selected);
+@lime-checkbox-icon-selected-focused: @lime-checkbox-icon-selected;
+@lime-checkbox-icon-selected-disabled: var(--alias-color-selection-icon-selected-disabled);
+@lime-checkbox-icon-selected-disabled-focused: var(--alias-color-selection-icon-selected-disabled-focused);
+@lime-checkbox-icon-indeterminate: @lime-checkbox-border;
+@lime-checkbox-icon-indeterminate-focused: @lime-checkbox-border-focused;
+@lime-checkbox-border: var(--alias-color-on-surface-main);
+@lime-checkbox-border-focused: var(--alias-color-on-focused);
+@lime-checkbox-border-selected: @lime-checkbox-bg-selected;
+@lime-checkbox-border-selected-focused: @lime-checkbox-bg-selected;
+@lime-checkbox-border-selected-disabled: @lime-checkbox-bg-selected-disabled;
+@lime-checkbox-border-selected-disabled-focused: @lime-checkbox-bg-selected-disabled-focused;
+@lime-checkbox-border-disabled: var(--alias-color-selection-border-disabled);
+@lime-checkbox-border-disabled-focused: var(--alias-selection-border-disabled-focused);
+@lime-checkbox-border-indeterminate: var(--alias-color-on-surface-main);
+@lime-checkbox-border-indeterminate-focused: var(--alias-color-on-focused);
+@lime-checkbox-border-indeterminate-disabled: var(--alias-color-selection-border-indeterminate-disabled);
+@lime-checkbox-border-indeterminate-disabled-focused: var(--alias-color-selection-border-indeterminate-disabled-focused);
 
 // ContextualPopup
 // ---------------------------------------
@@ -218,10 +221,15 @@
 
 // Item
 // ---------------------------------------
-@lime-item-label-color: var(--alias-color-on-surface-sub);
-@lime-item-focus-label-color: inherit;
-@lime-item-focus-background: '';
-@lime-item-disabled-focus-bg-color: var(--alias-color-container-disabled-focused);
+@lime-item-text: var(--alias-color-on-surface-main);
+@lime-item-text-focused: var(--alias-color-on-focused);
+@lime-item-text-selected: var(--alias-color-on-selected);
+@lime-item-text-sub: var(--alias-color-on-surface-sub);
+@lime-item-text-sub-focused: var(--alias-color-on-sub-focused);
+@lime-item-text-sub-selected: var(--alias-color-on-sub-selected);
+@lime-item-bg-focused: var(--alias-color-container-focused);
+@lime-item-bg-selected: var(--alias-color-container-selected-alpha10);
+@lime-item-bg-disabled-focused: var(--alias-color-container-disabled-focused);
 
 // KeyGuide
 // ---------------------------------------
