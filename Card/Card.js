@@ -44,7 +44,28 @@ const CardBase = kind({
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
+		 * The primary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @required
+		 * @public
+		 */
+		children: PropTypes.string.isRequired,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @required
+		 * @public
+		 */
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+
+		/**
 		 * Determines whether the caption will be placed over the image or not.
+		 * It only applies when `orientation` is `'vertical'`.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -58,14 +79,6 @@ const CardBase = kind({
 		 * @public
 		 */
 		centered: PropTypes.bool,
-
-		/**
-		 * The primary caption displayed with the image.
-		 *
-		 * @type {String}
-		 * @public
-		 */
-		children: PropTypes.string,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -167,17 +180,7 @@ const CardBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		selected: PropTypes.bool,
-
-		/**
-		 * Source for the image.
-		 * String value or Object of values used to determine which image will appear on
-		 * a specific screenSize.
-		 *
-		 * @type {String|Object}
-		 * @public
-		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		selected: PropTypes.bool
 	},
 	defaultProps: {
 		orientation: 'vertical'
@@ -231,12 +234,13 @@ const CardBase = kind({
 		},
 		className: ({captionOverlay, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
-			roundedImage: roundedImage,
+			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
 		})
 	},
 
 	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, ...rest}) => {
+		delete rest.centered;
 		delete rest.label;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
