@@ -282,7 +282,9 @@
 
 // ProgressButton
 // ---------------------------------------
-@lime-progressbutton-bar-color: var(--alias-color-on-container-sub);
+@lime-progressbutton-bar-color: ~"color(from" var(--alias-color-on-surface-main) ~"srgb r g b / 0.2)";
+@lime-progressbutton-fill-color: var(--alias-color-on-surface-main);
+@lime-progressbutton-focus-bar-color: ~"color(from" var(--alias-color-on-focused) ~"srgb r g b / 0.2)";
 @lime-progressbutton-focus-fill-color: var(--alias-color-on-focused);
 
 // RadioItem
