@@ -154,7 +154,7 @@
 			background-color: @lime-card-bg;
 
 			&.selected {
-				.selected-border(@lime-card-selected-image-border-color, 7);
+				.selected-border(@lime-card-selected-image-border-color, 5);
 			}
 		}
 
@@ -192,7 +192,7 @@
 		&.vertical {
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-selected-image-border-color;
-				z-index: 5;
+				z-index: 3;
 			}
 		}
 
@@ -210,7 +210,7 @@
 				transition: transform 200ms ease-in-out;
 
 				background-color: @lime-card-focused-bg-color;
-				.selected-border(@lime-card-focused-image-border-color, 7);
+				.selected-border(@lime-card-focused-image-border-color, 5);
 
 				.caption {
 					color: @lime-card-focus-caption-color;
@@ -233,7 +233,7 @@
 				}
 
 				&:not(.hasContainer) .selectionContainer {
-					z-index: 7;
+					z-index: 5;
 					border-color: @lime-card-focused-image-border-color;
 				}
 			}
