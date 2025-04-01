@@ -193,14 +193,6 @@ const CardBase = kind({
 		children: ({centered, children, css, 'data-index': index, label, imageIconSrc, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
-			let placeholderCaptionHeight, placeholderLabelHeight;
-
-			if (imageIconSrc) {
-				placeholderCaptionHeight = ri.scale(label ? 138 : 276);
-			} else {
-				placeholderCaptionHeight = ri.scale(label ? 108 : 156);
-			}
-			placeholderLabelHeight = ri.scale(imageIconSrc ? 138 : 108);
 
 			const captions = (
 				<Row className={css.captions}>
@@ -222,10 +214,15 @@ const CardBase = kind({
 			return (
 				typeof index !== 'undefined' ?
 					<AsyncRenderChildren
-						fallback={<>
-							<div style={{height: placeholderCaptionHeight}} />
-							{typeof label !== 'undefined' ? <div style={{height: placeholderLabelHeight}} /> : null}
-						</>}
+						fallback={
+							<Row className={css.captions}>
+								{hasImageIcon ? <Cell className={css.imageIcon} /> : null}
+								<Cell>
+									<div className={css.caption} />
+									{typeof label !== 'undefined' ? <div className={css.label} /> : null}
+								</Cell>
+							</Row>
+						}
 						index={index}
 					>
 						{captions}
