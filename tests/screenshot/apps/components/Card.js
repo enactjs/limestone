@@ -25,7 +25,7 @@ const defaultCardTests = [
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} roundedImage selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer roundedImage>Short</Card>,
-	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer  selected>Short</Card>,
+	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} hasContainer selected>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} style={verticalStyle} orientation="vertical" label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
 
