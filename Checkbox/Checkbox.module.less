@@ -84,23 +84,6 @@
 	);
 };
 
-// Disabled
-@checkbox-disabled-resting: {
-	.checkbox-states(
-		{
-			// No custom rules for this state
-		};
-		.checkbox-colors(
-			@lime-checkbox-icon-selected-disabled,
-			@lime-checkbox-bg-selected-disabled,
-			@lime-checkbox-border-selected-disabled
-		);
-		{
-			// No custom rules for this state
-		}
-	);
-};
-
 // Disabled + Focus States
 @checkbox-disabled-focus: {
 	.checkbox-states(
@@ -110,11 +93,9 @@
 				background-color: @lime-checkbox-bg-standalone-disabled-focused;
 			}
 		};
-		.checkbox-colors(
-			@lime-checkbox-icon-selected-disabled-focused,
-			@lime-checkbox-bg-selected-disabled-focused,
-			@lime-checkbox-border-selected-disabled-focused
-		);
+		{
+			// No custom rules for this state
+		};
 		{
 			// No custom rules for this state
 		};
@@ -182,14 +163,16 @@
 		// Disabled
 		.lime-disabled({
 			.icon {
-				.lime-disabled-focus-content-colors();
+				.lime-disabled-colors();
 			}
-
-			@checkbox-disabled-resting();
 
 			// Disabled + Focus
 			.focus({
 				@checkbox-disabled-focus();
+
+				.icon {
+					.lime-disabled-focus-content-colors();
+				}
 			});
 		});
 	});
@@ -211,14 +194,6 @@
 			}
 		});
 	}
-});
-
-.applySkins({
-	.disabled({
-		& .checkbox {
-			@checkbox-disabled-resting();
-		}
-	});
 });
 
 .applySkins({
