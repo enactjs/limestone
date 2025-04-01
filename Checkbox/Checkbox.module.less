@@ -40,19 +40,19 @@
 @checkbox-resting: {
 	.checkbox-states(
 		.checkbox-colors(
-			@lime-checkbox-text-color,
-			@lime-checkbox-bg-color,
-			@lime-checkbox-border-color
+			@lime-checkbox-icon,
+			@lime-checkbox-bg,
+			@lime-checkbox-border
 		);
 		.checkbox-colors(
-			@lime-checkbox-selected-text-color,
-			@lime-checkbox-selected-bg-color,
-			@lime-checkbox-selected-border-color
+			@lime-checkbox-icon-selected,
+			@lime-checkbox-bg-selected,
+			@lime-checkbox-border-selected
 		);
 		.checkbox-colors(
-			@lime-checkbox-indeterminate-text-color,
-			@lime-checkbox-indeterminate-bg-color,
-			@lime-checkbox-indeterminate-border-color
+			@lime-checkbox-icon-indeterminate,
+			@lime-checkbox-bg-indeterminate,
+			@lime-checkbox-border-indeterminate
 		);
 	);
 };
@@ -63,23 +63,23 @@
 		// Gathered rules into a rules-set to include the .bg selector in the resting block
 		{
 			.checkbox-colors(
-				@lime-checkbox-focus-text-color,
-				@lime-checkbox-focus-bg-color,
-				@lime-checkbox-focus-border-color
+				@lime-checkbox-icon-focused,
+				@lime-checkbox-bg-focused,
+				@lime-checkbox-border-focused
 			);
 			.bg {
 				.lime-spotlight-focus-bg-colors();
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-selected-focus-text-color,
-			@lime-checkbox-selected-focus-bg-color,
-			@lime-checkbox-selected-focus-border-color
+			@lime-checkbox-icon-selected-focused,
+			@lime-checkbox-bg-selected-focused,
+			@lime-checkbox-border-selected-focused
 		);
 		.checkbox-colors(
-			@lime-checkbox-indeterminate-focus-text-color,
-			@lime-checkbox-indeterminate-focus-bg-color,
-			@lime-checkbox-indeterminate-focus-border-color
+			@lime-checkbox-icon-indeterminate-focused,
+			@lime-checkbox-bg-indeterminate-focused,
+			@lime-checkbox-border-indeterminate-focused
 		);
 	);
 };
@@ -91,9 +91,9 @@
 			// No custom rules for this state
 		};
 		.checkbox-colors(
-			@lime-checkbox-disabled-selected-text-color,
-			@lime-checkbox-disabled-selected-bg-color,
-			@lime-checkbox-disabled-selected-border-color
+			@lime-checkbox-icon-selected-disabled,
+			@lime-checkbox-bg-selected-disabled,
+			@lime-checkbox-border-selected-disabled
 		);
 		{
 			// No custom rules for this state
@@ -107,13 +107,13 @@
 		{
 			// No custom rules for this state
 			.bg {
-				background-color: @lime-checkbox-standalone-bg-disabled-focus-bg-color;
+				background-color: @lime-checkbox-bg-standalone-disabled-focused;
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-focus-disabled-selected-text-color,
-			@lime-checkbox-focus-disabled-selected-bg-color,
-			@lime-checkbox-focus-disabled-selected-border-color
+			@lime-checkbox-icon-selected-disabled-focused,
+			@lime-checkbox-bg-selected-disabled-focused,
+			@lime-checkbox-border-selected-disabled-focused
 		);
 		{
 			// No custom rules for this state
