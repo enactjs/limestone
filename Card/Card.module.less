@@ -42,6 +42,7 @@
 			border-radius: @lime-card-selection-icon-border-radius;
 			margin: @lime-card-selection-icon-margin;
 			line-height: @lime-card-selection-icon-line-height;
+			z-index: 3;
 		}
 	}
 
@@ -71,6 +72,30 @@
 		font-weight: @lime-card-label-font-weight;
 	}
 
+	&.roundedImage {
+		border-radius: @lime-card-border-radius;
+
+		&.selected::before {
+			border-radius:  @lime-card-border-radius;
+		}
+
+		&.vertical {
+			.selectionContainer, .image {
+				border-radius: @lime-card-border-radius;
+			}
+
+			&.hasContainer .image {
+				border-bottom-left-radius: unset;
+				border-bottom-right-radius: unset;
+			}
+		}
+
+		&.horizontal .image {
+			border-top-left-radius: @lime-card-border-radius;
+			border-bottom-left-radius: @lime-card-border-radius;
+		}
+	}
+
 	&.vertical {
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
@@ -86,50 +111,18 @@
 			margin: @lime-card-vertical-image-icon-margin;
 		}
 
-		&.roundedImage {
-			border-radius: @lime-card-border-radius;
-
-			.selectionContainer, .image {
-				border-radius: @lime-card-border-radius;
-			}
-		}
-
 		&.captionOverlay .captions {
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
-		&.hasContainer {
-			.captions {
-				padding: @lime-card-vertical-has-container-captions-padding;
-			}
-
-			&.roundedImage {
-				.image {
-					border-bottom-left-radius: unset;
-					border-bottom-right-radius: unset;
-				}
-
-				&.selected::before {
-					border-radius:  @lime-card-border-radius;
-				}
-			}
+		&.hasContainer .captions {
+			padding: @lime-card-vertical-has-container-captions-padding;
 		}
 	}
 
 	&.horizontal {
-		border-radius: @lime-card-border-radius;
-
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
-		}
-
-		.image {
-			border-top-left-radius: @lime-card-border-radius;
-			border-bottom-left-radius: @lime-card-border-radius;
-		}
-
-		&.selected::before {
-			border-radius: @lime-card-border-radius;
 		}
 	}
 
@@ -150,6 +143,11 @@
 			}
 		}
 
+		&.selected .selectionIcon {
+			background-color: @lime-card-selected-selection-icon-bg-color;
+			color: @lime-card-selected-selection-icon-color;
+		}
+
 		&.hasContainer {
 			background-color: @lime-card-bg;
 
@@ -158,9 +156,27 @@
 			}
 		}
 
-		&.selected .selectionIcon {
-			background-color: @lime-card-selected-selection-icon-bg-color;
-			color: @lime-card-selected-selection-icon-color;
+		&.selected {
+			.image::after {
+				.image-scrim();
+			}
+
+			&.roundedImage {
+				.image::after {
+					border-radius:  @lime-card-border-radius;
+				}
+
+				&.vertical.hasContainer .image::after {
+					border-bottom-left-radius: unset;
+					border-bottom-right-radius: unset;
+				}
+
+				&.horizontal .image::after {
+					border-radius: @lime-card-border-radius;
+					border-top-right-radius: unset;
+					border-bottom-right-radius: unset;
+				}
+			}
 		}
 
 		.caption {
@@ -176,30 +192,6 @@
 				border-color: @lime-card-selected-image-border-color;
 				z-index: 5;
 			}
-
-			&.selected {
-				.image::after {
-					.image-scrim();
-				}
-
-				&.roundedImage .image::after {
-					border-radius:  @lime-card-border-radius;
-				}
-
-				&.hasContainer.roundedImage .image::after {
-					border-bottom-left-radius: unset;
-					border-bottom-right-radius: unset;
-				}
-			}
-		}
-
-		&.horizontal {
-			&.selected .image::after {
-				.image-scrim();
-				border-radius: @lime-card-border-radius;
-				border-top-right-radius: unset;
-				border-bottom-right-radius: unset;
-			}
 		}
 
 		.focus({
@@ -211,19 +203,23 @@
 				color: @lime-card-selected-selection-icon-color;
 			}
 
-			&.hasContainer .caption, &.horizontal .caption {
-				color: @lime-card-focus-caption-color;
-			}
-
-			&.hasContainer .label, &.horizontal .label {
-				color: @lime-card-focus-label-color;
-			}
-
 			&.hasContainer {
 				transform: scale(1.1);
 
 				background-color: @lime-card-focused-bg-color;
 				.selected-border(@lime-card-focused-image-border-color, 7);
+
+				.caption {
+					color: @lime-card-focus-caption-color;
+				}
+
+				.label {
+					color: @lime-card-focus-label-color;
+				}
+
+				&.roundedImage::before {
+					border-radius: @lime-card-border-radius;
+				}
 			}
 
 			&.vertical {
@@ -232,21 +228,9 @@
 					transform: scale(1.1);
 				}
 
-				&.hasContainer {
-					&.roundedImage::before {
-						border-radius: @lime-card-border-radius;
-					}
-				}
-
 				&:not(.hasContainer) .selectionContainer {
 					z-index: 7;
 					border-color: @lime-card-focused-image-border-color;
-				}
-			}
-
-			&.horizontal {
-				&::before {
-					border-radius: @lime-card-border-radius;
 				}
 			}
 		})
