@@ -95,6 +95,7 @@ const CardBase = kind({
 
 		/**
 		 * Set to `true` to display a container with background color.
+		 * When `orientation` is `'horizontal'`, this prop is always `true` and provided value will be ignored.
 		 *
 		 * @type {Boolean}
 		 * @public
