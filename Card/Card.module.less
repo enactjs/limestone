@@ -147,6 +147,10 @@
 			padding: @lime-card-vertical-has-container-captions-padding;
 		}
 
+		&:not(.hasContainer) .image {
+			z-index: 1;
+		}
+
 		&.selected:not(.hasContainer) .selectionContainer {
 			z-index: 3;
 		}
