@@ -72,6 +72,14 @@
 		height: 106px;
 	}
 
+	.input {
+		&:focus-within {
+			.input-placeholder({
+				padding: @lime-inputfield-placeholder-padding;
+			});
+		}
+	}
+
 	.input,
 	.inputHighlight {
 		z-index: 1;
@@ -215,6 +223,7 @@
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
 					color: @lime-inputfield-placeholder-active-color;
+					opacity: @lime-disabled-focus-content-opacity;
 				});
 			}
 
