@@ -25,10 +25,9 @@ import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
 import Image from '../Image';
+import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
-
-import AsyncRenderChildren from './AsyncRenderChildren';
 
 import componentCss from './ImageItem.module.less';
 
