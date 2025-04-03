@@ -1,8 +1,6 @@
 // Chip.module.less
 //
-@import '../styles/mixins.less';
 @import '../styles/variables.less';
-@import '../styles/skin.less';
 
 .chip {
 	position: relative;
@@ -11,6 +9,7 @@
 	.button {
 		&.small {
 			margin: @lime-chip-margin;
+			min-width: @lime-chip-min-width;
 		}
 
 		.bg {
@@ -48,19 +47,4 @@
 	.focused {
 		display: block;
 	}
-
-	// Skin colors
-	.applySkins({
-		.focus({
-			.lime-spotlight-focus-text-colors();
-
-			.bg {
-				.lime-spotlight-focus-bg-colors();
-			}
-		});
-
-		.disabled({
-			opacity: @lime-disabled-opacity;
-		})
-	})
 }

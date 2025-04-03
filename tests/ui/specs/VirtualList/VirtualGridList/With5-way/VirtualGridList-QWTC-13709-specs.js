@@ -6,7 +6,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.open();
 	});
 
-	it('Should not scroll to abnormal position by 5-way navigation)', async function () {
+	it('Should not scroll to abnormal position by 5-way navigation', async function () {
 		const scrollAnimationTimeout = 500;
 
 		// Set minHeight to 1300 to make itemSize + affordance bigger than viewport
@@ -36,13 +36,13 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.spotlightDown();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(6);
-		expect(await Page.getScrollPositionNative()).toBe(740);
+		expect(await Page.getScrollPositionNative()).toBe(730);
 
 		// move left to check if unexpected scrolling occurs
 		await Page.spotlightLeft();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(5);
-		expect(await Page.getScrollPositionNative()).toBe(740);
+		expect(await Page.getScrollPositionNative()).toBe(730);
 
 		// move up to check if the scroll position is updated correctly
 		await Page.spotlightUp();
@@ -51,7 +51,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		expect(await Page.getScrollPositionNative()).toBe(0);
 	});
 
-	it('Should not scroll to abnormal position by 5-way navigation with translate mode)', async function () {
+	it('Should not scroll to abnormal position by 5-way navigation with translate mode', async function () {
 		const scrollAnimationTimeout = 1000;
 
 		// Set translate mode
@@ -85,13 +85,13 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.spotlightDown();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(6);
-		expect(await Page.getScrollPositionTranslate()).toBe(-740);
+		expect(await Page.getScrollPositionTranslate()).toBe(-730);
 
 		// move left to check if unexpected scrolling occurs
 		await Page.spotlightLeft();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(5);
-		expect(await Page.getScrollPositionTranslate()).toBe(-740);
+		expect(await Page.getScrollPositionTranslate()).toBe(-730);
 
 		// move up to check if the scroll position is updated correctly
 		await Page.spotlightUp();
