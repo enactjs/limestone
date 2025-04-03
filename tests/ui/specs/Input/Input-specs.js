@@ -460,7 +460,7 @@ describe('Input test', () => {
 		// // Disabled Input
 		it('should focus the Disabled Input Button', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightDown();
 
@@ -470,7 +470,7 @@ describe('Input test', () => {
 
 		it('should open Disabled Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
