@@ -1,10 +1,10 @@
 /**
- * Provides a Sandstone-themed pill-shaped toggle switch component.
+ * Provides a Limestone-themed pill-shaped toggle switch component.
  *
  * @example
  * <Switch />
  *
- * @module sandstone/Switch
+ * @module limestone/Switch
  * @exports Switch
  * @exports SwitchBase
  */
@@ -17,7 +17,6 @@ import Spottable from '@enact/spotlight/Spottable';
 import Touchable from '@enact/ui/Touchable';
 import Toggleable from '@enact/ui/Toggleable';
 
-import Icon from '../Icon';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Switch.module.less';
@@ -26,17 +25,14 @@ import componentCss from './Switch.module.less';
  * Renders the base level DOM structure of the component.
  *
  * @class SwitchBase
- * @memberof sandstone/Switch
- * @extends sandstone/Icon.Icon
+ * @memberof limestone/Switch
  * @ui
  * @public
  */
 const SwitchBase = kind({
 	name: 'Switch',
 
-	propTypes: /** @lends sandstone/Switch.SwitchBase.prototype */ {
-		children: PropTypes.string,
-
+	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
 		css: PropTypes.object,
 
 		/**
@@ -68,7 +64,6 @@ const SwitchBase = kind({
 	},
 
 	defaultProps: {
-		children: 'circle',
 		noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION,
 		selected: false
 	},
@@ -86,7 +81,7 @@ const SwitchBase = kind({
 		})
 	},
 
-	render: ({children, css, disabled, selected, ...rest}) => {
+	render: ({css, disabled, selected, ...rest}) => {
 		delete rest.noAnimation;
 
 		return (
@@ -99,12 +94,7 @@ const SwitchBase = kind({
 			>
 				<div className={css.bg} />
 				<div className={css.client}>
-					<Icon
-						size="small"
-						className={css.icon}
-					>
-						{children}
-					</Icon>
+					<div className={css.icon} />
 				</div>
 			</div>
 		);
@@ -115,7 +105,7 @@ const SwitchBase = kind({
  * Adds interactive functionality to `Switch`.
  *
  * @class SwitchDecorator
- * @memberof sandstone/Switch
+ * @memberof limestone/Switch
  * @mixes ui/Toggleable.Toggleable
  * @mixes spotlight/Spottable.Spottable
  * @hoc
@@ -129,15 +119,15 @@ const SwitchDecorator = compose(
 );
 
 /**
- * A Sandstone-styled component that looks like a toggle switch.
+ * A Limestone-styled component that looks like a toggle switch.
  *
  * `Switch` will manage its `selected` state via {@link ui/Toggleable|Toggleable} unless set
  * directly.
  *
  * @class Switch
- * @memberof sandstone/Switch
- * @extends sandstone/Switch.SwitchBase
- * @mixes sandstone/Switch.SwitchDecorator
+ * @memberof limestone/Switch
+ * @extends limestone/Switch.SwitchBase
+ * @mixes limestone/Switch.SwitchDecorator
  * @ui
  * @public
  */

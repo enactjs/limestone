@@ -63,7 +63,7 @@ const animationDuration = 300;
  * A set of components for controlling media playback and rendering additional components.
  *
  * @class MediaControlsBase
- * @memberof sandstone/MediaPlayer
+ * @memberof limestone/MediaPlayer
  * @ui
  * @private
  */
@@ -71,7 +71,7 @@ const MediaControlsBase = kind({
 	name: 'MediaControls',
 
 	// intentionally assigning these props to MediaControls instead of Base (which is private)
-	propTypes: /** @lends sandstone/MediaPlayer.MediaControls.prototype */ {
+	propTypes: /** @lends limestone/MediaPlayer.MediaControls.prototype */ {
 		/**
 		 * DOM id for the component.
 		 *
@@ -132,8 +132,8 @@ const MediaControlsBase = kind({
 		jumpBackwardAriaLabel: PropTypes.string,
 
 		/**
-		 * Jump backward {@link sandstone/Icon.Icon|icon} name. Accepts any
-		 * {@link sandstone/Icon.Icon|icon} component type.
+		 * Jump backward {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
 		 *
 		 * @type {String}
 		 * @default 'jumpbackward'
@@ -158,8 +158,8 @@ const MediaControlsBase = kind({
 		jumpForwardAriaLabel: PropTypes.string,
 
 		/**
-		 * Jump forward {@link sandstone/Icon.Icon|icon} name. Accepts any
-		 * {@link sandstone/Icon.Icon|icon} component type.
+		 * Jump forward {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
 		 *
 		 * @type {String}
 		 * @default 'jumpforward'
@@ -267,9 +267,9 @@ const MediaControlsBase = kind({
 
 		/**
 		 * A string which is sent to the `pause` icon of the player controls. This can be
-		 * anything that is accepted by {@link sandstone/Icon.Icon|Icon}. This will be temporarily replaced by
-		 * the {@link sandstone/MediaPlayer.MediaControls.playIcon|playIcon} when the
-		 * {@link sandstone/MediaPlayer.MediaControls.paused|paused} boolean is `false`.
+		 * anything that is accepted by {@link limestone/Icon.Icon|Icon}. This will be temporarily replaced by
+		 * the {@link limestone/MediaPlayer.MediaControls.playIcon|playIcon} when the
+		 * {@link limestone/MediaPlayer.MediaControls.paused|paused} boolean is `false`.
 		 *
 		 * @type {String}
 		 * @default 'pause'
@@ -279,9 +279,9 @@ const MediaControlsBase = kind({
 
 		/**
 		 * A string which is sent to the `play` icon of the player controls. This can be
-		 * anything that is accepted by {@link sandstone/Icon.Icon}. This will be temporarily replaced by
-		 * the {@link sandstone/MediaPlayer.MediaControls.pauseIcon|pauseIcon} when the
-		 * {@link sandstone/MediaPlayer.MediaControls.paused|paused} boolean is `true`.
+		 * anything that is accepted by {@link limestone/Icon.Icon}. This will be temporarily replaced by
+		 * the {@link limestone/MediaPlayer.MediaControls.pauseIcon|pauseIcon} when the
+		 * {@link limestone/MediaPlayer.MediaControls.paused|paused} boolean is `true`.
 		 *
 		 * @type {String}
 		 * @default 'play'
@@ -422,12 +422,12 @@ const MediaControlsBase = kind({
 });
 
 /**
- * Media control behaviors to apply to {@link sandstone/MediaPlayer.MediaControlsBase|MediaControlsBase}.
+ * Media control behaviors to apply to {@link limestone/MediaPlayer.MediaControlsBase|MediaControlsBase}.
  * Provides built-in support for showing more components and key handling for basic playback
  * controls.
  *
  * @class MediaControlsDecorator
- * @memberof sandstone/MediaPlayer
+ * @memberof limestone/MediaPlayer
  * @mixes ui/Slottable.Slottable
  * @hoc
  * @private
@@ -436,7 +436,7 @@ const MediaControlsDecorator = hoc((config, Wrapped) => {
 	class MediaControlsDecoratorHOC extends Component {
 		static displayName = 'MediaControlsDecorator';
 
-		static propTypes = /** @lends sandstone/MediaPlayer.MediaControlsDecorator.prototype */ {
+		static propTypes = /** @lends limestone/MediaPlayer.MediaControlsDecorator.prototype */ {
 			/**
 			 * The label for the action guide.
 			 *
@@ -910,9 +910,9 @@ const handleCancel = (ev, {onClose}) => {
  * `MediaControls` when the user navigates down from the media buttons.
  *
  * @class MediaControls
- * @memberof sandstone/MediaPlayer
+ * @memberof limestone/MediaPlayer
  * @mixes ui/Cancelable.Cancelable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @ui
  * @public
  */

@@ -9,21 +9,21 @@
 		/* Available for customization */
 	}
 
-	font-size: @sand-item-font-size;
-	.sand-spotlight-padding(@sand-item-vertical-padding);
+	font-size: @lime-item-font-size;
+	.lime-spotlight-padding(@lime-item-vertical-padding);
 
-	font-weight: @sand-item-font-weight;
-	.enact-locale-line-height(@sand-item-line-height, @sand-tallglyph-item-line-height);
-	height: @sand-item-height;
+	font-weight: @lime-item-font-weight;
+	.enact-locale-line-height(@lime-item-line-height, @lime-tallglyph-item-line-height);
+	height: @lime-item-height;
 	display: flex;
 	position: relative;
 	color: inherit;
-	margin: @sand-item-margin;
+	margin: @lime-item-margin;
 
 	.bg {
 		position: absolute;
 		.position(0);
-		border-radius: @sand-item-border-radius;
+		border-radius: @lime-item-border-radius;
 	}
 
 	.slotAfter,
@@ -46,15 +46,15 @@
 	}
 
 	.slotAfter {
-		margin-inline-start: @sand-item-slotafter-spacing;
+		margin-inline-start: @lime-item-slotafter-spacing;
 	}
 
 	.slotBefore {
-		margin-inline-end: @sand-item-slotbefore-spacing;
+		margin-inline-end: @lime-item-slotbefore-spacing;
 	}
 
 	&.hasLabel {
-		height: @sand-item-withlabel-height;
+		height: @lime-item-withlabel-height;
 
 		.itemContent {
 			&.labelAfter,
@@ -73,7 +73,7 @@
 
 	&.inline {
 		display: inline-flex;
-		max-width: @sand-item-inline-max-width;
+		max-width: @lime-item-inline-max-width;
 
 		// Apply to the marquee content area to tell it to expand to the available width of the container
 		.content,
@@ -91,47 +91,47 @@
 
 	// Text
 	.label {
-		font-size: @sand-item-label-font-size;
+		font-size: @lime-item-label-font-size;
 		font-weight: inherit;
-		.enact-locale-line-height(@sand-item-label-line-height, @sand-tallglyph-item-label-line-height);
+		.enact-locale-line-height(@lime-item-label-line-height, @lime-tallglyph-item-label-line-height);
 	}
 
-	.sand-custom-text({
-		font-size: @sand-item-font-size-large;
-		.enact-locale-line-height(@sand-item-line-height-large, @sand-tallglyph-item-line-height-large);
+	.lime-custom-text({
+		font-size: @lime-item-font-size-large;
+		.enact-locale-line-height(@lime-item-line-height-large, @lime-tallglyph-item-line-height-large);
 
 		.label {
-			font-size: @sand-item-label-font-size-large;
+			font-size: @lime-item-label-font-size-large;
 		}
 	});
 
 	&.large { /* Needed to prevent global class being added in the DOM */ }
 
 	&.small {
-		font-size: @sand-item-small-font-size;
+		font-size: @lime-item-small-font-size;
 
-		font-weight: @sand-item-small-font-weight;
-		height: @sand-item-small-height;
-		.enact-locale-line-height(@sand-item-small-line-height, @sand-tallglyph-item-small-line-height);
+		font-weight: @lime-item-small-font-weight;
+		height: @lime-item-small-height;
+		.enact-locale-line-height(@lime-item-small-line-height, @lime-tallglyph-item-small-line-height);
 
 		&.hasLabel {
-			height: @sand-item-small-withlabel-height;
+			height: @lime-item-small-withlabel-height;
 		}
 
 		.label {
-			font-size: @sand-item-small-label-font-size;
+			font-size: @lime-item-small-label-font-size;
 
 			font-weight: inherit;
-			line-height: @sand-item-small-label-line-height;
+			line-height: @lime-item-small-label-line-height;
 		}
 
 		.enact-locale-tallglyph({
-			font-size: @sand-item-small-font-size;
+			font-size: @lime-item-small-font-size;
 		});
 
-		.sand-custom-text({
-			font-size: @sand-item-small-font-size-large;
-			.enact-locale-line-height(@sand-item-small-line-height-large, @sand-tallglyph-item-small-line-height-large);
+		.lime-custom-text({
+			font-size: @lime-item-small-font-size-large;
+			.enact-locale-line-height(@lime-item-small-line-height-large, @lime-tallglyph-item-small-line-height-large);
 		});
 	}
 
@@ -140,23 +140,35 @@
 	// Skin colors
 	.applySkins({
 		.bg {
-			.sand-spotlight-resting-bg-colors();
+			.lime-spotlight-resting-bg-colors();
 		}
 
 		.label {
-			color: @sand-item-label-color;
+			color: @lime-item-text-sub;
 		}
 
-		.focus({
-			.sand-spotlight-focus-text-colors();
+		&.selected {
+			color: @lime-item-text-selected;
 
 			.bg {
-				.sand-spotlight-focus-bg-colors();
-				background: @sand-item-focus-background;
+				opacity: 1;
+				background-color: @lime-item-bg-selected;
 			}
 
 			.label {
-				color: @sand-item-focus-label-color;
+				color: @lime-item-text-sub-selected;
+			}
+		}
+
+		.focus({
+			.lime-spotlight-focus-text-colors();
+
+			.bg {
+				.lime-spotlight-focus-bg-colors();
+			}
+
+			.label {
+				color: @lime-item-text-sub-focused;
 			}
 		});
 
@@ -168,23 +180,23 @@
 			})
 		}
 
-		.sand-disabled({
+		.lime-disabled({
 			.slotBefore,
 			.itemContent,
 			.slotAfter {
-				.sand-disabled-colors();
+				.lime-disabled-colors();
 			}
 
 			.focus({
 				.bg {
-					.sand-disabled-focus-bg-colors();
-					background-color: @sand-item-disabled-focus-bg-color;
+					.lime-disabled-focus-bg-colors();
+					background-color: @lime-item-bg-disabled-focused;
 				}
 
 				.slotBefore,
 				.itemContent,
 				.slotAfter {
-					.sand-disabled-focus-content-colors();
+					.lime-disabled-focus-content-colors();
 				}
 			});
 		});

@@ -21,7 +21,7 @@ function useReverseTransition (index, rtl) {
  * PageViewsRouter passes children, index and transition handlers
  *
  * @class PageViewsRouter
- * @memberof sandstone/PageViews
+ * @memberof limestone/PageViews
  * @private
  */
 function PageViewsRouter (Wrapped) {
@@ -67,7 +67,7 @@ function PageViewsRouter (Wrapped) {
 		);
 	};
 
-	PageViewsProvider.propTypes =  /** @lends sandstone/PageViews.PageViewsRouter.prototype */  {
+	PageViewsProvider.propTypes =  /** @lends limestone/PageViews.PageViewsRouter.prototype */  {
 		/**
 		 * Sets the strategy used to automatically focus an element within the PageViews upon render.
 		 * When set to 'none', focus is not set only on the first render.

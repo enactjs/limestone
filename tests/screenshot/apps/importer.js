@@ -1,8 +1,9 @@
-// Sandstone
+// Limestone
 import ActionGuide from '../../../ActionGuide';
 import Alert from '../../../Alert';
 import BodyText from '../../../BodyText';
 import Button from '../../../Button';
+import Card from '../../../Card';
 import Checkbox from '../../../Checkbox';
 import CheckboxItem from '../../../CheckboxItem';
 import ContextualMenuDecorator from '../../../ContextualMenuDecorator';
@@ -50,6 +51,7 @@ const components = {
 	Alert,
 	BodyText,
 	Button,
+	Card,
 	Checkbox,
 	CheckboxItem,
 	ContextualMenuDecorator,

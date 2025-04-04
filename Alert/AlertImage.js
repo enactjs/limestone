@@ -8,13 +8,13 @@ import componentCss from './AlertImage.module.less';
  * An image for use in an Alert.
  *
  * @class
- * @memberof sandstone/Alert
+ * @memberof limestone/Alert
  * @ui
  * @public
  */
 const AlertImage = kind({
 	name: 'AlertImage',
-	propTypes: /** @lends sandstone/Alert.AlertImage.prototype */ {
+	propTypes: /** @lends limestone/Alert.AlertImage.prototype */ {
 		/**
 		 * String value or Object of values used to determine which image will appear for
 		 * a specific component size.
@@ -48,18 +48,37 @@ const AlertImage = kind({
 		 * @type {Object}
 		 * @private
 		 */
-		css: PropTypes.object
+		css: PropTypes.object,
+
+		/**
+		 * Size of the image when `type` is set to `icon`.
+		 *
+		 *
+		 * @type {('small'|'large')}
+		 * @public
+		 * @default 'large'
+		 */
+		iconSize: PropTypes.oneOf(['small', 'large'])
 	},
+
+	defaultProps: {
+		iconSize: 'large'
+	},
+
 	styles: {
 		className: 'alertImage',
 		css: componentCss,
 		publicClassNames: ['alertImage', 'icon', 'thumbnail']
 	},
+
 	computed: {
-		className: ({type, styler}) => styler.append(type)
+		className: ({iconSize, type, styler}) => styler.append(iconSize, type)
 	},
+
 	render: ({css, src, ...rest}) => {
 		delete rest.type;
+		delete rest.iconSize;
+
 		return (
 			<Image
 				{...rest}

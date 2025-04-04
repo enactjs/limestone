@@ -17,7 +17,7 @@
 	///
 
 	.titlesRow {
-		padding-bottom: @sand-header-subtitle-height;
+		padding-bottom: @lime-header-subtitle-height;
 
 		// The following alters .subtitle to be removed from the measurement calculations for so the
 		// title can vertically align with the side buttons (ignoring the dimensions of subtitle).
@@ -30,11 +30,11 @@
 		.back {
 			margin-inline-start: 0;
 
-			.sand-custom-text({
-				.sand-small-button-text();
-				height: @sand-button-small-height;
-				line-height: (@sand-button-small-height - (2 * @sand-button-border-width));
-				min-width: @sand-button-small-height;
+			.lime-custom-text({
+				.lime-small-button-text();
+				height: @lime-button-small-height;
+				line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+				min-width: @lime-button-small-height;
 			});
 		}
 
@@ -45,7 +45,7 @@
 
 	&.wizard {
 		.titlesRow {
-			padding-bottom: (@sand-header-subtitle-height * @sand-header-wizard-subtitle-lines);
+			padding-bottom: (@lime-header-subtitle-height * @lime-header-wizard-subtitle-lines);
 		}
 	}
 
@@ -76,7 +76,7 @@
 	}
 
 	.slotAbove {
-		margin: @sand-header-slotabove-margin;
+		margin: @lime-header-slotabove-margin;
 	}
 
 	// Align `slotAfter` contents to the right LTR
@@ -90,7 +90,7 @@
 	}
 
 	.slotBelow {
-		margin: @sand-header-slotbelow-margin;
+		margin: @lime-header-slotbelow-margin;
 	}
 
 	///
@@ -112,44 +112,44 @@
 
 	// Standard Header
 	&.standard {
-		margin: @sand-header-standard-margin;
-		padding: @sand-header-standard-padding;
+		margin: @lime-header-standard-margin;
+		padding: @lime-header-standard-padding;
 
 		.subtitle,
 		.title {
-			padding: @sand-header-standard-title-padding;
+			padding: @lime-header-standard-title-padding;
 		}
 
 		.subtitle {
-			margin: @sand-header-standard-subtitle-margin;
+			margin: @lime-header-standard-subtitle-margin;
 		}
 	}
 
 	// Compact Header
 	&.compact {
-		margin: @sand-header-compact-margin;
-		padding: @sand-header-compact-padding;
+		margin: @lime-header-compact-margin;
+		padding: @lime-header-compact-padding;
 
 		.title {
-			padding: @sand-header-compact-title-padding;
+			padding: @lime-header-compact-title-padding;
 		}
 
 		.subtitle {
-			padding: @sand-header-compact-subtitle-padding;
+			padding: @lime-header-compact-subtitle-padding;
 		}
 
 		.title {
-			.sand-font-size(@sand-header-compact-title-font-size, @sand-non-latin-header-compact-title-font-size);
+			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 	}
 
 	// Wizard Header
 	&.wizard {
-		margin: @sand-header-wizard-margin;
-		padding: @sand-header-wizard-padding;
+		margin: @lime-header-wizard-margin;
+		padding: @lime-header-wizard-padding;
 
 		&.noSubtitle {
-			padding-bottom: @sand-header-wizard-nosubtitle-padding-bottom;
+			padding-bottom: @lime-header-wizard-nosubtitle-padding-bottom;
 		}
 
 		.titleContainer {
@@ -162,13 +162,13 @@
 		}
 
 		.title {
-			.sand-font-size(@sand-header-wizard-title-font-size, @sand-non-latin-header-wizard-title-font-size);
-			padding: @sand-header-wizard-title-padding;
+			.lime-font-size(@lime-header-wizard-title-font-size, @lime-non-latin-header-wizard-title-font-size);
+			padding: @lime-header-wizard-title-padding;
 		}
 
 		.subtitle {
-			.sand-multi-line-ellipsis(@sand-header-wizard-subtitle-lines);
-			padding: @sand-header-wizard-subtitle-padding;
+			.lime-multi-line-ellipsis(@lime-header-wizard-subtitle-lines);
+			padding: @lime-header-wizard-subtitle-padding;
 		}
 
 		&.centered {
@@ -180,8 +180,8 @@
 
 	// Mini Header
 	&.mini {
-		margin: @sand-header-mini-margin;
-		padding: @sand-header-mini-padding;
+		margin: @lime-header-mini-margin;
+		padding: @lime-header-mini-padding;
 
 		.titlesRow {
 			padding: 0;
@@ -192,12 +192,12 @@
 		}
 
 		.title {
-			.sand-font-size(@sand-header-mini-title-font-size, @sand-non-latin-header-mini-title-font-size);
+			.lime-font-size(@lime-header-mini-title-font-size, @lime-non-latin-header-mini-title-font-size);
 		}
 
 		&.withSubtitle:not(.noSubtitle) {
 			.titlesRow {
-				padding-bottom: @sand-header-subtitle-height;
+				padding-bottom: @lime-header-subtitle-height;
 			}
 		}
 	}
@@ -212,7 +212,7 @@
 		&.shadowed {	
 			.subtitle,
 			.title {
-				text-shadow: @sand-header-text-shadow;
+				text-shadow: @lime-header-text-shadow;
 			}
 		}
 	});

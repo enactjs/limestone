@@ -7,18 +7,18 @@ import Feedback from './Feedback';
 import states from './FeedbackIcons.js';
 
 /**
- * FeedbackContent {@link sandstone/VideoPlayer}. This displays the media's playback rate and other
+ * FeedbackContent {@link limestone/VideoPlayer}. This displays the media's playback rate and other
  * information.
  *
  * @class FeedbackContent
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @private
  */
 const FeedbackContentBase = kind({
 	name: 'FeedbackContent',
 
-	propTypes: /** @lends sandstone/VideoPlayer.Feedback.prototype */ {
+	propTypes: /** @lends limestone/VideoPlayer.Feedback.prototype */ {
 		/**
 		 * If the current `playbackState` allows the feedback component's visibility to be changed,
 		 * the feedback component will be hidden. If not, setting this property will have no effect.
@@ -47,7 +47,7 @@ const FeedbackContentBase = kind({
 		 * Each state understands where its related icon should be positioned, and whether it should
 		 * respond to changes to the `visible` property.
 		 *
-		 * This string feeds directly into {@link sandstone/FeedbackIcon.FeedbackIcon}.
+		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.
 		 *
 		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
 		 * @public

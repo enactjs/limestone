@@ -1,5 +1,5 @@
 /**
- * Provides Sandstone-themed slider components and behaviors.
+ * Provides Limestone-themed slider components and behaviors.
  *
  * @example
  * <Slider
@@ -10,7 +10,7 @@
  *   tooltip
  * />
  *
- * @module sandstone/Slider
+ * @module limestone/Slider
  * @exports Slider
  * @exports SliderBase
  * @exports SliderDecorator
@@ -66,7 +66,7 @@ const sliderDefaultProps = {
  * @class SliderBase
  * @extends ui/Slider.SliderBase
  * @omit progressBarComponent
- * @memberof sandstone/Slider
+ * @memberof limestone/Slider
  * @ui
  * @public
  */
@@ -193,7 +193,7 @@ const SliderBase = (props) => {
 
 SliderBase.displayName = 'Slider';
 
-SliderBase.propTypes = /** @lends sandstone/Slider.SliderBase.prototype */ {
+SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	/**
 	 * Activates the component when selected so that it may be manipulated via the directional
 	 * input keys.
@@ -275,7 +275,7 @@ SliderBase.propTypes = /** @lends sandstone/Slider.SliderBase.prototype */ {
 	 * The maximum value of the slider.
 	 *
 	 * The range between `min` and `max` should be evenly divisible by
-	 * {@link sandstone/Slider.SliderBase.step|step}.
+	 * {@link limestone/Slider.SliderBase.step|step}.
 	 *
 	 * @type {Number}
 	 * @default 100
@@ -287,7 +287,7 @@ SliderBase.propTypes = /** @lends sandstone/Slider.SliderBase.prototype */ {
 	 * The minimum value of the slider.
 	 *
 	 * The range between `min` and `max` should be evenly divisible by
-	 * {@link sandstone/Slider.SliderBase.step|step}.
+	 * {@link limestone/Slider.SliderBase.step|step}.
 	 *
 	 * @type {Number}
 	 * @default 0
@@ -360,7 +360,7 @@ SliderBase.propTypes = /** @lends sandstone/Slider.SliderBase.prototype */ {
 	 * Enables the built-in tooltip
 	 *
 	 * To customize the tooltip, pass either a custom tooltip component or an instance of
-	 * {@link sandstone/Slider.SliderTooltip|SliderTooltip} with additional props configured.
+	 * {@link limestone/Slider.SliderTooltip|SliderTooltip} with additional props configured.
 	 *
 	 * ```
 	 * <Slider
@@ -417,13 +417,13 @@ SliderBase.propTypes = /** @lends sandstone/Slider.SliderBase.prototype */ {
 };
 
 /**
- * Sandstone-specific slider behaviors to apply to {@link sandstone/Slider.SliderBase|SliderBase}.
+ * Limestone-specific slider behaviors to apply to {@link limestone/Slider.SliderBase|SliderBase}.
  *
  * @hoc
- * @memberof sandstone/Slider
+ * @memberof limestone/Slider
  * @mixes ui/Changeable.Changeable
  * @mixes spotlight/Spottable.Spottable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @mixes ui/Slottable.Slottable
  * @mixes ui/Slider.SliderDecorator
  * @public
@@ -438,8 +438,8 @@ const SliderDecorator = compose(
 );
 
 /**
- * Slider input with Sandstone styling, {@link spotlight/Spottable.Spottable|Spottable},
- * {@link ui/Touchable|Touchable} and {@link sandstone/Slider.SliderDecorator|SliderDecorator}
+ * Slider input with Limestone styling, {@link spotlight/Spottable.Spottable|Spottable},
+ * {@link ui/Touchable|Touchable} and {@link limestone/Slider.SliderDecorator|SliderDecorator}
  * applied.
  *
  * By default, `Slider` maintains the state of its `value` property. Supply the `defaultValue`
@@ -448,8 +448,8 @@ const SliderDecorator = compose(
  * events.
  *
  * @class Slider
- * @memberof sandstone/Slider
- * @mixes sandstone/Slider.SliderDecorator
+ * @memberof limestone/Slider
+ * @mixes limestone/Slider.SliderDecorator
  * @ui
  * @public
  */
@@ -461,7 +461,7 @@ const SliderDecorator = compose(
  * the parent controls the value of the slider directly through the props.
  *
  * @name aria-valuetext
- * @memberof sandstone/Slider.Slider.prototype
+ * @memberof limestone/Slider.Slider.prototype
  * @type {String|Number}
  * @public
  */
@@ -471,13 +471,13 @@ const Slider = SliderDecorator(SliderBase);
 Slider.defaultPropValues = sliderDefaultProps;
 
 /**
- * A {@link sandstone/TooltipDecorator.Tooltip|Tooltip} specifically adapted for use with
- * {@link sandstone/ProgressBar.ProgressBar|ProgressBar} or
- * {@link sandstone/Slider.Slider|Slider}.
+ * A {@link limestone/TooltipDecorator.Tooltip|Tooltip} specifically adapted for use with
+ * {@link limestone/ProgressBar.ProgressBar|ProgressBar} or
+ * {@link limestone/Slider.Slider|Slider}.
  *
- * @see {@link sandstone/ProgressBar.ProgressBarTooltip}
+ * @see {@link limestone/ProgressBar.ProgressBarTooltip}
  * @class SliderTooltip
- * @memberof sandstone/Slider
+ * @memberof limestone/Slider
  * @ui
  * @public
  */

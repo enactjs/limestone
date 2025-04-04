@@ -1,4 +1,4 @@
-import Spinner from '@enact/sandstone/Spinner';
+import Spinner from '@enact/limestone/Spinner';
 
 import Section from '../components/Section';
 

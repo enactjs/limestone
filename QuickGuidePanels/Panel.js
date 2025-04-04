@@ -4,10 +4,10 @@ import {PanelsContext} from '../internal/Panels/PanelsRouter';
 
 /**
  * Panel that sets the children for
- * {@link sandstone/QuickGuidePanels.QuickGuidePanels|QuickGuidePanels}.
+ * {@link limestone/QuickGuidePanels.QuickGuidePanels|QuickGuidePanels}.
  *
  * @class Panel
- * @memberof sandstone/QuickGuidePanels
+ * @memberof limestone/QuickGuidePanels
  * @ui
  * @public
  */
@@ -47,7 +47,7 @@ function Panel ({
  * ```
  * @name aria-label
  * @type {String}
- * @memberof sandstone/QuickGuidePanels.Panel.prototype
+ * @memberof limestone/QuickGuidePanels.Panel.prototype
  * @public
  */
 
@@ -58,7 +58,7 @@ function Panel ({
  *
  * If `false`, the button will not show. If set to a component, or `true`, the button will
  * show. This will override the setting of
- * {@link sandstone/QuickGuidePanels.QuickGuidePanelsBase.nextButtonVisibility|nextButtonVisibility}.
+ * {@link limestone/QuickGuidePanels.QuickGuidePanelsBase.nextButtonVisibility|nextButtonVisibility}.
  *
  * Example:
  * ```
@@ -66,7 +66,7 @@ function Panel ({
  * ```
  *
  * @name nextButton
- * @memberof sandstone/QuickGuidePanels.Panel.prototype
+ * @memberof limestone/QuickGuidePanels.Panel.prototype
  * @type {Boolean|Component}
  * @public
  */
@@ -78,7 +78,7 @@ function Panel ({
  *
  * If `false`, the button will not show. If set to a component, or `true`, the button will
  * show. This will override the setting of
- * {@link sandstone/QuickGuidePanels.QuickGuidePanelsBase.prevButtonVisibility|prevButtonVisibility}.
+ * {@link limestone/QuickGuidePanels.QuickGuidePanelsBase.prevButtonVisibility|prevButtonVisibility}.
  *
  * Example:
  * ```
@@ -86,7 +86,7 @@ function Panel ({
  * ```
  *
  * @name prevButton
- * @memberof sandstone/QuickGuidePanels.Panel.prototype
+ * @memberof limestone/QuickGuidePanels.Panel.prototype
  * @type {Boolean|Component}
  * @public
  */

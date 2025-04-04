@@ -5,84 +5,84 @@
 @import "../styles/skin.less";
 
 .heading {
-	margin: @sand-heading-margin;
-	padding: @sand-heading-padding;
-	letter-spacing: @sand-heading-letter-spacing;
-	font-style: @sand-heading-font-style;
+	margin: @lime-heading-margin;
+	padding: @lime-heading-padding;
+	letter-spacing: @lime-heading-letter-spacing;
+	font-style: @lime-heading-font-style;
 
 	:global(.enact-locale-non-italic) & {
-		font-style: @sand-heading-font-style;
+		font-style: @lime-heading-font-style;
 	}
 
-	.enact-locale-line-height(@sand-heading-line-height, @sand-tallglyph-heading-line-height);
+	.enact-locale-line-height(@lime-heading-line-height, @lime-tallglyph-heading-line-height);
 
 	// Only the following sizes get a bottom border
 	&.large,
 	&.medium,
 	&.small,
 	&.tiny {
-		border-bottom: @sand-heading-border-width solid transparent;
+		border-bottom: @lime-heading-border-width solid transparent;
 	}
 
 	&.title {
-		.sand-font(@sand-heading-title-font-family, @sand-non-latin-font-family);
-		.enact-locale-line-height(@sand-heading-title-line-height, @sand-tallglyph-heading-title-line-height);
+		.lime-font(@lime-heading-title-font-family, @lime-non-latin-font-family);
+		.enact-locale-line-height(@lime-heading-title-line-height, @lime-tallglyph-heading-title-line-height);
 		.enact-locale-tallglyph({
-			font-size: @sand-tallglyph-heading-title-font-size;
+			font-size: @lime-tallglyph-heading-title-font-size;
 		});
-		font-weight: @sand-heading-title-font-weight;
-		font-size: @sand-heading-title-font-size;
+		font-weight: @lime-heading-title-font-weight;
+		font-size: @lime-heading-title-font-size;
 		.font-kerning();
 	}
 	&.subtitle {
-		.sand-font(@sand-heading-subtitle-font-family, @sand-non-latin-font-family);
-		.enact-locale-line-height(@sand-heading-subtitle-line-height, @sand-tallglyph-heading-subtitle-line-height);
+		.lime-font(@lime-heading-subtitle-font-family, @lime-non-latin-font-family);
+		.enact-locale-line-height(@lime-heading-subtitle-line-height, @lime-tallglyph-heading-subtitle-line-height);
 		.enact-locale-tallglyph({
-			font-size: @sand-tallglyph-heading-subtitle-font-size;
+			font-size: @lime-tallglyph-heading-subtitle-font-size;
 		});
-		font-weight: @sand-heading-subtitle-font-weight;
-		font-size: @sand-heading-subtitle-font-size;
+		font-weight: @lime-heading-subtitle-font-weight;
+		font-size: @lime-heading-subtitle-font-size;
 	}
 	&.large {
-		font-family: @sand-heading-large-font-family;
-		font-weight: @sand-heading-large-font-weight;
-		font-size: @sand-heading-large-font-size;
+		font-family: @lime-heading-large-font-family;
+		font-weight: @lime-heading-large-font-weight;
+		font-size: @lime-heading-large-font-size;
 	}
 	&.medium {
-		font-family: @sand-heading-medium-font-family;
-		font-weight: @sand-heading-medium-font-weight;
-		font-size: @sand-heading-medium-font-size;
+		font-family: @lime-heading-medium-font-family;
+		font-weight: @lime-heading-medium-font-weight;
+		font-size: @lime-heading-medium-font-size;
 	}
 	&.small {
-		font-family: @sand-heading-small-font-family;
-		font-weight: @sand-heading-small-font-weight;
-		font-size: @sand-heading-small-font-size;
+		font-family: @lime-heading-small-font-family;
+		font-weight: @lime-heading-small-font-weight;
+		font-size: @lime-heading-small-font-size;
 	}
 	&.tiny {
-		font-family: @sand-heading-tiny-font-family;
-		font-weight: @sand-heading-tiny-font-weight;
-		font-size: @sand-heading-tiny-font-size;
+		font-family: @lime-heading-tiny-font-family;
+		font-weight: @lime-heading-tiny-font-weight;
+		font-size: @lime-heading-tiny-font-size;
 	}
 
 	// Margin-bottom is set up this way so the presence of the line does not affect the height of the Heading.
 	// We simply toggle the color from transparent to "colored" below, leaving the height untouched.
 	&.titleSpacing {
-		margin-bottom: @sand-heading-spacing-title;
+		margin-bottom: @lime-heading-spacing-title;
 	}
 	&.subtitleSpacing {
-		margin-bottom: @sand-heading-spacing-subtitle;
+		margin-bottom: @lime-heading-spacing-subtitle;
 	}
 	&.largeSpacing {
-		margin-bottom: (@sand-heading-spacing-large - @sand-heading-border-width);
-		min-height: (@sand-heading-spacing-large - @sand-heading-border-width);
+		margin-bottom: (@lime-heading-spacing-large - @lime-heading-border-width);
+		min-height: (@lime-heading-spacing-large - @lime-heading-border-width);
 	}
 	&.mediumSpacing {
-		margin-bottom: (@sand-heading-spacing-medium - @sand-heading-border-width);
-		min-height: (@sand-heading-spacing-medium - @sand-heading-border-width);
+		margin-bottom: (@lime-heading-spacing-medium - @lime-heading-border-width);
+		min-height: (@lime-heading-spacing-medium - @lime-heading-border-width);
 	}
 	&.smallSpacing {
-		margin-bottom: (@sand-heading-spacing-small - @sand-heading-border-width);
-		min-height: (@sand-heading-spacing-small - @sand-heading-border-width);
+		margin-bottom: (@lime-heading-spacing-small - @lime-heading-border-width);
+		min-height: (@lime-heading-spacing-small - @lime-heading-border-width);
 	}
 	&.noneSpacing {
 		margin-bottom: 0;
@@ -91,14 +91,14 @@
 
 	// Skin colors
 	.applySkins({
-		color: @sand-heading-text-color;
+		color: @lime-heading-text-color;
 
 		&.subtitle {
-			color: @sand-heading-subtitle-text-color;
+			color: @lime-heading-subtitle-text-color;
 		}
 
 		&.showLine {
-			border-bottom-color: @sand-heading-border-color;
+			border-bottom-color: @lime-heading-border-color;
 		}
 	});
 }

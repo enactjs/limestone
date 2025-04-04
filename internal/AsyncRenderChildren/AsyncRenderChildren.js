@@ -6,12 +6,11 @@ import {useState, useRef, useEffect} from 'react';
 const delayToRenderChildren = 600;
 
 /**
- * This component introduced to enhance scroll performance when `ImageItem` used in `VirtualGridList`.
+ * This component introduced to enhance scroll performance when `ImageItem` or `Card` used in `VirtualGridList`.
  * Basically it renders `children` asynchronously when `children` and `index` changed.
  * When `ImageItem` used in other components, it will render immediately.
  *
  * @class AsyncRenderChildren
- * @memberof sandstone/ImageItem
  * @ui
  * @private
  */
@@ -39,7 +38,7 @@ function AsyncRenderChildren ({children, fallback = '', index}) {
 	return async ? fallback : children;
 }
 
-AsyncRenderChildren.propTypes = /** @lends sandstone/ImageItem.AsyncRenderChildren.prototype */ {
+AsyncRenderChildren.propTypes = /** @lends limestone/ImageItem.AsyncRenderChildren.prototype */ {
 	/**
 	 * The fallback element that shows before `children` render.
 	 *
@@ -49,7 +48,7 @@ AsyncRenderChildren.propTypes = /** @lends sandstone/ImageItem.AsyncRenderChildr
 	fallback: PropTypes.any,
 
 	/**
-	 * `data-index` of {@link sandstone/ImageItem|ImageItem}.
+	 * `data-index` of {@link limestone/ImageItem|ImageItem} or {@link limestone/Card|Card}.
 	 * Renders `children` asynchronously when this value changed.
 	 *
 	 * @type {Number}

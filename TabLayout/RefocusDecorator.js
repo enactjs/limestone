@@ -23,7 +23,7 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function RefocusDecorator ({collapsed, index, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
-		const {generateId} = useId({prefix: 'sand-tablayout-'});
+		const {generateId} = useId({prefix: 'lime-tablayout-'});
 
 		// generate an id for the component (and a derived id for the tabs) so we can refocus them
 		// generating a different ID by orientation so swapping orientations doesn't clear container

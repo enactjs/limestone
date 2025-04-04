@@ -1,5 +1,5 @@
 /**
- * Provides Sandstone styled image item components and behaviors.
+ * Provides Limestone styled image item components and behaviors.
  *
  * @example
  * <ImageItem
@@ -9,7 +9,7 @@
  * 	The primary caption for the image
  * </ImageItem>
  *
- * @module sandstone/ImageItem
+ * @module limestone/ImageItem
  * @exports ImageItem
  * @exports ImageItemBase
  * @exports ImageItemDecorator
@@ -25,10 +25,9 @@ import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
 import Image from '../Image';
+import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
-
-import AsyncRenderChildren from './AsyncRenderChildren';
 
 import componentCss from './ImageItem.module.less';
 
@@ -40,18 +39,18 @@ const
 	'4NCg==';
 
 /**
- * A Sandstone styled base component for {@link sandstone/ImageItem.ImageItem|ImageItem}.
+ * A Limestone styled base component for {@link limestone/ImageItem.ImageItem|ImageItem}.
  *
  * @class ImageItemBase
  * @extends ui/ImageItem.ImageItem
- * @memberof sandstone/ImageItem
+ * @memberof limestone/ImageItem
  * @ui
  * @public
  */
 const ImageItemBase = kind({
 	name: 'ImageItem',
 
-	propTypes: /** @lends sandstone/ImageItem.ImageItemBase.prototype */ {
+	propTypes: /** @lends limestone/ImageItem.ImageItemBase.prototype */ {
 		/**
 		 * Centers the primary caption and label in vertical orientation.
 		 *
@@ -103,7 +102,7 @@ const ImageItemBase = kind({
 		 *
 		 * @type {String}
 		 * @default 'Select'
-		 * @memberof sandstone/ImageItem.ImageItemBase.prototype
+		 * @memberof limestone/ImageItem.ImageItemBase.prototype
 		 * @public
 		 */
 		'data-webos-voice-intent': PropTypes.string,
@@ -121,7 +120,7 @@ const ImageItemBase = kind({
 		 * The component used to render the image icon component.
 		 *
 		 * @type {Component}
-		 * @default sandstone/Image.Image
+		 * @default limestone/Image.Image
 		 * @private
 		 */
 		imageIconComponent: EnactPropTypes.component,
@@ -155,7 +154,7 @@ const ImageItemBase = kind({
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
 
 		/**
-		 * Placeholder image used while {@link sandstone/ImageItem.ImageItemBase.src|src}
+		 * Placeholder image used while {@link limestone/ImageItem.ImageItemBase.src|src}
 		 * is loaded.
 		 *
 		 * @type {String}
@@ -305,14 +304,14 @@ const ImageItemBase = kind({
 });
 
 /**
- * Sandstone-specific ImageItem behaviors to apply to
- * {@link sandstone/ImageItem.ImageItem|ImageItem}.
+ * Limestone-specific ImageItem behaviors to apply to
+ * {@link limestone/ImageItem.ImageItem|ImageItem}.
  *
  * @hoc
- * @memberof sandstone/ImageItem
- * @mixes sandstone/Marquee.MarqueeController
+ * @memberof limestone/ImageItem
+ * @mixes limestone/Marquee.MarqueeController
  * @mixes spotlight/Spottable.Spottable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const ImageItemDecorator = compose(
@@ -322,7 +321,7 @@ const ImageItemDecorator = compose(
 );
 
 /**
- * A sandstone-styled image item, Marquee and Spottable applied.
+ * A limestone-styled image item, Marquee and Spottable applied.
  *
  * Usage:
  * ```
@@ -335,10 +334,10 @@ const ImageItemDecorator = compose(
  * ```
  *
  * @class ImageItem
- * @memberof sandstone/ImageItem
- * @extends sandstone/ImageItem.ImageItemBase
- * @mixes sandstone/ImageItem.ImageItemDecorator
- * @see {@link sandstone/ImageItem.ImageItemBase}
+ * @memberof limestone/ImageItem
+ * @extends limestone/ImageItem.ImageItemBase
+ * @mixes limestone/ImageItem.ImageItemDecorator
+ * @see {@link limestone/ImageItem.ImageItemBase}
  * @ui
  * @public
  */

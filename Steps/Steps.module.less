@@ -5,55 +5,55 @@
 @import "../styles/variables.less";
 
 .steps {
-	margin: @sand-steps-margin;
+	margin: @lime-steps-margin;
 
 	.step {
-		margin: @sand-steps-step-margin;
+		margin: @lime-steps-step-margin;
 
 		&.numbers {
-			.sand-font-number();
-			font-size: @sand-steps-step-number-font-size;
-			font-weight: @sand-steps-step-number-font-weight;
+			.lime-font-number();
+			font-size: @lime-steps-step-number-font-size;
+			font-weight: @lime-steps-step-number-font-weight;
 		}
 
 		&.highlightCurrentOnly {
 			&.future {
-				opacity: @sand-steps-step-highlight-current-only-future-opacity;
+				opacity: @lime-steps-step-highlight-current-only-future-opacity;
 			}
 		}
 
 		&.past {
-			opacity:  @sand-steps-step-past-opacity;
+			opacity:  @lime-steps-step-past-opacity;
 		}
 
 		&.current {
-			opacity: @sand-steps-step-current-opacity;
+			opacity: @lime-steps-step-current-opacity;
 		}
 
 		&.future {
-			opacity: @sand-steps-step-future-opacity;
+			opacity: @lime-steps-step-future-opacity;
 		}
 	}
 
 	.pageIndicator {
-		width: @sand-steps-pageindicator-size;
-		height: @sand-steps-pageindicator-size;
-		margin: @sand-steps-pageindicator-margin;
-		border-radius: @sand-steps-pageindicator-border-radius;
+		width: @lime-steps-pageindicator-size;
+		height: @lime-steps-pageindicator-size;
+		margin: @lime-steps-pageindicator-margin;
+		border-radius: @lime-steps-pageindicator-border-radius;
 
 		&.current {
-			width: @sand-steps-pageindicator-current-size;
-			height: @sand-steps-pageindicator-current-size;
-			margin: @sand-steps-pageindicator-current-margin;
+			width: @lime-steps-pageindicator-current-size;
+			height: @lime-steps-pageindicator-current-size;
+			margin: @lime-steps-pageindicator-current-margin;
 		}
 	}
 
 	.applySkins({
 		.pageIndicator {
-			background-color: @sand-steps-pageindicator-bg-color;
+			background-color: @lime-steps-pageindicator-bg-color;
 
 			&.current {
-				background-color: @sand-steps-pageindicator-current-bg-color;
+				background-color: @lime-steps-pageindicator-current-bg-color;
 			}
 		}
 	});

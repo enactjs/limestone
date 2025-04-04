@@ -4,13 +4,19 @@
 	margin: 0;
 
 	&.thumbnail {
-		width: @sand-alert-image-thumbnail-width;
-		height: @sand-alert-image-thumbnail-height;
+		width: @lime-alert-image-thumbnail-width;
+		height: @lime-alert-image-thumbnail-height;
 	}
 
 	&.icon {
-		width: @sand-alert-image-icon-size;
-		height: @sand-alert-image-icon-size;
-		border-radius: @sand-alert-image-icon-border-radius;
+		&.large {
+			width: @lime-alert-image-icon-large-size;
+			height: @lime-alert-image-icon-large-size;
+		}
+
+		&.small {
+			width: @lime-alert-image-icon-small-size;
+			height: @lime-alert-image-icon-small-size;
+		}
 	}
 }

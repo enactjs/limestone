@@ -102,7 +102,7 @@ class ScrollerPage extends Page {
 	async getScrollerRect () {
 		return await browser.execute(function (_scrollContentSelector) {
 			const scroller = document.querySelector(_scrollContentSelector);
-			return scroller.getBoundingClientRect();
+			return scroller.getBoundingClientRect().toJSON();
 		}, scrollContentSelector);
 	}
 	async getScrollThumbRect () {
@@ -129,7 +129,7 @@ class ScrollerPage extends Page {
 			const clickPositionFromCenter = way === 'Down' ? 300 : -300;
 			await $(`${verticalscrollbarSelector}`).click({y: clickPositionFromCenter});
 		} else if (direction === 'horizontal') {
-			const clickPositionFromCenter = way === 'Left' ? -500 : 500;
+			const clickPositionFromCenter = way === 'Left' ? -400 : 400;
 			await $(`${horizontalscrollbarSelector}`).click({x: clickPositionFromCenter});
 		}
 	}
@@ -197,7 +197,7 @@ class ScrollerPage extends Page {
 
 	async getActiveElementRect () {
 		return await browser.execute(function () {
-			return document.activeElement.getBoundingClientRect();
+			return document.activeElement.getBoundingClientRect().toJSON();
 		});
 	}
 

@@ -1,4 +1,4 @@
-import Item from '@enact/sandstone/Item';
+import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import {useContext} from 'react';
 

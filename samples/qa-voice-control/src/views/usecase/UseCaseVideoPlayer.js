@@ -1,4 +1,4 @@
-import {VideoPlayer} from '@enact/sandstone/VideoPlayer';
+import {VideoPlayer} from '@enact/limestone/VideoPlayer';
 
 const src = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 

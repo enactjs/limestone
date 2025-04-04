@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /**
- * Sandstone component to allow the user to choose a color.
+ * Limestone component to allow the user to choose a color.
  *
  * @example
  * <ColorPicker
@@ -10,7 +10,7 @@
  *	 text={'Color Picker'}
  * />
  *
- * @module sandstone/ColorPicker
+ * @module limestone/ColorPicker
  * @exports ColorPicker
  * @exports ColorPickerBase
  * @exports ColorPickerDecorator
@@ -40,10 +40,10 @@ import componentCss from './ColorPicker.module.less';
 const SpottableButton = Spottable(ButtonBase);
 
 /**
- * A component that contains the content for the {@link sandstone/ColorPicker|ColorPicker} popup.
+ * A component that contains the content for the {@link limestone/ColorPicker|ColorPicker} popup.
  *
  * @class PopupContent
- * @memberof sandstone/ColorPicker
+ * @memberof limestone/ColorPicker
  * @ui
  * @private
  */
@@ -182,10 +182,10 @@ PopupContent.propTypes = {
  * The color picker base component which sets-up the component's structure.
  *
  * This component is most often not used directly but may be composed within another component as it
- * is within {@link sandstone/ColorPicker|ColorPicker}.
+ * is within {@link limestone/ColorPicker|ColorPicker}.
  *
  * @class ColorPickerBase
- * @memberof sandstone/ColorPicker
+ * @memberof limestone/ColorPicker
  * @ui
  * @private
  */
@@ -194,7 +194,7 @@ const ColorPickerBase = kind({
 
 	functional: true,
 
-	propTypes: /** @lends sandstone/ColorPicker.ColorPickerBase.prototype */ {
+	propTypes: /** @lends limestone/ColorPicker.ColorPickerBase.prototype */ {
 		/**
 		 * Indicates the color.
 		 *
@@ -330,11 +330,11 @@ const ColorPickerBase = kind({
 });
 
 /**
- * Applies Sandstone specific behaviors to {@link sandstone/ColorPicker.ColorPickerBase|ColorPicker} components.
+ * Applies Limestone specific behaviors to {@link limestone/ColorPicker.ColorPickerBase|ColorPicker} components.
  *
  * @hoc
- * @memberof sandstone/ColorPicker
- * @mixes sandstone/Skinnable.Skinnable
+ * @memberof limestone/ColorPicker
+ * @mixes limestone/Skinnable.Skinnable
  * @mixes ui/Toggleable.Toggleable
  * @private
  */
@@ -344,12 +344,12 @@ const ColorPickerDecorator = compose(
 );
 
 /**
- * A color picker component, ready to use in Sandstone applications.
+ * A color picker component, ready to use in Limestone applications.
  *
  * @class ColorPicker
- * @memberof sandstone/ColorPicker
- * @extends sandstone/ColorPicker.ColorPickerBase
- * @mixes sandstone/ColorPicker.ColorPickerDecorator
+ * @memberof limestone/ColorPicker
+ * @extends limestone/ColorPicker.ColorPickerBase
+ * @mixes limestone/ColorPicker.ColorPickerDecorator
  * @ui
  * @private
  */

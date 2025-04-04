@@ -30,29 +30,29 @@
 }
 
 .spinner {
-	line-height: @sand-body-line-height;
+	line-height: @lime-body-line-height;
 	vertical-align: middle;
 
 	.bg {
 		position: relative;
 		border-radius: 999px;
-		width: @sand-spinner-size;
-		height: @sand-spinner-size;
-		padding: @sand-spinner-line-margin;
+		width: @lime-spinner-size;
+		height: @lime-spinner-size;
+		padding: @lime-spinner-line-margin;
 		margin-left: auto;
 		margin-right: auto;
 	}
 
 	.decorator {
-		width: @sand-spinner-size;
-		height: @sand-spinner-size;
+		width: @lime-spinner-size;
+		height: @lime-spinner-size;
 		position: relative;
 		background-size: cover;
 		border-radius: 999px;
 		overflow: hidden;
 		margin: 0 auto;
-		-webkit-mask-image: radial-gradient(transparent (@sand-spinner-size / 2 - @sand-spinner-line-width - 1px), black (@sand-spinner-size / 2 - @sand-spinner-line-width)); // These colors control masking, not visible colors
-		animation: none @sand-spinner-time linear infinite;
+		-webkit-mask-image: radial-gradient(transparent (@lime-spinner-size / 2 - @lime-spinner-line-width - 1px), black (@lime-spinner-size / 2 - @lime-spinner-line-width)); // These colors control masking, not visible colors
+		animation: none @lime-spinner-time linear infinite;
 		animation-name: spin;
 		animation-play-state: paused;
 
@@ -74,7 +74,7 @@
 		.fan4,
 		.cap {
 			position: absolute;
-			animation: none @sand-spinner-time linear infinite;
+			animation: none @lime-spinner-time linear infinite;
 			animation-name: rotate1;
 			animation-play-state: paused;
 			animation-fill-mode: both;
@@ -94,15 +94,15 @@
 			right: 0;
 			bottom: 50%;
 			left: 0;
-			clip-path: circle((@sand-spinner-line-width / 2) at 50% (@sand-spinner-line-width / 2));
+			clip-path: circle((@lime-spinner-line-width / 2) at 50% (@lime-spinner-line-width / 2));
 			transform-origin: bottom;
 		}
 	}
 
 	.client {
-		.sand-body-text();
-		font-weight: @sand-spinner-font-weight;
-		margin-top: @sand-spotlight-outset;
+		.lime-body-text();
+		font-weight: @lime-spinner-font-weight;
+		margin-top: @lime-spotlight-outset;
 		max-width: 696px;
 	}
 
@@ -111,38 +111,38 @@
 	&.small {
 		.bg,
 		.decorator {
-			width: @sand-spinner-small-size;
-			height: @sand-spinner-small-size;
+			width: @lime-spinner-small-size;
+			height: @lime-spinner-small-size;
 		}
 
 		.bg {
-			padding: @sand-spinner-small-line-margin;
+			padding: @lime-spinner-small-line-margin;
 		}
 
 		.decorator {
-			-webkit-mask-image: radial-gradient(transparent (@sand-spinner-small-size / 2 - @sand-spinner-small-line-width - 1px), black (@sand-spinner-small-size / 2 - @sand-spinner-small-line-width));
+			-webkit-mask-image: radial-gradient(transparent (@lime-spinner-small-size / 2 - @lime-spinner-small-line-width - 1px), black (@lime-spinner-small-size / 2 - @lime-spinner-small-line-width));
 
 			.cap {
-				clip-path: circle((@sand-spinner-small-line-width / 2) at 50% (@sand-spinner-small-line-width / 2));
+				clip-path: circle((@lime-spinner-small-line-width / 2) at 50% (@lime-spinner-small-line-width / 2));
 			}
 		}
 
 		// Large-text mode support
-		.sand-custom-text({
+		.lime-custom-text({
 			.bg,
 			.decorator {
-				width: @sand-spinner-small-size-large;
-				height: @sand-spinner-small-size-large;
+				width: @lime-spinner-small-size-large;
+				height: @lime-spinner-small-size-large;
 			}
 
 			.decorator {
-				-webkit-mask-image: radial-gradient(transparent (@sand-spinner-small-size-large / 2 - @sand-spinner-small-line-width - 1px), black (@sand-spinner-small-size-large / 2 - @sand-spinner-small-line-width));
+				-webkit-mask-image: radial-gradient(transparent (@lime-spinner-small-size-large / 2 - @lime-spinner-small-line-width - 1px), black (@lime-spinner-small-size-large / 2 - @lime-spinner-small-line-width));
 			}
 		});
 	}
 
 	&.content {
-		padding: ((@sand-button-height - @sand-spinner-size) / 2);
+		padding: ((@lime-button-height - @lime-spinner-size) / 2);
 	}
 
 	&.running .decorator {
@@ -159,27 +159,27 @@
 
 	// Skin colors
 	.applySkins({
-		color: @sand-spinner-text-color;
+		color: @lime-spinner-text-color;
 
 		.bg {
-			background-color: @sand-spinner-bg-color;
+			background-color: @lime-spinner-bg-color;
 		}
 
 		.decorator {
 			// Ideal way, but won't be supported until Chrome 69
-			// background: conic-gradient(@sand-spinner-empty-color 75%, @sand-spinner-color 87.5%);
+			// background: conic-gradient(@lime-spinner-empty-color 75%, @lime-spinner-color 87.5%);
 			background:
-				radial-gradient(circle at 0% 0%, @sand-spinner-color 20%, @sand-spinner-empty-color 40%), // Visible gradient
-				radial-gradient(circle at 35% 8%, @sand-spinner-color 15%, transparent 15%); // Filler between the closest fan and center of gradient
+				radial-gradient(circle at 0% 0%, @lime-spinner-color 20%, @lime-spinner-empty-color 40%), // Visible gradient
+				radial-gradient(circle at 35% 8%, @lime-spinner-color 15%, transparent 15%); // Filler between the closest fan and center of gradient
 
 			.fan1,
 			.fan2,
 			.fan3,
 			.fan4 {
-				background-color: @sand-spinner-color;
+				background-color: @lime-spinner-color;
 			}
 			.cap {
-				background-color: @sand-spinner-head-color;
+				background-color: @lime-spinner-head-color;
 			}
 		}
 
@@ -190,7 +190,7 @@
 		}
 
 		.client {
-			text-shadow: 0 1px 1px @sand-spinner-text-shadow-color;
+			text-shadow: 0 1px 1px @lime-spinner-text-shadow-color;
 		}
 	});
 }
@@ -201,7 +201,7 @@
 		.blockClickOn {
 			// Visible scrim
 			.scrim {
-				background-color: @sand-scrim-color;
+				background-color: @lime-scrim-color;
 			}
 		}
 	});

@@ -1,20 +1,20 @@
-@import "~@enact/sandstone/styles/mixins.less";
-@import "~@enact/sandstone/styles/skin.less";
+@import "~@enact/limestone/styles/mixins.less";
+@import "~@enact/limestone/styles/skin.less";
 
 .spottableitem {
 	.applySkins({
 		background-color: transparent;
-		color: @sand-text-color;
+		color: var(--alias-color-on-surface-main);
 		.focus({
-			background-color: @sand-spotlight-bg-color;
-			color: @sand-spotlight-text-color;
+			background-color: @lime-spotlight-bg-color;
+			color: @lime-spotlight-text-color;
 		});
 	});
 }
 
 .spottableDiv1 {
 	.applySkins({
-		.sand-focus-highlight();
+		.lime-focus-highlight();
 	});
 	.focus({
 		transform: scale(1.1);
@@ -26,7 +26,7 @@
 
 .spottableDiv2 {
 	.applySkins({
-		.sand-focus-highlight(image);
+		.lime-focus-highlight(image);
 	});
 
 	.focus({

@@ -30,6 +30,9 @@ class ButtonInterface {
 	get iconSymbol () {
 		return getText(this.icon);
 	}
+	get isCentered () {
+		return hasClass('centered', this.self);
+	}
 	get isIconAfter () {
 		return hasClass('iconAfter', this.self);
 	}
@@ -65,6 +68,7 @@ class ButtonPage extends Page {
 		const buttonFalseMinWidth = new ButtonInterface('button6');
 		const buttonSizeSmall = new ButtonInterface('button7');
 		const iconButton = new ButtonInterface('button8');
+		const buttonCenteredWithIcon = new ButtonInterface('button9');
 
 		this.components = {
 			buttonDefault,
@@ -74,7 +78,8 @@ class ButtonPage extends Page {
 			buttonWithIconAfter,
 			buttonFalseMinWidth,
 			buttonSizeSmall,
-			iconButton
+			iconButton,
+			buttonCenteredWithIcon
 		};
 	}
 

@@ -1,6 +1,6 @@
-import Icon from '@enact/sandstone/Icon';
-import Item, {ItemBase} from '@enact/sandstone/Item';
-import RadioItem, {RadioItemBase} from '@enact/sandstone/RadioItem';
+import Icon from '@enact/limestone/Icon';
+import Item, {ItemBase} from '@enact/limestone/Item';
+import RadioItem, {RadioItemBase} from '@enact/limestone/RadioItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -11,7 +11,7 @@ RadioItem.displayName = 'RadioItem';
 const Config = mergeComponentMetadata('RadioItem', ItemBase, Item, RadioItemBase, RadioItem);
 
 export default {
-	title: 'Sandstone/RadioItem',
+	title: 'Limestone/RadioItem',
 	component: 'RadioItem'
 };
 

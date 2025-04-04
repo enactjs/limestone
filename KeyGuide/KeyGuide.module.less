@@ -6,17 +6,23 @@
 
 .keyGuide {
 	position: absolute;
-	width: @sand-keyguide-width;
-	right: @sand-keyguide-position-right;
-	bottom: @sand-keyguide-position-bottom;
-	padding: @sand-keyguide-padding;
+
+	&.iconGuide {
+		width: @lime-keyguide-icon-width;
+		right: @lime-keyguide-icon-position-right;
+		bottom: @lime-keyguide-icon-position-bottom;
+		padding: @lime-keyguide-icon-padding;
+	}
+	&.imageGuide {
+		padding: @lime-keyguide-image-padding;
+	}
 
 	.item {
-		.sand-font({
-			font-size: @sand-keyguide-font-size;
+		.lime-font({
+			font-size: @lime-keyguide-font-size;
 		});
-		font-size: @sand-keyguide-font-size;
-		height: @sand-keyguide-item-height;
+		font-size: @lime-keyguide-font-size;
+		height: @lime-keyguide-item-height;
 		margin: 0;
 
 		.icon {
@@ -24,7 +30,32 @@
 		}
 
 		.slotBefore {
-			margin-inline-end: @sand-keyguide-icon-margin-right;
+			margin-inline-end: @lime-keyguide-icon-icon-margin-right;
+		}
+	}
+
+	.imageItem {
+		height: @lime-keyguide-image-item-height;
+		width: @lime-keyguide-image-item-width;
+		align-items: center;
+		justify-content: center;
+
+		.image {
+			width: @lime-keyguide-image-image-width;
+			height: @lime-keyguide-image-image-height;
+			margin: @lime-keyguide-image-margin;
+			margin-inline-end: @lime-keyguide-image-image-margin-right;
+		}
+
+		.text {
+			height: 100%;
+			margin: @lime-keyguide-image-margin;
+			overflow: hidden;
+			align-content: center;
+
+			.bodyText {
+				margin: @lime-keyguide-image-margin;
+			}
 		}
 	}
 
@@ -32,30 +63,69 @@
 	.green,
 	.yellow,
 	.blue {
-		width: @sand-keyguide-colordot-width;
-		height: @sand-keyguide-colordot-height;
-		margin: @sand-keyguide-colordot-margin;
-		border-radius: @sand-keyguide-colordot-border-radius;
+		width: @lime-keyguide-colordot-width;
+		height: @lime-keyguide-colordot-height;
+		margin: @lime-keyguide-colordot-margin;
+		border-radius: @lime-keyguide-colordot-border-radius;
 	}
 
 	.applySkins({
-		background: @sand-keyguide-bg-color;
+		background: @lime-keyguide-bg-color;
 
 		.red {
-			background-color: @sand-keyguide-colordot-red-color;
+			background-color: @lime-keyguide-colordot-red-color;
 		}
 		.green {
-			background-color: @sand-keyguide-colordot-green-color;
+			background-color: @lime-keyguide-colordot-green-color;
 		}
 		.yellow {
-			background-color: @sand-keyguide-colordot-yellow-color;
+			background-color: @lime-keyguide-colordot-yellow-color;
 		}
 		.blue {
-			background-color: @sand-keyguide-colordot-blue-color;
+			background-color: @lime-keyguide-colordot-blue-color;
 		}
 
 		.item {
-			color: @sand-keyguide-item-color;
+			color: @lime-keyguide-item-color;
 		}
-	})
+
+		&.iconGuide {
+			box-shadow: @lime-keyguide-icon-shadow;
+		}
+
+		&.imageGuide {
+			box-shadow: @lime-keyguide-image-shadow;
+		}
+
+		&:not(.noArrow):after {
+			position: absolute;
+			border-width: @lime-keyguide-arrow-border-width;
+			border-style: solid;
+			content: '';
+		}
+		&.bottomArrow:after {
+			border-color: @lime-keyguide-bg-color transparent transparent transparent;
+			left: 50%;
+			top: 100%;
+			transform: translateX(-50%);
+		}
+		&.topArrow:after {
+			border-color: transparent transparent @lime-keyguide-bg-color transparent;
+			left: 50%;
+			bottom: 100%;
+			transform: translateX(-50%);
+		}
+		&.leftArrow:after {
+			border-color: transparent @lime-keyguide-bg-color transparent transparent ;
+			right: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		&.rightArrow:after {
+			border-color: transparent transparent transparent @lime-keyguide-bg-color;
+			left: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	});
 }

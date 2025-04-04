@@ -5,26 +5,26 @@
 @import "../styles/mixins.less";
 
 .verticalPadding {
-	.padding-start-end(0, @sand-scrollbar-focusable-size - @sand-scrollbar-size);
+	.padding-start-end(0, @lime-scrollbar-focusable-size - @lime-scrollbar-size);
 }
 
 .scroll {
-	--scroll-scrollbar-size: @sand-scrollbar-size;
+	--scroll-scrollbar-size: @lime-scrollbar-size;
 
 	box-sizing: border-box;
 	overflow: hidden;
 
 	&.focusableScrollbar {
-		--scroll-scrollbar-size: @sand-scrollbar-focusable-size;
+		--scroll-scrollbar-size: @lime-scrollbar-focusable-size;
 	}
 
 	.verticalScrollbar {
 		position: absolute;
 		width: var(--scroll-scrollbar-size);
-		height: calc(100% - 2 * @sand-scrollbar-padding);
+		height: calc(100% - 2 * @lime-scrollbar-padding);
 		right: 0;
 		top: 0;
-		padding: @sand-scrollbar-padding 0;
+		padding: @lime-scrollbar-padding 0;
 	}
 
 	.enact-locale-rtl({
@@ -36,20 +36,20 @@
 
 	.horizontalScrollbar {
 		position: absolute;
-		width: calc(100% - 2 * @sand-scrollbar-padding);
+		width: calc(100% - 2 * @lime-scrollbar-padding);
 		height: var(--scroll-scrollbar-size);
 		left: 0;
 		bottom: 0;
-		padding: 0 @sand-scrollbar-padding;
+		padding: 0 @lime-scrollbar-padding;
 	}
 
 	&.bidirectional {
 		.verticalScrollbar {
-			height: calc(100% - 2 * @sand-scrollbar-padding - var(--scroll-scrollbar-size));
+			height: calc(100% - 2 * @lime-scrollbar-padding - var(--scroll-scrollbar-size));
 		}
 
 		.horizontalScrollbar {
-			width: calc(100% - 2 * @sand-scrollbar-padding -  var(--scroll-scrollbar-size));
+			width: calc(100% - 2 * @lime-scrollbar-padding -  var(--scroll-scrollbar-size));
 			left: 0;
 		}
 

@@ -1,4 +1,4 @@
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
 import {useCallback} from 'react';
 import {useI18nContext} from '@enact/i18n/I18nDecorator';
 

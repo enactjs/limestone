@@ -1,7 +1,7 @@
-import Heading from '@enact/sandstone/Heading';
-import $L from '@enact/sandstone/internal/$L';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
+import Heading from '@enact/limestone/Heading';
+import $L from '@enact/limestone/internal/$L';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
 import {select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
@@ -22,7 +22,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Heading',
+	title: 'Limestone/Heading',
 	component: 'Heading'
 };
 

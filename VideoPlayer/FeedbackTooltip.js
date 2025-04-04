@@ -14,18 +14,18 @@ import {secondsToTime} from '../MediaPlayer/';
 import css from './FeedbackTooltip.module.less';
 
 /**
- * FeedbackTooltip {@link sandstone/VideoPlayer}. This displays the media's playback rate and
+ * FeedbackTooltip {@link limestone/VideoPlayer}. This displays the media's playback rate and
  * time information.
  *
  * @class FeedbackTooltip
- * @memberof sandstone/VideoPlayer
+ * @memberof limestone/VideoPlayer
  * @ui
  * @private
  */
 const FeedbackTooltipBase = kind({
 	name: 'FeedbackTooltip',
 
-	propTypes: /** @lends sandstone/VideoPlayer.FeedbackTooltip.prototype */ {
+	propTypes: /** @lends limestone/VideoPlayer.FeedbackTooltip.prototype */ {
 		/**
 		 * Invoke action to display or hide tooltip.
 		 *
@@ -88,7 +88,7 @@ const FeedbackTooltipBase = kind({
 		 * Each state understands where its related icon should be positioned, and whether it should
 		 * respond to changes to the `visible` property.
 		 *
-		 * This string feeds directly into {@link sandstone/FeedbackIcon.FeedbackIcon}.
+		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.
 		 *
 		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
 		 * @public
@@ -118,7 +118,7 @@ const FeedbackTooltipBase = kind({
 
 		/**
 		 * Set a thumbnail image source to show on VideoPlayer's Slider knob. This is a standard
-		 * {@link sandstone/Image} component so it supports all the same options for the `src`
+		 * {@link limestone/Image} component so it supports all the same options for the `src`
 		 * property. If no `thumbnailSrc` is set, no tooltip will display.
 		 *
 		 * @type {String|Object}
@@ -127,7 +127,7 @@ const FeedbackTooltipBase = kind({
 		thumbnailSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
-		 * Required by the interface for sandstone/Slider.tooltip but not used here
+		 * Required by the interface for limestone/Slider.tooltip but not used here
 		 *
 		 * @type {Boolean}
 		 * @default true

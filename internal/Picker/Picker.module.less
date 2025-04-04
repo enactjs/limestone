@@ -8,16 +8,16 @@
 	vertical-align: bottom;
 	position: relative;
 	text-align: center;
-	margin: @sand-picker-margin;
+	margin: @lime-picker-margin;
 
 	.sizingPlaceholder,
 	.valueWrapper {
-		.sand-text-base(@sand-picker-font-size);
+		.lime-text-base(@lime-picker-font-size);
 		max-width: 960px;
 
 		.item {
 			&.numeric {
-				.sand-font-number();
+				.lime-font-number();
 			}
 		}
 	}
@@ -25,34 +25,34 @@
 	.sizingPlaceholder {
 		height: 0;
 		visibility: hidden;
-		padding-left: .extract(@sand-picker-item-padding, left)[];
-		padding-right: .extract(@sand-picker-item-padding, right)[];
+		padding-left: .extract(@lime-picker-item-padding, left)[];
+		padding-right: .extract(@lime-picker-item-padding, right)[];
 		line-height: 0;
 	}
 
 	.valueWrapper {
 		margin-left: auto;
 		margin-right: auto;
-		height: @sand-picker-value-height;
-		line-height: @sand-picker-value-height;
+		height: @lime-picker-value-height;
+		line-height: @lime-picker-value-height;
 		position: relative;
 
 		.enact-locale-tallglyph({
-			height: @sand-tallglyph-picker-line-height;
-			line-height: @sand-tallglyph-picker-line-height;
+			height: @lime-tallglyph-picker-line-height;
+			line-height: @lime-tallglyph-picker-line-height;
 		});
 	}
 
 	.item {
-		padding: @sand-picker-item-padding;
+		padding: @lime-picker-item-padding;
 	}
 
 	// Special rules for small size for a more compact view
 	&.small {
 		.sizingPlaceholder,
 		.item {
-			padding-left: (.extract(@sand-picker-item-padding, left)[] / 2);
-			padding-right: (.extract(@sand-picker-item-padding, right)[] / 2);
+			padding-left: (.extract(@lime-picker-item-padding, left)[] / 2);
+			padding-right: (.extract(@lime-picker-item-padding, right)[] / 2);
 		}
 	}
 
@@ -100,7 +100,7 @@
 	}
 
 	&.vertical {
-		height: @sand-picker-vertical-height;
+		height: @lime-picker-vertical-height;
 	}
 
 	&.joined {
@@ -112,7 +112,7 @@
 
 		.sizingPlaceholder,
 		.valueWrapper {
-			font-weight: @sand-picker-joined-font-weight;
+			font-weight: @lime-picker-joined-font-weight;
 		}
 
 		.icon {
@@ -120,22 +120,22 @@
 		}
 
 		&.horizontal:not(.arrow) {
-			height: @sand-picker-joined-horizontal-height;
-			padding: @sand-picker-joined-horizontal-padding;
+			height: @lime-picker-joined-horizontal-height;
+			padding: @lime-picker-joined-horizontal-padding;
 
 			&::before {
-				border-radius: @sand-picker-joined-horizontal-border-radius;
+				border-radius: @lime-picker-joined-horizontal-border-radius;
 			}
 
 			.sizingPlaceholder,
 			.valueWrapper {
-				font-size: @sand-picker-joined-font-size;
+				font-size: @lime-picker-joined-font-size;
 			}
 
 			.valueWrapper {
-				height: @sand-picker-joined-value-height;
-				line-height: @sand-picker-joined-value-height;
-				margin-bottom: @sand-picker-joined-horizontal-value-offset;
+				height: @lime-picker-joined-value-height;
+				line-height: @lime-picker-joined-value-height;
+				margin-bottom: @lime-picker-joined-horizontal-value-offset;
 			}
 
 			.item {
@@ -152,17 +152,17 @@
 
 				.indicator {
 					display: inline-block;
-					width: @sand-picker-indicator-width;
-					height: @sand-picker-indicator-height;
-					margin: @sand-picker-indicator-margin;
-					border-radius: @sand-picker-indicator-border-radius;
-					transform: scale(@sand-picker-indicator-inactive-scale);
+					width: @lime-picker-indicator-width;
+					height: @lime-picker-indicator-height;
+					margin: @lime-picker-indicator-margin;
+					border-radius: @lime-picker-indicator-border-radius;
+					transform: scale(@lime-picker-indicator-inactive-scale);
 					vertical-align: middle;
 					will-change: transform;
-					transition: transform @sand-picker-focus-duration ease-out;
+					transition: transform @lime-picker-focus-duration ease-out;
 
 					&.active {
-						transform: scale(@sand-picker-indicator-active-scale);
+						transform: scale(@lime-picker-indicator-active-scale);
 					}
 				}
 			}
@@ -170,123 +170,123 @@
 
 		&.horizontal.arrow, &.vertical {
 			&::before {
-				border-radius: @sand-picker-joined-vertical-border-radius;
+				border-radius: @lime-picker-joined-vertical-border-radius;
 			}
 		}
 
 		&.horizontal.arrow {
 			.incrementer,
 			.decrementer {
-				line-height: (@sand-button-small-height - (2 * @sand-button-border-width));
-				height: @sand-button-small-height;
-				margin: @sand-button-small-focusexpand-margin;
-				padding: @sand-button-icon-small-padding;
+				line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+				height: @lime-button-small-height;
+				margin: @lime-button-small-focusexpand-margin;
+				padding: @lime-button-icon-small-padding;
 			}
 		}
 
 		&.vertical {
 			.valueWrapper {
-				height: @sand-picker-joined-value-height;
-				line-height: @sand-picker-joined-value-height;
+				height: @lime-picker-joined-value-height;
+				line-height: @lime-picker-joined-value-height;
 			}
 		}
 	}
 
 	&.small .valueWrapper {
-		width: @sand-picker-small-value-width;
+		width: @lime-picker-small-value-width;
 	}
 	&.medium .valueWrapper {
-		width: @sand-picker-medium-value-width;
+		width: @lime-picker-medium-value-width;
 	}
 	&.large .valueWrapper {
-		width: @sand-picker-large-value-width;
+		width: @lime-picker-large-value-width;
 	}
 
 	// Skin colors
 	.applySkins({
-		color: @sand-picker-text-color;
+		color: @lime-picker-text-color;
 
 		&.joined {
-			color: @sand-picker-joined-text-color;
+			color: @lime-picker-joined-text-color;
 
 			&.horizontal:not(.arrow) {
-				color: @sand-picker-joined-horizontal-text-color;
+				color: @lime-picker-joined-horizontal-text-color;
 
 				&::before {
-					.sand-spotlight-resting-bg-colors(1);
-					background-color: @sand-picker-joined-horizontal-bg-color;
+					.lime-spotlight-resting-bg-colors(1);
+					background-color: @lime-picker-joined-horizontal-bg-color;
 				}
 
 				.indicator {
-					background-color: @sand-picker-indicator-inactive-bg-color;
+					background-color: @lime-picker-indicator-inactive-bg-color;
 
 					&.active {
-						background-color: @sand-picker-indicator-active-bg-color;
+						background-color: @lime-picker-indicator-active-bg-color;
 					}
 				}
 			}
 
 			&.horizontal.arrow, &.vertical {
 				&::before {
-					.sand-spotlight-resting-bg-colors();
+					.lime-spotlight-resting-bg-colors();
 				}
 
 				.incrementer,
 				.decrementer {
-					color: @sand-picker-joined-incrementer-color;
+					color: @lime-picker-joined-incrementer-color;
 				}
 			}
 
 			.focus({
 				:global(.spotlight-input-key)&,
 				:global(.spotlight-input-mouse)& {
-					.sand-spotlight-focus-text-colors();
+					.lime-spotlight-focus-text-colors();
 
 					&.horizontal:not(.arrow) {
 						&::before {
-							.sand-spotlight-focus-bg-colors();
-							background-color: @sand-picker-joined-horizontal-bg-color; // We use the resting colors here and augment the color using a filter so it can be animated smoothly
+							.lime-spotlight-focus-bg-colors();
+							background-color: @lime-picker-joined-horizontal-bg-color; // We use the resting colors here and augment the color using a filter so it can be animated smoothly
 							filter+_: saturate(0) brightness(1.89);
 						}
 					}
 
 					&.horizontal.arrow, &.vertical {
 						&::before {
-							.sand-spotlight-focus-bg-colors();
+							.lime-spotlight-focus-bg-colors();
 						}
 
 						.incrementer,
 						.decrementer {
-							color: @sand-picker-joined-focus-incrementer-color;
+							color: @lime-picker-joined-focus-incrementer-color;
 						}
 					}
 
-					.sand-disabled({
-						color: @sand-picker-joined-focus-disabled-text-color;
+					.lime-disabled({
+						color: @lime-picker-joined-focus-disabled-text-color;
 
 						&::before {
-							.sand-disabled-focus-bg-colors();
+							.lime-disabled-focus-bg-colors();
 						}
 
 						.valueWrapper {
-							.sand-disabled-focus-content-colors();
+							.lime-disabled-focus-content-colors();
 						}
 
 						.indicator {
-							background-color: @sand-picker-joined-focus-disabled-indicator-bg-color;
-							opacity: @sand-picker-joined-focus-disabled-indicator-opacity;
+							background-color: @lime-picker-joined-focus-disabled-indicator-bg-color;
+							opacity: @lime-picker-joined-focus-disabled-indicator-opacity;
 
 							&.active {
-								opacity: @sand-picker-joined-focus-disabled-indicator-active-opacity;
+								opacity: @lime-picker-joined-focus-disabled-indicator-active-opacity;
 							}
 						}
 					});
 
 					.indicator {
-						background-color: @sand-picker-indicator-inactive-focus-bg-color;
+						background-color: @lime-picker-indicator-inactive-focus-bg-color;
 
 						&.active {
-							background-color: @sand-picker-indicator-active-focus-bg-color;
+							background-color: @lime-picker-indicator-active-focus-bg-color;
 						}
 					}
 				}

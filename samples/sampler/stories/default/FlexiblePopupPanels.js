@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 
-import Button from '@enact/sandstone/Button';
-import {FlexiblePopupPanelsBase, FlexiblePopupPanels, Panel, PanelBase, Header} from '@enact/sandstone/FlexiblePopupPanels';
-import Item from '@enact/sandstone/Item';
-import Scroller from '@enact/sandstone/Scroller';
-import Slider from '@enact/sandstone/Slider';
+import Button from '@enact/limestone/Button';
+import {FlexiblePopupPanelsBase, FlexiblePopupPanels, Panel, PanelBase, Header} from '@enact/limestone/FlexiblePopupPanels';
+import Item from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
+import Slider from '@enact/limestone/Slider';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
@@ -21,11 +21,11 @@ const Config = mergeComponentMetadata('FlexiblePopupPanels', FlexiblePopupPanels
 const PanelConfig = mergeComponentMetadata('Panel', PanelBase, Panel);
 
 export default {
-	title: 'Sandstone/FlexiblePopupPanels',
+	title: 'Limestone/FlexiblePopupPanels',
 	component: 'FlexiblePopupPanels'
 };
 
-export const _FlexiblePopupPanels = (args) => {
+export const FlexiblePopupPanels_ = (args) => {
 	const defaultOpen = false;
 	const [open, setOpenState] = useState(defaultOpen);
 	const toggleOpen = () => setOpenState(!open);
@@ -109,26 +109,26 @@ export const _FlexiblePopupPanels = (args) => {
 	);
 };
 
-boolean('fullHeight', _FlexiblePopupPanels, Config);
-select('nextButtonVisibility', _FlexiblePopupPanels, propOptions.buttonVisibility, Config);
-boolean('noAnimation', _FlexiblePopupPanels, Config);
-boolean('noAutoDismiss', _FlexiblePopupPanels, Config);
-boolean('noCloseButton', _FlexiblePopupPanels, Config);
-select('prevButtonVisibility', _FlexiblePopupPanels, propOptions.buttonVisibility, Config);
-select('scrimType', _FlexiblePopupPanels, ['none', 'translucent', 'transparent'], Config, 'translucent');
+boolean('fullHeight', FlexiblePopupPanels_, Config);
+select('nextButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
+boolean('noAnimation', FlexiblePopupPanels_, Config);
+boolean('noAutoDismiss', FlexiblePopupPanels_, Config);
+boolean('noCloseButton', FlexiblePopupPanels_, Config);
+select('prevButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
+select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config, 'translucent');
 select(
 	'spotlightRestrict',
-	_FlexiblePopupPanels,
+	FlexiblePopupPanels_,
 	['self-first', 'self-only'],
 	Config,
 	'self-only'
 );
-select('size', _FlexiblePopupPanels, propOptions.size, PanelConfig);
-boolean('custom first Panel prevButton', _FlexiblePopupPanels, PanelConfig);
-boolean('custom last Panel nextButton', _FlexiblePopupPanels, PanelConfig);
+select('size', FlexiblePopupPanels_, propOptions.size, PanelConfig);
+boolean('custom first Panel prevButton', FlexiblePopupPanels_, PanelConfig);
+boolean('custom last Panel nextButton', FlexiblePopupPanels_, PanelConfig);
 
-_FlexiblePopupPanels.storyName = 'FlexiblePopupPanels';
-_FlexiblePopupPanels.parameters = {
+FlexiblePopupPanels_.storyName = 'FlexiblePopupPanels';
+FlexiblePopupPanels_.parameters = {
 	info: {
 		text:
 			'Intended for use with a single "control" at a time, to maximize the amount of background visible.'

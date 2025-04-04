@@ -8,7 +8,7 @@
 	--tooltip-progress-percent: ~"calc(var(--tooltip-progress-proportion) * 100%)";
 
 	.tooltipLabel {
-		.sand-font-number();
+		.lime-font-number();
 	}
 
 	.before (@ruleset) {
@@ -31,11 +31,11 @@
 		left: var(--tooltip-progress-percent);
 
 		&.above {
-			bottom: @sand-progressbar-tooltip-above-offset;
+			bottom: @lime-progressbar-tooltip-above-offset;
 		}
 
 		&.below {
-			top: @sand-progressbar-tooltip-below-offset;
+			top: @lime-progressbar-tooltip-below-offset;
 		}
 	}
 
@@ -44,12 +44,12 @@
 
 		// Left side
 		.before({
-			right: @sand-progressbar-tooltip-before-offset;
+			right: @lime-progressbar-tooltip-before-offset;
 		});
 
 		// Right side
 		.after({
-			left: @sand-progressbar-tooltip-after-offset;
+			left: @lime-progressbar-tooltip-after-offset;
 		});
 	}
 
@@ -74,33 +74,33 @@
 
 		&.center {
 			&.above {
-				bottom: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				bottom: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 			&.below {
-				top: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				top: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 		}
 
 		.before({
-			left: -@sand-progressbar-tooltip-radial-offset;
+			left: -@lime-progressbar-tooltip-radial-offset;
 
 			&.above {
-				bottom: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				bottom: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 			&.below {
-				top: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				top: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 		});
 
 		.after({
-			left: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+			left: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 
 			&.above {
-				bottom: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				bottom: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 
 			&.below {
-				top: ~"calc(100% + " @sand-progressbar-tooltip-radial-offset ~")";
+				top: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";
 			}
 		});
 	}

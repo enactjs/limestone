@@ -1,4 +1,4 @@
-import FormCheckboxItem from '@enact/sandstone/FormCheckboxItem';
+import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
 
 import Section from '../components/Section';
 

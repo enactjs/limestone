@@ -1,5 +1,5 @@
-import {ImageItem} from '@enact/sandstone/ImageItem';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import {ImageItem} from '@enact/limestone/ImageItem';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
@@ -67,7 +67,7 @@ const VirtualGridListConfig = mergeComponentMetadata(
 );
 
 export default {
-	title: 'Sandstone/VirtualList.VirtualGridList',
+	title: 'Limestone/VirtualList.VirtualGridList',
 	component: 'VirtualGridList'
 };
 

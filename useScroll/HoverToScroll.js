@@ -45,7 +45,7 @@ const directionToFocus = {
  * A hover area to scroll for a single direction.
  *
  * @class HoverToScrollBase
- * @memberof sandstone/useScroll.HoverToScroll
+ * @memberof limestone/useScroll.HoverToScroll
  * @ui
  * @private
  */
@@ -218,7 +218,7 @@ const HoverToScrollBase = (props) => {
 
 HoverToScrollBase.displayName = 'HoverToScrollBase';
 
-HoverToScrollBase.propTypes = /** @lends sandstone/useScroll.HoverToScroll.HoverToScrollBase.prototype */ {
+HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.HoverToScrollBase.prototype */ {
 	direction: PropTypes.string,
 	scrollContainerHandle: PropTypes.object
 };
@@ -227,7 +227,7 @@ HoverToScrollBase.propTypes = /** @lends sandstone/useScroll.HoverToScroll.Hover
  * A hover area to scroll.
  *
  * @class HoverToScroll
- * @memberof sandstone/useScroll
+ * @memberof limestone/useScroll
  * @ui
  * @private
  */
@@ -242,7 +242,7 @@ const HoverToScroll = ({scrollContainerHandle, ...rest}) => {
 
 HoverToScroll.displayName = 'HoverToScroll';
 
-HoverToScroll.propTypes = /** @lends sandstone/useScroll.HoverToScroll.prototype */ {
+HoverToScroll.propTypes = /** @lends limestone/useScroll.HoverToScroll.prototype */ {
 	scrollContainerHandle: PropTypes.object
 };
 

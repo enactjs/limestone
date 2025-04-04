@@ -1,8 +1,8 @@
 import {add, is} from '@enact/core/keymap';
-import Button from '@enact/sandstone/Button';
-import IconItem from '@enact/sandstone/IconItem';
-import Scroller from '@enact/sandstone/Scroller';
-import $L from '@enact/sandstone/internal/$L';
+import Button from '@enact/limestone/Button';
+import IconItem from '@enact/limestone/IconItem';
+import Scroller from '@enact/limestone/Scroller';
+import $L from '@enact/limestone/internal/$L';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
@@ -79,7 +79,6 @@ for (let i = 0; i < 20; i++) {
 }
 
 const Container = SpotlightContainerDecorator('div');
-const ContainerDivWithLeaveForConfig = SpotlightContainerDecorator({leaveFor: {left: '', right: ''}}, 'div');
 const TouchableDiv = Touchable('div');
 
 export const EditableIcon = (args) => {
@@ -277,11 +276,11 @@ export const EditableIcon = (args) => {
 										onMouseLeave={onMouseLeaveItem}
 										style={{order: index + 1}}
 									>
-										<ContainerDivWithLeaveForConfig className={css.removeButtonContainer}>
+										<div className={css.removeButtonContainer}>
 											{item.hidden ? null : <Button aria-label="Delete" className={css.removeButton} onClick={onClickRemoveButton} icon="trash" />}
 											{item.hidden ? null : <Button aria-label="Hide" className={css.removeButton} onClick={onClickHideButton} icon="minus" />}
 											{item.hidden ? <Button aria-label="Show" className={css.removeButton} onClick={onClickShowButton} icon="plus" /> : null}
-										</ContainerDivWithLeaveForConfig>
+										</div>
 										<IconItem
 											{...item.iconItemProps}
 											aria-label={`Icon ${item.index}`}
@@ -436,6 +435,6 @@ select('verticalScrollbar', EditableIconWithLongPress, prop.scrollbarOption, Scr
 EditableIconWithLongPress.storyName = 'with editable scroller trigger by long press';
 
 export default {
-	title: 'Sandstone/IconItem',
+	title: 'Limestone/IconItem',
 	component: 'IconItem'
 };

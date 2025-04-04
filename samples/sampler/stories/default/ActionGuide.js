@@ -1,4 +1,4 @@
-import ActionGuide, {ActionGuideBase} from '@enact/sandstone/ActionGuide';
+import ActionGuide, {ActionGuideBase} from '@enact/limestone/ActionGuide';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {text, select} from '@enact/storybook-utils/addons/controls';
 
@@ -13,7 +13,7 @@ ActionGuide.displayName = 'ActionGuide';
 const Config = mergeComponentMetadata('ActionGuide', ActionGuideBase, ActionGuide);
 
 export default {
-	title: 'Sandstone/ActionGuide',
+	title: 'Limestone/ActionGuide',
 	component: 'ActionGuide'
 };
 

@@ -1,5 +1,5 @@
-import Item from '@enact/sandstone/Item';
-import VirtualList from '@enact/sandstone/VirtualList';
+import Item from '@enact/limestone/Item';
+import VirtualList from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
 import {VoiceControlDecorator} from '@enact/webos/speech';
 import {useCallback, useEffect, useReducer, useRef, useState} from 'react';

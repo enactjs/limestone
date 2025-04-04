@@ -1,4 +1,4 @@
-import {IconItem, IconItemBase} from '@enact/sandstone/IconItem';
+import {IconItem, IconItemBase} from '@enact/limestone/IconItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
@@ -22,7 +22,7 @@ const imageObj = {
 };
 
 export default {
-	title: 'Sandstone/IconItem',
+	title: 'Limestone/IconItem',
 	component: 'IconItem'
 };
 

@@ -1,5 +1,5 @@
-import Heading from '@enact/sandstone/Heading';
-import SwitchItem from '@enact/sandstone/SwitchItem';
+import Heading from '@enact/limestone/Heading';
+import SwitchItem from '@enact/limestone/SwitchItem';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, text} from '@enact/storybook-utils/addons/controls';
 import Group from '@enact/ui/Group';
@@ -15,7 +15,7 @@ const inputData = {
 };
 
 export default {
-	title: 'Sandstone/SwitchItem',
+	title: 'Limestone/SwitchItem',
 	component: 'SwitchItem'
 };
 

@@ -4,7 +4,7 @@
  * @example
  * <Popup open>Hello!</Popup>
  *
- * @module sandstone/Popup
+ * @module limestone/Popup
  * @exports Popup
  * @exports PopupBase
  */
@@ -56,14 +56,14 @@ const transitionDirection = {
  * The base popup component.
  *
  * @class PopupBase
- * @memberof sandstone/Popup
+ * @memberof limestone/Popup
  * @ui
  * @public
  */
 const PopupBase = kind({
 	name: 'PopupBase',
 
-	propTypes: /** @lends sandstone/Popup.PopupBase.prototype */ {
+	propTypes: /** @lends limestone/Popup.PopupBase.prototype */ {
 		/**
 		 * The contents to be displayed in the body of the popup.
 		 *
@@ -163,11 +163,11 @@ const PopupBase = kind({
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top')}
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top']),
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
 
 		/**
 		 * The ARIA role for the Popup.
@@ -194,7 +194,7 @@ const PopupBase = kind({
 		 *
 		 * It can be either `'none'`, `'self-first'`, or `'self-only'`.
 		 *
-		 * Note: The ready-to-use {@link sandstone/Popup.Popup|Popup} component only supports
+		 * Note: The ready-to-use {@link limestone/Popup.Popup|Popup} component only supports
 		 * `'self-first'` and `'self-only'`.
 		 *
 		 * @type {('none'|'self-first'|'self-only')}
@@ -223,14 +223,14 @@ const PopupBase = kind({
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `aria-live` will be usually `off`.
 		'aria-live': ({'aria-live': live, noAlertRole}) => ((typeof live !== 'undefined') ? live : (!noAlertRole && 'off' || null)),
-		className: ({noOutline, position, styler}) => styler.append(position, position === 'fullscreen' || noOutline ? null : componentCss.outline),
+		className: ({noOutline, position, styler}) => styler.append(position.split(' '), position === 'fullscreen' || noOutline ? null : componentCss.outline),
 		direction: ({position}) => transitionDirection[position],
 		noAnimation: ({noAnimation}) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation,
 		// When passing `role` prop to the Popup, the prop should work first.
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `role` will be usually `alert`.
 		role: ({noAlertRole, role}) => ((typeof role !== 'undefined') ? role : (!noAlertRole && 'alert' || null)),
-		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position)
+		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '))
 	},
 
 	render: ({children, css, direction, noAnimation, onHide, onShow, open, position, spotlightId, spotlightRestrict, transitionContainerClassName, ...rest}) => {
@@ -284,14 +284,14 @@ const OpenState = {
  * {@link ui/FloatingLayer.FloatingLayer|FloatingLayer}.
  *
  * @class Popup
- * @memberof sandstone/Popup
- * @extends sandstone/Popup.PopupBase
+ * @memberof limestone/Popup
+ * @extends limestone/Popup.PopupBase
  * @ui
  * @public
  */
 class Popup extends Component {
 
-	static propTypes = /** @lends sandstone/Popup.Popup.prototype */ {
+	static propTypes = /** @lends limestone/Popup.Popup.prototype */ {
 		/**
 		 * Prevents closing the popup via 5-way navigation out of the content.
 		 *
@@ -361,7 +361,7 @@ class Popup extends Component {
 		 * Called after show transition has completed, and immediately with no transition.
 		 *
 		 * Note: The function does not run if Popup is initially opened and
-		 * {@link sandstone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
+		 * {@link limestone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
 		 *
 		 * @type {Function}
 		 * @public
@@ -382,11 +382,11 @@ class Popup extends Component {
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top')}
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top']),
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
 
 		/**
 		 * Scrim type.

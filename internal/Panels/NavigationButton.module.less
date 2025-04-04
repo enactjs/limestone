@@ -6,15 +6,15 @@
 
 .button.hasIcon {
 	&.small {
-		padding: @sand-button-icon-small-padding;
+		padding: @lime-button-icon-small-padding;
 		& .bg {
-			width: @sand-button-small-height;
+			width: @lime-button-small-height;
 		}
 	}
 	&.large {
-		padding: @sand-button-icon-padding;
+		padding: @lime-button-icon-padding;
 		& .bg {
-			width: @sand-button-height;
+			width: @lime-button-height;
 		}
 	}
 	&.iconAfter {
@@ -22,17 +22,17 @@
 			.position-start-end(auto, 0);
 		}
 		.icon {
-			.margin-start-end(@sand-wizardpanels-button-icon-text-gap, 0);
+			.margin-start-end(@lime-wizardpanels-button-icon-text-gap, 0);
 		}
 	}
 	&.iconBefore {
 		.icon {
-			.margin-start-end(0, @sand-wizardpanels-button-icon-text-gap);
+			.margin-start-end(0, @lime-wizardpanels-button-icon-text-gap);
 		}
 	}
 	.applySkins({
 		.client :not(.icon) {
-			color: @sand-text-color;
+			color: var(--alias-color-on-surface-main);
 		}
 	});
 }

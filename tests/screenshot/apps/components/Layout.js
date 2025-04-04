@@ -1,5 +1,5 @@
 import Layout, {Cell, Column, Row} from '@enact/ui/Layout';
-import Button from '@enact/sandstone/Button';
+import Button from '@enact/limestone/Button';
 
 import {withConfig, withProps} from './utils';
 

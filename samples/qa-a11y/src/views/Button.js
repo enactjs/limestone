@@ -1,4 +1,4 @@
-import Button from '@enact/sandstone/Button';
+import Button from '@enact/limestone/Button';
 
 import Section from '../components/Section';
 

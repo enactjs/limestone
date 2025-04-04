@@ -6,30 +6,30 @@
 
 // Create a module-level LESS variable containing a our CSS variable with a default assigned.
 // Assign the default here, rather than assigning it on every usage of --icon-size.
-@icon-size: ~"var(--icon-size, " @sand-icon-small-size ~")";
+@icon-size: ~"var(--icon-size, " @lime-icon-small-size ~")";
 
 .icon {
 	background-repeat: no-repeat;
 	text-align: center;
 	position: relative;
-	font-family: @sand-icon-font-family;
-	margin: @sand-icon-margin;
+	font-family: @lime-icon-font-family;
+	margin: @lime-icon-margin;
 	overflow: hidden; // prevent drawing outside the icon DOM box. Glyph icons are scaled 2x larger, which means their inline dimensions fall outside the container. This prevents them from drawing and receiving pointer events.
 
 	&.large {
-		--icon-size: @sand-icon-large-size;
+		--icon-size: @lime-icon-large-size;
 	}
 
 	&.medium {
-		--icon-size: @sand-icon-medium-size;
+		--icon-size: @lime-icon-medium-size;
 	}
 
 	&.small {
-		--icon-size: @sand-icon-small-size;
+		--icon-size: @lime-icon-small-size;
 	}
 
 	&.tiny {
-		--icon-size: @sand-icon-tiny-size;
+		--icon-size: @lime-icon-tiny-size;
 	}
 
 	// Icon size calculations
@@ -41,7 +41,7 @@
 	background-size: @icon-size calc(@icon-size * 2);
 
 	&.dingbat {
-		font-family: @sand-icon-other-font-family;
+		font-family: @lime-icon-other-font-family;
 	}
 
 	// Skin colors

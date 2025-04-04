@@ -12,17 +12,17 @@
 	.content {
 		box-sizing: border-box;
 		background-size: contain;
-		border-radius: @sand-iconitem-border-radius;
-		font-weight: @sand-iconitem-font-weight;
+		border-radius: @lime-iconitem-border-radius;
+		font-weight: @lime-iconitem-font-weight;
 	}
 
 	&.bordered .content {
-		border-width: @sand-iconitem-border-width;
-		border-style: @sand-iconitem-border-style;
+		border-width: @lime-iconitem-border-width;
+		border-style: @lime-iconitem-border-style;
 	}
 
 	&:not(.labelOnFocus) .icon {
-		margin: @sand-iconitem-icon-margin;
+		margin: @lime-iconitem-icon-margin;
 	}
 
 	.image {
@@ -35,15 +35,15 @@
 	}
 
 	.label {
-		font-size: @sand-iconitem-label-font-size;
-		line-height: @sand-iconitem-label-line-height;
-		padding: @sand-iconitem-label-padding;
+		font-size: @lime-iconitem-label-font-size;
+		line-height: @lime-iconitem-label-line-height;
+		padding: @lime-iconitem-label-padding;
 	}
 
 	.title {
-		font-size: @sand-iconitem-title-font-size;
-		line-height: @sand-iconitem-title-line-height;
-		margin: @sand-iconitem-title-margin;
+		font-size: @lime-iconitem-title-font-size;
+		line-height: @lime-iconitem-title-line-height;
+		margin: @lime-iconitem-title-margin;
 	}
 
 	&.labelOnFocus {
@@ -57,11 +57,11 @@
 	}
 
 	.focus({
-		transform: @sand-iconitem-focus-transform;
+		transform: @lime-iconitem-focus-transform;
 
 		&.labelOnFocus {
 			.icon {
-				margin: @sand-iconitem-icon-margin;
+				margin: @lime-iconitem-icon-margin;
 			}
 
 			.label, .labelContainer {
@@ -81,21 +81,21 @@
 	// Skin colors
 	.applySkins({
 		&.bordered .content {
-			border-color: @sand-iconitem-border-color;
+			border-color: @lime-iconitem-border-color;
 		}
 
 		.label {
-			color: @sand-iconitem-label-color;
+			color: @lime-iconitem-label-color;
 		}
 
 		&.darkLabel .label {
-			color: @sand-iconitem-label-dark-color;
+			color: @lime-iconitem-label-dark-color;
 		}
 
 		.disabled ({
-			opacity: @sand-iconitem-disabled-opacity;
+			opacity: @lime-iconitem-disabled-opacity;
 		});
 
-		.sand-focus-highlight(content);
+		.lime-focus-highlight(content);
 	});
 }

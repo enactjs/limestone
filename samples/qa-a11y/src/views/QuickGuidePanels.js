@@ -1,4 +1,4 @@
-import QuickGuidePanels from '@enact/sandstone/QuickGuidePanels';
+import QuickGuidePanels from '@enact/limestone/QuickGuidePanels';
 
 const QuickGuidePanelsView = () => (
 	<QuickGuidePanels>

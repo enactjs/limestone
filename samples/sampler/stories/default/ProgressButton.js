@@ -1,5 +1,5 @@
-import Button, {ButtonBase} from '@enact/sandstone/Button';
-import ProgressButton, {ProgressButtonBase} from '@enact/sandstone/ProgressButton';
+import Button, {ButtonBase} from '@enact/limestone/Button';
+import ProgressButton, {ProgressButtonBase} from '@enact/limestone/ProgressButton';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range, select, text} from '@enact/storybook-utils/addons/controls';
@@ -46,7 +46,7 @@ const threeWayBoolean = (value) => {
 };
 
 export default {
-	title: 'Sandstone/ProgressButton',
+	title: 'Limestone/ProgressButton',
 	component: 'ProgressButton'
 };
 

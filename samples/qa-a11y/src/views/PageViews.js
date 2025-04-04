@@ -1,6 +1,6 @@
-import Item from '@enact/sandstone/Item';
-import {Panel, Header} from '@enact/sandstone/Panels';
-import PageViews, {Page} from '@enact/sandstone/PageViews';
+import Item from '@enact/limestone/Item';
+import {Panel, Header} from '@enact/limestone/Panels';
+import PageViews, {Page} from '@enact/limestone/PageViews';
 
 const PageViewsView = () => (
 	<Panel>

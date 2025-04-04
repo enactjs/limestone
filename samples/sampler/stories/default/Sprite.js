@@ -1,4 +1,4 @@
-import Sprite from '@enact/sandstone/Sprite';
+import Sprite from '@enact/limestone/Sprite';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
@@ -16,7 +16,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/Sprite',
+	title: 'Limestone/Sprite',
 	component: 'Sprite'
 };
 

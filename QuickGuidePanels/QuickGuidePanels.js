@@ -32,14 +32,14 @@ import css from './QuickGuidePanels.module.less';
  *	</QuickGuidePanels>
  *
  * @class QuickGuidePanelsBase
- * @memberof sandstone/QuickGuidePanels
+ * @memberof limestone/QuickGuidePanels
  * @ui
  * @public
  */
 const QuickGuidePanelsBase = kind({
 	name: 'QuickGuidePanels',
 
-	propTypes: /** @lends sandstone/QuickGuidePanels.QuickGuidePanelsBase.prototype */ {
+	propTypes: /** @lends limestone/QuickGuidePanels.QuickGuidePanelsBase.prototype */ {
 		/**
 		 * The aria-label for the Panel.
 		 *
@@ -275,12 +275,11 @@ const QuickGuidePanelsBase = kind({
 	},
 
 	computed: {
-		stepHintAriaLabel: ({'aria-label': label, current, index}) => {
-			if (label) return label;
-
+		stepHintAriaLabel: ({'aria-label': label, current, index, totalPanels}) => {
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
-			const step = new IString($L('step {num}')).format({num: stepNum}) + ' ';
-			return `${step}`;
+			const step = new IString($L('Page {current} out of {total}')).format({current: stepNum, total: totalPanels}) + ' ';
+
+			return `${step} ${label || ''}`;
 		},
 		closeButton: ({closeButtonAriaLabel, onClose, totalPanels}) => {
 			return (
@@ -358,6 +357,7 @@ const QuickGuidePanelsBase = kind({
 		steps,
 		...rest
 	}) => {
+		delete rest['aria-label'];
 		delete rest.closeButtonAriaLabel;
 		delete rest.current;
 		delete rest.nextButton;
@@ -425,11 +425,11 @@ const QuickGuidePanelsDecorator = compose(
 
 /**
  * A QuickGuidePanels that can step through different panels.
- * Expects {@link sandstone/QuickGuidePanels.Panel|Panel} as children.
+ * Expects {@link limestone/QuickGuidePanels.Panel|Panel} as children.
  *
  * @class QuickGuidePanels
- * @memberof sandstone/QuickGuidePanels
- * @extends sandstone/QuickGuidePanels.QuickGuidePanelsBase
+ * @memberof limestone/QuickGuidePanels
+ * @extends limestone/QuickGuidePanels.QuickGuidePanelsBase
  * @mixes ui/Changeable.Changeable
  * @ui
  * @public
@@ -443,7 +443,7 @@ const QuickGuidePanels = QuickGuidePanelsDecorator(QuickGuidePanelsBase);
  * not called, the index of the panel will be decremented unless `noPrevButton` is set.
  *
  * @name onBack
- * @memberof sandstone/QuickGuidePanels.QuickGuidePanels.prototype
+ * @memberof limestone/QuickGuidePanels.QuickGuidePanels.prototype
  * @type {Function}
  */
 

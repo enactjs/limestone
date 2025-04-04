@@ -1,10 +1,10 @@
-import Button from '@enact/sandstone/Button';
-import Icon from '@enact/sandstone/Icon';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Item from '@enact/sandstone/Item';
-import {Panel, Header} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
-import TabLayout, {Tab} from '@enact/sandstone/TabLayout';
+import Button from '@enact/limestone/Button';
+import Icon from '@enact/limestone/Icon';
+import ImageItem from '@enact/limestone/ImageItem';
+import Item from '@enact/limestone/Item';
+import {Panel, Header} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
+import TabLayout, {Tab} from '@enact/limestone/TabLayout';
 import Spotlight from '@enact/spotlight';
 import {scaleToRem} from '@enact/ui/resolution';
 import {useCallback} from 'react';
@@ -48,7 +48,7 @@ const TabLayoutView = () => {
 
 	return (
 		<Panel spotlightId={containerSpotlightId}>
-			<Header title="Sandstone TabLayout" subtitle="Basic TabLayout" />
+			<Header title="Limestone TabLayout" subtitle="Basic TabLayout" />
 			<TabLayout onCollapse={handleCollapse} onExpand={handleExpand}>
 				<Tab
 					icon={tabsWithIcons[0].icon}

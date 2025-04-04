@@ -1,14 +1,14 @@
 import {add, is} from '@enact/core/keymap';
-import Button from '@enact/sandstone/Button';
-import BodyText from '@enact/sandstone/BodyText';
-import {FixedPopupPanels, Panel} from '@enact/sandstone/FixedPopupPanels';
-import {Heading} from '@enact/sandstone/Heading';
-import ImageItem from '@enact/sandstone/ImageItem';
-import {InputField} from '@enact/sandstone/Input';
-import Item from '@enact/sandstone/Item';
-import {Header} from '@enact/sandstone/Panels';
-import {ContentContainerDecorator, Scroller} from '@enact/sandstone/Scroller';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
+import Button from '@enact/limestone/Button';
+import BodyText from '@enact/limestone/BodyText';
+import {FixedPopupPanels, Panel} from '@enact/limestone/FixedPopupPanels';
+import {Heading} from '@enact/limestone/Heading';
+import ImageItem from '@enact/limestone/ImageItem';
+import {InputField} from '@enact/limestone/Input';
+import Item from '@enact/limestone/Item';
+import {Header} from '@enact/limestone/Panels';
+import {ContentContainerDecorator, Scroller} from '@enact/limestone/Scroller';
+import {VirtualGridList} from '@enact/limestone/VirtualList';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
@@ -176,7 +176,7 @@ class ScrollerWithLargeContainer extends Component {
 }
 
 export default {
-	title: 'Sandstone/Scroller',
+	title: 'Limestone/Scroller',
 	component: 'Scroller'
 };
 

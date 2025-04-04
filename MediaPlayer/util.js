@@ -45,7 +45,7 @@ const secondsToPeriod = (seconds) => {
  * @param  {Object}        config  Additional configuration object that includes `includeHour`
  *
  * @returns {String} Formatted duration string
- * @memberof sandstone/MediaPlayer
+ * @memberof limestone/MediaPlayer
  * @public
  */
 const secondsToTime = (seconds, durfmt, config) => {

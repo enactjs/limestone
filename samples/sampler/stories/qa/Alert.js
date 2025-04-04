@@ -1,14 +1,17 @@
-import Alert, {AlertBase, AlertImage} from '@enact/sandstone/Alert';
-import Button from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import ProgressBar from '@enact/sandstone/ProgressBar';
-import Scroller from '@enact/sandstone/Scroller';
+import Alert, {AlertBase, AlertImage} from '@enact/limestone/Alert';
+import Button from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import ProgressBar from '@enact/limestone/ProgressBar';
+import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
+import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
+
+import css from './Alert.module.less';
 
 Alert.displayName = 'Alert';
 AlertImage.displayName = 'AlertImage';
@@ -17,13 +20,13 @@ const ImageConfig = mergeComponentMetadata('AlertImage', AlertImage);
 
 const inputData = {
 	longTitle:
-	'Core, The building blocks of an Enact application. Sandstone, our touch-centric UI library.',
+	'Core, The building blocks of an Enact application. Limestone, our touch-centric UI library.',
 	longChildren:
 	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis. Praesent quis tellus non diam viverra feugiat. In quis mattis purus, quis tristique mi. Mauris vitae tellus tempus, convallis ligula id, laoreet eros. Nullam eu tempus odio, non mollis tellus. Phasellus vitae iaculis nisl. Sed ipsum felis, suscipit vel est quis, interdum pretium dolor. Curabitur sit amet purus ac massa ullamcorper egestas ornare vel lectus. Nullam quis velit sed ex finibus cursus. Duis porttitor congue cursus.'
 };
 
 export default {
-	title: 'Sandstone/Alert',
+	title: 'Limestone/Alert',
 	component: 'Alert'
 };
 
@@ -157,3 +160,62 @@ select('type (image)', WithDifferentTypesOfComponentsAndLongChildren, ['icon', '
 text('src', WithDifferentTypesOfComponentsAndLongChildren, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
 
 WithDifferentTypesOfComponentsAndLongChildren.storyName = 'with different types of components and long children';
+
+export const WithThumbnailAndScroller = (args) => (
+	<Alert
+		css={css}
+		open={args['open']}
+		onClose={action('onClose')}
+		title={args['title']}
+		type={args['type']}
+	>
+		<image>
+			<AlertImage src={args['src']} type={args['type (image)']} />
+		</image>
+		<buttons>
+			<Button>Button</Button>
+			<Button>Button</Button>
+			<Button>Button</Button>
+		</buttons>
+		<Row>
+			<AlertImage iconSize="small" src={args['src']} type="icon" />
+			<Scroller className={css.scroller}>
+				<div style={{height: ri.scaleToRem(1600)}}>
+					{args['children']}
+				</div>
+			</Scroller>
+		</Row>
+	</Alert>
+);
+
+boolean('open', WithThumbnailAndScroller, Config, true);
+text('title', WithThumbnailAndScroller, Config, 'Overlay Alert Title');
+select('type', WithThumbnailAndScroller, ['fullscreen', 'overlay'], Config, 'overlay');
+text('children', WithThumbnailAndScroller, Config, inputData.longChildren);
+select('type (image)', WithThumbnailAndScroller, ['icon', 'thumbnail'], ImageConfig, 'thumbnail');
+text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
+
+WithThumbnailAndScroller.storyName = 'with thumbnail and scroller';
+
+export const WithCustomSizeImage = (args) => (
+	<Alert
+		open={args['open']}
+		onClose={action('onClose')}
+		title="Fullscreen Alert Title"
+		type={args['type']}
+	>
+		<image>
+			<AlertImage src={args['src']} type="thumbnail" css={css} />
+		</image>
+		<buttons>
+			<Button>Yes</Button>
+			<Button>No</Button>
+		</buttons>
+		Additional text content for Alert
+	</Alert>
+);
+
+boolean('open', WithCustomSizeImage, Config);
+text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
+
+WithCustomSizeImage.storyName = 'with custom size image';

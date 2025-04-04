@@ -1,4 +1,4 @@
-import ImageItem from '@enact/sandstone/ImageItem';
+import ImageItem from '@enact/limestone/ImageItem';
 import {useContext} from 'react';
 
 import {RecordContext, RecordDispatchContext, selectItem as selectItemAction} from '../../context/RecordContext';

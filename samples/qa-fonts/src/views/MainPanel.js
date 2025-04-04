@@ -1,33 +1,33 @@
-import Button from '@enact/sandstone/Button';
-import Heading from '@enact/sandstone/Heading';
-import {Header, Panel} from '@enact/sandstone/Panels';
-import Scroller from '@enact/sandstone/Scroller';
+import Button from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
+import {Header, Panel} from '@enact/limestone/Panels';
+import Scroller from '@enact/limestone/Scroller';
 
 import FontList from '../components/FontList';
 
 const
-	sandstoneIcons = '\u{2B} \u{21A9} \u{22EF} \u{EFFDD} \u{EFFEA} \u{F0028}',
+	limestoneIcons = '\u{2B} \u{21A9} \u{22EF} \u{EFFDD} \u{EFFEA} \u{F0028}',
 	lgIcons = 'ꔘ ꔧ ꕒ ꕭ ꖀ';
 
 const fonts = {
 	standard: [
-		'300 condensed 1em "Sandstone"',
-		'condensed 1em "Sandstone"',
-		'bold condensed 1em "Sandstone"',
-		'100 1em "Sandstone"',
-		'300 1em "Sandstone"',
-		'1em "Sandstone"',
-		'500 1em "Sandstone"',
-		'italic 500 1em "Sandstone"',
-		'700 1em "Sandstone"',
-		'italic 700 1em "Sandstone"',
-		'900 1em "Sandstone"',
-		'italic 900 1em "Sandstone"',
-		['1em "Sandstone Icons"', sandstoneIcons],
+		'300 condensed 1em "Limestone"',
+		'condensed 1em "Limestone"',
+		'bold condensed 1em "Limestone"',
+		'100 1em "Limestone"',
+		'300 1em "Limestone"',
+		'1em "Limestone"',
+		'500 1em "Limestone"',
+		'italic 500 1em "Limestone"',
+		'700 1em "Limestone"',
+		'italic 700 1em "Limestone"',
+		'900 1em "Limestone"',
+		'italic 900 1em "Limestone"',
+		['1em "Limestone Icons"', limestoneIcons],
 		['1em "LG Icons"', lgIcons],
-		'300 1em "Sandstone Global"',
-		'1em "Sandstone Global"',
-		'bold 1em "Sandstone Global"'
+		'300 1em "Limestone Global"',
+		'1em "Limestone Global"',
+		'bold 1em "Limestone Global"'
 	],
 	system: [
 		// Full-names
@@ -39,7 +39,7 @@ const fonts = {
 		'1em "LG Smart UI"',
 		'600 1em "LG Smart UI SemiBold"',
 		'700 1em "LG Smart UI Bold"',
-		['1em "Sandstone"', sandstoneIcons],
+		['1em "Limestone"', limestoneIcons],
 		['1em "LG Display_Dingbat"', lgIcons],
 		'1em "LG Smart UI Global-Light"',
 		'1em "LG Smart UI Global-Regular"',
@@ -67,9 +67,9 @@ const fonts = {
 		['1em "LG Display_Urdu"', 'مجھے چکّر آرہے ہیں']
 	],
 	legacyWeb: [
-		'300 1em "Sandstone Miso"',
-		'1em "Sandstone Miso"',
-		'bold 1em "Sandstone Miso"',
+		'300 1em "Limestone Miso"',
+		'1em "Limestone Miso"',
+		'bold 1em "Limestone Miso"',
 		'100 1em "MuseoSans"',
 		'300 1em "MuseoSans"',
 		'1em "MuseoSans"',
@@ -79,11 +79,11 @@ const fonts = {
 		'italic 700 1em "MuseoSans"',
 		'900 1em "MuseoSans"',
 		'italic 900 1em "MuseoSans"',
-		['1em "Sandstone Icons"', sandstoneIcons],
+		['1em "Limestone Icons"', limestoneIcons],
 		['1em "LG Icons"', lgIcons],
-		'300 1em "Sandstone LG Display"',
-		'1em "Sandstone LG Display"',
-		'bold 1em "Sandstone LG Display"'
+		'300 1em "Limestone LG Display"',
+		'1em "Limestone LG Display"',
+		'bold 1em "Limestone LG Display"'
 	],
 	legacySystem: [
 		'300 1em "Miso"',
@@ -98,7 +98,7 @@ const fonts = {
 		'italic 700 1em "Museo Sans"',
 		'900 1em "Museo Sans"',
 		'italic 900 1em "Museo Sans"',
-		['1em "Sandstone"', sandstoneIcons],
+		['1em "Limestone"', limestoneIcons],
 		['1em "LG Display_Dingbat"', lgIcons],
 		'1em "LG Display-Light"',
 		'1em "LG Display-Regular"',
@@ -112,17 +112,17 @@ const MainPanel = (props) => {
 		<Panel {...props}>
 			<Header type="compact">
 				<title>Font Verification</title>
-				<Button>A Sandstone Button</Button>
+				<Button>A Limestone Button</Button>
 			</Header>
 			<Scroller focusableScrollbar>
 				<Heading showLine size="large">Current</Heading>
-				<FontList fonts={fonts.standard}>Sandstone Defined Fonts</FontList>
+				<FontList fonts={fonts.standard}>Limestone Defined Fonts</FontList>
 				<FontList fonts={fonts.system}>System Fonts (Locally Installed)</FontList>
 				<FontList fonts={fonts.systemPs}>System Fonts PostScript Names (Locally Installed)</FontList>
 				<Heading showLine size="large">Regional</Heading>
 				<FontList fonts={fonts.locale}>Locale-specific Fonts</FontList>
 				<Heading showLine size="large">Legacy</Heading>
-				<FontList fonts={fonts.legacyWeb}>Legacy Sandstone Defined Fonts</FontList>
+				<FontList fonts={fonts.legacyWeb}>Legacy Limestone Defined Fonts</FontList>
 				<FontList fonts={fonts.legacySystem}>Legacy System Fonts (Locally Installed)</FontList>
 			</Scroller>
 		</Panel>

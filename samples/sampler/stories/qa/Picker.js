@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import {Header} from '@enact/sandstone/Panels';
-import Picker from '@enact/sandstone/Picker';
-import PopupTabLayout, {Tab, TabPanels, TabPanel} from '@enact/sandstone/PopupTabLayout';
-import Scroller from '@enact/sandstone/Scroller';
+import Button from '@enact/limestone/Button';
+import {Header} from '@enact/limestone/Panels';
+import Picker from '@enact/limestone/Picker';
+import PopupTabLayout, {Tab, TabPanels, TabPanel} from '@enact/limestone/PopupTabLayout';
+import Scroller from '@enact/limestone/Scroller';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
@@ -58,7 +58,7 @@ const pickerList = {
 };
 
 export default {
-	title: 'Sandstone/Picker',
+	title: 'Limestone/Picker',
 	component: 'Picker'
 };
 

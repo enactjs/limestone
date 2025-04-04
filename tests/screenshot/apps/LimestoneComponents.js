@@ -3,10 +3,12 @@ import {generateTestData} from '@enact/ui-test-utils/utils';
 
 import ActionGuide from './components/ActionGuide';
 import Alert from './components/Alert';
-import Button from './components/Button';
 import BodyText from './components/BodyText';
+import Button from './components/Button';
+import Card from './components/Card';
 import Checkbox from './components/Checkbox';
 import CheckboxItem from './components/CheckboxItem';
+import Chip from './components/Chip';
 import ContextualMenuDecorator from './components/ContextualMenuDecorator';
 import ContextualPopupDecorator from './components/ContextualPopupDecorator';
 import DatePicker from './components/DatePicker';
@@ -60,8 +62,10 @@ const components = {
 	Alert,
 	BodyText,
 	Button,
+	Card,
 	Checkbox,
 	CheckboxItem,
+	Chip,
 	ContextualMenuDecorator,
 	ContextualPopupDecorator,
 	DatePicker,

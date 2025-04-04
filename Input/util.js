@@ -14,7 +14,7 @@ const FULLSCREEN_JOINED_DIGITS_LIMIT = 25;
  * Determines the `aria-label` for an Input
  *
  * @method
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @param   {String}  prefix   Text to precede the value in the aria-label
  * @param   {String}  type     `type` of the Input
  * @param   {String}  [value]  Current value of the input
@@ -43,7 +43,7 @@ const convertToPasswordFormat = (value) => {
  * `<InputField>` component.
  *
  * @method
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @param   {Object} props  Props object
  * @returns {Object}        input related props
  * @private
@@ -87,7 +87,7 @@ const extractInputFieldProps = function (props) {
  * element.
  *
  * @method
- * @memberof sandstone/Input
+ * @memberof limestone/Input
  * @param   {Object} props  Props object
  * @returns {Object}        input related props
  * @private

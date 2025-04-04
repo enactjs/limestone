@@ -1,8 +1,8 @@
-import Button from '@enact/sandstone/Button';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
-import {InputField as Input} from '@enact/sandstone/Input';
-import {Header, Panel} from '@enact/sandstone/Panels';
-import VirtualList from '@enact/sandstone/VirtualList';
+import Button from '@enact/limestone/Button';
+import CheckboxItem from '@enact/limestone/CheckboxItem';
+import {InputField as Input} from '@enact/limestone/Input';
+import {Header, Panel} from '@enact/limestone/Panels';
+import VirtualList from '@enact/limestone/VirtualList';
 import {Cell, Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';

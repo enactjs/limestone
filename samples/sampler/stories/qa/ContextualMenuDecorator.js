@@ -1,5 +1,5 @@
-import Button from '@enact/sandstone/Button';
-import ContextualMenuDecorator from '@enact/sandstone/ContextualMenuDecorator';
+import Button from '@enact/limestone/Button';
+import ContextualMenuDecorator from '@enact/limestone/ContextualMenuDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
 import Layout, {Cell} from '@enact/ui/Layout';
@@ -36,7 +36,7 @@ const prop = {
 };
 
 export default {
-	title: 'Sandstone/ContextualMenuDecorator',
+	title: 'Limestone/ContextualMenuDecorator',
 	component: 'ContextualMenuDecorator'
 };
 

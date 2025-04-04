@@ -1,9 +1,9 @@
-import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import Icon from '@enact/sandstone/Icon';
-import Item from '@enact/sandstone/Item';
-import {Scroller} from '@enact/sandstone/Scroller';
-import WizardPanels, {WizardPanelsBase} from '@enact/sandstone/WizardPanels';
+import BodyText from '@enact/limestone/BodyText';
+import Button from '@enact/limestone/Button';
+import Icon from '@enact/limestone/Icon';
+import Item from '@enact/limestone/Item';
+import {Scroller} from '@enact/limestone/Scroller';
+import WizardPanels, {WizardPanelsBase} from '@enact/limestone/WizardPanels';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
@@ -16,7 +16,7 @@ const propOptions = {
 };
 
 export default {
-	title: 'Sandstone/WizardPanels',
+	title: 'Limestone/WizardPanels',
 	component: 'WizardPanels'
 };
 

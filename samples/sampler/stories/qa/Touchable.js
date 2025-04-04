@@ -1,5 +1,5 @@
 import kind from '@enact/core/kind';
-import Button from '@enact/sandstone/Button';
+import Button from '@enact/limestone/Button';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, range} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
@@ -70,7 +70,7 @@ const TouchArea = kind({
 });
 
 export default {
-	title: 'Sandstone/Touchable',
+	title: 'Limestone/Touchable',
 	component: 'Touchable'
 };
 

@@ -1,5 +1,5 @@
 /**
- * Provides Sandstone styled icon item components and behaviors.
+ * Provides Limestone styled icon item components and behaviors.
  *
  * @example
  * <IconItem
@@ -12,7 +12,7 @@
  *   }}
  * />
  *
- * @module sandstone/IconItem
+ * @module limestone/IconItem
  * @exports IconItem
  * @exports IconItemBase
  * @exports IconItemDecorator
@@ -33,10 +33,10 @@ import Skinnable from '../Skinnable';
 import componentCss from './IconItem.module.less';
 
 /**
- * The shape for image of {@link sandstone/IconItem|IconItem}.
+ * The shape for image of {@link limestone/IconItem|IconItem}.
  *
  * @typedef {Object} ImageShape
- * @memberof sandstone/IconItem
+ * @memberof limestone/IconItem
  * @property {Object} size Size for the image.
  *  The following properties should be provided:
  *
@@ -65,17 +65,17 @@ const MarqueeBase = ({...rest}) => {
 const Marquee = MarqueeDecorator({invalidateProps: ['remeasure', 'order']}, MarqueeBase);
 
 /**
- * A Sandstone styled base component for {@link sandstone/IconItem.IconItem|IconItem}.
+ * A Limestone styled base component for {@link limestone/IconItem.IconItem|IconItem}.
  *
  * @class IconItemBase
- * @memberof sandstone/IconItem
+ * @memberof limestone/IconItem
  * @ui
  * @public
  */
 const IconItemBase = kind({
 	name: 'IconItem',
 
-	propTypes: /** @lends sandstone/IconItem.IconItemBase.prototype */ {
+	propTypes: /** @lends limestone/IconItem.IconItemBase.prototype */ {
 		/**
 		 * The background color, gradient, or image of this item.
 		 * Accepts any format of color, gradient type value, and image url.
@@ -142,7 +142,7 @@ const IconItemBase = kind({
 
 		/**
 		 * The icon content.
-		 * If this is specified, {@link sandstone/Icon.Icon|Icon} will be shown as the content.
+		 * If this is specified, {@link limestone/Icon.Icon|Icon} will be shown as the content.
 		 *
 		 * @see {@link ui/Icon.Icon.children}
 		 * @type {String|Object}
@@ -152,9 +152,9 @@ const IconItemBase = kind({
 
 		/**
 		 * Source and size for the image.
-		 * See the details in {@link sandstone/IconItem.ImageShape|ImageShape}
+		 * See the details in {@link limestone/IconItem.ImageShape|ImageShape}
 		 *
-		 * @type {sandstone/IconItem.ImageShape}
+		 * @type {limestone/IconItem.ImageShape}
 		 * @public
 		 */
 		image: ImageShape,
@@ -305,14 +305,14 @@ const IconItemBase = kind({
 });
 
 /**
- * Sandstone-specific IconItem behaviors to apply to
- * {@link sandstone/IconItem.IconItem|IconItem}.
+ * Limestone-specific IconItem behaviors to apply to
+ * {@link limestone/IconItem.IconItem|IconItem}.
  *
  * @hoc
- * @memberof sandstone/IconItem
- * @mixes sandstone/Marquee.MarqueeController
+ * @memberof limestone/IconItem
+ * @mixes limestone/Marquee.MarqueeController
  * @mixes spotlight/Spottable.Spottable
- * @mixes sandstone/Skinnable.Skinnable
+ * @mixes limestone/Skinnable.Skinnable
  * @public
  */
 const IconItemDecorator = compose(
@@ -322,7 +322,7 @@ const IconItemDecorator = compose(
 );
 
 /**
- * A sandstone-styled icon item, Marquee and Spottable applied.
+ * A limestone-styled icon item, Marquee and Spottable applied.
  *
  * Usage:
  * ```
@@ -334,10 +334,10 @@ const IconItemDecorator = compose(
  * ```
  *
  * @class IconItem
- * @memberof sandstone/IconItem
- * @extends sandstone/IconItem.IconItemBase
- * @mixes sandstone/IconItem.IconItemDecorator
- * @see {@link sandstone/IconItem.IconItemBase}
+ * @memberof limestone/IconItem
+ * @extends limestone/IconItem.IconItemBase
+ * @mixes limestone/IconItem.IconItemDecorator
+ * @see {@link limestone/IconItem.IconItemBase}
  * @ui
  * @public
  */
