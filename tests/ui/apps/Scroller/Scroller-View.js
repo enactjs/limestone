@@ -108,8 +108,8 @@ class app extends Component {
 											onScrollStop={this.onScrollStop}
 											scrollMode={nativeScroll ? 'native' : 'translate'}
 											style={{
-												height: ri.scaleToRem(1680),
-												width: ri.scaleToRem(2400)
+												height: ri.scaleToRem(1300),
+												width: ri.scaleToRem(1800)
 											}}
 											verticalScrollbar={getScrollbarVisibility(hideScrollbar)}
 										>
