@@ -199,13 +199,13 @@
 @lime-non-latin-font-weight-light: 300;
 @lime-non-latin-font-weight-bold: 700;
 @lime-spottable-font-weight: 600;
-@lime-common-line-height: 1.3em;
+@lime-common-line-height: 1.4em;
 @lime-tallglyph-line-height: 1.5em;
 
 // Alert
 @lime-alert-font-family: @lime-font-family;
 @lime-alert-font-weight: 600;
-@lime-alert-line-height: 84px;
+@lime-alert-line-height: @lime-common-line-height;
 
 // Body
 @lime-body-font-family: @lime-font-family;
@@ -239,14 +239,14 @@
 @lime-timepicker-colon-margin: 0 6px;
 
 // Heading
-@lime-heading-line-height: @lime-common-line-height;
+@lime-heading-line-height: 1.3em;
 @lime-heading-font-style: normal;
 @lime-heading-title-font-family: @lime-alt-font-family;
 @lime-heading-title-font-weight: 600;
 @lime-heading-title-line-height: @lime-heading-line-height;
 @lime-heading-subtitle-font-family: @lime-font-family;
 @lime-heading-subtitle-font-weight: normal;
-@lime-heading-subtitle-line-height: 1.4em;
+@lime-heading-subtitle-line-height: @lime-common-line-height;
 @lime-heading-large-font-family: @lime-font-family;
 @lime-heading-large-font-weight: @lime-spottable-font-weight;
 @lime-heading-medium-font-family: @lime-heading-large-font-family;
@@ -283,7 +283,7 @@
 // Item
 @lime-item-font-weight: @lime-spottable-font-weight;
 @lime-item-label-font-weight: 400;
-@lime-item-line-height: 1.4em;
+@lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
 @lime-item-label-line-height: 1.25em;
 @lime-item-small-font-weight: @lime-item-font-weight;
@@ -410,7 +410,7 @@
 @lime-card-badge-top: 24px;
 @lime-card-badge-left: 24px;
 @lime-card-badge-right: 24px;
-@lime-card-caption-line-height: 84px;
+@lime-card-caption-line-height: @lime-common-line-height;
 @lime-card-caption-height: 84px;
 @lime-card-label-line-height: 60px;
 @lime-card-label-height: 60px;
@@ -650,7 +650,7 @@
 
 // ImageItem
 // ---------------------------------------
-@lime-imageitem-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
+@lime-imageitem-margin: @lime-item-margin;
 @lime-imageitem-border-radius: 12px;
 @lime-imageitem-image-border-width: 6px;
 @lime-imageitem-caption-line-height: 72px;
@@ -749,6 +749,7 @@
 @lime-item-border-radius: var(--alias-radius-container);
 @lime-item-slotafter-spacing: var(--ref-spacing-36);
 @lime-item-slotbefore-spacing: var(--ref-spacing-36);
+@lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
 @lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-60);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
