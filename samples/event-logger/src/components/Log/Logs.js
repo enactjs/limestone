@@ -1,7 +1,7 @@
 import kind from '@enact/core/kind';
 import Scroller from '@enact/limestone/Scroller';
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
+import {use} from 'react';
 
 import {EventLoggerContext} from '../../context/EventLoggerContext';
 
@@ -20,7 +20,7 @@ const Logs = kind({
 
 	render: () => {
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const {eventLogsReducer} = useContext(EventLoggerContext);
+		const {eventLogsReducer} = use(EventLoggerContext);
 		const {eventLogs} = eventLogsReducer;
 
 		const logs = eventLogs.map((log, index) => <Log className={css.log} log={log} key={index} />);
