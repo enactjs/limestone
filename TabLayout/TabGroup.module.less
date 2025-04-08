@@ -1,20 +1,19 @@
 // TabGroup.module.less
 //
-@import "../styles/colors.less";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .tab {
 	font-size: @lime-tablayout-tab-font-size;
-	margin: @lime-tablayout-tab-horizontal-margin;
+	margin: @lime-tablayout-tab-margin;
 
 	&.horizontal {
 		&.button {
 			display: block;
 			height: @lime-tablayout-tab-horizontal-button-height;
 			line-height: @lime-tablayout-tab-horizontal-button-line-height;
-			margin: @lime-tablayout-tab-horizontal-margin;
+			margin: @lime-tablayout-tab-margin;
 			.padding-start-end(@lime-tablayout-tab-horizontal-padding);
 
 			&.small {
@@ -53,7 +52,7 @@
 	.applySkins({
 		&.button {
 			&.selected {
-				background-color: @lime-tablayout-tab-selected-background-color;
+				background-color: @lime-tablayout-full-tab-bg-selected;
 
 				.bg {
 					opacity: 0;
@@ -64,12 +63,6 @@
 				.bg {
 					background-color: @lime-tablayout-tab-focused-background-color;
 				}
-
-				.lime-disabled({
-					.bg {
-						background-color: @lime-tablayout-tab-disabled-background-color;
-					}
-				});
 			});
 		}
 	});
@@ -77,7 +70,7 @@
 
 .applySkins({
 	.tabGroup {
-		background-color: @lime-tablayout-tabs-background-color;
+		background-color: @lime-tablayout-full-tab-bg-group;
 		border-radius: @lime-tablayout-border-radius;
 
 		.tabs {

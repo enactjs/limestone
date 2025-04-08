@@ -31,6 +31,7 @@ const TabBase = kind({
 	name: 'Tab',
 
 	propTypes: {
+		buttonSize: PropTypes.string,
 		collapsed: PropTypes.bool,
 		css: PropTypes.object,
 		icon: PropTypes.string,
@@ -39,10 +40,9 @@ const TabBase = kind({
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
 		selected: PropTypes.bool,
-		size: PropTypes.string,
+		size: PropTypes.number,
 		sprite: PropTypes.object,
-		stopped: PropTypes.bool,
-		tabSize: PropTypes.number
+		stopped: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -84,7 +84,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, orientation, size, tabSize, ...rest}) => {
+	render: ({buttonSize, children, collapsed, css, orientation, size, ...rest}) => {
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
@@ -110,10 +110,10 @@ const TabBase = kind({
 				return (
 					<Cell
 						{...rest}
-						size={tabSize}
+						buttonSize={buttonSize}
+						size={size}
 						component={TabButton}
 						{...commonProps}
-						{...{buttonSize: size}}
 					/>
 				);
 			}
@@ -195,7 +195,7 @@ const TabGroupBase = kind({
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({css, collapsed, orientation, size, tabSize}), [css, collapsed, orientation, size, tabSize]);
+		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
