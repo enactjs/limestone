@@ -6,7 +6,7 @@ import VirtualList from '@enact/limestone/VirtualList';
 import {Cell, Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
-import {useCallback, useContext, useEffect, useState} from 'react';
+import {useCallback, use, useEffect, useState} from 'react';
 
 import ListItem from '../components/ListItem';
 import LocaleSwitch from '../components/LocaleSwitch';
@@ -18,8 +18,8 @@ import css from './MainPanel.module.less';
 const childProps = {text: ' child props'};
 
 const MainPanel = ({...rest}) => {
-	const dispatch = useContext(ListDispatchContext);
-	const {listItems} = useContext(ListContext);
+	const dispatch = use(ListDispatchContext);
+	const {listItems} = use(ListContext);
 
 	const [hasChildProps, setHasChildProps] = useState(false);
 	const [isDisabled, setIsDisabled] = useState(false);

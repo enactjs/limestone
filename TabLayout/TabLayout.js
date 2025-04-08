@@ -405,7 +405,7 @@ const TabLayoutBase = kind({
 
 		// In vertical orientation, render two sets of tabs, one just icons, one with icons and text.
 		return (
-			<TabLayoutContext.Provider value={handleEnter}>
+			<TabLayoutContext value={handleEnter}>
 				<Layout {...rest} orientation={tabOrientation} data-spotlight-id={spotlightId}>
 					<Cell className={css.tabs} shrink onTransitionEnd={handleTabsTransitionEnd}>
 						<TabGroup
@@ -439,7 +439,7 @@ const TabLayoutBase = kind({
 						{children}
 					</ContentCell>
 				</Layout>
-			</TabLayoutContext.Provider>
+			</TabLayoutContext>
 		);
 	}
 });
