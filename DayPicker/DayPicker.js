@@ -28,6 +28,17 @@ import {DaySelectorDecorator, getSelectedDayString} from './DaySelectorDecorator
 
 import css from './DayPicker.module.less';
 
+const childComponent = (props) => {
+	console.log(props);
+	const index = props["data-index"];
+	return (
+		<>
+			<CheckboxItem {...props} />
+			{index !== 6 && <div className={css.divider} /> }
+		</>
+	);
+}
+
 /**
  * A day of the week selection component.
  *
@@ -91,9 +102,9 @@ const DayPickerBase = kind({
 		return (
 			<Group
 				{...rest}
+				childComponent={childComponent}
 				component="div"
-				childComponent={CheckboxItem}
-				itemProps={{className: css.item, disabled}}
+				itemProps={{className: css.item, css, disabled}}
 				role={null}
 				select="multiple"
 				selectedProp="selected"

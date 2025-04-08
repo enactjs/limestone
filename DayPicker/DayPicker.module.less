@@ -1,10 +1,58 @@
 // DayPicker.module.less
 //
 @import "../styles/variables.less";
+@import "../styles/mixins.less";
+@import "../styles/skin.less";
 
 .dayPicker {
+	width: 732px;
+
 	.item {
+		height: 168px;
 		margin-top: 0;
 		margin-bottom: 0;
+		width: 660px;
+
+		&.selected {
+			border-radius: 0;
+			.bg {
+				border-radius: 0;
+				color: red;
+				background-color: red;
+			}
+		}
+
+		.focus({
+			border-radius: 0;
+			.bg {
+				border-radius: 0;
+				color: red;
+				background-color: red;
+			}
+		})
 	}
-}
+
+	.applySkins({
+		.item {
+			&.selected {
+				height: 400px;
+				color: red;
+				background-color: red;
+				.bg {
+					background-color: red;
+					color: red;
+				}
+			}
+		}
+	});
+};
+
+.divider {
+	align-self: center;
+	display: flex;
+	background-color: red;
+	height: 2px;
+	width: 540px;
+	border-radius: 50px;
+	margin: 6px 90px;
+};
