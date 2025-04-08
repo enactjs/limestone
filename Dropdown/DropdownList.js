@@ -193,11 +193,27 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 		const scrollToRef = useRef(() => {});
 		const lastFocusedKey = useRef(null);
 
-		useEffect(() => {
-			if (props.handleSpotlightPause) {
-				props.handleSpotlightPause(false);
+		const scrollIntoView = useCallback(() => {
+			let {selected} = props;
+
+			if (state.prevFocused == null && !isSelectedValid(props)) {
+				selected = 0;
+			} else if (state.prevFocused != null) {
+				selected = state.prevFocused;
 			}
-		}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+			scrollToRef.current({
+				animate: false,
+				focus: true,
+				index: selected,
+				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
+				stickTo: 'start' // offset from the top of the dropdown
+			});
+
+			setState(value => {
+				return {...value, ready: ReadyState.SCROLLED};
+			});
+		}, [props, state.prevFocused]);
 
 		const focusSelected = () => {
 			setState(value => {
@@ -224,27 +240,12 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 			});
 		}, [props]);
 
-		const scrollIntoView = useCallback(() => {
-			let {selected} = props;
-
-			if (state.prevFocused == null && !isSelectedValid(props)) {
-				selected = 0;
-			} else if (state.prevFocused != null) {
-				selected = state.prevFocused;
+		useEffect(() => {
+			if (props.handleSpotlightPause) {
+				props.handleSpotlightPause(false);
 			}
-
-			scrollToRef.current({
-				animate: false,
-				focus: true,
-				index: selected,
-				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
-				stickTo: 'start' // offset from the top of the dropdown
-			});
-
-			setState(value => {
-				return {...value, ready: ReadyState.SCROLLED};
-			});
-		}, [props, state.prevFocused]);
+			scrollIntoView();
+		}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 		useEffect(() => {
 			if (state.ready === ReadyState.INIT) {

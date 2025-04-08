@@ -25,8 +25,8 @@ const MainPanel = () => {
 	return (
 		<WizardPanels>
 			<Panel title="QA Sample - Dropdown">
-				<Dropdown onClose={handleClose1} onOpen={handleOpen1} open={open1} size="large" title="language">
-					{['English', 'Korean', 'Spanish', 'Amharic', 'Thai', 'Arabic', 'Urdu', 'Simplified Chinese', 'Traditional Chinese', 'Vietnamese']}
+				<Dropdown onClose={handleClose1} onOpen={handleOpen1} open={open1} size="tiny" title="language">
+					{['English ftertry5674uyrthgfhfdhhhgfh', 'Korean ftertry5674uyrthgfhfdhhhgfh', 'Spanish ftertry5674uyrthgfhfdhhhgfh', 'Amharic ftertry5674uyrthgfhfdhhhgfh', 'Thai ftertry5674uyrthgfhfdhhhgfh', 'Arabic ftertry5674uyrthgfhfdhhhgfh', 'Urdu', 'Simplified Chinese', 'Traditional Chinese', 'Vietnamese']}
 				</Dropdown>
 				<Button size="large">
 					Enter

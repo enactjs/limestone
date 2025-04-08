@@ -53,6 +53,8 @@ const defaultConfig = {
 	 * @public
 	 */
 	noArrow: false,
+	
+	spotContent: true,
 
 	/**
 	 * Disables passing the `skin` prop to the wrapped component.
@@ -83,7 +85,7 @@ const ContextualPopupContainer = SpotlightContainerDecorator(
 );
 
 const Decorator = hoc(defaultConfig, (config, Wrapped) => {
-	const {noArrow, noSkin, openProp} = config;
+	const {noArrow, noSkin, openProp, spotContent} = config;
 	const WrappedWithRef = WithRef(Wrapped);
 
 	return class extends Component {
@@ -658,7 +660,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.setState({
 				activator: current
 			});
-			this.spotPopupContent();
+			if(spotContent) {
+				this.spotPopupContent();
+			}
 		};
 
 		handleClose = () => {

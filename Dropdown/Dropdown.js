@@ -73,7 +73,7 @@ const DropdownButtonBase = kind({
 });
 
 const DropdownButton = ContextualPopupDecorator(
-	{noArrow: true},
+	{noArrow: true, spotContent: false},
 	ForwardRef(
 		DropdownButtonBase
 	)
