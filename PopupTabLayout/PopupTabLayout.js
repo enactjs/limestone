@@ -22,7 +22,7 @@ import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/conta
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {Component, useContext, useEffect} from 'react';
+import {Component, use, useEffect} from 'react';
 import compose from 'ramda/src/compose';
 
 import Skinnable from '../Skinnable';
@@ -496,7 +496,7 @@ const tabPanelsHandlers = {
  * @public
  */
 const TabPanelsBase = ({rtl, ... rest}) => {
-	const onTransition = useContext(TabLayoutContext);
+	const onTransition = use(TabLayoutContext);
 	const handlers = useHandlers(tabPanelsHandlers, {rtl, ...rest}, {onTransition});
 
 	return <Panels noCloseButton {...rest} css={componentCss} {...handlers} />;
