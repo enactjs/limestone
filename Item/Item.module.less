@@ -144,7 +144,20 @@
 		}
 
 		.label {
-			color: @lime-item-label-color;
+			color: @lime-item-text-sub;
+		}
+
+		&.selected {
+			color: @lime-item-text-selected;
+
+			.bg {
+				opacity: 1;
+				background-color: @lime-item-bg-selected;
+			}
+
+			.label {
+				color: @lime-item-text-sub-selected;
+			}
 		}
 
 		.focus({
@@ -152,11 +165,10 @@
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
-				background: @lime-item-focus-background;
 			}
 
 			.label {
-				color: @lime-item-focus-label-color;
+				color: @lime-item-text-sub-focused;
 			}
 		});
 
@@ -178,7 +190,7 @@
 			.focus({
 				.bg {
 					.lime-disabled-focus-bg-colors();
-					background-color: @lime-item-disabled-focus-bg-color;
+					background-color: @lime-item-bg-disabled-focused;
 				}
 
 				.slotBefore,

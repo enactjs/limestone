@@ -170,27 +170,21 @@ describe('Input test', () => {
 
 		// Password Number Input
 		it('should focus the Password Number Input Button', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 
 			expect(await components.input4.self.isFocused()).toBe(true);
 			expect(await components.input4.self.getText()).toBe('placeholder');
 		});
 
 		it('should open Password Number Input popup using 5-way enter', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 
 			expect(await components.input4.title.getText()).toBe('Password Number Input');
 		});
 
 		it('should focus Password Number BackButton', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 
@@ -198,9 +192,7 @@ describe('Input test', () => {
 		});
 
 		it('should exit Password Number Input using 5-way enter', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
@@ -213,9 +205,7 @@ describe('Input test', () => {
 		});
 
 		it('should exit Password Number Input using 5-way escape key', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.backKey();
 
@@ -223,10 +213,8 @@ describe('Input test', () => {
 			expect(await components.input4.self.getText()).toBe('placeholder');
 		});
 
-		it('should exit Password Input using BackButton', async () => {
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+		it('should exit Password Number Input using BackButton', async () => {
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 			await Page.spotlightSelect();
@@ -238,9 +226,7 @@ describe('Input test', () => {
 		// URL Input
 		it('should focus the URL Input Button', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 
 			expect(await components.input5.self.isFocused()).toBe(true);
 			expect(await components.input5.self.getText()).toBe('placeholder');
@@ -248,9 +234,7 @@ describe('Input test', () => {
 
 		it('should open URL Input popup using 5-way enter', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 
 			expect(await components.input5.title.getText()).toBe('URL Input');
@@ -259,9 +243,7 @@ describe('Input test', () => {
 
 		it('should focus URL BackButton', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 
@@ -270,9 +252,7 @@ describe('Input test', () => {
 
 		it('should exit URL Input using 5-way enter', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 
@@ -282,9 +262,7 @@ describe('Input test', () => {
 
 		it('should exit URL Input using 5-way escape key', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.backKey();
 
@@ -294,9 +272,7 @@ describe('Input test', () => {
 
 		it('should exit URL Input using BackButton', async () => {
 			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 			await Page.spotlightSelect();
@@ -307,6 +283,8 @@ describe('Input test', () => {
 
 		// Invalid Input
 		it('should focus the Invalid Input Button', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 
 			expect(await components.input6.self.isFocused()).toBe(true);
@@ -314,6 +292,8 @@ describe('Input test', () => {
 		});
 
 		it('should open Invalid Input popup using 5-way enter', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
 
@@ -322,6 +302,8 @@ describe('Input test', () => {
 		});
 
 		it('should focus Invalid BackButton', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
@@ -330,6 +312,8 @@ describe('Input test', () => {
 		});
 
 		it('should exit Invalid Input using 5-way enter', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
@@ -339,6 +323,8 @@ describe('Input test', () => {
 		});
 
 		it('should exit Invalid Input using 5-way escape key', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.backKey();
@@ -348,6 +334,8 @@ describe('Input test', () => {
 		});
 
 		it('should exit Invalid Input using BackButton', async () => {
+			await Page.spotlightRight();
+			await Page.spotlightRight();
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
@@ -360,7 +348,7 @@ describe('Input test', () => {
 		// NoBackButton Input
 		it('should focus the NoBackButton Input Button', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 
 			expect(await components.input7.self.isFocused()).toBe(true);
 			expect(await components.input7.self.getText()).toBe('placeholder');
@@ -368,7 +356,7 @@ describe('Input test', () => {
 
 		it('should open NoBackButton Input popup using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 
 			expect(await components.input7.title.getText()).toBe('NoBackButton Input');
@@ -377,7 +365,7 @@ describe('Input test', () => {
 
 		it('should try to focus and press NoBackButton BackButton', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 			await Page.spotlightSelect();
@@ -387,7 +375,7 @@ describe('Input test', () => {
 
 		it('should exit NoBackButton Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 
@@ -397,7 +385,7 @@ describe('Input test', () => {
 
 		it('should exit NoBackButton Input using 5-way escape key', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.backKey();
 
@@ -408,7 +396,7 @@ describe('Input test', () => {
 		// Size Large Input
 		it('should focus the Size Large Input Button', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 
 			expect(await components.input8.self.isFocused()).toBe(true);
@@ -417,7 +405,7 @@ describe('Input test', () => {
 
 		it('should open Size Large Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
 
@@ -427,7 +415,7 @@ describe('Input test', () => {
 
 		it('should focus Size Large BackButton', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
@@ -437,7 +425,7 @@ describe('Input test', () => {
 
 		it('should exit Size Large Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
@@ -448,7 +436,7 @@ describe('Input test', () => {
 
 		it('should exit Size Large Input using 5-way escape key', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
 			await Page.backKey();
@@ -459,7 +447,7 @@ describe('Input test', () => {
 
 		it('should exit Size Large Input using BackButton', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
@@ -472,7 +460,7 @@ describe('Input test', () => {
 		// // Disabled Input
 		it('should focus the Disabled Input Button', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightRight();
 
@@ -482,7 +470,7 @@ describe('Input test', () => {
 
 		it('should open Disabled Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
 			await Page.spotlightRight();
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
@@ -494,10 +482,8 @@ describe('Input test', () => {
 		// Overlay Input
 		it('should focus the Overlay Input Button', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 
 			expect(await components.input10.self.isFocused()).toBe(true);
 			expect(await components.input10.self.getText()).toBe('placeholder');
@@ -505,10 +491,8 @@ describe('Input test', () => {
 
 		it('should open Overlay Input popup using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 
 			expect(await components.input10.inputField.isFocused()).toBe(true);
@@ -516,10 +500,8 @@ describe('Input test', () => {
 
 		it('should focus Overlay BackButton', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 
@@ -528,10 +510,8 @@ describe('Input test', () => {
 
 		it('should exit Overlay Input using 5-way enter', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 
@@ -541,10 +521,8 @@ describe('Input test', () => {
 
 		it('should exit Overlay Input using 5-way escape key', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.backKey();
 
@@ -554,10 +532,8 @@ describe('Input test', () => {
 
 		it('should exit Overlay Input using BackButton', async () => {
 			await Page.spotlightDown();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
-			await Page.spotlightRight();
+			await Page.spotlightDown();
+			await Page.spotlightDown();
 			await Page.spotlightSelect();
 			await Page.spotlightUp();
 			await Page.spotlightSelect();

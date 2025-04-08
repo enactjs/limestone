@@ -120,9 +120,11 @@
 @lime-body-font-size:               @lime-base-font-size;
 @lime-body-small-font-size:         54px;
 @lime-button-font-size-large:       96px;
-@lime-button-font-size:             78px;
+@lime-button-font-size:             60px;
 @lime-button-small-font-size-large: 72px;
-@lime-button-small-font-size:       60px;
+@lime-button-small-font-size:       54px;
+@lime-card-caption-font-size:       60px;
+@lime-card-label-font-size:         48px;
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
@@ -228,6 +230,10 @@
 @lime-non-latin-button-font-weight: @lime-non-latin-font-weight-bold;
 @lime-non-latin-button-small-font-style: @lime-button-small-font-style;
 @lime-non-latin-button-small-font-weight: @lime-non-latin-font-weight-bold;
+
+// Card
+@lime-card-caption-font-weight: 600;
+@lime-card-label-font-weight: 400;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 24px;
@@ -341,13 +347,12 @@
 @lime-button-bg-opacity: 1;
 @lime-button-transparent-bg-opacity: 0;
 @lime-button-transparent-selected-bg-opacity: 1;
-@lime-button-margin: 0 @lime-component-spacing;
-@lime-button-focusexpand-margin: 6px .extract(@lime-button-margin, right)[]; // 6px provides enough space for the expanded focus state
+@lime-button-margin: 36px;
+@lime-button-focusexpand-margin: 9px .extract(@lime-button-margin, right)[]; // 9px provides enough space for the expanded focus state
 @lime-button-h-padding: 60px;
-@lime-button-with-icon-h-padding: @lime-spotlight-outset;
 @lime-button-height-large: 192px;
-@lime-button-height: 144px;
-@lime-button-icon-h-margin: 30px;
+@lime-button-height: 132px;
+@lime-button-icon-h-margin: 24px;
 @lime-button-icon-margin-end: @lime-button-icon-h-margin;
 @lime-button-icon-margin-start: 0;
 @lime-button-icon-padding: 0 ((@lime-button-height - @lime-icon-large-size) / 2);
@@ -359,18 +364,20 @@
 @lime-button-icon-small-margin-end: @lime-button-icon-small-h-margin;
 @lime-button-icon-small-margin-start: 0;
 @lime-button-icon-small-padding: 0 ((@lime-button-small-height - @lime-icon-small-size) / 2);
-@lime-button-max-width: 900px;
-@lime-button-min-width: 540px; // If this changes, update `overflow` computed value from Alert.js
-@lime-button-focusexpand-focus-bg-transform: scale(1.05);
+@lime-button-max-width: 1200px;
+@lime-button-min-width: 300px;
+@lime-button-min-width-default: 840px;
+@lime-button-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-focusexpand-pressed-bg-transform: scale(1.02);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
-@lime-button-small-margin: @lime-button-margin;
+@lime-button-small-margin: 24px;
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
-@lime-button-small-h-padding: 48px;
+@lime-button-small-h-padding: 60px;
 @lime-button-small-height-large: 144px;
 @lime-button-small-height: 108px;
-@lime-button-small-max-width: @lime-button-max-width;
-@lime-button-small-min-width: 300px;
+@lime-button-small-max-width: 1020px;
+@lime-button-small-min-width: 264px;
+@lime-button-small-min-width-default: 720px;
 @lime-button-small-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-small-focusexpand-pressed-bg-transform: scale(1.04);
 @lime-button-colordot-bottom: 18px;
@@ -378,14 +385,41 @@
 @lime-button-colordot-width: 60px;
 @lime-button-colordot-height: 12px;
 @lime-button-colordot-h-margin: 24px;
-@lime-button-colordot-padding-start: (@lime-button-h-padding / 2);
+@lime-button-colordot-padding-start: 36px;
 @lime-button-small-colordot-bottom: 12px;
-@lime-button-small-colordot-width: 48px;
+@lime-button-small-colordot-width: 51px;
+@lime-button-small-colordot-height: 9px;
 @lime-button-small-colordot-padding-start: 30px;
 @lime-button-icon-only-colordot-width: 66px;
 @lime-button-icon-only-colordot-height: 9px;
 @lime-button-collapse-duration: 300ms;
 @lime-button-collapsable-icon-margin: 0 24px;
+
+// Card
+// ---------------------------------------
+@lime-card-margin: @lime-item-margin;
+@lime-card-border-radius: 36px;
+@lime-card-image-border-width: 6px;
+@lime-card-selection-icon-size: 90px;
+@lime-card-selection-icon-border-radius: 50%;
+@lime-card-selection-icon-margin: 0;
+@lime-card-selection-icon-line-height: 90px;
+@lime-card-badge-size: 108px;
+@lime-card-badge-margin: 0;
+@lime-card-badge-top: 24px;
+@lime-card-badge-left: 24px;
+@lime-card-badge-right: 24px;
+@lime-card-caption-line-height: 84px;
+@lime-card-caption-height: 84px;
+@lime-card-label-line-height: 60px;
+@lime-card-label-height: 60px;
+@lime-card-vertical-captions-padding: 36px 0;
+@lime-card-vertical-captions-gap: 48px;
+@lime-card-vertical-image-icon-size: 180px;
+@lime-card-vertical-image-icon-margin: 0;
+@lime-card-vertical-caption-overlay-captions-padding: 48px;
+@lime-card-vertical-has-container-captions-padding: 36px 48px;
+@lime-card-horizontal-captions-padding: 48px;
 
 // Checkbox
 // ---------------------------------------
@@ -398,6 +432,7 @@
 // ---------------------------------------
 @lime-chip-border-radius: @lime-common-circular-corners;
 @lime-chip-margin: 18px;
+@lime-chip-min-width: 108px;
 @lime-chip-delete-button-margin: 12px;
 
 // ContextualMenu
@@ -591,9 +626,9 @@
 
 // Icon
 // ---------------------------------------
-@lime-icon-large-size: 108px;
+@lime-icon-large-size: 84px;
 @lime-icon-medium-size: 90px;
-@lime-icon-small-size: 78px;
+@lime-icon-small-size: 72px;
 @lime-icon-tiny-size: 60px;
 @lime-icon-margin: 24px;
 @lime-icon-large-size-large: (@lime-icon-large-size * 1.2);

@@ -112,14 +112,14 @@ let VirtualList = (props) => {
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
-		<ResizeContext.Provider {...resizeContextProps}>
+		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
 				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
 			</ScrollContentWrapper>
-		</ResizeContext.Provider>
+		</ResizeContext>
 	);
 };
 
@@ -600,14 +600,14 @@ let VirtualGridList = (props) => {
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
-		<ResizeContext.Provider {...resizeContextProps}>
+		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
 				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
 			</ScrollContentWrapper>
-		</ResizeContext.Provider>
+		</ResizeContext>
 	);
 };
 
