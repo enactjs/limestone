@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/Item` styling to match the latest GUI
+- 
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to spot content only after the state has been updated, on popup open
