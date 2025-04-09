@@ -32,13 +32,13 @@ const indexFromKey = (children, key) => {
 	if (children) {
 		index = children.findIndex(child => child.key === key);
 	}
-
+	
 	return index;
 };
 
 const DropdownListBase = kind({
 	name: 'DropdownListBase',
-
+	
 	propTypes: {
 		/*
 		 * The selections for Dropdown
@@ -52,7 +52,7 @@ const DropdownListBase = kind({
 				key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 			}))
 		]),
-
+		
 		/**
 		 * The `id` of DropdownList referred to when setting aria-labelledby
 		 *
@@ -60,28 +60,28 @@ const DropdownListBase = kind({
 		 * @private
 		 */
 		id: PropTypes.string,
-
+		
 		/*
 		 * Called when an item is selected.
 		 *
 		 * @type {Function}
 		 */
 		onSelect: PropTypes.func,
-
+		
 		/*
 		 * Callback function that will receive the scroller's scrollTo() method
 		 *
 		 * @type {Function}
 		 */
 		scrollTo: PropTypes.func,
-
+		
 		/*
 		 * Index of the selected item.
 		 *
 		 * @type {Number}
 		 */
 		selected: PropTypes.number,
-
+		
 		/*
 		 * State of possible skin variants.
 		 *
@@ -90,7 +90,7 @@ const DropdownListBase = kind({
 		 * @type {Object}
 		 */
 		skinVariants: PropTypes.object,
-
+		
 		/*
 		 * The width of DropdownList.
 		 *
@@ -101,25 +101,25 @@ const DropdownListBase = kind({
 			PropTypes.number
 		])
 	},
-
+	
 	styles: {
 		css,
 		className: 'dropdownList'
 	},
-
+	
 	handlers: {
 		itemRenderer: ({index, ...rest}, props) => {
 			const {children, selected} = props;
 			const isSelected = index === selected;
 			const slotAfter = isSelected ? (<Icon>check</Icon>) : null;
-
+			
 			let child = children[index];
 			if (typeof child === 'string') {
 				child = {children: child};
 			}
 			const data = child.children;
 			const {key, ...restChild} = {...child};
-
+			
 			return (
 				<Item
 					{...rest}
@@ -134,7 +134,7 @@ const DropdownListBase = kind({
 			);
 		}
 	},
-
+	
 	computed: {
 		className: ({width, styler}) => styler.append(typeof width === 'string' ? width : null),
 		dataSize: ({children}) => children ? children.length : 0,
@@ -142,14 +142,14 @@ const DropdownListBase = kind({
 		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 126 : 126)
 		itemSize: () => 126
 	},
-
+	
 	render: ({dataSize, id, itemSize, scrollTo, width, ...rest}) => {
 		delete rest.children;
 		delete rest.onSelect;
 		delete rest.selected;
 		delete rest.skinVariants;
 		delete rest.width;
-
+		
 		return (
 			<div role="region" aria-labelledby={`${id}_dropdownlist`}>
 				<div id={`${id}_dropdownlist`} aria-label={$L('Dropdown list opened')} />
@@ -179,7 +179,7 @@ const ReadyState = {
 
 const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 	const WrappedWithRef = WithRef(Wrapped);
-
+	
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
 		const clientSiblingRef = useRef(null);
@@ -192,45 +192,29 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 		});
 		const scrollToRef = useRef(() => {});
 		const lastFocusedKey = useRef(null);
-
-		const scrollIntoView = useCallback(() => {
-			let {selected} = props;
-
-			if (state.prevFocused == null && !isSelectedValid(props)) {
-				selected = 0;
-			} else if (state.prevFocused != null) {
-				selected = state.prevFocused;
+		
+		useEffect(() => {
+			if (props.handleSpotlightPause) {
+				props.handleSpotlightPause(false);
 			}
-
-			scrollToRef.current({
-				animate: false,
-				focus: true,
-				index: selected,
-				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
-				stickTo: 'start' // offset from the top of the dropdown
-			});
-
-			setState(value => {
-				return {...value, ready: ReadyState.SCROLLED};
-			});
-		}, [props, state.prevFocused]);
-
+		}, []); // eslint-disable-line react-hooks/exhaustive-deps
+		
 		const focusSelected = () => {
 			setState(value => {
 				return {...value, ready: ReadyState.DONE};
 			});
 		};
-
+		
 		const resetFocus = useCallback((keysDiffer) => {
 			let adjustedFocusIndex;
-
+			
 			if (!keysDiffer && lastFocusedKey.current) {
 				const targetIndex = indexFromKey(props.children, lastFocusedKey.current);
 				if (targetIndex >= 0) {
 					adjustedFocusIndex = targetIndex;
 				}
 			}
-
+			
 			setState({
 				prevChildren: props.children,
 				prevFocused: adjustedFocusIndex,
@@ -239,14 +223,29 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				ready: ReadyState.INIT
 			});
 		}, [props]);
-
-		useEffect(() => {
-			if (props.handleSpotlightPause) {
-				props.handleSpotlightPause(false);
+		
+		const scrollIntoView = useCallback(() => {
+			let {selected} = props;
+			
+			if (state.prevFocused == null && !isSelectedValid(props)) {
+				selected = 0;
+			} else if (state.prevFocused != null) {
+				selected = state.prevFocused;
 			}
-			scrollIntoView();
-		}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
+			
+			scrollToRef.current({
+				animate: false,
+				focus: true,
+				index: selected,
+				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
+				stickTo: 'start' // offset from the top of the dropdown
+			});
+			
+			setState(value => {
+				return {...value, ready: ReadyState.SCROLLED};
+			});
+		}, [props, state.prevFocused]);
+		
 		useEffect(() => {
 			if (state.ready === ReadyState.INIT) {
 				scrollIntoView();
@@ -255,7 +254,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 			} else {
 				const key = getKey(props);
 				const keysDiffer = key && state.prevSelectedKey && key !== state.prevSelectedKey;
-
+				
 				if (keysDiffer ||
 					((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
 					!compareChildren(state.prevChildren, props.children)
@@ -264,37 +263,37 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				}
 			}
 		}, [props, resetFocus, scrollIntoView, state]);
-
+		
 		const setScrollTo = useCallback((scrollTo) => {
 			scrollToRef.current = scrollTo;
 		}, []);
-
+		
 		const handleFocus = useCallback((ev) => {
 			const current = ev.target;
 			const dropdownListNode = clientSiblingRef?.current;
-
+			
 			if (state.ready === ReadyState.DONE && !Spotlight.getPointerMode() &&
 				current.dataset['index'] != null && dropdownListNode.contains(current)
 			) {
 				const focusedIndex = Number(current.dataset['index']);
 				lastFocusedKey.current = getKey({children: props.children, selected: focusedIndex});
 			}
-
+			
 			if (props.onFocus) {
 				props.onFocus(ev);
 			}
 		}, [props, state.ready]);
-
+		
 		const wrappedComponentProps = Object.assign({}, props);
 		delete wrappedComponentProps.handleSpotlightPause;
-
+		
 		return (
 			<WrappedWithRef {...wrappedComponentProps} onFocus={handleFocus} outermostRef={clientSiblingRef} referrerName="DropdownList" scrollTo={setScrollTo} />
 		);
 	};
-
+	
 	DropdownListSpotlightDecorator.displayName = 'DropdownListSpotlightDecorator';
-
+	
 	DropdownListSpotlightDecorator.propTypes = {
 		/*
          * Passed by DropdownBase to resume Spotlight
@@ -302,14 +301,14 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
          * @type {Function}
          */
 		handleSpotlightPause: PropTypes.func,
-
+		
 		/*
          * Called when an item receives focus.
          *
          * @type {Function}
          */
 		onFocus: PropTypes.func,
-
+		
 		/*
          * Index of the selected item.
          *
@@ -317,7 +316,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
          */
 		selected: PropTypes.number
 	};
-
+	
 	return DropdownListSpotlightDecorator;
 });
 
