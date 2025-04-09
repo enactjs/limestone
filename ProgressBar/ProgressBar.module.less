@@ -75,15 +75,15 @@
 	// Skin colors
 	.applySkins({
 		.bar {
-			background-color: @lime-progressbar-bar-bg-color;
+			background-color: @lime-progressbar-full-progress-bg;
 		}
 
 		.fill {
-			background-color: @lime-progressbar-fill-bg-color;
+			background-color: @lime-progressbar-full-progress-bar;
 		}
 
 		.load {
-			background-color: @lime-progressbar-load-bg-color;
+			background-color: @lime-progressbar-full-progress-bar-buffer;
 		}
 
 		&.radial {
@@ -94,34 +94,34 @@
 			}
 
 			.bar {
-				border-color: @lime-progressbar-bar-bg-color;
+				border-color: @lime-progressbar-full-progress-bg;
 			}
 
 			.fill {
-				border-color: @lime-progressbar-fill-bg-color;
+				border-color: @lime-progressbar-full-progress-bar;
 			}
 
 			.load {
-				border-color: @lime-progressbar-load-bg-color;
+				border-color: @lime-progressbar-full-progress-bar-buffer;
 			}
 		}
 
 		&.highlighted {
 			.fill {
-				background-color: @lime-progressbar-highlighted-fill-bg-color;
+				background-color: @lime-progressbar-full-progress-bar-focused;
 			}
 
 			&.radial {
 				.fill {
 					background-color: transparent;
-					border-color: @lime-progressbar-highlighted-fill-bg-color;
+					border-color: @lime-progressbar-full-progress-bar-focused;
 				}
 			}
 		}
 
 		&.showAnchor {
 			&::after {
-				background-color: @lime-progressbar-bar-bg-color;
+				background-color: @lime-progressbar-full-progress-bg;
 			}
 		}
 	});
