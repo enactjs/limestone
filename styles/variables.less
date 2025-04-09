@@ -148,13 +148,13 @@
 @lime-input-invalid-tooltip-font-size:        @lime-inputfield-invalid-tooltip-font-size;
 @lime-inputfield-invalid-tooltip-font-size:   48px;
 @lime-inputfield-small-font-size:        72px;
-@lime-item-font-size:               60px;
-@lime-item-font-size-large:         72px;
-@lime-item-label-font-size:         48px;
-@lime-item-label-font-size-large:   54px;
-@lime-item-small-font-size:         60px;
-@lime-item-small-font-size-large:   72px;
-@lime-item-small-label-font-size:   48px;
+@lime-item-font-size:               var(--ref-font-size-60);
+@lime-item-font-size-large:         var(--ref-font-size-72);
+@lime-item-label-font-size:         var(--ref-font-size-48);
+@lime-item-label-font-size-large:   var(--ref-font-size-54);
+@lime-item-small-font-size:         var(--ref-font-size-60);
+@lime-item-small-font-size-large:   var(--ref-font-size-72);
+@lime-item-small-label-font-size:   var(--ref-font-size-48);
 @lime-keyguide-font-size:           60px;
 @lime-mediaoverlay-caption-font-size: 48px;
 @lime-mediaoverlay-font-size:         48px;
@@ -199,7 +199,7 @@
 @lime-non-latin-font-weight-light: 300;
 @lime-non-latin-font-weight-bold: 700;
 @lime-spottable-font-weight: 600;
-@lime-common-line-height: 1.3em;
+@lime-common-line-height: 1.4em;
 @lime-tallglyph-line-height: 1.5em;
 
 // Alert
@@ -239,14 +239,14 @@
 @lime-timepicker-colon-margin: 0 6px;
 
 // Heading
-@lime-heading-line-height: @lime-common-line-height;
+@lime-heading-line-height: 1.3em;
 @lime-heading-font-style: normal;
 @lime-heading-title-font-family: @lime-alt-font-family;
 @lime-heading-title-font-weight: 600;
 @lime-heading-title-line-height: @lime-heading-line-height;
 @lime-heading-subtitle-font-family: @lime-font-family;
 @lime-heading-subtitle-font-weight: normal;
-@lime-heading-subtitle-line-height: 1.4em;
+@lime-heading-subtitle-line-height: @lime-common-line-height;
 @lime-heading-large-font-family: @lime-font-family;
 @lime-heading-large-font-weight: @lime-spottable-font-weight;
 @lime-heading-medium-font-family: @lime-heading-large-font-family;
@@ -282,10 +282,12 @@
 
 // Item
 @lime-item-font-weight: @lime-spottable-font-weight;
+@lime-item-label-font-weight: 400;
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
-@lime-item-label-line-height: @lime-item-line-height;
+@lime-item-label-line-height: 1.25em;
 @lime-item-small-font-weight: @lime-item-font-weight;
+@lime-item-small-label-font-weight: @lime-item-label-font-weight;
 @lime-item-small-line-height: @lime-common-line-height;
 @lime-item-small-line-height-large: @lime-item-small-line-height;
 @lime-item-small-label-line-height: @lime-item-small-line-height;
@@ -744,12 +746,13 @@
 @lime-item-height-large: @lime-item-height;
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
-@lime-item-vertical-padding: 6px;
+@lime-item-withlabel-padding: var(--ref-spacing-48) var(--ref-spacing-60);
 @lime-item-inline-max-width: 480px;
-@lime-item-border-radius: 12px;
-@lime-item-slotafter-spacing: 54px;
-@lime-item-slotbefore-spacing: 54px;
+@lime-item-border-radius: var(--alias-radius-container);
+@lime-item-slotafter-spacing: var(--ref-spacing-36);
+@lime-item-slotbefore-spacing: var(--ref-spacing-36);
 @lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
+@lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-60);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;
