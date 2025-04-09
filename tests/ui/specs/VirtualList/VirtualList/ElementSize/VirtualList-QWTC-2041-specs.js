@@ -33,7 +33,7 @@ describe('spotlight size compare', function () {
 		await expectFocusedItem(2);
 		const curSpotlightSize = await Page.spotlightSize();
 		expect(curSpotlightSize).toBe(150);
-		// Step 4: Knobs > VirtualList > itemSize > 50
+		// Step 4: Knobs > VirtualList > itemSize > 100
 		await Page.inputfieldItemSize.moveTo();
 		await Page.spotlightSelect();
 		await Page.backSpace();
