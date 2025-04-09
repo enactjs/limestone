@@ -135,18 +135,16 @@ const CheckboxItemBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'checkboxItem',
-		publicClassNames: ['checkboxItem', 'item', 'itemContent', 'content', 'label', 'bg', 'slotAfter', 'slotBefore', 'selected']
+		publicClassNames: ['checkboxItem', 'bg', 'selected']
 	},
 
-	render: ({children, componentCss, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => {
-		console.log(componentCss)
-		console.log(rest);
-		return <Item
+	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
+		<Item
 			data-webos-voice-intent="SelectCheckItem"
 			role="checkbox"
 			{...rest}
 			aria-checked={selected}
-			css={componentCss}
+			css={css}
 			selected={selected}
 		>
 			<slotBefore>
@@ -162,7 +160,7 @@ const CheckboxItemBase = kind({
 			</slotBefore>
 			{children}
 		</Item>
-	}
+	)
 });
 
 /**

@@ -29,11 +29,10 @@ import {DaySelectorDecorator, getSelectedDayString} from './DaySelectorDecorator
 import css from './DayPicker.module.less';
 
 const childComponent = (props) => {
-	console.log(props);
 	const index = props["data-index"];
 	return (
 		<>
-			<CheckboxItem {...props} />
+			<CheckboxItem css={css} {...props} />
 			{index !== 6 && <div className={css.divider} /> }
 		</>
 	);
@@ -104,7 +103,7 @@ const DayPickerBase = kind({
 				{...rest}
 				childComponent={childComponent}
 				component="div"
-				itemProps={{className: css.item, css, disabled}}
+				itemProps={{disabled}}
 				role={null}
 				select="multiple"
 				selectedProp="selected"

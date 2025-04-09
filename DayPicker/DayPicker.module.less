@@ -7,7 +7,7 @@
 .dayPicker {
 	width: 732px;
 
-	.item {
+	.checkboxItem {
 		height: 168px;
 		margin-top: 0;
 		margin-bottom: 0;
@@ -32,8 +32,18 @@
 		})
 	}
 
+	.divider {
+		align-self: center;
+		display: flex;
+		background-color: red;
+		height: 2px;
+		width: 540px;
+		border-radius: 50px;
+		margin: 6px 90px;
+	};
+
 	.applySkins({
-		.item {
+		.checkboxItem {
 			&.selected {
 				height: 400px;
 				color: red;
@@ -45,14 +55,4 @@
 			}
 		}
 	});
-};
-
-.divider {
-	align-self: center;
-	display: flex;
-	background-color: red;
-	height: 2px;
-	width: 540px;
-	border-radius: 50px;
-	margin: 6px 90px;
 };
