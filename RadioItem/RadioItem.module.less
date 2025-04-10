@@ -8,31 +8,28 @@
 .radioIconColors (@color, @bg, @border) {
 	color: @color;
 	background-color: @bg;
-	box-shadow: 0 0 0 @lime-radioitem-indicator-border-width @border;
+	box-shadow: 0 0 0 @lime-radioitem-icon-border-width @border;
 }
 
 .radioItem {
-	.icon {
-		margin: 0;
-	}
-
 	.applySkins({
 		.icon {
 			.radioIconColors(
-				@lime-radioitem-indicator-color,
-				@lime-radioitem-indicator-bg-color,
-				@lime-radioitem-indicator-border-color
+				@lime-radioitem-icon,
+				@lime-radioitem-icon-bg,
+				@lime-radioitem-icon-border
 			);
-			border-radius: @lime-radioitem-indicator-border-radius;
+			border-radius: @lime-radioitem-icon-border-radius;
 			font-size: @lime-radioitem-icon-font-size;
+			margin: @lime-radioitem-icon-margin;
 		}
 
 		&.selected {
 			.icon {
 				.radioIconColors(
-					@lime-radioitem-selected-indicator-color,
-					@lime-radioitem-selected-indicator-bg-color,
-					@lime-radioitem-selected-indicator-border-color
+					@lime-radioitem-icon-selected,
+					@lime-radioitem-icon-bg-active,
+					@lime-radioitem-icon-border-selected
 				);
 			}
 		}
@@ -40,18 +37,18 @@
 		.focus({
 			.icon {
 				.radioIconColors(
-					@lime-radioitem-focus-indicator-color,
-					@lime-radioitem-focus-indicator-bg-color,
-					@lime-radioitem-focus-indicator-border-color
+					@lime-radioitem-icon-focused,
+					@lime-radioitem-icon-bg-focused,
+					@lime-radioitem-icon-border-focused
 				);
 			}
 
 			&.selected {
 				.icon {
 					.radioIconColors(
-						@lime-radioitem-selected-focus-indicator-color,
-						@lime-radioitem-selected-focus-indicator-bg-color,
-						@lime-radioitem-selected-focus-indicator-border-color
+						@lime-radioitem-icon-selected-focused,
+						@lime-radioitem-icon-bg-active-focused,
+						@lime-radioitem-icon-border-selected-focused
 					);
 				}
 			}
