@@ -42,7 +42,7 @@ describe('TabLayout', function () {
 						await Page.spotlightLeft();
 					}
 					// Step 6: Wait for the first view
-					await Page.delay(1000);
+					await Page.delay(1500);
 					await (await Page.tabLayout.view(1)).waitForExist();
 					// Step 7: Check if the first tab is selected
 					expect(await Page.tabLayout.isSelectedTab(0)).toBe(true);
