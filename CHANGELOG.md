@@ -10,7 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Scroller` with `editable` prop to ignore hidden elements
+- `limestone/Scroller` with `editable` prop to not move hidden items
 
 ## [1.0.0-alpha.1] - 2025-04-04
 
