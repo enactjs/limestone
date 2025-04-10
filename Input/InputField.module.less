@@ -63,7 +63,7 @@
 		border-radius: @lime-inputfield-border-radius;
 	}
 
-	&.centered .input{
+	&.centered {
 		text-align: center;
 	}
 
@@ -94,15 +94,12 @@
 		vertical-align: middle;
 	}
 
+	.input.passwordtel, .input.password  {
+		letter-spacing: @lime-inputfield-password-spacing; //this shoud be var(--ref-spacing-30)
+	}
+	
 	.input.passwordtel {
 		-webkit-text-security: disc;
-		letter-spacing: 27px;
-		width: 100%;
-	}
-
-	.input.password {
-		letter-spacing: 27px;
-		width: 100%;
 	}
 
 	.inputHighlight {

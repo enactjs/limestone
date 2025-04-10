@@ -322,7 +322,7 @@ const InputFieldBase = kind({
 				disabled={disabled}
 			>
 				<div className={css.bg} />
-				<InputFieldDecoratorIcon className={css.icon} position="before" size={size}>{iconBefore}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
