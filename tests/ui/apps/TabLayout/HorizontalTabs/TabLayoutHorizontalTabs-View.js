@@ -10,7 +10,7 @@ import {tabsForScroll} from '../TabComponents';
 spotlight.setPointerMode(false);
 
 const app = (props) => (
-	<div {...props} style={{display: 'flex', flexDirection: 'row', overflow: 'scroll'}}>
+	<div {...props} style={{display: 'flex', flexDirection: 'row', overflow: 'hidden'}}>
 		<TabLayout
 			id="tabLayout"
 			orientation="horizontal"
