@@ -86,6 +86,7 @@
 // Generic/Common/Shared
 // ---------------------------------------
 @lime-component-spacing: 36px;
+@lime-component-spacing: 36px;
 @lime-component-spacing-bottom: 30px;
 @lime-overlay-outline-width: 0.0625rem; // 3px
 @lime-smallest-tappable-size: 168px;
@@ -161,7 +162,7 @@
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             54px;
 @lime-picker-joined-font-size:      66px;
-@lime-steps-step-number-font-size:  54px;
+@lime-steps-step-number-font-size:  var(--ref-font-size-48);
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-font-size:      66px;
@@ -949,10 +950,14 @@
 // ---------------------------------------
 @lime-steps-step-number-font-weight: 600;
 @lime-steps-margin: 0;
-@lime-steps-step-margin: 0 @lime-component-spacing;
-@lime-steps-step-past-opacity: 0.75;
+@lime-steps-step-number-margin: 0 @lime-component-spacing;
+@lime-steps-step-margin: 0 6px;
+@lime-steps-step-past-opacity: 0.4;
 @lime-steps-step-current-opacity: 1;
-@lime-steps-step-future-opacity: 1;
+@lime-steps-step-future-opacity: 0.4;
+@lime-steps-step-number-past-opacity: 0.75;
+@lime-steps-step-number-current-opacity: 1;
+@lime-steps-step-number-future-opacity: 1;
 @lime-steps-step-highlight-current-only-future-opacity: 1;
 @lime-steps-pageindicator-size: 18px;
 @lime-steps-pageindicator-margin: 0 15px;
