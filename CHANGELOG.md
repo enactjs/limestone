@@ -10,7 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - 
 ### Fixed
 
-- `limestone/ContextualPopupDecorator` to spot content only after the state has been updated, on popup open
+- `limestone/ContextualPopupDecorator` to focus content only after the state has been updated when popup opens
 
 ## [1.0.0-alpha.1] - 2025-04-04
 
