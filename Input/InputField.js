@@ -293,7 +293,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, size, type, value, ...rest}) => {
+	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPassword = type === 'password';
@@ -314,6 +314,7 @@ const InputFieldBase = kind({
 		delete rest.invalidMessage;
 		delete rest.onBeforeChange;
 		delete rest.rtl;
+		delete rest.size;
 
 		return (
 			<div
