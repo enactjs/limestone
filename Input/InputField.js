@@ -322,7 +322,7 @@ const InputFieldBase = kind({
 				disabled={disabled}
 			>
 				<div className={css.bg} />
-				<InputFieldDecoratorIcon position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
@@ -337,7 +337,7 @@ const InputFieldBase = kind({
 					type={isPasswordtel ? 'tel' : type}
 					value={value}
 				/>
-				<InputFieldDecoratorIcon position="after" size={size}>{iconAfter}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size={size}>{iconAfter}</InputFieldDecoratorIcon>
 				{invalidTooltip}
 			</div>
 		);
