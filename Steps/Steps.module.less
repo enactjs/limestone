@@ -23,7 +23,7 @@
 		}
 
 		&.past {
-			opacity:  @lime-steps-step-past-opacity;
+			opacity: @lime-steps-step-past-opacity;
 		}
 
 		&.current {
@@ -50,8 +50,14 @@
 
 	.applySkins({
 		.step{
+			&.past {
+				color: @lime-steps-full-step-icon-complete;
+			}
 			&.current {
-				color: @lime-steps-step-current-color;
+				color: @lime-steps-full-step-text-now;
+			}
+			&.future {
+				color: @lime-steps-full-step-text-next;
 			}
 		}
 
