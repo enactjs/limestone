@@ -1,6 +1,7 @@
 // WizardPanels.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .wizardPanels {
@@ -10,12 +11,28 @@
 		}
 	}
 
+	.steps {
+		height: @lime-wizardpanels-steps-height;
+		margin-top: -@lime-wizardpanels-steps-height;
+	}
+
 	.content {
+		border-radius: @lime-wizardpanels-content-border-radius;
 		margin: @lime-wizardpanels-content-margin;
+
+		.viewManager > :first-child {
+			padding: @lime-wizardpanels-content-padding;
+		}
 	}
 
 	.footer {
 		text-align: center;
 		margin: @lime-wizardpanels-footer-margin;
 	}
+
+	.applySkins({
+		.content {
+			background-color: @lime-wizardpanels-container-group;
+		}
+	})
 }
