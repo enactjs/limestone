@@ -1,5 +1,6 @@
 // PageViews.module.less
 //
+@import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .pageViews {
@@ -50,10 +51,15 @@
 	&.number .stepsRow {
 		min-height: @lime-pageviews-number-steps-area-min-height;
 		.pageNumber {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			padding: @lime-pageviews-navigation-text-area-padding;
 			width: @lime-pageviews-number-steps-number-width;
-		}
-		.separator {
-			width: @lime-pageviews-number-steps-separator-width;
+
+			.separator {
+				width: @lime-pageviews-number-steps-separator-width;
+			}
 		}
 	}
 
@@ -61,6 +67,22 @@
 		display: flex;
 		align-items: center;
 		min-height: @lime-pageviews-dot-steps-area-min-height;
+		gap: @lime-pageviews-full-picker-icon-gap;
+
+		.step {
+			width: 18px;
+			height: 18px;
+			margin: 0;
+
+			&.current {
+				width: 24px;
+				height: 24px;
+			}
+
+			&.future, &.past {
+				opacity: @lime-pageviews-full-picker-icon-opacity;
+			}
+		}
 	}
 
 	&.fullContents .stepsRow {
@@ -89,4 +111,14 @@
 	.horizontalLayout {
 		height: 100%;
 	}
+
+	.applySkins({
+		&.dot .steps .step {
+			&.past,
+			&.current,
+			&.future {
+				background-color: @lime-pageviews-full-picker-icon;
+			}
+		}
+	});
 }
