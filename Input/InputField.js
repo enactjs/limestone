@@ -337,7 +337,7 @@ const InputFieldBase = kind({
 					type={isPasswordtel ? 'tel' : type}
 					value={value}
 				/>
-				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size={size}>{iconAfter}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size="large">{iconAfter}</InputFieldDecoratorIcon>
 				{invalidTooltip}
 			</div>
 		);
