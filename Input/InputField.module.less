@@ -54,8 +54,6 @@
 	box-sizing: border-box;
 	vertical-align: middle;
 	align-items: center;
-	height: @lime-inputfield-height;
-	width: @lime-inputfield-width;
 
 	.bg {
 		position: absolute;
@@ -63,13 +61,8 @@
 		border-radius: @lime-inputfield-border-radius;
 	}
 
-	&.centered {
+	&.centered .input{
 		text-align: center;
-	}
-
-	.icon {
-		width: 106px;
-		height: 106px;
 	}
 
 	.input {
@@ -82,20 +75,17 @@
 
 	.input,
 	.inputHighlight {
-		z-index: 1;
 		font-size: @lime-input-font-size;
 		font-weight: @lime-inputfield-font-weight;
-	}
-
-	.input,
-	.inputHighlight {
-		line-height: @lime-inputfield-height;
 		height: @lime-inputfield-height;
+		line-height: @lime-inputfield-height;
 		vertical-align: middle;
+		z-index: 1;
 	}
 
 	.input.passwordtel, .input.password  {
 		letter-spacing: @lime-inputfield-password-spacing; //this shoud be var(--ref-spacing-30)
+		width: 100%;
 	}
 	
 	.input.passwordtel {
@@ -120,11 +110,6 @@
 	&.small {
 		height: @lime-inputfield-small-height;
 		width: @lime-inputfield-small-width;
-
-		.icon {
-			width: 84px;
-			height: 84px;
-		}
 
 		.input {
 			font-size: @lime-inputfield-small-font-size;
@@ -162,13 +147,11 @@
 
 	// Skin colors
 	.applySkins({
-		caret-color: @lime-inputfield-caret-color;
-		color: @lime-inputfield-text-color;
+		caret-color: @lime-inputfield-full-input-cursor;
+		color: @lime-inputfield-full-input-text-success;
 
 		.bg {
-			.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: var(--ref-color-base-40);
-				});
+			background-color: @lime-inputfield-full-input-bg;
 		}
 
 		.input {
@@ -177,15 +160,15 @@
 
 			.input-placeholder({
 				font-weight: @lime-inputfield-placeholder-font-weight;
-				color: @lime-inputfield-placeholder-color;
+				color: @lime-inputfield-full-input-text-inactive;
 			});
 
 			&:focus-within {
-				color: @lime-inputfield-focus-text-color;
+				color: @lime-inputfield-full-input-text-active-focused;
 
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-inputfield-placeholder-active-color;
+					color: @lime-inputfield-full-input-text-inactive-focused;
 				});
 			}
 		}
@@ -210,16 +193,18 @@
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @lime-inputfield-focus-text-color;
+			color: @lime-inputfield-full-input-text-inactive-focused;
 
 			.bg {
-				.lime-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors(@bg: {
+					background-color: @lime-inputfield-full-input-bg-focused;
+				});
 			}
 
 			.input {
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-inputfield-placeholder-active-color;
+					color: @lime-inputfield-full-input-text-inactive-focused;
 					opacity: @lime-disabled-focus-content-opacity;
 				});
 			}
@@ -241,10 +226,12 @@
 
 		// For when the HTML input field has focus (someone is typing)
 		&:focus-within {
-			color: @lime-inputfield-focus-text-color;
+			color: @lime-inputfield-full-input-text-inactive-focused;
 
 			.bg {
-				.lime-spotlight-focus-bg-colors();
+				.lime-spotlight-focus-bg-colors(@bg: {
+					background-color: @lime-inputfield-full-input-bg-focused;
+				});
 				box-shadow: none;
 			}
 		}
@@ -258,15 +245,13 @@
 
 			.input {
 				.lime-disabled-colors();
-				color: @lime-inputfield-disabled-text-color;
+				color: @lime-inputfield-full-input-text-inactive;
 			}
 
 			.focus({
 				.bg {
-					.lime-bg-colors({
-						background-color: @lime-inputfield-disabled-focus-bg-color;
-						filter: unset;
-					});
+					background-color: @lime-inputfield-full-input-disabled-bg-focused;
+					filter: unset;
 				}
 			});
 		});
