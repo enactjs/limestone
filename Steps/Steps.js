@@ -212,10 +212,7 @@ const StepsBase = kind({
 				const present = (stepNum === current);
 				const future = (stepNum > current);
 
-				let children,
-					numbers = false,
-					hasNumbers = (currentIcon === 'numbers' || futureIcon === 'numbers' || pastIcon === 'numbers');
-
+				let children, numbers = false;
 				if (present) {
 					numbers = (currentIcon === 'numbers');
 					children = numbers ? stepNum.toString() : currentIcon;
@@ -233,7 +230,7 @@ const StepsBase = kind({
 				}
 
 				return {
-					className: styler.join('step', {hasNumbers, numbers, past, current: present, future, skip: (skipStep && !present), highlightCurrentOnly}),
+					className: styler.join('step', {numbers, past, current: present, future, skip: (skipStep && !present), highlightCurrentOnly}),
 					key: `step${stepNum}`,
 					children
 				};

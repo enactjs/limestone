@@ -14,31 +14,6 @@
 			.lime-font-number();
 			font-size: @lime-steps-step-number-font-size;
 			font-weight: @lime-steps-step-number-font-weight;
-			margin: @lime-steps-step-number-margin;
-
-			&.past {
-				opacity:  @lime-steps-step-number-past-opacity;
-			}
-
-			&.current {
-				opacity: @lime-steps-step-number-current-opacity;
-			}
-
-			&.future {
-				opacity: @lime-steps-step-number-future-opacity;
-			}
-		}
-
-		&.hasNumbers {
-			margin: @lime-steps-step-margin;
-
-			&.past {
-				opacity:  @lime-steps-step-number-past-opacity;
-			}
-
-			&.future {
-				opacity: @lime-steps-step-number-future-opacity;
-			}
 		}
 
 		&.highlightCurrentOnly {
@@ -48,7 +23,7 @@
 		}
 
 		&.past {
-			opacity: @lime-steps-step-past-opacity;
+			opacity:  @lime-steps-step-past-opacity;
 		}
 
 		&.current {
@@ -74,35 +49,9 @@
 	}
 
 	.applySkins({
-		.step {
-			&.numbers {
-				&.current {
-					color: @lime-steps-step-text-now;
-				}
-
-				&.future {
-					color: @lime-steps-step-text-next;
-
-				}
-
-				&.past {
-					color: @lime-steps-step-text-past
-				}
-			}
-
-			&.hasNumbers {
-				&.current {
-					color: @lime-steps-step-text-now;
-				}
-
-				&.future {
-					color: @lime-steps-step-text-next;
-
-				}
-
-				&.past {
-					color: @lime-steps-step-text-past
-				}
+		.step{
+			&.current {
+				color: @lime-steps-step-current-color;
 			}
 		}
 
