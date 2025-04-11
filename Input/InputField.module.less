@@ -55,24 +55,13 @@
 	vertical-align: middle;
 	align-items: center;
 
-	.enact-locale-rtl({
-		.iconBefore {
-			margin-left: @lime-inputfield-icon-margin;
-		}
-
-		.iconAfter {
-			margin-right: @lime-inputfield-icon-margin;
-		}
-	});
-
 	.iconBefore {
-		margin-right: @lime-inputfield-icon-margin;
+		.margin-start-end(0, @lime-inputfield-icon-margin);
 	}
 
 	.iconAfter {
-		margin-left: @lime-inputfield-icon-margin;
+		.margin-start-end(@lime-inputfield-icon-margin, 0);
 	}
-
 	.bg {
 		position: absolute;
 		.position(0);
