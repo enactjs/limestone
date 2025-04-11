@@ -33,7 +33,10 @@ const childComponent = (props) => {
 	return (
 		<>
 			<CheckboxItem css={css} {...props} />
-			{index !== 6 && <div className={css.divider} />}
+			{
+				index !== 6 && // prevents adding a divider to the last DayPicker item
+				<div className={css.divider} />
+			}
 		</>
 	);
 };
