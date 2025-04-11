@@ -5,54 +5,27 @@
 @import "../styles/skin.less";
 
 .dayPicker {
-	width: 732px;
+	width: @lime-daypicker-width;
 
 	.checkboxItem {
-		height: 168px;
-		margin-top: 0;
-		margin-bottom: 0;
-		width: 660px;
-
-		&.selected {
-			border-radius: 0;
-			.bg {
-				border-radius: 0;
-				color: red;
-				background-color: red;
-			}
-		}
-
-		.focus({
-			border-radius: 0;
-			.bg {
-				border-radius: 0;
-				color: red;
-				background-color: red;
-			}
-		})
+		margin: 0;
 	}
 
 	.divider {
-		align-self: center;
-		display: flex;
-		background-color: red;
-		height: 2px;
-		width: 540px;
-		border-radius: 50px;
-		margin: 6px 90px;
+		margin: @lime-daypicker-divider-margin;
 	};
 
 	.applySkins({
 		.checkboxItem {
 			&.selected {
-				height: 400px;
-				color: red;
-				background-color: red;
 				.bg {
-					background-color: red;
-					color: red;
+					background-color: inherit;
 				}
 			}
 		}
+
+		.divider {
+			border-bottom: @lime-daypicker-divider-border-width @lime-daypicker-divider-border-style @lime-daypicker-divider-border;
+		};
 	});
 };
