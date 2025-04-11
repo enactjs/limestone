@@ -147,11 +147,11 @@
 
 	// Skin colors
 	.applySkins({
-		caret-color: @lime-inputfield-full-input-cursor;
-		color: @lime-inputfield-full-input-text-success;
+		caret-color: @lime-input-cursor;
+		color: @lime-input-text-success;
 
 		.bg {
-			background-color: @lime-inputfield-full-input-bg;
+			background-color: @lime-input-bg;
 		}
 
 		.input {
@@ -160,15 +160,15 @@
 
 			.input-placeholder({
 				font-weight: @lime-inputfield-placeholder-font-weight;
-				color: @lime-inputfield-full-input-text-inactive;
+				color: @lime-input-text-inactive;
 			});
 
 			&:focus-within {
-				color: @lime-inputfield-full-input-text-active-focused;
+				color: @lime-input-text-active-focused;
 
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-inputfield-full-input-text-inactive-focused;
+					color: @lime-input-text-inactive-focused;
 				});
 			}
 		}
@@ -193,18 +193,18 @@
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @lime-inputfield-full-input-text-inactive-focused;
+			color: @lime-input-text-inactive-focused;
 
 			.bg {
 				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-inputfield-full-input-bg-focused;
+					background-color: @lime-input-bg-focused;
 				});
 			}
 
 			.input {
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-inputfield-full-input-text-inactive-focused;
+					color: @lime-input-text-inactive-focused;
 					opacity: @lime-disabled-focus-content-opacity;
 				});
 			}
@@ -226,11 +226,11 @@
 
 		// For when the HTML input field has focus (someone is typing)
 		&:focus-within {
-			color: @lime-inputfield-full-input-text-inactive-focused;
+			color: @lime-input-text-inactive-focused;
 
 			.bg {
 				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-inputfield-full-input-bg-focused;
+					background-color: @lime-input-bg-focused;
 				});
 				box-shadow: none;
 			}
@@ -245,12 +245,12 @@
 
 			.input {
 				.lime-disabled-colors();
-				color: @lime-inputfield-full-input-text-inactive;
+				color: @lime-input-text-inactive;
 			}
 
 			.focus({
 				.bg {
-					background-color: @lime-inputfield-full-input-disabled-bg-focused;
+					background-color: @lime-input-disabled-bg-focused;
 					filter: unset;
 				}
 			});

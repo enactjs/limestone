@@ -257,18 +257,18 @@
 
 		.numberCell {
 			&::before {
-				background-color: @lime-inputfield-full-input-bg;
+				background-color: @lime-input-bg;
 			}
 		}
 
 		// Style joined numeric inputs and active cells like a focused input
 		.joined,
 		.numberCell.active {
-			color: @lime-input-full-input-dot-focused;
+			color: @lime-input-dot-focused;
 
 			&::before {
 				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-inputfield-full-input-bg-focused;
+					background-color: @lime-input-bg-focused;
 				});
 				// Remove drop shadow for this input-like field
 				box-shadow: none;
