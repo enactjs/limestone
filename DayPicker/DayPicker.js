@@ -33,10 +33,10 @@ const childComponent = (props) => {
 	return (
 		<>
 			<CheckboxItem css={css} {...props} />
-			{index !== 6 && <div className={css.divider} /> }
+			{index !== 6 && <div className={css.divider} />}
 		</>
 	);
-}
+};
 
 /**
  * A day of the week selection component.
