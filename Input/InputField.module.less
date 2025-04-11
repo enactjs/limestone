@@ -84,7 +84,7 @@
 	}
 
 	.input.passwordtel, .input.password  {
-		letter-spacing: @lime-inputfield-password-spacing; //this shoud be var(--ref-spacing-30)
+		letter-spacing: @lime-inputfield-password-spacing;
 	}
 	
 	.input.passwordtel {
@@ -127,7 +127,7 @@
 	&.multiline {
 		display: block;
 		padding: 24px 36px;
-		border-radius: @lime-inputfield-border-radius;
+		border-radius: 24px;
 	}
 
 	// an Input that isn't spottable is behaviorly disabled but not visually
@@ -251,6 +251,10 @@
 				.bg {
 					background-color: @lime-input-disabled-bg-focused;
 					filter: unset;
+				}
+
+				.input {
+					color: @lime-input-text-inactive-focused;
 				}
 			});
 		});
