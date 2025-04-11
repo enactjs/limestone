@@ -70,13 +70,13 @@
 		gap: @lime-pageviews-picker-icon-gap;
 
 		.step {
-			width: 18px;
-			height: 18px;
+			height: @lime-pageviews-number-step-size;
+			width: @lime-pageviews-number-step-size;
 			margin: 0;
 
 			&.current {
-				width: 24px;
-				height: 24px;
+				height: @lime-pageviews-number-highlighted-step-size;
+				width: @lime-pageviews-number-highlighted-step-size;
 			}
 
 			&.future, &.past {
@@ -113,7 +113,7 @@
 	}
 
 	.applySkins({
-		.step {
+		.steps .step {
 			background-color: @lime-pageviews-picker-icon;
 		}
 	});
