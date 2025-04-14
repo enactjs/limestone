@@ -2,6 +2,7 @@
 //
 @import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/skin.less";
 
 .bodyText {
 	.lime-body-text();
@@ -12,7 +13,7 @@
 	&.large { /* Needed to prevent global class being added in the DOM */ }
 
 	&.small {
-		font-size: @lime-body-small-font-size;
+		.lime-body-text-small();
 
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-body-small-font-size;
@@ -37,4 +38,8 @@
 	}
 
 	.locale-japanese-line-break();
+
+	.applySkins({
+		color: @lime-bodytext-text;
+	});
 }
