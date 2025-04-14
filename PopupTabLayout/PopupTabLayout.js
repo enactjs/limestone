@@ -333,6 +333,14 @@ const OptimizedFocusDecorator = hoc((config, Wrapped) => {
 			open: PropTypes.bool,
 
 			/**
+			 * Optimizes PopupTabLayout without Popup when true.
+			 *
+			 * @type {Boolean}
+			 * @private
+			 */
+			optimized: PropTypes.bool,
+
+			/**
 			 * The container id.
 			 *
 			 * @type {String}
