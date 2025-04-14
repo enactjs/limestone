@@ -5,13 +5,14 @@
 @import "../styles/variables.less";
 
 .steps {
+	gap: @lime-steps-gap;
 	margin: @lime-steps-margin;
 
 	.step {
 		margin: @lime-steps-step-margin;
 
 		&.numbers {
-			.lime-font-number();
+			.lime-font(@lime-steps-step-number-font-family, @lime-steps-step-number-font-family);
 			font-size: @lime-steps-step-number-font-size;
 			font-weight: @lime-steps-step-number-font-weight;
 		}

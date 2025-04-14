@@ -163,7 +163,7 @@
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             54px;
 @lime-picker-joined-font-size:      66px;
-@lime-steps-step-number-font-size:  54px;
+@lime-steps-step-number-font-size:  var(--ref-font-size-48);
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-font-size:      66px;
@@ -303,6 +303,8 @@
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
 @lime-picker-joined-font-weight: @lime-spottable-font-weight;
 
+// Steps
+@lime-steps-step-number-font-family: @lime-font-family;
 
 // ---------------------------------------
 // Component Rules
@@ -985,9 +987,10 @@
 
 // Steps
 // ---------------------------------------
+@lime-steps-gap: var(--ref-spacing-60);
 @lime-steps-step-number-font-weight: 600;
 @lime-steps-margin: 0;
-@lime-steps-step-margin: 0 @lime-component-spacing;
+@lime-steps-step-margin: 0;
 @lime-steps-step-past-opacity: 0.75;
 @lime-steps-step-current-opacity: 1;
 @lime-steps-step-future-opacity: 1;
