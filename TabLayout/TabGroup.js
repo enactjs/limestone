@@ -67,7 +67,7 @@ const TabBase = kind({
 			() => !Spotlight.getPointerMode(),
 			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
 				if (orientation === 'horizontal') {
-					ev.target.scrollIntoView({behavior: 'smooth'});
+					ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
 				}
 
 				return {selected: index};
