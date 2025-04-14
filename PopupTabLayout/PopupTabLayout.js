@@ -196,7 +196,7 @@ const PopupTabLayoutBase = kind({
 		 * Optimizes PopupTabLayout without Popup when true.
 		 *
 		 * @type {Boolean}
-		 * @public
+		 * @private
 		 */
 		optimized: PropTypes.bool,
 
