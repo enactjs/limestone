@@ -78,7 +78,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 		delete rest.onBack;
 
 		return (
-			<PanelsContext.Provider value={setPanel}>
+			<PanelsContext value={setPanel}>
 				{Children.toArray(children)[index]}
 				{config.type === 'wizard' ?
 					<Wrapped
@@ -116,7 +116,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 						) : null}
 					</Wrapped>
 				}
-			</PanelsContext.Provider>
+			</PanelsContext>
 		);
 	};
 
