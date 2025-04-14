@@ -94,7 +94,11 @@
 	padding: @lime-dropdown-list-padding;
 
 	&.verticalScrollbar {
-		padding-right: @lime-dropdown-list-scroller-padding;
+		--scroll-scrollbar-size: @lime-dropdown-scrollbar-size;
+
+		.scrollbarTrack {
+			margin: @lime-dropdown-scrollbar-track-margin;
+		}
 	}
 
 	&.tiny {
@@ -124,6 +128,11 @@
 	.lime-custom-text({
 		max-height: @lime-dropdown-list-max-height-large;
 	});
+
+	.item {
+		margin: 0;
+		padding: @lime-dropdown-list-item-padding;
+	}
 
 	// Skin colors
 	.applySkins({

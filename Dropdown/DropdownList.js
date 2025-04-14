@@ -124,6 +124,7 @@ const DropdownListBase = kind({
 				<Item
 					{...rest}
 					{...restChild}
+					css={css}
 					key={key}
 					slotAfter={slotAfter}
 					data-selected={isSelected}
@@ -161,6 +162,7 @@ const DropdownListBase = kind({
 					cbScrollTo={scrollTo}
 					dataSize={dataSize}
 					itemSize={ri.scale(itemSize)}
+					scrollbarTrackCss={css}
 					style={{
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
