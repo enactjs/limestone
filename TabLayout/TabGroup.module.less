@@ -89,6 +89,11 @@
 		background-color: @lime-tablayout-full-tab-bg-group;
 		border-radius: @lime-tablayout-border-radius;
 
+		// Apply transparent background to the child component so if the Scroller is used, then it will not have doubled background color
+		> :first-child {
+			background: transparent;
+		}
+
 		.tab {
 			&.vertical {
 				&.button {
