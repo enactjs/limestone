@@ -37,7 +37,7 @@ const isLeft = is('left');
 const isRight = is('right');
 const isUp = is('up');
 
-const DivComponent = ({containerRef, ...rest}) => (<div ref={containerRef} {...rest} />);
+const DivComponent = ({ref, ...rest}) => (<div ref={ref} {...rest} />);
 
 DivComponent.propTypes = {
 	/**
@@ -46,10 +46,10 @@ DivComponent.propTypes = {
 	 * @type {Object|Function}
 	 * @public
 	 */
-	containerRef: EnactPropTypes.ref
+	ref: EnactPropTypes.ref
 };
 
-const Div = Touchable(ForwardRef({prop: 'containerRef'}, DivComponent));
+const Div = Touchable(DivComponent);
 const SpottableDiv = Touchable(ForwardRef({prop: 'containerRef'}, SpottablePicker));
 
 const PickerViewManager = onlyUpdateForProps(ViewManager, ['index', 'children']);
