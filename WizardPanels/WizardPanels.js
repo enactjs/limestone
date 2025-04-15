@@ -436,7 +436,6 @@ const WizardPanelsBase = kind({
 						{children ? (
 							<ViewManager
 								arranger={BasicArranger}
-								className={css.viewManager}
 								duration={400}
 								onTransition={onTransition}
 								onWillTransition={onWillTransition}
