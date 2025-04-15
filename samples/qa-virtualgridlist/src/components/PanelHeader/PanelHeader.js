@@ -6,7 +6,7 @@ import {Header} from '@enact/limestone/Panels';
 import {InputField as Input} from '@enact/limestone/Input';
 import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
+import {use} from 'react';
 
 import LocaleSwitch from '../LocaleSwitch';
 import ScrollModeSwitch from '../ScrollModeSwitch';
@@ -30,8 +30,8 @@ import createRecord from '../../utils';
 const PanelHeader = (props) => {
 	const {nativeScroll, onChangeDirection, onChangeScrollMode, ...rest} = props;
 
-	const dispatch = useContext(RecordDispatchContext);
-	const {dataSize, minHeight, minWidth, showOverlay, spacing} = useContext(RecordContext);
+	const dispatch = use(RecordDispatchContext);
+	const {dataSize, minHeight, minWidth, showOverlay, spacing} = use(RecordContext);
 
 	const tooltipText = showOverlay ? 'Previous' : 'Selection';
 	const inputWidth = {width: '5em'};
