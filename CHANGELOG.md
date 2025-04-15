@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/Item` styling to match the latest GUI
+- `limestone/ProgressBar` styling to match the latest GUI
 
 ### Fixed
 
