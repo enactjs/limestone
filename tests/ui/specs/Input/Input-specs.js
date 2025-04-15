@@ -462,7 +462,7 @@ describe('Input test', () => {
 			await Page.spotlightDown();
 			await Page.spotlightDown();
 			await Page.spotlightRight();
-			await Page.spotlightDown();
+			await Page.spotlightRight();
 
 			expect(await components.input9.self.isFocused()).toBe(true);
 			expect(await components.input9.self.getText()).toBe('placeholder');
@@ -472,7 +472,7 @@ describe('Input test', () => {
 			await Page.spotlightDown();
 			await Page.spotlightDown();
 			await Page.spotlightRight();
-			await Page.spotlightDown();
+			await Page.spotlightRight();
 			await Page.spotlightSelect();
 
 			expect(await components.input9.self.isFocused()).toBe(true);
