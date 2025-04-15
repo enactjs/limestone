@@ -12,6 +12,12 @@
 }
 
 .radioItem {
+	.icon {
+		border-radius: @lime-radioitem-icon-border-radius;
+		font-size: @lime-radioitem-icon-font-size;
+		margin: @lime-radioitem-icon-margin;
+	}
+
 	.applySkins({
 		.icon {
 			.radioIconColors(
@@ -19,9 +25,6 @@
 				@lime-radioitem-icon-bg,
 				@lime-radioitem-icon-border
 			);
-			border-radius: @lime-radioitem-icon-border-radius;
-			font-size: @lime-radioitem-icon-font-size;
-			margin: @lime-radioitem-icon-margin;
 		}
 
 		&.selected {
@@ -47,7 +50,7 @@
 				.icon {
 					.radioIconColors(
 						@lime-radioitem-icon-selected-focused,
-						@lime-radioitem-icon-bg-active-focused,
+						@lime-radioitem-icon-bg-selected-focused,
 						@lime-radioitem-icon-border-selected-focused
 					);
 				}
