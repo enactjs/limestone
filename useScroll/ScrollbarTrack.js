@@ -4,7 +4,7 @@ import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
 import {Announce} from '@enact/ui/AnnounceDecorator';
 import PropTypes from 'prop-types';
-import {forwardRef, useCallback, useEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
 
@@ -32,9 +32,9 @@ const SpottableDiv = Spottable('div');
  * @ui
  * @private
  */
-const ScrollbarTrack = forwardRef((props, ref) => {
+const ScrollbarTrack = (props) => {
 	const
-		{'aria-label': ariaLabel, cbAlertScrollbarTrack, focusableScrollbar, onInteractionForScroll, rtl, scrollbarTrackCss, vertical, ...rest} = props,
+		{'aria-label': ariaLabel, cbAlertScrollbarTrack, focusableScrollbar, onInteractionForScroll, ref, rtl, scrollbarTrackCss, vertical, ...rest} = props,
 		className = classNames(css.scrollbarTrack, {[css.vertical]: vertical, [css.focusableScrollbar]: focusableScrollbar}),
 		ScrollbarThumb = focusableScrollbar ? SpottableDiv : 'div',
 		announceRef = useRef({});
@@ -129,11 +129,19 @@ const ScrollbarTrack = forwardRef((props, ref) => {
 			/>
 		</div>
 	);
-});
+};
 
 ScrollbarTrack.displayName = 'ScrollbarTrack';
 
 ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototype */ {
+	/**
+	 * The aria label for the component.
+	 *
+	 * @type {String}
+	 * @private
+	 */
+	'aria-label': PropTypes.string,
+
 	/**
 	 * Called when {@link limestone/useScroll.ScrollbarTrack|ScrollbarTrack} is updated.
 	 *
@@ -157,6 +165,14 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	 * @private
 	 */
 	onInteractionForScroll: PropTypes.func,
+
+	/**
+	 * Forwards a reference to the DOM element.
+	 *
+	 * @type {Object}
+	 * @private
+	 */
+	ref: PropTypes.shape({current: PropTypes.any}),
 
 	/**
 	 * `true` if rtl, `false` if ltr.

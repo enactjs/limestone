@@ -25,7 +25,6 @@ import Announce from '@enact/ui/AnnounceDecorator/Announce';
 import ComponentOverride from '@enact/ui/ComponentOverride';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import {FloatingLayerContext} from '@enact/ui/FloatingLayer/FloatingLayerDecorator';
-import ForwardRef from "@enact/ui/ForwardRef";
 import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
@@ -87,13 +86,13 @@ RootComponent.propTypes = {
 };
 
 const SpottableDiv = Touchable(Spottable('div'));
-const RootContainer = ForwardRef({prop: 'playerRef'}, SpotlightContainerDecorator(
+const RootContainer = SpotlightContainerDecorator(
 	{
 		enterTo: 'default-element',
 		defaultElement: [`.${css.controlsHandleAbove}`, `.${css.controlsFrame}`]
 	},
 	RootComponent
-));
+);
 
 const ControlsContainer = SpotlightContainerDecorator(
 	{
@@ -2057,7 +2056,7 @@ const VideoPlayerBase = class extends Component {
 			<RootContainer
 				className={css.videoPlayer + ' enact-fit' + (className ? ' ' + className : '')}
 				onClick={this.activityDetected}
-				ref={this.playerRef}
+				playerRef={this.playerRef}
 				spotlightDisabled={spotlightDisabled}
 				spotlightId={spotlightId}
 				style={style}
