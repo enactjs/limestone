@@ -291,10 +291,10 @@
 
 // ProgressBar
 // ---------------------------------------
-@lime-progressbar-bar-bg-color: var(--alias-color-progress-bg);
-@lime-progressbar-load-bg-color: var(--ref-color-base-60);
-@lime-progressbar-fill-bg-color: var(--alias-color-progress-bar);
-@lime-progressbar-highlighted-fill-bg-color: var(--ref-color-base-100);
+@lime-progressbar-bg: var(--alias-color-progress-bg);
+@lime-progressbar-bar-buffer: var(--ref-color-base-60);
+@lime-progressbar-bar: var(--alias-color-progress-bar);
+@lime-progressbar-bar-focused: var(--ref-color-base-100);
 
 // ProgressButton
 // ---------------------------------------
@@ -303,24 +303,18 @@
 
 // RadioItem
 // ---------------------------------------
-@lime-radioitem-indicator-color: transparent;
-@lime-radioitem-indicator-bg-color: transparent;
-@lime-radioitem-indicator-border-color: var(--alias-color-on-surface-main);
-@lime-radioitem-focus-indicator-color: transparent;
-@lime-radioitem-focus-indicator-bg-color: transparent;
-@lime-radioitem-focus-indicator-border-color: var(--alias-color-on-focused);
-@lime-radioitem-selected-indicator-color: var(--alias-color-on-selected);
-@lime-radioitem-selected-indicator-bg-color: var(--alias-color-selection-bg-active);
-@lime-radioitem-selected-indicator-border-color: @lime-radioitem-selected-indicator-bg-color;
-@lime-radioitem-selected-focus-indicator-color: @lime-radioitem-selected-indicator-color;
-@lime-radioitem-selected-focus-indicator-bg-color:  @lime-radioitem-selected-indicator-bg-color;
-@lime-radioitem-selected-focus-indicator-border-color: @lime-radioitem-selected-focus-indicator-bg-color;
-@lime-radioitem-disabled-selected-color: var(--alias-color-selection-icon-selected-disabled);
-@lime-radioitem-disabled-selected-bg-color: var(--alias-color-selection-bg-active-disabled);
-@lime-radioitem-disabled-selected-border-color: @lime-radioitem-disabled-selected-bg-color;
-@lime-radioitem-focus-disabled-selected-color: var(--alias-color-selection-icon-selected-disabled-focused);
-@lime-radioitem-focus-disabled-selected-bg-color: var(--alias-color-selection-bg-active-disabled-focused);
-@lime-radioitem-focus-disabled-selected-border-color: @lime-radioitem-focus-disabled-selected-bg-color;
+@lime-radioitem-icon: transparent;
+@lime-radioitem-icon-focused: transparent;
+@lime-radioitem-icon-selected: var(--alias-color-on-selected);
+@lime-radioitem-icon-selected-focused: @lime-radioitem-icon-selected;
+@lime-radioitem-icon-bg: transparent;
+@lime-radioitem-icon-bg-focused: transparent;
+@lime-radioitem-icon-bg-selected: var(--alias-color-selection-bg-active);
+@lime-radioitem-icon-bg-selected-focused: @lime-radioitem-icon-bg-selected;
+@lime-radioitem-icon-border: var(--alias-color-on-surface-main);
+@lime-radioitem-icon-border-focused: var(--alias-color-on-focused);
+@lime-radioitem-icon-border-selected: @lime-radioitem-icon-bg-selected;
+@lime-radioitem-icon-border-selected-focused: @lime-radioitem-icon-bg-selected-focused;
 
 // Scrollbar
 // ---------------------------------------
@@ -336,8 +330,8 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-bar-bg-color: @lime-progressbar-bar-bg-color;
-@lime-slider-load-bg-color: @lime-progressbar-load-bg-color;
+@lime-slider-bar-bg-color: @lime-progressbar-bg;
+@lime-slider-load-bg-color: @lime-progressbar-bar-buffer;
 @lime-slider-fill-bg-color: var(--alias-color-progress-bar);
 @lime-slider-knob-bg-color: @lime-slider-fill-bg-color;
 @lime-slider-knob-border-color: transparent;
