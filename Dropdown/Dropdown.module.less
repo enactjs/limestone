@@ -109,6 +109,12 @@
 	min-width: @lime-dropdown-list-min-width;
 	padding: @lime-dropdown-list-padding;
 
+	&.verticalScrollbar {
+		.scrollbarTrack{
+			height: calc(100% - @lime-scrollbar-padding);
+		}
+	}
+
 	&.tiny {
 		width: @lime-dropdown-list-tiny-width;
 	}
@@ -151,3 +157,9 @@
 		}
 	});
 }
+
+.applySkins({
+	.contextualPopup {
+		padding-bottom: 0;
+	}
+});
