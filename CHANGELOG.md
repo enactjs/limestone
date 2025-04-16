@@ -8,6 +8,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
+- `limestone/ProgressBar` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
 
 ### Fixed
 
