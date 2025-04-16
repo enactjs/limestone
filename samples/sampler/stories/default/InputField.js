@@ -23,7 +23,6 @@ export default {
 export const _InputField = (args) => (
 	<InputField
 		autoFocus={args['autoFocus']}
-		centered={args['centered']}
 		disabled={args['disabled']}
 		dismissOnEnter={args['dismissOnEnter']}
 		iconAfter={args['iconAfter']}
@@ -39,7 +38,6 @@ export const _InputField = (args) => (
 );
 
 boolean('autoFocus', _InputField, Config);
-boolean('centered', _InputField, Config);
 boolean('disabled', _InputField, Config);
 boolean('dismissOnEnter', _InputField, Config);
 select('iconAfter', _InputField, iconNames, Config);

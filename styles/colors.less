@@ -202,6 +202,8 @@
 
 // Input
 // ---------------------------------------
+@lime-input-bg: var(--ref-color-base-30);
+@lime-input-disabled-bg-focused: var(--alias-color-container-disabled-focused);
 @lime-input-dot-focused: var(--ref-color-base-10);
 @lime-input-fullscreen-background-color: var(--alias-color-surface-full);
 @lime-input-overlay-background-color: @lime-popup-bg-color;
@@ -213,14 +215,11 @@
 
 // InputField
 // ---------------------------------------
-@lime-input-bg: var(--ref-color-base-30);
-@lime-input-bg-focused: var(--alias-color-on-container-main);
-@lime-input-disabled-bg-focused: var(--alias-color-container-disabled-focused);
-@lime-input-cursor: var(--alias-color-accent);
-@lime-input-text-success: var(--ref-color-base-100);
-@lime-input-text-active-focused: var(--alias-color-on-focused);
-@lime-input-text-inactive: ~"color(from" var(--alias-color-on-container-main) ~"srgb r g b / 0.4)";
-@lime-input-text-inactive-focused: var(--alias-color-on-focused);
+@lime-inputfield-cursor: var(--alias-color-accent);
+@lime-inputfield-text-success: var(--ref-color-base-100);
+@lime-inputfield-text-active-focused: var(--alias-color-on-focused);
+@lime-inputfield-text-inactive: ~"color(from" var(--alias-color-on-container-main) ~"srgb r g b / 0.4)";
+@lime-inputfield-text-inactive-focused: var(--alias-color-on-focused);
 @lime-inputfield-invalid-color: @lime-invalid-color;
 @lime-inputfield-invalid-tooltip-color: var(--alias-color-invalid);
 

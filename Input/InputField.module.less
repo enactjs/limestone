@@ -68,10 +68,6 @@
 		border-radius: @lime-inputfield-border-radius;
 	}
 
-	&.centered .input{
-		text-align: center;
-	}
-
 	.input {
 		&:focus-within {
 			.input-placeholder({
@@ -90,8 +86,12 @@
 		z-index: 1;
 	}
 
-	.input.passwordtel, .input.password  {
+	.input.passwordtel, .input[type="password"]  {
 		letter-spacing: @lime-inputfield-password-spacing;
+
+		.input-placeholder({
+			letter-spacing: 0;
+		});
 	}
 	
 	.input.passwordtel {
@@ -153,8 +153,8 @@
 
 	// Skin colors
 	.applySkins({
-		caret-color: @lime-input-cursor;
-		color: @lime-input-text-success;
+		caret-color: @lime-inputfield-cursor;
+		color: @lime-inputfield-text-success;
 
 		.bg {
 			background-color: @lime-input-bg;
@@ -166,15 +166,15 @@
 
 			.input-placeholder({
 				font-weight: @lime-inputfield-placeholder-font-weight;
-				color: @lime-input-text-inactive;
+				color: @lime-inputfield-text-inactive;
 			});
 
 			&:focus-within {
-				color: @lime-input-text-active-focused;
+				color: @lime-inputfield-text-active-focused;
 
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-input-text-inactive-focused;
+					color: @lime-inputfield-text-inactive-focused;
 				});
 			}
 		}
@@ -199,18 +199,16 @@
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @lime-input-text-inactive-focused;
+			color: @lime-inputfield-text-inactive-focused;
 
 			.bg {
-				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-input-bg-focused;
-				});
+				.lime-spotlight-focus-bg-colors();
 			}
 
 			.input {
 				.input-placeholder({
 					font-weight: @lime-inputfield-placeholder-focus-font-weight;
-					color: @lime-input-text-inactive-focused;
+					color: @lime-inputfield-text-inactive-focused;
 					opacity: @lime-disabled-focus-content-opacity;
 				});
 			}
@@ -232,12 +230,10 @@
 
 		// For when the HTML input field has focus (someone is typing)
 		&:focus-within {
-			color: @lime-input-text-inactive-focused;
+			color: @lime-inputfield-text-inactive-focused;
 
 			.bg {
-				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-input-bg-focused;
-				});
+				.lime-spotlight-focus-bg-colors();
 				box-shadow: none;
 			}
 		}
@@ -251,7 +247,7 @@
 
 			.input {
 				.lime-disabled-colors();
-				color: @lime-input-text-inactive;
+				color: @lime-inputfield-text-inactive;
 			}
 
 			.focus({
@@ -261,7 +257,7 @@
 				}
 
 				.input {
-					color: @lime-input-text-inactive-focused;
+					color: @lime-inputfield-text-inactive-focused;
 				}
 			});
 		});

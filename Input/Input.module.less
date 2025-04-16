@@ -267,9 +267,7 @@
 			color: @lime-input-dot-focused;
 
 			&::before {
-				.lime-spotlight-focus-bg-colors(@bg: {
-					background-color: @lime-input-bg-focused;
-				});
+				.lime-spotlight-focus-bg-colors();
 				// Remove drop shadow for this input-like field
 				box-shadow: none;
 			}
