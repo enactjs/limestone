@@ -163,6 +163,7 @@
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             54px;
 @lime-picker-joined-font-size:      66px;
+@lime-radioitem-icon-font-size: var(--ref-font-size-48);
 @lime-steps-step-number-font-size:  54px;
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
@@ -745,13 +746,13 @@
 @lime-item-height-large: @lime-item-height;
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
-@lime-item-withlabel-padding: var(--ref-spacing-48) var(--ref-spacing-60);
+@lime-item-withlabel-padding: var(--ref-spacing-48) var(--ref-spacing-48);
 @lime-item-inline-max-width: 480px;
 @lime-item-border-radius: var(--alias-radius-container);
 @lime-item-slotafter-spacing: var(--ref-spacing-36);
 @lime-item-slotbefore-spacing: var(--ref-spacing-36);
 @lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
-@lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-60);
+@lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-48);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;
@@ -917,11 +918,12 @@
 
 // RadioItem
 // ---------------------------------------
-@lime-radioitem-indicator-border-width: 4px; // ### Exceptional Case ###
+@lime-radioitem-icon-border-width: 4px; // ### Exceptional Case ###
 	// 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
 	// this value must be specifically considered as to not impose layout issues related to, for
 	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
-@lime-radioitem-indicator-border-radius: @lime-common-circular-corners;
+@lime-radioitem-icon-border-radius: @lime-common-circular-corners;
+@lime-radioitem-icon-margin: var(--ref-spacing-24);
 
 // Scrim
 // ---------------------------------------
