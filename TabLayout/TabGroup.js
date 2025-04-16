@@ -180,7 +180,7 @@ const TabGroupBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'tabGroup',
-		publicClassNames: ['bg', 'button', 'selected', 'tab', 'tabGroup', 'vertical']
+		publicClassNames: ['bg', 'button', 'client', 'selected', 'tab', 'tabGroup', 'vertical']
 	},
 
 	computed: {
