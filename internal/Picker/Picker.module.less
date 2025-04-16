@@ -113,7 +113,7 @@
 			order: 2;
 		}
 
-		&.large {
+		&.large:not(.joined) {
 			width: @lime-picker-large-horizontal-width;
 		}
 	}
@@ -141,6 +141,14 @@
 			height: @lime-picker-joined-horizontal-height;
 			padding: @lime-picker-joined-horizontal-padding;
 
+			&.large {
+				width: @lime-picker-joined-horizontal-large-width;
+
+				.valueWrapper {
+					width: 100%;
+				}
+			}
+
 			&::before {
 				border-radius: @lime-picker-joined-horizontal-border-radius;
 			}
@@ -152,6 +160,8 @@
 
 			.valueWrapper {
 				margin-bottom: @lime-picker-joined-horizontal-value-offset;
+				height: @lime-picker-joined-value-height;
+				line-height: @lime-picker-joined-value-height;
 			}
 
 			.item {
@@ -196,14 +206,6 @@
 			&::before {
 				border-radius: @lime-picker-joined-vertical-border-radius;
 			}
-
-			&.large {
-				width: @lime-picker-joined-horizontal-large-width;
-
-				.valueWrapper {
-					width: 100%;
-				}
-			}
 		}
 
 		&.horizontal.arrow {
@@ -236,21 +238,19 @@
 
 	// Skin colors
 	.applySkins({
-		color: @lime-picker-full-bodytext-text;
+		color: @lime-picker-text;
 
 		&.joined {
-			color: @lime-picker-joined-text-color;
-
 			&.horizontal:not(.arrow) {
-				color: @lime-picker-full-picker-text;
+				color: @lime-picker-joined-text;
 
 				&::before {
 					.lime-spotlight-resting-bg-colors(1);
-					background-color: @lime-picker-full-picker-bg;
+					background-color: @lime-picker-bg;
 				}
 
 				.indicator {
-					background-color: @lime-picker-full-picker-icon;
+					background-color: @lime-picker-icon;
 					opacity: 0.4;
 
 					&.active {
@@ -262,11 +262,6 @@
 			&.horizontal.arrow, &.vertical {
 				&::before {
 					.lime-spotlight-resting-bg-colors();
-				}
-
-				.incrementer,
-				.decrementer {
-					color: @lime-picker-full-bodytext-icon;
 				}
 			}
 
@@ -285,15 +280,10 @@
 						&::before {
 							.lime-spotlight-focus-bg-colors();
 						}
-
-						.incrementer,
-						.decrementer {
-							color: @lime-picker-full-button-fill-icon-focused;
-						}
 					}
 
 					.lime-disabled({
-						color: @lime-picker-joined-focus-disabled-text-color;
+						color: @lime-picker-joined-disabled-text-focused;
 
 						&::before {
 							.lime-disabled-focus-bg-colors();
@@ -310,17 +300,17 @@
 						}
 
 						.indicator {
-							background-color: @lime-picker-joined-focus-disabled-indicator-bg-color;
-							opacity: @lime-picker-joined-focus-disabled-indicator-opacity;
+							background-color: @lime-picker-joined-disabled-indicator-bg-focused;
+							opacity: @lime-picker-joined-disabled-indicator-focused-opacity;
 
 							&.active {
-								opacity: @lime-picker-joined-focus-disabled-indicator-active-opacity;
+								opacity: @lime-picker-joined-disabled-indicator-focused-active-opacity;
 							}
 						}
 					});
 
 					.indicator {
-						background-color: @lime-picker-full-picker-icon-focused;
+						background-color: @lime-picker-icon-focused;
 						opacity: 0.4;
 
 						&.active {
