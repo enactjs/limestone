@@ -26,7 +26,6 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
-			text-align: left;
 			.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 			&.collapsed {
@@ -45,6 +44,14 @@
 				font-size: @lime-tablayout-tab-font-size;
 				min-width: @lime-button-height;
 			})
+		}
+
+		.client {
+			text-align: left;
+
+			.enact-locale-rtl({
+				text-align: right;
+			});
 		}
 	}
 

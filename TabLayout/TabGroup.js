@@ -52,7 +52,7 @@ const TabBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'tab',
-		publicClassNames: ['bg', 'button', 'selected', 'tab', 'vertical']
+		publicClassNames: ['bg', 'button', 'client', 'selected', 'tab', 'vertical']
 	},
 
 	handlers: {
