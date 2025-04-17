@@ -190,6 +190,14 @@ const TabLayoutTests = [
 		component: <TabLayout type="popup">{tabs}</TabLayout>,
 		wrapper: {full: true}
 	},
+	{
+		component: <TabLayout index={13}>{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		component: <TabLayout index={13} orientation="horizontal">{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
 	// start of [QWTC-2616]
 	<TabLayout orientation="vertical">
 		{Array.from({length: 20}, (v, i) => (
@@ -214,12 +222,6 @@ const TabLayoutTests = [
 				<Button>Tab {i} Top</Button>
 			</TabLayout.Tab>
 		))}
-	</TabLayout>,
-	<TabLayout index={9}>
-		{tabsForScroll}
-	</TabLayout>,
-	<TabLayout index={9} orientation="horizontal" tabSize={900}>
-		{tabsForScroll}
 	</TabLayout>,
 	// end of [QWTC-2616]
 	// *************************************************************

@@ -32,7 +32,6 @@ for (let i = 0; i < 100; i++) {
 }
 
 // Used to render VirtualGridList into Panels
-// eslint-disable-next-line enact/prop-types
 const renderItem = ({index, ...rest}) => {
 	const {caption, source, text} = items[index];
 	return (

@@ -10,15 +10,14 @@ import {tabsForScroll} from '../TabComponents';
 spotlight.setPointerMode(false);
 
 const app = (props) => (
-	<div {...props} style={{display: 'flex', flexDirection: 'row', overflow: 'scroll'}}>
-		<TabLayout
-			id="tabLayout"
-			orientation="horizontal"
-			tabSize={900}
-		>
-			{tabsForScroll}
-		</TabLayout>
-	</div>
+	<TabLayout
+		{...props}
+		id="tabLayout"
+		orientation="horizontal"
+		tabSize={900}
+	>
+		{tabsForScroll}
+	</TabLayout>
 );
 
 export default ThemeDecorator(app);
