@@ -14,7 +14,6 @@ const defaultDataSize = 100;
 
 const items = [];
 
-// eslint-disable-next-line enact/prop-types
 const renderItem = ({index, ...rest}) => {
 	const {children, label, source} = items[index];
 
