@@ -1,7 +1,7 @@
 import {Card, CardBase} from '@enact/limestone/Card';
 import VirtualGridList from '@enact/limestone/VirtualList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, number, object, select} from '@enact/storybook-utils/addons/controls';
+import {number, object, select} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
 import ri from '@enact/ui/resolution';
 
