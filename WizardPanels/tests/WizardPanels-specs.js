@@ -54,7 +54,7 @@ describe('WizardPanels Specs', () => {
 			const expected = 'subtitle';
 			const actual = screen.getByText(viewSubtitle);
 
-			expect(actual).toHaveClass(expected);
+			expect(actual.parentElement.parentElement).toHaveClass(expected);
 		}
 	);
 
