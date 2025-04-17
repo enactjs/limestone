@@ -191,11 +191,11 @@ const TabLayoutTests = [
 		wrapper: {full: true}
 	},
 	{
-		component: <TabLayout index={9}>{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={13}>{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	},
 	{
-		component: <TabLayout index={9} orientation="horizontal">{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={13} orientation="horizontal">{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	},
 	// start of [QWTC-2616]
