@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Card` prop `secondaryLabel`
+
 ### Changed
 
 - `limestone/Item` styling to match the latest GUI
