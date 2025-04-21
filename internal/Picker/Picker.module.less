@@ -235,7 +235,7 @@
 				}
 
 				.indicator {
-					background-color: @lime-picker-icon;
+					background-color: @lime-picker-indicator;
 					opacity: 0.4;
 
 					&.active {
@@ -268,8 +268,6 @@
 					}
 
 					.lime-disabled({
-						color: @lime-picker-joined-disabled-text-focused;
-
 						&::before {
 							.lime-disabled-focus-bg-colors();
 						}
@@ -283,19 +281,10 @@
 						.valueWrapper {
 							.lime-disabled-focus-content-colors();
 						}
-
-						.indicator {
-							background-color: @lime-picker-joined-disabled-indicator-bg-focused;
-							opacity: @lime-picker-joined-disabled-indicator-focused-opacity;
-
-							&.active {
-								opacity: @lime-picker-joined-disabled-indicator-focused-active-opacity;
-							}
-						}
 					});
 
 					.indicator {
-						background-color: @lime-picker-icon-focused;
+						background-color: @lime-picker-indicator-focused;
 						opacity: 0.4;
 
 						&.active {
