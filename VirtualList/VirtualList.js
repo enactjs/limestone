@@ -111,7 +111,9 @@ let VirtualList = (props) => {
 		...scrollContentWrapperRest
 	} = scrollContentWrapperProps;
 
-	const themeScrollContainerProps = ({...scrollContainerProps, className: classnames(css.scrollContainer, scrollContainerProps.className)});
+	const themeScrollContainerProps = scrollContentProps.direction === 'vertical' ?
+		{...scrollContainerProps, className: classnames(css.scrollContainer, scrollContainerProps.className)} :
+		scrollContainerProps;
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
