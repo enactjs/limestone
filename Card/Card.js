@@ -200,6 +200,9 @@ const CardBase = kind({
 	},
 
 	computed: {
+		'aria-label': ({children, label, secondaryLabel, selected}) => {
+			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' selected' : ''}`;
+		},
 		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
