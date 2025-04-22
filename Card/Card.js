@@ -254,6 +254,7 @@ const CardBase = kind({
 	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, ...rest}) => {
 		delete rest.centered;
 		delete rest.label;
+		delete rest.secondaryLabel;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
