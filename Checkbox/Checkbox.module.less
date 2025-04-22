@@ -115,9 +115,11 @@
 			@lime-checkbox-bg-selected-disabled-focused,
 			@lime-checkbox-border-selected-disabled-focused
 		);
-		{
-			// No custom rules for this state
-		};
+		.checkbox-colors(
+			@lime-checkbox-icon-indeterminate-focused,
+			@lime-checkbox-bg-indeterminate-focused,
+			@lime-checkbox-border-indeterminate-focused
+		);
 	);
 };
 
@@ -182,14 +184,16 @@
 		// Disabled
 		.lime-disabled({
 			.icon {
-				.lime-disabled-focus-content-colors();
+				.lime-disabled-colors();
 			}
-
-			@checkbox-disabled-resting();
 
 			// Disabled + Focus
 			.focus({
 				@checkbox-disabled-focus();
+
+				.icon {
+					.lime-disabled-focus-content-colors();
+				}
 			});
 		});
 	});
@@ -215,7 +219,7 @@
 
 .applySkins({
 	.disabled({
-		& .checkbox {
+		&.checkbox {
 			@checkbox-disabled-resting();
 		}
 	});
