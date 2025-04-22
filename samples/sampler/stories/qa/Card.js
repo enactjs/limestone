@@ -74,7 +74,7 @@ export const WithAsyncRender = (args) => (
 );
 
 number('dataSize', WithAsyncRender, Config, defaultDataSize);
-select('direction', WithAsyncRender, prop.direction, Config, 'horizontal');
+select('direction', WithAsyncRender, prop.direction, Config);
 object('src', WithAsyncRender, Config, src);
 
-WithAsyncRender.storyName = 'with async render feature';
+WithAsyncRender.storyName = 'with async render';
