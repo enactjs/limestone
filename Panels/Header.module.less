@@ -154,6 +154,10 @@
 		margin: @lime-header-wizard-margin;
 		padding: @lime-header-wizard-padding;
 
+		&.noSubtitle {
+			padding-bottom: @lime-header-wizard-nosubtitle-padding-bottom;
+		}
+
 		.titleContainer {
 			// absolutely position the incoming title
 			&:nth-child(2) {
@@ -170,7 +174,6 @@
 		}
 
 		.subtitle {
-			.lime-multi-line-ellipsis(@lime-header-wizard-subtitle-lines);
 			.lime-font-size(@lime-header-wizard-subtitle-font-size);
 			line-height: @lime-header-wizard-subtitle-line-height;
 			padding: @lime-header-wizard-subtitle-padding;
