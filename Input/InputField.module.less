@@ -69,14 +69,6 @@
 		border-radius: @lime-inputfield-border-radius;
 	}
 
-	.input {
-		&:focus-within {
-			.input-placeholder({
-				padding: @lime-inputfield-placeholder-padding;
-			});
-		}
-	}
-
 	.input,
 	.inputHighlight {
 		font-size: @lime-input-font-size;
@@ -166,7 +158,6 @@
 			color: inherit;
 
 			.input-placeholder({
-				font-weight: @lime-inputfield-placeholder-font-weight;
 				color: @lime-inputfield-text-inactive;
 			});
 
@@ -174,8 +165,8 @@
 				color: @lime-inputfield-text-active-focused;
 
 				.input-placeholder({
-					font-weight: @lime-inputfield-placeholder-focus-font-weight;
 					color: @lime-inputfield-text-inactive-focused;
+					opacity: @lime-disabled-focus-content-opacity;
 				});
 			}
 		}
@@ -208,7 +199,6 @@
 
 			.input {
 				.input-placeholder({
-					font-weight: @lime-inputfield-placeholder-focus-font-weight;
 					color: @lime-inputfield-text-inactive-focused;
 					opacity: @lime-disabled-focus-content-opacity;
 				});
