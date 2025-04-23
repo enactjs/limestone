@@ -91,17 +91,17 @@
 // Card
 // ---------------------------------------
 @lime-card-bg: var(--alias-color-container-group);
-@lime-card-selection-icon-color: transparent;
-@lime-card-selected-selection-icon-color: var(--alias-color-on-selection-icon-selected);
-@lime-card-selected-selection-icon-bg-color: var(--alias-color-accent);
-@lime-card-selected-image-border-color: var(--alias-color-on-border-selected);
-@lime-card-focused-bg-color: var(--alias-color-container-focused);
-@lime-card-focused-image-border-color: var(--alias-color-on-border-full);
-@lime-card-scrim-bg-color: var(--alias-color-scrim-a50);
-@lime-card-caption-color: var(--alias-color-on-surface-main);
-@lime-card-label-color: var(--alias-color-on-surface-sub);
-@lime-card-focus-caption-color: var(--alias-color-on-focused);
-@lime-card-focus-label-color: var(--alias-color-on-sub-focused);
+@lime-card-selection-icon: transparent;
+@lime-card-selection-icon-selected: var(--alias-color-selection-icon-selected);
+@lime-card-selection-bg-selected: var(--alias-color-accent);
+@lime-card-border-selected: var(--alias-color-on-border-selected);
+@lime-card-bg-focused: var(--alias-color-container-focused);
+@lime-card-border-focused: var(--alias-color-on-border-full);
+@lime-card-scrim-bg: var(--alias-color-scrim-a50);
+@lime-card-text: var(--alias-color-on-surface-main);
+@lime-card-text-sub: var(--alias-color-on-surface-sub);
+@lime-card-text-focused: var(--alias-color-on-focused);
+@lime-card-text-sub-focused: var(--alias-color-on-sub-focused);
 
 // Checkbox
 // ---------------------------------------
@@ -109,8 +109,8 @@
 @lime-checkbox-bg-focused: @lime-checkbox-bg;
 @lime-checkbox-bg-selected: var(--alias-color-accent);
 @lime-checkbox-bg-selected-focused: @lime-checkbox-bg-selected;
-@lime-checkbox-bg-selected-disabled: var(--alias-color-selection-bg-active-disabled);
-@lime-checkbox-bg-selected-disabled-focused: var(--alias-color-selection-bg-active-disabled-focused);
+@lime-checkbox-bg-selected-disabled: @lime-checkbox-bg-selected;
+@lime-checkbox-bg-selected-disabled-focused:  @lime-checkbox-bg-selected;
 @lime-checkbox-bg-indeterminate: @lime-checkbox-bg;
 @lime-checkbox-bg-indeterminate-focused: @lime-checkbox-bg-indeterminate;
 @lime-checkbox-bg-standalone-disabled-focused: @lime-item-bg-disabled-focused;
@@ -118,16 +118,16 @@
 @lime-checkbox-icon-focused: @lime-checkbox-icon;
 @lime-checkbox-icon-selected: var(--alias-color-on-selected);
 @lime-checkbox-icon-selected-focused: @lime-checkbox-icon-selected;
-@lime-checkbox-icon-selected-disabled: var(--alias-color-selection-icon-selected-disabled);
-@lime-checkbox-icon-selected-disabled-focused: var(--alias-color-selection-icon-selected-disabled-focused);
+@lime-checkbox-icon-selected-disabled: @lime-checkbox-icon-selected;
+@lime-checkbox-icon-selected-disabled-focused: @lime-checkbox-icon-selected;
 @lime-checkbox-icon-indeterminate: @lime-checkbox-border;
 @lime-checkbox-icon-indeterminate-focused: @lime-checkbox-border-focused;
 @lime-checkbox-border: var(--alias-color-on-surface-main);
 @lime-checkbox-border-focused: var(--alias-color-on-focused);
 @lime-checkbox-border-selected: @lime-checkbox-bg-selected;
-@lime-checkbox-border-selected-focused: @lime-checkbox-bg-selected;
-@lime-checkbox-border-selected-disabled: @lime-checkbox-bg-selected-disabled;
-@lime-checkbox-border-selected-disabled-focused: @lime-checkbox-bg-selected-disabled-focused;
+@lime-checkbox-border-selected-focused: @lime-checkbox-border-selected;
+@lime-checkbox-border-selected-disabled: @lime-checkbox-border-selected;
+@lime-checkbox-border-selected-disabled-focused: @lime-checkbox-border-selected;
 @lime-checkbox-border-disabled: var(--alias-color-selection-border-disabled);
 @lime-checkbox-border-disabled-focused: var(--alias-selection-border-disabled-focused);
 @lime-checkbox-border-indeterminate: var(--alias-color-on-surface-main);
@@ -142,8 +142,8 @@
 
 // Dropdown
 // ---------------------------------------
-@lime-dropdown-title-color: var(--alias-color-on-surface-sub);
-@lime-dropdown-selected-text-color: var(--alias-color-on-selected);
+@lime-dropdown-title-text: var(--alias-color-on-index);
+@lime-dropdown-text-selected: var(--alias-color-on-selected);
 
 // FixedPopupPanels
 // ---------------------------------------
@@ -262,20 +262,11 @@
 
 // Picker
 // ---------------------------------------
-@lime-picker-text-color: var(--alias-color-on-surface-main);
-@lime-picker-indicator-active-bg-color: var(--alias-color-indicator-icon-active);
-@lime-picker-indicator-active-focus-bg-color: var(--alias-color-indicator-icon-active-focused);
-@lime-picker-indicator-inactive-bg-color: var(--alias-color-indicator-icon-inactive);
-@lime-picker-indicator-inactive-focus-bg-color: var(--alias-color-indicator-icon-inactive-focused);
-@lime-picker-joined-horizontal-text-color: var(--alias-color-on-container-main);
-@lime-picker-joined-horizontal-bg-color: var(--alias-color-container-normal);
-@lime-picker-joined-text-color: var(--alias-color-on-surface-main);
-@lime-picker-joined-incrementer-color: ~"color(from" var(--alias-color-on-container-sub) ~"srgb r g b / 0.5)";
-@lime-picker-joined-focus-incrementer-color: var(--alias-color-on-focused);
-@lime-picker-joined-focus-disabled-text-color: @lime-picker-indicator-active-focus-bg-color;
-@lime-picker-joined-focus-disabled-indicator-bg-color: @lime-picker-indicator-active-focus-bg-color;
-@lime-picker-joined-focus-disabled-indicator-opacity: 0.9;
-@lime-picker-joined-focus-disabled-indicator-active-opacity: 1;
+@lime-picker-text: var(--alias-color-on-surface-main);
+@lime-picker-bg: var(--alias-color-container-normal);
+@lime-picker-indicator: var(--alias-color-indicator-icon-active);
+@lime-picker-indicator-focused: var(--alias-color-indicator-icon-active-focused);
+@lime-picker-joined-text: var(--alias-color-on-container-main);
 
 // Popup
 // ---------------------------------------
@@ -319,10 +310,11 @@
 
 // Scrollbar
 // ---------------------------------------
-@lime-scrollbar-track-bg-color: transparent;
-@lime-scrollbar-thumb-bg-color: var(--ref-color-base-25);
-@lime-scrollbar-thumb-focus-bg-color: var(--alias-color-container-focused);
-@lime-scrollbar-thumb-focus-direction-indicator-color: ~"color(from" var(--alias-color-on-focused) ~"srgb r g b / 0.4)";
+@lime-scroll-bg: transparent;
+@lime-scroll-bg-focused: ~"color(from" var(--alias-color-container-normal) ~"srgb r g b /" 0.25 ~")" ;
+@lime-scroll-bar: var(--ref-color-base-50);
+@lime-scroll-bar-focused: var(--alias-color-on-container-main);
+@lime-scroll-arrow: var(--alias-color-accent);
 @lime-scrollbar-thumb-focus-box-shadow-color: var(--alias-color-shadow);
 
 // Scroller
@@ -377,8 +369,8 @@
 
 // TabLayout
 // ---------------------------------------
-@lime-tablayout-tab-horizontal-border-color: ~"color(from" var(--alias-color-on-surface-main) ~"srgb r g b / 0.5)";
-@lime-tablayout-tab-horizontal-selected-border-color: var(--alias-color-on-selected);
+@lime-tablayout-tab-bg-selected: var(--alias-color-container-selected-alpha20);
+@lime-tablayout-tab-bg-group: var(--alias-color-container-group);
 
 // Tooltip
 // ---------------------------------------
