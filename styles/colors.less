@@ -313,10 +313,11 @@
 
 // Scrollbar
 // ---------------------------------------
-@lime-scrollbar-track-bg-color: transparent;
-@lime-scrollbar-thumb-bg-color: var(--ref-color-base-25);
-@lime-scrollbar-thumb-focus-bg-color: var(--alias-color-container-focused);
-@lime-scrollbar-thumb-focus-direction-indicator-color: ~"color(from" var(--alias-color-on-focused) ~"srgb r g b / 0.4)";
+@lime-scroll-bg: transparent;
+@lime-scroll-bg-focused: ~"color(from" var(--alias-color-container-normal) ~"srgb r g b /" 0.25 ~")" ;
+@lime-scroll-bar: var(--ref-color-base-50);
+@lime-scroll-bar-focused: var(--alias-color-on-container-main);
+@lime-scroll-arrow: var(--alias-color-accent);
 @lime-scrollbar-thumb-focus-box-shadow-color: var(--alias-color-shadow);
 
 // Scroller
@@ -390,3 +391,7 @@
 @lime-video-player-title-color: var(--alias-color-on-surface-main);
 @lime-video-player-title-text-shadow: 0 4px 4px var(--alias-color-shadow);
 @lime-video-player-scrim-gradient-color: linear-gradient(180deg, transparent 0%, #000 100%);
+
+// VirtualList
+// ---------------------------------------
+@lime-virtuallist-container-bg: var(--alias-color-container-group);

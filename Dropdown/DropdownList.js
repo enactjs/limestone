@@ -164,6 +164,7 @@ const DropdownListBase = kind({
 					itemSize={ri.scale(itemSize)}
 					scrollbarTrackCss={css}
 					style={{
+						backgroundColor: 'transparent',
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}
