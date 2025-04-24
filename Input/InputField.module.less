@@ -156,6 +156,7 @@
 		.input {
 			background: transparent;
 			color: inherit;
+			opacity: @lime-inputfield-text-inactive-focused-opacity;
 
 			.input-placeholder({
 				color: @lime-inputfield-text-inactive;
@@ -163,10 +164,11 @@
 
 			&:focus-within {
 				color: @lime-inputfield-text-active-focused;
+				opacity: 1;
 
 				.input-placeholder({
 					color: @lime-inputfield-text-inactive-focused;
-					opacity: @lime-disabled-focus-content-opacity;
+					opacity: @lime-inputfield-text-inactive-focused-opacity;
 				});
 			}
 		}
@@ -200,7 +202,7 @@
 			.input {
 				.input-placeholder({
 					color: @lime-inputfield-text-inactive-focused;
-					opacity: @lime-disabled-focus-content-opacity;
+					opacity: @lime-inputfield-text-inactive-focused-opacity;
 				});
 			}
 
