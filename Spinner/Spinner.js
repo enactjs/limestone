@@ -121,7 +121,7 @@ const SpinnerBase = kind({
 	},
 
 	defaultProps: {
-		size: 'large',
+		size: 'medium',
 		transparent: false
 	},
 
