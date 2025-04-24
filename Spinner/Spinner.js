@@ -101,14 +101,14 @@ const SpinnerBase = kind({
 		/**
 		 * Customize the size of this component.
 		 *
-		 * Recommended usage is "large" (default) for standalone and popup scenarios, while "small"
+		 * Recommended usage is "medium" (default) for standalone and popup scenarios, while "small"
 		 * is best suited for use inside other elements, like {@link limestone/Item.Item}.
 		 *
-		 * @type {('large'|'small')}
-		 * @default 'large'
+		 * @type {('medium'|'small')}
+		 * @default 'medium'
 		 * @public
 		 */
-		size: PropTypes.oneOf(['large', 'small']),
+		size: PropTypes.oneOf(['medium', 'small']),
 
 		/**
 		 * Removes the background color (making it transparent).
