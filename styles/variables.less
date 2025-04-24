@@ -1094,8 +1094,7 @@
 
 // WizardPanels
 // ---------------------------------------
-@lime-wizardpanels-steps-height: 60px;
 @lime-wizardpanels-content-border-radius: var(--alias-radius-container);
-@lime-wizardpanels-content-margin: var(--ref-spacing-60) 324px var(--ref-spacing-60) 324px;
+@lime-wizardpanels-content-margin: var(--ref-spacing-60) (324px - .extract(@lime-panel-body-padding, left)[]);
 @lime-wizardpanels-footer-margin: 0 0 var(--ref-spacing-132) 0;
 @lime-wizardpanels-button-icon-text-gap: var(--ref-spacing-54);
