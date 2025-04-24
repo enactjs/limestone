@@ -147,7 +147,7 @@
 	// Skin colors
 	.applySkins({
 		caret-color: @lime-inputfield-cursor;
-		color: @lime-inputfield-text-success;
+		color: @lime-inputfield-text-inactive;
 
 		.bg {
 			background-color: @lime-inputfield-bg;
@@ -202,7 +202,6 @@
 			.input {
 				.input-placeholder({
 					color: @lime-inputfield-text-inactive-focused;
-					opacity: @lime-inputfield-text-inactive-focused-opacity;
 				});
 			}
 
@@ -240,6 +239,7 @@
 
 			.input {
 				color: @lime-inputfield-text-inactive;
+				opacity: @lime-inputfield-text-inactive-focused-opacity;
 			}
 
 			.focus({
