@@ -33,6 +33,7 @@
 @lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, var(--ref-color-base-60));
 @lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, var(--ref-color-base-65));
 @lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, var(--ref-color-base-60));
+@lime-shadow: ~"color(from" var(--primitive-color-black) ~"srgb r g b / 0.35)";
 
 // component colors
 @lime-alert-overlay-progress-color: var(--lime-alert-overlay-progress-color, var(--alias-color-accent));
@@ -55,7 +56,7 @@
 // ---------------------------------------
 @lime-spotlight-text-color:           var(--semantic-color-on-surface-main-focused); // Used in color-mixins.less, QA Sampler Marquee
 @lime-spotlight-bg-color:             var(--semantic-color-surface-default-focused); // If this changes, update Button bg-color mixins in color-mixins.less
-@lime-spotlight-focus-shadow:         0 24px 36px var(--alias-color-shadow); // Used in color-mixins.less
+@lime-spotlight-focus-shadow:         0 24px 36px @lime-shadow; // Used in color-mixins.less
 
 
 // ---------------------------------------
@@ -70,7 +71,7 @@
 // Alert
 // ---------------------------------------
 @lime-alert-bg-color: var(--semantic-color-background-full-default);
-@lime-alert-overlay-shadow: 0 36px 48px 0 var(--alias-color-shadow);
+@lime-alert-overlay-shadow: 0 36px 48px 0 @lime-shadow;
 
 // Button
 // ---------------------------------------
@@ -138,7 +139,7 @@
 // ContextualPopup
 // ---------------------------------------
 @lime-contextualpopup-bg-color: var(--semantic-color-background-overlay-default);
-@lime-contextualpopup-shadow: 0 24px 60px var(--alias-color-shadow);
+@lime-contextualpopup-shadow: 0 24px 60px @lime-shadow;
 
 // Dropdown
 // ---------------------------------------
@@ -149,13 +150,13 @@
 // ---------------------------------------
 @lime-fixedpopuppanels-bg-color: @lime-popup-bg-color;
 @lime-fixedpopuppanels-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-fixedpopuppanels-shadow: 0 36px 36px var(--alias-color-shadow);
+@lime-fixedpopuppanels-shadow: 0 36px 36px @lime-shadow;
 
 // FlexiblePopupPanels
 // ---------------------------------------
 @lime-flexiblepopuppanels-panel-bg-color: @lime-popup-bg-color;
 @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px var(--alias-color-shadow);
+@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-shadow;
 
 // FormCheckboxItem
 // ---------------------------------------
@@ -165,7 +166,7 @@
 
 // Header
 // ---------------------------------------
-@lime-header-text-shadow: 6px 12px 12px var(--alias-color-shadow);
+@lime-header-text-shadow: 6px 12px 12px @lime-shadow;
 
 // Heading
 // ---------------------------------------
@@ -191,7 +192,7 @@
 @lime-imageitem-image-border-color: transparent;
 @lime-imageitem-selection-icon-color: transparent;
 @lime-imageitem-selection-icon-bg-color: transparent;
-@lime-imageitem-focus-bg-shadow: 0 36px 36px var(--alias-color-shadow);
+@lime-imageitem-focus-bg-shadow: 0 36px 36px @lime-shadow;
 @lime-imageitem-focus-selection-icon-color: @lime-imageitem-selection-icon-color;
 @lime-imageitem-focus-selection-icon-bg-color: @lime-imageitem-selection-icon-bg-color;
 @lime-imageitem-selected-selection-icon-color: var(--semantic-color-on-surface-main-selected);
@@ -252,7 +253,7 @@
 // MediaPlayer
 // ---------------------------------------
 @lime-mediaplayer-slider-knob-color: var(--semantic-color-on-surface-accent);
-@lime-mediaplayer-slider-tooltip-text-shadow: 0 4px 4px var(--alias-color-shadow);
+@lime-mediaplayer-slider-tooltip-text-shadow: 0 4px 4px @lime-shadow;
 
 // MediaSlider
 // ---------------------------------------
@@ -277,7 +278,7 @@
 // ---------------------------------------
 @lime-popuptablayout-bg-color: @lime-popup-bg-color;
 @lime-popuptablayout-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-popuptablayout-shadow: 0 42px 24px var(--alias-color-shadow);
+@lime-popuptablayout-shadow: 0 42px 24px @lime-shadow;
 
 // ProgressBar
 // ---------------------------------------
@@ -313,7 +314,7 @@
 @lime-scroll-bar: var(--ref-color-base-50);
 @lime-scroll-bar-focused: var(--alias-color-on-container-main);
 @lime-scroll-arrow: var(--alias-color-accent);
-@lime-scrollbar-thumb-focus-box-shadow-color: var(--alias-color-shadow);
+@lime-scrollbar-thumb-focus-box-shadow-color: @lime-shadow;
 
 // Scroller
 // ---------------------------------------
@@ -331,7 +332,7 @@
 @lime-slider-focus-fill-bg-color: var(--semantic-color-surface-default-focused);
 @lime-slider-focus-knob-bg-color: @lime-slider-focus-fill-bg-color;
 @lime-slider-focus-knob-border-color: @lime-slider-knob-border-color;
-@lime-slider-focus-knob-shadow: 0 6px 12px var(--alias-color-shadow);
+@lime-slider-focus-knob-shadow: 0 6px 12px @lime-shadow;
 @lime-slider-active-bar-bg-color: @lime-slider-focus-bar-bg-color;
 @lime-slider-active-load-bg-color: @lime-slider-focus-load-bg-color;
 @lime-slider-active-fill-bg-color: @lime-slider-focus-fill-bg-color;
@@ -346,7 +347,7 @@
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
 @lime-spinner-bg-color: var(--semantic-color-surface-default);
 @lime-spinner-text-color: var(--semantic-color-on-surface-main);
-@lime-spinner-text-shadow-color: var(--alias-color-shadow);
+@lime-spinner-text-shadow-color: @lime-shadow;
 
 // Steps
 // ---------------------------------------
@@ -374,7 +375,7 @@
 // ---------------------------------------
 @lime-tooltip-bg-color:               var(--semantic-color-surface-default-focused);
 @lime-tooltip-text-color:             var(--semantic-color-on-surface-main-focused);
-@lime-tooltip-shadow:                 0 18px 12px var(--alias-color-shadow);
+@lime-tooltip-shadow:                 0 18px 12px @lime-shadow;
 
 // VideoPlayer
 // ---------------------------------------
@@ -384,7 +385,7 @@
 @lime-video-slider-tooltip-thumbnail-border-color: var(--semantic-color-on-background-main);
 @lime-video-player-bottom-bg-color: transparent;
 @lime-video-player-title-color: var(--semantic-color-on-background-main);
-@lime-video-player-title-text-shadow: 0 4px 4px var(--alias-color-shadow);
+@lime-video-player-title-text-shadow: 0 4px 4px @lime-shadow;
 @lime-video-player-scrim-gradient-color: linear-gradient(180deg, transparent 0%, #000 100%);
 
 // VirtualList
