@@ -77,10 +77,10 @@ const TimesBase = kind({
 
 	computed: {
 		currentPeriod:   ({current}) => secondsToPeriod(current),
-		currentReadable: ({current, formatter}) => secondsToTime(current, formatter),
+		currentReadable: ({current, formatter}) => secondsToTime(current, formatter, {includeHour: true}),
 		noSeparator: ({noCurrentTime, noTotalTime}) => noCurrentTime || noTotalTime,
 		totalPeriod:     ({total}) => secondsToPeriod(total),
-		totalReadable:   ({total, formatter}) => secondsToTime(total, formatter)
+		totalReadable:   ({total, formatter}) => secondsToTime(total, formatter, {includeHour: true})
 	},
 
 	render: ({currentPeriod, currentReadable, noCurrentTime, noSeparator, noTotalTime, totalPeriod, totalReadable, ...rest}) => {

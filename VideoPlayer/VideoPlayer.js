@@ -829,7 +829,7 @@ const VideoPlayerBase = class extends Component {
 			bottomControlsRendered: false,
 			feedbackAction: 'idle',
 			feedbackVisible: false,
-			infoVisible: false,
+			infoVisible: true,
 			mediaControlsVisible: false,
 			mediaSliderVisible: false,
 			miniFeedbackVisible: false,
@@ -2088,7 +2088,7 @@ const VideoPlayerBase = class extends Component {
 							playbackState={this.pulsedPlaybackState || this.prevCommand}
 							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
 						>
-							{secondsToTime(this.state.sliderTooltipTime, durFmt)}
+							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
 						</FeedbackContent>
 						{
 							this.state.mediaControlsVisible ?
