@@ -5,7 +5,7 @@
 @import "../styles/skin.less";
 
 // Module level variables, for use only in this file
-@popupTabLayout-max-height: ~"calc(100vh -" (.extract(@lime-popuptablayout-margin, top)[] + .extract(@lime-popuptablayout-margin, bottom)[])~")";
+@popupTabLayout-max-height: ~"calc(100vh - 2 * "@lime-popuptablayout-margin~")";
 
 .popupTabLayout {
 	// Override Popup (more precedence)
@@ -22,6 +22,8 @@
 		&.collapsed { /* Override TabLayout */ }
 
 		.tabGroup {
+			border-radius: @lime-popuptablayout-tabgroup-border-radius;
+
 			.tab {
 				&.vertical {
 					&.button {
@@ -76,7 +78,7 @@
 		background-color: transparent;
 
 		.tabGroup {
-			background-color: transparent;
+			background-color: @lime-popuptablayout-overlay-tab-bg-group;
 		}
 
 		.tabs,
@@ -96,18 +98,12 @@
 			}
 		}
 
-		&.scrimTranslucent {
-			.tabs,
-			.content .panels::before {
-				background-color: @lime-popuptablayout-bg-color;
-			}
-		}
-
 		&.scrimNone,
+		&.scrimTranslucent,
 		&.scrimTransparent {
 			.tabs,
 			.content .panels::before {
-				background-color: @lime-popuptablayout-scrimtransparent-bg-color;
+				background-color: @lime-popuptablayout-surface-overlay;
 			}
 		}
 	});
