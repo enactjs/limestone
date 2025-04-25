@@ -1,6 +1,6 @@
 import Button from '@enact/limestone/Button';
-import ContextualMenuDecorator from '@enact/sandstone/ContextualMenuDecorator';
-import ImageItem from '@enact/sandstone/ImageItem';
+import ContextualMenuDecorator from '@enact/limestone/ContextualMenuDecorator';
+import ImageItem from '@enact/limestone/ImageItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
 import Layout, {Cell} from '@enact/ui/Layout';
