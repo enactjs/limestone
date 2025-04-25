@@ -27,20 +27,20 @@
 @lime-alert-overlay-bg-color: var(--lime-alert-overlay-bg-color, var(--semantic-color-background-popup-default));
 @lime-alert-overlay-bg-color-opacity: 1;
 @lime-alert-overlay-text-color: var(--lime-alert-overlay-text-color, var(--semantic-color-on-background-popup-main));
-@lime-alert-overlay-text-sub-color: var(--lime-alert-overlay-text-sub-color, var(--ref-color-base-0-a70));
+@lime-alert-overlay-text-sub-color: var(--lime-alert-overlay-text-sub-color, var(--semantic-color-on-background-popup-sub));
 @lime-alert-overlay-focus-text-color: var(--lime-alert-overlay-focus-text-color, var(--semantic-color-on-surface-main-focused));
-@lime-alert-overlay-disabled-selected-color: var(--lime-alert-overlay-disabled-selected-color, var(--ref-color-base-65));
-@lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, var(--ref-color-base-60));
-@lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, var(--ref-color-base-65));
-@lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, var(--ref-color-base-60));
+@lime-alert-overlay-disabled-selected-color: var(--lime-alert-overlay-disabled-selected-color, var(--primitive-color-neutral-gray-65));
+@lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, var(--primitive-color-neutral-gray-60));
+@lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, var(--primitive-color-neutral-gray-65));
+@lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, var(--primitive-color-neutral-gray-60));
 @lime-shadow: ~"color(from" var(--semantic-color-surface-black) ~"srgb r g b / 0.35)";
 
 // component colors
 @lime-alert-overlay-progress-color: var(--lime-alert-overlay-progress-color, var(--semantic-color-surface-accent));
-@lime-alert-overlay-progress-bg-color: var(--lime-alert-overlay-progress-bg-color, var(--ref-color-base-40));
+@lime-alert-overlay-progress-bg-color: var(--lime-alert-overlay-progress-bg-color, var(--semantic-color-surface-popup-default-track));
 @lime-alert-overlay-progress-bg-color-opacity: var(--lime-alert-overlay-progress-bg-color-opacity, 1);
 @lime-alert-overlay-checkbox-color: var(--lime-alert-overlay-checkbox-color, var(--semantic-color-on-surface-main-selected));
-@lime-alert-overlay-checkbox-disabled-selected-text-color: var(--lime-alert-overlay-checkbox-disabled-selected-text-color, var(--ref-color-base-65));
+@lime-alert-overlay-checkbox-disabled-selected-text-color: var(--lime-alert-overlay-checkbox-disabled-selected-text-color, var(--primitive-color-neutral-gray-65));
 @lime-alert-overlay-formcheckboxitem-focus-text-color: var(--lime-alert-overlay-formcheckboxitem-focus-text-color, @lime-alert-overlay-focus-text-color);
 @lime-alert-overlay-item-disabled-focus-bg-color: var(--lime-alert-overlay-item-disabled-focus-bg-color, var(--semantic-color-surface-default-disabled-focused));
 
@@ -183,7 +183,7 @@
 @lime-iconitem-disabled-opacity: 0.4;
 @lime-iconitem-label-color: var(--semantic-color-on-background-main);
 @lime-iconitem-label-dark-color: var(--semantic-color-on-surface-main-focused);
-@lime-iconitem-border-color: var(--ref-color-base-100-a30);
+@lime-iconitem-border-color: var(--semantic-color-stroke-default);
 
 // ImageItem
 // ---------------------------------------
@@ -203,10 +203,10 @@
 
 // Input
 // ---------------------------------------
-@lime-input-bg: var(--ref-color-base-30);
-@lime-input-disabled-bg-focused: var(--alias-color-container-disabled-focused);
-@lime-input-dot-focused: var(--alias-color-on-focused);
-@lime-input-fullscreen-background-color: var(--alias-color-surface-full);
+@lime-input-bg: var(--semantic-color-surface-input);
+@lime-input-disabled-bg-focused: var(--semantic-color-default-disabled-focused);
+@lime-input-dot-focused: var(--semantic-color-on-surface-main-focused);
+@lime-input-fullscreen-background-color: var(--semantic-color-background-full-default);
 @lime-input-overlay-background-color: @lime-popup-bg-color;
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
 @lime-input-numberfield-disabled-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
@@ -218,13 +218,13 @@
 // ---------------------------------------
 @lime-inputfield-bg: @lime-input-bg;
 @lime-inputfield-disabled-bg-focused: @lime-input-disabled-bg-focused;
-@lime-inputfield-cursor: var(--alias-color-accent);
-@lime-inputfield-text-active-focused: var(--alias-color-on-focused);
-@lime-inputfield-text-inactive: var(--alias-color-on-container-main);
-@lime-inputfield-text-inactive-focused: var(--alias-color-on-focused);
+@lime-inputfield-cursor: var(--semantic-color-on-surface-accent);
+@lime-inputfield-text-active-focused: var(--semantic-color-on-surface-main-focused);
+@lime-inputfield-text-inactive: var(--semantic-color-on-surface-input);
+@lime-inputfield-text-inactive-focused: var(--semantic-color-on-surface-main-focused);
 @lime-inputfield-text-inactive-focused-opacity: 0.4;
 @lime-inputfield-invalid-color: @lime-invalid-color;
-@lime-inputfield-invalid-tooltip-color: var(--alias-color-invalid);
+@lime-inputfield-invalid-tooltip-color: var(--semantic-color-on-background-error);
 
 // Item
 // ---------------------------------------
@@ -344,7 +344,7 @@
 
 // Spinner
 // ---------------------------------------
-@lime-spinner-color: var(--ref-color-base-100);
+@lime-spinner-color: var(--semantic-color-on-background-main);
 @lime-spinner-head-color: @lime-spinner-color;
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
 @lime-spinner-bg-color: var(--semantic-color-surface-default);
@@ -353,19 +353,19 @@
 
 // Steps
 // ---------------------------------------
-@lime-steps-pageindicator-bg-color: var(--ref-color-secondary-60);
+@lime-steps-pageindicator-bg-color: ~"color(from "var(--semantic-color-surface-indicator) ~"srgb r g b /0.4)";
 @lime-steps-pageindicator-current-bg-color: var(--semantic-color-on-surface-main);
 
 // Switch
 // ---------------------------------------
-@lime-switch-icon-bg-color: var(--ref-color-base-70);
-@lime-switch-bg-color: var(--ref-color-base-45);
+@lime-switch-icon-bg-color: var(--semantic-color-surface-toggle-handle);
+@lime-switch-bg-color: var(--semantic-color-surface-toggle);
 @lime-switch-focus-icon-bg-color: @lime-switch-icon-bg-color;
 @lime-switch-selected-icon-bg-color: var(--semantic-color-on-surface-main);
 @lime-switch-selected-bg-color: var(--semantic-color-surface-toggle-active);
 @lime-switch-selected-focus-icon-bg-color: @lime-switch-selected-icon-bg-color;
-@lime-switch-disabled-selected-bg-color: #303030;
-@lime-switch-disabled-selected-icon-bg-color: var(--ref-color-base-25);
+@lime-switch-disabled-selected-bg-color: var(--semantic-color-surface-toggle-active);
+@lime-switch-disabled-selected-icon-bg-color: var(--semantic-color-on-surface-main);
 
 
 // TabLayout
