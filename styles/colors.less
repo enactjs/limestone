@@ -75,14 +75,14 @@
 
 // Button
 // ---------------------------------------
-@lime-button-fill-text: var(--semantic-color-on-surface-main);
-@lime-button-fill-bg: var(--semantic-color-surface-default);
-@lime-button-outline-bg: var(--alias-color-container-normal-alpha);
-@lime-button-outline-border: var(--alias-color-on-border-full); // 없음
-@lime-button-outline-border-selected: var(--alias-color-on-border-selected); // 없음
-@lime-button-fill-bg-focused: var(--semantic-color-surface-default-focused);
-@lime-button-fill-text-selected: var(--semantic-color-on-surface-main);
-@lime-button-fill-bg-selected: var(--semantic-color-surface-default-selected);
+@lime-button-fill-label: var(--semantic-color-on-surface-main);
+@lime-button-fill-container: var(--semantic-color-surface-default);
+@lime-button-outline-container: ~"color(from" var(--semantic-color-surface-default) ~"srgb r g b / 0.5)";
+@lime-button-outline-border: var(--semantic-color-stroke-button-outline);
+@lime-button-outline-border-selected: var(--semantic-color-stroke-default-selected);
+@lime-button-fill-container-focused: var(--semantic-color-surface-default-focused);
+@lime-button-fill-label-selected: var(--semantic-color-on-surface-main);
+@lime-button-fill-container-selected: var(--semantic-color-surface-default-selected);
 @lime-button-filter-focused: none;
 @lime-button-filter-selected: none;
 @lime-button-transparent-fill-text: var(--semantic-color-on-background-main);

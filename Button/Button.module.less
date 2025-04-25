@@ -295,7 +295,7 @@
 
 		&,
 		:global(.enact-a11y-high-contrast) & {
-			color: @lime-button-fill-text;
+			color: @lime-button-fill-label;
 		}
 
 		.bg {
@@ -308,13 +308,13 @@
 
 		&.bordered {
 			.bg {
-				background-color: @lime-button-outline-bg;
+				background-color: @lime-button-outline-container;
 				border: @lime-button-border-width solid @lime-button-outline-border;
 			}
 		}
 
 		&.opaque {
-			color: @lime-button-fill-text;
+			color: @lime-button-fill-label;
 
 			.bg {
 				opacity: @lime-button-bg-opacity;
@@ -367,7 +367,7 @@
 		}
 
 		&.selected {
-			color: @lime-button-fill-text-selected;
+			color: @lime-button-fill-label-selected;
 
 			.bg {
 				.lime-button-selected-colors();
