@@ -279,10 +279,10 @@
 
 // ProgressBar
 // ---------------------------------------
-@lime-progressbar-bg: var(--alias-color-progress-bg);
-@lime-progressbar-bar-buffer: var(--ref-color-base-60);
-@lime-progressbar-bar: var(--semantic-color-surface-accent);
-@lime-progressbar-bar-focused: var(--ref-color-base-100);
+@lime-progressbar-track: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-progressbar-track-buffer: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
+@lime-progressbar-track-active: var(--semantic-color-surface-accent);
+@lime-progressbar-track-active-focused: var(--semantic-color-surface-default-focused);
 
 // ProgressButton
 // ---------------------------------------
@@ -319,8 +319,8 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-bar-bg-color: @lime-progressbar-bg;
-@lime-slider-load-bg-color: @lime-progressbar-bar-buffer;
+@lime-slider-bar-bg-color: @lime-progressbar-track;
+@lime-slider-load-bg-color: @lime-progressbar-track-buffer;
 @lime-slider-fill-bg-color: var(--semantic-color-surface-accent);
 @lime-slider-knob-bg-color: @lime-slider-fill-bg-color;
 @lime-slider-knob-border-color: transparent;
