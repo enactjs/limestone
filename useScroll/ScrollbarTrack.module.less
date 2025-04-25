@@ -14,7 +14,7 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
-	background-color: @lime-scroll-bg;
+	background-color: @lime-scroll-track;
 	border-radius: @lime-scrollbar-track-border-radius;
 	opacity: 0;
 	transition: opacity 100ms ease-out;
@@ -24,7 +24,7 @@
 	}
 
 	&:has(.thumb:focus) {
-		background-color: @lime-scroll-bg-focused;
+		background-color: @lime-scroll-track-focused;
 	}
 
 	&.focusableScrollbar {
@@ -34,7 +34,7 @@
 	}
 
 	.thumb {
-		background: @lime-scroll-bar;
+		background: @lime-scroll-handle;
 		display: block;
 		position: absolute;
 		width: 100%;
@@ -43,7 +43,7 @@
 
 		.focus({
 			position: absolute;
-			background-color: @lime-scroll-bar-focused;
+			background-color: @lime-scroll-handle-focused;
 			box-shadow: @lime-scrollbar-thumb-focus-box-shadow @lime-scrollbar-thumb-focus-box-shadow-color;
 			border-radius: @lime-scrollbar-thumb-focus-border-radius;
 
