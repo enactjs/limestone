@@ -114,7 +114,7 @@
 @lime-checkbox-container-selected-disabled-focused:  @lime-checkbox-container-selected;
 @lime-checkbox-container-indeterminate: @lime-checkbox-container;
 @lime-checkbox-container-indeterminate-focused: @lime-checkbox-container-indeterminate;
-@lime-checkbox-container-standalone-disabled-focused: @lime-item-bg-disabled-focused;
+@lime-checkbox-container-standalone-disabled-focused: @lime-item-container-disabled-focused;
 @lime-checkbox-icon: transparent;
 @lime-checkbox-icon-focused: @lime-checkbox-icon;
 @lime-checkbox-icon-selected: var(--semantic-color-on-surface-main-selected);
@@ -224,15 +224,12 @@
 
 // Item
 // ---------------------------------------
-@lime-item-text: var(--alias-color-on-surface-main);
-@lime-item-text-focused: var(--alias-color-on-focused);
-@lime-item-text-selected: var(--alias-color-on-selected);
-@lime-item-text-sub: ~"color(from" var(--semantic-color-on-surface-white) ~"srgb r g b / 0.7)";
-@lime-item-text-sub-focused: var(--alias-color-on-sub-focused);
-@lime-item-text-sub-selected: var(--alias-color-on-sub-selected);
-@lime-item-bg-focused: var(--alias-color-container-focused);
-@lime-item-bg-selected: var(--alias-color-container-selected-alpha10);
-@lime-item-bg-disabled-focused: var(--alias-color-container-disabled-focused);
+@lime-item-label-main-selected: var(--semantic-color-on-background-main);
+@lime-item-label-sub: var(--semantic-color-on-background-sub);
+@lime-item-label-sub-focused: var(--semantic-color-on-surface-sub-focused);
+@lime-item-label-sub-selected: var(--semantic-color-on-background-sub);
+@lime-item-container-selected: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
+@lime-item-container-disabled-focused: var(--semantic-color-surface-default-disabled-focused);
 
 // KeyGuide
 // ---------------------------------------
