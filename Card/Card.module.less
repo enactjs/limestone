@@ -195,12 +195,12 @@
 		}
 
 		&.selected .selectionIcon {
-			background-color: @lime-card-selection-bg-selected;
+			background-color: @lime-card-selection-container-selected;
 			color: @lime-card-selection-icon-selected;
 		}
 
 		&.hasContainer {
-			background-color: @lime-card-bg;
+			background-color: @lime-card-container;
 
 			&.selected {
 				.selected-border(@lime-card-border-selected, 5);
@@ -209,16 +209,16 @@
 
 		&.selected {
 			.image::after {
-				background: @lime-card-scrim-bg;
+				background: @lime-card-scrim;
 			}
 		}
 
 		.caption {
-			color: @lime-card-text;
+			color: @lime-card-label-main;
 		}
 
 		.label {
-			color: @lime-card-text-sub;
+			color: @lime-card-label-sub;
 		}
 
 		&.vertical {
@@ -237,15 +237,15 @@
 			}
 
 			&.hasContainer {
-				background-color: @lime-card-bg-focused;
+				background-color: @lime-card-container-focused;
 				.selected-border(@lime-card-border-focused, 5);
 
 				.caption {
-					color: @lime-card-text-focused;
+					color: @lime-card-label-main-focused;
 				}
 
 				.label {
-					color: @lime-card-text-sub-focused;
+					color: @lime-card-label-sub-focused;
 				}
 			}
 

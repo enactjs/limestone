@@ -91,18 +91,18 @@
 
 // Card
 // ---------------------------------------
-@lime-card-bg: var(--alias-color-container-group);
+@lime-card-container: ~"color(from "var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
 @lime-card-selection-icon: transparent;
-@lime-card-selection-icon-selected: var(--alias-color-selection-icon-selected);
-@lime-card-selection-bg-selected: var(--alias-color-accent);
-@lime-card-border-selected: var(--alias-color-on-border-selected);
-@lime-card-bg-focused: var(--alias-color-container-focused);
-@lime-card-border-focused: var(--alias-color-on-border-full);
-@lime-card-scrim-bg: var(--alias-color-scrim-a50);
-@lime-card-text: var(--alias-color-on-surface-main);
-@lime-card-text-sub: var(--alias-color-on-surface-sub);
-@lime-card-text-focused: var(--alias-color-on-focused);
-@lime-card-text-sub-focused: var(--alias-color-on-sub-focused);
+@lime-card-selection-icon-selected: var(--semantic-color-on-surface-main-selected);
+@lime-card-selection-container-selected: var(--semantic-color-surface-accent);
+@lime-card-border-selected: var(--semantic-color-stroke-default-selected);
+@lime-card-container-focused: var(--semantic-color-surface-default-focused);
+@lime-card-border-focused: var(--semantic-color-stroke-default-focused);
+@lime-card-scrim: ~"color(from "var(--semantic-color-scrim-default) ~"srgb r g b / 0.5)";
+@lime-card-label-main: var(--semantic-color-on-background-main);
+@lime-card-label-sub: var(--semantic-color-on-background-sub);
+@lime-card-label-main-focused: var(--semantic-color-on-surface-main-focused);
+@lime-card-label-sub-focused: var(--semantic-color-on-surface-sub-focused);
 
 // Checkbox
 // ---------------------------------------
