@@ -212,13 +212,15 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 			// expect we'll be able to drop this when we add the private popupComponent
 			// implementation with the Repeater for the items since the popup class could be set
 			// on the component by itself
-			popupClassName: ({popupWidth, popupClassName, styler}) => {
+			popupClassName: ({menuItems, popupWidth, popupClassName, styler}) => {
 				const sizeClass = popupWidth !== 'auto' && popupWidth;
+				const verticalScrollbar = menuItems.length > MAX_VISIBLE_MENU_ITEMS;
 				return styler.join(
 					'popup',
 					'container',
 					popupClassName,
-					sizeClass
+					sizeClass,
+					verticalScrollbar ? 'verticalScrollbar' : null
 				);
 			},
 			popupComponent: ({menuItems}) => (menuItems && menuItems.length > MAX_VISIBLE_MENU_ITEMS ? ScrollingRepeater : Repeater),

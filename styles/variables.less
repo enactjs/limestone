@@ -437,12 +437,14 @@
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: 36px 0;
+@lime-contextualmenu-container-padding: var(--ref-spacing-36) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
-@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + .extract(@lime-contextualmenu-container-padding, top)[] + .extract(@lime-contextualmenu-container-padding, bottom)[]);
+@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
 @lime-contextualmenu-large-width: 960px;
+@lime-contextualmenu-large-withScrollbar-width: 984px;
 @lime-contextualmenu-small-width: 612px;
+@lime-contextualmenu-small-withScrollbar-width: 636px;
 
 // ContextualPopup
 // ---------------------------------------
