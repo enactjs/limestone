@@ -202,9 +202,11 @@
 
 // Input
 // ---------------------------------------
+@lime-input-bg: var(--ref-color-base-30);
+@lime-input-disabled-bg-focused: var(--alias-color-container-disabled-focused);
+@lime-input-dot-focused: var(--alias-color-on-focused);
 @lime-input-fullscreen-background-color: var(--alias-color-surface-full);
 @lime-input-overlay-background-color: @lime-popup-bg-color;
-@lime-input-numbercell-background-color: ~"color(from" var(--alias-color-on-surface-main) ~"srgb r g b / 0.2)";
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
 @lime-input-numberfield-disabled-color: ~"color(from" var(--alias-color-on-focused) ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
 @lime-input-numberfield-disabled-opacity: @lime-disabled-focus-bg-opacity;
@@ -213,11 +215,13 @@
 
 // InputField
 // ---------------------------------------
-@lime-inputfield-text-color: var(--alias-color-on-surface-main);
-@lime-inputfield-placeholder-color: ~"color(from" var(--alias-color-on-container-main) ~"srgb r g b / 0.2)";
-@lime-inputfield-placeholder-active-color: ~"color(from" var(--alias-color-on-focused) ~"srgb r g b / 0.4)";
-@lime-inputfield-focus-text-color: var(--alias-color-on-focused);
-@lime-inputfield-disabled-text-color: inherit;
+@lime-inputfield-bg: @lime-input-bg;
+@lime-inputfield-disabled-bg-focused: @lime-input-disabled-bg-focused;
+@lime-inputfield-cursor: var(--alias-color-accent);
+@lime-inputfield-text-active-focused: var(--alias-color-on-focused);
+@lime-inputfield-text-inactive: var(--alias-color-on-container-main);
+@lime-inputfield-text-inactive-focused: var(--alias-color-on-focused);
+@lime-inputfield-text-inactive-focused-opacity: 0.4;
 @lime-inputfield-invalid-color: @lime-invalid-color;
 @lime-inputfield-invalid-tooltip-color: var(--alias-color-invalid);
 
