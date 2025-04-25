@@ -40,19 +40,19 @@
 @checkbox-resting: {
 	.checkbox-states(
 		.checkbox-colors(
-			@lime-checkbox-icon,
-			@lime-checkbox-container,
-			@lime-checkbox-border
+			@lime-checkbox-icon-color,
+			@lime-checkbox-container-color,
+			@lime-checkbox-border-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-icon-selected,
-			@lime-checkbox-container-selected,
-			@lime-checkbox-border-selected
+			@lime-checkbox-icon-selected-color,
+			@lime-checkbox-container-selected-color,
+			@lime-checkbox-border-selected-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-icon-indeterminate,
-			@lime-checkbox-container-indeterminate,
-			@lime-checkbox-border-indeterminate
+			@lime-checkbox-icon-indeterminate-color,
+			@lime-checkbox-container-indeterminate-color,
+			@lime-checkbox-border-indeterminate-color
 		);
 	);
 };
@@ -63,23 +63,23 @@
 		// Gathered rules into a rules-set to include the .bg selector in the resting block
 		{
 			.checkbox-colors(
-				@lime-checkbox-icon-focused,
-				@lime-checkbox-container-focused,
-				@lime-checkbox-border-focused
+				@lime-checkbox-icon-focused-color,
+				@lime-checkbox-container-focused-color,
+				@lime-checkbox-border-focused-color
 			);
 			.bg {
 				.lime-spotlight-focus-bg-colors();
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-icon-selected-focused,
-			@lime-checkbox-container-selected-focused,
-			@lime-checkbox-border-selected-focused
+			@lime-checkbox-icon-selected-focused-color,
+			@lime-checkbox-container-selected-focused-color,
+			@lime-checkbox-border-selected-focused-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-icon-indeterminate-focused,
-			@lime-checkbox-container-indeterminate-focused,
-			@lime-checkbox-border-indeterminate-focused
+			@lime-checkbox-icon-indeterminate-focused-color,
+			@lime-checkbox-container-indeterminate-focused-color,
+			@lime-checkbox-border-indeterminate-focused-color
 		);
 	);
 };
@@ -91,9 +91,9 @@
 			// No custom rules for this state
 		};
 		.checkbox-colors(
-			@lime-checkbox-icon-selected-disabled,
-			@lime-checkbox-container-selected-disabled,
-			@lime-checkbox-border-selected-disabled
+			@lime-checkbox-icon-selected-disabled-color,
+			@lime-checkbox-container-selected-disabled-color,
+			@lime-checkbox-border-selected-disabled-color
 		);
 		{
 			// No custom rules for this state
@@ -107,18 +107,18 @@
 		{
 			// No custom rules for this state
 			.bg {
-				background-color: @lime-checkbox-container-standalone-disabled-focused;
+				background-color: @lime-checkbox-container-standalone-disabled-focused-color;
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-icon-selected-disabled-focused,
-			@lime-checkbox-container-selected-disabled-focused,
-			@lime-checkbox-border-selected-disabled-focused
+			@lime-checkbox-icon-selected-disabled-focused-color,
+			@lime-checkbox-container-selected-disabled-focused-color,
+			@lime-checkbox-border-selected-disabled-focused-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-icon-indeterminate-focused,
-			@lime-checkbox-container-indeterminate-focused,
-			@lime-checkbox-border-indeterminate-focused
+			@lime-checkbox-icon-indeterminate-focused-color,
+			@lime-checkbox-container-indeterminate-focused-color,
+			@lime-checkbox-border-indeterminate-focused-color
 		);
 	);
 };

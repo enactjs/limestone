@@ -295,26 +295,26 @@
 
 		&,
 		:global(.enact-a11y-high-contrast) & {
-			color: @lime-button-fill-label;
+			color: @lime-button-fill-label-color;
 		}
 
 		.bg {
 			.lime-button-resting-bg-colors();
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
-			border-color: @lime-button-outline-border;
+			border-color: @lime-button-outline-border-color;
 			border-radius: @lime-button-border-radius;
 		}
 
 		&.bordered {
 			.bg {
-				background-color: @lime-button-outline-container;
-				border: @lime-button-border-width solid @lime-button-outline-border;
+				background-color: @lime-button-outline-container-color;
+				border: @lime-button-border-width solid @lime-button-outline-border-color;
 			}
 		}
 
 		&.opaque {
-			color: @lime-button-fill-label;
+			color: @lime-button-fill-label-color;
 
 			.bg {
 				opacity: @lime-button-bg-opacity;
@@ -322,7 +322,7 @@
 		}
 
 		&.transparent {
-			color: @lime-button-transparent-fill-text;
+			color: @lime-button-transparent-fill-text-color;
 
 			.bg {
 				opacity: @lime-button-transparent-bg-opacity;
@@ -367,7 +367,7 @@
 		}
 
 		&.selected {
-			color: @lime-button-fill-label-selected;
+			color: @lime-button-fill-label-selected-color;
 
 			.bg {
 				.lime-button-selected-colors();
@@ -375,7 +375,7 @@
 
 			&.bordered {
 				.bg {
-					border: @lime-button-border-width solid @lime-button-outline-border-selected;
+					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
 				}
 			}
 
@@ -405,7 +405,7 @@
 
 			&.iconOnly {
 				.bg {
-					background-color: @lime-button-icononly-bg-focused;
+					background-color: @lime-button-icononly-bg-focused-color;
 				}
 			}
 
