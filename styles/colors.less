@@ -19,6 +19,7 @@
 @lime-overlay-outline-style: var(--lime-overlay-outline-style, none);
 
 @lime-invalid-color: #ff0000; // TBD
+@lime-shadow-color: ~"color(from" var(--semantic-color-on-background-black) ~"srgb r g b / 0.35)";
 
 // Overlay Alert
 // ---------------------------------------
@@ -33,7 +34,6 @@
 @lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, var(--primitive-color-neutral-gray-60));
 @lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, var(--primitive-color-neutral-gray-65));
 @lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, var(--primitive-color-neutral-gray-60));
-@lime-shadow-color: ~"color(from" var(--semantic-color-surface-black) ~"srgb r g b / 0.35)";
 
 // component colors
 @lime-alert-overlay-progress-color: var(--lime-alert-overlay-progress-color, var(--semantic-color-surface-accent));
@@ -183,7 +183,7 @@
 @lime-iconitem-disabled-opacity: 0.4;
 @lime-iconitem-label-color: var(--semantic-color-on-background-main);
 @lime-iconitem-label-dark-color: var(--semantic-color-on-surface-main-focused);
-@lime-iconitem-border-color: var(--semantic-color-stroke-default);
+@lime-iconitem-border-color: ~"color(from" var(--semantic-color-stroke-default-focused) ~"srgb r g b / 0.3)";
 
 // ImageItem
 // ---------------------------------------
