@@ -226,15 +226,15 @@
 
 	// Skin colors
 	.applySkins({
-		color: @lime-picker-text;
+		color: @lime-picker-label;
 
 		&.joined {
 			&.horizontal:not(.arrow) {
-				color: @lime-picker-joined-text;
+				color: @lime-picker-joined-label;
 
 				&::before {
 					.lime-spotlight-resting-bg-colors(1);
-					background-color: @lime-picker-bg;
+					background-color: @lime-picker-container;
 				}
 
 				.indicator {
