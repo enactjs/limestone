@@ -86,7 +86,7 @@
 			letter-spacing: 0;
 		});
 	}
-	
+
 	.input.passwordtel {
 		-webkit-text-security: disc;
 	}
@@ -146,29 +146,29 @@
 
 	// Skin colors
 	.applySkins({
-		caret-color: @lime-inputfield-cursor;
-		color: @lime-inputfield-text-inactive;
+		caret-color: @lime-inputfield-cursor-color;
+		color: @lime-inputfield-label-inactive-color;
 
 		.bg {
-			background-color: @lime-inputfield-bg;
+			background-color: @lime-inputfield-container-color;
 		}
 
 		.input {
 			background: transparent;
 			color: inherit;
-			opacity: @lime-inputfield-text-inactive-focused-opacity;
+			opacity: @lime-inputfield-label-inactive-focused-opacity;
 
 			.input-placeholder({
-				color: @lime-inputfield-text-inactive;
+				color: @lime-inputfield-label-inactive-color;
 			});
 
 			&:focus-within {
-				color: @lime-inputfield-text-active-focused;
+				color: @lime-inputfield-label-active-color;
 				opacity: 1;
 
 				.input-placeholder({
-					color: @lime-inputfield-text-inactive-focused;
-					opacity: @lime-inputfield-text-inactive-focused-opacity;
+					color: @lime-inputfield-label-inactive-focused-color;
+					opacity: @lime-inputfield-label-inactive-focused-opacity;
 				});
 			}
 		}
@@ -193,7 +193,7 @@
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @lime-inputfield-text-inactive-focused;
+			color: @lime-inputfield-label-inactive-focused-color;
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
@@ -201,7 +201,7 @@
 
 			.input {
 				.input-placeholder({
-					color: @lime-inputfield-text-inactive-focused;
+					color: @lime-inputfield-label-inactive-focused-color;
 				});
 			}
 
@@ -222,7 +222,7 @@
 
 		// For when the HTML input field has focus (someone is typing)
 		&:focus-within {
-			color: @lime-inputfield-text-inactive-focused;
+			color: @lime-inputfield-label-inactive-focused-color;
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
@@ -233,23 +233,23 @@
 		.lime-disabled({
 			.bg {
 				.lime-disabled-focus-bg-colors(@bg: {
-					opacity: @lime-inputfield-bg-opacity
+					opacity: @lime-inputfield-container-opacity
 				});
 			}
 
 			.input {
-				color: @lime-inputfield-text-inactive;
-				opacity: @lime-inputfield-text-inactive-focused-opacity;
+				color: @lime-inputfield-label-inactive-color;
+				opacity: @lime-inputfield-label-inactive-focused-opacity;
 			}
 
 			.focus({
 				.bg {
-					background-color: @lime-inputfield-disabled-bg-focused;
+					background-color: @lime-inputfield-container-disabled-focused-color;
 					filter: unset;
 				}
 
 				.input {
-					color: @lime-inputfield-text-inactive-focused;
+					color: @lime-inputfield-label-inactive-focused-color;
 				}
 			});
 		});
