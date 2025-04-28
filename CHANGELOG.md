@@ -4,12 +4,25 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Card` prop `secondaryLabel`
+
 ### Changed
 
 - `limestone/BodyText` styling to match the latest GUI.
+- `limestone/Button` styling to match the latest GUI
+- `limestone/Checkbox` styling to match the latest GUI
+- `limestone/Dropdown` styling to match the latest GUI
+- `limestone/Input.InputField` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
+- `limestone/Picker` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Scroller` styling to match the latest GUI
+- `limestone/Tab` styling to match the latest GUI
+- `limestone/VirtualList` styling to match the latest GUI
+- `limestone/WizardPanels` to marquee subtitle
 
 ### Fixed
 
