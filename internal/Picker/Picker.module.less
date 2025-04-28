@@ -226,19 +226,19 @@
 
 	// Skin colors
 	.applySkins({
-		color: @lime-picker-text;
+		color: @lime-picker-label-color;
 
 		&.joined {
 			&.horizontal:not(.arrow) {
-				color: @lime-picker-joined-text;
+				color: @lime-picker-joined-label-color;
 
 				&::before {
 					.lime-spotlight-resting-bg-colors(1);
-					background-color: @lime-picker-bg;
+					background-color: @lime-picker-container-color;
 				}
 
 				.indicator {
-					background-color: @lime-picker-indicator;
+					background-color: @lime-picker-indicator-color;
 					opacity: 0.4;
 
 					&.active {
@@ -287,7 +287,7 @@
 					});
 
 					.indicator {
-						background-color: @lime-picker-indicator-focused;
+						background-color: @lime-picker-indicator-focused-color;
 						opacity: 0.4;
 
 						&.active {
