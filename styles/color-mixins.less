@@ -141,15 +141,15 @@
 // autonomously calculate this in the future...
 // Button single-color mixins
 .lime-button-resting-bg-color () {
-	background-color: @lime-button-bg-color;
+	background-color: @lime-button-fill-container-color;
 }
 .lime-button-selected-bg-color () {
-	background-color: @lime-button-selected-bg-color;
-	filter+_: @lime-button-selected-filter;
+	background-color: @lime-button-fill-container-selected-color;
+	filter+_: @lime-button-filter-selected;
 }
 .lime-button-focus-bg-color () {
-	background-color: @lime-button-focus-bg-color;
-	filter+_: @lime-button-focus-filter;
+	background-color: @lime-button-fill-container-focused-color;
+	filter+_: @lime-button-filter-focused;
 }
 
 // Button state mixins
