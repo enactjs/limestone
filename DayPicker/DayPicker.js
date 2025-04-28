@@ -29,14 +29,9 @@ import {DaySelectorDecorator, getSelectedDayString} from './DaySelectorDecorator
 import css from './DayPicker.module.less';
 
 const childComponent = (props) => {
-	const index = props["data-index"];
 	return (
 		<>
 			<CheckboxItem css={css} {...props} />
-			{
-				index !== 6 && // prevents adding a divider to the last DayPicker item
-				<div className={css.divider} />
-			}
 		</>
 	);
 };
