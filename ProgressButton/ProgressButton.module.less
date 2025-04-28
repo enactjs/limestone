@@ -24,12 +24,12 @@
 
 	.applySkins({
 		.progressBar.radial {
-			.fill {
-				border-color: @lime-progressbutton-track-active-color;
-			}
-
 			.bar {
 				border-color: @lime-progressbutton-track-color;
+
+				.fill {
+					border-color: @lime-progressbutton-track-active-color;
+				}
 			}
 		}
 
@@ -37,14 +37,10 @@
 			.progressBar.radial {
 				.bar {
 					border-color: @lime-progressbutton-track-focused-color;
-				}
 
-				.fill {
-					border-color: @lime-progressbutton-track-active-focused-color;
-				}
-
-				.bar {
-					border-color: @lime-progressbutton-track-focused-color;
+					.fill {
+						border-color: @lime-progressbutton-track-active-focused-color;
+					}
 				}
 			}
 		});
