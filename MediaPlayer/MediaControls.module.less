@@ -12,12 +12,19 @@
 	}
 
 	.mediaControls {
-		text-align: center;
-		direction: ltr;
-		white-space: nowrap;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: @lime-mediaplayer-controls-gap;
 
-		> *:first-child {
-			margin-inline-start: 0;
+		.button {
+			height: @lime-mediaplayer-button-height;
+			min-width: @lime-mediaplayer-button-height;
+			margin: 0;
+
+			.client {
+				padding: @lime-mediaplayer-button-client-padding;
+			}
 		}
 	}
 
@@ -28,6 +35,10 @@
 		&.hidden {
 			opacity: 0;
 			visibility: hidden;
+		}
+
+		.label {
+			margin-top: -24px;
 		}
 	}
 
@@ -55,17 +66,6 @@
 
 		> :first-child {
 			margin-top: @lime-mediaplayer-controls-moreComponents-margin-top;
-		}
-	}
-
-	.button {
-		height: @lime-mediaplayer-button-height;
-		min-width: @lime-mediaplayer-button-height;
-		margin: 0;
-		margin-inline-start: @lime-mediaplayer-controls-button-margin-start;
-
-		.client {
-			padding: @lime-mediaplayer-button-client-padding;
 		}
 	}
 

@@ -172,6 +172,7 @@ export const _VideoPlayer = (args) => {
 				</infoComponents>
 				<MediaControls
 					actionGuideButtonAriaLabel={args['actionGuideButtonAriaLabel']}
+					actionGuideLabel={args['actionGuideLabel']}
 					jumpBackwardAriaLabel={args['jumpBackwardAriaLabel']}
 					jumpBackwardIcon={args['jumpBackwardIcon']}
 					jumpButtonsDisabled={args['jumpButtonsDisabled']}
@@ -238,6 +239,12 @@ text(
 	_VideoPlayer,
 	MediaControlsConfig,
 	''
+);
+text(
+	'actionGuideLabel',
+	_VideoPlayer,
+	MediaControlsConfig,
+	'Please Scroll or Press Down Button'
 );
 text('jumpBackwardAriaLabel', _VideoPlayer, MediaControlsConfig, '');
 select('jumpBackwardIcon', _VideoPlayer, icons, MediaControlsConfig, 'jumpbackward');
