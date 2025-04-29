@@ -114,7 +114,11 @@
 
 	.applySkins({
 		.steps .step {
-			background-color: @lime-pageviews-picker-icon;
+			background-color: @lime-pageviews-picker-icon-active;
+		}
+
+		&.future, &.past {
+			background-color: @lime-pageviews-picker-icon-inactive;
 		}
 	});
 }
