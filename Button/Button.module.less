@@ -295,26 +295,26 @@
 
 		&,
 		:global(.enact-a11y-high-contrast) & {
-			color: @lime-button-text-color;
+			color: @lime-button-fill-label-color;
 		}
 
 		.bg {
 			.lime-button-resting-bg-colors();
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
-			border-color: @lime-button-border-color;
+			border-color: @lime-button-outline-border-color;
 			border-radius: @lime-button-border-radius;
 		}
 
 		&.bordered {
 			.bg {
-				background-color: @lime-button-bordered-bg-color;
-				border: @lime-button-border-width solid @lime-button-border-color;
+				background-color: @lime-button-outline-container-color;
+				border: @lime-button-border-width solid @lime-button-outline-border-color;
 			}
 		}
 
 		&.opaque {
-			color: @lime-button-text-color;
+			color: @lime-button-fill-label-color;
 
 			.bg {
 				opacity: @lime-button-bg-opacity;
@@ -322,7 +322,7 @@
 		}
 
 		&.transparent {
-			color: @lime-button-transparent-text-color;
+			color: @lime-button-transparent-fill-text-color;
 
 			.bg {
 				opacity: @lime-button-transparent-bg-opacity;
@@ -334,19 +334,19 @@
 		}
 
 		&.red .client::before {
-			background-color: @lime-remote-button-red-color;
+			background-color: @lime-colorkey-icon-red;
 		}
 
 		&.green .client::before {
-			background-color: @lime-remote-button-green-color;
+			background-color: @lime-colorkey-icon-green;
 		}
 
 		&.yellow .client::before {
-			background-color: @lime-remote-button-yellow-color;
+			background-color: @lime-colorkey-icon-yellow;
 		}
 
 		&.blue .client::before {
-			background-color: @lime-remote-button-blue-color;
+			background-color: @lime-colorkey-icon-blue;
 		}
 
 		&.small {
@@ -367,7 +367,7 @@
 		}
 
 		&.selected {
-			color: @lime-button-selected-text-color;
+			color: @lime-button-fill-label-selected-color;
 
 			.bg {
 				.lime-button-selected-colors();
@@ -375,7 +375,7 @@
 
 			&.bordered {
 				.bg {
-					border: @lime-button-border-width solid @lime-button-selected-border-color;
+					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
 				}
 			}
 
@@ -405,7 +405,7 @@
 
 			&.iconOnly {
 				.bg {
-					background-color: @lime-button-focus-icononly-bg-color;
+					background-color: @lime-button-icononly-bg-focused-color;
 				}
 			}
 

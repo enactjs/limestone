@@ -257,14 +257,14 @@
 
 		.numberCell {
 			&::before {
-				background-color: @lime-input-numbercell-background-color;
+				background-color: @lime-input-bg-color;
 			}
 		}
 
 		// Style joined numeric inputs and active cells like a focused input
 		.joined,
 		.numberCell.active {
-			color: @lime-inputfield-focus-text-color;
+			color: @lime-input-dot-focused-color;
 
 			&::before {
 				.lime-spotlight-focus-bg-colors();

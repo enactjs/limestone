@@ -20,9 +20,9 @@
 // common colors
 
 & {
-	--alias-color-container-normal: #2d224c;
-	--alias-color-container-focused: #6d2fa1;
-	--alias-color-on-focused: #e6e6e6;
+	--semantic-color-surface-default: #2d224c;
+	--semantic-color-surface-default-focused: #6d2fa1;
+	--semantic-color-on-surface-main-focused: #e6e6e6;
 }
 
 // ---------------------------------------
@@ -38,8 +38,8 @@
 
 // Button
 // --------------------------------------
-@lime-button-border-color: fade(@lime-game-skin-color-01, 50%);
-@lime-button-focus-icononly-bg-color: fade(@lime-game-skin-color-02, 50%);
+@lime-button-outline-border: fade(@lime-game-skin-color-01, 50%);
+@lime-button-icononly-bg-focused: fade(@lime-game-skin-color-02, 50%);
 
 // Heading
 // ---------------------------------------
@@ -52,5 +52,5 @@
 
 // RadioItem
 // ---------------------------------------
-@lime-radioitem-selected-indicator-bg-color: @lime-game-skin-color-02;
-@lime-radioitem-selected-indicator-border-color: @lime-game-skin-color-02;
+@lime-radioitem-icon-bg-selected: @lime-game-skin-color-02;
+@lime-radioitem-icon-border-selected: @lime-game-skin-color-02;

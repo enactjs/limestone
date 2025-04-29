@@ -175,6 +175,14 @@ const CardBase = kind({
 		secondaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
+		 * A ternary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		secondaryLabel: PropTypes.string,
+
+		/**
 		 * Applies a selected visual effect to the image.
 		 *
 		 * @type {Boolean}
@@ -192,7 +200,10 @@ const CardBase = kind({
 	},
 
 	computed: {
-		children: ({centered, children, css, 'data-index': index, label, imageIconSrc, orientation}) => {
+		'aria-label': ({children, label, secondaryLabel, selected}) => {
+			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' selected' : ''}`;
+		},
+		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
 
@@ -209,6 +220,7 @@ const CardBase = kind({
 					<Cell>
 						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
 						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
+						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
 					</Cell>
 				</Row>
 			);
@@ -242,6 +254,7 @@ const CardBase = kind({
 	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, ...rest}) => {
 		delete rest.centered;
 		delete rest.label;
+		delete rest.secondaryLabel;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;

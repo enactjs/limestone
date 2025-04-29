@@ -381,7 +381,6 @@ const HeaderBase = kind({
 					id={subtitleId}
 					size="subtitle"
 					spacing="auto"
-					marqueeDisabled={type === 'wizard'}
 					marqueeOn={marqueeOn}
 					forceDirection={direction}
 					alignment={centered ? 'center' : null}
