@@ -22,8 +22,6 @@
 		&.collapsed { /* Override TabLayout */ }
 
 		.tabGroup {
-			border-radius: @lime-popuptablayout-tabgroup-border-radius;
-
 			.tab {
 				&.vertical {
 					&.button {
@@ -55,7 +53,12 @@
 	}
 
 	.tabs {
+		border-radius: @lime-popuptablayout-tabs-radius-container;
 		margin-right: @lime-popuptablayout-tabs-content-spacing;
+	}
+
+	.content .panels::before {
+		border-radius: @lime-popuptablayout-panels-radius-overlay;
 	}
 
 	.tabsExpanded {
@@ -77,18 +80,16 @@
 	.applySkins({
 		background-color: transparent;
 
-		.tabGroup {
-			background-color: @lime-popuptablayout-overlay-tab-bg-group;
+		.tabs {
+			box-shadow: @lime-popuptablayout-shadow;
 		}
 
 		.tabs,
 		.content .panels::before {
-			border-radius: @lime-popuptablayout-tabs-content-border-radius;
-			box-shadow: @lime-popuptablayout-shadow;
-			outline-color: @lime-overlay-outline-color;
-			outline-width: @lime-overlay-outline-width;
-			outline-style: @lime-overlay-outline-style;
-			outline-offset: -@lime-overlay-outline-width;
+			outline-color: @lime-popuptablayout-stroke-overlay-default;
+			outline-width: @lime-popuptablayout-overlay-outline-width;
+			outline-style: @lime-popuptablayout-overlay-outline-style;
+			outline-offset: -@lime-popuptablayout-overlay-outline-width;
 		}
 
 		:global(.noAnimation) & {
@@ -103,7 +104,7 @@
 		&.scrimTransparent {
 			.tabs,
 			.content .panels::before {
-				background-color: @lime-popuptablayout-surface-overlay;
+				background-color: @lime-popuptablayout-background-overlay-default;
 			}
 		}
 	});
