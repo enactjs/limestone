@@ -515,7 +515,7 @@
 
 // Header
 // ---------------------------------------
-@lime-header-slotabove-margin: 0 -@lime-component-spacing var(--ref-spacing-24) -@lime-component-spacing; // Negative margins accomodate the component-spacing
+@lime-header-slotabove-margin: 0 -@lime-component-spacing var(--primitive-spacing-24) -@lime-component-spacing; // Negative margins accomodate the component-spacing
 @lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accomodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
 // STOP! READ THE FOLLOWING BEFORE EDITING.
@@ -618,7 +618,7 @@
 	.extract(#guide.header[wizard-padding], bottom)[]
 	.extract(#guide.header[wizard-padding], left)[]; // 66px comes from the GUI guide, as the distance from the bottom of the 2-line subtitle to the top of the content area. We must subtract the padding-top of panel.body to get the total spacing to match the guide.
 @lime-header-wizard-title-padding: 0;
-@lime-header-wizard-title-container-margin: var(--ref-spacing-54);
+@lime-header-wizard-title-container-margin: var(--primitive-spacing-54);
 @lime-header-wizard-subtitle-padding: 0;
 @lime-header-back-container-width: (@lime-button-small-height + @lime-button-icon-small-h-margin);
 
@@ -1092,7 +1092,8 @@
 
 // WizardPanels
 // ---------------------------------------
-@lime-wizardpanels-content-border-radius: var(--alias-radius-container);
-@lime-wizardpanels-content-margin: var(--ref-spacing-60) (324px - .extract(@lime-panel-body-padding, left)[]);
-@lime-wizardpanels-footer-margin: 0 0 var(--ref-spacing-132) 0;
-@lime-wizardpanels-button-icon-text-gap: var(--ref-spacing-54);
+@lime-wizardpanels-steps-height: 60px;
+@lime-wizardpanels-content-border-radius: var(--semantic-radius-container);
+@lime-wizardpanels-content-margin: var(--primitive-spacing-60) (324px - .extract(@lime-panel-body-padding, left)[]);
+@lime-wizardpanels-footer-margin: 0 0 var(--primitive-spacing-132) 0;
+@lime-wizardpanels-button-icon-text-gap: var(--primitive-spacing-54);
