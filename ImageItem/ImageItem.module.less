@@ -166,18 +166,22 @@
 		}
 
 		.caption {
-			color: @lime-imageitem-caption-color;
+			color: @lime-imageitem-label-main;
 		}
 
 		.label {
-			color: @lime-imageitem-label-color;
+			color: @lime-imageitem-label-sub;
 		}
 
 		&.selected {
-			background-color: @lime-imageitem-selected-selected-bg-color;
+			background-color: @lime-imageitem-container-selected;
+
+			.caption {
+				color: @lime-imageitem-label-main-selected;
+			}
 
 			.label {
-				color: @lime-imageitem-selected-selected-label-color;
+				color: @lime-imageitem-label-sub-selected;
 			}
 
 			.selectionContainer::after {
@@ -218,11 +222,11 @@
 			}
 
 			.caption {
-				color: @lime-imageitem-focus-caption-color;
+				color: @lime-imageitem-label-main-focused;
 			}
 
 			.label {
-				color: @lime-imageitem-focus-label-color;
+				color: @lime-imageitem-label-sub-focused;
 			}
 
 			&.vertical {
