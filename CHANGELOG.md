@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.0.0-beta.1] - 2025-04-29
 
 ### Added
 
@@ -10,8 +10,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Dropdown` styling to match the latest GUI
+- `limestone/Input.InputField` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
