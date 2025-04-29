@@ -169,7 +169,7 @@
 @lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
 @lime-tablayout-tab-font-size: var(--primitive-font-size-60);
-@lime-tooltip-label-font-size:      54px;
+@lime-tooltip-label-font-size:      var(--primitive-font-size-54);
 
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
 @lime-tallglyph-alert-notitle-content-font-size: @lime-alert-notitle-content-font-size;
@@ -1036,17 +1036,17 @@
 
 // Tooltip
 // ---------------------------------------
-@lime-tooltip-font-weight: 600;
+@lime-tooltip-font-weight: var(--primitive-font-weight-semibold);
 @lime-tooltip-transparent-font-weight: normal;
-@lime-tooltip-offset: 24px;
+@lime-tooltip-offset: var(--primitive-spacing-24);
 @lime-tooltip-transparent-label-offset: 0px;
 @lime-tooltip-arrow-offset: 0;
 @lime-tooltip-point-width: 31px; // actual value is 30px. +1px to ensure no gaps
 @lime-tooltip-point-height: 37px; // actual value is 36px. +1px to ensure no gaps
-@lime-tooltip-border-radius: var(--alias-radius-button);
+@lime-tooltip-border-radius: var(--semantic-radius-button);
 @lime-tooltip-label-line-height: 72px;
-@lime-tooltip-padding: var(--ref-spacing-12) var(--ref-spacing-48);
-@lime-tooltip-margin-offset: 18px; // GUI for the length of the arrow
+@lime-tooltip-padding: var(--primitive-spacing-12) var(--primitive-spacing-48);
+@lime-tooltip-margin-offset: var(--primitive-spacing-18); // GUI for the length of the arrow
 @lime-tooltip-marquee-width: 600px;
 @lime-tooltip-max-width: 1200px;
 
