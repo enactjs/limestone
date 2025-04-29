@@ -120,10 +120,10 @@
 @lime-base-font-size:               60px;
 @lime-body-font-size:               @lime-base-font-size;
 @lime-body-small-font-size:         54px;
-@lime-button-font-size-large:       96px;
-@lime-button-font-size:             60px;
-@lime-button-small-font-size-large: 72px;
-@lime-button-small-font-size:       54px;
+@lime-button-font-size-large:       var(--primitive-font-size-96);
+@lime-button-font-size:             var(--primitive-font-size-60);
+@lime-button-small-font-size-large: var(--primitive-font-size-72);
+@lime-button-small-font-size:       var(--primitive-font-size-54);
 @lime-card-caption-font-size:       60px;
 @lime-card-label-font-size:         48px;
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
@@ -151,28 +151,28 @@
 @lime-input-overlay-numberfield-font-size:    @lime-input-overlay-numbercell-font-size;
 @lime-input-invalid-tooltip-font-size:        @lime-inputfield-invalid-tooltip-font-size;
 @lime-inputfield-invalid-tooltip-font-size:   48px;
-@lime-inputfield-small-font-size:        72px;
-@lime-item-font-size:               var(--ref-font-size-60);
-@lime-item-font-size-large:         var(--ref-font-size-72);
-@lime-item-label-font-size:         var(--ref-font-size-48);
-@lime-item-label-font-size-large:   var(--ref-font-size-54);
-@lime-item-small-font-size:         var(--ref-font-size-60);
-@lime-item-small-font-size-large:   var(--ref-font-size-72);
-@lime-item-small-label-font-size:   var(--ref-font-size-48);
+@lime-inputfield-small-font-size:	var(--primitive-font-size-60);
+@lime-item-font-size:               var(--primitive-font-size-60);
+@lime-item-font-size-large:         var(--primitive-font-size-72);
+@lime-item-label-font-size:         var(--primitive-font-size-48);
+@lime-item-label-font-size-large:   var(--primitive-font-size-54);
+@lime-item-small-font-size:         var(--primitive-font-size-60);
+@lime-item-small-font-size-large:   var(--primitive-font-size-72);
+@lime-item-small-label-font-size:   var(--primitive-font-size-48);
 @lime-keyguide-font-size:           60px;
 @lime-mediaoverlay-caption-font-size: 48px;
 @lime-mediaoverlay-font-size:         48px;
 @lime-mediaoverlay-title-font-size:   60px;
 @lime-mediaplayer-times-min-width:    186px;
 @lime-mediaplayer-times-text-size:    48px;
-@lime-picker-font-size:             var(--ref-font-size-54);
-@lime-picker-joined-font-size:      var(--ref-font-size-66);
-@lime-radioitem-icon-font-size: var(--ref-font-size-48);
+@lime-picker-font-size:             var(--primitive-font-size-54);
+@lime-picker-joined-font-size:      var(--primitive-font-size-66);
+@lime-radioitem-icon-font-size: var(--primitive-font-size-48);
 @lime-steps-step-number-font-size:  54px;
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
-@lime-tablayout-tab-small-font-size: var(--ref-font-size-48);
-@lime-tablayout-tab-font-size: var(--ref-font-size-60);
+@lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
+@lime-tablayout-tab-font-size: var(--primitive-font-size-60);
 @lime-tooltip-label-font-size:      54px;
 
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
@@ -180,8 +180,8 @@
 @lime-non-latin-body-font-size:         54px;
 @lime-non-latin-body-small-font-size:   48px;
 @lime-tallglyph-body-small-font-size:   48px;
-@lime-non-latin-button-large-font-size: 72px;
-@lime-non-latin-button-small-font-size: 54px;
+@lime-non-latin-button-large-font-size: var(--primitive-font-size-72);
+@lime-non-latin-button-small-font-size: var(--primitive-font-size-54);
 @lime-non-latin-header-compact-title-font-size: @lime-header-compact-title-font-size;
 @lime-non-latin-header-mini-title-font-size: @lime-header-mini-title-font-size;
 @lime-non-latin-header-wizard-title-font-size: @lime-header-wizard-title-font-size;
@@ -279,8 +279,6 @@
 
 // InputField
 @lime-inputfield-font-weight: @lime-spottable-font-weight;
-@lime-inputfield-placeholder-font-weight: normal;
-@lime-inputfield-placeholder-focus-font-weight: @lime-inputfield-font-weight;
 @lime-inputfield-invalid-tooltip-font-weight: @lime-inputfield-font-weight;
 
 // InputNumber
@@ -376,7 +374,7 @@
 @lime-button-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-focusexpand-pressed-bg-transform: scale(1.02);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
-@lime-button-small-margin: 24px;
+@lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
 @lime-button-small-h-padding: 60px;
 @lime-button-small-height-large: 144px;
@@ -386,20 +384,20 @@
 @lime-button-small-min-width-default: 720px;
 @lime-button-small-focusexpand-focus-bg-transform: scale(1.1);
 @lime-button-small-focusexpand-pressed-bg-transform: scale(1.04);
-@lime-button-colordot-bottom: 18px;
-@lime-button-colordot-border-radius: 6px;
+@lime-button-colordot-bottom: var(--primitive-spacing-12);
+@lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
 @lime-button-colordot-height: 12px;
-@lime-button-colordot-h-margin: 24px;
+@lime-button-colordot-h-margin: var(--primitive-spacing-24);
 @lime-button-colordot-padding-start: 36px;
-@lime-button-small-colordot-bottom: 12px;
+@lime-button-small-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-small-colordot-width: 51px;
 @lime-button-small-colordot-height: 9px;
 @lime-button-small-colordot-padding-start: 30px;
 @lime-button-icon-only-colordot-width: 66px;
 @lime-button-icon-only-colordot-height: 9px;
 @lime-button-collapse-duration: 300ms;
-@lime-button-collapsable-icon-margin: 0 24px;
+@lime-button-collapsable-icon-margin: 0 var(--primitive-spacing-24);
 
 // Card
 // ---------------------------------------
@@ -432,7 +430,7 @@
 @lime-checkbox-border-radius: @lime-common-circular-corners;
 @lime-checkbox-border-width: 4px;
 @lime-checkbox-container-position: ((@lime-icon-tiny-size - 132px) / 2);  // Container's total dimensions should be `132px` defined in the GUI spec
-@lime-checkbox-container-border-radius: var(--alias-radius-button);
+@lime-checkbox-container-border-radius: var(--semantic-radius-button);
 
 // Chip
 // ---------------------------------------
@@ -461,7 +459,7 @@
 // Dropdown
 // ---------------------------------------
 @lime-dropdown-margin: 0 @lime-spotlight-outset; // this extra margin used to align dropdown container with the outer element
-@lime-dropdown-padding: 0 var(--ref-spacing-48);
+@lime-dropdown-padding: 0 var(--primitive-spacing-48);
 @lime-dropdown-min-width: @lime-button-min-width;
 @lime-dropdown-title-min-width: (@lime-dropdown-min-width - .extract(@lime-dropdown-title-padding, left)[] * 2);
 @lime-dropdown-tiny-width: 480px;
@@ -486,7 +484,7 @@
 @lime-dropdown-list-min-width: @lime-dropdown-min-width;
 @lime-dropdown-list-max-height: (@lime-dropdown-max-items * @lime-item-height + @lime-item-shadow-height);
 @lime-dropdown-list-max-height-large: (@lime-dropdown-max-items * @lime-item-small-height-large + @lime-item-shadow-height);
-@lime-dropdown-list-item-padding: var(--ref-spacing-36) var(--ref-spacing-48);
+@lime-dropdown-list-item-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-dropdown-title-padding: 36px 24px;
 
 // FixedPopupPanels
@@ -689,10 +687,10 @@
 // Input
 // ---------------------------------------
 @lime-input-popup-component-v-spacing: 42px;
-@lime-input-numbercell-border-radius: 12px;
+@lime-input-numbercell-border-radius: var(--semantic-radius-button);
 @lime-input-fullscreen-padding: (210px - .extract(@lime-popup-padding, top)[]) (264px - .extract(@lime-popup-padding, right)[]) (246px - .extract(@lime-popup-padding, bottom)[]) (264px - .extract(@lime-popup-padding, left)[]);
-@lime-input-fullscreen-numbercell-width: 246px;
-@lime-input-fullscreen-numbercell-height: 300px;
+@lime-input-fullscreen-numbercell-width: 180px;
+@lime-input-fullscreen-numbercell-height: 240px;
 @lime-input-fullscreen-numbercell-margin: 0 18px;
 @lime-input-fullscreen-numberfield-width: 1164px;
 @lime-input-fullscreen-numberfield-height: 168px;
@@ -737,19 +735,19 @@
 
 // InputField
 // ---------------------------------------
-@lime-inputfield-margin: 0 @lime-component-spacing;
-@lime-inputfield-padding: 0 @lime-inputfield-icon-spacing;
+@lime-inputfield-margin: 0;
+@lime-inputfield-icon-margin: var(--primitive-spacing-30);
+@lime-inputfield-padding: var(--primitive-spacing-24) var(--primitive-spacing-48);
+@lime-inputfield-padding-large: 0 @lime-inputfield-icon-margin;
+@lime-inputfield-password-spacing: var(--primitive-spacing-30);
 @lime-inputfield-text-indent: 0.2em;
-@lime-inputfield-bg-opacity: 0.2;
-@lime-inputfield-border-radius: @lime-inputfield-border-width;
-@lime-inputfield-border-width: 12px;
-@lime-inputfield-icon-spacing: 30px;
+@lime-inputfield-container-opacity: 0.3;
+@lime-inputfield-border-radius: var(--semantic-radius-button);
 @lime-inputfield-invalid-tooltip-margin-top: 30px;
 @lime-inputfield-height: 168px;
 @lime-inputfield-small-height: 132px;
 @lime-inputfield-highlight-height: 100%;
-@lime-inputfield-highlight-max-width: 756px;
-@lime-inputfield-highlight-small-max-width: 714px;
+@lime-inputfield-small-width: 1200px;
 
 // Item
 // ---------------------------------------
@@ -757,13 +755,13 @@
 @lime-item-height-large: @lime-item-height;
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
-@lime-item-withlabel-padding: var(--ref-spacing-48) var(--ref-spacing-48);
+@lime-item-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48);
 @lime-item-inline-max-width: 480px;
-@lime-item-border-radius: var(--alias-radius-container);
-@lime-item-slotafter-spacing: var(--ref-spacing-36);
-@lime-item-slotbefore-spacing: var(--ref-spacing-36);
+@lime-item-border-radius: var(--semantic-radius-container);
+@lime-item-slotafter-spacing: var(--primitive-spacing-36);
+@lime-item-slotbefore-spacing: var(--primitive-spacing-36);
 @lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
-@lime-item-padding: var(--ref-spacing-36) var(--ref-spacing-48);
+@lime-item-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;
@@ -844,24 +842,24 @@
 @lime-picker-value-height: 72px;
 @lime-picker-vertical-height: 362px;
 @lime-picker-vertical-large-value-width: 696px;
-@lime-picker-joined-horizontal-border-radius: var(--ref-border-radius-full);
+@lime-picker-joined-horizontal-border-radius: var(--semantic-radius-full);
 @lime-picker-joined-horizontal-height: 210px;
 @lime-picker-joined-horizontal-large-value-width: 696px;
-@lime-picker-joined-horizontal-padding: var(--ref-spacing-36) var(--ref-spacing-48);
-@lime-picker-joined-horizontal-value-margin: 0 0 var(--ref-spacing-48) 0;
-@lime-picker-joined-vertical-border-radius: var(--alias-radius-button);
+@lime-picker-joined-horizontal-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-picker-joined-horizontal-value-margin: 0 0 var(--primitive-spacing-48) 0;
+@lime-picker-joined-vertical-border-radius: var(--semantic-radius-button);
 @lime-picker-joined-value-height: 90px;
 @lime-picker-small-value-width: (@lime-icon-large-size + (@lime-spotlight-outset * 3));
 @lime-picker-medium-value-width: 360px;
 @lime-picker-large-value-width: 468px;
-@lime-picker-incrementer-margin: var(--ref-spacing-36);
+@lime-picker-incrementer-margin: var(--primitive-spacing-36);
 @lime-picker-incrementer-width: 120px;
 @lime-picker-indicator-width: 24px;
 @lime-picker-indicator-height: 24px;
 @lime-picker-indicator-border-radius: @lime-picker-indicator-width;
 @lime-picker-indicator-inactive-scale: 0.75;
 @lime-picker-indicator-active-scale: 1;
-@lime-picker-indicator-margin: var(--ref-spacing-30) var(--ref-spacing-12) 0;
+@lime-picker-indicator-margin: var(--primitive-spacing-30) var(--primitive-spacing-12) 0;
 
 // Popup
 // ---------------------------------------
@@ -885,8 +883,8 @@
 // ProgressBar
 // ---------------------------------------
 @lime-progressbar-bar-thickness: 12px;
-@lime-progressbar-bar-border-radius: var(--ref-border-radius-full);
-@lime-progressbar-margin: var(--ref-spacing-24) 0;
+@lime-progressbar-bar-border-radius: var(--semantic-radius-full);
+@lime-progressbar-margin: var(--primitive-spacing-24) 0;
 @lime-progressbar-vertical-min-height: 240px;
 @lime-progressbar-radial-size: 68px;
 @lime-progressbar-radial-thickness: 6px;
@@ -926,7 +924,7 @@
 	// this value must be specifically considered as to not impose layout issues related to, for
 	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
 @lime-radioitem-icon-border-radius: @lime-common-circular-corners;
-@lime-radioitem-icon-margin: var(--ref-spacing-24);
+@lime-radioitem-icon-margin: var(--primitive-spacing-24);
 
 // Scrim
 // ---------------------------------------
@@ -940,11 +938,11 @@
 @lime-scrollbar-track-margin: 12px;
 @lime-scrollbar-track-focusable-margin: 24px;
 @lime-scrollbar-track-width: 12px;
-@lime-scrollbar-track-border-radius: var(--ref-border-radius-full);
-@lime-scrollbar-thumb-border-radius: var(--ref-border-radius-full);
+@lime-scrollbar-track-border-radius: var(--semantic-radius-full);
+@lime-scrollbar-thumb-border-radius: var(--semantic-radius-full);
 @lime-scrollbar-thumb-focus-width: 30px;
 @lime-scrollbar-thumb-focus-left: -9px;
-@lime-scrollbar-thumb-focus-border-radius: var(--ref-border-radius-full);
+@lime-scrollbar-thumb-focus-border-radius: var(--semantic-radius-full);
 @lime-scrollbar-thumb-focus-box-shadow: 0 6px 18px;
 @lime-scrollbar-thumb-focus-direction-indicator-width: 18px;
 @lime-scrollbar-thumb-focus-direction-indicator-height: 12px;
@@ -1021,24 +1019,24 @@
 
 // TabLayout
 // ---------------------------------------
-@lime-tablayout-border-radius: var(--alias-radius-container);
+@lime-tablayout-border-radius: var(--semantic-radius-container);
 @lime-tablayout-collapse-duration: 250ms;
 @lime-tablayout-vertical-content-margin-top: 0;
-@lime-tablayout-horizontal-content-margin-top: var(--ref-spacing-96);
+@lime-tablayout-horizontal-content-margin-top: var(--primitive-spacing-96);
 @lime-tablayout-horizontal-tabs-margin: 0 @lime-component-spacing;
-@lime-tablayout-horizontal-tabs-padding: var(--ref-spacing-12);
-@lime-tablayout-horizontal-tabs-spacing: var(--ref-spacing-48);
-@lime-tablayout-vertical-tabs-padding: var(--ref-spacing-36);
+@lime-tablayout-horizontal-tabs-padding: var(--primitive-spacing-12);
+@lime-tablayout-horizontal-tabs-spacing: var(--primitive-spacing-48);
+@lime-tablayout-vertical-tabs-padding: var(--primitive-spacing-36);
 @lime-tablayout-vertical-tabs-spacing: @lime-tablayout-vertical-tabs-padding;
 @lime-tablayout-tab-vertical-button-height: 156px;
-@lime-tablayout-tab-vertical-margin: var(--ref-spacing-30);
-@lime-tablayout-tab-vertical-padding: var(--ref-spacing-48);
-@lime-tablayout-tab-vertical-padding-left: var(--ref-spacing-30);
-@lime-tablayout-tab-vertical-padding-right: var(--ref-spacing-48);
+@lime-tablayout-tab-vertical-margin: var(--primitive-spacing-30);
+@lime-tablayout-tab-vertical-padding: var(--primitive-spacing-48);
+@lime-tablayout-tab-vertical-padding-left: var(--primitive-spacing-30);
+@lime-tablayout-tab-vertical-padding-right: var(--primitive-spacing-48);
 @lime-tablayout-tab-horizontal-button-height: 108px;
 @lime-tablayout-tab-horizontal-small-button-height: 96px;
 @lime-tablayout-tab-horizontal-small-button-line-height: 60px;
-@lime-tablayout-tab-horizontal-padding: var(--ref-spacing-24);
+@lime-tablayout-tab-horizontal-padding: var(--primitive-spacing-24);
 @lime-tablayout-tab-margin: 0;
 
 // Tooltip
@@ -1090,7 +1088,7 @@
 
 // VirtualList
 // ---------------------------------------
-@lime-virtuallist-container-border-radius: var(--alias-radius-container);
+@lime-virtuallist-container-border-radius: var(--semantic-radius-container);
 
 // WizardPanels
 // ---------------------------------------
