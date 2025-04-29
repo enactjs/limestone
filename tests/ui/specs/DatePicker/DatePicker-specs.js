@@ -118,6 +118,7 @@ describe('DatePicker', function () {
 
 				it('should select item', async function () {
 					await datePicker.month.click();
+					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 				});
 
@@ -125,6 +126,7 @@ describe('DatePicker', function () {
 				it('should increase the month when incrementing the picker', async function () {
 					const {month} = await extractValues(datePicker);
 					await datePicker.month.click();
+					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.incrementer('month').click();
 					const {month: value} = await extractValues(datePicker);
@@ -135,6 +137,7 @@ describe('DatePicker', function () {
 				it('should decrease the month when decrementing the picker', async function () {
 					const {month} = await extractValues(datePicker);
 					await datePicker.month.click();
+					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.decrementer('month').click();
 					const {month: value} = await extractValues(datePicker);
@@ -146,8 +149,10 @@ describe('DatePicker', function () {
 					const {day, month, year} = await extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					await datePicker.day.click();
+					await Page.delay(200);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.incrementer('day').click();
+					await Page.delay(200);
 					const {day: value} = await extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
 					expect(value).toBe(expected);
@@ -157,6 +162,7 @@ describe('DatePicker', function () {
 					const {day, month, year} = await extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					await datePicker.day.click();
+					await Page.delay(200);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.decrementer('day').click();
 					const {day: value} = await extractValues(datePicker);
@@ -167,6 +173,7 @@ describe('DatePicker', function () {
 				it('should increase the year when incrementing the picker', async function () {
 					const {year} = await extractValues(datePicker);
 					await datePicker.year.click();
+					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.incrementer('year').click();
 					const {year: value} = await extractValues(datePicker);
@@ -177,6 +184,7 @@ describe('DatePicker', function () {
 				it('should decrease the year when decrementing the picker', async function () {
 					const {year} = await extractValues(datePicker);
 					await datePicker.year.click();
+					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.decrementer('year').click();
 					const {year: value} = await extractValues(datePicker);
@@ -221,11 +229,13 @@ describe('DatePicker', function () {
 
 			it('should focus the disabled month picker', async function () {
 				await datePicker.month.click();
+				await Page.delay(200);
 				expect(await datePicker.month.isFocused()).toBe(true);
 			});
 
 			it('should not increase the day when incrementing disabled picker', async function () {
 				await datePicker.day.click();
+				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 
 				await datePicker.incrementer('day').click();
@@ -236,6 +246,7 @@ describe('DatePicker', function () {
 
 			it('should not decrease the day when decrementing disabled picker', async function () {
 				await datePicker.day.click();
+				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 
 				await datePicker.decrementer('day').click();
@@ -261,14 +272,17 @@ describe('DatePicker', function () {
 			it('should not update \'defaultValue\' on decrementing disabled picker', async function () {
 				const {day, month, year} = await extractValues(datePicker);
 				await datePicker.month.click();
+				await Page.delay(200);
 				expect(await datePicker.month.isFocused()).toBe(true);
 				await datePicker.decrementer('month').click();
 
 				await datePicker.day.click();
+				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 				await datePicker.decrementer('day').click();
 
 				await datePicker.year.click();
+				await Page.delay(200);
 				expect(await datePicker.year.isFocused()).toBe(true);
 				await datePicker.decrementer('year').click();
 
@@ -283,14 +297,17 @@ describe('DatePicker', function () {
 				const {day, month, year} = await extractValues(datePicker);
 
 				await datePicker.month.click();
+				await Page.delay(200);
 				expect(await datePicker.month.isFocused()).toBe(true);
 				await datePicker.incrementer('month').click();
 
 				await datePicker.day.click();
+				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 				await datePicker.incrementer('day').click();
 
 				await datePicker.year.click();
+				await Page.delay(200);
 				expect(await datePicker.year.isFocused()).toBe(true);
 				await datePicker.incrementer('year').click();
 
@@ -356,12 +373,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMinValue.decrementer('year').click();
 			await datePickerCheckMinValue.decrementer('year').click();
 			// Step 3 Verify: Year Value changes to 1900.
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 
 			// check disabled picker does not work when value reached minimum end-value.
 			await datePickerCheckMinValue.decrementer('year').click();
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 			await datePickerCheckMinValue.incrementer('year').click();
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1901);
 		});
 
@@ -373,12 +393,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMaxValue.incrementer('year').click();
 			await datePickerCheckMaxValue.incrementer('year').click();
 			// Step 3 Verify: Year Value changes to 2099.
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 
 			// check disabled picker does not work when value reached maximum end-value.
 			await datePickerCheckMaxValue.incrementer('year').click();
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 			await datePickerCheckMaxValue.decrementer('year').click();
+			await Page.delay(200);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2098);
 		});
 	});

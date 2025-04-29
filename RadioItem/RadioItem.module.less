@@ -8,76 +8,64 @@
 .radioIconColors (@color, @bg, @border) {
 	color: @color;
 	background-color: @bg;
-	box-shadow: 0 0 0 @lime-radioitem-indicator-border-width @border;
+	box-shadow: 0 0 0 @lime-radioitem-icon-border-width @border;
 }
 
 .radioItem {
+	.slotBefore {
+		> * {
+			// Override Item's slotBefore margin
+			&:first-child {
+				margin-inline-start: @lime-radioitem-icon-margin;
+			}
+			&:last-child {
+				margin-inline-end: @lime-radioitem-icon-margin;
+			}
+		}
+	}
+
 	.icon {
-		margin: 0;
+		border-radius: @lime-radioitem-icon-border-radius;
+		font-size: @lime-radioitem-icon-font-size;
 	}
 
 	.applySkins({
 		.icon {
 			.radioIconColors(
-				@lime-radioitem-indicator-color,
-				@lime-radioitem-indicator-bg-color,
-				@lime-radioitem-indicator-border-color
+				@lime-radioitem-icon-color,
+				@lime-radioitem-container-color,
+				@lime-radioitem-border-color
 			);
-			border-radius: @lime-radioitem-indicator-border-radius;
 		}
 
 		&.selected {
 			.icon {
 				.radioIconColors(
-					@lime-radioitem-selected-indicator-color,
-					@lime-radioitem-selected-indicator-bg-color,
-					@lime-radioitem-selected-indicator-border-color
+					@lime-radioitem-icon-selected-color,
+					@lime-radioitem-container-selected-color,
+					@lime-radioitem-border-selected-color
 				);
 			}
 		}
 
-		.disabled({
-			&.selected {
-				.icon {
-					.radioIconColors(
-						@lime-radioitem-disabled-selected-color,
-						@lime-radioitem-disabled-selected-bg-color,
-						@lime-radioitem-disabled-selected-border-color
-					);
-				}
-			}
-		});
-
 		.focus({
 			.icon {
 				.radioIconColors(
-					@lime-radioitem-focus-indicator-color,
-					@lime-radioitem-focus-indicator-bg-color,
-					@lime-radioitem-focus-indicator-border-color
+					@lime-radioitem-icon-focused-color,
+					@lime-radioitem-container-focused-color,
+					@lime-radioitem-border-focused-color
 				);
 			}
 
 			&.selected {
 				.icon {
 					.radioIconColors(
-						@lime-radioitem-selected-focus-indicator-color,
-						@lime-radioitem-selected-focus-indicator-bg-color,
-						@lime-radioitem-selected-focus-indicator-border-color
+						@lime-radioitem-icon-selected-focused-color,
+						@lime-radioitem-container-selected-focused-color,
+						@lime-radioitem-border-selected-focused-color
 					);
 				}
 			}
-
-			.disabled({
-				&.selected {
-					.icon {
-						.radioIconColors(
-							@lime-radioitem-focus-disabled-selected-color,
-							@lime-radioitem-focus-disabled-selected-bg-color,
-							@lime-radioitem-focus-disabled-selected-border-color
-						);
-					}
-				}
-			});
 		});
 	});
 }

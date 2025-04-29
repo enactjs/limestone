@@ -5,13 +5,12 @@
 @import "../styles/variables.less";
 
 .item {
-	.selected {
+	&.selected {
 		/* Available for customization */
 	}
 
 	font-size: @lime-item-font-size;
-	.lime-spotlight-padding(@lime-item-vertical-padding);
-
+	padding: @lime-item-padding;
 	font-weight: @lime-item-font-weight;
 	.enact-locale-line-height(@lime-item-line-height, @lime-tallglyph-item-line-height);
 	height: @lime-item-height;
@@ -55,6 +54,7 @@
 
 	&.hasLabel {
 		height: @lime-item-withlabel-height;
+		padding: @lime-item-withlabel-padding;
 
 		.itemContent {
 			&.labelAfter,
@@ -92,7 +92,7 @@
 	// Text
 	.label {
 		font-size: @lime-item-label-font-size;
-		font-weight: inherit;
+		font-weight: @lime-item-label-font-weight;
 		.enact-locale-line-height(@lime-item-label-line-height, @lime-tallglyph-item-label-line-height);
 	}
 
@@ -109,7 +109,6 @@
 
 	&.small {
 		font-size: @lime-item-small-font-size;
-
 		font-weight: @lime-item-small-font-weight;
 		height: @lime-item-small-height;
 		.enact-locale-line-height(@lime-item-small-line-height, @lime-tallglyph-item-small-line-height);
@@ -120,8 +119,7 @@
 
 		.label {
 			font-size: @lime-item-small-label-font-size;
-
-			font-weight: inherit;
+			font-weight: @lime-item-small-label-font-weight;
 			line-height: @lime-item-small-label-line-height;
 		}
 
@@ -144,7 +142,20 @@
 		}
 
 		.label {
-			color: @lime-item-label-color;
+			color: @lime-item-label-sub-color;
+		}
+
+		&.selected {
+			color: @lime-item-label-main-selected-color;
+
+			.bg {
+				opacity: 1;
+				background-color: @lime-item-container-selected-color;
+			}
+
+			.label {
+				color: @lime-item-label-sub-selected-color;
+			}
 		}
 
 		.focus({
@@ -152,11 +163,10 @@
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
-				background: @lime-item-focus-background;
 			}
 
 			.label {
-				color: @lime-item-focus-label-color;
+				color: @lime-item-label-sub-focused-color;
 			}
 		});
 
@@ -177,8 +187,7 @@
 
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors();
-					background-color: @lime-item-disabled-focus-bg-color;
+					background-color: @lime-item-container-disabled-focused-color;
 				}
 
 				.slotBefore,
