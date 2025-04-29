@@ -139,7 +139,7 @@ const DropdownListBase = kind({
 	computed: {
 		className: ({children, styler, width}) => styler.append(
 			typeof width === 'string' ? width : null,
-			{verticalScrollbar: children.length > 5}
+			{verticalScrollbar: children?.length > 5}
 		),
 		dataSize: ({children}) => children ? children.length : 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
@@ -164,6 +164,7 @@ const DropdownListBase = kind({
 					itemSize={ri.scale(itemSize)}
 					scrollbarTrackCss={css}
 					style={{
+						backgroundColor: 'transparent',
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}

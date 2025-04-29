@@ -12,10 +12,13 @@
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
-@import "~design-tokens/packages/webos-tokens/css/alias.css";
+@import "~design-tokens/packages/core-tokens/css/spacing-primitive.css";
+@import "~design-tokens/packages/core-tokens/css/typography-primitive.css";
+@import "~design-tokens/packages/webos-tokens/css/color-semantic.css";
+@import "~design-tokens/packages/webos-tokens/css/radius-semantic.css";
 
 .applySkins({
-	color: var(--alias-color-on-surface-main);
+	color: var(--semantic-color-on-background-main);
 
 	::selection {
 		color: @lime-input-selection-color;
@@ -59,21 +62,17 @@
 
 	/* Light Skin */
 	&:global(.light) {
-		--alias-color-surface-full: var(--ref-color-base-85);
-		--alias-color-on-surface-main: var(--ref-color-base-10);
-		--alias-color-on-surface-sub: var(--ref-color-base-35);
-		--alias-color-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
-		--alias-color-selection-icon-selected-disabled: var(--ref-color-base-65);
-		--alias-color-selection-bg-active-disabled: var(--ref-color-base-60);
-		--alias-color-selection-bg-active-disabled-focused: var(--ref-color-base-60);
-		--alias-color-surface-overlay: var(--ref-color-secondary-85);
-		--alias-color-progress-bar: var(--alias-color-accent);
-		--alias-color-progress-bg: var(--ref-color-base-40-a70);
+		--semantic-color-background-full-default: var(--primitive-color-neutral-gray-85);
+		--semantic-color-on-background-main: var(--primitive-color-neutral-gray-10);
+		--semantic-color-on-background-sub: var(--primitive-color-neutral-gray-35);
+		--semantic-color-background-overlay-default: var(--primitive-color-cool-gray-85);
+		--semantic-color-surface-default-track: var(--primitive-color-neutral-gray-40);
+		--semantic-color-stroke-selection-inactive: var(--primitive-color-neutral-gray-10);
 	}
 
 	/* High Contrast */
 	&:global(.enact-a11y-high-contrast):global(.highContrast) {
-		--alias-color-surface-overlay: var(--ref-color-base-0);
+		--semantic-color-background-overlay-default: var(--primitive-color-black);
 	}
 }
 
@@ -85,6 +84,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: var(--alias-color-surface-full);
+		background-color: var(--semantic-color-background-full-default);
 	}
 });

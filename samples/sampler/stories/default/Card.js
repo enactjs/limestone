@@ -33,11 +33,14 @@ export const _Card = (args) => (
 		disabled={args['disabled']}
 		imageIconSrc={args['imageIconSrc']}
 		hasContainer={args['hasContainer']}
-		label={args['label']}
+		// eslint-disable-next-line no-undefined
+		label={args['label'] ? args['label'] : undefined}
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
 		roundedImage={args['roundedImage']}
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
+		// eslint-disable-next-line no-undefined
+		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
 		src={args['src']}
 		style={{
@@ -60,6 +63,7 @@ select('orientation', _Card, prop.orientation, Config);
 object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
+text('secondaryLabel', _Card, Config, 'Card secondary label');
 boolean('selected', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
 text('children', _Card, Config, 'Card Caption');
