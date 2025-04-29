@@ -9,59 +9,75 @@
 	margin: @lime-dropdown-margin;
 	min-width: @lime-dropdown-min-width;
 
+	.button {
+		padding: @lime-dropdown-padding;
+		margin: 0;
+	}
+
 	&.tinyWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-tiny-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-tiny-width;
 		}
 	}
 
 	&.smallWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-small-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-small-width;
 		}
 	}
 
 	&.mediumWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-medium-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-medium-width;
 		}
 	}
 
 	&.largeWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-large-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-large-width;
 		}
 	}
 
 	&.x-largeWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-x-large-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-x-large-width;
 		}
 	}
 
 	&.hugeWidth {
-		.title,
+		.title {
+			width: @lime-dropdown-huge-title-width;
+		}
+
 		.button {
 			width: @lime-dropdown-huge-width;
 		}
 	}
 
 	.title {
-		min-width: @lime-dropdown-min-width;
-		font-style: @lime-dropdown-title-font-style;
-
-		:global(.enact-locale-non-italic) & {
-			font-style: @lime-non-italic-dropdown-title-font-style;
-		}
-	}
-
-	&.hasTitle .button {
-		margin-top: 0;
+		min-width: @lime-dropdown-title-min-width;
+		padding: @lime-dropdown-title-padding;
+		margin: 0;
 	}
 
 	.button {
@@ -83,7 +99,7 @@
 	// Skin colors
 	.applySkins({
 		.title {
-			color: @lime-dropdown-title-color;
+			color: @lime-dropdown-title-text-color;
 		}
 	});
 }
@@ -91,6 +107,12 @@
 .dropdownList {
 	max-height: @lime-dropdown-list-max-height;
 	min-width: @lime-dropdown-list-min-width;
+
+	&.verticalScrollbar {
+		.scrollbarTrack{
+			height: calc(100% - @lime-scrollbar-padding);
+		}
+	}
 
 	&.tiny {
 		width: @lime-dropdown-list-tiny-width;
@@ -120,14 +142,22 @@
 		max-height: @lime-dropdown-list-max-height-large;
 	});
 
+	.item {
+		padding: @lime-dropdown-list-item-padding;
+	}
+
 	// Skin colors
 	.applySkins({
-		border-radius: @lime-dropdown-border-radius;
-
 		[data-selected="true"] {
 			&:not(:focus) {
-				color: @lime-dropdown-selected-text-color;
+				color: @lime-dropdown-label-selected-color;
 			}
 		}
 	});
 }
+
+.applySkins({
+	.contextualPopup {
+		padding-bottom: 0;
+	}
+});

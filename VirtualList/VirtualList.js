@@ -22,6 +22,8 @@ import Skinnable from '../Skinnable';
 
 import {useThemeVirtualList} from './useThemeVirtualList';
 
+import css from './VirtualList.module.less';
+
 const nop = () => {};
 
 const virtualListDefaultProps = {
@@ -109,17 +111,18 @@ let VirtualList = (props) => {
 		...scrollContentWrapperRest
 	} = scrollContentWrapperProps;
 
+	const themeScrollContainerProps = {...scrollContainerProps, className: classnames(css.scrollContainer, scrollContainerProps.className)};
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
-		<ResizeContext.Provider {...resizeContextProps}>
-			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
+		<ResizeContext {...resizeContextProps}>
+			<ScrollContentWrapper {...themeScrollContainerProps} {...scrollContentWrapperRest}>
 				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
 			</ScrollContentWrapper>
-		</ResizeContext.Provider>
+		</ResizeContext>
 	);
 };
 
@@ -600,14 +603,14 @@ let VirtualGridList = (props) => {
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
-		<ResizeContext.Provider {...resizeContextProps}>
+		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
 				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
 			</ScrollContentWrapper>
-		</ResizeContext.Provider>
+		</ResizeContext>
 	);
 };
 

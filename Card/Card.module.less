@@ -195,35 +195,35 @@
 		}
 
 		&.selected .selectionIcon {
-			background-color: @lime-card-selected-selection-icon-bg-color;
-			color: @lime-card-selected-selection-icon-color;
+			background-color: @lime-card-selection-container-selected-color;
+			color: @lime-card-selection-icon-selected-color;
 		}
 
 		&.hasContainer {
-			background-color: @lime-card-bg;
+			background-color: @lime-card-container-color;
 
 			&.selected {
-				.selected-border(@lime-card-selected-image-border-color, 5);
+				.selected-border(@lime-card-border-selected-color, 5);
 			}
 		}
 
 		&.selected {
 			.image::after {
-				background: @lime-card-scrim-bg-color;
+				background: @lime-card-scrim-color;
 			}
 		}
 
 		.caption {
-			color: @lime-card-caption-color;
+			color: @lime-card-label-main-color;
 		}
 
 		.label {
-			color: @lime-card-label-color;
+			color: @lime-card-label-sub-color;
 		}
 
 		&.vertical {
 			&.selected:not(.hasContainer) .selectionContainer {
-				border-color: @lime-card-selected-image-border-color;
+				border-color: @lime-card-border-selected-color;
 			}
 		}
 
@@ -233,24 +233,24 @@
 			}
 
 			&.selected .selectionIcon {
-				color: @lime-card-selected-selection-icon-color;
+				color: @lime-card-selection-icon-selected-color;
 			}
 
 			&.hasContainer {
-				background-color: @lime-card-focused-bg-color;
-				.selected-border(@lime-card-focused-image-border-color, 5);
+				background-color: @lime-card-container-focused-color;
+				.selected-border(@lime-card-border-focused-color, 5);
 
 				.caption {
-					color: @lime-card-focus-caption-color;
+					color: @lime-card-label-main-focused-color;
 				}
 
 				.label {
-					color: @lime-card-focus-label-color;
+					color: @lime-card-label-sub-focused-color;
 				}
 			}
 
 			&.vertical:not(.hasContainer) .selectionContainer {
-				border-color: @lime-card-focused-image-border-color;
+				border-color: @lime-card-border-focused-color;
 			}
 		});
 	})
