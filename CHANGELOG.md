@@ -4,14 +4,24 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Fixed
+
+- `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
+- `limestone/Input.InputField` to receive focus properly when navigating with directional keys
+- `limestone/Input.InputField` to receive focus properly when not contained in the same SpotlightContainer
+
+## [1.0.0-beta.1] - 2025-04-29
+
 ### Added
 
 - `limestone/Card` prop `secondaryLabel`
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Dropdown` styling to match the latest GUI
+- `limestone/Input.InputField` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
@@ -23,10 +33,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
 - `limestone/ContextualPopupDecorator` to focus content only after the state has been updated when popup opens
-- `sandstone/Input.InputField` to receive focus properly when navigating with directional keys
-- `sandstone/Input.InputField` to receive focus properly when not contained in the same SpotlightContainer
 - `limestone/Scroller` with `editable` prop to not move hidden items
 
 ## [1.0.0-alpha.1] - 2025-04-04
