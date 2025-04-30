@@ -44,15 +44,15 @@ export const _ImageItem = (args) => (
 	</ImageItem>
 );
 
-select('orientation', _ImageItem, prop.orientation, Config);
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
+text('label', _ImageItem, Config, 'Description label');
 boolean('selected', _ImageItem, Config);
 boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
-text('children', _ImageItem, Config, 'Item Label');
-text('label', _ImageItem, Config, 'Description label');
 object('src', _ImageItem, Config, src);
+select('orientation', _ImageItem, prop.orientation, Config);
+text('children', _ImageItem, Config, 'Item Label');
 
 _ImageItem.storyName = 'ImageItem';
 _ImageItem.parameters = {
