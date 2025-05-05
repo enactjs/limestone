@@ -38,9 +38,6 @@
   "enact": {
     "screenTypes": "ThemeDecorator/screenTypes.json"
   },
-  "eslintConfig": {
-    "extends": "enact-proxy/strict"
-  },
   "dependencies": {
     "@enact/core": "^5.0.0-beta.1",
     "@enact/i18n": "^5.0.0-beta.1",
@@ -66,7 +63,6 @@
   },
   "devDependencies": {
     "@enact/docs-utils": "^0.4.11",
-    "@enact/ui-test-utils": "^2.0.0-alpha.2",
-    "eslint-config-enact-proxy": "^1.0.9"
+    "@enact/ui-test-utils": "^2.0.0-alpha.2"
   }
 }
