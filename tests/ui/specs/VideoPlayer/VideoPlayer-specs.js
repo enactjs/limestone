@@ -275,12 +275,12 @@ describe('VideoPlayer', function () {
 
 		it('should jump 10 seconds on next/previous button click', async function () {
 			await Page.delay(1000);
-			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:00');
+			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:00:00');
 			await videoPlayerProps.nextButton.click();
 
-			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:10');
+			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:00:10');
 			await videoPlayerProps.previousButton.click();
-			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:00');
+			expect(await videoPlayerProps.mediaControlsTime.getText()).toBe('00:00:00');
 
 		});
 
@@ -343,7 +343,7 @@ describe('VideoPlayer', function () {
 			await videoPlayerProps2.nextButton.click();
 			await Page.delay(250);
 
-			expect(await videoPlayerProps2.mediaControlsTime.getText()).toBe('00:00');
+			expect(await videoPlayerProps2.mediaControlsTime.getText()).toBe('00:00:00');
 		});
 
 		it('should display info component', async function () {
