@@ -22,7 +22,7 @@ const FeedbackContentBase = kind({
 		/**
 		 * If the current `playbackState` allows the feedback component's visibility to be changed,
 		 * the feedback component will be hidden. If not, setting this property will have no effect.
-		 * All `playbackState`s respond to this property except the following:
+		 * All `playbackState`'s response to this property except the following:
 		 * `'rewind'`, `'fastForward'`.
 		 *
 		 * @type {Boolean}
@@ -41,10 +41,10 @@ const FeedbackContentBase = kind({
 
 		/**
 		 * Refers to one of the following possible media playback states.
-		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'`,
 		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
 		 *
-		 * Each state understands where its related icon should be positioned, and whether it should
+		 * Each state understands where its related icon should be positioned and whether it should
 		 * respond to changes to the `visible` property.
 		 *
 		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.

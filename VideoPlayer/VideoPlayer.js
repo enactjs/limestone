@@ -2082,14 +2082,6 @@ const VideoPlayerBase = class extends Component {
 
 				{this.state.bottomControlsRendered ?
 					<div className={css.fullscreen} {...controlsAriaProps}>
-						<FeedbackContent
-							className={css.miniFeedback}
-							playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
-							playbackState={this.pulsedPlaybackState || this.prevCommand}
-							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
-						>
-							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
-						</FeedbackContent>
 						{
 							this.state.mediaControlsVisible ?
 								<Button
@@ -2111,6 +2103,14 @@ const VideoPlayerBase = class extends Component {
 								Only render when `this.state.mediaControlsVisible` is true in order for `Marquee`
 								to make calculations correctly in `MediaTitle`.
 							*/}
+							<FeedbackContent
+								className={css.miniFeedback}
+								playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
+								playbackState={this.pulsedPlaybackState || this.prevCommand}
+								visible={this.state.miniFeedbackVisible && !noMiniFeedback}
+							>
+								{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
+							</FeedbackContent>
 							{this.state.mediaSliderVisible ?
 								<div className={css.infoFrame}>
 									<MediaTitle
