@@ -38,6 +38,16 @@
 
 		.slotBefore {
 			margin-inline-end: @lime-keyguide-icon-icon-margin-right;
+
+			.red,
+			.green,
+			.yellow,
+			.blue {
+				width: @lime-keyguide-colordot-width;
+				height: @lime-keyguide-colordot-height;
+				margin: @lime-keyguide-colordot-margin;
+				border-radius: @lime-keyguide-colordot-border-radius;
+			}
 		}
 	}
 
@@ -64,16 +74,6 @@
 				margin: @lime-keyguide-image-margin;
 			}
 		}
-	}
-
-	.red,
-	.green,
-	.yellow,
-	.blue {
-		width: @lime-keyguide-colordot-width;
-		height: @lime-keyguide-colordot-height;
-		margin: @lime-keyguide-colordot-margin;
-		border-radius: @lime-keyguide-colordot-border-radius;
 	}
 
 	.applySkins({
