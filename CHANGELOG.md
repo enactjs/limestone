@@ -4,6 +4,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ActionGuide` styling to match the latest GUI
+- `limestone/KeyGuide` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
