@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ProgressButton` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
@@ -25,7 +29,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Item` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
-- `limestone/ProgressButton` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
 - `limestone/Scroller` styling to match the latest GUI
 - `limestone/Tab` styling to match the latest GUI
