@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/BodyText` styling to match the latest GUI.
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
@@ -18,7 +22,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
-- `limestone/BodyText` styling to match the latest GUI.
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Dropdown` styling to match the latest GUI
