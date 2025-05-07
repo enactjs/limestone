@@ -4,6 +4,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/Heading` styling to match the latest GUI
+- `limestone/Panels` styling to match the latest GUI
+- `limestone/Panels.Header` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
