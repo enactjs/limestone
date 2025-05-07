@@ -28,6 +28,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/RadioItem` styling to match the latest GUI
 - `limestone/Scroller` styling to match the latest GUI
 - `limestone/Tab` styling to match the latest GUI
+- `limestone/VideoPlayer` styling to match the latest GUI
 - `limestone/VirtualList` styling to match the latest GUI
 - `limestone/WizardPanels` to marquee subtitle
 
