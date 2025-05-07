@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/WizardPanels` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
@@ -29,7 +33,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Scroller` styling to match the latest GUI
 - `limestone/Tab` styling to match the latest GUI
 - `limestone/VirtualList` styling to match the latest GUI
-- `limestone/WizardPanels` styling to match the latest GUI
 - `limestone/WizardPanels` to marquee subtitle
 
 ### Fixed
