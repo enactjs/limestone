@@ -123,6 +123,10 @@
 		.subtitle {
 			margin: @lime-header-standard-subtitle-margin;
 		}
+
+		&.centered {
+			padding-top: @lime-header-standard-centered-padding-top;
+		}
 	}
 
 	// Compact Header
@@ -140,6 +144,12 @@
 
 		.title {
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
+			line-height: @lime-header-compact-title-line-height;
+		}
+
+		.subtitle {
+			font-size: @lime-header-compact-subtitle-font-size;
+			line-height: @lime-header-compact-subtitle-line-height;
 		}
 	}
 
@@ -208,6 +218,14 @@
 	}
 
 	.applySkins({
+		.title {
+			color: @lime-header-label-main;
+		}
+
+		.subtitle {
+			color: @lime-header-label-sub;
+		}
+
 		&.shadowed {	
 			.subtitle,
 			.title {
