@@ -79,6 +79,7 @@
 			.tooltipLabel {
 				font-size: @lime-input-invalid-tooltip-font-size;
 				font-weight: @lime-input-invalid-tooltip-font-weight;
+				line-height: 60px;
 			}
 		}
 	}
@@ -125,7 +126,11 @@
 
 		.keypad {
 			margin: @lime-input-fullscreen-keypad-margin;
-			max-width: 100vw;
+			height: @lime-input-fullscreen-keypad-height;
+			width: @lime-input-fullscreen-keypad-width;
+			display: flex;
+			justify-content: space-between;
+			align-content: center;
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
@@ -157,12 +162,28 @@
 		}
 
 		.inputArea {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: @lime-input-fullscreen-inputarea-gap;
+			height: @lime-input-fullscreen-inputarea-height;
+
 			.textField {
-				width: @lime-input-fullscreen-textfield-width;
+				height: @lime-input-fullscreen-textfield-height;
+				max-width: @lime-input-fullscreen-textfield-max-width;
+				min-width: @lime-input-fullscreen-textfield-min-width;
 			}
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-number-inputarea-margin;
+			}
+		}
+
+		&.number,
+		&.passwordnumber {
+			.inputArea {
+				gap: 0;
 			}
 		}
 
@@ -186,6 +207,8 @@
 	}
 
 	&.overlay {
+		width: @lime-input-overlay-width;
+
 		.back {
 			top: @lime-input-overlay-back-button-top;
 
@@ -193,7 +216,7 @@
 		}
 
 		.body {
-			padding: @lime-input-overlay-padding;
+			padding: 0;
 		}
 
 		.title {
@@ -210,16 +233,21 @@
 			}
 		}
 
+		.numberField {
+			width: @lime-input-overlay-numberfield-width;
+			justify-content: center;
+			align-items: center;
+			display: flex;
+		}
+
 		.numberCell {
 			width: @lime-input-overlay-numbercell-width;
 			height: @lime-input-overlay-numbercell-height;
 			font-size: @lime-input-overlay-numbercell-font-size;
-			margin: @lime-input-overlay-numbercell-margin;
 		}
 
 		.joined {
-			min-width: @lime-input-overlay-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) * " @lime-input-overlay-numberfield-font-size ~")";
+			width: @lime-input-overlay-numberfield-width;
 			height: @lime-input-overlay-numberfield-height;
 			line-height: @lime-input-overlay-numberfield-height;
 			letter-spacing: @lime-input-overlay-numberfield-letter-spacing;
@@ -232,6 +260,14 @@
 		.keypad {
 			margin: @lime-input-overlay-keypad-margin;
 			width: @lime-input-overlay-keypad-width;
+			justify-content: flex-end;
+			gap: @lime-input-overlay-keypad-gap;
+
+			.key {
+				height: @lime-input-overlay-keypad-key-height;
+				width: @lime-input-overlay-keypad-key-width;
+				margin: 0;
+			}
 
 			:global(.enact-text-large) & {
 				width: @lime-input-overlay-keypad-width-large;
@@ -257,7 +293,7 @@
 
 		.numberCell {
 			&::before {
-				background-color: @lime-input-bg-color;
+				background-color: @lime-inputfield-container-color;
 			}
 		}
 
@@ -290,7 +326,58 @@
 		}
 
 		&.overlay {
-			background-color: @lime-input-overlay-background-color;
+			background-color: @lime-input-background-popup-default;
+
+			.inputArea {
+				.bg {
+					background-color: @lime-input-inputField-popup-container;
+				}
+				.input {
+					.input-placeholder({
+						color: @lime-input-inputField-popup-label-inactive;
+					});
+				}
+				.inputField {
+					color: @lime-input-inputField-popup-label-inactive;
+				}
+
+			}
+
+			.numberCell {
+				color: @lime-input-inputField-password-focused;
+
+				&::before {
+					background-color: @lime-input-inputField-popup-container;
+				}
+			}
+
+			.numberCell.active {
+				color: @lime-input-dot-focused-color;
+
+				&::before {
+					.lime-spotlight-focus-bg-colors();
+					// Remove drop shadow for this input-like field
+					box-shadow: none;
+				}
+			}
+
+			.keypad {
+				.key {
+					color: @lime-input-button-popup-transparent-label;
+				}
+			}
+
+			.title {
+				color: @lime-input-header-popup-label-main;
+			}
+
+			.subtitle {
+				color: @lime-input-header-popup-label-sub;
+			}
+
+			.back {
+				color: @lime-input-button-popup-transparent-icon;
+			}
 		}
 	});
 }
