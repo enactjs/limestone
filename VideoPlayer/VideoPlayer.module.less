@@ -40,6 +40,8 @@
 		.miniFeedback {
 			display: inline-flex;
 			align-items: center;
+			font-size: @lime-video-feedback-mini-font-size;
+			font-weight: @lime-video-feedback-mini-font-weight;
 			height: @lime-video-feedback-mini-height;
 			line-height: @lime-video-feedback-mini-line-height;
 			margin-bottom: @lime-video-feedback-mini-margin-bottom;
@@ -111,6 +113,10 @@
 	// Skin colors
 	.applySkins({
 		.fullscreen {
+			.miniFeedback {
+				color: @lime-video-player-label-color;
+			}
+
 			.bottom {
 				background-color: @lime-video-player-bottom-bg-color;
 			}

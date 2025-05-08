@@ -2090,7 +2090,6 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
-									size="small"
 								/> :
 								null
 						}

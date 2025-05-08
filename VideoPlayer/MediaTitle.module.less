@@ -41,6 +41,7 @@
 	// Badges and title components
 	.infoComponents {
 		font-size: @lime-video-player-info-font-size;
+		font-weight: @lime-video-player-info-font-weight;
 		line-height: @lime-video-player-info-line-height;
 
 		&.hidden {
@@ -84,9 +85,10 @@
 			}
 		}
 	}
-	.applySkins({
-		.titleFrame {
-			color: @lime-video-player-label-color;
-		}
-	})
 }
+
+.applySkins({
+	.titleFrame {
+		color: @lime-video-player-label-color;
+	}
+});

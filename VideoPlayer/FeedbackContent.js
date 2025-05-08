@@ -22,7 +22,7 @@ const FeedbackContentBase = kind({
 		/**
 		 * If the current `playbackState` allows the feedback component's visibility to be changed,
 		 * the feedback component will be hidden. If not, setting this property will have no effect.
-		 * All `playbackState`'s response to this property except the following:
+		 * All `playbackState`s respond to this property except the following:
 		 * `'rewind'`, `'fastForward'`.
 		 *
 		 * @type {Boolean}
