@@ -798,7 +798,7 @@
 // Panels
 // ---------------------------------------
 @lime-panel-padding: 0;
-@lime-panel-body-padding-top: .extract(#guide.panel[body-padding], top)[]; // Used in this file only, for consistency
+@lime-panel-body-padding-top: var(--primitive-spacing-120);
 @lime-panel-body-padding: @lime-panel-body-padding-top (.extract(#guide.panel[body-padding], right)[] - @lime-component-spacing);
 
 // Picker
