@@ -829,7 +829,7 @@ const VideoPlayerBase = class extends Component {
 			bottomControlsRendered: false,
 			feedbackAction: 'idle',
 			feedbackVisible: false,
-			infoVisible: true,
+			infoVisible: false,
 			mediaControlsVisible: false,
 			mediaSliderVisible: false,
 			miniFeedbackVisible: false,
