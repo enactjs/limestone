@@ -81,16 +81,17 @@
 		min-height: (@lime-heading-spacing-medium - @lime-heading-border-width);
 	}
 	&.smallSpacing {
-		margin-bottom: (@lime-heading-spacing-small - @lime-heading-border-width);
+		margin-bottom: @lime-heading-spacing-small-margin-bottom;
 		min-height: (@lime-heading-spacing-small - @lime-heading-border-width);
 	}
 	&.noneSpacing {
+		margin-bottom: 0;
 		min-height: 0;
 	}
 
 	// Skin colors
 	.applySkins({
-		color: @lime-heading-label;
+		color: @lime-heading-label-color;
 
 		&.showLine {
 			border-bottom-color: @lime-heading-border-color;

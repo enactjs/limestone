@@ -52,6 +52,18 @@ const HeadingBase = kind({
 		showLine: PropTypes.bool,
 
 		/**
+		 * Set the size of the component.
+		 *
+		 * If the `spacing` prop is not set (defaulting to "auto"), these values automatically set
+		 * the spacing to the correlated names.
+		 *
+		 * @type {('large'|'medium'|'small'|'tiny')}
+		 * @default 'tiny'
+		 * @public
+		 */
+		size: PropTypes.oneOf(['large', 'medium', 'small', 'tiny']),
+
+		/**
 		 * The size for slotBefore and slotAfter.
 		 * This size is used for remeasuring marquee metrics for Panels.Header.
 		 *
@@ -78,6 +90,7 @@ const HeadingBase = kind({
 	},
 
 	defaultProps: {
+		size: 'tiny',
 		spacing: 'none'
 	},
 
