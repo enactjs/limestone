@@ -9,6 +9,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Heading` styling to match the latest GUI
 - `limestone/Panels` styling to match the latest GUI
 - `limestone/Panels.Header` styling to match the latest GUI
+- `limestone/ProgressButton` styling to match the latest GUI
 
 ### Fixed
 
