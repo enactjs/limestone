@@ -555,7 +555,7 @@ describe('Input test', () => {
 
 		it('should exit Text Input using BackButton', async () => {
 			await components.input1.self.click();
-			await components.input1.background.click();
+			await components.input1.backButton.click();
 			await components.input1.backButton.click();
 			await Page.spotlightSelect();
 
@@ -574,7 +574,7 @@ describe('Input test', () => {
 
 		it('should exit Password Input using BackButton', async () => {
 			await components.input2.self.click();
-			await components.input2.background.click();
+			await components.input2.backButton.click();
 			await components.input2.backButton.click();
 			await Page.spotlightSelect();
 
@@ -630,7 +630,7 @@ describe('Input test', () => {
 
 		it('should exit URL Input using BackButton', async () => {
 			await components.input5.self.click();
-			await components.input5.background.click();
+			await components.input5.backButton.click();
 			await components.input5.backButton.click();
 			await Page.spotlightSelect();
 
@@ -649,7 +649,7 @@ describe('Input test', () => {
 
 		it('should exit Invalid Input using BackButton', async () => {
 			await components.input6.self.click();
-			await components.input6.background.click();
+			await components.input6.backButton.click();
 			await components.input6.backButton.click();
 			await Page.spotlightSelect();
 
@@ -677,7 +677,7 @@ describe('Input test', () => {
 
 		it('should exit Size Large Input using BackButton', async () => {
 			await components.input8.self.click();
-			await components.input8.background.click();
+			await components.input8.backButton.click();
 			await components.input8.backButton.click();
 			await Page.spotlightSelect();
 
@@ -703,7 +703,7 @@ describe('Input test', () => {
 
 		it('should exit Overlay Input using BackButton', async () => {
 			await components.input10.self.click();
-			await components.input10.background.click();
+			await components.input10.backButton.click();
 			await components.input10.backButton.click();
 			await Page.spotlightSelect();
 
