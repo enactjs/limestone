@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ActionGuide` styling to match the latest GUI
 - `limestone/KeyGuide` styling to match the latest GUI
+- `limestone/ProgressButton` styling to match the latest GUI
 
 ### Fixed
 
