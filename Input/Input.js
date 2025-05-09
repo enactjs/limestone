@@ -386,7 +386,7 @@ const InputPopupBase = kind({
 				icon="arrowhookleft"
 				iconFlip="auto"
 				onClick={onClose}
-				size="small"
+				size="large"
 			/>
 		) : null);
 		const heading = <Heading id={`${id}_title`} size="title" marqueeOn="render" alignment="center" className={css.title}>{title}</Heading>;
