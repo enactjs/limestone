@@ -74,7 +74,7 @@ const Keypad = kind({
 
 	render: ({disabled, onAdd, onRemove, ...rest}) => {
 		return (
-			<Layout wrap {...rest} inline>
+			<Layout align="center end" wrap {...rest} inline>
 				{KEY_LIST.map((keyText, rowIndex) => {
 					return (
 						<Cell

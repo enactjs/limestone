@@ -79,7 +79,7 @@
 			.tooltipLabel {
 				font-size: @lime-input-invalid-tooltip-font-size;
 				font-weight: @lime-input-invalid-tooltip-font-weight;
-				line-height: 60px;
+				line-height: @lime-input-invalid-tooltip-line-height;
 			}
 		}
 	}
@@ -88,6 +88,12 @@
 		.enact-locale-rtl({
 			direction: ltr;
 		});
+
+		.key {
+			margin: @lime-input-keypad-key-margin;
+			height: @lime-input-keypad-key-height;
+			width: @lime-input-keypad-key-width;
+		}
 	}
 
 	&.fullscreen {
@@ -147,8 +153,6 @@
 		}
 
 		.key {
-			margin: @lime-input-fullscreen-keypad-key-margin;
-
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-key-margin;
 			}
@@ -242,17 +246,11 @@
 			}
 		}
 
-		.numberField {
-			width: @lime-input-overlay-numberfield-width;
-			justify-content: center;
-			align-items: center;
-			display: flex;
-		}
-
 		.numberCell {
 			width: @lime-input-overlay-numbercell-width;
 			height: @lime-input-overlay-numbercell-height;
 			font-size: @lime-input-overlay-numbercell-font-size;
+			margin: @lime-input-overlay-numbercell-margin;
 		}
 
 		.joined {
@@ -271,12 +269,6 @@
 			width: @lime-input-overlay-keypad-width;
 			justify-content: flex-end;
 			gap: @lime-input-overlay-keypad-gap;
-
-			.key {
-				height: @lime-input-overlay-keypad-key-height;
-				width: @lime-input-overlay-keypad-key-width;
-				margin: 0;
-			}
 
 			:global(.enact-text-large) & {
 				width: @lime-input-overlay-keypad-width-large;
