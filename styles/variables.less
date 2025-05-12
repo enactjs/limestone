@@ -214,7 +214,7 @@
 @lime-body-font-style: normal;
 @lime-body-font-weight: var(--primitive-font-weight-regular);
 @lime-body-line-height: @lime-common-line-height;
-@lime-body-small-line-height: var(--primitive-font-size-72);
+@lime-body-small-line-height: 1.3em;
 @lime-non-latin-body-font-weight: @lime-non-latin-font-weight-light;
 @lime-non-latin-body-font-style: @lime-body-font-style;
 @lime-tallglyph-body-line-height: 1.7em;
@@ -339,7 +339,7 @@
 
 // BodyText
 // ---------------------------------------
-@lime-bodytext-margin: 0;
+@lime-bodytext-margin: 0 @lime-component-spacing @lime-body-font-size @lime-component-spacing;
 @lime-bodytext-padding: 0;
 
 // Button
