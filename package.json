@@ -49,10 +49,10 @@
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.30.1",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "warning": "^4.0.3",
-    "ilib": "^14.21.0"
+    "ilib": "^14.21.1"
   },
   "peerDependencies": {
     "ilib": "^14.20.0 || ^14.20.0-webos1"
@@ -62,7 +62,7 @@
     "vue-template-compiler": "@vue/compiler-sfc@3.4.31"
   },
   "devDependencies": {
-    "@enact/docs-utils": "^0.4.11",
+    "@enact/docs-utils": "^0.4.12",
     "@enact/ui-test-utils": "^2.0.0-alpha.2"
   }
 }
