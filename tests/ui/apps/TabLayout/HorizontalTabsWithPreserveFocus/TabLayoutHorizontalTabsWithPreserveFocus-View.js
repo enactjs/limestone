@@ -16,7 +16,7 @@ const app = (props) => (
 		<TabLayout
 			id="tabLayout"
 			orientation="horizontal"
-			preserveFocus={true}
+			preserveFocus
 			style={{width: '90%'}}
 			tabSize={900}
 		>

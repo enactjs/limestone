@@ -49,7 +49,7 @@ export const tabsWithIcons = [
 
 export const tabsForScroll = [
 	<Tab title="One">
-		<Header title='Horizontal Tabs' />
+		<Header title="Horizontal Tabs" />
 		<div id="view1">
 			View One
 			<Button id="button1">Button One</Button>
@@ -95,7 +95,7 @@ export const tabsForScroll = [
 		<div id="view14"><Button id="button14">Button Fourteen</Button></div>
 	</Tab>,
 	<Tab title="Fifteen">
-		<Header title='Horizontal Tabs' />
+		<Header title="Horizontal Tabs" />
 		<div id="view15">View Fifteen</div>
 	</Tab>
 ];
