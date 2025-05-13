@@ -244,7 +244,7 @@ const TabLayoutBase = kind({
 		dimensions: {
 			tabs: {
 				collapsed: 216,
-				normal: 882
+				normal: 888
 			},
 			content: {
 				expanded: null,
