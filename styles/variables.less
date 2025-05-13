@@ -117,9 +117,9 @@
 @lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
 @lime-alert-title-font-size:        @lime-header-wizard-title-font-size;
 @lime-alert-notitle-content-font-size: 90px;
-@lime-base-font-size:               60px;
+@lime-base-font-size:               var(--primitive-font-size-60);
 @lime-body-font-size:               @lime-base-font-size;
-@lime-body-small-font-size:         54px;
+@lime-body-small-font-size:         var(--primitive-font-size-54);
 @lime-button-font-size-large:       var(--primitive-font-size-96);
 @lime-button-font-size:             var(--primitive-font-size-60);
 @lime-button-small-font-size-large: var(--primitive-font-size-72);
@@ -168,7 +168,7 @@
 @lime-picker-font-size:             var(--primitive-font-size-54);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
-@lime-steps-step-number-font-size:  54px;
+@lime-steps-step-number-font-size: var(--primitive-font-size-48);
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
@@ -216,12 +216,13 @@
 // Body
 @lime-body-font-family: @lime-font-family;
 @lime-body-font-style: normal;
-@lime-body-font-weight: normal;
-@lime-body-line-height: @lime-body-font-size + 6;
+@lime-body-font-weight: var(--primitive-font-weight-regular);
+@lime-body-line-height: @lime-common-line-height;
+@lime-body-small-line-height: 1.3em;
 @lime-non-latin-body-font-weight: @lime-non-latin-font-weight-light;
 @lime-non-latin-body-font-style: @lime-body-font-style;
 @lime-tallglyph-body-line-height: 1.7em;
-@lime-non-latin-body-line-height: @lime-tallglyph-body-line-height; // "non-latin" variable retained for legacy code safety.
+@lime-non-latin-body-line-height: 66px;
 
 // Button
 @lime-button-font-family: @lime-alt-font-family;
@@ -305,7 +306,6 @@
 // Picker
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
 @lime-picker-font-weight: 600;
-
 
 // ---------------------------------------
 // Component Rules
@@ -989,17 +989,15 @@
 // Steps
 // ---------------------------------------
 @lime-steps-step-number-font-weight: 600;
-@lime-steps-margin: 0;
-@lime-steps-step-margin: 0 @lime-component-spacing;
-@lime-steps-step-past-opacity: 1;
+@lime-steps-step-margin: 0 var(--primitive-spacing-30);
 @lime-steps-step-current-opacity: 1;
-@lime-steps-step-future-opacity: 0.2;
+@lime-steps-step-future-opacity: 1;
 @lime-steps-step-highlight-current-only-future-opacity: 1;
 @lime-steps-pageindicator-size: 18px;
-@lime-steps-pageindicator-margin: 0 15px;
-@lime-steps-pageindicator-border-radius: 999px;
-@lime-steps-pageindicator-current-size: 30px;
-@lime-steps-pageindicator-current-margin: 0 9px;
+@lime-steps-pageindicator-margin: 0 var(--primitive-spacing-12);
+@lime-steps-pageindicator-border-radius: var(--semantic-radius-full);
+@lime-steps-pageindicator-current-size: 24px;
+@lime-steps-pageindicator-current-margin: 0 var(--primitive-spacing-6);
 
 // Switch
 // ---------------------------------------
