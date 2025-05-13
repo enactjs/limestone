@@ -93,6 +93,9 @@ export const tabsForScroll = [
 		<div id="view14"><Button id="button14">Button Fourteen</Button></div>
 	</Tab>,
 	<Tab title="Fifteen">
-		<div id="view15">View Fifteen</div>
+		<div id="view15" style={{textAlign: 'right'}}>
+			View Fifteen
+			<Button id="button15">Button Fifteen</Button>
+		</div>
 	</Tab>
 ];

@@ -38,6 +38,7 @@ const TabBase = kind({
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
+		preserveFocus: PropTypes.bool,
 		selected: PropTypes.bool,
 		size: PropTypes.number,
 		sprite: PropTypes.object,
@@ -71,6 +72,16 @@ const TabBase = kind({
 
 				return {selected: index};
 			})
+		),
+		onKeyDown: handle(
+			forwardCustom('onKeyDown', (ev, props) => {
+				const {orientation, preserveFocus} = props;
+				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
+
+				if (preserveFocus) {
+					Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
+				}
+			})
 		)
 	},
 
@@ -87,6 +98,7 @@ const TabBase = kind({
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
+		delete rest.preserveFocus;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -137,7 +149,6 @@ const GroupComponent = SpotlightContainerDecorator(
 		// the view when re-entering the tab group
 		defaultElement: `.${componentCss.selected}`,
 		enterTo: 'default-element',
-		partition: true,
 		// When swapping from unscrolled to scrolled tab group, the container config is lost so this
 		// preserves it across unmounts / remounts
 		preserveId: true
@@ -169,6 +180,7 @@ const TabGroupBase = kind({
 		onFocusTab: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
+		preserveFocus: PropTypes.bool,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
@@ -190,11 +202,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, preserveFocus, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
+		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, preserveFocus, size: tabSize}), [css, collapsed, orientation, preserveFocus, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {

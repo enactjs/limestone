@@ -197,6 +197,15 @@ const TabLayoutBase = kind({
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
 
 		/**
+		 * Preserve focus within the component.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		preserveFocus: PropTypes.bool,
+
+		/**
 		 * Indicates the content's text direction is right-to-left.
 		 *
 		 * @type {Boolean}
@@ -253,6 +262,7 @@ const TabLayoutBase = kind({
 		},
 		index: 0,
 		orientation: 'vertical',
+		preserveFocus: false,
 		type: 'normal'
 	},
 
@@ -389,7 +399,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, preserveFocus, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -408,6 +418,7 @@ const TabLayoutBase = kind({
 			onFocusTab: onSelect,
 			onSelect,
 			orientation,
+			preserveFocus,
 			selectedIndex: index,
 			tabs
 		};
