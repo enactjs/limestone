@@ -1,0 +1,16 @@
+.panel {
+    .body {
+        padding: 0
+    }
+}
+
+.tabs {
+    .tabGroup {
+        margin-left: calc((1 - var(--is-scrolled)) * 132px);
+    }
+    .tabGroup [role="tablist"] {
+        padding-left: calc(var(--is-scrolled) * 132px);
+        padding-right: calc(var(--is-scrolled) * 132px);
+        width: calc(var(--tabs-width) + calc(var(--is-scrolled) * 264px));
+    }
+}

@@ -6,6 +6,7 @@ import Group from '@enact/ui/Group';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import {Cell, Layout} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
+import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -20,11 +21,8 @@ import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
 
-const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
-const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
-
-// Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
-const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
+const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 6;
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8
 
 const TabBase = kind({
 	name: 'Tab',
@@ -104,14 +102,11 @@ const TabBase = kind({
 		};
 
 		switch (orientation) {
-			// Horizontal Cell sizing can auto-size width or be set to a finite value, stretching the Button.
 			case 'horizontal': {
 				return (
-					<Cell
+					<Button
+						style={{minWidth: ri.scaleToRem(size)}}
 						{...rest}
-						buttonSize={buttonSize}
-						size={size}
-						component={TabButton}
 						{...commonProps}
 					/>
 				);
@@ -183,14 +178,14 @@ const TabGroupBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
+		className: ({collapsed, orientation, useScroller, styler}) => styler.append({collapsed, useScroller}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, useScroller, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -218,22 +213,21 @@ const TabGroupBase = kind({
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
-		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
-
-		const useScroller = (children.length > maxTabs);
-		const scrollerProps = useScroller ? {
+		const scrollerProps = {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
 			verticalScrollbar: 'hidden'
-		} : null;
-		const Component = useScroller ? Scroller : 'div';
+		};
+		const Component = Scroller;
 
 		return (
 			<Component
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
+				scrollbarTrackCss={componentCss}
+				style={{"--tabs-width": ri.scaleToRem(tabSize * children.length + 48 * (children.length - 1))}}
 				{...scrollerProps}
 			>
 				{noIcons ? (

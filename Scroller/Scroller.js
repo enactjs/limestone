@@ -124,7 +124,7 @@ let Scroller = (props) => {
 
 	// To apply spotlight navigableFilter, SpottableDiv should be in scrollContainer.
 	const ScrollBody = rest.focusableScrollbar === 'byEnter' ? SpottableDiv : Fragment;
-
+	// console.log(themeScrollContentProps.scrollContentRef.current?.scrollWidth);
 	// Render
 	return (
 		<ResizeContext {...resizeContextProps}>

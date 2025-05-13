@@ -15,6 +15,11 @@
 			margin: @lime-tablayout-tab-margin;
 			.padding-start-end(@lime-tablayout-tab-horizontal-padding);
 
+			&:before {
+				left: 0;
+				right: 0;
+			}
+
 			&.small {
 				font-size: @lime-tablayout-tab-small-font-size;
 				height: @lime-tablayout-tab-horizontal-small-button-height;
@@ -26,6 +31,7 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
+			width: 816px;
 			.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 			&.collapsed {
@@ -33,7 +39,7 @@
 			}
 
 			&.hasIcon:not(&.collapsed) {
-				.padding-start-end(@lime-tablayout-tab-vertical-padding-left, @lime-tablayout-tab-vertical-padding-right);
+				.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 				.icon {
 					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
@@ -74,26 +80,38 @@
 	}
 
 	&.horizontal {
+		&:not(.useScroller) {
+			width: calc(var(--tabs-width) + 24px);
+		}
 		padding: @lime-tablayout-horizontal-tabs-padding;
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
+			width: var(--tabs-width);
 		}
 	}
 
 	&.vertical {
 		padding: @lime-tablayout-vertical-tabs-padding;
 
+		&.scrolled {
+			height: 1584px;
+		}
 		.tabs {
 			flex-direction: column;
 			gap: @lime-tablayout-vertical-tabs-spacing;
+		}
+		.scrollbarTrack {
+			margin-top: 36px;
+			margin-bottom: 36px;
+			height: calc(100% - 60px);
 		}
 	}
 }
 
 .applySkins({
 	.tabGroup {
-		background-color: @lime-tablayout-tab-group-container-color;
+		background-color: grey;
 		border-radius: @lime-tablayout-border-radius;
 
 		// Apply transparent background to the child component so if the Scroller is used, then it will not have doubled background color

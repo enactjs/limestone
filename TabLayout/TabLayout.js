@@ -19,7 +19,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Changeable} from '@enact/ui/Changeable';
 import {Cell, Layout} from '@enact/ui/Layout';
-import {scaleToRem} from '@enact/ui/resolution';
+import ri, {scaleToRem} from '@enact/ui/resolution';
 import Toggleable from '@enact/ui/Toggleable';
 import Touchable from '@enact/ui/Touchable';
 import ViewManager from '@enact/ui/ViewManager';
@@ -214,22 +214,6 @@ const TabLayoutBase = kind({
 		size: PropTypes.oneOf(['small', 'large']),
 
 		/**
-		 * Assign a custom size to horizontal tabs.
-		 *
-		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
-		 * Leave this prop blank to use the default auto-sizing behavior.
-		 * Tabs may also be set to a finite width using this property. This accepts numeric pixel
-		 * values. Be mindful of the value you provide as values that are too wide will run off the
-		 * edge of the screen.
-		 *
-		 * Only applies to `orientation="horizontal"` at this time.
-		 *
-		 * @type {Number}
-		 * @public
-		 */
-		tabSize: PropTypes.number,
-
-		/**
 		 * Type of TabLayout.
 		 *
 		 * @type {('normal'|'popup')}
@@ -244,7 +228,7 @@ const TabLayoutBase = kind({
 		dimensions: {
 			tabs: {
 				collapsed: 216,
-				normal: 882
+				normal: 888
 			},
 			content: {
 				expanded: null,
@@ -399,6 +383,7 @@ const TabLayoutBase = kind({
 		const isVertical = orientation === 'vertical';
 		const ContentCell = isVertical ? TouchableCell : Cell;
 		const contentCellProps = isVertical ? {onFlick: handleFlick} : null;
+		const useScroller = orientation === "horizontal" && isHorizontalScrollerTabs(tabs.length, size);
 
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
@@ -421,9 +406,10 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							collapsed={isVertical}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
-							tabSize={!isVertical ? tabSize : null}
 							size={size}
+							tabSize={!isVertical ? getHorizontalTabWidth(tabs.length, size) : null}
 							spotlightDisabled={!collapsed && isVertical}
+							useScroller={useScroller}
 						/>
 					</Cell>
 					{isVertical ? <Cell
@@ -471,6 +457,19 @@ const TabLayoutDecorator = compose(
 // Currently not documenting the base output since it's not exported
 const TabLayout = TabLayoutDecorator(TabLayoutBase);
 
+const getHorizontalTabWidth = (dataSize, size) => {
+	const widths = size === 'small' ? [540, 420, 420] : [852, 672, 552];
+	return dataSize < 5 ? widths[0] : dataSize < 6 ? widths[1] : widths[2];
+};
+
+const isHorizontalScrollerTabs = (dataSize, size) => {
+	console.log('isHorizontalScrollerTabs', dataSize, size);
+	if (window.screen.width < ri.scale(dataSize*getHorizontalTabWidth(dataSize, size) + 48 * (dataSize - 1))) {
+		return true;
+	}
+	return false;
+};
+
 /**
  * A shortcut to access {@link limestone/TabLayout.Tab}
  *
@@ -487,5 +486,7 @@ export {
 	TabLayoutBase,
 	TabLayoutContext,
 	TabLayoutDecorator,
-	Tab
+	Tab,
+	getHorizontalTabWidth,
+	isHorizontalScrollerTabs,
 };

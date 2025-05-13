@@ -825,7 +825,7 @@
 // ---------------------------------------
 @lime-panel-padding: 0;
 @lime-panel-body-padding-top: .extract(#guide.panel[body-padding], top)[]; // Used in this file only, for consistency
-@lime-panel-body-padding: @lime-panel-body-padding-top (.extract(#guide.panel[body-padding], right)[] - @lime-component-spacing);
+@lime-panel-body-padding: @lime-panel-body-padding-top 132px 0;
 
 // Picker
 // ----------------------------------------
@@ -1018,7 +1018,7 @@
 @lime-tablayout-collapse-duration: 250ms;
 @lime-tablayout-vertical-content-margin-top: 0;
 @lime-tablayout-horizontal-content-margin-top: var(--primitive-spacing-96);
-@lime-tablayout-horizontal-tabs-margin: 0 @lime-component-spacing;
+@lime-tablayout-horizontal-tabs-margin: 0 18px;
 @lime-tablayout-horizontal-tabs-padding: var(--primitive-spacing-12);
 @lime-tablayout-horizontal-tabs-spacing: var(--primitive-spacing-48);
 @lime-tablayout-vertical-tabs-padding: var(--primitive-spacing-36);
