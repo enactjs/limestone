@@ -1,4 +1,5 @@
 import Button from '../../../../Button';
+import {Header} from '../../../../Panels';
 import {Tab} from '../../../../TabLayout';
 
 export const tabs = [
@@ -48,6 +49,7 @@ export const tabsWithIcons = [
 
 export const tabsForScroll = [
 	<Tab title="One">
+		<Header title='Horizontal Tabs' />
 		<div id="view1">
 			View One
 			<Button id="button1">Button One</Button>
@@ -93,9 +95,7 @@ export const tabsForScroll = [
 		<div id="view14"><Button id="button14">Button Fourteen</Button></div>
 	</Tab>,
 	<Tab title="Fifteen">
-		<div id="view15" style={{textAlign: 'right'}}>
-			View Fifteen
-			<Button id="button15">Button Fifteen</Button>
-		</div>
+		<Header title='Horizontal Tabs' />
+		<div id="view15">View Fifteen</div>
 	</Tab>
 ];
