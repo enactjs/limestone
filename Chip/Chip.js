@@ -25,7 +25,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useRef} from 'react';
+import {useCallback, useRef} from 'react';
 
 import Button from '../Button';
 import Skinnable from '../Skinnable';
