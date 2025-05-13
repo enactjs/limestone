@@ -1,17 +1,14 @@
 // Steps.module.less
 //
 @import "../styles/mixins.less";
-@import '../styles/skin.less';
+@import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .steps {
-	margin: @lime-steps-margin;
-
 	.step {
 		margin: @lime-steps-step-margin;
 
 		&.numbers {
-			.lime-font-number();
 			font-size: @lime-steps-step-number-font-size;
 			font-weight: @lime-steps-step-number-font-weight;
 		}
@@ -20,10 +17,6 @@
 			&.future {
 				opacity: @lime-steps-step-highlight-current-only-future-opacity;
 			}
-		}
-
-		&.past {
-			opacity:  @lime-steps-step-past-opacity;
 		}
 
 		&.current {
@@ -49,11 +42,25 @@
 	}
 
 	.applySkins({
+		.step:not(.pageIndicator) {
+			&.past {
+				color: @lime-steps-step-icon-success-color;
+			}
+			
+			&.current {
+				color: @lime-steps-step-label-active-color;
+			}
+			
+			&.future {
+				color: @lime-steps-step-label-inactive-color;
+			}
+		}
+
 		.pageIndicator {
-			background-color: @lime-steps-pageindicator-bg-color;
+			background-color: @lime-steps-indicator-icon-inactive-color;
 
 			&.current {
-				background-color: @lime-steps-pageindicator-current-bg-color;
+				background-color: @lime-steps-indicator-icon-active-color;
 			}
 		}
 	});

@@ -164,7 +164,7 @@
 @lime-picker-font-size:             var(--primitive-font-size-54);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
-@lime-steps-step-number-font-size:  54px;
+@lime-steps-step-number-font-size: var(--primitive-font-size-48);
 @lime-switch-icon-font-size:        84px;
 @lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
@@ -301,7 +301,6 @@
 // Picker
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
 @lime-picker-font-weight: 600;
-
 
 // ---------------------------------------
 // Component Rules
@@ -984,17 +983,15 @@
 // Steps
 // ---------------------------------------
 @lime-steps-step-number-font-weight: 600;
-@lime-steps-margin: 0;
-@lime-steps-step-margin: 0 @lime-component-spacing;
-@lime-steps-step-past-opacity: 1;
+@lime-steps-step-margin: 0 var(--primitive-spacing-30);
 @lime-steps-step-current-opacity: 1;
-@lime-steps-step-future-opacity: 0.2;
+@lime-steps-step-future-opacity: 1;
 @lime-steps-step-highlight-current-only-future-opacity: 1;
 @lime-steps-pageindicator-size: 18px;
-@lime-steps-pageindicator-margin: 0 15px;
-@lime-steps-pageindicator-border-radius: 999px;
-@lime-steps-pageindicator-current-size: 30px;
-@lime-steps-pageindicator-current-margin: 0 9px;
+@lime-steps-pageindicator-margin: 0 var(--primitive-spacing-12);
+@lime-steps-pageindicator-border-radius: var(--semantic-radius-full);
+@lime-steps-pageindicator-current-size: 24px;
+@lime-steps-pageindicator-current-margin: 0 var(--primitive-spacing-6);
 
 // Switch
 // ---------------------------------------
