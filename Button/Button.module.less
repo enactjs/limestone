@@ -296,6 +296,10 @@
 		&,
 		:global(.enact-a11y-high-contrast) & {
 			color: @lime-button-fill-label-color;
+
+			&.bordered {
+				color: @lime-button-outline-label-color;
+			}
 		}
 
 		.bg {
@@ -316,13 +320,17 @@
 		&.opaque {
 			color: @lime-button-fill-label-color;
 
+			&.bordered {
+				color: @lime-button-outline-label-color;
+			}
+
 			.bg {
 				opacity: @lime-button-bg-opacity;
 			}
 		}
 
 		&.transparent {
-			color: @lime-button-transparent-fill-text-color;
+			color: @lime-button-transparent-label-color;
 
 			.bg {
 				opacity: @lime-button-transparent-bg-opacity;
@@ -330,6 +338,10 @@
 
 			&.shadowed .client {
 				text-shadow: @lime-button-text-shadow;
+			}
+
+			.icon {
+				color: @lime-button-transparent-icon-color;
 			}
 		}
 
@@ -378,7 +390,10 @@
 			}
 
 			&.bordered {
+				color: @lime-button-outline-label-selected-color;
+
 				.bg {
+					.lime-button-outline-selected-colors();
 					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
 				}
 			}
@@ -390,17 +405,43 @@
 			}
 
 			&.transparent {
+				color: @lime-button-transparent-label-selected-color;
+
 				.bg {
 					opacity: @lime-button-transparent-selected-bg-opacity;
+				}
+
+				.icon {
+					color: @lime-button-transparent-icon-selected-color;
 				}
 			}
 		}
 
 		.focus({
-			.lime-spotlight-focus-text-colors();
+			color: @lime-button-fill-label-focused-color;
 
 			.bg {
 				.lime-button-focus-bg-colors();
+			}
+
+			&.bordered {
+				color: @lime-button-outline-label-focused-color;
+
+				.bg {
+					.lime-button-outline-focus-bg-colors();
+				}
+			}
+
+			&.transparent {
+				color: @lime-button-transparent-label-focused-color;
+
+				.bg {
+					.lime-button-transparent-focus-bg-colors();
+				}
+
+				.icon {
+					color: @lime-button-transparent-icon-focused-color;
+				}
 			}
 
 			.client {
@@ -457,9 +498,19 @@
 		:global(.noAnimation) & {
 			.focus({
 				.bg {
-					.lime-button-focus-bg-colors(@shadow: {
-						box-shadow: none;
-					});
+					.lime-button-focus-bg-colors(@shadow: {box-shadow: none;});
+				}
+
+				&.bordered {
+					.bg {
+						.lime-button-outline-focus-bg-colors(@shadow: {box-shadow: none;});
+					}
+				}
+
+				&.transparent {
+					.bg {
+						.lime-button-transparent-focus-bg-colors(@shadow: {box-shadow: none;});
+					}
 				}
 
 				&.focusExpand {
