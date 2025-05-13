@@ -71,7 +71,7 @@ boolean('showProgress', _ProgressButton, Config);
 select('backgroundOpacity', _ProgressButton, prop.backgroundOpacity, Config);
 select('color', _ProgressButton, prop.color, Config);
 select('icon', _ProgressButton, prop.icons, Config);
-select('minWidth', _ProgressButton, prop.minWidth, Config);
+select('minWidth', _ProgressButton, prop.minWidth, Config, 'false');
 range('progress', _ProgressButton, Config, {min: 0, max: 1, step: 0.01}, 0.4);
 select('size', _ProgressButton, prop.size, Config);
 text('children', _ProgressButton, Config, 'Update');
