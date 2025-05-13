@@ -83,12 +83,6 @@ const ChipBase = (props) => {
 		}
 	}, [deleteButton]);
 
-	useEffect(() => {
-		if (buttonRef.current && deleteButton) {
-			buttonRef.current.classList.remove(css.focused);
-		}
-	}, [deleteButton]);
-
 	delete rest.deleteButton;
 
 	return (
@@ -101,7 +95,7 @@ const ChipBase = (props) => {
 			onMouseLeave={handleMouseLeave}
 			onFocus={handleFocus}
 		>
-			<Button icon={icon ? icon : null} size="small" css={css}>{children}</Button>
+			<Button css={css} focusEffect="static" icon={icon ? icon : null} size="small">{children}</Button>
 			{deleteButton &&
 				<div ref={buttonRef} className={buttonClassName}>
 					<Button
@@ -111,6 +105,7 @@ const ChipBase = (props) => {
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
 						onClick={handleDelete}
+						css={css}
 					/>
 				</div>
 			}
