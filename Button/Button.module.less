@@ -7,8 +7,8 @@
 .button {
 	// default is size="large"
 	.lime-large-button-text();
+	.enact-locale-line-height(@lime-button-line-height, (@lime-button-height - (2 * @lime-button-border-width)));
 	height: @lime-button-height;
-	line-height: @lime-button-line-height;
 	min-width: @lime-button-min-width;
 	max-width: @lime-button-max-width;
 	padding: 0 @lime-button-h-padding;
@@ -130,10 +130,10 @@
 
 	&.small {
 		.lime-small-button-text();
+		.enact-locale-line-height(@lime-button-small-line-height, (@lime-button-small-height - (2 * @lime-button-border-width)));
 		height: @lime-button-small-height;
 		min-width: @lime-button-small-min-width;
 		max-width: @lime-button-small-max-width;
-		line-height: @lime-button-small-line-height;
 		margin: @lime-button-small-margin;
 		padding-left: @lime-button-small-h-padding;
 		padding-right: @lime-button-small-h-padding;
