@@ -1,0 +1,124 @@
+@import '~@enact/limestone/styles/skin.less';
+@import "../styles/variables.less";
+
+.banners {
+	display: inline-flex;
+	position: relative;
+	flex-direction: column;
+
+	.navButtonCell {
+		text-align: center;
+		display: flex;
+		align-items: center;
+		width: @lime-pageviews-navigation-button-area-width;
+		justify-content: center;
+	}
+
+
+	.navButtonContainer {
+		position: absolute;
+		width: 100%;
+		height: @lime-button-height;
+		top: ~"calc(50% - "@lime-button-height / 2 ~")";
+		z-index: 10;
+	}
+
+	.viewManager {
+		overflow: hidden;
+	}
+
+	.stepsRow {
+		position: absolute;
+		align-self: center;
+		bottom: @lime-pageviews-full-contents-bottom-steps-bottom;
+	}
+
+	.steps {
+		display: flex;
+		align-items: center;
+		min-height: @lime-pageviews-dot-steps-area-min-height;
+	}
+}
+
+.banner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	.sponsoredText {
+		position: absolute;
+		width: 480px;
+		height: 42px;
+		bottom: 48px;
+		left: 48px;
+		gap: 0px;
+		opacity: 0.8;
+		font-size: 36px;
+		color: #FFFFFF;
+		font-weight: 700;
+		text-align: left;
+	}
+
+	.companionContainer {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		.video {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.image {
+		width: 100%;
+		height: 100%;
+	}
+
+	.videoOnly {
+		position: relative;
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+	}
+
+	.overlayText {
+		position: absolute;
+		display: flex;
+		height: 108px;
+		width: 406px;
+		max-width: 1020px;
+		bottom: 48px;
+		right: 48px;
+		padding: 0px 30px 0px 30px;
+		border-radius: 24px;
+		box-shadow: 0 0 0 4px #FFFFFF inset;
+		background: #5B5D6632;
+		font-size: 42px;
+		font-weight: 600;
+		justify-content: center;
+		align-items: center;
+		color: #FFFFFF;
+	}
+
+	.description {
+		position: absolute;
+		top: 354px;
+		left: 198px;
+		width: 1868px;
+		height: 192px;
+		max-height: 384px;
+		font-size: 72px;
+		font-weight: 400;
+	}
+}
+
+.applySkins({
+	.banners:focus {
+		transform: none;
+		outline: 12px solid rgb(230, 230, 230);
+	}
+});
