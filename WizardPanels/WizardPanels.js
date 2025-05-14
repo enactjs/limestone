@@ -409,7 +409,7 @@ const WizardPanelsBase = kind({
 							iconFlip="auto"
 							minWidth={false}
 							onClick={onPrevClick}
-							size="small"
+							size="large"
 							slot="slotBefore"
 							visible={isPrevButtonVisible}
 						/>
@@ -423,7 +423,7 @@ const WizardPanelsBase = kind({
 							iconPosition="after"
 							minWidth={false}
 							onClick={onNextClick}
-							size="small"
+							size="large"
 							slot="slotAfter"
 							visible={isNextButtonVisible}
 						/>
