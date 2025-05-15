@@ -92,16 +92,6 @@
 			.bg {
 				.lime-spotlight-focus-bg-colors();
 			}
-
-			.icon {
-				background-color: @lime-switch-focus-handle-inactive-color;
-			}
-
-			&.selected {
-				.icon {
-					background-color: @lime-switch-focus-handle-active-color;
-				}
-			}
 		});
 
 		:global(.noAnimation) & {
@@ -128,20 +118,3 @@
 		});
 	});
 }
-
-// Keep the switch handle (the icon) a constant color regardless of focus state.
-.applySkins({
-	.focus({
-		.switch {
-			.icon {
-				background-color: @lime-switch-focus-handle-inactive-color;
-			}
-
-			&.selected {
-				.icon {
-					background-color: @lime-switch-focus-handle-active-color;
-				}
-			}
-		}
-	}, parent);
-});
