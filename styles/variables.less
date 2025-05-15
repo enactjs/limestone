@@ -52,8 +52,10 @@
 
 	// Component Definition Mixins
 	.header() {
+		compact-padding: 60px 60px 0 60px;
 		compact-title-font-size: 90px;
-		compact-title-line-height: 72px;
+		compact-title-line-height: 120px;
+		compact-subtitle-font-size: 54px;
 
 		mini-margin: 0 0 36px 0;
 		mini-padding: 60px 60px 45px 60px;
@@ -119,8 +121,8 @@
 @lime-button-small-font-size:       var(--primitive-font-size-54);
 @lime-card-caption-font-size:       60px;
 @lime-card-label-font-size:         48px;
-@lime-header-compact-title-font-size: var(--primitive-font-size-90);
-@lime-header-compact-subtitle-font-size: var(--primitive-font-size-54);
+@lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
+@lime-header-compact-subtitle-font-size: #guide.header[compact-subtitle-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
 @lime-heading-large-font-size:      72px;
@@ -549,8 +551,26 @@
 	)
 	0 0 0;
 @lime-header-compact-margin: 0;
-@lime-header-compact-padding: var(--primitive-spacing-60) var(--primitive-spacing-60) 0;
-@lime-header-compact-title-line-height: 120px;
+@lime-header-compact-padding:
+	(
+		.extract(#guide.header[compact-padding], top)[]
+		- #guide.get-edge-size-difference(
+			#guide.header[compact-title-line-height],
+			@lime-header-compact-title-font-size,
+			@lime-heading-title-line-height
+		)[@result]
+	)
+	.extract(#guide.header[compact-padding], right)[]
+	(
+		.extract(#guide.header[compact-padding], bottom)[]
+		- #guide.get-edge-size-difference(
+			#guide.header[compact-title-line-height],
+			@lime-header-compact-title-font-size,
+			@lime-heading-title-line-height
+		)[@result]
+	)
+	.extract(#guide.header[compact-padding], left)[];
+@lime-header-compact-title-line-height: #guide.header[compact-title-line-height];
 @lime-header-compact-title-padding: 0;
 @lime-header-compact-subtitle-padding: 0;
 @lime-header-compact-subtitle-line-height: 72px;
