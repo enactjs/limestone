@@ -223,9 +223,9 @@ const TabGroupBase = kind({
 		const useScroller = (children.length > maxTabs);
 		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
-			preventScrollByFocus: true,
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
+			preventScrollByFocus: true,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';

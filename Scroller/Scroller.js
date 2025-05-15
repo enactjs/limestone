@@ -59,7 +59,7 @@ const scrollerDefaultProps = {
 		track: false,
 		wheel: true
 	},
-	preventScrollByFocus: true,
+	preventScrollByFocus: false,
 	scrollMode: 'native',
 	verticalScrollbar: 'auto'
 };
