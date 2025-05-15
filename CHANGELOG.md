@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/TabLayout` prop `preserveFocus`
+
 ### Changed
 
 - `limestone/BodyText` styling to match the latest GUI
@@ -22,7 +26,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Card` prop `secondaryLabel`
-- `limestone/TabLayout` prop `preserveFocus`
 
 ### Changed
 
