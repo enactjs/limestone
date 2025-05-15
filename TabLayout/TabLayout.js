@@ -19,7 +19,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Changeable} from '@enact/ui/Changeable';
 import {Cell, Layout} from '@enact/ui/Layout';
-import {scaleToRem} from '@enact/ui/resolution';
+import ri, {scaleToRem} from '@enact/ui/resolution';
 import Toggleable from '@enact/ui/Toggleable';
 import Touchable from '@enact/ui/Touchable';
 import ViewManager from '@enact/ui/ViewManager';
@@ -36,11 +36,37 @@ import Tab from './Tab';
 import componentCss from './TabLayout.module.less';
 import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
 
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
+const TAB_SPACING = 48;
+
 const TabLayoutContext = createContext(null);
 
 const TouchableCell = Touchable(Cell);
 
 const isTouchMode = () => (getLastInputType() === 'touch');
+
+const getHorizontalTabWidth = (dataSize, size) => {
+	let widths;
+
+	if (size === 'small') {
+		widths = [540, 420, 420];
+	} else {
+		widths = [852, 672, 552];
+	}
+
+	if (dataSize < 5) {
+		return widths[0];
+	} else if (dataSize < 6) {
+		return widths[1];
+	} else {
+		return widths[2];
+	}
+};
+
+const isHorizontalScrollableTabs = (dataSize, size) => {
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size) + TAB_SPACING * (dataSize - 1);
+	return window.screen.width < ri.scale(totalTabsWidth);
+};
 
 /**
  * Tabbed Layout component.
@@ -214,22 +240,6 @@ const TabLayoutBase = kind({
 		size: PropTypes.oneOf(['small', 'large']),
 
 		/**
-		 * Assign a custom size to horizontal tabs.
-		 *
-		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
-		 * Leave this prop blank to use the default auto-sizing behavior.
-		 * Tabs may also be set to a finite width using this property. This accepts numeric pixel
-		 * values. Be mindful of the value you provide as values that are too wide will run off the
-		 * edge of the screen.
-		 *
-		 * Only applies to `orientation="horizontal"` at this time.
-		 *
-		 * @type {Number}
-		 * @public
-		 */
-		tabSize: PropTypes.number,
-
-		/**
 		 * Type of TabLayout.
 		 *
 		 * @type {('normal'|'popup')}
@@ -253,6 +263,7 @@ const TabLayoutBase = kind({
 		},
 		index: 0,
 		orientation: 'vertical',
+		size: 'large',
 		type: 'normal'
 	},
 
@@ -389,7 +400,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -399,6 +410,9 @@ const TabLayoutBase = kind({
 		const isVertical = orientation === 'vertical';
 		const ContentCell = isVertical ? TouchableCell : Cell;
 		const contentCellProps = isVertical ? {onFlick: handleFlick} : null;
+		const isScrollable = orientation === 'viertical' ?
+			(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+			isHorizontalScrollableTabs(children.length, size);
 
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
@@ -421,9 +435,10 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							collapsed={isVertical}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
-							tabSize={!isVertical ? tabSize : null}
+							tabSize={!isVertical ? getHorizontalTabWidth(tabs.length, size) : null}
 							size={size}
 							spotlightDisabled={!collapsed && isVertical}
+							hasScroller={isScrollable}
 						/>
 					</Cell>
 					{isVertical ? <Cell
@@ -434,6 +449,7 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							spotlightId={getTabsSpotlightId(spotlightId, false)}
 							spotlightDisabled={collapsed}
+							hasScroller={isScrollable}
 						/>
 					</Cell> : null}
 					<ContentCell
@@ -483,6 +499,8 @@ TabLayout.Tab = Tab;
 
 export default TabLayout;
 export {
+	getHorizontalTabWidth,
+	isHorizontalScrollableTabs,
 	TabLayout,
 	TabLayoutBase,
 	TabLayoutContext,

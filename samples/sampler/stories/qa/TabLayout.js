@@ -5,10 +5,12 @@ import {InputField} from '@enact/limestone/Input';
 import Item from '@enact/limestone/Item';
 import {Panel, Header} from '@enact/limestone/Panels';
 import {Scroller} from '@enact/limestone/Scroller';
-import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
+import TabLayout, {isHorizontalScrollableTabs, TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
 import {Component, useState} from 'react';
+
+import css from './TabLayout.module.less';
 
 import {tabIcons} from '../helper/icons';
 
@@ -73,16 +75,19 @@ export default {
 
 export const WithVariableNumberOfTabs = (args) => {
 	const tabs = args['Number of Tabs'];
+	const isHorizontal = args['orientation'] === 'horizontal';
 
 	return (
-		<Panel>
+		<Panel css={isHorizontal ? css : null}>
 			<Header title="TabLayout" subtitle="With variable number of tabs" />
 			<TabLayout
+				css={isHorizontal ? css : null}
 				orientation={args['orientation']}
+				style={{"--is-scrolled": isHorizontalScrollableTabs(tabs, 'large') ? 1 : 0}}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i}`} icon={tabIcons[i % tabIcons.length]} key={`tab${i}`}>
-						<Scroller key={'view' + i}>
+						<Scroller className={isHorizontal ? css.scroller : null} key={'view' + i}>
 							<Button>Tab {i} Top</Button>
 							<BodyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ante sit amet dui
