@@ -61,34 +61,22 @@
 	// Skin colors
 	.applySkins({
 		.client {
-			background-color: @lime-switch-bg-color;
+			background-color: @lime-switch-container-inactive-color;
 		}
 
 		.icon {
-			background-color: @lime-switch-icon-bg-color;
+			background-color: @lime-switch-handle-inactive-color;
 		}
 
 		&.selected {
 			.client {
-				background-color: @lime-switch-selected-bg-color;
+				background-color: @lime-switch-container-active-color;
 			}
 
 			.icon {
-				background-color: @lime-switch-selected-icon-bg-color;
+				background-color: @lime-switch-handle-active-color;
 			}
 		}
-
-		.disabled({
-			&.selected {
-				.client {
-					background-color: @lime-switch-disabled-selected-bg-color;
-				}
-
-				.icon {
-					background-color: @lime-switch-disabled-selected-icon-bg-color;
-				}
-			}
-		});
 
 		// Standalone Switch
 		.spottable({
@@ -106,12 +94,12 @@
 			}
 
 			.icon {
-				background-color: @lime-switch-focus-icon-bg-color;
+				background-color: @lime-switch-focus-handle-inactive-color;
 			}
 
 			&.selected {
 				.icon {
-					background-color: @lime-switch-selected-focus-icon-bg-color;
+					background-color: @lime-switch-focus-handle-active-color;
 				}
 			}
 		});
@@ -146,30 +134,14 @@
 	.focus({
 		.switch {
 			.icon {
-				background-color: @lime-switch-focus-icon-bg-color;
+				background-color: @lime-switch-focus-handle-inactive-color;
 			}
 
 			&.selected {
 				.icon {
-					background-color: @lime-switch-selected-focus-icon-bg-color;
+					background-color: @lime-switch-focus-handle-active-color;
 				}
 			}
 		}
 	}, parent);
-});
-
-.applySkins({
-	.disabled({
-		.switch {
-			&.selected {
-				.client {
-					background-color: @lime-switch-disabled-selected-bg-color;
-				}
-
-				.icon {
-					background-color: @lime-switch-disabled-selected-icon-bg-color;
-				}
-			}
-		}
-	});
 });
