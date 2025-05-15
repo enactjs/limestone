@@ -434,6 +434,15 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	}),
 
 	/**
+	 * Prevents from scrolling to focused elements.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @private
+	 */
+	preventScrollByFocus: PropTypes.bool,
+
+	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the
 	 * corresponding internal elements and states of this component.
 	 *
@@ -455,15 +464,6 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	 * @public
 	 */
 	scrollMode: PropTypes.oneOf(['native', 'translate']),
-
-	/**
-	 * Prevents from scrolling to focused elements.
-	 *
-	 * @type {Boolean}
-	 * @default true
-	 * @private
-	 */
-	preventScrollByFocus: PropTypes.bool,
 
 	/**
 	 * Specifies how to show vertical scrollbar.
