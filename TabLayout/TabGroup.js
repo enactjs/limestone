@@ -78,7 +78,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, orientation, size, ...rest}) => {
+	render: ({buttonSize, children, collapsed, css, orientation, size, ...rest}) => {
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
@@ -103,6 +103,7 @@ const TabBase = kind({
 			case 'horizontal': {
 				return (
 					<Button
+						size={buttonSize}
 						style={{minWidth: ri.scaleToRem(size)}}
 						{...rest}
 						{...commonProps}
