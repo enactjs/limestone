@@ -60,7 +60,7 @@
 		mini-title-font-size: 90px;
 		mini-title-line-height: 80px;
 
-		standard-padding: 108px 150px 73px 150px;
+		standard-padding: 96px 132px 6x 132px;
 		standard-title-font-size: 108px;
 		standard-title-line-height: 144px;
 		standard-titles-gap: 18px;
@@ -520,7 +520,18 @@
 // values in the guide.
 @lime-header-standard-margin: 0;
 @lime-header-standard-centered-padding-top: var(--primitive-spacing-156);
-@lime-header-standard-padding: var(--primitive-spacing-96) var(--primitive-spacing-132) var(--primitive-spacing-6) var(--primitive-spacing-132);
+@lime-header-standard-padding:
+	(
+		.extract(#guide.header[standard-padding], top)[]
+		- #guide.get-edge-size-difference(
+			#guide.header[standard-title-line-height],
+			@lime-heading-title-font-size,
+			@lime-heading-title-line-height
+		)[@result]
+	)
+	.extract(#guide.header[standard-padding], right)[]
+	.extract(#guide.header[standard-padding], bottom)[]
+	.extract(#guide.header[standard-padding], left)[];
 @lime-header-standard-title-padding: 0;
 @lime-header-standard-subtitle-margin:
 	(
