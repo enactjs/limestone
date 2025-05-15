@@ -126,7 +126,7 @@ const getFocusableBodyProps = (scrollContainerRef, contentId, isScrollbarVisible
 };
 
 const useSpottable = (props, instances) => {
-	const {scrollContainerRef, scrollContentHandle, scrollContentRef} = instances;
+	const {preventScrollByFocus, scrollContainerRef, scrollContentHandle, scrollContentRef} = instances;
 
 	// Hooks
 
@@ -349,20 +349,32 @@ const useSpottable = (props, instances) => {
 		}
 	}
 
+	/**
+	 * Determines if it should prevent scrolling to focused elements.
+	 *
+	 * @returns {Boolean}
+	 * @private
+	 */
+	function shouldPreventScrollByFocus () {
+		return preventScrollByFocus;
+	}
+
 	// Return
 
 	return {
 		calculatePositionOnFocus,
 		focusOnNode,
-		setContainerDisabled
+		setContainerDisabled,
+		shouldPreventScrollByFocus
 	};
 };
 
 const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScrollbarVisible, isVerticalScrollbarVisible) => {
 	const {className, children, editable, fadeOut, scrollContainerRef, ...rest} = scrollContentProps;
-	const {scrollContainerHandle, scrollContentHandle, scrollContentRef} = rest;
+	const {preventScrollByFocus, scrollContainerHandle, scrollContentHandle, scrollContentRef} = rest;
 
 	delete rest.onUpdate;
+	delete rest.preventScrollByFocus;
 	delete rest.scrollContainerContainsDangerously;
 	delete rest.scrollContainerHandle;
 	delete rest.scrollContentHandle;
@@ -371,7 +383,7 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 
 	// Hooks
 	const isScrollbarVisible = isHorizontalScrollbarVisible || isVerticalScrollbarVisible;
-	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled} = useSpottable(scrollContentProps, {scrollContainerRef, scrollContentHandle, scrollContentRef});
+	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled, shouldPreventScrollByFocus} = useSpottable(scrollContentProps, {preventScrollByFocus, scrollContainerRef, scrollContentHandle, scrollContentRef});
 	const {setNavigableFilter, ...focusableBodyProps} = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
 
 	useLayoutEffect(() => {
@@ -384,7 +396,8 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	scrollContentProps.setThemeScrollContentHandle({
 		calculatePositionOnFocus,
 		focusOnNode,
-		setContainerDisabled
+		setContainerDisabled,
+		shouldPreventScrollByFocus
 	});
 
 	// Render

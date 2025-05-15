@@ -59,6 +59,7 @@ const scrollerDefaultProps = {
 		track: false,
 		wheel: true
 	},
+	preventScrollByFocus: true,
 	scrollMode: 'native',
 	verticalScrollbar: 'auto'
 };
@@ -88,7 +89,7 @@ let Scroller = (props) => {
 			wheel: false
 		};
 	}
-	const {'aria-label': ariaLabel, hoverToScroll, ...rest} = scrollerProps;
+	const {'aria-label': ariaLabel, hoverToScroll, preventScrollByFocus, ...rest} = scrollerProps;
 
 	const id = `scroller_${++scrollerId}_content`;
 
@@ -118,7 +119,7 @@ let Scroller = (props) => {
 		editableWrapperProps,
 		focusableBodyProps,
 		themeScrollContentProps
-	} = useThemeScroller(rest, {...scrollContentProps, className: classnames(className, scrollContentProps.className)}, id, isHorizontalScrollbarVisible, isVerticalScrollbarVisible);
+	} = useThemeScroller(rest, {...scrollContentProps, preventScrollByFocus, className: classnames(className, scrollContentProps.className)}, id, isHorizontalScrollbarVisible, isVerticalScrollbarVisible);
 
 	const {children, direction, editable} = rest;
 
@@ -454,6 +455,15 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	 * @public
 	 */
 	scrollMode: PropTypes.oneOf(['native', 'translate']),
+
+	/**
+	 * Prevents from scrolling to focused elements.
+	 *
+	 * @type {Boolean}
+	 * @default true
+	 * @private
+	 */
+	preventScrollByFocus: PropTypes.bool,
 
 	/**
 	 * Specifies how to show vertical scrollbar.
