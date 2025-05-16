@@ -1,6 +1,7 @@
 // PageViews.module.less
 //
 @import "../styles/variables.less";
+@import "../styles/skin.less";
 
 .pageViews {
 	height: 100%;
@@ -11,6 +12,13 @@
 	.navButton {
 		/* CSS Overrides */
 	}
+
+	.button {
+		&.small {
+			width: @lime-pageviews-navigation-button-width;
+			height: @lime-pageviews-navigation-button-width;
+		}
+	};
 
 	.navButtonCell {
 		text-align: center;
@@ -41,6 +49,8 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
+		height: @lime-pageviews-steps-height;
+
 		&.hidden {
 			min-height: @lime-pageviews-steps-area-min-height;
 			visibility: hidden;
@@ -84,9 +94,16 @@
 
 	.viewManager {
 		overflow: hidden;
+		border-radius: @lime-pageviews-contents-border-radius;
 	}
 
 	.horizontalLayout {
 		height: 100%;
 	}
+
+	.applySkins({
+		.viewManager {
+			background-color: @lime-pageviews-background-color;
+		}
+	})
 }
