@@ -1,17 +1,13 @@
 // SwitchItem.module.less
 //
 @import "../styles/skin.less";
-@import "../styles/variables.less";
 
-.switchItem {
-	gap: @lime-switchitem-gap;
-	width: @lime-switchitem-width;
-
-	.applySkins({
+.applySkins({
+	.switchItem {
 		&.selected {
 			.bg {
 				background-color: @lime-switchitem-item-selected-container-color;
 			}
 		}
-	});
-}
+	}
+});
