@@ -36,7 +36,6 @@ describe('Scroller', () => {
 				render(
 					<Scroller
 						horizontalScrollbar="visible"
-						preventScrollByFocus	// setting prop for code coverage purposes
 						verticalScrollbar="visible"
 					>
 						{contents}
