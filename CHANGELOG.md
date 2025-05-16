@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/BodyText` styling to match the latest GUI
 - `limestone/DayPicker` styling to match the latest GUI
+- `limestone/ImageItem` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/WizardPanels` styling to match the latest GUI
@@ -29,7 +30,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Dropdown` styling to match the latest GUI
-- `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input.InputField` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI

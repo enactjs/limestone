@@ -166,22 +166,22 @@
 		}
 
 		.caption {
-			color: @lime-imageitem-label-main;
+			color: @lime-imageitem-label-main-color;
 		}
 
 		.label {
-			color: @lime-imageitem-label-sub;
+			color: @lime-imageitem-label-sub-color;
 		}
 
 		&.selected {
-			background-color: @lime-imageitem-container-selected;
+			background-color: @lime-imageitem-container-selected-color;
 
 			.caption {
-				color: @lime-imageitem-label-main-selected;
+				color: @lime-imageitem-label-main-selected-color;
 			}
 
 			.label {
-				color: @lime-imageitem-label-sub-selected;
+				color: @lime-imageitem-label-sub-selected-color;
 			}
 
 			.selectionContainer::after {
@@ -189,8 +189,8 @@
 			}
 
 			.selectionIcon {
-				background-color: @lime-imageitem-selected-selection-icon-bg-color;
-				color: @lime-imageitem-selected-selection-icon-color;
+				background-color: @lime-imageitem-selection-container-selected-color;
+				color: @lime-imageitem-selection-icon-selected-color;
 			}
 		}
 
@@ -222,17 +222,17 @@
 			}
 
 			.caption {
-				color: @lime-imageitem-label-main-focused;
+				color: @lime-imageitem-label-main-focused-color;
 			}
 
 			.label {
-				color: @lime-imageitem-label-sub-focused;
+				color: @lime-imageitem-label-sub-focused-color;
 			}
 
 			&.vertical {
 				&.fullImage .image {
 					transform: @lime-imageitem-vertical-focus-image-transform;
-					box-shadow: @lime-imageitem-focus-bg-shadow;
+					box-shadow: @lime-imageitem-focus-bg-shadow-color;
 				}
 			}
 

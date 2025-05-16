@@ -187,22 +187,22 @@
 
 // ImageItem
 // ---------------------------------------
-@lime-imageitem-container-selected: ~"color(from" var(--semantic-color-on-surface-main-selected) ~"srgb r g b / 0.1)";
-@lime-imageitem-focus-bg-shadow: 0 36px 36px @lime-shadow-color;
+@lime-imageitem-container-selected-color: ~"color(from" var(--semantic-color-on-surface-main-selected) ~"srgb r g b / 0.1)";
+@lime-imageitem-focus-bg-shadow-color: 0 36px 36px @lime-shadow-color;
 @lime-imageitem-focus-selection-icon-color: @lime-imageitem-selection-icon-color;
 @lime-imageitem-focus-selection-icon-bg-color: @lime-imageitem-selection-icon-bg-color;
 @lime-imageitem-image-border-color: transparent;
-@lime-imageitem-label-main: var(--semantic-color-on-background-main);
-@lime-imageitem-label-main-focused: var(--semantic-color-on-surface-main-focused);
-@lime-imageitem-label-main-selected: var(--semantic-color-on-surface-main-selected);
-@lime-imageitem-label-sub: var(--semantic-color-on-background-sub);
-@lime-imageitem-label-sub-focused: var(--semantic-color-on-surface-sub-focused);
-@lime-imageitem-label-sub-selected: var(--semantic-color-on-surface-sub);
+@lime-imageitem-label-main-color: var(--semantic-color-on-background-main);
+@lime-imageitem-label-main-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-imageitem-label-main-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-imageitem-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-imageitem-label-sub-focused-color: var(--semantic-color-on-surface-sub-focused);
+@lime-imageitem-label-sub-selected-color: var(--semantic-color-on-surface-sub);
 @lime-imageitem-selected-image-border-color: ~"color(from" var(--semantic-color-on-surface-main-selected) ~"srgb r g b / 0.7)";
-@lime-imageitem-selected-focus-selection-icon-bg-color: @lime-imageitem-selected-selection-icon-bg-color;
-@lime-imageitem-selected-focus-selection-icon-color: @lime-imageitem-selected-selection-icon-color;
-@lime-imageitem-selected-selection-icon-bg-color: var(--semantic-color-surface-toggle-active);
-@lime-imageitem-selected-selection-icon-color: var(--semantic-color-on-surface-main-selected);
+@lime-imageitem-selected-focus-selection-icon-bg-color: @lime-imageitem-selection-container-selected-color;
+@lime-imageitem-selected-focus-selection-icon-color: @lime-imageitem-selection-icon-selected-color;
+@lime-imageitem-selection-container-selected-color: var(--semantic-color-on-background-accent);
+@lime-imageitem-selection-icon-selected-color: var(--semantic-color-on-surface-main-selected);
 @lime-imageitem-selection-icon-color: transparent;
 @lime-imageitem-selection-icon-bg-color: transparent;
 
