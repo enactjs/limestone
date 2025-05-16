@@ -63,15 +63,14 @@
 
 		standard-padding: 108px 150px 73px 150px;
 		standard-title-font-size: 108px;
-		standard-title-line-height: 127px;
+		standard-title-line-height: 144px;
 		standard-titles-gap: 18px;
-		standard-subtitle-font-size: 60px;
-		standard-subtitle-line-height: 70px;
+		standard-subtitle-font-size: 54px;
+		standard-subtitle-line-height: 72px;
 
-		wizard-padding: 108px 150px 66px 150px;
+		wizard-padding: 156px 132px 6px 132px;
 		wizard-title-font-size: 108px;
-		wizard-title-line-height: 169px;
-		wizard-titles-gap: 12px;
+		wizard-title-line-height: 144px;
 	}
 
 	.panel() {
@@ -513,8 +512,8 @@
 
 // Header
 // ---------------------------------------
-@lime-header-slotabove-margin: 0 -@lime-component-spacing 30px -@lime-component-spacing; // Negative margins accomodate the component-spacing
-@lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accomodate the component-spacing
+@lime-header-slotabove-margin: 0 -@lime-component-spacing var(--primitive-spacing-24) -@lime-component-spacing; // Negative margins accommodate the component-spacing
+@lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
 // STOP! READ THE FOLLOWING BEFORE EDITING.
 //
@@ -601,6 +600,7 @@
 		)[@result]
 	)
 	.extract(#guide.header[mini-padding], left)[];
+@lime-header-wizard-nosubtitle-padding-bottom: ~"calc("@lime-header-subtitle-height ~"+ var(--primitive-spacing-6))";
 @lime-header-wizard-margin: 0;
 @lime-header-wizard-padding:
 	(
@@ -614,7 +614,6 @@
 	.extract(#guide.header[wizard-padding], right)[]
 	.extract(#guide.header[wizard-padding], bottom)[]
 	.extract(#guide.header[wizard-padding], left)[]; // 66px comes from the GUI guide, as the distance from the bottom of the 2-line subtitle to the top of the content area. We must subtract the padding-top of panel.body to get the total spacing to match the guide.
-@lime-header-wizard-nosubtitle-padding-bottom: 42px;
 @lime-header-wizard-title-padding: 0;
 @lime-header-wizard-subtitle-padding: 0;
 @lime-header-back-container-width: (@lime-button-small-height + @lime-button-icon-small-h-margin);
@@ -1087,6 +1086,8 @@
 
 // WizardPanels
 // ---------------------------------------
-@lime-wizardpanels-content-margin: 0 0 150px 0;
-@lime-wizardpanels-footer-margin: 0 0 (102px - @lime-app-keepout) 0;
-@lime-wizardpanels-button-icon-text-gap: 54px;
+@lime-wizardpanels-steps-height: 60px;
+@lime-wizardpanels-steps-margin-top: ~"calc("var(--primitive-spacing-84) ~"* -1)"; // The negative value (-84px = steps height (60px) + additional spacing between the title and steps (24px)), ensures the steps component doesn't affect the padding between title and top of the container
+@lime-wizardpanels-content-margin: var(--primitive-spacing-60) (324px - .extract(@lime-panel-body-padding, left)[]);
+@lime-wizardpanels-footer-margin: 0 0 var(--primitive-spacing-132) 0;
+@lime-wizardpanels-button-icon-text-gap: var(--primitive-spacing-36);
