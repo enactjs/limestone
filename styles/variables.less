@@ -56,6 +56,8 @@
 		compact-title-font-size: 90px;
 		compact-title-line-height: 120px;
 		compact-subtitle-font-size: 54px;
+		compact-subtitle-line-height: 72px;
+		compact-subtitle-height: 84px;
 
 		mini-margin: 0 0 36px 0;
 		mini-padding: 60px 60px 45px 60px;
@@ -572,8 +574,11 @@
 	.extract(#guide.header[compact-padding], left)[];
 @lime-header-compact-title-line-height: #guide.header[compact-title-line-height];
 @lime-header-compact-title-padding: 0;
+@lime-header-compact-titles-row-padding: 0 0 #guide.header[compact-subtitle-height];
+@lime-header-compact-titles-row-spacing: var(--primitive-spacing-24);
 @lime-header-compact-subtitle-padding: 0;
-@lime-header-compact-subtitle-line-height: 72px;
+@lime-header-compact-subtitle-line-height: #guide.header[compact-subtitle-line-height];
+@lime-header-compact-subtitle-margin-top: (#guide.header[compact-subtitle-height] - #guide.header[compact-subtitle-line-height]);
 @lime-header-mini-margin:
 	6px
 	@lime-component-spacing

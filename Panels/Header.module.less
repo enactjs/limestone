@@ -134,8 +134,18 @@
 		margin: @lime-header-compact-margin;
 		padding: @lime-header-compact-padding;
 
+		.back,
+		.close {
+			margin: 0;
+		}
+
 		.title {
 			padding: @lime-header-compact-title-padding;
+		}
+
+		.titlesRow {
+			padding: @lime-header-compact-titles-row-padding;
+			gap: @lime-header-compact-titles-row-spacing;
 		}
 
 		.subtitle {
@@ -148,6 +158,7 @@
 		}
 
 		.subtitle {
+			margin-top: @lime-header-compact-subtitle-margin-top;
 			font-size: @lime-header-compact-subtitle-font-size;
 			line-height: @lime-header-compact-subtitle-line-height;
 		}
