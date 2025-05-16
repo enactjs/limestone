@@ -228,6 +228,10 @@
 	.applySkins({
 		color: @lime-picker-label-color;
 
+		.icon {
+			color: @lime-picker-icon-color;
+		}
+
 		&.joined {
 			&.horizontal:not(.arrow) {
 				color: @lime-picker-joined-label-color;
@@ -267,6 +271,7 @@
 					&.horizontal.arrow, &.vertical {
 						&::before {
 							.lime-spotlight-focus-bg-colors();
+							background-color: @lime-picker-container-focused-color;
 						}
 					}
 
@@ -285,6 +290,10 @@
 							.lime-disabled-focus-content-colors();
 						}
 					});
+
+					.icon {
+						color: @lime-picker-icon-focused-color;
+					}
 
 					.indicator {
 						background-color: @lime-picker-indicator-focused-color;

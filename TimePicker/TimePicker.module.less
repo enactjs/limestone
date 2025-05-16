@@ -22,13 +22,16 @@
 				order: 3;
 				margin-inline-start: .extract(@lime-datecomponentpicker-margin, left)[];
 			}
+
 			.timeSeparator {
 				order: 2;
 			}
+
 			.minutePicker {
 				order: 1;
 				margin-inline-start: 0;
 			}
+
 			.meridiemPicker {
 				order: 4;
 			}
@@ -37,6 +40,8 @@
 
 	.applySkins({
 		.timeSeparator {
+			color: @lime-picker-datetime-label-color;
+
 			.lime-disabled({
 				.lime-disabled-colors();
 			});
