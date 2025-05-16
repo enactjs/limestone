@@ -349,12 +349,6 @@ const useSpottable = (props, instances) => {
 		}
 	}
 
-	/**
-	 * Determines if it should prevent scrolling to focused elements.
-	 *
-	 * @returns {Boolean}
-	 * @private
-	 */
 	function shouldPreventScrollByFocus () {
 		return preventScrollByFocus;
 	}

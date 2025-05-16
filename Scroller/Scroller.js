@@ -438,7 +438,7 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	 *
 	 * @type {Boolean}
 	 * @default false
-	 * @private
+	 * @public
 	 */
 	preventScrollByFocus: PropTypes.bool,
 
