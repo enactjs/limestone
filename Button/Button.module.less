@@ -7,7 +7,7 @@
 .button {
 	// default is size="large"
 	.lime-large-button-text();
-	.enact-locale-line-height(@lime-button-line-height, (@lime-button-height - (2 * @lime-button-border-width)));
+	.enact-locale-line-height(@lime-button-line-height, @lime-tallglyph-button-line-height);
 	height: @lime-button-height;
 	min-width: @lime-button-min-width;
 	max-width: @lime-button-max-width;
@@ -130,7 +130,7 @@
 
 	&.small {
 		.lime-small-button-text();
-		.enact-locale-line-height(@lime-button-small-line-height, (@lime-button-small-height - (2 * @lime-button-border-width)));
+		.enact-locale-line-height(@lime-button-small-line-height, @lime-tallglyph-button-small-line-height);
 		height: @lime-button-small-height;
 		min-width: @lime-button-small-min-width;
 		max-width: @lime-button-small-max-width;
@@ -296,10 +296,6 @@
 		&,
 		:global(.enact-a11y-high-contrast) & {
 			color: @lime-button-fill-label-color;
-
-			&.bordered {
-				color: @lime-button-outline-label-color;
-			}
 		}
 
 		.bg {
@@ -315,14 +311,20 @@
 				background-color: @lime-button-outline-container-color;
 				border: @lime-button-border-width solid @lime-button-outline-border-color;
 			}
+
+			.client {
+				color: @lime-button-outline-label-color;
+			}
+
+			&.opaque {
+				.client {
+					color: @lime-button-outline-label-color;
+				}
+			}
 		}
 
 		&.opaque {
 			color: @lime-button-fill-label-color;
-
-			&.bordered {
-				color: @lime-button-outline-label-color;
-			}
 
 			.bg {
 				opacity: @lime-button-bg-opacity;
@@ -390,11 +392,13 @@
 			}
 
 			&.bordered {
-				color: @lime-button-outline-label-selected-color;
-
 				.bg {
 					.lime-button-outline-selected-colors();
 					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
+				}
+
+				.client {
+					color: @lime-button-outline-label-selected-color;
 				}
 			}
 
@@ -405,10 +409,12 @@
 			}
 
 			&.transparent {
-				color: @lime-button-transparent-label-selected-color;
-
 				.bg {
 					opacity: @lime-button-transparent-selected-bg-opacity;
+				}
+
+				.client {
+					color: @lime-button-transparent-label-selected-color;
 				}
 
 				.icon {
@@ -425,18 +431,22 @@
 			}
 
 			&.bordered {
-				color: @lime-button-outline-label-focused-color;
-
 				.bg {
 					.lime-button-outline-focus-bg-colors();
+				}
+
+				.client {
+					color: @lime-button-outline-label-focused-color;
 				}
 			}
 
 			&.transparent {
-				color: @lime-button-transparent-label-focused-color;
-
 				.bg {
 					.lime-button-transparent-focus-bg-colors();
+				}
+
+				.client {
+					color: @lime-button-transparent-label-focused-color;
 				}
 
 				.icon {
