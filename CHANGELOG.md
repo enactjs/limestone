@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Alert` styling to match the latest GUI
 - `limestone/BodyText` styling to match the latest GUI
 - `limestone/DayPicker` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI

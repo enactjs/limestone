@@ -219,7 +219,7 @@ const AlertBase = kind({
 				>
 					<Layout align="center center" orientation="vertical">
 						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
-						{showTitle ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
+						{showTitle ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`} spacing="small">{title}</Heading></Cell> : null}
 						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
 							{children}
 						</Cell>

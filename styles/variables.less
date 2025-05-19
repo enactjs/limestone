@@ -111,10 +111,8 @@
 // Font Sizes
 // ---------------------------------------
 @lime-actionguide-label-font-size:  48px;
-@lime-alert-overlay-font-size:      60px;
-@lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
-@lime-alert-title-font-size:        @lime-header-wizard-title-font-size;
-@lime-alert-notitle-content-font-size: 90px;
+@lime-alert-overlay-font-size:      var(--primitive-font-size-60);
+@lime-alert-title-font-size:        var(--primitive-font-size-108);
 @lime-base-font-size:               var(--primitive-font-size-60);
 @lime-body-font-size:               @lime-base-font-size;
 @lime-body-small-font-size:         var(--primitive-font-size-54);
@@ -171,7 +169,6 @@
 @lime-tooltip-label-font-size:      54px;
 
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
-@lime-tallglyph-alert-notitle-content-font-size: @lime-alert-notitle-content-font-size;
 @lime-non-latin-body-font-size:         54px;
 @lime-non-latin-body-small-font-size:   48px;
 @lime-tallglyph-body-small-font-size:   48px;
@@ -205,7 +202,7 @@
 
 // Alert
 @lime-alert-font-family: @lime-font-family;
-@lime-alert-font-weight: 600;
+@lime-alert-font-weight: var(--primitive-font-weight-semibold);
 @lime-alert-line-height: 84px;
 
 // Body
@@ -314,18 +311,15 @@
 
 // Alert
 // ---------------------------------------
-@lime-alert-buttons-margin-top: 120px;
-@lime-alert-fullscreen-button-spacing: 72px;
-@lime-alert-fullscreen-content-padding: 36px 48px;
-@lime-alert-fullscreen-image-spacing: 60px;
+@lime-alert-buttons-margin-top: var(--primitive-spacing-96);
+@lime-alert-fullscreen-image-spacing: var(--primitive-spacing-60);
 @lime-alert-fullscreen-max-width: 2400px;
-@lime-alert-overlay-buttons-margin-top: 60px;
-@lime-alert-overlay-button-spacing: 48px;
+@lime-alert-overlay-buttons-margin-top: var(--primitive-spacing-36);
 @lime-alert-overlay-max-height: 2028px;
-@lime-alert-overlay-image-margin-bottom: @lime-component-spacing;
-@lime-alert-overlay-padding: 84px 0;
-@lime-alert-overlay-body-padding: 0 84px;
-@lime-alert-overlay-image-padding: 0 84px;
+@lime-alert-overlay-image-margin-bottom: var(--primitive-spacing-60);
+@lime-alert-overlay-padding: var(--primitive-spacing-84) 0;
+@lime-alert-overlay-body-padding: 0 var(--primitive-spacing-84);
+@lime-alert-overlay-image-padding: 0 var(--primitive-spacing-84);
 @lime-alert-overlay-width: 1128px;
 
 // AlertImage
