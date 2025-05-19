@@ -315,12 +315,6 @@
 			.client {
 				color: @lime-button-outline-label-color;
 			}
-
-			&.opaque {
-				.client {
-					color: @lime-button-outline-label-color;
-				}
-			}
 		}
 
 		&.opaque {
@@ -385,10 +379,16 @@
 		}
 
 		&.selected {
-			color: @lime-button-fill-label-selected-color;
-
 			.bg {
 				.lime-button-selected-colors();
+			}
+
+			.client {
+				color: @lime-button-fill-label-selected-color;
+			}
+
+			.icon {
+				color: @lime-button-fill-icon-selected-color;
 			}
 
 			&.bordered {
@@ -410,6 +410,7 @@
 
 			&.transparent {
 				.bg {
+					.lime-button-transparent-selected-colors();
 					opacity: @lime-button-transparent-selected-bg-opacity;
 				}
 
@@ -424,10 +425,16 @@
 		}
 
 		.focus({
-			color: @lime-button-fill-label-focused-color;
-
 			.bg {
 				.lime-button-focus-bg-colors();
+			}
+
+			.client {
+				color: @lime-button-fill-label-focused-color;
+			}
+
+			.icon {
+				color: @lime-button-fill-icon-focused-color;
 			}
 
 			&.bordered {

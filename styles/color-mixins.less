@@ -154,6 +154,11 @@
 	filter+_: @lime-button-filter-selected;
 }
 
+.lime-button-transparent-selected-bg-color () {
+	background-color: @lime-button-transparent-container-selected-color;
+	filter+_: @lime-button-filter-selected;
+}
+
 .lime-button-focus-bg-color () {
 	background-color: @lime-button-fill-container-focused-color;
 	filter+_: @lime-button-filter-focused;
@@ -190,6 +195,14 @@
 .lime-button-outline-selected-colors (@bg: {}, @shadow: {}) {
 	.lime-bg-colors({
 		.lime-button-outline-selected-bg-color();
+		@bg();
+		@shadow();
+	});
+}
+
+.lime-button-transparent-selected-colors (@bg: {}, @shadow: {}) {
+	.lime-bg-colors({
+		.lime-button-transparent-selected-bg-color();
 		@bg();
 		@shadow();
 	});
