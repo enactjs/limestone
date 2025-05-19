@@ -26,7 +26,7 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
-			width: 816px;
+			width: @lime-tablayout-tab-vertical-button-width;
 			.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 			&.collapsed {
@@ -34,7 +34,8 @@
 			}
 
 			&.hasIcon:not(&.collapsed) {
-				.padding-start-end(@lime-tablayout-tab-vertical-padding-left, @lime-tablayout-tab-vertical-padding-right);
+				padding: @lime-tablayout-tab-vertical-padding-top;
+				.padding-start-end(@lime-tablayout-tab-vertical-padding);
 
 				.icon {
 					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
@@ -90,9 +91,19 @@
 	&.vertical {
 		padding: @lime-tablayout-vertical-tabs-padding;
 
+		&.hasScroller {
+			height: @lime-tablayout-tab-group-vertical-height;
+		}
+
 		.tabs {
 			flex-direction: column;
 			gap: @lime-tablayout-vertical-tabs-spacing;
+		}
+
+		.scrollbarTrack {
+			margin-top: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			margin-bottom: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			height: @lime-tablayout-tab-group-vertical-scrollbar-height;
 		}
 	}
 }
