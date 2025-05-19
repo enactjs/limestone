@@ -65,7 +65,11 @@ const getHorizontalTabWidth = (dataSize, size) => {
 
 const isHorizontalScrollableTabs = (dataSize, size) => {
 	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size) + TAB_SPACING * (dataSize - 1);
-	return window.screen.width < ri.scale(totalTabsWidth);
+	if (typeof window !== 'undefined' && window?.screen?.width) {
+		return window.screen.width < ri.scale(totalTabsWidth);
+	} else {
+		return false;
+	}
 };
 
 /**
@@ -414,7 +418,7 @@ const TabLayoutBase = kind({
 			(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
 			isHorizontalScrollableTabs(children.length, size);
 
-		// Props that are shared between both of the rendered TabGroup components
+			// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
 			onClick: (collapsed ? handleClick : null),

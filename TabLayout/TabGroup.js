@@ -214,21 +214,21 @@ const TabGroupBase = kind({
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
 
 		const TAB_SPACING = 48;
+		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
 		const scrollerProps = hasScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
+			scrollbarTrackCss: componentCss,
 			verticalScrollbar: 'auto'
 		} : null;
 		const Component = hasScroller ? Scroller : 'div';
-		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
 
 		return (
 			<Component
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
-				scrollbarTrackCss={componentCss}
 				style={{"--tabs-width": orientation === "horizontal" ? totalTabsWidth : '100%'}}
 				{...scrollerProps}
 			>
