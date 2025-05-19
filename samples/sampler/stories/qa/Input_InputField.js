@@ -140,6 +140,7 @@ export const _5WayTest = (args) => {
 		<div>
 			<div style={divMargin}>
 				<InputField
+					style={divMargin}
 					autoFocus={args['autoFocus']}
 					disabled={disable1}
 					onChange={action('onChange')}
@@ -156,6 +157,7 @@ export const _5WayTest = (args) => {
 			</div>
 			<div style={divMargin}>
 				<InputField
+					style={divMargin}
 					autoFocus={args['autoFocus']}
 					disabled={disable3}
 					onChange={action('onChange')}
