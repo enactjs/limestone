@@ -197,13 +197,16 @@ const TabLayoutBase = kind({
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
 
 		/**
-		 * Preserve focus within the component.
+		 * Retains the focus within the component when navigating with the 5-way
+		 * in the same direction as the orientation.
+		 * When set to `false`, focus can move outside the component,
+		 * allowing navigation to other elements.
+		 * When set to `true`, focus will be retained within the component.
 		 *
 		 * @type {Boolean}
-		 * @default false
 		 * @public
 		 */
-		preserveFocus: PropTypes.bool,
+		retainFocus: PropTypes.bool,
 
 		/**
 		 * Indicates the content's text direction is right-to-left.
@@ -262,7 +265,6 @@ const TabLayoutBase = kind({
 		},
 		index: 0,
 		orientation: 'vertical',
-		preserveFocus: false,
 		type: 'normal'
 	},
 
@@ -399,7 +401,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, preserveFocus, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, retainFocus, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -418,7 +420,7 @@ const TabLayoutBase = kind({
 			onFocusTab: onSelect,
 			onSelect,
 			orientation,
-			preserveFocus,
+			retainFocus,
 			selectedIndex: index,
 			tabs
 		};

@@ -38,7 +38,7 @@ const TabBase = kind({
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
-		preserveFocus: PropTypes.bool,
+		retainFocus: PropTypes.bool,
 		selected: PropTypes.bool,
 		size: PropTypes.number,
 		sprite: PropTypes.object,
@@ -75,10 +75,10 @@ const TabBase = kind({
 		),
 		onKeyDown: handle(
 			forwardCustom('onKeyDown', (ev, props) => {
-				const {orientation, preserveFocus} = props;
+				const {orientation, retainFocus} = props;
 				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
 
-				if (preserveFocus) {
+				if (retainFocus) {
 					Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
 				}
 			})
@@ -98,7 +98,7 @@ const TabBase = kind({
 		delete rest.index;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
-		delete rest.preserveFocus;
+		delete rest.retainFocus;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -180,7 +180,7 @@ const TabGroupBase = kind({
 		onFocusTab: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
-		preserveFocus: PropTypes.bool,
+		retainFocus: PropTypes.bool,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
@@ -202,11 +202,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, preserveFocus, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, retainFocus, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, preserveFocus, size: tabSize}), [css, collapsed, orientation, preserveFocus, size, tabSize]);
+		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, retainFocus, size: tabSize}), [css, collapsed, orientation, retainFocus, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {

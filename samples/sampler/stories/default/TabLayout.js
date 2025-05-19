@@ -62,7 +62,7 @@ export const _TabLayout = (args) => {
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
-				preserveFocus={args['preserveFocus']}
+				retainFocus={args['retainFocus']}
 				size={args['size']}
 				tabSize={args['tabSize'] || null}
 			>
@@ -96,7 +96,7 @@ export const _TabLayout = (args) => {
 	);
 };
 
-boolean('preserveFocus', _TabLayout, Config);
+boolean('retainFocus', _TabLayout, Config);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
