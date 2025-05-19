@@ -22,6 +22,7 @@ import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {getDirection} from '@enact/spotlight';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
+import {getPointerMode} from '@enact/spotlight/src/pointer';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -44,12 +45,16 @@ const ChipDefaultProps = {
  * @ui
  * @public
  */
+
+let overComponent = false;
+
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
-	const chipClassName = classnames(css.chip, className, deleteButton?.position);
-	const buttonClassName = classnames(css.deleteButtonContainer, css.focused, css[deleteButton?.position || 'right']);
+	const chipClassName = classnames(className, deleteButton?.position);
+	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
 	const buttonRef = useRef(null);
+	const containerRef = useRef(null);
 	const clientRef = useRef(null);
 	const chipRef = ref || clientRef;
 
@@ -58,20 +63,20 @@ const ChipBase = (props) => {
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
-			if (nextTarget !== null && nextTarget !== chipRef.current.firstChild && nextTarget !== buttonRef.current.firstChild) {
+			if (nextTarget !== null && nextTarget !== chipRef.current && nextTarget !== buttonRef.current) {
 				buttonRef.current.classList.remove(css.focused);
 			}
 		}
 	}, [chipRef]);
 
 	const handleMouseLeave = useCallback((ev) => {
-		if (chipRef.current.contains(ev.target)) {
+		if (containerRef.current.contains(ev.target)) {
 			buttonRef.current.classList.remove(css.focused);
 		}
-	}, [chipRef]);
+	}, []);
 
 	const handleFocus = useCallback((ev) => {
-		if (ev.target === chipRef.current.firstChild) {
+		if (ev.target === chipRef.current) {
 			buttonRef.current.classList.add(css.focused);
 		}
 	}, [chipRef]);
@@ -83,31 +88,56 @@ const ChipBase = (props) => {
 		}
 	}, [deleteButton]);
 
+	const handleBlur = useCallback(() => {
+		if (getPointerMode() === true && !overComponent) {
+			buttonRef.current.classList.remove(css.focused);
+		}
+	}, []);
+
+	const handleMouseOver = useCallback(() => {
+		overComponent = true;
+	}, []);
+
+	const handleMouseOut = useCallback(() => {
+		overComponent = false;
+	}, []);
+
 	delete rest.deleteButton;
 
 	return (
 		<div
 			{...rest}
-			className={chipClassName}
-			disabled={disabled}
-			ref={chipRef}
-			onKeyDown={handleKeyDown}
+			className={css.chip}
 			onMouseLeave={handleMouseLeave}
-			onFocus={handleFocus}
+			onBlur={handleBlur}
+			onKeyDown={handleKeyDown}
+			onMouseOver={handleMouseOver}
+			onMouseOut={handleMouseOut}
+			ref={containerRef}
 		>
-			<Button css={css} focusEffect="static" icon={icon ? icon : null} size="small">{children}</Button>
+			<Button
+				css={css}
+				className={chipClassName}
+				disabled={disabled}
+				focusEffect="static"
+				icon={icon ? icon : null}
+				size="small"
+				onFocus={handleFocus}
+				ref={chipRef}
+			>
+				{children}
+			</Button>
 			{deleteButton &&
-				<div ref={buttonRef} className={buttonClassName}>
-					<Button
-						backgroundOpacity="transparent"
-						className={css.deleteButton}
-						disabled={disabled}
-						icon={deleteButton?.icon || 'closex'}
-						size="small"
-						onClick={handleDelete}
-						css={css}
-					/>
-				</div>
+				<Button
+					backgroundOpacity="transparent"
+					css={css}
+					className={buttonClassName}
+					disabled={disabled}
+					icon={deleteButton?.icon || 'closex'}
+					size="small"
+					onClick={handleDelete}
+					ref={buttonRef}
+				/>
 			}
 		</div>
 	);
