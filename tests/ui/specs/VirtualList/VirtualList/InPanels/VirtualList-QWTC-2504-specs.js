@@ -17,7 +17,7 @@ describe('VirtualList in Panels', function () {
 		await Page.spotlightDown();
 		await expectFocusedItem(0);
 		// Step 4-2: Keep 5-way Down until scroll happens.
-		const bottomVisibleItem = (await Page.bottomVisibleItemId()).slice(4);
+		const bottomVisibleItem = (await Page.bottomVisibleItemId(72)).slice(4);
 		await Page.fiveWayToItem(Number(bottomVisibleItem));
 		await Page.delay(500);
 		expect(Number(await Page.getScrollThumbPosition())).toBeGreaterThan(0);
