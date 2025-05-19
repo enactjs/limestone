@@ -418,7 +418,7 @@ const TabLayoutBase = kind({
 			(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
 			isHorizontalScrollableTabs(children.length, size);
 
-			// Props that are shared between both of the rendered TabGroup components
+		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
 			onClick: (collapsed ? handleClick : null),

@@ -7,7 +7,7 @@ import Scroller from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {range, select} from '@enact/storybook-utils/addons/controls';
+import {select} from '@enact/storybook-utils/addons/controls';
 import {scaleToRem} from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
