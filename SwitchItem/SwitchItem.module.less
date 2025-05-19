@@ -1,4 +1,13 @@
 // SwitchItem.module.less
 //
+@import "../styles/skin.less";
 
-.switchItem { /* Needed to prevent global class being added in the DOM */ }
+.applySkins({
+	.switchItem {
+		&.selected {
+			.bg {
+				background-color: @lime-switchitem-item-selected-container-color;
+			}
+		}
+	}
+});
