@@ -488,7 +488,6 @@ export const WithScroller = (args) => {
 			<Header title="TabLayout" subtitle="With Scroller" />
 			<TabLayout
 				orientation={args['orientation']}
-				tabSize={args['Tab Size']}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i + 1}`} key={`tab${i}`}>
@@ -553,7 +552,6 @@ export const WithScroller = (args) => {
 };
 
 range('Number of Tabs', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 8);
-range('Tab Size', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
 select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'horizontal');
 
 WithScroller.storyName = 'With Scroller';

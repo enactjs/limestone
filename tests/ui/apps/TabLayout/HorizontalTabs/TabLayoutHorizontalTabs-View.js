@@ -14,7 +14,6 @@ const app = (props) => (
 		{...props}
 		id="tabLayout"
 		orientation="horizontal"
-		tabSize={900}
 	>
 		{tabsForScroll}
 	</TabLayout>

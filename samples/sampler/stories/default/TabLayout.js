@@ -63,7 +63,6 @@ export const _TabLayout = (args) => {
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
 				size={args['size']}
-				tabSize={args['tabSize'] || null}
 			>
 				<Tab title={tabSelections[tabs][0].title} icon={tabSelections[tabs][0].icon}>
 					<Scroller>{images}</Scroller>
@@ -98,7 +97,6 @@ export const _TabLayout = (args) => {
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
-range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);
 
 _TabLayout.storyName = 'TabLayout';
 _TabLayout.parameters = {

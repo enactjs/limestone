@@ -403,7 +403,6 @@ describe('TabLayout specs', () => {
 		render(
 			<TabLayout
 				orientation="horizontal"
-				tabSize={3000}
 			>
 				<Tab icon="home" title="Home">
 					<div>Home</div>

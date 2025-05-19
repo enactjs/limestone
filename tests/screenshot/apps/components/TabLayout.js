@@ -183,10 +183,6 @@ const TabLayoutTests = [
 		wrapper: {full: true}
 	},
 	{
-		component: <TabLayout tabSize={500}>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
 		component: <TabLayout type="popup">{tabs}</TabLayout>,
 		wrapper: {full: true}
 	},
@@ -255,7 +251,7 @@ const TabLayoutTests = [
 	},
 	{
 		locale: 'ar-SA',
-		component: <TabLayout index={9} orientation="horizontal" tabSize={900}>{tabsForScroll}</TabLayout>,
+		component: <TabLayout index={9} orientation="horizontal">{tabsForScroll}</TabLayout>,
 		wrapper: {full: true}
 	}
 ];
