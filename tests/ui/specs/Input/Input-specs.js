@@ -605,7 +605,7 @@ describe('Input test', () => {
 			await components.input4.self.click();
 			await components.input4.numberButton.click();
 
-			expect(await components.input4.numberCell.getText()).toBe('󯿛');
+			expect(await components.input4.numberCell.getText()).toBe('᛫');
 			expect(await components.input4.title.getText()).toBe('Password Number Input');
 		});
 
