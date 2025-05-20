@@ -19,7 +19,7 @@ const iconNames = ['', ...icons];
 const inputData = {
 	shortText: 'Short',
 	longText:
-	'The W3C is an international community where Member organizations, a full-time staff, and the public work together to develop Web standards.',
+	'The W3C is an international community where Member organizations, a full-time staff, and the public work together to develop Web standards. The World Wide Web Consortium develops standards and guidelines to help everyone build a web based on the principles of accessibility, internationalization, privacy and security.',
 	extraSpaceText:
 	'This                                                             text                                                                          has                                                                                        extra                                                                         spaces',
 	tallText: ['नरेंद्र मोदी', 'ฟิ ไั ஒ து', 'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ', 'صباح الخير', 'តន្ត្រី'],
@@ -280,12 +280,12 @@ export const WithChangingSlots = () => {
 				onClick={handleClick}
 				slotBefore={<Icon>{'soccer'}</Icon>}
 				slotAfter={check ? <Icon>{'check'}</Icon> : null}
-			>Medium Item Title</Item>
+			>Medium Item Title 1</Item>
 			<Item
 				onClick={handleClick}
 				slotBefore={<Icon>{'soccer'}</Icon>}
 				slotAfter={check ? <Icon>{'check'}</Icon> : null}
-			>Medium Item Title</Item>
+			>Medium Item Title 2</Item>
 		</div>
 	);
 };
