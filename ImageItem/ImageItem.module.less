@@ -68,7 +68,11 @@
 
 	&.vertical {
 		&.fullImage {
-			padding: @lime-imageitem-vertical-full-image-padding;
+			border-radius: 0;
+			margin: @lime-imageitem-vertical-full-image-margin;
+			height: @lime-imageitem-vertical-full-image-height;
+			width: @lime-imageitem-vertical-full-image-width;
+
 			.image {
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
 				will-change: transform, box-shadow;
@@ -77,6 +81,20 @@
 					transition: transform 200ms ease-in-out;
 				}
 			}
+
+			.selectionContainer {
+				&::after {
+					border-width: @lime-imageitem-vertical-full-image-border-width;
+				}
+			}
+
+			.focus({
+				.selectionContainer {
+					&::after {
+						border-width: @lime-imageitem-vertical-full-image-focus-border-width;
+					}
+				}
+			});
 		}
 
 		&:not(.fullImage) {
@@ -196,6 +214,12 @@
 
 		&.vertical {
 			&.fullImage {
+				background-color: transparent;
+
+				.selectionContainer::after {
+					border-color: @lime-imageitem-full-image-border-color;
+				}
+
 				.lime-focus-highlight(image)
 			}
 		}
@@ -230,9 +254,15 @@
 			}
 
 			&.vertical {
-				&.fullImage .image {
-					transform: @lime-imageitem-vertical-focus-image-transform;
-					box-shadow: @lime-imageitem-focus-bg-shadow-color;
+				&.fullImage {
+					.selectionContainer::after {
+						border-color: @lime-imageitem-focus-full-image-border-color;
+					}
+
+					.image {
+						transform: @lime-imageitem-vertical-focus-image-transform;
+						box-shadow: @lime-imageitem-focus-bg-shadow-color;
+					}
 				}
 			}
 

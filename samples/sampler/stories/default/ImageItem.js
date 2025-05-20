@@ -34,9 +34,7 @@ export const _ImageItem = (args) => (
 		showSelection={args['showSelection']}
 		src={args['src']}
 		style={{
-			position: 'absolute',
-			width: args['orientation'] === 'vertical' && ri.scaleToRem(768),
-			height: args['orientation'] === 'vertical' && ri.scaleToRem(588)
+			position: 'absolute'
 		}}
 		wideImage={args['wideImage']}
 	>
