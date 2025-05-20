@@ -98,9 +98,37 @@
 
 	// Skin colors
 	.applySkins({
-		.title {
-			color: @lime-dropdown-title-text-color;
+		.button {
+			color: @lime-dropdown-label-color;
+
+			.bg {
+				background-color: @lime-dropdown-container-color;
+			}
+
+			&.selected {
+				.bg {
+					background-color: @lime-dropdown-container-selected-color;
+				}
+			}
 		}
+
+		.icon {
+			color: @lime-dropdown-icon-color;
+		}
+
+		.focus({
+			.button {
+				color: @lime-dropdown-label-focused-color;
+
+				.bg {
+					background-color: @lime-dropdown-container-focused-color;
+				}
+			}
+
+			.icon {
+				color: @lime-dropdown-icon-focused-color;
+			}
+		})
 	});
 }
 
