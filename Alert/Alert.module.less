@@ -21,10 +21,14 @@
 		.content {
 			font-weight: @lime-alert-font-weight;
 			max-width: @lime-alert-fullscreen-max-width;
+
+			:global(.enact-orientation-portrait) & {
+				max-width: @lime-portrait-alert-fullscreen-max-width;
+			}
 		}
 
 		.content {
-			margin: 0;
+			margin: @lime-alert-fullscreen-content-margin;
 			overflow: hidden;
 			max-height: 60%; // Set a reasonable cutoff for a maximum bound
 		}

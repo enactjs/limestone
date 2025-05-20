@@ -220,6 +220,20 @@
 // Text definitions
 //
 
+.lime-alert-title() {
+	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
+	.enact-locale-line-height(@lime-alert-line-height; @lime-tallglyph-body-line-height);
+	font-size: @lime-alert-title-font-size;
+	font-weight: @lime-alert-font-weight;
+}
+
+.lime-alert-subtitle() {
+	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
+	.enact-locale-line-height(@lime-alert-line-height);
+	font-size: @lime-alert-subtitle-font-size;
+	font-weight: @lime-alert-font-weight;
+}
+
 .lime-alert-overlay-content() {
 	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
 	.enact-locale-line-height(@lime-alert-line-height; @lime-tallglyph-body-line-height);
