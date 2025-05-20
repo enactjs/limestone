@@ -24,23 +24,30 @@ export default {
 	component: 'ImageItem'
 };
 
-export const _ImageItem = (args) => (
-	<ImageItem
-		centered={args['centered']}
-		disabled={args['disabled']}
-		label={args['label']}
-		orientation={args['orientation']}
-		selected={args['selected']}
-		showSelection={args['showSelection']}
-		src={args['src']}
-		style={{
-			position: 'absolute'
-		}}
-		wideImage={args['wideImage']}
-	>
-		{args['children']}
-	</ImageItem>
-);
+export const _ImageItem = (args) => {
+	const style = args['children'].length || args['label'] ? {
+		position: 'absolute',
+		width: args['orientation'] === 'vertical' && ri.scaleToRem(768),
+		height: args['orientation'] === 'vertical' && ri.scaleToRem(588)
+	} : {};
+
+	console.log(args['children']);
+	return (
+		<ImageItem
+			centered={args['centered']}
+			disabled={args['disabled']}
+			label={args['label']}
+			orientation={args['orientation']}
+			selected={args['selected']}
+			showSelection={args['showSelection']}
+			src={args['src']}
+			style={style}
+			wideImage={args['wideImage']}
+		>
+			{args['children']}
+		</ImageItem>
+	)
+};
 
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
