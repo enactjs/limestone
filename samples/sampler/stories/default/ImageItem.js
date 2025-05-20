@@ -31,7 +31,6 @@ export const _ImageItem = (args) => {
 		height: args['orientation'] === 'vertical' && ri.scaleToRem(588)
 	} : {};
 
-	console.log(args['children']);
 	return (
 		<ImageItem
 			centered={args['centered']}
