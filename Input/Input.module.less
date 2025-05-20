@@ -260,7 +260,7 @@
 			margin: @lime-input-overlay-keypad-margin;
 			width: @lime-input-overlay-keypad-width;
 			justify-content: flex-end;
-			gap: @lime-input-overlay-keypad-gap;
+			column-gap: @lime-input-overlay-keypad-gap;
 
 			:global(.enact-text-large) & {
 				width: @lime-input-overlay-keypad-width-large;
@@ -319,30 +319,30 @@
 		}
 
 		&.overlay {
-			background-color: @lime-input-background-popup-default;
+			background-color: @lime-input-background-popup-default-color;
 
 			.inputArea {
 				.bg {
-					background-color: @lime-input-inputField-popup-container;
+					background-color: @lime-input-inputField-popup-container-color;
 				}
 				
 				.input {
 					.input-placeholder({
-						color: @lime-input-inputField-popup-label-inactive;
+						color: @lime-input-inputField-popup-label-inactive-color;
 					});
 				}
 				
 				.inputField {
-					color: @lime-input-inputField-popup-label-inactive;
+					color: @lime-input-inputField-popup-label-inactive-color;
 				}
 
 			}
 
 			.numberCell {
-				color: @lime-input-inputField-password-focused;
+				color: @lime-input-inputField-password-focused-color;
 
 				&::before {
-					background-color: @lime-input-inputField-popup-container;
+					background-color: @lime-input-inputField-popup-container-color;
 				}
 			}
 
@@ -358,20 +358,20 @@
 
 			.keypad {
 				.key {
-					color: @lime-input-button-popup-transparent-label;
+					color: @lime-input-button-popup-transparent-label-color;
 				}
 			}
 
 			.title {
-				color: @lime-input-header-popup-label-main;
+				color: @lime-input-header-popup-label-main-color;
 			}
 
 			.subtitle {
-				color: @lime-input-header-popup-label-sub;
+				color: @lime-input-header-popup-label-sub-color;
 			}
 
 			.back {
-				color: @lime-input-button-popup-transparent-icon;
+				color: @lime-input-button-popup-transparent-icon-color;
 			}
 		}
 	});
