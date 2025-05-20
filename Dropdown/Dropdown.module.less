@@ -9,11 +9,6 @@
 	margin: @lime-dropdown-margin;
 	min-width: @lime-dropdown-min-width;
 
-	.button {
-		padding: @lime-dropdown-padding;
-		margin: 0;
-	}
-
 	&.tinyWidth {
 		.title {
 			width: @lime-dropdown-tiny-title-width;
@@ -83,6 +78,8 @@
 	.button {
 		min-width: unset;
 		max-width: unset;
+		padding: @lime-dropdown-padding;
+		margin: 0;
 
 		&:not([disabled]) {
 			.focus({
@@ -93,6 +90,10 @@
 					}
 				}
 			});
+		}
+
+		.icon {
+			margin-left: @lime-dropdown-icon-margin;
 		}
 	}
 
@@ -136,12 +137,6 @@
 	max-height: @lime-dropdown-list-max-height;
 	min-width: @lime-dropdown-list-min-width;
 
-	&.verticalScrollbar {
-		.scrollbarTrack{
-			height: calc(100% - @lime-scrollbar-padding);
-		}
-	}
-
 	&.tiny {
 		width: @lime-dropdown-list-tiny-width;
 	}
@@ -169,10 +164,6 @@
 	.lime-custom-text({
 		max-height: @lime-dropdown-list-max-height-large;
 	});
-
-	.item {
-		padding: @lime-dropdown-list-item-padding;
-	}
 
 	// Skin colors
 	.applySkins({
