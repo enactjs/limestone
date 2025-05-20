@@ -45,7 +45,7 @@ export const _ImageItem = (args) => {
 		>
 			{args['children']}
 		</ImageItem>
-	)
+	);
 };
 
 boolean('centered', _ImageItem, Config);
