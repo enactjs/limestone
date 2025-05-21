@@ -77,8 +77,11 @@
 
 // Overrides for Panel
 .panel {
-	padding: @lime-fixedpopuppanels-panel-padding;
 	max-height: @fixedpopuppanels-max-height;
+
+	.header {
+		padding: @lime-fixedpopuppanels-panel-title-padding;
+	}
 
 	> .body {
 		display: flex;
