@@ -2,7 +2,7 @@ const Page = require('../TabLayoutPage');
 
 describe('TabLayout', function () {
 	beforeEach(async function () {
-		await Page.open('HorizontalTabsWithPreserveFocus');
+		await Page.open('HorizontalTabsWithRetainFocus');
 		await Page.delay(500);
 	});
 

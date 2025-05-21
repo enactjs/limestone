@@ -11,18 +11,15 @@ import {tabsForScroll} from '../TabComponents';
 spotlight.setPointerMode(false);
 
 const app = (props) => (
-	<div {...props} style={{display: 'flex', flexDirection: 'row'}}>
-		<Button icon="arrowsmallleft" id="leftButton" minWidth={false} size="small" />
+	<div {...props} style={{display: 'flex', flexDirection: 'column'}}>
+		<Button icon="arrowsmallleft" id="upButton" minWidth={false} size="small" />
 		<TabLayout
 			id="tabLayout"
-			orientation="horizontal"
-			preserveFocus
-			style={{width: '90%'}}
 			tabSize={900}
 		>
 			{tabsForScroll}
 		</TabLayout>
-		<Button icon="arrowsmallright" id="rightButton" minWidth={false} size="small" />
+		<Button icon="arrowsmallright" id="downButton" minWidth={false} size="small" />
 	</div>
 );
 
