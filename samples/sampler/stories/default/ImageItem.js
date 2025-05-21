@@ -51,11 +51,11 @@ export const _ImageItem = (args) => {
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
 text('label', _ImageItem, Config, 'ImageItem label');
+select('orientation', _ImageItem, prop.orientation, Config);
 boolean('selected', _ImageItem, Config);
 boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
-select('orientation', _ImageItem, prop.orientation, Config);
 text('children', _ImageItem, Config, 'ImageItem Caption');
 
 _ImageItem.storyName = 'ImageItem';
