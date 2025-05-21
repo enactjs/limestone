@@ -3,7 +3,7 @@
 @import "../styles/variables.less";
 
 // Module level variables, for use only in this file
-@fixedpopuppanels-max-height: ~"calc(100vh -" (.extract(@lime-fixedpopuppanels-margin, top)[] + .extract(@lime-fixedpopuppanels-margin, bottom)[])~")";
+@fixedpopuppanels-max-height: calc(100vh - @lime-fixedpopuppanels-margin);
 
 .fixedPopupPanels {
 	// Overrides for Panels - the & just refers to this element. Using a block here to visually compartmentalize the overrides apart from the general styles.
@@ -40,6 +40,17 @@
 		.enact-locale-rtl({
 			padding: 0;
 		});
+	}
+
+	// Overrides for Popup
+	&.popup {
+		&.right {
+			margin: @lime-fixedpopuppanels-margin @lime-fixedpopuppanels-margin 0 0;
+		}
+
+		&.left {
+			margin: @lime-fixedpopuppanels-margin 0 0 @lime-fixedpopuppanels-margin;
+		}
 	}
 
 	// Skin colors
