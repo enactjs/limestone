@@ -152,6 +152,15 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
+		 * The index of the main tab in the tabs.
+		 *
+		 * @type {Number}
+		 * @default null
+		 * @public
+		 */
+		mainTabIndex: PropTypes.number,
+
+		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -251,7 +260,8 @@ const TabLayoutBase = kind({
 				normal: null
 			}
 		},
-		index: 0,
+		index: null,
+		mainTabIndex: null,
 		orientation: 'vertical',
 		type: 'normal'
 	},
@@ -288,19 +298,23 @@ const TabLayoutBase = kind({
 		},
 		onKeyUp: (ev, props) => {
 			const {keyCode, target} = ev;
-			const {anchorTo, collapsed, orientation, 'data-spotlight-id': spotlightId, rtl, type} = props;
+			const {anchorTo, collapsed, orientation, 'data-spotlight-id': spotlightId, rtl, type, mainTabIndex} = props;
 			const popupPanelRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${popupTabLayoutComponentCss.panel}`);
 			const tabLayoutContentRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${componentCss.content}`);
+			const tabsExpandedSpotlightId = `${spotlightId}-tabs-expanded`;
 
 			if (forwardWithPrevent('onKeyUp', ev, props) && is('cancel')(keyCode)) {
 				if ((type === 'popup' && popupPanelRef?.contains(target) && popupPanelRef?.dataset.index === '0') || (type === 'normal' && !Spotlight.getPointerMode() && tabLayoutContentRef?.contains(target))) {
 					if (collapsed) {
 						forward('onExpand', ev, props);
 					}
-					Spotlight.focus(`[data-spotlight-id='${spotlightId}-tabs-expanded']`);
+					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}']`);
+					ev.stopPropagation();
+				} else if (mainTabIndex !== null) {
+					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}-main-tab']`);
 					ev.stopPropagation();
 				}
-			} else if (is('enter')(keyCode) && !collapsed && document.querySelector(`[data-spotlight-id='${spotlightId}-tabs-expanded']`).contains(target) && target.tagName !== 'INPUT') {
+			} else if (is('enter')(keyCode) && !collapsed && document.querySelector(`[data-spotlight-id='${tabsExpandedSpotlightId}']`).contains(target) && target.tagName !== 'INPUT') {
 				Spotlight.setPointerMode(false);
 
 				let moveTo;
@@ -378,6 +392,11 @@ const TabLayoutBase = kind({
 			...style,
 			'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
 		}),
+		index: ({index, mainTabIndex}) => {
+			// When tablayout is rendered with no index, it will be set to the mainTabIndex
+			// if it is defined. Otherwise, it will be set to 0.
+			return index === null ? mainTabIndex || 0 : index;
+		},
 		tabOrientation: ({orientation}) => orientation === 'vertical' ? 'horizontal' : 'vertical',
 		tabs: ({children}) => {
 			const tabs = mapAndFilterChildren(children, (child) => (
@@ -389,7 +408,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, mainTabIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -403,6 +422,7 @@ const TabLayoutBase = kind({
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
+			mainTabIndex,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,

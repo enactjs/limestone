@@ -83,8 +83,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({buttonSize, children, collapsed, css, orientation, size, ...rest}) => {
-		delete rest.index;
+	render: ({buttonSize, index, children, collapsed, css, mainTabIndex, mainTabSpotlightId, orientation, size, ...rest}) => {
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -100,7 +99,8 @@ const TabBase = kind({
 			css,
 			focusEffect: 'static',
 			minWidth: false,
-			role: 'tab'
+			role: 'tab',
+			spotlightId: index === mainTabIndex ? mainTabSpotlightId : null
 		};
 
 		switch (orientation) {
@@ -190,11 +190,20 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, mainTabIndex, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
+		const mainTabSpotlightId = `${spotlightId}-main-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
+		const itemProps = useMemo(() => ({
+			buttonSize: size,
+			css,
+			collapsed,
+			orientation,
+			size: tabSize,
+			mainTabIndex: collapsed ? null : mainTabIndex,
+			mainTabSpotlightId
+		}), [css, collapsed, mainTabIndex, mainTabSpotlightId, orientation, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {

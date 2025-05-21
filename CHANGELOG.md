@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/TabLayout` prop `mainTabIndex`
+
 ### Changed
 
 - `limestone/BodyText` styling to match the latest GUI

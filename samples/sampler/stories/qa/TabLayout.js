@@ -557,3 +557,31 @@ WithScroller.parameters = {
 		noPanel: true
 	}
 };
+
+export const WithMainTabIndex = (args) => {
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With main tab index" />
+			<TabLayout
+				orientation={args['orientation']}
+				mainTabIndex={args['mainTabIndex']}
+			>
+				{tabsWithIcons.map((tab, i) => (
+					<TabLayout.Tab title={tab.title} icon={tab.icon} key={`tab${i}`}>
+						<Button>Tab {i + 1}</Button>
+					</TabLayout.Tab>
+				))}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+select('orientation', WithMainTabIndex, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('mainTabIndex', WithMainTabIndex, {groupId: 'TabLayout'}, {min: 0, max: 2, step: 1}, 0);
+
+WithMainTabIndex.storyName = 'With main tab index';
+WithMainTabIndex.parameters = {
+	props: {
+		noPanel: true
+	}
+};
