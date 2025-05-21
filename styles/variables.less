@@ -486,7 +486,7 @@
 // ---------------------------------------
 @lime-fixedpopuppanels-width: 1200px;
 @lime-fixedpopuppanels-half-width: 1716px;
-@lime-fixedpopuppanels-margin: .extract(@lime-popup-position-left-margin, top)[] .extract(@lime-popup-position-left-margin, right)[];
+@lime-fixedpopuppanels-margin: 60px 60px 0 0;
 @lime-fixedpopuppanels-border-radius: var(--semantic-radius-overlay);
 @lime-fixedpopuppanels-panel-title-padding: var(--primitive-spacing-60) var(--primitive-spacing-60) 0;
 @lime-fixedpopuppanels-panel-body-padding: var(--primitive-spacing-60);
@@ -861,9 +861,9 @@
 @lime-popup-border-radius: 24px;
 // Remove the margin on the leading edge so we're not wasting some of our transition frames on animating empty space, but also account for the shadow.
 @lime-popup-position-top-margin: 150px 120px 78px 120px; // 78px is the amount of space the shadow renders onto, so it's not clipped.
-@lime-popup-position-right-margin: 60px 60px 0 0;
+@lime-popup-position-right-margin: 120px 60px 120px @lime-component-spacing;
 @lime-popup-position-bottom-margin: 0 120px 150px 120px;
-@lime-popup-position-left-margin: 60px 0 0 60px;
+@lime-popup-position-left-margin: 120px @lime-component-spacing 120px 60px;
 @lime-popup-position-corner-margin: 60px;
 
 // PopupTabLayout
