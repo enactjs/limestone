@@ -65,9 +65,9 @@ const TabBase = kind({
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
 			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
-				if (orientation === 'horizontal') {
-					ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
-				}
+				// if (orientation === 'horizontal') {
+				// 	ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
+				// }
 
 				return {selected: index};
 			})
@@ -246,7 +246,7 @@ const TabGroupBase = kind({
 					/>
 				) : (
 					<div role="region" aria-labelledby={`${id}_tabgroup`}>
-						<GroupComponent
+						<Group
 							id={`${id}_tabgroup`}
 							childComponent={Tab}
 							aria-label={`${new IString($L('{total} items in total')).format({'total': tabs.length})}`}
@@ -264,7 +264,7 @@ const TabGroupBase = kind({
 							spotlightDisabled={spotlightDisabled}
 						>
 							{children}
-						</GroupComponent>
+						</Group>
 					</div>
 				)}
 			</Component>
