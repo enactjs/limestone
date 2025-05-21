@@ -60,6 +60,10 @@
 	}
 
 	&.centered {
+		.title {
+			margin-top: @lime-header-standard-title-margin-top;
+		}
+
 		.slotAbove,
 		.slotBelow {
 			text-align: center;
@@ -123,10 +127,6 @@
 		.subtitle {
 			margin: @lime-header-standard-subtitle-margin;
 		}
-
-		&.centered {
-			padding-top: @lime-header-standard-centered-padding-top;
-		}
 	}
 
 	// Compact Header
@@ -141,26 +141,21 @@
 
 		.title {
 			padding: @lime-header-compact-title-padding;
+			.margin-start-end(@lime-header-compact-title-margin-start, @lime-header-compact-title-margin-end);
 		}
 
 		.titlesRow {
 			padding: @lime-header-compact-titles-row-padding;
-			gap: @lime-header-compact-titles-row-spacing;
 		}
 
 		.subtitle {
 			padding: @lime-header-compact-subtitle-padding;
+			.margin-start-end(@lime-header-compact-subtitle-margin-start, 0);
+			margin-top: @lime-header-compact-subtitle-margin-top;
 		}
 
 		.title {
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
-			line-height: @lime-header-compact-title-line-height;
-		}
-
-		.subtitle {
-			margin-top: @lime-header-compact-subtitle-margin-top;
-			font-size: @lime-header-compact-subtitle-font-size;
-			line-height: @lime-header-compact-subtitle-line-height;
 		}
 	}
 
@@ -229,14 +224,6 @@
 	}
 
 	.applySkins({
-		.title {
-			color: @lime-header-label-main-color;
-		}
-
-		.subtitle {
-			color: @lime-header-label-sub-color;
-		}
-
 		&.shadowed {	
 			.subtitle,
 			.title {

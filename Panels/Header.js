@@ -458,7 +458,6 @@ const HeaderBase = kind({
 				iconFlip="auto"
 				onClick={onBack}
 				shadowed={shadowed}
-				size="large"
 			/>
 		) : null);
 
@@ -471,7 +470,6 @@ const HeaderBase = kind({
 				icon="closex"
 				onClick={onClose}
 				shadowed={shadowed}
-				size="large"
 			/>
 		) : null);
 

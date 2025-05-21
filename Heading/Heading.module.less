@@ -91,7 +91,11 @@
 
 	// Skin colors
 	.applySkins({
-		color: @lime-heading-label-color;
+		color: @lime-heading-label-main-color;
+
+		&.subtitle {
+			color: @lime-heading-label-sub-color;
+		}
 
 		&.showLine {
 			border-bottom-color: @lime-heading-border-color;
