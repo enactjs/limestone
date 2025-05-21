@@ -6,7 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/TabLayout` prop `retainFocus` to retain the focus within tabs for navigating by 5way key in the same direction of its orientation.
+- `limestone/TabLayout` prop `retainFocus` to retain the focus within tabs for navigating by 5way key in the same direction of its orientation
 
 ### Changed
 

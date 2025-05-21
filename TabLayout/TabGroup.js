@@ -72,16 +72,6 @@ const TabBase = kind({
 
 				return {selected: index};
 			})
-		),
-		onKeyDown: handle(
-			forwardCustom('onKeyDown', (ev, props) => {
-				const {orientation, retainFocus} = props;
-				const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
-
-				if (retainFocus) {
-					Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: leaveFor});
-				}
-			})
 		)
 	},
 
@@ -196,6 +186,11 @@ const TabGroupBase = kind({
 
 	computed: {
 		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
+		configureSpotlightLeaveFor: ({orientation, retainFocus})  => {
+			const leaveFor = orientation === 'horizontal' ? {right: '', left: ''} : {up: '', down: ''};
+
+			Spotlight.set(Spotlight.getActiveContainer(), {leaveFor: retainFocus ? leaveFor : null});
+		},
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
@@ -204,6 +199,7 @@ const TabGroupBase = kind({
 
 	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, retainFocus, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
+		delete rest.configureSpotlightLeaveFor;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, retainFocus, size: tabSize}), [css, collapsed, orientation, retainFocus, size, tabSize]);
