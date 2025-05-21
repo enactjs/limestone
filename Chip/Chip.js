@@ -21,6 +21,7 @@
 import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {getDirection} from '@enact/spotlight';
+import Spotlight from '@enact/spotlight';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {getPointerMode} from '@enact/spotlight/src/pointer';
 import classnames from 'classnames';
@@ -64,6 +65,9 @@ const ChipBase = (props) => {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
 			if (nextTarget !== null && nextTarget !== chipRef.current && nextTarget !== buttonRef.current) {
+				Spotlight.focus(nextTarget);
+				ev.stopPropagation();
+
 				buttonRef.current.classList.remove(css.focused);
 			}
 		}
