@@ -1,5 +1,6 @@
 // DateTime.module.less
 //
+@import "../../styles/skin.less";
 @import "../../styles/variables.less";
 
 .dateTime {
@@ -22,4 +23,10 @@
 			margin-inline-end: 0
 		}
 	}
+
+	.applySkins({
+		.heading {
+			color: @lime-datetime-label-color;
+		}
+	})
 }
