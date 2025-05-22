@@ -21,23 +21,23 @@ const prop = {
 		),
 		'2 buttons': (
 			<buttons>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
 			</buttons>
 		),
 		'3 buttons': (
 			<buttons>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
 			</buttons>
 		),
 		'4 buttons': (
 			<buttons>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
-				<Button>Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
 			</buttons>
 		)
 	}

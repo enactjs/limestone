@@ -256,8 +256,8 @@ const AlertBase = kind({
  *   Body text for alert. Components may also be used here for greater customizability.
  *
  *   <buttons>
- *     <Button>Button 1</Button>
- *     <Button>Button 2</Button>
+ *     <Button size="small">Button 1</Button>
+ *     <Button size="small">Button 2</Button>
  *   </buttons>
  * </Alert>
  * ```

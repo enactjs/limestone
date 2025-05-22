@@ -157,17 +157,17 @@ const dropIn = {
 		/>
 	),
 	oneButton: (
-		<Button>Yes</Button>
+		<Button size="small">Yes</Button>
 	),
 	// we need an array here rather than a fragment due to the impl of Alert that maps over the
 	// array of buttons and wraps them with Cell.
 	twoButtons: [
-		<Button key="yes">Yes</Button>,
-		<Button key="no">No</Button>
+		<Button key="yes" size="small">Yes</Button>,
+		<Button key="no" size="small">No</Button>
 	],
 	twoDisabledButton: [
-		<Button key="yes" disabled>Yes</Button>,
-		<Button key="no" disabled>No</Button>
+		<Button key="yes" disabled size="small">Yes</Button>,
+		<Button key="no" disabled size="small">No</Button>
 	]
 };
 
