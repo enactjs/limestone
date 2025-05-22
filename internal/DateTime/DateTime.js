@@ -26,13 +26,26 @@ const DateTimeBase = kind({
 		 *
 		 * @type {String}
 		 */
-		label: PropTypes.string
+		label: PropTypes.string,
+
+		/**
+		 * Aligns the `title` horizontally within the component.
+		 *
+		 * @type {('center'|'left')}
+		 * @default 'center'
+		 * @public
+		 */
+		titleAlign: PropTypes.oneOf(['center', 'left'])
 	},
 
 	styles: {
 		css: componentCss,
 		className: 'dateTime',
 		publicClassNames: ['dateTime', 'pickers']
+	},
+
+	computed: {
+		className: ({titleAlign, styler}) => styler.append(titleAlign)
 	},
 
 	render: ({children, css, label, ...rest}) => (
