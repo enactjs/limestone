@@ -20,7 +20,7 @@ spotlight.setPointerMode(false);
 
 const items = [];
 const itemSize = 156;
-const listSize = itemSize * 8;
+const listSize = itemSize * 9;
 const itemStyle = {margin: 0};
 
 // eslint-disable-next-line enact/display-name
