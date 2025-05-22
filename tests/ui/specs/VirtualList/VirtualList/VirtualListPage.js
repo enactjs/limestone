@@ -140,12 +140,13 @@ class VirtualListPage extends Page {
 		}, scrollableSelector);
 	}
 
-	async bottomVisibleItemId (affordanceSize = 24) {
-		return await browser.execute(function (_affordanceSize, _scrollableSelector) {
+	async bottomVisibleItemId () {
+		return await browser.execute(function (_scrollableSelector) {
 			const scroller = document.querySelector(_scrollableSelector),
 				{bottom, left, width} = scroller.getBoundingClientRect();
 			// affordance space to draw the bottom shadow. affordanceSize is 48 for 4k and 24 for FHD.
-			let currentY = bottom - _affordanceSize - 1,
+			const affordanceSize = 24;
+			let currentY = bottom - affordanceSize - 1,
 				middle = left + Math.floor((left + width) / 2);
 
 			for (let i = 0; i < 10; i++) {
@@ -162,7 +163,7 @@ class VirtualListPage extends Page {
 				// else, it's inside the list itself, decrement y and try again
 			}
 			return 'unknown';	// we didn't find it?!
-		}, affordanceSize, scrollableSelector);
+		}, scrollableSelector);
 	}
 
 	async getElementAttribute (string) {
