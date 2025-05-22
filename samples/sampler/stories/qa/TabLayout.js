@@ -8,7 +8,7 @@ import {Scroller} from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
-import {Component, useCallback, useState} from 'react';
+import {Component, useCallback, useMemo, useState} from 'react';
 
 import {tabIcons} from '../helper/icons';
 
@@ -559,7 +559,7 @@ WithScroller.parameters = {
 };
 
 export const WithScrollingTabs = (args) => {
-	const list = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
 
 	const [dynamicList, setDynamicList] = useState(list);
 
@@ -570,8 +570,8 @@ export const WithScrollingTabs = (args) => {
 	}, [dynamicList]);
 
 	const handleResetList = useCallback(() => {
-		setDynamicList(list)
-	}, [])
+		setDynamicList(list);
+	}, [list]);
 
 	const tabList = () => {
 		return dynamicList.map((tab) => {

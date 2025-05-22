@@ -32,7 +32,7 @@ const spotlightContainerConfig = {
 	// When swapping from unscrolled to scrolled tab group, the container config is lost so this
 	// preserves it across unmounts / remounts
 	preserveId: true
-}
+};
 
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
