@@ -215,10 +215,10 @@ const TabGroupBase = kind({
 		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
 		const useScroller = (children.length > maxTabs);
-		const groupProps = useScroller ? {
+		const groupProps = useScroller ? null : {
 			spotlightId: spotlightId,
 			spotlightDisabled: spotlightDisabled
-		} : null;
+		};
 		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
