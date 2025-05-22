@@ -8,7 +8,7 @@ import {Scroller} from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select} from '@enact/storybook-utils/addons/controls';
-import {Component, useState} from 'react';
+import {Component, useCallback, useState} from 'react';
 
 import {tabIcons} from '../helper/icons';
 
@@ -553,6 +553,61 @@ select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'hori
 
 WithScroller.storyName = 'With Scroller';
 WithScroller.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithScrollingTabs = (args) => {
+	const list = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'];
+
+	const [dynamicList, setDynamicList] = useState(list);
+
+	const handleAddList = useCallback(() => {
+		const newList = [...dynamicList];
+		newList.push(`Added Tab ${newList.length + 1}`);
+		setDynamicList(newList);
+	}, [dynamicList]);
+
+	const handleResetList = useCallback(() => {
+		setDynamicList(list)
+	}, [])
+
+	const tabList = () => {
+		return dynamicList.map((tab) => {
+			return (
+				<Tab key={tab} title={tab}>
+					<Header title={tab} />
+					<Item>Tab Item</Item>
+					<Button onClick={handleAddList}>
+						Add Tab
+					</Button>
+					<Button onClick={handleResetList}>
+						Reset Tabs
+					</Button>
+				</Tab>
+			);
+		});
+	};
+
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With Scrolling Tabs" />
+			<TabLayout
+				orientation={args['orientation']}
+				tabSize={args['tabSize']}
+			>
+				{tabList()}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+range('tabSize', WithScrollingTabs, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithScrollingTabs, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+WithScrollingTabs.storyName = 'With Scrolling Tabs';
+WithScrollingTabs.parameters = {
 	props: {
 		noPanel: true
 	}

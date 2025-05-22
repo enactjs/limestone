@@ -23,6 +23,17 @@ import componentCss from './TabGroup.module.less';
 const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
 const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
 
+const spotlightContainerConfig = {
+	// using default-element so we always land on the selected tab in order to avoid changing
+	// the view when re-entering the tab group
+	defaultElement: `.${componentCss.selected}`,
+	enterTo: 'default-element',
+	partition: true,
+	// When swapping from unscrolled to scrolled tab group, the container config is lost so this
+	// preserves it across unmounts / remounts
+	preserveId: true
+}
+
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
 
@@ -64,13 +75,7 @@ const TabBase = kind({
 			forward('onFocus'),
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
-			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
-				// if (orientation === 'horizontal') {
-				// 	ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
-				// }
-
-				return {selected: index};
-			})
+			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
 		)
 	},
 
@@ -131,19 +136,7 @@ const TabBase = kind({
 
 const Tab = Toggleable({prop: 'stopped', activate: 'onBlur', deactivate: 'onFocus'}, Skinnable(TabBase));
 
-const GroupComponent = SpotlightContainerDecorator(
-	{
-		// using default-element so we always land on the selected tab in order to avoid changing
-		// the view when re-entering the tab group
-		defaultElement: `.${componentCss.selected}`,
-		enterTo: 'default-element',
-		partition: true,
-		// When swapping from unscrolled to scrolled tab group, the container config is lost so this
-		// preserves it across unmounts / remounts
-		preserveId: true
-	},
-	Group
-);
+const GroupContainer = SpotlightContainerDecorator(spotlightContainerConfig, Group);
 
 /**
  * A group of tabs
@@ -186,6 +179,7 @@ const TabGroupBase = kind({
 		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
+		scrollerConfig: ({spotlightId}) => Spotlight.set(spotlightId, spotlightContainerConfig),
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
@@ -221,13 +215,20 @@ const TabGroupBase = kind({
 		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
 		const useScroller = (children.length > maxTabs);
+		const groupProps = useScroller ? {
+			spotlightId: spotlightId,
+			spotlightDisabled: spotlightDisabled
+		} : null;
 		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
+			spotlightId: spotlightId,
+			spotlightDisabled: spotlightDisabled,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
+		const GroupComponent = useScroller ? Group : GroupContainer;
 
 		return (
 			<Component
@@ -246,7 +247,7 @@ const TabGroupBase = kind({
 					/>
 				) : (
 					<div role="region" aria-labelledby={`${id}_tabgroup`}>
-						<Group
+						<GroupComponent
 							id={`${id}_tabgroup`}
 							childComponent={Tab}
 							aria-label={`${new IString($L('{total} items in total')).format({'total': tabs.length})}`}
@@ -260,11 +261,10 @@ const TabGroupBase = kind({
 							select="radio"
 							selected={selectedIndex}
 							selectedProp="selected"
-							spotlightId={spotlightId}
-							spotlightDisabled={spotlightDisabled}
+							{...groupProps}
 						>
 							{children}
-						</Group>
+						</GroupComponent>
 					</div>
 				)}
 			</Component>
