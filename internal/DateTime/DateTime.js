@@ -26,7 +26,20 @@ const DateTimeBase = kind({
 		 *
 		 * @type {String}
 		 */
-		label: PropTypes.string
+		label: PropTypes.string,
+
+		/**
+		 * Aligns the `title` horizontally within the component.
+		 *
+		 * @type {('center'|'left')}
+		 * @default 'center'
+		 * @public
+		 */
+		titleAlignment: PropTypes.oneOf(['center', 'left'])
+	},
+
+	defaultProps: {
+		titleAlignment: 'center'
 	},
 
 	styles: {
@@ -35,14 +48,22 @@ const DateTimeBase = kind({
 		publicClassNames: ['dateTime', 'pickers']
 	},
 
-	render: ({children, css, label, ...rest}) => (
-		<div {...rest}>
-			{label ? <Heading className={css.heading} size="tiny">{label}</Heading> : null}
-			<div className={css.pickers}>
-				{children}
+	computed: {
+		className: ({titleAlignment, styler}) => styler.append(titleAlignment)
+	},
+
+	render: ({children, css, label, ...rest}) => {
+		delete rest.titleAlignment;
+
+		return (
+			<div {...rest}>
+				{label ? <Heading className={css.heading} size="tiny">{label}</Heading> : null}
+				<div className={css.pickers}>
+					{children}
+				</div>
 			</div>
-		</div>
-	)
+		);
+	}
 });
 
 export default DateTimeBase;
