@@ -52,14 +52,18 @@ const DateTimeBase = kind({
 		className: ({titleAlignment, styler}) => styler.append(titleAlignment)
 	},
 
-	render: ({children, css, label, ...rest}) => (
-		<div {...rest}>
-			{label ? <Heading className={css.heading} size="tiny">{label}</Heading> : null}
-			<div className={css.pickers}>
-				{children}
+	render: ({children, css, label, ...rest}) => {
+		delete rest.titleAlignment;
+
+		return (
+			<div {...rest}>
+				{label ? <Heading className={css.heading} size="tiny">{label}</Heading> : null}
+				<div className={css.pickers}>
+					{children}
+				</div>
 			</div>
-		</div>
-	)
+		);
+	}
 });
 
 export default DateTimeBase;
