@@ -1,10 +1,11 @@
 import DatePicker, {DatePickerBase} from '@enact/limestone/DatePicker';
+import {DateTime} from '@enact/limestone/internal/DateTime';
 import {mergeComponentMetadata, removeProps} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 
 DatePicker.displayName = 'DatePicker';
-const Config = mergeComponentMetadata('DatePicker', DatePickerBase, DatePicker);
+const Config = mergeComponentMetadata('DatePicker', DatePickerBase, DatePicker, DateTime);
 removeProps(
 	Config,
 	'year day maxDays maxMonths month onChangeDate onChangeMonth onChangeYear order'
@@ -23,7 +24,7 @@ export const _DatePicker = (args) => (
 		monthAriaLabel={args['monthAriaLabel']}
 		dayAriaLabel={args['dayAriaLabel']}
 		yearAriaLabel={args['yearAriaLabel']}
-		titleAlign={args['titleAlign']}
+		titleAlignment={args['titleAlignment']}
 		onChange={action('onChange')}
 		onComplete={action('onComplete')}
 	/>
@@ -35,7 +36,7 @@ boolean('noLabel', _DatePicker, Config);
 text('monthAriaLabel', _DatePicker, Config);
 text('dayAriaLabel', _DatePicker, Config);
 text('yearAriaLabel', _DatePicker, Config);
-select('titleAlign', _DatePicker, ['center', 'left'], Config);
+select('titleAlignment', _DatePicker, ['center', 'left'], Config);
 
 _DatePicker.storyName = 'DatePicker';
 _DatePicker.parameters = {

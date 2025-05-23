@@ -35,7 +35,11 @@ const DateTimeBase = kind({
 		 * @default 'center'
 		 * @public
 		 */
-		titleAlign: PropTypes.oneOf(['center', 'left'])
+		titleAlignment: PropTypes.oneOf(['center', 'left'])
+	},
+
+	defaultProps: {
+		titleAlignment: 'center'
 	},
 
 	styles: {
@@ -45,7 +49,7 @@ const DateTimeBase = kind({
 	},
 
 	computed: {
-		className: ({titleAlign, styler}) => styler.append(titleAlign)
+		className: ({titleAlignment, styler}) => styler.append(titleAlignment)
 	},
 
 	render: ({children, css, label, ...rest}) => (
