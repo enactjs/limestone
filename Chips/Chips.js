@@ -31,7 +31,7 @@ const ChipsDefaultProps = {
 };
 
 /**
- * A Limestone styled base component for {@link limestone/Chips.Chips|ChipsBase}.
+ * A container that contains the basic behavior of {@link limestone/Chips.Chips|ChipsBase}.
  *
  * @class ChipsBase
  * @memberof limestone/Chips

@@ -1,13 +1,13 @@
 /**
- * Provides a Limestone styled pages component with page indicator and navigation buttons.
+ * Provides Limestone styled chip components and behaviors.
  *
  * Usage:
  * ```
- * <PageViews>
- *		<PageViews.Page aria-label="This is a description for page">
- *			lorem ipsum ...
- *		</PageViews.Page>
- * </PageViews>
+ * <Chips>
+ *		<Chips.Chip icon={icon} deleteButton={deleteButton}>
+ *			label
+ *		</Chips.Chip>
+ * </Chips>
  * ```
  * @module limestone/Chips
  * @exports Chips
@@ -17,11 +17,11 @@
  import Chip from './Chip';
  
  /**
-  * A shortcut to access {@link limestone/PageViews.Page}
+  * A shortcut to access {@link limestone/Chips.Chip}
   *
-  * @name Page
+  * @name Chip
   * @static
-  * @memberof limestone/PageViews.PageViews
+  * @memberof limestone/Chips.Chips
   */
  Chips.Chip = Chip;
  
