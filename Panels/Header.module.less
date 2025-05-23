@@ -74,9 +74,12 @@
 	/// Begin child node rules configuration, shared across multiple types
 	///
 
-	.title,
-	.subtitle {
+	.title {
 		margin: 0;
+	}
+
+	.subtitle {
+		.margin-start-end(@lime-header-subtitle-margin-start, 0);
 	}
 
 	.slotAbove {
@@ -127,6 +130,14 @@
 		.subtitle {
 			margin: @lime-header-standard-subtitle-margin;
 		}
+
+		&.slotBefore .slotBefore {
+			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
+		}
+
+		&.slotAfter .slotAfter {
+			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
+		}
 	}
 
 	// Compact Header
@@ -141,7 +152,6 @@
 
 		.title {
 			padding: @lime-header-compact-title-padding;
-			.margin-start-end(@lime-header-compact-title-margin-start, @lime-header-compact-title-margin-end);
 		}
 
 		.titlesRow {
@@ -150,12 +160,19 @@
 
 		.subtitle {
 			padding: @lime-header-compact-subtitle-padding;
-			.margin-start-end(@lime-header-compact-subtitle-margin-start, 0);
 			margin-top: @lime-header-compact-subtitle-margin-top;
 		}
 
 		.title {
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
+		}
+
+		&.slotBefore .slotBefore {
+			.margin-start-end(0, @lime-header-compact-slotbefore-margin-end);
+		}
+
+		&.slotAfter .slotAfter {
+			.margin-start-end(@lime-header-compact-slotafter-margin-start, 0);
 		}
 	}
 
