@@ -409,6 +409,38 @@ const IconBase = kind({
  * alert01
  * alert02
  * calibration
+ * mypage
+ * moodmaker
+ * check
+ * calendar
+ * antenna
+ * av
+ * component
+ * pcpicture
+ * hdmigeneric
+ * hdmi01
+ * hdmi02
+ * hdmi03
+ * hdmi04
+ * dvd
+ * hdmisub
+ * usbport
+ * vcr
+ * soundshare
+ * remotepc
+ * mobileguide
+ * airplay
+ * musicbt
+ * streamingspeaker
+ * insteon
+ * satellite
+ * scart
+ * settopbox
+ * screenshare
+ * pc
+ * tips
+ * googlehome
+ * thinq
  * ```
  *
  * @name iconList

@@ -255,5 +255,37 @@ export default {
 	ai                : 0x0F01BB, // ai
 	alert01           : 0x0F01BC, // alert.01
 	alert02           : 0x0F01BD, // alert.02
-	calibration       : 0x0F01BE // calibration
+	calibration       : 0x0F01BE, // calibration
+	mypage            : 0x0F01BF, // mypage
+	moodmaker         : 0x0F01C0, // moodmaker
+	check             : 0x0F01C1, // check
+	calendar          : 0x0F01C2, // calendar
+	antenna           : 0x0F01C3, // antenna
+	av                : 0x0F01C4, // av
+	component         : 0x0F01C5, // component
+	pcpicture         : 0x0F01C6, // pc_picture
+	hdmigeneric       : 0x0F01C7, // hdmigeneric
+	hdmi1             : 0x0F01C8, // hdmi.01
+	hdmi2             : 0x0F01C9, // hdmi.02
+	hdmi3             : 0x0F01CA, // hdmi.03
+	hdmi4             : 0x0F01CB, // hdmi.04
+	dvd               : 0x0F01CC, // dvd
+	hdmisub           : 0x0F01CD, // hdmi_sub
+	usbport           : 0x0F01CE, // usb_port
+	vcr               : 0x0F01CF, // vcr
+	soundshare        : 0x0F01D0, // soundshare
+	remotepc          : 0x0F01D1, // remotepc
+	mobileguide       : 0x0F01D2, // mobileguide
+	airplay           : 0x0F01D3, // airplay
+	musicbt           : 0x0F01D4, // music_bt
+	streamingspeaker  : 0x0F01D5, // streaming_speaker
+	insteon           : 0x0F01D6, // insteon
+	satellite         : 0x0F01D7, // satellite
+	scart             : 0x0F01D8, // scart
+	settopbox         : 0x0F01D9, // settopbox
+	screenshare       : 0x0F01DA, // screenshare
+	pc                : 0x0F01DB, // pc
+	tips              : 0x0F01DC, // tips
+	googlehome        : 0x0F01DD, // google_home
+	thinq             : 0x0F01DE // thinq
 };
