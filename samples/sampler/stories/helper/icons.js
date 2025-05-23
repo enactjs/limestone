@@ -216,7 +216,8 @@ export const settingsIcons = [
 	'tvguidefvp',
 	'usbport',
 	'voiced',
-	'wowcast'
+	'wowcast',
+	'zoom'
 ].sort();
 
 export const drawingIcons = [

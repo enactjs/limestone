@@ -192,6 +192,7 @@ export default {
 	home              : 0x0F017C, // home
 	gear              : 0x0F017D, // gear
 	wallpaper         : 0x0F017E, // wallpaper
+	zoom              : 0x0F017F, // zoom
 	spanner           : 0x0F0180, // spanner
 	bluetooth         : 0x0F0181, // bluetooth
 	moodmode          : 0x0F0182, // moodmode

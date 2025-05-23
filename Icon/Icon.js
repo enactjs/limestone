@@ -345,6 +345,7 @@ const IconBase = kind({
  * profilecheck
  * mediaserver
  * wallpaper
+ * zoom
  * spanner
  * bluetooth
  * moodmode
