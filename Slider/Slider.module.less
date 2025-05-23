@@ -140,7 +140,7 @@
 
 	.applySkins({
 		.bar {
-			background-color: @lime-slider-bar-bg-color;
+			background-color: @lime-slider-track-color;
 		}
 
 		.fill {
@@ -148,7 +148,7 @@
 		}
 
 		.load {
-			background-color: @lime-slider-load-bg-color;
+			background-color: @lime-slider-track-buffer-color;
 		}
 
 		.knob::before {
@@ -159,16 +159,8 @@
 		.focus({
 			background-color: transparent;
 
-			.bar {
-				background-color: @lime-slider-focus-bar-bg-color;
-			}
-
 			.fill {
 				background-color: @lime-slider-focus-fill-bg-color;
-			}
-
-			.load {
-				background-color: @lime-slider-focus-load-bg-color;
 			}
 
 			.knob::before {
@@ -180,16 +172,8 @@
 
 			&.active,
 			&.pressed {
-				.bar {
-					background-color: @lime-slider-active-bar-bg-color;
-				}
-
 				.fill {
 					background-color: @lime-slider-active-fill-bg-color;
-				}
-
-				.load {
-					background-color: @lime-slider-active-load-bg-color;
 				}
 
 				.knob::before {
@@ -211,16 +195,8 @@
 		});
 
 		:global(.spotlight-input-touch) &.pressed {
-			.bar {
-				background-color: @lime-slider-active-bar-bg-color;
-			}
-
 			.fill {
 				background-color: @lime-slider-active-fill-bg-color;
-			}
-
-			.load {
-				background-color: @lime-slider-active-load-bg-color;
 			}
 
 			.knob::before {
