@@ -40,7 +40,7 @@ export const inputData = {
 	numberSubtitle: 'This will auto-close when the length has been reached',
 	shortText: 'Text string',
 	shortPlaceholder: 'Placeholder string',
-	longText: 'What could we do with such a very long text string? We could write that novel we\'ve always talked about, or travel the world, or hike a great mountain; the sky\'s the limit!',
+	longText: 'What could we do with such a very long text string? We could write that novel we\'ve always talked about, or travel the world, or hike a great mountain; the sky\'s the limit! Isn\'t that nice?',
 	longPlaceHolder: 'Placeholder - What could we do with such a very long placeholder string? We could write that novel we\'ve always talked about, or travel the world, or hike a great mountain; the sky\'s the limit!',
 	longInvalidTooltip: 'You\'ve entered an invalid value. Please check the value you entered. By the way, this is a long text that can be guided when an invalid value is entered; There would be some filter to validate a value!',
 	tallText: ['नरेंद्र मोदी', 'ฟิ้  ไั  ஒ  து', 'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ', 'តន្ត្រី'],

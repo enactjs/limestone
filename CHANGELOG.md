@@ -8,9 +8,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/BodyText` styling to match the latest GUI
 - `limestone/ContextualMenuDecorator` styling to match the latest GUI
+- `limestone/DatePicker` styling to match the latest GUI
 - `limestone/DayPicker` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
+- `limestone/SwitchItem` styling to match the latest GUI
+- `limestone/WizardPanels` styling to match the latest GUI
 
 ### Fixed
 
