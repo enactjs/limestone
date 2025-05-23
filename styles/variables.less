@@ -1099,6 +1099,6 @@
 // ---------------------------------------
 @lime-wizardpanels-steps-height: 60px;
 @lime-wizardpanels-steps-margin-top: ~"calc("var(--primitive-spacing-84) ~"* -1)"; // The negative value (-84px = steps height (60px) + additional spacing between the title and steps (24px)), ensures the steps component doesn't affect the padding between title and top of the container
-@lime-wizardpanels-content-margin: var(--primitive-spacing-60) ~"calc(324px - var(--primitive-spacing-132))";
+@lime-wizardpanels-content-margin: var(--primitive-spacing-60) (324px - .extract(@lime-panel-body-padding, left)[]);
 @lime-wizardpanels-footer-margin: 0 0 var(--primitive-spacing-132) 0;
 @lime-wizardpanels-button-icon-text-gap: var(--primitive-spacing-36);
