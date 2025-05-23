@@ -355,8 +355,11 @@
 
 // Steps
 // ---------------------------------------
-@lime-steps-pageindicator-bg-color: ~"color(from" var(--semantic-color-surface-indicator) ~"srgb r g b /0.4)";
-@lime-steps-pageindicator-current-bg-color: var(--semantic-color-on-surface-main);
+@lime-steps-indicator-icon-active-color: var(--semantic-color-surface-indicator);
+@lime-steps-indicator-icon-inactive-color: ~"color(from" var(--semantic-color-surface-indicator) ~"srgb r g b / 0.4)";
+@lime-steps-step-icon-success-color: var(--semantic-color-on-background-main);
+@lime-steps-step-label-active-color: var(--semantic-color-on-background-accent);
+@lime-steps-step-label-inactive-color: var(--semantic-color-on-background-main);
 
 // Switch
 // ---------------------------------------
@@ -369,6 +372,9 @@
 @lime-switch-disabled-selected-bg-color: var(--semantic-color-surface-toggle-active);
 @lime-switch-disabled-selected-icon-bg-color: var(--semantic-color-on-surface-main);
 
+// SwitchItem
+// ---------------------------------------
+@lime-switchitem-item-selected-container-color: transparent;
 
 // TabLayout
 // ---------------------------------------
