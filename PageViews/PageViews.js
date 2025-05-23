@@ -219,7 +219,7 @@ const PageViewsBase = kind({
 
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} css={css} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} size="small" /> : null}
+					{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} size="small" /> : null}
 				</Cell>
 			);
 		},
@@ -227,7 +227,7 @@ const PageViewsBase = kind({
 			const isPrevButtonVisible = index !== 0;
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} css={css} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} size="small" /> : null}
+					{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} size="small" /> : null}
 				</Cell>
 			);
 		},
