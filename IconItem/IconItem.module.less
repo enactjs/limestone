@@ -8,19 +8,25 @@
 	position: relative;
 	transition: transform 200ms ease-in-out;
 	will-change: transform;
+	height: @lime-iconitem-height;
+	width: @lime-iconitem-width;
 
 	.content {
 		box-sizing: border-box;
 		background-size: contain;
 		border-radius: @lime-iconitem-border-radius;
 		justify-content: center;
-		height: @lime-iconitem-content-height;
-		width: @lime-iconitem-content-width;
 	}
 
 	&.bordered .content {
 		border-width: @lime-iconitem-border-width;
 		border-style: @lime-iconitem-border-style;
+	}
+
+	&.hasLabel {
+		.image {
+			height: calc(@lime-iconitem-height - @lime-iconitem-label-line-height - 24px);
+		}
 	}
 
 	.image {
@@ -38,8 +44,6 @@
 	}
 
 	.labelContainer {
-		margin: @lime-iconitem-label-container-margin;
-		height: @lime-iconitem-label-container-height;
 		width: 100%;
 	}
 

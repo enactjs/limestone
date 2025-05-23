@@ -225,8 +225,9 @@ const IconItemBase = kind({
 	},
 
 	computed: {
-		className: ({bordered, labelColor, labelOn, styler, titleOn}) => styler.append({
+		className: ({bordered, label, labelColor, labelOn, styler, titleOn}) => styler.append({
 			bordered,
+			hasLabel: !!label,
 			labelOnFocus: labelOn === 'focus',
 			titleOnFocus: titleOn === 'focus',
 			darkLabel: labelColor === 'dark'
