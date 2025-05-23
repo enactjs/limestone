@@ -48,7 +48,7 @@ export const _IconItem = (args) => {
 			style={{
 				position: 'absolute',
 				height: args['height'] !== 0 && ri.scale(args['height']),
-				width: args['height'] !== 0 && ri.scale(args['width'])
+				width: args['width'] !== 0 && ri.scale(args['width'])
 			}}
 			title={args['title']}
 			titleOn={args['titleOn']}
