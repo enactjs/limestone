@@ -29,8 +29,8 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useRef} from 'react';
 
-import Button from '../Button';
-import Skinnable from '../Skinnable';
+import Button from '../Button/Button';
+import Skinnable from '../Skinnable/Skinnable';
 
 import css from './Chip.module.less';
 
@@ -51,7 +51,7 @@ let overComponent = false;
 
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, handleDelete, icon, ref, ...rest} = chipProps;
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
 	const buttonRef = useRef(null);
@@ -64,7 +64,8 @@ const ChipBase = (props) => {
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
-			if (nextTarget !== null && nextTarget !== chipRef.current && nextTarget !== buttonRef.current) {
+			if (nextTarget !== null && nextTarget !== chipRef.current && nextTarget !== buttonRef.current.firstChild) {
+				console.log('nextTarget', nextTarget);
 				Spotlight.focus(nextTarget);
 				ev.stopPropagation();
 
@@ -84,13 +85,6 @@ const ChipBase = (props) => {
 			buttonRef.current.classList.add(css.focused);
 		}
 	}, [chipRef]);
-
-	const handleDelete = useCallback((ev) => {
-		ev.stopPropagation();
-		if (deleteButton && deleteButton.onDelete) {
-			deleteButton.onDelete(ev);
-		}
-	}, [deleteButton]);
 
 	const handleBlur = useCallback(() => {
 		if (getPointerMode() === true && !overComponent) {
@@ -132,16 +126,16 @@ const ChipBase = (props) => {
 				{children}
 			</Button>
 			{deleteButton &&
-				<Button
-					backgroundOpacity="transparent"
-					css={css}
-					className={buttonClassName}
-					disabled={disabled}
-					icon={deleteButton?.icon || 'closex'}
-					size="small"
-					onClick={handleDelete}
-					ref={buttonRef}
-				/>
+				<div className={buttonClassName} ref={buttonRef}>
+					<Button
+						backgroundOpacity="transparent"
+						css={css}
+						disabled={disabled}
+						icon={deleteButton?.icon || 'closex'}
+						size="small"
+						onClick={handleDelete}
+					/>
+				</div>
 			}
 		</div>
 	);

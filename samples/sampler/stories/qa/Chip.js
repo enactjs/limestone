@@ -1,7 +1,6 @@
-import Chip from '@enact/limestone/Chip';
+import {Chip, Chips} from '@enact/limestone/Chips';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {select} from '@enact/storybook-utils/addons/controls';
-import {Column, Row} from '@enact/ui/Layout';
 import {useState} from 'react';
 
 Chip.displayName = 'Chip';
@@ -20,7 +19,7 @@ const defaultChips = [
 
 export const WithDeleteButton = (args) => {
 	const [chips, setChips] = useState(defaultChips);
-	const Layout = args['layout'] === 'horizontal' ? Row : Column;
+	const orientation = args['orientation'];
 
 	const handleDelete = (id) => {
 		action('onDelete')();
@@ -28,9 +27,9 @@ export const WithDeleteButton = (args) => {
 	};
 
 	return (
-		<Layout inline>
+		<Chips orientation={orientation}>
 			{chips.map(({id, icon, children}, index) => {
-				const deleteButton = {position: Layout === Row ? 'bottom' : 'right', onDelete: () => handleDelete(id)};
+				const deleteButton = {position: orientation === 'vertical' ? 'right' : 'bottom', onDelete: () => handleDelete(id)};
 				return (
 					<Chip
 						key={index}
@@ -42,10 +41,10 @@ export const WithDeleteButton = (args) => {
 					</Chip>
 				);
 			})}
-		</Layout>
+		</Chips>
 	);
 };
 
-select('layout', WithDeleteButton, ['horizontal', 'vertical']);
+select('orientation', WithDeleteButton, ['horizontal', 'vertical']);
 
 WithDeleteButton.storyName = 'with delete button';
