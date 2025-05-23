@@ -179,13 +179,14 @@ const TabGroupBase = kind({
 		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
-		scrollerConfig: ({spotlightId}) => Spotlight.set(spotlightId, spotlightContainerConfig),
+		scrollerConfig: ({spotlightId}) => Spotlight.set(`${spotlightId}_scroller`, spotlightContainerConfig),
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
 	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
+		delete rest.scrollerConfig;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
@@ -223,8 +224,7 @@ const TabGroupBase = kind({
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
-			spotlightId: spotlightId,
-			spotlightDisabled: spotlightDisabled,
+			spotlightId: `${spotlightId}_scroller`,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
