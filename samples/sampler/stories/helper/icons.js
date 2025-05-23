@@ -189,7 +189,6 @@ export const settingsIcons = [
 	'musicsrc',
 	'mycontents',
 	'mypage',
-	'newfeature',
 	'onnow',
 	'pagewidth',
 	'pcnotconnected',

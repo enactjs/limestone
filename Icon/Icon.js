@@ -161,7 +161,7 @@ const IconBase = kind({
  * arrowhookleft
  * arrowhookright
  * ellipsis
- * check
+ * checkmark
  * triangleup
  * triangleright
  * triangledown
@@ -287,7 +287,6 @@ const IconBase = kind({
  * sound
  * wisa
  * demooptions
- * newfeature
  * youtube
  * ostsearch
  * shopping
@@ -319,7 +318,6 @@ const IconBase = kind({
  * help
  * share
  * files
- * quickstart
  * scheduler
  * recording
  * guide

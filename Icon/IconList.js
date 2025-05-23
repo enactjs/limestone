@@ -7,7 +7,7 @@ export default {
 	arrowhookleft     : 0x021A9,  // LeftArrowHook
 	arrowhookright    : 0x021AA,  // RightArrowHook
 	ellipsis          : 0x022EF,  // ellipsis
-	check             : 0x02713,  // checkmark
+	checkmark         : 0x02713,  // checkmark
 	triangleup        : 0x025B2,  // triagup
 	triangleright     : 0x025B6,  // triagright
 	triangledown      : 0x025BC,  // triagdown
@@ -59,7 +59,6 @@ export default {
 	star              : 0x0F0028, // star_full
 	starhalf          : 0x0F0029, // star_half
 	starhollow        : 0x0F002A, // star_empty
-	gear              : 0x0F002B, // gear
 	plug              : 0x0F002C, // input
 	lock              : 0x0F002D, // lock
 	music             : 0x0F0062, // music
@@ -68,7 +67,6 @@ export default {
 	verticalellipsis  : 0x0F00B5, // vertical_ellipsis
 	arrowcurveright   : 0x0F00B6, // arrow_curve_right
 	picture           : 0x0F00BA, // picture
-	home              : 0x0F00BB, // home
 	liverecord        : 0x0F00C1, // live_record
 	liveplay          : 0x0F00C2, // live_play
 	trashlock         : 0x0F00C7, // trash_lock
@@ -134,7 +132,6 @@ export default {
 	sound             : 0x0F013D, // sound
 	wisa              : 0x0F013E, // wisa
 	demooptions       : 0x0F013F, // demo_options
-	newfeature        : 0x0F0140, // new_feature
 	youtube           : 0x0F0141, // youtube
 	ostsearch         : 0x0F0142, // ostsearch
 	shopping          : 0x0F0143, // shopping
@@ -166,7 +163,6 @@ export default {
 	help              : 0x0F015E, // help
 	share             : 0x0F015F, // share
 	files             : 0x0F0160, // files
-	quickstart        : 0x0F0161, // quickstart
 	scheduler         : 0x0F0162, // scheduler
 	recording         : 0x0F0163, // recording
 	guide             : 0x0F0164, // guide
@@ -193,6 +189,8 @@ export default {
 	profile           : 0x0F0179, // profile
 	profilecheck      : 0x0F017A, // profilecheck
 	mediaserver       : 0x0F017B, // mediaserver
+	home              : 0x0F017C, // home
+	gear              : 0x0F017D, // gear
 	wallpaper         : 0x0F017E, // wallpaper
 	spanner           : 0x0F0180, // spanner
 	bluetooth         : 0x0F0181, // bluetooth
