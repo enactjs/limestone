@@ -131,11 +131,11 @@
 			margin: @lime-header-standard-subtitle-margin;
 		}
 
-		&.slotBefore .slotBefore {
+		&.slotBefore:not(.centered) .slotBefore {
 			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
 		}
 
-		&.slotAfter .slotAfter {
+		&.slotAfter:not(.centered) .slotAfter {
 			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
 		}
 	}
@@ -167,11 +167,11 @@
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 
-		&.slotBefore .slotBefore {
+		&.slotBefore:not(.centered) .slotBefore {
 			.margin-start-end(0, @lime-header-compact-slotbefore-margin-end);
 		}
 
-		&.slotAfter .slotAfter {
+		&.slotAfter:not(.centered) .slotAfter {
 			.margin-start-end(@lime-header-compact-slotafter-margin-start, 0);
 		}
 	}
