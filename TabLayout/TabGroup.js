@@ -9,7 +9,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 
 import $L from '../internal/$L';
 import DebounceDecorator from '../internal/DebounceDecorator';
@@ -189,6 +189,13 @@ const TabGroupBase = kind({
 		delete rest.scrollerConfig;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useEffect(() => {
+			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
+			if (selectedTab) {
+				Spotlight.focus(selectedTab); // focus selected tab on first render
+			}
+		}, []);
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
@@ -216,19 +223,19 @@ const TabGroupBase = kind({
 		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
 		const useScroller = (children.length > maxTabs);
-		const groupProps = useScroller ? null : {
+		const groupProps = (isHorizontal && useScroller) ? null : {
 			spotlightId: spotlightId,
 			spotlightDisabled: spotlightDisabled
 		};
 		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
-			hoverToScroll: true,
+			hoverToScroll: !collapsed,
 			spotlightId: `${spotlightId}_scroller`,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
-		const GroupComponent = useScroller ? Group : GroupContainer;
+		const GroupComponent = (isHorizontal && useScroller) ? Group : GroupContainer;
 
 		return (
 			<Component
