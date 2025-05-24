@@ -239,10 +239,6 @@
 @lime-card-caption-font-weight: 600;
 @lime-card-label-font-weight: 400;
 
-// Date and Time Picker
-@lime-datecomponentpicker-margin: 24px;
-@lime-timepicker-colon-margin: 0 6px;
-
 // Heading
 @lime-heading-line-height: 1.25em;
 @lime-heading-font-style: normal;
@@ -303,7 +299,7 @@
 
 // Picker
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
-@lime-picker-font-weight: 600;
+@lime-picker-font-weight: var(--primitive-font-weight-semibold);
 
 // ---------------------------------------
 // Component Rules
@@ -453,6 +449,11 @@
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
 @lime-contextualpopup-offset-small: 36px;
+
+// Date and Time Picker
+@lime-datecomponentpicker-margin: 0 24px;
+@lime-datetime-heading-margin: 0 0 var(--primitive-spacing-132);
+@lime-timepicker-colon-margin: 0 var(--primitive-spacing-6);
 
 // Dropdown
 // ---------------------------------------
