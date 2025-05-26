@@ -190,14 +190,6 @@ const TabGroupBase = kind({
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		useEffect(() => {
-			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
-			if (selectedTab && !collapsed) {
-				Spotlight.focus(selectedTab); // focus selected tab on first render
-			}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
-		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({
 			buttonSize: size,
 			css,
@@ -246,6 +238,15 @@ const TabGroupBase = kind({
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
 		const GroupComponent = (isHorizontal && useScroller) ? Group : GroupContainer;
+
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		useEffect(() => {
+			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
+			if (selectedTab && isHorizontal && useScroller) {
+				Spotlight.focus(selectedTab); // focus selected tab on first render
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, []);
 
 		return (
 			<Component
