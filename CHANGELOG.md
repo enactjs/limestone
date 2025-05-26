@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/TabLayout` prop `primaryIndex` to focus primary tab when pressing back key from other tabs or initial rendering
+
 ### Changed
 
 - `limestone/BodyText` styling to match the latest GUI
