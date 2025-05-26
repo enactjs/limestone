@@ -135,7 +135,7 @@ const CheckboxItemBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'checkboxItem',
-		publicClassNames: ['checkboxItem']
+		publicClassNames: ['checkboxItem', 'bg', 'selected']
 	},
 
 	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (

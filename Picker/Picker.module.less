@@ -3,6 +3,7 @@
 
 @import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/skin.less";
 
 .title {
 	.margin-start-end(@lime-picker-title-margin-left, .extract(@lime-heading-margin, right)[]);
@@ -14,4 +15,12 @@
 		padding-bottom: 0;
 		margin-bottom: 0;
 	}
+}
+
+.heading {
+	.applySkins({
+		&.tiny {
+			color: @lime-picker-label-color;
+		}
+	})
 }

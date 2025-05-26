@@ -141,6 +141,10 @@
 @lime-contextualpopup-bg-color: var(--semantic-color-background-overlay-default);
 @lime-contextualpopup-shadow: 0 24px 60px @lime-shadow-color;
 
+// DateTime
+// ---------------------------------------
+@lime-datetime-label-color: @lime-heading-label-main-color;
+
 // Dropdown
 // ---------------------------------------
 @lime-dropdown-title-text-color: var(--semantic-color-on-surface-sub);
@@ -170,9 +174,10 @@
 
 // Heading
 // ---------------------------------------
-@lime-heading-text-color: var(--semantic-color-on-background-main);
-@lime-heading-border-color: @lime-heading-text-color;
-@lime-heading-subtitle-text-color: var(--semantic-color-on-background-sub);
+@lime-heading-label-main-color: var(--semantic-color-on-background-main);
+@lime-heading-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-heading-label-tiny-color: var(--semantic-color-on-background-heading);
+@lime-heading-border-color: @lime-heading-label-main-color;
 
 // HolePunchScrim
 // ---------------------------------------
@@ -290,9 +295,10 @@
 
 // ProgressButton
 // ---------------------------------------
-@lime-progressbutton-bar-color: ~"color(from" var(--semantic-color-on-surface-white) ~"srgb r g b / 0.2)";
-@lime-progressbutton-bar-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.2)";
-@lime-progressbutton-focus-fill-color: var(--semantic-color-on-surface-main-focused);
+@lime-progressbutton-track-color: ~"color(from" var(--semantic-color-on-surface-white) ~"srgb r g b / 0.2)";
+@lime-progressbutton-track-active-color: var(--semantic-color-on-surface-main);
+@lime-progressbutton-track-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.2)";
+@lime-progressbutton-track-active-focused-color: var(--semantic-color-on-surface-main-focused);
 
 // RadioItem
 // ---------------------------------------
@@ -353,8 +359,11 @@
 
 // Steps
 // ---------------------------------------
-@lime-steps-pageindicator-bg-color: ~"color(from" var(--semantic-color-surface-indicator) ~"srgb r g b /0.4)";
-@lime-steps-pageindicator-current-bg-color: var(--semantic-color-on-surface-main);
+@lime-steps-indicator-icon-active-color: var(--semantic-color-surface-indicator);
+@lime-steps-indicator-icon-inactive-color: ~"color(from" var(--semantic-color-surface-indicator) ~"srgb r g b / 0.4)";
+@lime-steps-step-icon-success-color: var(--semantic-color-on-background-main);
+@lime-steps-step-label-active-color: var(--semantic-color-on-background-accent);
+@lime-steps-step-label-inactive-color: var(--semantic-color-on-background-main);
 
 // Switch
 // ---------------------------------------
@@ -367,6 +376,9 @@
 @lime-switch-disabled-selected-bg-color: var(--semantic-color-surface-toggle-active);
 @lime-switch-disabled-selected-icon-bg-color: var(--semantic-color-on-surface-main);
 
+// SwitchItem
+// ---------------------------------------
+@lime-switchitem-item-selected-container-color: transparent;
 
 // TabLayout
 // ---------------------------------------

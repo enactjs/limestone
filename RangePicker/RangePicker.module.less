@@ -2,6 +2,7 @@
 //
 @import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/skin.less";
 
 .rangePicker {
 	.valueWrapper {
@@ -27,4 +28,12 @@
 		padding-bottom: 0;
 		margin-bottom: 0;
 	}
+}
+
+.heading {
+	.applySkins({
+		&.tiny {
+			color: @lime-picker-label-color;
+		}
+	})
 }
