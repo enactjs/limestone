@@ -53,12 +53,7 @@
 	}
 
 	.tabs {
-		border-radius: @lime-popuptablayout-tabs-border-radius;
 		margin-right: @lime-popuptablayout-tabs-content-spacing;
-	}
-
-	.content .panels::before {
-		border-radius: @lime-popuptablayout-content-border-radius;
 	}
 
 	.tabsExpanded {
@@ -79,6 +74,14 @@
 	// Skin colors
 	.applySkins({
 		background-color: transparent;
+
+		.tabs {
+			border-radius: @lime-popuptablayout-tabs-border-radius;
+		}
+
+		.content .panels::before {
+			border-radius: @lime-popuptablayout-content-border-radius;
+		}
 
 		.tabs,
 		.content .panels::before {
