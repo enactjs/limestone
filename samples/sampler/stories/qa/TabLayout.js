@@ -18,6 +18,15 @@ const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
 const tabsWithIcons = [
 	{title: 'Home', icon: 'home'},
 	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
 	{title: 'Item', icon: 'trash'}
 ];
 
@@ -553,6 +562,34 @@ select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'hori
 
 WithScroller.storyName = 'With Scroller';
 WithScroller.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithPrimaryIndex = (args) => {
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With primary index" />
+			<TabLayout
+				orientation={args['orientation']}
+				primaryIndex={args['primaryIndex']}
+			>
+				{tabsWithIcons.map((tab, i) => (
+					<TabLayout.Tab title={tab.title} icon={tab.icon} key={`tab${i}`}>
+						<Button>Tab {i + 1}</Button>
+					</TabLayout.Tab>
+				))}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+select('orientation', WithPrimaryIndex, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('primaryIndex', WithPrimaryIndex, {groupId: 'TabLayout'}, {min: 0, max: 2, step: 1}, 0);
+
+WithPrimaryIndex.storyName = 'With primary index';
+WithPrimaryIndex.parameters = {
 	props: {
 		noPanel: true
 	}

@@ -88,8 +88,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({buttonSize, children, collapsed, css, orientation, size, ...rest}) => {
-		delete rest.index;
+	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, size, ...rest}) => {
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -105,7 +104,8 @@ const TabBase = kind({
 			css,
 			focusEffect: 'static',
 			minWidth: false,
-			role: 'tab'
+			role: 'tab',
+			spotlightId: index === primaryIndex ? primaryTabSpotlightId : null
 		};
 
 		switch (orientation) {
@@ -184,10 +184,11 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 		delete rest.scrollerConfig;
 
+		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		useEffect(() => {
 			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
@@ -197,7 +198,15 @@ const TabGroupBase = kind({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
+		const itemProps = useMemo(() => ({
+			buttonSize: size,
+			css,
+			collapsed,
+			orientation,
+			primaryIndex: collapsed ? null : primaryIndex,
+			primaryTabSpotlightId,
+			size: tabSize
+		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
