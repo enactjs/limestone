@@ -424,7 +424,7 @@ describe('TabLayout specs', () => {
 		expect(tab.scrollIntoView).toHaveBeenCalled();
 	});
 
-	test('should use \'primaryIndex\` to determine the default selected tab', () => {
+	test('should use \'primaryIndex\' to determine the default selected tab', () => {
 		render(
 			<TabLayout
 				data-testid="tabLayout"
