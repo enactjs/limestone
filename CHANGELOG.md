@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Icon` supported icon list, adding new icons
 - `limestone/TabLayout` prop `primaryIndex` to focus primary tab when pressing back key from other tabs or initial rendering
 
 ### Changed
