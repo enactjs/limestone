@@ -27,8 +27,8 @@
     "@enact/limestone": "../../",
     "@enact/spotlight": "^5.0.0-beta.1",
     "@enact/ui": "^5.0.0-beta.1",
-    "ilib": "^14.20.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "ilib": "^14.21.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   }
 }

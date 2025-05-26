@@ -25,17 +25,22 @@
 	.applySkins({
 		.progressBar.radial {
 			.bar {
-				border-color: @lime-progressbutton-bar-color;
+				border-color: @lime-progressbutton-track-color;
+
+				.fill {
+					border-color: @lime-progressbutton-track-active-color;
+				}
 			}
 		}
 
 		.focus({
 			.progressBar.radial {
 				.bar {
-					border-color: @lime-progressbutton-bar-focused-color;
-				}
-				.fill {
-					border-color: @lime-progressbutton-focus-fill-color;
+					border-color: @lime-progressbutton-track-focused-color;
+
+					.fill {
+						border-color: @lime-progressbutton-track-active-focused-color;
+					}
 				}
 			}
 		});

@@ -262,6 +262,12 @@
 	a:active {color: inherit; text-decoration:none;}
 }
 
+.lime-body-text-small() {
+	font-size: @lime-body-small-font-size;
+
+	.enact-locale-line-height(@lime-body-small-line-height; @lime-tallglyph-body-line-height);
+}
+
 .lime-large-button-text() {
 	.lime-font(@lime-button-font-family; @lime-non-latin-button-font-family; {
 		font-size: @lime-non-latin-button-large-font-size;

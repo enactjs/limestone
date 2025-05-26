@@ -59,6 +59,7 @@
 		font-size: @lime-heading-small-font-size;
 	}
 	&.tiny {
+		margin: @lime-heading-margin-tiny;
 		font-family: @lime-heading-tiny-font-family;
 		font-weight: @lime-heading-tiny-font-weight;
 		font-size: @lime-heading-tiny-font-size;
@@ -81,7 +82,7 @@
 		min-height: (@lime-heading-spacing-medium - @lime-heading-border-width);
 	}
 	&.smallSpacing {
-		margin-bottom: (@lime-heading-spacing-small - @lime-heading-border-width);
+		margin-bottom: @lime-heading-spacing-small-margin-bottom;
 		min-height: (@lime-heading-spacing-small - @lime-heading-border-width);
 	}
 	&.noneSpacing {
@@ -91,10 +92,14 @@
 
 	// Skin colors
 	.applySkins({
-		color: @lime-heading-text-color;
+		color: @lime-heading-label-main-color;
+
+		&.tiny {
+			color: @lime-heading-label-tiny-color;
+		}
 
 		&.subtitle {
-			color: @lime-heading-subtitle-text-color;
+			color: @lime-heading-label-sub-color;
 		}
 
 		&.showLine {
