@@ -42,7 +42,7 @@ export const _Heading = (args) => (
 
 select('marqueeOn', _Heading, prop.marqueeOn, Config);
 boolean('showLine', _Heading, Config);
-select('size', _Heading, prop.size, Config, 'medium');
+select('size', _Heading, prop.size, Config, 'tiny');
 select('spacing', _Heading, prop.spacing, Config);
 text('children', _Heading, Config, 'Heading text');
 
