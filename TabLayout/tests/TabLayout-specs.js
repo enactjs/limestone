@@ -423,4 +423,29 @@ describe('TabLayout specs', () => {
 
 		expect(tab.scrollIntoView).toHaveBeenCalled();
 	});
+
+	test('should use \'primaryIndex\` to determine the default selected tab', () => {
+		render(
+			<TabLayout
+				data-testid="tabLayout"
+				primaryIndex={1}
+			>
+				<Tab icon="home" title="Test1">
+					<div>Test1Content</div>
+				</Tab>
+				<Tab icon="gear" title="Test2">
+					<div>Test2Content</div>
+				</Tab>
+				<Tab icon="playcircle" title="Test3">
+					<div>Test3Content</div>
+				</Tab>
+			</TabLayout>
+		);
+
+		const selectedTab = screen.getByRole('tab', {name: 'Test2'});
+		expect(selectedTab).toHaveClass('selected');
+
+		const selectedContent = screen.getByText('Test2Content');
+		expect(selectedContent).toBeVisible();
+	});
 });
