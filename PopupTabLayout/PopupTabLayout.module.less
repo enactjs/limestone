@@ -5,7 +5,7 @@
 @import "../styles/skin.less";
 
 // Module level variables, for use only in this file
-@popupTabLayout-max-height: ~"calc(100vh - 2 * "@lime-popuptablayout-margin~")";
+@popupTabLayout-max-height: ~"calc(100vh -" (.extract(@lime-popuptablayout-margin, top)[] + .extract(@lime-popuptablayout-margin, bottom)[])~")";
 
 .popupTabLayout {
 	// Override Popup (more precedence)
@@ -53,12 +53,12 @@
 	}
 
 	.tabs {
-		border-radius: @lime-popuptablayout-tabs-radius-container;
+		border-radius: @lime-popuptablayout-tabs-border-radius;
 		margin-right: @lime-popuptablayout-tabs-content-spacing;
 	}
 
 	.content .panels::before {
-		border-radius: @lime-popuptablayout-panels-radius-overlay;
+		border-radius: @lime-popuptablayout-content-border-radius;
 	}
 
 	.tabsExpanded {
@@ -80,31 +80,20 @@
 	.applySkins({
 		background-color: transparent;
 
-		.tabs {
-			box-shadow: @lime-popuptablayout-shadow;
-		}
-
 		.tabs,
 		.content .panels::before {
-			outline-color: @lime-popuptablayout-stroke-overlay-default;
-			outline-width: @lime-popuptablayout-overlay-outline-width;
-			outline-style: @lime-popuptablayout-overlay-outline-style;
-			outline-offset: -@lime-popuptablayout-overlay-outline-width;
+			background-color: @lime-popuptablayout-content-background-color;
+			box-shadow: @lime-popuptablayout-shadow;
+			outline-color: @lime-overlay-outline-color;
+			outline-width: @lime-overlay-outline-width;
+			outline-style: @lime-overlay-outline-style;
+			outline-offset: -@lime-overlay-outline-width;
 		}
 
 		:global(.noAnimation) & {
 			.tabs,
 			.content .panels::before {
 				box-shadow: none;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTranslucent,
-		&.scrimTransparent {
-			.tabs,
-			.content .panels::before {
-				background-color: @lime-popuptablayout-background-overlay-default;
 			}
 		}
 	});
