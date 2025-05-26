@@ -194,6 +194,7 @@ const TabGroupBase = kind({
 			if (selectedTab && !collapsed) {
 				Spotlight.focus(selectedTab); // focus selected tab on first render
 			}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
