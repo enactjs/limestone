@@ -27,6 +27,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
 - `limestone/Input.InputField` to receive focus properly when navigating with directional keys
 - `limestone/Input.InputField` to receive focus properly when not contained in the same SpotlightContainer
+- `limestone/TabLayout` to ensure focus visibility when focus is restored on the tab scroller.
 
 ## [1.0.0-beta.1] - 2025-04-29
 
