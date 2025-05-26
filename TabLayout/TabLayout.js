@@ -152,15 +152,6 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
-		 * The index of the main tab in the tabs.
-		 *
-		 * @type {Number}
-		 * @default null
-		 * @public
-		 */
-		mainTabIndex: PropTypes.number,
-
-		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -204,6 +195,18 @@ const TabLayoutBase = kind({
 		 * @public
 		 */
 		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+
+		/**
+		 * The index of the primary tab.
+		 * When this prop is set, the initial focus will be on the primary tab when rendered.
+		 * Also, when pressing the back key from other tabs, the focus will be moved to the primary tab.
+		 * If the `primaryIndex` is not provided, the initial focus will default to the first tab during the initial render.
+		 *
+		 * @type {Number}
+		 * @default null
+		 * @public
+		 */
+		primaryIndex: PropTypes.number,
 
 		/**
 		 * Indicates the content's text direction is right-to-left.
@@ -261,7 +264,7 @@ const TabLayoutBase = kind({
 			}
 		},
 		index: null,
-		mainTabIndex: null,
+		primaryIndex: null,
 		orientation: 'vertical',
 		type: 'normal'
 	},
@@ -298,7 +301,7 @@ const TabLayoutBase = kind({
 		},
 		onKeyUp: (ev, props) => {
 			const {keyCode, target} = ev;
-			const {anchorTo, collapsed, orientation, 'data-spotlight-id': spotlightId, rtl, type, mainTabIndex} = props;
+			const {anchorTo, collapsed, orientation, primaryIndex, 'data-spotlight-id': spotlightId, rtl, type} = props;
 			const popupPanelRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${popupTabLayoutComponentCss.panel}`);
 			const tabLayoutContentRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${componentCss.content}`);
 			const tabsExpandedSpotlightId = `${spotlightId}-tabs-expanded`;
@@ -310,8 +313,8 @@ const TabLayoutBase = kind({
 					}
 					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}']`);
 					ev.stopPropagation();
-				} else if (mainTabIndex !== null) {
-					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}-main-tab']`);
+				} else if (primaryIndex !== null) {
+					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}-primary-tab']`);
 					ev.stopPropagation();
 				}
 			} else if (is('enter')(keyCode) && !collapsed && document.querySelector(`[data-spotlight-id='${tabsExpandedSpotlightId}']`).contains(target) && target.tagName !== 'INPUT') {
@@ -392,10 +395,9 @@ const TabLayoutBase = kind({
 			...style,
 			'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
 		}),
-		index: ({index, mainTabIndex}) => {
-			// When tablayout is rendered with no index, it will be set to the mainTabIndex
-			// if it is defined. Otherwise, it will be set to 0.
-			return index === null ? mainTabIndex || 0 : index;
+		index: ({index, primaryIndex}) => {
+			// If `index` is not provided, it defaults to `primaryIndex` or 0.
+			return index ?? primaryIndex ?? 0;
 		},
 		tabOrientation: ({orientation}) => orientation === 'vertical' ? 'horizontal' : 'vertical',
 		tabs: ({children}) => {
@@ -408,7 +410,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, mainTabIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -422,7 +424,7 @@ const TabLayoutBase = kind({
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
-			mainTabIndex,
+			primaryIndex,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,

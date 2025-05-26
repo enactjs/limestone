@@ -83,7 +83,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({buttonSize, index, children, collapsed, css, mainTabIndex, mainTabSpotlightId, orientation, size, ...rest}) => {
+	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, size, ...rest}) => {
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -100,7 +100,7 @@ const TabBase = kind({
 			focusEffect: 'static',
 			minWidth: false,
 			role: 'tab',
-			spotlightId: index === mainTabIndex ? mainTabSpotlightId : null
+			spotlightId: index === primaryIndex ? primaryTabSpotlightId : null
 		};
 
 		switch (orientation) {
@@ -190,20 +190,20 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, mainTabIndex, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
-		const mainTabSpotlightId = `${spotlightId}-main-tab`;
+		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const itemProps = useMemo(() => ({
 			buttonSize: size,
 			css,
 			collapsed,
 			orientation,
-			size: tabSize,
-			mainTabIndex: collapsed ? null : mainTabIndex,
-			mainTabSpotlightId
-		}), [css, collapsed, mainTabIndex, mainTabSpotlightId, orientation, size, tabSize]);
+			primaryIndex: collapsed ? null : primaryIndex,
+			primaryTabSpotlightId,
+			size: tabSize
+		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size, tabSize]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
