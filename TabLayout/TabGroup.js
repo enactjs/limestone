@@ -64,13 +64,7 @@ const TabBase = kind({
 			forward('onFocus'),
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
-			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
-				if (orientation === 'horizontal') {
-					ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
-				}
-
-				return {selected: index};
-			})
+			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
 		)
 	},
 
@@ -131,7 +125,7 @@ const TabBase = kind({
 
 const Tab = Toggleable({prop: 'stopped', activate: 'onBlur', deactivate: 'onFocus'}, Skinnable(TabBase));
 
-const GroupComponent = SpotlightContainerDecorator(
+const GroupContainer = SpotlightContainerDecorator(
 	{
 		// using default-element so we always land on the selected tab in order to avoid changing
 		// the view when re-entering the tab group
@@ -225,9 +219,22 @@ const TabGroupBase = kind({
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: true,
-			verticalScrollbar: 'hidden'
+			verticalScrollbar: 'hidden',
+			spotlightId,
+			spotlightDisabled
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
+		const GroupComponent = useScroller ? Group : GroupContainer;
+		const GroupComponentProps = useScroller ? null : {
+			spotlightId,
+			spotlightDisabled
+		};
+		Spotlight.set(spotlightId, {
+			// using default-element so we always land on the selected tab in order to avoid changing
+			// the view when re-entering the tab group
+			defaultElement: `.${componentCss.selected}`,
+			enterTo: 'default-element'
+		});
 
 		return (
 			<Component
@@ -260,8 +267,7 @@ const TabGroupBase = kind({
 							select="radio"
 							selected={selectedIndex}
 							selectedProp="selected"
-							spotlightId={spotlightId}
-							spotlightDisabled={spotlightDisabled}
+							{...GroupComponentProps}
 						>
 							{children}
 						</GroupComponent>
