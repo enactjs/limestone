@@ -191,7 +191,7 @@ const TabGroupBase = kind({
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		useEffect(() => {
 			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
-			if (selectedTab) {
+			if (selectedTab && !collapsed) {
 				Spotlight.focus(selectedTab); // focus selected tab on first render
 			}
 		}, []);
