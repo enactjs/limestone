@@ -90,7 +90,7 @@ describe('Button', () => {
 
 	describe('with icon', function () {
 		test('should have check icon when specified', () => {
-			render(<Button icon="check">abc</Button>);
+			render(<Button icon="checkmark">abc</Button>);
 			const icon = screen.getByText('✓');
 
 			expect(icon).toBeInTheDocument();

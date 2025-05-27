@@ -18,11 +18,11 @@ const prop = {
 	},
 	buttons: {
 		'no buttons': null,
-		'1 button': <Button size="small" icon="ellipsis" />,
+		'1 button': <Button icon="ellipsis" />,
 		'2 buttons': (
 			<Fragment>
-				<Button size="small" icon="search" />
-				<Button size="small" icon="ellipsis" />
+				<Button icon="search" />
+				<Button icon="ellipsis" />
 			</Fragment>
 		)
 	},
