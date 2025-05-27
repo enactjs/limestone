@@ -17,6 +17,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Heading` prop `size` default value to `tiny` and styling to match the latest GUI
 - `limestone/Panels` styling to match the latest GUI
 - `limestone/Panels.Header` styling to match the latest GUI
+- `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI

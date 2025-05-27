@@ -89,7 +89,7 @@
 // ---------------------------------------
 @lime-component-spacing: 36px;
 @lime-component-spacing-bottom: 30px;
-@lime-overlay-outline-width: 0.0625rem; // 3px
+@lime-overlay-outline-width: 0.021rem; // 1px
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
 @lime-common-circular-corners: 9000px; // A value large enough that when applied to any node via border-radius produces a completely round corner
@@ -882,11 +882,12 @@
 
 // PopupTabLayout
 // ---------------------------------------
-@lime-popuptablayout-margin: 120px 60px;
-@lime-popuptablayout-tabs-content-spacing: 36px;
-@lime-popuptablayout-tabs-content-border-radius: @lime-popup-border-radius;
+@lime-popuptablayout-margin: 60px auto 132px 60px;
+@lime-popuptablayout-tabs-border-radius: var(--semantic-radius-container);
+@lime-popuptablayout-tabs-content-spacing: var(--primitive-spacing-36);
+@lime-popuptablayout-content-border-radius: var(--semantic-radius-popup);
 @lime-popuptablayout-content-margin: 0;
-@lime-popuptablayout-panel-body-padding: @lime-panel-body-padding-top (108px - @lime-component-spacing - @lime-spotlight-outset) (78px - @lime-component-spacing-bottom);
+@lime-popuptablayout-panel-body-padding: var(--primitive-spacing-60);
 
 // ProgressBar
 // ---------------------------------------
