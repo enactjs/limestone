@@ -19,7 +19,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Panels` styling to match the latest GUI
 - `limestone/Panels.Header` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
-- `limestone/QuickGuidePanels` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/SwitchItem` styling to match the latest GUI
