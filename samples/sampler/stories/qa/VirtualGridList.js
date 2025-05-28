@@ -72,6 +72,12 @@ const updateDataSize = (dataSize) => {
 
 updateDataSize(defaultDataSize);
 
+const delayOnKeyDown = (ev) => {
+	setTimeout(() => {
+		return action('onKeyDown')(ev);
+	}, 300);
+};
+
 let itemList = [];
 for (let i = 0; i < 60; i++) {
 	itemList.push('item' + i);
@@ -194,7 +200,7 @@ export const HorizontalVirtualGridList = (args) => (
 		}}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -246,7 +252,7 @@ export const HorizontalSquaredVirtualGridList = (args) => (
 		}}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -319,7 +325,7 @@ class SnapToCenterVGL extends Component {
 					minWidth: ri.scale(args['minWidth']),
 					minHeight: ri.scale(args['minHeight'])
 				}}
-				onKeyDown={action('onKeyDown')}
+				onKeyDown={delayOnKeyDown}
 				onScrollStart={action('onScrollStart')}
 				onScrollStop={action('onScrollStop')}
 				snapToCenter

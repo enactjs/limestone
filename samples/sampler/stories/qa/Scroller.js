@@ -28,6 +28,12 @@ import css from './Scroller.module.less';
 add('cancel', 27);
 const isCancel = is('cancel');
 
+const delayOnKeyDown = (ev) => {
+	setTimeout(() => {
+		return action('onKeyDown')(ev);
+	}, 300);
+};
+
 const Config = mergeComponentMetadata('Scroller', UiScrollerBasic, Scroller);
 
 const itemData = [];
@@ -44,12 +50,6 @@ const prop = {
 	},
 	scrollbarOption: ['auto', 'hidden', 'visible'],
 	scrollModeOption: ['native', 'translate']
-};
-
-const delayOnKeyDown = (ev) => {
-	setTimeout(() => {
-		return action('onKeyDown')(ev);
-	}, 300);
 };
 
 class ScrollerResizableItem extends Component {
