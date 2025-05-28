@@ -159,15 +159,19 @@
 
 // FlexiblePopupPanels
 // ---------------------------------------
-@lime-flexiblepopuppanels-panel-bg-color: @lime-popup-bg-color;
+@lime-flexiblepopuppanels-panel-bg-color: var(--semantic-color-background-overlay-default);
 @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-shadow-color;
+@lime-flexiblepopuppanels-outline-color: var(--semantic-color-stroke-overlay-default);
+@lime-flexiblepopuppanels-outline-style: solid;
+@lime-flexiblepopuppanels-panel-shadow: 0 36px 48px 0 @lime-shadow-color;;
 
 // FormCheckboxItem
 // ---------------------------------------
-@lime-formcheckboxitem-disabled-text-color: inherit;
-@lime-formcheckboxitem-disabled-focus-text-color: @lime-formcheckboxitem-disabled-text-color;
-@lime-formcheckboxitem-focus-text-color: var(--semantic-color-on-background-main);
+@lime-formcheckboxitem-label-main-disabled-color: inherit;
+@lime-formcheckboxitem-label-main-disabled-focused-color: @lime-formcheckboxitem-label-main-disabled-color;
+@lime-formcheckboxitem-label-main-focused-color: var(--semantic-color-on-background-main);
+@lime-formcheckboxitem-label-sub-focused-color: var(--semantic-color-on-background-sub);
+@lime-formcheckboxitem-item-selected-container-color: transparent;
 
 // Header
 // ---------------------------------------
