@@ -96,7 +96,7 @@
 	&.horizontal {
 		@h-gap: (@lime-slider-knob-width / 2);
 		@v-gap: @lime-slider-knob-height - @lime-slider-bar-height;
-		width: auto;
+		width: @lime-slider-bar-horizontal-width;
 		padding: @v-gap @h-gap;
 
 		.fill,
@@ -118,7 +118,8 @@
 		@h-gap: (@lime-slider-knob-height - @lime-slider-bar-height);
 		@v-gap: (@lime-slider-knob-width / 2);
 		padding: @v-gap @h-gap;
-		min-height: 240px;
+		min-height: @lime-slider-bar-vertical-min-height;
+		height: @lime-slider-bar-vertical-height;
 		display: inline-block;
 		vertical-align: top;
 
@@ -144,7 +145,7 @@
 		}
 
 		.fill {
-			background-color: @lime-slider-fill-bg-color;
+			background-color: @lime-slider-track-active-color;
 		}
 
 		.load {
@@ -152,28 +153,28 @@
 		}
 
 		.knob::before {
-			background-color: @lime-slider-knob-bg-color;
-			border-color: @lime-slider-knob-border-color;
+			background-color: @lime-slider-handle-color;
+			border-color: @lime-slider-handle-border-color;
 		}
 
 		.focus({
 			background-color: transparent;
 
 			.fill {
-				background-color: @lime-slider-focus-fill-bg-color;
+				background-color: @lime-slider-track-active-color;
 			}
 
 			.knob::before {
-				background-color: @lime-slider-focus-knob-bg-color;
-				border-color: @lime-slider-focus-knob-border-color;
+				background-color: @lime-slider-handle-focused-color;
+				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-focus-knob-shadow;
-				transform: @knob-transform-resting;
+				transform: @knob-transform-active;
 			}
 
 			&.active,
 			&.pressed {
 				.fill {
-					background-color: @lime-slider-active-fill-bg-color;
+					background-color: @lime-slider-track-active-focused-color;
 				}
 
 				.knob::before {
@@ -182,13 +183,7 @@
 			}
 
 			.disabled({
-				.bar {
-					opacity: @lime-slider-disabled-bar-opacity;
-				}
-
 				.knob::before {
-					background-color: @lime-slider-disabled-focus-knob-bg-color;
-					border-color: @lime-slider-focus-knob-border-color;
 					transform: @knob-transform-resting;
 				}
 			});
@@ -196,12 +191,12 @@
 
 		:global(.spotlight-input-touch) &.pressed {
 			.fill {
-				background-color: @lime-slider-active-fill-bg-color;
+				background-color: @lime-slider-track-active-focused-color;
 			}
 
 			.knob::before {
-				background-color: @lime-slider-focus-knob-bg-color;
-				border-color: @lime-slider-focus-knob-border-color;
+				background-color: @lime-slider-handle-focused-color;
+				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-focus-knob-shadow;
 				transform: @knob-transform-active;
 			}
@@ -230,15 +225,11 @@
 		}
 
 		.disabled({
-			opacity: 1;
-
-			.bar {
-				opacity: @lime-slider-disabled-bar-opacity;
-			}
+			opacity: @lime-slider-disabled-bar-opacity;
 
 			.knob::before {
-				background-color: @lime-slider-disabled-knob-bg-color;
-				border-color: @lime-slider-knob-border-color;
+				background-color: @lime-slider-handle-disabled-color;
+				border-color: @lime-slider-handle-border-color;
 			}
 
 			&.showAnchor {
