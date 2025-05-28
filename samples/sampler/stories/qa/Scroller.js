@@ -46,6 +46,12 @@ const prop = {
 	scrollModeOption: ['native', 'translate']
 };
 
+const delayOnKeyDown = (ev) => {
+	setTimeout(() => {
+		return action('onKeyDown')(ev);
+	}, 300);
+};
+
 class ScrollerResizableItem extends Component {
 	static propTypes = {
 		max: PropTypes.number,
@@ -91,7 +97,7 @@ class ScrollerWithLongItem extends Component {
 			<Scroller
 				focusableScrollbar={args['focusableScrollbar']}
 				key={args['scrollMode']}
-				onKeyDown={action('onKeyDown')}
+				onKeyDown={delayOnKeyDown}
 				onScrollStart={action('onScrollStart')}
 				onScrollStop={action('onScrollStop')}
 				scrollMode={args['scrollMode']}
@@ -123,7 +129,7 @@ class ScrollerWithResizable extends Component {
 		return (
 			<Scroller
 				key={args['scrollMode']}
-				onKeyDown={action('onKeyDown')}
+				onKeyDown={delayOnKeyDown}
 				onScrollStart={action('onScrollStart')}
 				onScrollStop={action('onScrollStop')}
 				scrollMode={args['scrollMode']}
@@ -152,7 +158,7 @@ class ScrollerWithLargeContainer extends Component {
 			<Scroller
 				focusableScrollbar={args['focusableScrollbar']}
 				key={args['scrollMode']}
-				onKeyDown={action('onKeyDown')}
+				onKeyDown={delayOnKeyDown}
 				onScrollStart={action('onScrollStart')}
 				onScrollStop={action('onScrollStop')}
 				scrollMode={args['scrollMode']}
@@ -187,7 +193,7 @@ export const ListOfThings = (args) => (
 		hoverToScroll={args['hoverToScroll']}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -339,7 +345,7 @@ export const EditableList = (args) => {
 						key={args['scrollMode']}
 						noScrollByWheel={args['noScrollByWheel']}
 						onClick={action('onClickScroller')}
-						onKeyDown={action('onKeyDown')}
+						onKeyDown={delayOnKeyDown}
 						onScrollStart={action('onScrollStart')}
 						onScrollStop={action('onScrollStop')}
 						scrollMode={args['scrollMode']}
@@ -379,7 +385,7 @@ export const EditableList = (args) => {
 					<Scroller
 						direction="horizontal"
 						onClick={action('onClickScroller')}
-						onKeyDown={action('onKeyDown')}
+						onKeyDown={delayOnKeyDown}
 						onScrollStart={action('onScrollStart')}
 						onScrollStop={action('onScrollStop')}
 					>
@@ -467,7 +473,7 @@ export const EditableListWithLongPress = (args) => {
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
 			onClick={action('onClickScroller')}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -522,7 +528,7 @@ export const ListOfThingsInFixedPopupPanels = (args) => (
 				hoverToScroll={args['hoverToScroll']}
 				key={args['scrollMode']}
 				noScrollByWheel={args['noScrollByWheel']}
-				onKeyDown={action('onKeyDown')}
+				onKeyDown={delayOnKeyDown}
 				onScrollStart={action('onScrollStart')}
 				onScrollStop={action('onScrollStop')}
 				scrollMode={args['scrollMode']}
@@ -594,7 +600,7 @@ export const CenteredListOfImageItems = (args) => {
 			hoverToScroll={args['hoverToScroll']}
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -628,7 +634,7 @@ export const HorizontalScroll = (args) => (
 		hoverToScroll={args['hoverToScroll']}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -667,7 +673,7 @@ export const WithSpottableComponents = (args) => (
 		hoverToScroll={args['hoverToScroll']}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -720,7 +726,7 @@ export const WithShortContents = (args) => (
 			horizontalScrollbar={args['horizontalScrollbar']}
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -759,7 +765,7 @@ export const WithTwoUiScroller = (args) => (
 	<div style={{display: 'flex', height: ri.scaleToRem(798)}}>
 		<UiScroller
 			key={args['scrollMode'] + '1'}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -768,7 +774,7 @@ export const WithTwoUiScroller = (args) => (
 		</UiScroller>
 		<UiScroller
 			key={args['scrollMode'] + '2'}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -799,7 +805,7 @@ export const WithFocusOutsideContainer = (args) => (
 		<Scroller
 			focusableScrollbar={args['focusableScrollbar']}
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -829,7 +835,7 @@ export const TestScrollingToBoundaryWithSmallOverflow = (args) => {
 	return (
 		<Scroller
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -855,7 +861,7 @@ export const TestScrollingToBoundaryWithLongOverflow = (args) => {
 		<Scroller
 			focusableScrollbar={args['focusableScrollbar']}
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -888,7 +894,7 @@ export const WithSpotlightTargetCalculation = (args) => (
 		<Scroller
 			focusableScrollbar={args['focusableScrollbar']}
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -919,7 +925,7 @@ export const WithOneLongHeightItem = (args) => (
 	<Scroller
 		focusableScrollbar={args['focusableScrollbar']}
 		key={args['scrollMode']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -941,7 +947,7 @@ export const WithNestedScrollerInVerticalScroller = (args) => {
 			direction="vertical"
 			focusableScrollbar={args['focusableScrollbar']}
 			key="nested-outer"
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
@@ -1041,7 +1047,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 		direction="horizontal"
 		focusableScrollbar={args['focusableScrollbar']}
 		key="nested-outer"
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
@@ -1140,7 +1146,7 @@ export const WithCustomizedStyle = (args) => (
 		<Scroller
 			focusableScrollbar={args['focusableScrollbar']}
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollbarTrackCss={css}
@@ -1178,7 +1184,7 @@ export const WithLongContents = (args) => {
 		<Scroller
 			focusableScrollbar={args['focusableScrollbar']}
 			key={args['scrollMode']}
-			onKeyDown={action('onKeyDown')}
+			onKeyDown={delayOnKeyDown}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 		>
@@ -1198,7 +1204,7 @@ export const WithInputFields = (args) => (
 	<Scroller
 		focusableScrollbar={args['focusableScrollbar']}
 		key={args['scrollMode']}
-		onKeyDown={action('onKeyDown')}
+		onKeyDown={delayOnKeyDown}
 		onScrollStart={action('onScrollStart')}
 		onScrollStop={action('onScrollStop')}
 		scrollMode={args['scrollMode']}
