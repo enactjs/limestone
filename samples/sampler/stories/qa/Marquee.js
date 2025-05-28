@@ -66,10 +66,10 @@ const MarqueeI18nSamples = I18nContextDecorator(
 
 		render: ({updateLocale}) => (
 			<div>
-				<Heading size="medium" showLine>
+				<Heading showLine size="medium">
 					Remeasure marquee when locale change causes a font change with different metrics
 				</Heading>
-				<Button minWidth={false} onClick={updateLocale} css={css} className={css.button}>Change locale to ar-SA</Button>
+				<Button className={css.button} minWidth={false} onClick={updateLocale}>Change locale to ar-SA</Button>
 			</div>
 		)
 	})
