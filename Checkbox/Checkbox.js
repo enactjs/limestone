@@ -54,7 +54,7 @@ const CheckboxBase = kind({
 		 *
 		 * @see {@link limestone/Icon.IconBase.children}
 		 * @type {String|Object}
-		 * @default	'check'
+		 * @default	'checkmark'
 		 * @public
 		 */
 		children: PropTypes.string,
@@ -132,7 +132,7 @@ const CheckboxBase = kind({
 	},
 
 	defaultProps: {
-		children: 'check',
+		children: 'checkmark',
 		indeterminate: false,
 		indeterminateIcon: 'minus',
 		selected: false
