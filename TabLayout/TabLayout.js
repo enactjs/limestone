@@ -217,6 +217,15 @@ const TabLayoutBase = kind({
 		rtl: PropTypes.bool,
 
 		/**
+		 * Orientation of the screen.
+		 *
+		 * @type {('landscape'|'portrait')}
+		 * @default 'landscape'
+		 * @public
+		 */
+		screenOrientation: PropTypes.oneOf(['landscape', 'portrait']),
+
+		/**
 		 * The size of the horizontal tab.
 		 *
 		 * @type {('small'|'large')}
@@ -386,8 +395,8 @@ const TabLayoutBase = kind({
 		children: ({children}) => mapAndFilterChildren(children, (child) => (
 			<Fragment>{child.props.children}</Fragment>
 		)),
-		className: ({collapsed, anchorTo, orientation, styler}) => styler.append(
-			{collapsed: orientation === 'vertical' && collapsed},
+		className: ({collapsed, anchorTo, orientation, screenOrientation, styler}) => styler.append(
+			{collapsed: (orientation === 'vertical' && collapsed) || (orientation === 'vertical' && screenOrientation === 'portrait')},
 			`anchor${cap(anchorTo)}`,
 			orientation
 		),
@@ -414,6 +423,7 @@ const TabLayoutBase = kind({
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
+		delete rest.screenOrientation;
 		delete rest.rtl;
 
 		const contentSize = (collapsed ? dimensions.content.expanded : dimensions.content.normal);

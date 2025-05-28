@@ -1,7 +1,7 @@
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {useLayoutEffect, useEffect, useCallback} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 
 import css from './TabGroup.module.less';
 
@@ -19,6 +19,26 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 		elem.dataset.spotlightId !== getTabsSpotlightId(spotlightId, collapsed)
 	)
 );
+
+function useOrientation() {
+	const getOrientation = () =>
+		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+
+	const [orientation, setOrientation] = useState(getOrientation());
+
+	useEffect(() => {
+		const handleResize = () => {
+			setOrientation(getOrientation());
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		// Cleanup
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return orientation;
+}
 
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
@@ -64,6 +84,8 @@ const RefocusDecorator = Wrapped => {
 
 		}, [collapsed, onTabAnimationEnd, spotlightId]);
 
+		const screenOrientation = useOrientation();
+
 		return (
 			<Wrapped
 				{...rest}
@@ -71,6 +93,7 @@ const RefocusDecorator = Wrapped => {
 				index={index}
 				onTabAnimationEnd={handleTabAnimationEnd}
 				orientation={orientation}
+				screenOrientation={screenOrientation}
 				spotlightId={spotlightId}
 			/>
 		);
@@ -81,6 +104,7 @@ const RefocusDecorator = Wrapped => {
 		index: PropTypes.number,
 		onTabAnimationEnd: PropTypes.func,
 		orientation: PropTypes.string,
+		screenOrientation: PropTypes.string,
 		spotlightId: PropTypes.string
 	};
 
