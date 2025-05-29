@@ -89,7 +89,7 @@
 // ---------------------------------------
 @lime-component-spacing: 36px;
 @lime-component-spacing-bottom: 30px;
-@lime-overlay-outline-width: 0.0625rem; // 3px
+@lime-overlay-outline-width: 0.021rem; // 1px
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
 @lime-common-circular-corners: 9000px; // A value large enough that when applied to any node via border-radius produces a completely round corner
@@ -435,12 +435,14 @@
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: 36px 0;
+@lime-contextualmenu-container-padding: var(--primitive-spacing-36) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
-@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + .extract(@lime-contextualmenu-container-padding, top)[] + .extract(@lime-contextualmenu-container-padding, bottom)[]);
+@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
 @lime-contextualmenu-large-width: 960px;
+@lime-contextualmenu-large-withScrollbar-width: 984px;
 @lime-contextualmenu-small-width: 612px;
+@lime-contextualmenu-small-withScrollbar-width: 636px;
 
 // ContextualPopup
 // ---------------------------------------
@@ -448,7 +450,7 @@
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
-@lime-contextualpopup-offset-small: 36px;
+@lime-contextualpopup-offset-small: 18px;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
@@ -825,14 +827,16 @@
 
 // PageViews
 // ---------------------------------------
+@lime-pageviews-contents-border-radius: var(--semantic-radius-container);
 @lime-pageviews-navigation-button-area-width: 216px;
 @lime-pageviews-steps-area-min-height: 132px;
+@lime-pageviews-steps-height: 96px;
 @lime-pageviews-dot-steps-area-min-height: @lime-pageviews-steps-area-min-height;
 @lime-pageviews-full-contents-bottom-steps-bottom: 0;
-@lime-pageviews-number-navigation-button-area-width: 108px;
+@lime-pageviews-number-navigation-button-area-width: 204px;
 @lime-pageviews-number-steps-area-min-height: 252px;
-@lime-pageviews-number-steps-number-width: 126px;
-@lime-pageviews-number-steps-separator-width: 60px;
+@lime-pageviews-number-steps-number-width: 67px;
+@lime-pageviews-number-steps-separator-width: 34px;
 
 // Panels
 // ---------------------------------------
@@ -882,11 +886,12 @@
 
 // PopupTabLayout
 // ---------------------------------------
-@lime-popuptablayout-margin: 120px 60px;
-@lime-popuptablayout-tabs-content-spacing: 36px;
-@lime-popuptablayout-tabs-content-border-radius: @lime-popup-border-radius;
+@lime-popuptablayout-margin: 60px auto 132px 60px;
+@lime-popuptablayout-tabs-border-radius: var(--semantic-radius-container);
+@lime-popuptablayout-tabs-content-spacing: var(--primitive-spacing-36);
+@lime-popuptablayout-content-border-radius: var(--semantic-radius-popup);
 @lime-popuptablayout-content-margin: 0;
-@lime-popuptablayout-panel-body-padding: @lime-panel-body-padding-top (108px - @lime-component-spacing - @lime-spotlight-outset) (78px - @lime-component-spacing-bottom);
+@lime-popuptablayout-panel-body-padding: var(--primitive-spacing-60);
 
 // ProgressBar
 // ---------------------------------------

@@ -4,6 +4,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ContextualMenuDecorator` styling to match the latest GUI
+
+## [1.0.0-rc.1] - 2025-05-29
+
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icons
@@ -15,8 +21,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/DatePicker` styling to match the latest GUI
 - `limestone/DayPicker` styling to match the latest GUI
 - `limestone/Heading` prop `size` default value to `tiny` and styling to match the latest GUI
+- `limestone/PageViews` styling to match the latest GUI
 - `limestone/Panels` styling to match the latest GUI
 - `limestone/Panels.Header` styling to match the latest GUI
+- `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
