@@ -9,8 +9,8 @@ describe('RadioItem Specs', () => {
 		render(<RadioItemBase icon="check" selected>Hello RadioItem</RadioItemBase>);
 		const radioItemElement = screen.getByRole('checkbox');
 
-		const expected = '✓';
-		const actual = radioItemElement.children.item(1).textContent;
+		const expected = 983489;
+		const actual = radioItemElement.children.item(1).textContent.codePointAt();
 
 		expect(actual).toBe(expected);
 	});
