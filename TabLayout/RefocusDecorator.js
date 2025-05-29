@@ -20,7 +20,7 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 	)
 );
 
-function useOrientation() {
+function useOrientation () {
 	const getOrientation = () =>
 		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
 
