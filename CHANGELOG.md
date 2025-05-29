@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ContextualMenuDecorator` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/TabLayout` to focus to the last focused tab when focus enters to the tab group
