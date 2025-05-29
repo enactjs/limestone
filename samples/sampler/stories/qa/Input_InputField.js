@@ -1,7 +1,9 @@
+import {Button} from '@enact/limestone/Button';
 import {InputField, InputFieldBase} from '@enact/limestone/Input';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
+import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 
 import {iconNames, divMargin, propOptions, inputData} from './common/Input_Common';
 
@@ -138,6 +140,7 @@ export const _5WayTest = (args) => {
 		<div>
 			<div style={divMargin}>
 				<InputField
+					style={divMargin}
 					autoFocus={args['autoFocus']}
 					disabled={disable1}
 					onChange={action('onChange')}
@@ -154,6 +157,7 @@ export const _5WayTest = (args) => {
 			</div>
 			<div style={divMargin}>
 				<InputField
+					style={divMargin}
 					autoFocus={args['autoFocus']}
 					disabled={disable3}
 					onChange={action('onChange')}
@@ -198,3 +202,40 @@ export const WithANumber = (args) => (
 select('size', WithANumber, propOptions.size, FieldConfig);
 
 WithANumber.storyName = 'with a number';
+
+export const InputFieldWithVKB = () => {
+	return (
+		<div>
+			<InputField autoFocus />
+			<Button>Hello</Button>
+		</div>
+	);
+};
+
+InputFieldWithVKB.storyName = 'with spotlight and VKB';
+InputFieldWithVKB.parameters = {
+	info: {
+		text: 'Observe when the spotlight is moved back to the inputField from another component.'
+	}
+};
+
+const SpotlightContainer = SpotlightContainerDecorator('div');
+
+export const InputFieldWithSpotlightContainer = () => {
+	return (
+		<div>
+			<InputField autoFocus />
+			<SpotlightContainer>
+				<Button>Previous</Button>
+			</SpotlightContainer>
+			<Button>Next</Button>
+		</div>
+	);
+};
+
+InputFieldWithSpotlightContainer.storyName = 'with SpotlightContainer and VKB';
+InputFieldWithSpotlightContainer.parameters = {
+	info: {
+		text: 'Observe when the spotlight is moved to Next Button.'
+	}
+};

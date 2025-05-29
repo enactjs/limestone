@@ -7,7 +7,7 @@ export default {
 	arrowhookleft     : 0x021A9,  // LeftArrowHook
 	arrowhookright    : 0x021AA,  // RightArrowHook
 	ellipsis          : 0x022EF,  // ellipsis
-	check             : 0x02713,  // checkmark
+	checkmark         : 0x02713,  // checkmark
 	triangleup        : 0x025B2,  // triagup
 	triangleright     : 0x025B6,  // triagright
 	triangledown      : 0x025BC,  // triagdown
@@ -59,7 +59,6 @@ export default {
 	star              : 0x0F0028, // star_full
 	starhalf          : 0x0F0029, // star_half
 	starhollow        : 0x0F002A, // star_empty
-	gear              : 0x0F002B, // gear
 	plug              : 0x0F002C, // input
 	lock              : 0x0F002D, // lock
 	music             : 0x0F0062, // music
@@ -68,7 +67,6 @@ export default {
 	verticalellipsis  : 0x0F00B5, // vertical_ellipsis
 	arrowcurveright   : 0x0F00B6, // arrow_curve_right
 	picture           : 0x0F00BA, // picture
-	home              : 0x0F00BB, // home
 	liverecord        : 0x0F00C1, // live_record
 	liveplay          : 0x0F00C2, // live_play
 	trashlock         : 0x0F00C7, // trash_lock
@@ -134,7 +132,6 @@ export default {
 	sound             : 0x0F013D, // sound
 	wisa              : 0x0F013E, // wisa
 	demooptions       : 0x0F013F, // demo_options
-	newfeature        : 0x0F0140, // new_feature
 	youtube           : 0x0F0141, // youtube
 	ostsearch         : 0x0F0142, // ostsearch
 	shopping          : 0x0F0143, // shopping
@@ -166,7 +163,6 @@ export default {
 	help              : 0x0F015E, // help
 	share             : 0x0F015F, // share
 	files             : 0x0F0160, // files
-	quickstart        : 0x0F0161, // quickstart
 	scheduler         : 0x0F0162, // scheduler
 	recording         : 0x0F0163, // recording
 	guide             : 0x0F0164, // guide
@@ -193,7 +189,10 @@ export default {
 	profile           : 0x0F0179, // profile
 	profilecheck      : 0x0F017A, // profilecheck
 	mediaserver       : 0x0F017B, // mediaserver
+	home              : 0x0F017C, // home
+	gear              : 0x0F017D, // gear
 	wallpaper         : 0x0F017E, // wallpaper
+	zoom              : 0x0F017F, // zoom
 	spanner           : 0x0F0180, // spanner
 	bluetooth         : 0x0F0181, // bluetooth
 	moodmode          : 0x0F0182, // moodmode
@@ -255,5 +254,37 @@ export default {
 	ai                : 0x0F01BB, // ai
 	alert01           : 0x0F01BC, // alert.01
 	alert02           : 0x0F01BD, // alert.02
-	calibration       : 0x0F01BE // calibration
+	calibration       : 0x0F01BE, // calibration
+	mypage            : 0x0F01BF, // mypage
+	moodmaker         : 0x0F01C0, // moodmaker
+	check             : 0x0F01C1, // check
+	calendar          : 0x0F01C2, // calendar
+	antenna           : 0x0F01C3, // antenna
+	av                : 0x0F01C4, // av
+	component         : 0x0F01C5, // component
+	pcpicture         : 0x0F01C6, // pc_picture
+	hdmigeneric       : 0x0F01C7, // hdmigeneric
+	hdmi1             : 0x0F01C8, // hdmi.01
+	hdmi2             : 0x0F01C9, // hdmi.02
+	hdmi3             : 0x0F01CA, // hdmi.03
+	hdmi4             : 0x0F01CB, // hdmi.04
+	dvd               : 0x0F01CC, // dvd
+	hdmisub           : 0x0F01CD, // hdmi_sub
+	usbport           : 0x0F01CE, // usb_port
+	vcr               : 0x0F01CF, // vcr
+	soundshare        : 0x0F01D0, // soundshare
+	remotepc          : 0x0F01D1, // remotepc
+	mobileguide       : 0x0F01D2, // mobileguide
+	airplay           : 0x0F01D3, // airplay
+	musicbt           : 0x0F01D4, // music_bt
+	streamingspeaker  : 0x0F01D5, // streaming_speaker
+	insteon           : 0x0F01D6, // insteon
+	satellite         : 0x0F01D7, // satellite
+	scart             : 0x0F01D8, // scart
+	settopbox         : 0x0F01D9, // settopbox
+	screenshare       : 0x0F01DA, // screenshare
+	pc                : 0x0F01DB, // pc
+	tips              : 0x0F01DC, // tips
+	googlehome        : 0x0F01DD, // google_home
+	thinq             : 0x0F01DE // thinq
 };

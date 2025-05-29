@@ -18,7 +18,7 @@ describe('qa sampler', function () {
 			expect(await browser.execute(getFocusedText)).toBe('button');
 
 			// Step 3 Verify: There is enough padding between the last button and the Popup.
-			expect(await Page.buttonPadding()).toBe(42);
+			expect(await Page.buttonPadding()).toBe(48);
 		});
 	});
 });

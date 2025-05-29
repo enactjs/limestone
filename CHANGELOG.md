@@ -2,6 +2,35 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.0.0-rc.1] - 2025-05-29
+
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+- `limestone/TabLayout` prop `primaryIndex` to focus primary tab when pressing back key from other tabs or initial rendering
+
+### Changed
+
+- `limestone/BodyText` styling to match the latest GUI
+- `limestone/DatePicker` styling to match the latest GUI
+- `limestone/DayPicker` styling to match the latest GUI
+- `limestone/Heading` prop `size` default value to `tiny` and styling to match the latest GUI
+- `limestone/PageViews` styling to match the latest GUI
+- `limestone/Panels` styling to match the latest GUI
+- `limestone/Panels.Header` styling to match the latest GUI
+- `limestone/PopupTabLayout` styling to match the latest GUI
+- `limestone/ProgressButton` styling to match the latest GUI
+- `limestone/Steps` styling to match the latest GUI
+- `limestone/Switch` styling to match the latest GUI
+- `limestone/SwitchItem` styling to match the latest GUI
+- `limestone/WizardPanels` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/ContextualPopupDecorator` to update popup position properly when Wrapped component updated
+- `limestone/Input.InputField` to receive focus properly when navigating with directional keys
+- `limestone/Input.InputField` to receive focus properly when not contained in the same SpotlightContainer
+
 ## [1.0.0-beta.1] - 2025-04-29
 
 ### Added

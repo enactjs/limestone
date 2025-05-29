@@ -7,7 +7,7 @@ import RangePicker from '../../RangePicker';
 import css from './DateComponentPicker.module.less';
 
 /**
- * {@link limestone/internal/DataComponentPicker.DateComponentRangePicker} allows the selection of
+ * {@link limestone/internal/DateComponentPicker.DateComponentRangePicker} allows the selection of
  * one part of the date or time using a {@link limestone/RangePicker.RangePicker}.
  *
  * @class DateComponentRangePickerBase
