@@ -1,5 +1,6 @@
 import handle, {forProp, forward, forwardCustom, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
+import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Group from '@enact/ui/Group';
@@ -9,30 +10,19 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 
 import $L from '../internal/$L';
 import DebounceDecorator from '../internal/DebounceDecorator';
 import Button from '../Button';
 import Skinnable from '../Skinnable';
-import Scroller from '../Scroller';
+import {ScrollerBase} from '../Scroller';
 import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
 
 const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
 const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
-
-const spotlightContainerConfig = {
-	// using default-element so we always land on the selected tab in order to avoid changing
-	// the view when re-entering the tab group
-	defaultElement: `.${componentCss.selected}`,
-	enterTo: 'default-element',
-	partition: true,
-	// When swapping from unscrolled to scrolled tab group, the container config is lost so this
-	// preserves it across unmounts / remounts
-	preserveId: true
-};
 
 // Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
 const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
@@ -136,6 +126,27 @@ const TabBase = kind({
 
 const Tab = Toggleable({prop: 'stopped', activate: 'onBlur', deactivate: 'onFocus'}, Skinnable(TabBase));
 
+const spotlightContainerConfig = {
+	// using default-element so we always land on the selected tab in order to avoid changing
+	// the view when re-entering the tab group
+	defaultElement: `.${componentCss.selected}`,
+	enterTo: 'default-element',
+	partition: true,
+	// When swapping from unscrolled to scrolled tab group, the container config is lost so this
+	// preserves it across unmounts / remounts
+	preserveId: true
+};
+
+const Scroller = Skinnable(
+	SpotlightContainerDecorator(
+		spotlightContainerConfig,
+		I18nContextDecorator(
+			{rtlProp: 'rtl'},
+			ScrollerBase
+		)
+	)
+);
+
 const GroupContainer = SpotlightContainerDecorator(spotlightContainerConfig, Group);
 
 /**
@@ -179,7 +190,6 @@ const TabGroupBase = kind({
 		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
-		scrollerConfig: ({spotlightId}) => Spotlight.set(`${spotlightId}_scroller`, spotlightContainerConfig),
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
@@ -225,28 +235,20 @@ const TabGroupBase = kind({
 		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
 		const useScroller = (children.length > maxTabs);
-		const groupProps = (isHorizontal && useScroller) ? null : {
-			spotlightId: spotlightId,
-			spotlightDisabled: spotlightDisabled
+		const groupProps = useScroller ? null : {
+			spotlightId,
+			spotlightDisabled
 		};
 		const scrollerProps = useScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
-			spotlightId: `${spotlightId}_scroller`,
+			spotlightId,
+			spotlightDisabled,
 			verticalScrollbar: 'hidden'
 		} : null;
 		const Component = useScroller ? Scroller : 'div';
-		const GroupComponent = (isHorizontal && useScroller) ? Group : GroupContainer;
-
-		// eslint-disable-next-line react-hooks/rules-of-hooks
-		useEffect(() => {
-			const selectedTab = document.getElementsByClassName(componentCss.selected)[0];
-			if (selectedTab && isHorizontal && useScroller) {
-				Spotlight.focus(selectedTab); // focus selected tab on first render
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, []);
+		const GroupComponent = useScroller ? Group : GroupContainer;
 
 		return (
 			<Component
