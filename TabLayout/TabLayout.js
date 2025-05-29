@@ -221,7 +221,7 @@ const TabLayoutBase = kind({
 		 *
 		 * @type {('landscape'|'portrait')}
 		 * @default 'landscape'
-		 * @public
+		 * @private
 		 */
 		screenOrientation: PropTypes.oneOf(['landscape', 'portrait']),
 

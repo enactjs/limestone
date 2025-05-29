@@ -29,6 +29,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/SwitchItem` styling to match the latest GUI
+- `limestone/TabLayout` vertical to be collapsed in portrait mode 
 - `limestone/WizardPanels` styling to match the latest GUI
 
 ### Fixed

@@ -104,7 +104,6 @@ const RefocusDecorator = Wrapped => {
 		index: PropTypes.number,
 		onTabAnimationEnd: PropTypes.func,
 		orientation: PropTypes.string,
-		screenOrientation: PropTypes.string,
 		spotlightId: PropTypes.string
 	};
 
