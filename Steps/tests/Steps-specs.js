@@ -61,7 +61,7 @@ describe('Steps Specs', () => {
 
 	test('should correctly indicate the `current` even if that\'s the only prop set', () => {
 		render(<Steps current={2} />);
-		const firstStepElement = screen.getByText('✓');
+		const firstStepElement = screen.getByRole('list').children.item(0);
 		const secondStepElement = screen.getByText('2');
 
 		const expected = 'current';

@@ -66,7 +66,7 @@ export const _QuickGuidePanels = (args) => {
 						</div>
 						<div className={css.svg}>
 							<svg width="100%" height="100%" fill="rgba(87, 94, 102, 0.3)">
-								<path d={`M0 0 h${screenWidth} v${screenHeight} h-${screenWidth}z M${184 * widthRatio} ${100 * heightRatio} v${100 * heightRatio} h${200 * widthRatio} v-${100 * heightRatio}z`} />
+								<path d={`M0 0 h${screenWidth} v${screenHeight} h-${screenWidth}z M${184 * widthRatio} ${100 * heightRatio} v${100 * heightRatio} h${400 * widthRatio} v-${100 * heightRatio}z`} />
 							</svg>
 						</div>
 					</QuickGuidePanels.Panel>
