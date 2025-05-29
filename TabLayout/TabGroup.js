@@ -139,7 +139,10 @@ const spotlightContainerConfig = {
 
 const Scroller = Skinnable(
 	SpotlightContainerDecorator(
-		spotlightContainerConfig,
+		{
+			...spotlightContainerConfig,
+			overflow: true
+		},
 		I18nContextDecorator(
 			{rtlProp: 'rtl'},
 			ScrollerBase
@@ -196,7 +199,6 @@ const TabGroupBase = kind({
 
 	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
-		delete rest.scrollerConfig;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
