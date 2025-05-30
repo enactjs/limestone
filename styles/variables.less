@@ -435,12 +435,14 @@
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: 36px 0;
+@lime-contextualmenu-container-padding: var(--primitive-spacing-36) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
-@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + .extract(@lime-contextualmenu-container-padding, top)[] + .extract(@lime-contextualmenu-container-padding, bottom)[]);
+@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
 @lime-contextualmenu-large-width: 960px;
+@lime-contextualmenu-large-withScrollbar-width: 984px;
 @lime-contextualmenu-small-width: 612px;
+@lime-contextualmenu-small-withScrollbar-width: 636px;
 
 // ContextualPopup
 // ---------------------------------------
@@ -448,7 +450,7 @@
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
-@lime-contextualpopup-offset-small: 36px;
+@lime-contextualpopup-offset-small: 18px;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
