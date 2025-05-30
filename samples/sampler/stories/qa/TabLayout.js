@@ -596,7 +596,7 @@ WithPrimaryIndex.parameters = {
 	}
 };
 
-export const WithScrollingTabs = (args) => {
+export const WithRestoredFocus = (args) => {
 	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
 
 	const [dynamicList, setDynamicList] = useState(list);
@@ -630,7 +630,7 @@ export const WithScrollingTabs = (args) => {
 
 	return (
 		<Panel>
-			<Header title="TabLayout" subtitle="With Scrolling Tabs" />
+			<Header title="TabLayout" subtitle="With restored focus" />
 			<TabLayout
 				orientation={args['orientation']}
 				tabSize={args['tabSize']}
@@ -641,17 +641,17 @@ export const WithScrollingTabs = (args) => {
 	);
 };
 
-range('tabSize', WithScrollingTabs, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
-select('orientation', WithScrollingTabs, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+range('tabSize', WithRestoredFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRestoredFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
 
-WithScrollingTabs.storyName = 'With Scrolling Tabs';
-WithScrollingTabs.parameters = {
+WithRestoredFocus.storyName = 'with restored focus';
+WithRestoredFocus.parameters = {
 	props: {
 		noPanel: true
 	}
 };
 
-export const WithRetainFocus = (args) => {
+export const WithRetainedFocus = (args) => {
 	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
 
 	const [dynamicList, setDynamicList] = useState(list);
@@ -688,7 +688,7 @@ export const WithRetainFocus = (args) => {
 
 	return (
 		<Panel>
-			<Header noCloseButton={args['noCloseButton']} title="TabLayout" subtitle="With Retain Focus" />
+			<Header noCloseButton={args['noCloseButton']} title="TabLayout" subtitle="With retained focus" />
 			<Layout orientation={args['orientation']} style={{height:'100%'}}>
 				{!args['hideFirstButton'] &&
 					<Component style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
@@ -713,15 +713,15 @@ export const WithRetainFocus = (args) => {
 	);
 };
 
-boolean('hideFirstButton', WithRetainFocus, TabLayout, false);
-boolean('hideSecondButton', WithRetainFocus, TabLayout, false);
-select('alignButtons', WithRetainFocus, ['start', 'center', 'end'], TabLayout, 'start');
-range('tabSize', WithRetainFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
-select('orientation', WithRetainFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+boolean('hideFirstButton', WithRetainedFocus, TabLayout, false);
+boolean('hideSecondButton', WithRetainedFocus, TabLayout, false);
+select('alignButtons', WithRetainedFocus, ['start', 'center', 'end'], TabLayout, 'start');
+range('tabSize', WithRetainedFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRetainedFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
 
 
-WithRetainFocus.storyName = 'Retain Focus';
-WithRetainFocus.parameters = {
+WithRetainedFocus.storyName = 'With retained focus';
+WithRetainedFocus.parameters = {
 	props: {
 		noPanel: true
 	}
