@@ -7,6 +7,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/Button` font-size for non-latin locale
+- `limestone/ContextualMenuDecorator` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/TabLayout` to focus to the last focused tab when focus enters to the tab group
 
 ## [1.0.0-rc.1] - 2025-05-29
 
