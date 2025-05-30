@@ -684,16 +684,16 @@ export const WithRetainedFocus = (args) => {
 	};
 
 	const isHorizontal = args['orientation'] === 'horizontal';
-	const Component = isHorizontal ? Row : Column;
+	const LayoutComponent = isHorizontal ? Row : Column;
 
 	return (
 		<Panel>
 			<Header noCloseButton={args['noCloseButton']} title="TabLayout" subtitle="With retained focus" />
 			<Layout orientation={args['orientation']} style={{height:'100%'}}>
 				{!args['hideFirstButton'] &&
-					<Component style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
 						<Button minWidth={false}>First</Button>
-					</Component>
+					</LayoutComponent>
 				}
 				<Cell>
 					<TabLayout
@@ -704,9 +704,9 @@ export const WithRetainedFocus = (args) => {
 					</TabLayout>
 				</Cell>
 				{!args['hideSecondButton'] &&
-					<Component style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
 						<Button minWidth={false}>Second</Button>
-					</Component>
+					</LayoutComponent>
 				}
 			</Layout>
 		</Panel>
