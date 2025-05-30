@@ -74,12 +74,6 @@ const populateItems = ({index}) => {
 	return {index, iconItemProps};
 };
 
-const delayOnKeyDown = (ev) => {
-	setTimeout(() => {
-		return action('onKeyDown')(ev);
-	}, 300);
-};
-
 for (let i = 0; i < 20; i++) {
 	itemsArr.push(populateItems({index: i}));
 }
@@ -263,7 +257,7 @@ export const EditableIcon = (args) => {
 						key={args['scrollMode']}
 						noScrollByWheel={args['noScrollByWheel']}
 						onClick={action('onClickScroller')}
-						onKeyDown={delayOnKeyDown}
+						onKeyDown={action('onKeyDown')}
 						onScrollStart={action('onScrollStart')}
 						onScrollStop={action('onScrollStop')}
 						scrollMode={args['scrollMode']}
@@ -311,7 +305,7 @@ export const EditableIcon = (args) => {
 						<Scroller
 							direction="horizontal"
 							onClick={action('onClickScroller')}
-							onKeyDown={delayOnKeyDown}
+							onKeyDown={action('onKeyDown')}
 							onScroll={handleScroll}
 							onScrollStart={action('onScrollStart')}
 							onScrollStop={action('onScrollStop')}
@@ -400,7 +394,7 @@ export const EditableIconWithLongPress = (args) => {
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
 			onClick={action('onClickScroller')}
-			onKeyDown={delayOnKeyDown}
+			onKeyDown={action('onKeyDown')}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
 			scrollMode={args['scrollMode']}
