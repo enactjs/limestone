@@ -16,13 +16,14 @@
  * @exports ChipsDecorator
  */
 
+import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import Spotlight from '@enact/spotlight';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import React, {useRef, useEffect, useState, createRef, Children, cloneElement, isValidElement} from 'react';
+import React, {useRef, createRef, Children, cloneElement, isValidElement} from 'react';
 
 import css from './Chips.module.less';
 
@@ -47,20 +48,48 @@ const ChipsBase = (props) => {
     const containerRef = useRef(null);
     const buttonRefs = useRef(children.map(() => createRef()));
 
-    /*
-    useEffect(() => {
-        clientRefs.current.forEach((ref) => {
-            if (ref && index) {
-                ref.classList.add(css.selected);
-            }
-        })
-    }, [index]);
-    */
+    const onButtonKeyDown = (ev, focused) => {
+        const {keyCode, target} = ev;
 
-    /*useEffect(() => {
-        console.log('buttonRefs after render: ', buttonRefs.current);
-    }, [children]);
-    */
+        console.log('target', target);
+
+        const containerId = containerRef.current.dataset.spotlightId;
+        const candidate = Spotlight.getSpottableDescendants(containerId);
+        const buttons = candidate.filter((_, index) => index % 2 === 1);
+        const chips = candidate.filter((_, index) => index % 2 === 0);
+        const currentIndex = buttons.findIndex((element) => target === element);
+
+        if (orientation === 'vertical') {
+            console.log('onButtonKeyDown')
+            if (is('up', keyCode)) {
+                const nextIndex = currentIndex -1 < -1 ? 0 : currentIndex - 1;
+                Spotlight.focus(chips[nextIndex]);
+
+                ev.stopPropagation();
+                buttonRefs.current[currentIndex].current.classList.remove(focused);
+            } else if (is('down', keyCode)) {
+                const nextIndex = currentIndex + 1 > buttons.length - 1 ? currentIndex : currentIndex + 1;
+                Spotlight.focus(chips[nextIndex]);
+
+                ev.stopPropagation();
+                buttonRefs.current[currentIndex].current.classList.remove(focused);
+            }
+        } else { // horizontal
+            if (is('left', keyCode)) {
+                const nextIndex = currentIndex -1 < -1 ? 0 : currentIndex - 1;
+                Spotlight.focus(chips[nextIndex]);
+
+                ev.stopPropagation();
+                buttonRefs.current[currentIndex].current.classList.remove(focused);
+            } else if (is('right', keyCode)) {
+                const nextIndex = currentIndex + 1 > buttons.length - 1 ? currentIndex : currentIndex + 1;
+                Spotlight.focus(chips[nextIndex]);
+
+                ev.stopPropagation();
+                buttonRefs.current[currentIndex].current.classList.remove(focused);
+            }
+        }
+    };
 
 	return (
 		<div className={chipsClassNames} ref={containerRef} {...rest}>
@@ -76,7 +105,9 @@ const ChipsBase = (props) => {
                 if(isValidElement(child)) {
                     return cloneElement(child, {
                         handleDelete,
-                        ref: buttonRefs.current[idx]});
+                        onButtonKeyDown,
+                        ref: buttonRefs.current[idx],
+                    });
                 }
                 return child;
             })}
@@ -108,7 +139,8 @@ ChipsBase.propTypes = /** @lends limestone/Chips.ChipsBase.prototype */ {
 const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
         //defaultElement: `.${css.selected}`,
-        enterTo: 'default-element'
+        enterTo: 'default-element',
+        leaveFor: {up: '#right'}
     })
 );
 

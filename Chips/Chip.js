@@ -52,7 +52,7 @@ let overComponent = false;
 
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, ref, icon, handleDelete, buttonRef, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, ref, icon, handleDelete, onButtonKeyDown, buttonRef, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -61,16 +61,21 @@ const ChipBase = (props) => {
 	const clientRef = useRef(null);
 	const chipRef = clientRef || ref;
 
+	const handleButtonKeyDown = (ev) => {
+		onButtonKeyDown(ev, css.focused);
+	};
+
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
 
-			console.log('nextTarget', nextTarget)
+			console.log('nextTarget', nextTarget, target);
 			Spotlight.focus(nextTarget);
+
 			ev.stopPropagation();
 
-			if (nextTarget !== null && nextTarget !== buttonRef.current.firstChild) {
+			if (nextTarget !== null && nextTarget !== buttonRef.current.firstChild && nextTarget !== chipRef.current) {
 				buttonRef.current?.classList.remove(css.focused);
 			}
 		}
@@ -147,6 +152,7 @@ const ChipBase = (props) => {
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
 						onClick={handleDelete}
+						onKeyDown={handleButtonKeyDown}
 					/>
 				</div>
 			}
