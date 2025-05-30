@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/ContextualMenuDecorator` styling to match the latest GUI
+- `limestone/FixedPopupPanels` styling to match the latest GUI
 
 ### Fixed
 
