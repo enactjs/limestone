@@ -20,7 +20,7 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 	)
 );
 
-function useOrientation () {
+function useScreenOrientation () {
 	const getOrientation = () =>
 		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
 
@@ -84,7 +84,7 @@ const RefocusDecorator = Wrapped => {
 
 		}, [collapsed, onTabAnimationEnd, spotlightId]);
 
-		const screenOrientation = useOrientation();
+		const screenOrientation = useScreenOrientation();
 
 		return (
 			<Wrapped
