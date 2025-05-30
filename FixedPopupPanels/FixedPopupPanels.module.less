@@ -3,7 +3,7 @@
 @import "../styles/variables.less";
 
 // Module level variables, for use only in this file
-@fixedpopuppanels-max-height: calc(100vh - @lime-fixedpopuppanels-margin);
+@fixedpopuppanels-max-height: ~"calc(100vh -" (.extract(@lime-fixedpopuppanels-margin, top)[] + .extract(@lime-fixedpopuppanels-margin, bottom)[])~")";
 
 .fixedPopupPanels {
 	// Overrides for Panels - the & just refers to this element. Using a block here to visually compartmentalize the overrides apart from the general styles.
@@ -44,12 +44,12 @@
 
 	// Overrides for Popup
 	&.popup {
-		&.right {
-			margin: @lime-fixedpopuppanels-margin @lime-fixedpopuppanels-margin 0 0;
-		}
+		margin: @lime-fixedpopuppanels-margin;
+		max-height: @fixedpopuppanels-max-height;
 
 		&.left {
-			margin: @lime-fixedpopuppanels-margin 0 0 @lime-fixedpopuppanels-margin;
+			margin-left: .extract(@lime-fixedpopuppanels-margin, right)[];
+			margin-right: .extract(@lime-fixedpopuppanels-margin, left)[];
 		}
 	}
 
@@ -59,28 +59,16 @@
 
 		// Overrides for Viewport
 		.viewport {
+			background-color: @lime-fixedpopuppanels-background-color;
 			border-radius: @lime-fixedpopuppanels-border-radius;
-			box-shadow: @lime-fixedpopuppanels-shadow;
-			outline-color: @lime-fixedpopuppanels-outline-color;
-			outline-style: @lime-fixedpopuppanels-outline-style;
+			box-shadow: @lime-overlay-shadow;
+			outline-color: @lime-overlay-outline-color;
 			outline-width: @lime-overlay-outline-width;
+			outline-style: @lime-overlay-outline-style;
 			outline-offset: -@lime-overlay-outline-width;
 
 			:global(.noAnimation) & {
 				box-shadow: none;
-			}
-		}
-
-		&.scrimTranslucent {
-			.viewport {
-				background-color: @lime-fixedpopuppanels-bg-color;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTransparent {
-			.viewport {
-				background-color: @lime-fixedpopuppanels-scrimtransparent-bg-color;
 			}
 		}
 	});
@@ -89,10 +77,6 @@
 // Overrides for Panel
 .panel {
 	max-height: @fixedpopuppanels-max-height;
-
-	.header {
-		padding: @lime-fixedpopuppanels-panel-title-padding;
-	}
 
 	> .body {
 		display: flex;
