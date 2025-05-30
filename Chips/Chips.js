@@ -17,12 +17,12 @@
  */
 
 import {setDefaultProps} from '@enact/core/util';
-import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
+import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import Spotlight from '@enact/spotlight';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import React, {useRef} from 'react';
+import React, {useRef, useEffect, useState, createRef, Children, cloneElement, isValidElement} from 'react';
 
 import css from './Chips.module.less';
 
@@ -43,11 +43,28 @@ const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, orientation, ...rest} = chipsProps;
     const chipsClassNames = classnames(css.chips, css[orientation]);
+
     const containerRef = useRef(null);
+    const buttonRefs = useRef(children.map(() => createRef()));
+
+    /*
+    useEffect(() => {
+        clientRefs.current.forEach((ref) => {
+            if (ref && index) {
+                ref.classList.add(css.selected);
+            }
+        })
+    }, [index]);
+    */
+
+    /*useEffect(() => {
+        console.log('buttonRefs after render: ', buttonRefs.current);
+    }, [children]);
+    */
 
 	return (
 		<div className={chipsClassNames} ref={containerRef} {...rest}>
-			{React.Children.map(children, (child) => {
+			{children && Children.map(children, (child, idx) => {
                  const handleDelete = (ev) => {
                     ev.stopPropagation();
             
@@ -56,8 +73,10 @@ const ChipsBase = (props) => {
                         Spotlight.focus(containerRef.current);
                     }
                 };
-                if(React.isValidElement(child)) {
-                    return React.cloneElement(child, {handleDelete});
+                if(isValidElement(child)) {
+                    return cloneElement(child, {
+                        handleDelete,
+                        ref: buttonRefs.current[idx]});
                 }
                 return child;
             })}
@@ -87,7 +106,10 @@ ChipsBase.propTypes = /** @lends limestone/Chips.ChipsBase.prototype */ {
 };
 
 const ChipsDecorator = compose(
-	SpotlightContainerDecorator({enterTo: 'default-element'})
+	SpotlightContainerDecorator({
+        //defaultElement: `.${css.selected}`,
+        enterTo: 'default-element'
+    })
 );
 
 /**
