@@ -27,7 +27,7 @@ import {getPointerMode} from '@enact/spotlight/src/pointer';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useRef, useEffect} from 'react';
+import {useCallback, useRef} from 'react';
 
 import Button from '../Button/Button';
 import Skinnable from '../Skinnable/Skinnable';
@@ -56,7 +56,6 @@ const ChipBase = (props) => {
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	//const buttonRef = useRef(null);
 	const chipContainerRef = useRef(null);
 	const clientRef = useRef(null);
 	const chipRef = clientRef || ref;
@@ -69,10 +68,11 @@ const ChipBase = (props) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
+			if(nextTarget === null) {
+				return;
+			}
 
-			console.log('nextTarget', nextTarget, target);
 			Spotlight.focus(nextTarget);
-
 			ev.stopPropagation();
 
 			if (nextTarget !== null && nextTarget !== buttonRef.current.firstChild && nextTarget !== chipRef.current) {
@@ -81,18 +81,8 @@ const ChipBase = (props) => {
 		}
 	}, [chipRef.current]);
 
-	/*const handleDelete = (ev) => {
-		ev.stopPropagation();
-
-		if (props.deleteButton && props.deleteButton.onDelete) {
-			props.deleteButton.onDelete(ev);
-			console.log('spotlight focus', containerRef.current)
-			Spotlight.focus(containerRef.current);
-		}
-	};*/
-
 	const handleMouseLeave = useCallback((ev) => {
-		if (buttonRef.current && chipContainerRef.current.contains(ev.target)) {
+		if (chipContainerRef.current.contains(ev.target)) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, []);
@@ -105,7 +95,7 @@ const ChipBase = (props) => {
 	}, [chipRef.current, buttonRef.current]);
 
 	const handleBlur = useCallback(() => {
-		if (buttonRef.current && getPointerMode() === true && !overComponent) {
+		if (getPointerMode() === true && !overComponent) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, []);

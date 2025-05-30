@@ -51,43 +51,36 @@ const ChipsBase = (props) => {
     const onButtonKeyDown = (ev, focused) => {
         const {keyCode, target} = ev;
 
-        console.log('target', target);
-
         const containerId = containerRef.current.dataset.spotlightId;
         const candidate = Spotlight.getSpottableDescendants(containerId);
         const buttons = candidate.filter((_, index) => index % 2 === 1);
         const chips = candidate.filter((_, index) => index % 2 === 0);
         const currentIndex = buttons.findIndex((element) => target === element);
 
-        if (orientation === 'vertical') {
-            console.log('onButtonKeyDown')
-            if (is('up', keyCode)) {
-                const nextIndex = currentIndex -1 < -1 ? 0 : currentIndex - 1;
-                Spotlight.focus(chips[nextIndex]);
+        const handleNavigation = (direction) => {
+            const isPrev = direction === 'prev';
+            const isNext = direction === 'next';
 
-                ev.stopPropagation();
-                buttonRefs.current[currentIndex].current.classList.remove(focused);
-            } else if (is('down', keyCode)) {
-                const nextIndex = currentIndex + 1 > buttons.length - 1 ? currentIndex : currentIndex + 1;
-                Spotlight.focus(chips[nextIndex]);
+            const nextIndex = isPrev
+                ? Math.max(0, currentIndex - 1)
+                : isNext
+                ? Math.min(buttons.length - 1, currentIndex + 1)
+                : currentIndex;
 
-                ev.stopPropagation();
-                buttonRefs.current[currentIndex].current.classList.remove(focused);
-            }
-        } else { // horizontal
-            if (is('left', keyCode)) {
-                const nextIndex = currentIndex -1 < -1 ? 0 : currentIndex - 1;
-                Spotlight.focus(chips[nextIndex]);
+            Spotlight.focus(chips[nextIndex]);
+            ev.stopPropagation();
+            buttonRefs.current[currentIndex].current.classList.remove(focused);
+        };
 
-                ev.stopPropagation();
-                buttonRefs.current[currentIndex].current.classList.remove(focused);
-            } else if (is('right', keyCode)) {
-                const nextIndex = currentIndex + 1 > buttons.length - 1 ? currentIndex : currentIndex + 1;
-                Spotlight.focus(chips[nextIndex]);
+        const isVertical = orientation === 'vertical';
+        const isHorizontal = orientation === 'horizontal';
 
-                ev.stopPropagation();
-                buttonRefs.current[currentIndex].current.classList.remove(focused);
-            }
+        if (isVertical) {
+            if (is('up', keyCode)) handleNavigation('prev');
+            else if (is('down', keyCode)) handleNavigation('next');
+        } else if (isHorizontal) {
+            if (is('left', keyCode)) handleNavigation('prev');
+            else if (is('right', keyCode)) handleNavigation('next');
         }
     };
 
