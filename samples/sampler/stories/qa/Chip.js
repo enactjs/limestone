@@ -28,7 +28,7 @@ export const WithDeleteButton = (args) => {
 
 	return (
 		<Chips orientation={orientation}>
-			{chips.map(({id, icon, children}, index) => {
+			{chips.map(({id, icon, children}) => {
 				const deleteButton = {position: orientation === 'vertical' ? 'right' : 'bottom', onDelete: () => handleDelete(id)};
 				return (
 					<Chip
