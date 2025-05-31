@@ -60,15 +60,15 @@ const ChipBase = (props) => {
 	const clientRef = useRef(null);
 	const chipRef = clientRef || ref;
 
-	const handleButtonKeyDown = (ev) => {
+	const handleButtonKeyDown = useCallback((ev) => {
 		onButtonKeyDown(ev, css.focused);
-	};
+	}, [onButtonKeyDown]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
-			if(nextTarget === null) {
+			if (nextTarget === null) {
 				return;
 			}
 
@@ -79,26 +79,26 @@ const ChipBase = (props) => {
 				buttonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef.current]);
+	}, [chipRef, buttonRef]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (chipContainerRef.current.contains(ev.target)) {
 			buttonRef.current.classList.remove(css.focused);
 		}
-	}, []);
+	}, [buttonRef]);
 
 	const handleFocus = useCallback((ev) => {
 		if (ev.target === chipRef.current) {
 			chipRef.current.classList.add(css.selected);
 			buttonRef.current.classList.add(css.focused);
 		}
-	}, [chipRef.current, buttonRef.current]);
+	}, [chipRef, buttonRef]);
 
 	const handleBlur = useCallback(() => {
 		if (getPointerMode() === true && !overComponent) {
 			buttonRef.current.classList.remove(css.focused);
 		}
-	}, []);
+	}, [buttonRef]);
 
 	const handleMouseOver = useCallback(() => {
 		overComponent = true;

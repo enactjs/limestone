@@ -13,21 +13,20 @@
  * @exports Chips
  */
 
- import Chips from './Chips';
- import Chip from './Chip';
- 
- /**
-  * A shortcut to access {@link limestone/Chips.Chip}
-  *
-  * @name Chip
-  * @static
-  * @memberof limestone/Chips.Chips
-  */
- Chips.Chip = Chip;
- 
- export default Chips;
- export {
-    Chip,
-    Chips
- };
- 
+import Chips from './Chips';
+import Chip from './Chip';
+
+/**
+ * A shortcut to access {@link limestone/Chips.Chip}
+ *
+ * @name Chip
+ * @static
+ * @memberof limestone/Chips.Chips
+ */
+Chips.Chip = Chip;
+
+export default Chips;
+export {
+	Chip,
+	Chips
+};

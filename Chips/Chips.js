@@ -23,7 +23,7 @@ import Spotlight from '@enact/spotlight';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import React, {useRef, createRef, Children, cloneElement, isValidElement} from 'react';
+import {Children, cloneElement, createRef, isValidElement, useCallback, useRef} from 'react';
 
 import css from './Chips.module.less';
 
@@ -43,67 +43,66 @@ const ChipsDefaultProps = {
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, orientation, ...rest} = chipsProps;
-    const chipsClassNames = classnames(css.chips, css[orientation]);
+	const chipsClassNames = classnames(css.chips, css[orientation]);
 
-    const containerRef = useRef(null);
-    const buttonRefs = useRef(children.map(() => createRef()));
+	const containerRef = useRef(null);
+	const buttonRefs = useRef(children.map(() => createRef()));
 
-    const onButtonKeyDown = (ev, focused) => {
-        const {keyCode, target} = ev;
+	const onButtonKeyDown = useCallback((ev, focused) => {
+		const {keyCode, target} = ev;
 
-        const containerId = containerRef.current.dataset.spotlightId;
-        const candidate = Spotlight.getSpottableDescendants(containerId);
-        const buttons = candidate.filter((_, index) => index % 2 === 1);
-        const chips = candidate.filter((_, index) => index % 2 === 0);
-        const currentIndex = buttons.findIndex((element) => target === element);
+		const containerId = containerRef.current.dataset.spotlightId;
+		const candidate = Spotlight.getSpottableDescendants(containerId);
+		const buttons = candidate.filter((_, index) => index % 2 === 1);
+		const chips = candidate.filter((_, index) => index % 2 === 0);
+		const currentIndex = buttons.findIndex((element) => target === element);
 
-        const handleNavigation = (direction) => {
-            const isPrev = direction === 'prev';
-            const isNext = direction === 'next';
+		const handleNavigation = (direction) => {
+			let nextIndex = currentIndex;
 
-            const nextIndex = isPrev
-                ? Math.max(0, currentIndex - 1)
-                : isNext
-                ? Math.min(buttons.length - 1, currentIndex + 1)
-                : currentIndex;
+			if (direction === 'prev') {
+				nextIndex = Math.max(0, currentIndex - 1);
+			} else if (direction === 'next') {
+				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
+			}
 
-            Spotlight.focus(chips[nextIndex]);
-            ev.stopPropagation();
-            buttonRefs.current[currentIndex].current.classList.remove(focused);
-        };
+			Spotlight.focus(chips[nextIndex]);
+			ev.stopPropagation();
+			buttonRefs.current[currentIndex].current.classList.remove(focused);
+		};
 
-        const isVertical = orientation === 'vertical';
-        const isHorizontal = orientation === 'horizontal';
+		const isVertical = orientation === 'vertical';
+		const isHorizontal = orientation === 'horizontal';
 
-        if (isVertical) {
-            if (is('up', keyCode)) handleNavigation('prev');
-            else if (is('down', keyCode)) handleNavigation('next');
-        } else if (isHorizontal) {
-            if (is('left', keyCode)) handleNavigation('prev');
-            else if (is('right', keyCode)) handleNavigation('next');
-        }
-    };
+		if (isVertical) {
+			if (is('up', keyCode)) handleNavigation('prev');
+			else if (is('down', keyCode)) handleNavigation('next');
+		} else if (isHorizontal) {
+			if (is('left', keyCode)) handleNavigation('prev');
+			else if (is('right', keyCode)) handleNavigation('next');
+		}
+	}, [buttonRefs, orientation]);
 
 	return (
 		<div className={chipsClassNames} ref={containerRef} {...rest}>
 			{children && Children.map(children, (child, idx) => {
-                 const handleDelete = (ev) => {
-                    ev.stopPropagation();
-            
-                    if (child.props.deleteButton && child.props.deleteButton.onDelete) {
-                        child.props.deleteButton.onDelete(ev);
-                        Spotlight.focus(containerRef.current);
-                    }
-                };
-                if(isValidElement(child)) {
-                    return cloneElement(child, {
-                        handleDelete,
-                        onButtonKeyDown,
-                        ref: buttonRefs.current[idx],
-                    });
-                }
-                return child;
-            })}
+				const handleDelete = (ev) => {
+					ev.stopPropagation();
+
+					if (child.props.deleteButton && child.props.deleteButton.onDelete) {
+						child.props.deleteButton.onDelete(ev);
+						Spotlight.focus(containerRef.current);
+					}
+				};
+				if (isValidElement(child)) {
+					return cloneElement(child, {
+						handleDelete,
+						onButtonKeyDown,
+						ref: buttonRefs.current[idx]
+					});
+				}
+				return child;
+			})}
 		</div>
 	);
 };
@@ -111,30 +110,29 @@ const ChipsBase = (props) => {
 ChipsBase.displayName = 'Chips';
 
 ChipsBase.propTypes = /** @lends limestone/Chips.ChipsBase.prototype */ {
-    /**
-     * {@link limestone/Chips.Chip|Chip} to be rendered
-     *
-     * @type {Node}
-     * @public
-     */
+	/**
+	 * {@link limestone/Chips.Chip|Chip} to be rendered
+	 *
+	 * @type {Node}
+	 * @public
+	 */
 	children: PropTypes.string.isRequired,
 
-    /**
-     * The layout orientation of the component.
-     *
-     * @type {('horizontal'|'vertical')}
-     * @default 'vertical'
-     * @public
-     */
-    orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+	/**
+	 * The layout orientation of the component.
+	 *
+	 * @type {('horizontal'|'vertical')}
+	 * @default 'vertical'
+	 * @public
+	 */
+	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
 const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
-        //defaultElement: `.${css.selected}`,
-        enterTo: 'default-element',
-        leaveFor: {up: '#right'}
-    })
+		enterTo: 'default-element',
+		leaveFor: {up: '#right'}
+	})
 );
 
 /**
