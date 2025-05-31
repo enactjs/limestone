@@ -1,19 +1,3 @@
-/**
- * Provides Limestone styled chip components and behaviors.
- *
- * @example
- * <Chip
- *   deleteButton={{
- *     icon: 'closex',
- *     position: 'right'
- *   }}
- *   icon="check"
- * >
- *  Label
- * </Chip>
- *
- */
-
 import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {getDirection} from '@enact/spotlight';
@@ -31,18 +15,29 @@ import Skinnable from '../Skinnable/Skinnable';
 import css from './Chip.module.less';
 import ForwardRef from '@enact/ui/ForwardRef';
 
-const ChipDefaultProps = {
-	disabled: false
-};
-
 /**
- * A Limestone styled base component for {@link limestone/Chips.Chip|ChipBase}.
+ * Provides Limestone styled chip components and behaviors.
+ *
+ * @example
+ * <Chip
+ *   deleteButton={{
+ *     icon: 'closex',
+ *     position: 'right'
+ *   }}
+ *   icon="check"
+ * >
+ *  Label
+ * </Chip>
  *
  * @class Chip
  * @memberof limestone/Chips
  * @ui
  * @public
  */
+
+const ChipDefaultProps = {
+	disabled: false
+};
 
 let overComponent = false;
 
@@ -191,10 +186,10 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 };
 
 /**
- * Limestone-specific Chip behaviors to apply to {@link limestone/Chip.Chip|Chip}.
+ * Limestone-specific Chip behaviors to apply to {@link limestone/Chips.Chip|Chip}.
  *
  * @hoc
- * @memberof limestone/Chip
+ * @memberof limestone/Chips
  * @mixes limestone/Skinnable.Skinnable
  * @public
  */
@@ -203,30 +198,6 @@ const ChipDecorator = compose(
 	ForwardRef({prop: 'buttonRef'})
 );
 
-/**
- * A limestone-styled chip.
- *
- * Usage:
- * ```
- * <Chip
- *   deleteButton={{
- *     icon: 'closex',
- *     position: 'right',
- *   }}
- *   icon="check"
- * >
- *  Label
- * </Chip>
- * ```
- *
- * @class Chip
- * @memberof limestone/Chips
- * @extends limestone/Chips.Chip
- * @mixes limestone/Chips.ChipDecorator
- * @see {@link limestone/Chips.Chip}
- * @ui
- * @public
- */
 const Chip = ChipDecorator(ChipBase);
 
 export default Chip;

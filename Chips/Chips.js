@@ -1,21 +1,3 @@
-/**
- * A container that surrounds the chip.
- *
- * @example
- * <Chips
- *   orientation="vertical"
- * >
- *  <Chip icon={icon}>label</Chip>
- *  <Chip icon={icon}> ... </Chip>
- *  <Chip icon={icon}>label</Chip>
- * </Chips>
- *
- * @module limestone/Chips
- * @exports Chips
- * @exports ChipsBase
- * @exports ChipsDecorator
- */
-
 import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
@@ -32,9 +14,18 @@ const ChipsDefaultProps = {
 };
 
 /**
- * A container that contains the basic behavior of {@link limestone/Chips.Chips|ChipsBase}.
+ * A container that surrounds the chip.
+ * 
+ * @example
+ * <Chips
+ *   orientation="vertical"
+ * >
+ *  <Chip icon={icon}>label</Chip>
+ *  <Chip icon={icon}> ... </Chip>
+ *  <Chip icon={icon}>label</Chip>
+ * </Chips>
  *
- * @class Chips
+ * @class ChipsBase
  * @memberof limestone/Chips
  * @ui
  * @public
@@ -162,23 +153,10 @@ const ChipsDecorator = compose(
 );
 
 /**
- * A container that surrounds the chip.
- *
- * Usage:
- * ```
- * <Chips
- *   orientation="vertical"
- * >
- *  <Chip icon={icon}>label</Chip>
- *  <Chip icon={icon}> ... </Chip>
- *  <Chip icon={icon}>label</Chip>
- * </Chips>
- * ```
- *
+ * A container that contains the basic behavior of {@link limestone/Chips.Chips|ChipsBase}.
  * @class Chips
  * @memberof limestone/Chips
- * @extends limestone/Chips.Chips
- * @mixes limestone/Chips.ChipsDecorator
+ * @extends limestone/Chips.ChipsBase
  * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
  * @see {@link limestone/Chips.Chips}
  * @ui
