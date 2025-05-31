@@ -32,7 +32,7 @@ export const WithDeleteButton = (args) => {
 				const deleteButton = {position: orientation === 'vertical' ? 'right' : 'bottom', onDelete: () => handleDelete(id)};
 				return (
 					<Chip
-						key={index}
+						key={id}
 						icon={icon}
 						deleteButton={deleteButton}
 						onClick={action('onClick')}
@@ -45,6 +45,6 @@ export const WithDeleteButton = (args) => {
 	);
 };
 
-select('orientation', WithDeleteButton, ['horizontal', 'vertical']);
+select('orientation', WithDeleteButton, ['horizontal', 'vertical'], 'vertical');
 
 WithDeleteButton.storyName = 'with delete button';

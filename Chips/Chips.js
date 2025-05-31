@@ -15,7 +15,7 @@ const ChipsDefaultProps = {
 
 /**
  * A container that surrounds the chip.
- * 
+ *
  * @example
  * <Chips
  *   orientation="vertical"
