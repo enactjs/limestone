@@ -434,12 +434,14 @@
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: 36px 0;
+@lime-contextualmenu-container-padding: var(--primitive-spacing-36) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
-@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + .extract(@lime-contextualmenu-container-padding, top)[] + .extract(@lime-contextualmenu-container-padding, bottom)[]);
+@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
 @lime-contextualmenu-large-width: 960px;
+@lime-contextualmenu-large-withScrollbar-width: 984px;
 @lime-contextualmenu-small-width: 612px;
+@lime-contextualmenu-small-withScrollbar-width: 636px;
 
 // ContextualPopup
 // ---------------------------------------
@@ -447,7 +449,7 @@
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
-@lime-contextualpopup-offset-small: 36px;
+@lime-contextualpopup-offset-small: 18px;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
@@ -487,12 +489,11 @@
 
 // FixedPopupPanels
 // ---------------------------------------
-@lime-fixedpopuppanels-width: 1140px;
+@lime-fixedpopuppanels-width: 1200px;
 @lime-fixedpopuppanels-half-width: 1716px;
-@lime-fixedpopuppanels-margin: .extract(@lime-popup-position-left-margin, top)[] .extract(@lime-popup-position-left-margin, right)[];
-@lime-fixedpopuppanels-border-radius: @lime-popup-border-radius;
-@lime-fixedpopuppanels-panel-padding: 0;
-@lime-fixedpopuppanels-panel-body-padding: @lime-panel-body-padding-top (108px - (@lime-component-spacing + @lime-spotlight-outset)) (78px - @lime-component-spacing-bottom);
+@lime-fixedpopuppanels-margin: 60px 60px 132px auto;
+@lime-fixedpopuppanels-border-radius: var(--semantic-radius-overlay);
+@lime-fixedpopuppanels-panel-body-padding: var(--primitive-spacing-60);
 
 // FlexiblePopupPanels
 // ---------------------------------------

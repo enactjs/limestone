@@ -4,6 +4,17 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ContextualMenuDecorator` styling to match the latest GUI
+- `limestone/FixedPopupPanels` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/TabLayout` to focus to the last focused tab when focus enters to the tab group
+
+## [1.0.0-rc.1] - 2025-05-29
+
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icons
