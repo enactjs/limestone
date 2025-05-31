@@ -12,10 +12,6 @@
  *  Label
  * </Chip>
  *
- * @module limestone/Chip
- * @exports Chip
- * @exports ChipBase
- * @exports ChipDecorator
  */
 
 import {is} from '@enact/core/keymap';
@@ -40,10 +36,10 @@ const ChipDefaultProps = {
 };
 
 /**
- * A Limestone styled base component for {@link limestone/Chip.Chip|ChipBase}.
+ * A Limestone styled base component for {@link limestone/Chips.Chip|ChipBase}.
  *
- * @class ChipBase
- * @memberof limestone/Chip
+ * @class Chip
+ * @memberof limestone/Chips
  * @ui
  * @public
  */
@@ -152,7 +148,7 @@ const ChipBase = (props) => {
 
 ChipBase.displayName = 'Chip';
 
-ChipBase.propTypes = /** @lends limestone/Chip.ChipBase.prototype */ {
+ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	/**
 	 * A label displayed in the chip content.
 	 *
@@ -224,10 +220,10 @@ const ChipDecorator = compose(
  * ```
  *
  * @class Chip
- * @memberof limestone/Chip
- * @extends limestone/Chip.ChipBase
- * @mixes limestone/Chip.ChipDecorator
- * @see {@link limestone/Chip.ChipBase}
+ * @memberof limestone/Chips
+ * @extends limestone/Chips.Chip
+ * @mixes limestone/Chips.ChipDecorator
+ * @see {@link limestone/Chips.Chip}
  * @ui
  * @public
  */

@@ -29,10 +29,10 @@ describe('Chip', () => {
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
 		const chip = screen.getByTestId('chip');
-        const deleteButton = chip.querySelector('.deleteButtonContainer');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-        expect(deleteButton).toBeInTheDocument();
-        expect(deleteButton).toHaveClass(position);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 
 	test('should apply `.bottom` when direction prop is `bottom`', () => {
@@ -40,10 +40,10 @@ describe('Chip', () => {
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
 		const chip = screen.getByTestId('chip');
-        const deleteButton = chip.querySelector('.deleteButtonContainer');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-        expect(deleteButton).toBeInTheDocument();
-        expect(deleteButton).toHaveClass(position);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 
 	test('should apply `.right` when direction prop is `right`', () => {
@@ -51,9 +51,9 @@ describe('Chip', () => {
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
 		const chip = screen.getByTestId('chip');
-        const deleteButton = chip.querySelector('.deleteButtonContainer');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-        expect(deleteButton).toBeInTheDocument();
-        expect(deleteButton).toHaveClass(position);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 });

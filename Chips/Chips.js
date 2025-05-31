@@ -34,7 +34,7 @@ const ChipsDefaultProps = {
 /**
  * A container that contains the basic behavior of {@link limestone/Chips.Chips|ChipsBase}.
  *
- * @class ChipsBase
+ * @class Chips
  * @memberof limestone/Chips
  * @ui
  * @public
@@ -57,29 +57,34 @@ const ChipsBase = (props) => {
 		const chips = candidate.filter((_, index) => index % 2 === 0);
 		const currentIndex = buttons.findIndex((element) => target === element);
 
-		const handleNavigation = (direction) => {
-			let nextIndex = currentIndex;
-
-			if (direction === 'prev') {
-				nextIndex = Math.max(0, currentIndex - 1);
-			} else if (direction === 'next') {
-				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-			}
-
-			Spotlight.focus(chips[nextIndex]);
-			ev.stopPropagation();
-			buttonRefs.current[currentIndex].current.classList.remove(focused);
-		};
+		let nextIndex = currentIndex;
+		let shouldStopPropagation = false;
 
 		const isVertical = orientation === 'vertical';
 		const isHorizontal = orientation === 'horizontal';
 
 		if (isVertical) {
-			if (is('up', keyCode)) handleNavigation('prev');
-			else if (is('down', keyCode)) handleNavigation('next');
+			if (is('up', keyCode)) {
+				nextIndex = Math.max(0, currentIndex - 1);
+				shouldStopPropagation = true;
+			} else if (is('down', keyCode)) {
+				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
+				shouldStopPropagation = true;
+			}
 		} else if (isHorizontal) {
-			if (is('left', keyCode)) handleNavigation('prev');
-			else if (is('right', keyCode)) handleNavigation('next');
+			if (is('left', keyCode)) {
+				nextIndex = Math.max(0, currentIndex - 1);
+				shouldStopPropagation = true;
+			} else if (is('right', keyCode)) {
+				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
+				shouldStopPropagation = true;
+			}
+		}
+
+		if (shouldStopPropagation) {
+			Spotlight.focus(chips[nextIndex]);
+			ev.stopPropagation();
+			buttonRefs.current[currentIndex].current.classList.remove(focused);
 		}
 	}, [buttonRefs, orientation]);
 
@@ -91,7 +96,28 @@ const ChipsBase = (props) => {
 
 					if (child.props.deleteButton && child.props.deleteButton.onDelete) {
 						child.props.deleteButton.onDelete(ev);
-						Spotlight.focus(containerRef.current);
+
+						const containerId = containerRef.current.dataset.spotlightId;
+						const candidate = Spotlight.getSpottableDescendants(containerId);
+						const buttons = candidate.filter((_, index) => index % 2 === 1);
+						const chips = candidate.filter((_, index) => index % 2 === 0);
+						const currentIndex = buttons.findIndex((element) => ev.target === element);
+
+						let nextIndex = currentIndex;
+						let shouldStopPropagation = false;
+
+						if (currentIndex > 0) {
+							nextIndex = Math.max(0, currentIndex - 1);
+							shouldStopPropagation = true;
+						} else {
+							nextIndex = Math.min(chips.length - 1, currentIndex + 1);
+							shouldStopPropagation = true;
+						}
+
+						if (shouldStopPropagation) {
+							Spotlight.focus(chips[nextIndex]);
+							ev.stopPropagation();
+						}
 					}
 				};
 				if (isValidElement(child)) {
@@ -109,7 +135,7 @@ const ChipsBase = (props) => {
 
 ChipsBase.displayName = 'Chips';
 
-ChipsBase.propTypes = /** @lends limestone/Chips.ChipsBase.prototype */ {
+ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	/**
 	 * {@link limestone/Chips.Chip|Chip} to be rendered
 	 *
@@ -151,10 +177,10 @@ const ChipsDecorator = compose(
  *
  * @class Chips
  * @memberof limestone/Chips
- * @extends limestone/Chips.ChipsBase
+ * @extends limestone/Chips.Chips
  * @mixes limestone/Chips.ChipsDecorator
  * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
- * @see {@link limestone/Chips.ChipsBase}
+ * @see {@link limestone/Chips.Chips}
  * @ui
  * @public
  */
