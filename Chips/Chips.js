@@ -17,13 +17,15 @@ const ChipsDefaultProps = {
  * A container that surrounds the chip.
  *
  * @example
- * <Chips
- *   orientation="vertical"
- * >
- *  <Chip icon={icon}>label</Chip>
- *  <Chip icon={icon}> ... </Chip>
- *  <Chip icon={icon}>label</Chip>
- * </Chips>
+ *  <Chips orientation="vertical">
+ *  	{chips.map(({id, icon, children}) => {
+ *			return (
+ *				<Chip key={id} icon={icon} deleteButton={deleteButton} onClick={onClick}>
+ *					{children}
+ *				</Chip>
+ *     		);
+ *		})}
+ *  </Chips>
  *
  * @class ChipsBase
  * @memberof limestone/Chips
@@ -37,7 +39,7 @@ const ChipsBase = (props) => {
 	const chipsClassNames = classnames(css.chips, css[orientation]);
 
 	const containerRef = useRef(null);
-	const buttonRefs = useRef(children.map(() => createRef()));
+	const buttonRefs = useRef(Array.isArray(children) ? children.map(() => createRef()): [createRef()]);
 
 	const onButtonKeyDown = useCallback((ev, focused) => {
 		const {keyCode, target} = ev;
@@ -50,6 +52,7 @@ const ChipsBase = (props) => {
 
 		let nextIndex = currentIndex;
 		let shouldStopPropagation = false;
+		let shouldRemoveFocused = true;
 
 		const isVertical = orientation === 'vertical';
 		const isHorizontal = orientation === 'horizontal';
@@ -58,24 +61,31 @@ const ChipsBase = (props) => {
 			if (is('up', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
 				shouldStopPropagation = true;
+				shouldRemoveFocused = currentIndex === 0 ? false : true;
 			} else if (is('down', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
 				shouldStopPropagation = true;
+				shouldRemoveFocused = currentIndex === buttons.length - 1 ? false : true;
 			}
 		} else if (isHorizontal) {
 			if (is('left', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
 				shouldStopPropagation = true;
+				shouldRemoveFocused = currentIndex === 0 ? false : true;
 			} else if (is('right', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
 				shouldStopPropagation = true;
+				shouldRemoveFocused = currentIndex === buttons.length - 1 ? false : true;
 			}
 		}
 
 		if (shouldStopPropagation) {
 			Spotlight.focus(chips[nextIndex]);
 			ev.stopPropagation();
-			buttonRefs.current[currentIndex].current.classList.remove(focused);
+
+			if(shouldRemoveFocused) {
+				buttonRefs.current[currentIndex].current.classList.remove(focused);
+			}
 		}
 	}, [buttonRefs, orientation]);
 
