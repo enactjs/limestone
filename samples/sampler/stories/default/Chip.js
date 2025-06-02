@@ -16,7 +16,7 @@ export default {
 
 export const _Chip = (args) => {
 	return (
-		<Chips style={{marginTop: ri.scaleToRem(12)}}>
+		<Chips style={{marginTop: ri.scaleToRem(24)}}>
 			<Chip
 				deleteButton={args['deleteButton']}
 				disabled={args['disabled']}
