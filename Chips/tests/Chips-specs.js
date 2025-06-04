@@ -119,10 +119,10 @@ describe('Chips', () => {
 			const deleteButtons = getAllDeleteButtons();
 			expect(deleteButtons.length).toBe(2);
 
-			deleteButtons[0].focus();
-			expect(deleteButtons[0]).toHaveFocus();
+			deleteButtons[1].focus();
+			expect(deleteButtons[1]).toHaveFocus();
 
-			fireEvent.keyDown(deleteButtons[0], {key: 'ArrowUp', keyCode: 38});
+			fireEvent.keyDown(deleteButtons[1], {key: 'ArrowUp', keyCode: 38});
 
 			expect(getSpottableSpy).toHaveBeenCalledTimes(1);
 
