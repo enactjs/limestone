@@ -8,7 +8,7 @@ import ri from '@enact/ui/resolution';
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import {Tooltip, defaultArrowAnchor, defaultDirection} from './Tooltip';
-import {adjustDirection, adjustAnchor, calcOverflow, getLabelOffset, getPosition} from './util';
+import {adjustDirection, adjustAnchor, calcOverflow, getLabelOffset, getPosition, adjustTransform} from './util';
 
 let currentTooltip; // needed to know whether we should stop a showing job when unmounting
 
@@ -197,7 +197,7 @@ const useTooltip = (props) => {
 
 		newLayout.tooltipDirection = adjustDirection(newLayout.tooltipDirection, overflow, rtl);
 		newLayout.arrowAnchor = adjustAnchor(newLayout.arrowAnchor, newLayout.tooltipDirection, overflow, rtl);
-		newLayout.position = getPosition(clientNode, newLayout.tooltipDirection);
+		newLayout.position = adjustTransform(clientRef.current, newLayout.tooltipDirection, getPosition(clientNode, newLayout.tooltipDirection));
 		newLayout.labelOffset = newLayout.arrowAnchor === 'center' ? getLabelOffset(tooltipNode, newLayout.tooltipDirection, newLayout.position, overflow) : null;
 
 		if (

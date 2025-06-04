@@ -95,6 +95,50 @@ const adjustDirection = function (tooltipDirection, overflow, rtl) {
 };
 
 /**
+ * Calculates the top and left position for `Tooltip` accounting for transform.
+ *
+ * @method
+ * @memberof limestone/TooltipDecorator
+ * @param   {Node} clientNode         	The value for client node
+ * @param   {String} tooltipDirection   Direction of tooltip
+ * @param   {Object} tooltipPosition    The `getBoundingClientRect` values for tooltip node
+ * @returns {Object}                    Tooltip's calculated new position accounting for transform
+ * @private
+ */
+const adjustTransform = function (clientNode, tooltipDirection, tooltipPosition) {
+	const componentNodes = clientNode?.childNodes.length ? [clientNode, ...clientNode.childNodes] : [clientNode];
+	const nodePositions = clientNode.getBoundingClientRect();
+	const horizontal = ((nodePositions.right - nodePositions.left) * 0.1) / 2;
+	const vertical = ((nodePositions.bottom - nodePositions.top) * 0.1) / 2;
+
+	let hasTransform = false;
+	componentNodes.forEach(node => {
+		if (window.getComputedStyle(node).transitionProperty === 'transform') hasTransform = true;
+	});
+
+	if (!hasTransform) return tooltipPosition;
+
+	switch (tooltipDirection) {
+		case 'above':
+			tooltipPosition.top -= vertical;
+			break;
+		case 'below':
+			tooltipPosition.top += vertical;
+			break;
+		case 'left':
+			tooltipPosition.left -= horizontal;
+			break;
+		case 'right':
+			tooltipPosition.left += horizontal;
+			break;
+		default:
+			break;
+	}
+
+	return tooltipPosition;
+};
+
+/**
  * Calculates the overflow of `Tooltip` — if `Tooltip` is at the edge of the viewport.
  * Return the amount of overflow in a particular direction if there is overflow (false otherwise).
  *
@@ -235,6 +279,7 @@ const getLabelOffset = function (tooltipNode, tooltipDirection, tooltipPosition,
 export {
 	adjustDirection,
 	adjustAnchor,
+	adjustTransform,
 	calcOverflow,
 	getLabelOffset,
 	getPosition
