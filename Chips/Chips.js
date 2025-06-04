@@ -62,14 +62,14 @@ const ChipsBase = (props) => {
 			if (is('up', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
 
-				if(currentIndex !== 0) {
+				if (currentIndex !== 0) {
 					shouldStopPropagation = true;
 					shouldRemoveFocused = true;
 				}
 			} else if (is('down', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
 
-				if(currentIndex !== buttons.length - 1) {
+				if (currentIndex !== buttons.length - 1) {
 					shouldStopPropagation = true;
 					shouldRemoveFocused = true;
 				}
@@ -78,14 +78,14 @@ const ChipsBase = (props) => {
 			if (is('left', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
 
-				if(currentIndex !== 0) {
+				if (currentIndex !== 0) {
 					shouldStopPropagation = true;
 					shouldRemoveFocused = true;
 				}
 			} else if (is('right', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
 
-				if(currentIndex !== buttons.length - 1) {
+				if (currentIndex !== buttons.length - 1) {
 					shouldStopPropagation = true;
 					shouldRemoveFocused = true;
 				}

@@ -18,8 +18,8 @@ import ForwardRef from '@enact/ui/ForwardRef';
 const getNavigableFilter = (node) => {
 	if (!node) return false;
 	const rects = node.getBoundingClientRect();
-	return rects.width !== 0 && rects.height !== 0
-  };
+	return rects.width !== 0 && rects.height !== 0;
+};
 
 /**
  * Provides Limestone styled chip components and behaviors.
@@ -82,7 +82,7 @@ const ChipBase = (props) => {
 				buttonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef, buttonRef]);
+	}, [chipRef, buttonRef, containerRef]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (chipContainerRef.current.contains(ev.target)) {
