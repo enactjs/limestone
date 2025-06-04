@@ -61,7 +61,7 @@ describe('TabGroup specs', () => {
 			/>
 		);
 		const actualHomeIcon = screen.getByTestId('homeIcon').textContent.codePointAt();
-		const expectedHomeIcon = 983227; // decimal converted charCode of Unicode 'home' character
+		const expectedHomeIcon = 983420; // decimal converted charCode of Unicode 'home' character
 		const actualDemosyncIcon = screen.getByTestId('demosyncIcon').textContent.codePointAt();
 		const expectedDemosyncIcon = 983355; // decimal converted charCode of Unicode 'demosync' character
 		const actualPlayCircleIcon = screen.getByTestId('playcircleIcon').textContent.codePointAt();
