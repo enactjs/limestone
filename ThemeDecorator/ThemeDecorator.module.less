@@ -9,13 +9,13 @@
 @import "../styles/internal/fonts.less";
 
 // Limestone Rules
+@import "~@enovaui/core-tokens/css/spacing-primitive.css";
+@import "~@enovaui/core-tokens/css/typography-primitive.css";
+@import "~@enovaui/webos-tokens/css/color-semantic.css";
+@import "~@enovaui/webos-tokens/css/radius-semantic.css";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
-@import "~design-tokens/packages/core-tokens/css/spacing-primitive.css";
-@import "~design-tokens/packages/core-tokens/css/typography-primitive.css";
-@import "~design-tokens/packages/webos-tokens/css/color-semantic.css";
-@import "~design-tokens/packages/webos-tokens/css/radius-semantic.css";
 
 .applySkins({
 	color: var(--semantic-color-on-background-main);
@@ -68,6 +68,7 @@
 		--semantic-color-background-overlay-default: var(--primitive-color-cool-gray-85);
 		--semantic-color-surface-default-track: var(--primitive-color-neutral-gray-40);
 		--semantic-color-stroke-selection-inactive: var(--primitive-color-neutral-gray-10);
+		--semantic-color-stroke-overlay-default: var(--primitive-color-cool-gray-70);
 	}
 
 	/* High Contrast */

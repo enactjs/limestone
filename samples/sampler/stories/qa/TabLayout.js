@@ -7,8 +7,9 @@ import {Panel, Header} from '@enact/limestone/Panels';
 import {Scroller} from '@enact/limestone/Scroller';
 import TabLayout, {isHorizontalScrollableTabs, TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {range, select} from '@enact/storybook-utils/addons/controls';
-import {Component, useState} from 'react';
+import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
+import Layout, {Cell, Column, Row} from '@enact/ui/Layout';
+import {Component, useCallback, useMemo, useState} from 'react';
 
 import css from './TabLayout.module.less';
 
@@ -18,6 +19,15 @@ TabLayout.displayName = 'TabLayout';
 const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
 
 const tabsWithIcons = [
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
 	{title: 'Home', icon: 'home'},
 	{title: 'Button', icon: 'gear'},
 	{title: 'Item', icon: 'trash'}
@@ -556,6 +566,165 @@ select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'hori
 
 WithScroller.storyName = 'With Scroller';
 WithScroller.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithPrimaryIndex = (args) => {
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With primary index" />
+			<TabLayout
+				orientation={args['orientation']}
+				primaryIndex={args['primaryIndex']}
+			>
+				{tabsWithIcons.map((tab, i) => (
+					<TabLayout.Tab title={tab.title} icon={tab.icon} key={`tab${i}`}>
+						<Button>Tab {i + 1}</Button>
+					</TabLayout.Tab>
+				))}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+select('orientation', WithPrimaryIndex, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('primaryIndex', WithPrimaryIndex, {groupId: 'TabLayout'}, {min: 0, max: 2, step: 1}, 0);
+
+WithPrimaryIndex.storyName = 'With primary index';
+WithPrimaryIndex.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithRestoredFocus = (args) => {
+	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
+
+	const [dynamicList, setDynamicList] = useState(list);
+
+	const handleAddList = useCallback(() => {
+		const newList = [...dynamicList];
+		newList.push(`Added Tab ${newList.length + 1}`);
+		setDynamicList(newList);
+	}, [dynamicList]);
+
+	const handleResetList = useCallback(() => {
+		setDynamicList(list);
+	}, [list]);
+
+	const tabList = () => {
+		return dynamicList.map((tab) => {
+			return (
+				<Tab key={tab} title={tab}>
+					<Header title={tab} />
+					<Item>Tab Item</Item>
+					<Button onClick={handleAddList}>
+						Add Tab
+					</Button>
+					<Button onClick={handleResetList}>
+						Reset Tabs
+					</Button>
+				</Tab>
+			);
+		});
+	};
+
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With restored focus" />
+			<TabLayout
+				orientation={args['orientation']}
+				tabSize={args['tabSize']}
+			>
+				{tabList()}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+range('tabSize', WithRestoredFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRestoredFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+WithRestoredFocus.storyName = 'with restored focus';
+WithRestoredFocus.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithRetainedFocus = (args) => {
+	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
+
+	const [dynamicList, setDynamicList] = useState(list);
+
+	const handleAddList = useCallback(() => {
+		const newList = [...dynamicList];
+		newList.push(`Added Tab ${newList.length + 1}`);
+		setDynamicList(newList);
+	}, [dynamicList]);
+
+	const handleResetList = useCallback(() => {
+		setDynamicList(list);
+	}, [list]);
+
+	const tabList = () => {
+		return dynamicList.map((tab) => {
+			return (
+				<Tab key={tab} title={tab}>
+					<Header title={tab} />
+					<Item>Tab Item</Item>
+					<Button onClick={handleAddList}>
+						Add Tab
+					</Button>
+					<Button onClick={handleResetList}>
+						Reset Tabs
+					</Button>
+				</Tab>
+			);
+		});
+	};
+
+	const isHorizontal = args['orientation'] === 'horizontal';
+	const LayoutComponent = isHorizontal ? Row : Column;
+
+	return (
+		<Panel>
+			<Header noCloseButton={args['noCloseButton']} title="TabLayout" subtitle="With retained focus" />
+			<Layout orientation={args['orientation']} style={{height:'100%'}}>
+				{!args['hideFirstButton'] &&
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+						<Button minWidth={false}>First</Button>
+					</LayoutComponent>
+				}
+				<Cell>
+					<TabLayout
+						orientation={args['orientation']}
+						tabSize={args['tabSize']}
+					>
+						{tabList()}
+					</TabLayout>
+				</Cell>
+				{!args['hideSecondButton'] &&
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+						<Button minWidth={false}>Second</Button>
+					</LayoutComponent>
+				}
+			</Layout>
+		</Panel>
+	);
+};
+
+boolean('hideFirstButton', WithRetainedFocus, TabLayout, false);
+boolean('hideSecondButton', WithRetainedFocus, TabLayout, false);
+select('alignButtons', WithRetainedFocus, ['start', 'center', 'end'], TabLayout, 'start');
+range('tabSize', WithRetainedFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRetainedFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+
+WithRetainedFocus.storyName = 'With retained focus';
+WithRetainedFocus.parameters = {
 	props: {
 		noPanel: true
 	}

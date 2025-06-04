@@ -1,18 +1,26 @@
 // DateTime.module.less
 //
+@import "../../styles/skin.less";
 @import "../../styles/variables.less";
 
 .dateTime {
 	display: inline-block;
 
 	.heading {
-		font-weight: normal;
+		margin: @lime-datetime-heading-margin;
+		border-bottom: none;
+	}
+
+	&.center {
+		.heading {
+			display: flex;
+			justify-content: center;
+		}
 	}
 
 	.pickers {
 		vertical-align: middle;
 		// direction: ltr;
-		margin: @lime-component-spacing;
 
 		> *:first-child {
 			margin-inline-start: 0
@@ -22,4 +30,10 @@
 			margin-inline-end: 0
 		}
 	}
+
+	.applySkins({
+		.heading {
+			color: @lime-datetime-label-color;
+		}
+	})
 }

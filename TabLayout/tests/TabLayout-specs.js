@@ -399,27 +399,28 @@ describe('TabLayout specs', () => {
 		expect(actual).toMatchObject(expected);
 	});
 
-	test('should scroll Tab into view on focus when orientation is `horizontal`', async () => {
+	test('should use \'primaryIndex\' to determine the default selected tab', () => {
 		render(
 			<TabLayout
-				orientation="horizontal"
+				data-testid="tabLayout"
+				primaryIndex={1}
 			>
-				<Tab icon="home" title="Home">
-					<div>Home</div>
+				<Tab icon="home" title="Test1">
+					<div>Test1Content</div>
 				</Tab>
-				<Tab icon="gear" title="Button">
-					<div>Home</div>
+				<Tab icon="gear" title="Test2">
+					<div>Test2Content</div>
 				</Tab>
-				<Tab icon="playcircle" title="Item">
-					<div>Item</div>
+				<Tab icon="playcircle" title="Test3">
+					<div>Test3Content</div>
 				</Tab>
 			</TabLayout>
 		);
 
-		const tab = screen.getByRole('tab', {name: 'Item'});
-		tab.scrollIntoView = jest.fn();
-		tab.focus();
+		const selectedTab = screen.getByRole('tab', {name: 'Test2'});
+		expect(selectedTab).toHaveClass('selected');
 
-		expect(tab.scrollIntoView).toHaveBeenCalled();
+		const selectedContent = screen.getByText('Test2Content');
+		expect(selectedContent).toBeVisible();
 	});
 });
