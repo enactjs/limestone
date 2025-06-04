@@ -229,12 +229,13 @@ const TabGroupBase = kind({
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
 
-		const useScroller = (children.length > maxTabs);
-		const groupProps = useScroller ? null : {
+		const TAB_SPACING = 48;
+		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
+		const groupProps = hasScroller ? null : {
 			spotlightId,
 			spotlightDisabled
 		};
-		const scrollerProps = useScroller ? {
+		const scrollerProps = hasScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
@@ -242,8 +243,8 @@ const TabGroupBase = kind({
 			spotlightDisabled,
 			verticalScrollbar: 'hidden'
 		} : null;
-		const Component = useScroller ? Scroller : 'div';
-		const GroupComponent = useScroller ? Group : GroupContainer;
+		const Component = hasScroller ? Scroller : 'div';
+		const GroupComponent = hasScroller ? Group : GroupContainer;
 
 		return (
 			<Component
