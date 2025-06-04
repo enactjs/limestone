@@ -5,7 +5,7 @@ import Spotlight from '@enact/spotlight';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createRef, isValidElement, useCallback, useRef} from 'react';
+import {Children, cloneElement, createRef, isValidElement, useCallback, useEffect, useRef, useState} from 'react';
 
 import css from './Chips.module.less';
 
@@ -38,6 +38,7 @@ const ChipsBase = (props) => {
 	const {children, orientation, ...rest} = chipsProps;
 	const chipsClassNames = classnames(css.chips, css[orientation]);
 
+	const [load, setLoad] = useState(false);
 	const containerRef = useRef(null);
 	const buttonRefs = useRef(Array.isArray(children) ? children.map(() => createRef()) : [createRef()]);
 
@@ -60,22 +61,34 @@ const ChipsBase = (props) => {
 		if (isVertical) {
 			if (is('up', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
-				shouldStopPropagation = true;
-				shouldRemoveFocused = currentIndex !== 0;
+
+				if(currentIndex !== 0) {
+					shouldStopPropagation = true;
+					shouldRemoveFocused = true;
+				}
 			} else if (is('down', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-				shouldStopPropagation = true;
-				shouldRemoveFocused = currentIndex !== buttons.length - 1;
+
+				if(currentIndex !== buttons.length - 1) {
+					shouldStopPropagation = true;
+					shouldRemoveFocused = true;
+				}
 			}
 		} else if (isHorizontal) {
 			if (is('left', keyCode)) {
 				nextIndex = Math.max(0, currentIndex - 1);
-				shouldStopPropagation = true;
-				shouldRemoveFocused = currentIndex !== 0;
+
+				if(currentIndex !== 0) {
+					shouldStopPropagation = true;
+					shouldRemoveFocused = true;
+				}
 			} else if (is('right', keyCode)) {
 				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-				shouldStopPropagation = true;
-				shouldRemoveFocused = currentIndex !== buttons.length - 1;
+
+				if(currentIndex !== buttons.length - 1) {
+					shouldStopPropagation = true;
+					shouldRemoveFocused = true;
+				}
 			}
 		}
 
@@ -89,9 +102,15 @@ const ChipsBase = (props) => {
 		}
 	}, [buttonRefs, orientation]);
 
+	useEffect(() => {
+		if (containerRef.current) {
+			setLoad(true);
+		}
+	}, [containerRef]);
+
 	return (
 		<div className={chipsClassNames} ref={containerRef} {...rest}>
-			{children && Children.map(children, (child, idx) => {
+			{children && load && Children.map(children, (child, idx) => {
 				const handleDelete = (ev) => {
 					ev.stopPropagation();
 
@@ -125,7 +144,8 @@ const ChipsBase = (props) => {
 					return cloneElement(child, {
 						handleDelete,
 						onButtonKeyDown,
-						ref: buttonRefs.current[idx]
+						ref: buttonRefs.current[idx],
+						containerRef: containerRef
 					});
 				}
 				return child;

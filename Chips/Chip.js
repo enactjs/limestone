@@ -15,6 +15,12 @@ import Skinnable from '../Skinnable/Skinnable';
 import css from './Chip.module.less';
 import ForwardRef from '@enact/ui/ForwardRef';
 
+const getNavigableFilter = (node) => {
+	if (!node) return false;
+	const rects = node.getBoundingClientRect();
+	return rects.width !== 0 && rects.height !== 0
+  };
+
 /**
  * Provides Limestone styled chip components and behaviors.
  *
@@ -43,7 +49,7 @@ let overComponent = false;
 
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, ref, icon, handleDelete, onButtonKeyDown, buttonRef, ...rest} = chipProps;
+	const {children, className, containerRef, deleteButton, disabled, ref, icon, handleDelete, onButtonKeyDown, buttonRef, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -58,7 +64,13 @@ const ChipBase = (props) => {
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
 		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
+			const containerId = containerRef.current.dataset.spotlightId;
+
+			Spotlight.set(containerId, {navigableFilter: getNavigableFilter});
 			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
+
+			Spotlight.set(containerId, {navigableFilter: null});
+
 			if (nextTarget === null) {
 				return;
 			}
@@ -100,6 +112,7 @@ const ChipBase = (props) => {
 	}, []);
 
 	delete rest.deleteButton;
+	delete rest.containerId;
 
 	return (
 		<div
