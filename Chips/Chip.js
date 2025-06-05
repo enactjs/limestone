@@ -4,10 +4,12 @@ import {getTargetByDirectionFromElement, getTargetBySelector} from '@enact/spotl
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useRef} from 'react';
+import {use, useCallback, useEffect, useRef, useState} from 'react';
 
 import Button from '../Button';
 import Skinnable from '../Skinnable';
+
+import {ChipsContext} from './Chips';
 
 import css from './Chip.module.less';
 
@@ -35,8 +37,9 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
+	const {onChildDelete, orientation, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, ref, handleDelete, icon, index, orientation, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, ref, handleDelete, icon, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -47,6 +50,14 @@ const ChipBase = (props) => {
 	const chipRef = clientRef || ref;
 
 	const isHovering = useRef(false);
+
+	const [index, setIndex] = useState(-1);
+
+	useEffect(() => {
+		if (chipRef.current && deleteButtonRef.current) {
+			setIndex(registerChild(chipRef, deleteButtonRef));
+		}
+	}, [registerChild]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;

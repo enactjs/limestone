@@ -1,20 +1,21 @@
-import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
-import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import Spotlight from '@enact/spotlight';
+import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createRef, isValidElement, useCallback, useEffect, useRef, useState} from 'react';
+import {createContext, useCallback, useRef} from 'react';
 
 import css from './Chips.module.less';
+
+export const ChipsContext = createContext({});
 
 const ChipsDefaultProps = {
 	orientation: 'vertical'
 };
 
 /**
- * A container that surrounds the chip.
+ * A container that surrounds the chips.
  *
  * @example
  *  <Chips orientation="vertical">
@@ -35,51 +36,57 @@ const ChipsDefaultProps = {
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, orientation, ...rest} = chipsProps;
-	const chipsClassNames = classnames(css.chips, css[orientation]);
+	const chipsClassName = classnames(css.chips, css[orientation]);
+	const childRefs = useRef([]);
 
 	const containerRef = useRef(null);
 
+	const onChildDelete = (ev, index) => {
+		/*ev.stopPropagation();
+
+		if (child.props.deleteButton && child.props.deleteButton.onDelete) {
+			child.props.deleteButton.onDelete(ev);
+
+			const containerId = containerRef.current.dataset.spotlightId;
+			const candidate = Spotlight.getSpottableDescendants(containerId);
+			const buttons = candidate.filter((_, index) => index % 2 === 1);
+			const chips = candidate.filter((_, index) => index % 2 === 0);
+			const currentIndex = buttons.findIndex((element) => ev.target === element);
+
+			let nextIndex = currentIndex;
+			let shouldStopPropagation = false;
+
+			if (currentIndex > 0) {
+				nextIndex = Math.max(0, currentIndex - 1);
+				shouldStopPropagation = true;
+			} else {
+				nextIndex = Math.min(chips.length - 1, currentIndex + 1);
+				shouldStopPropagation = true;
+			}
+
+			if (shouldStopPropagation) {
+				Spotlight.focus(chips[nextIndex]);
+				ev.stopPropagation();
+			}
+		}*/
+	};
+
+	const registerChild = useCallback((chipRef, buttonRef) => {
+		childRefs.current.push({chipRef, buttonRef});
+		return childRefs.current.length - 1;
+	}, []);
+
 	return (
-		<div className={chipsClassNames} ref={containerRef} {...rest}>
-			{children && Children.map(children, (child, idx) => {
-				const handleDelete = (ev) => {
-					ev.stopPropagation();
-
-					if (child.props.deleteButton && child.props.deleteButton.onDelete) {
-						child.props.deleteButton.onDelete(ev);
-
-						const containerId = containerRef.current.dataset.spotlightId;
-						const candidate = Spotlight.getSpottableDescendants(containerId);
-						const buttons = candidate.filter((_, index) => index % 2 === 1);
-						const chips = candidate.filter((_, index) => index % 2 === 0);
-						const currentIndex = buttons.findIndex((element) => ev.target === element);
-
-						let nextIndex = currentIndex;
-						let shouldStopPropagation = false;
-
-						if (currentIndex > 0) {
-							nextIndex = Math.max(0, currentIndex - 1);
-							shouldStopPropagation = true;
-						} else {
-							nextIndex = Math.min(chips.length - 1, currentIndex + 1);
-							shouldStopPropagation = true;
-						}
-
-						if (shouldStopPropagation) {
-							Spotlight.focus(chips[nextIndex]);
-							ev.stopPropagation();
-						}
-					}
-				};
-				if (isValidElement(child)) {
-					return cloneElement(child, {
-						handleDelete,
-						index: idx,
-						orientation
-					});
-				}
-				return child;
-			})}
+		<div className={chipsClassName} ref={containerRef} {...rest}>
+			 <ChipsContext
+				value={{
+					onChildDelete,
+					registerChild,
+					orientation
+				}}
+			>
+				{children}
+			</ChipsContext>
 		</div>
 	);
 };
