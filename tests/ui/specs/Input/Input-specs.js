@@ -201,7 +201,7 @@ describe('Input test', () => {
 			await browser.pause(1000);
 
 			expect(await components.input4.self.isFocused()).toBe(true);
-			expect(await components.input4.self.getText()).toBe('●●●●');
+			expect(await components.input4.self.getText()).toBe('****');
 		});
 
 		it('should exit Password Number Input using 5-way escape key', async () => {
@@ -605,7 +605,7 @@ describe('Input test', () => {
 			await components.input4.self.click();
 			await components.input4.numberButton.click();
 
-			expect(await components.input4.numberCell.getText()).toBe('᛫');
+			expect(await components.input4.numberCell.getText()).toBe('󯿛');
 			expect(await components.input4.title.getText()).toBe('Password Number Input');
 		});
 

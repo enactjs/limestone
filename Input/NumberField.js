@@ -37,7 +37,7 @@ const NumberCell = kind({
 
 	defaultProps: {
 		password: false,
-		passwordIcon: '᛫'
+		passwordIcon: 'circle'
 	},
 
 	styles: {

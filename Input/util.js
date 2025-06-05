@@ -33,7 +33,7 @@ const calcAriaLabel = function (prefix, type, value = '') {
 };
 
 const convertToPasswordFormat = (value) => {
-	return '●'.repeat(value && value.length);
+	return '*'.repeat(value && value.length);
 };
 
 /**
