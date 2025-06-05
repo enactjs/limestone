@@ -13,6 +13,12 @@
 			display: block;
 			height: @lime-tablayout-tab-horizontal-button-height;
 			margin: @lime-tablayout-tab-margin;
+
+			&::before {
+				left:0;
+				right: 0;
+			}
+
 			.padding-start-end(@lime-tablayout-tab-horizontal-padding);
 
 			&.small {
@@ -79,7 +85,7 @@
 		padding: @lime-tablayout-horizontal-tabs-padding;
 
 		&:not(.hasScroller) {
-			width: var(--tabs-width);
+			width: calc(var(--tabs-width) + 24px);
 		}
 
 		.tabs {

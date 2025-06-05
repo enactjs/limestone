@@ -231,20 +231,18 @@ const TabGroupBase = kind({
 
 		const TAB_SPACING = 48;
 		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
-		const groupProps = hasScroller ? null : {
-			spotlightId,
-			spotlightDisabled
-		};
-		const scrollerProps = hasScroller ? {
+
+		const groupProps = null;
+		const scrollerProps = {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
 			spotlightId,
 			spotlightDisabled,
 			verticalScrollbar: 'hidden'
-		} : null;
-		const Component = hasScroller ? Scroller : 'div';
-		const GroupComponent = hasScroller ? Group : GroupContainer;
+		};
+		const Component = Scroller;
+		const GroupComponent = Group;
 
 		return (
 			<Component
