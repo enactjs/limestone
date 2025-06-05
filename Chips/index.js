@@ -1,20 +1,17 @@
 /**
- * Provides Limestone styled chip components and behaviors.
+ * Provides Limestone styled Chips and Chip comoponents and behaviors.
  *
- * Usage:
- * ```
- * <Chips>
- *		<Chips.Chip icon={icon} deleteButton={deleteButton}>
- *			label
- *		</Chips.Chip>
- * </Chips>
- * ```
  * @module limestone/Chips
+ * @exports Chip
+ * @exports ChipBase
+ * @exports ChipDecorator
  * @exports Chips
+ * @exports ChipsBase
+ * @exports ChipsDecorator
  */
 
-import Chips from './Chips';
-import Chip from './Chip';
+import Chip, {ChipBase, ChipDecorator} from './Chip';
+import Chips, {ChipsBase, ChipsDecorator} from './Chips';
 
 /**
  * A shortcut to access {@link limestone/Chips.Chip}
@@ -28,5 +25,9 @@ Chips.Chip = Chip;
 export default Chips;
 export {
 	Chip,
-	Chips
+	ChipBase,
+	ChipDecorator,
+	Chips,
+	ChipsBase,
+	ChipsDecorator
 };

@@ -1,19 +1,17 @@
 import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
-import {getDirection} from '@enact/spotlight';
-import Spotlight from '@enact/spotlight';
+import Spotlight, {getDirection} from '@enact/spotlight';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
-import {getPointerMode} from '@enact/spotlight/src/pointer';
+import ForwardRef from '@enact/ui/ForwardRef';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useRef} from 'react';
 
-import Button from '../Button/Button';
-import Skinnable from '../Skinnable/Skinnable';
+import Button from '../Button';
+import Skinnable from '../Skinnable';
 
 import css from './Chip.module.less';
-import ForwardRef from '@enact/ui/ForwardRef';
 
 const getNavigableFilter = (node) => {
 	if (!node) return false;
@@ -21,8 +19,12 @@ const getNavigableFilter = (node) => {
 	return rects.width !== 0 && rects.height !== 0;
 };
 
+const ChipDefaultProps = {
+	disabled: false
+};
+
 /**
- * Provides Limestone styled chip components and behaviors.
+ * Provides Limestone styled Chip component and behaviors.
  *
  * @example
  * <Chip
@@ -40,13 +42,6 @@ const getNavigableFilter = (node) => {
  * @ui
  * @public
  */
-
-const ChipDefaultProps = {
-	disabled: false
-};
-
-let overComponent = false;
-
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	const {children, className, containerRef, deleteButton, disabled, ref, icon, handleDelete, onButtonKeyDown, buttonRef, ...rest} = chipProps;
@@ -55,6 +50,7 @@ const ChipBase = (props) => {
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
 	const chipContainerRef = useRef(null);
 	const clientRef = useRef(null);
+	const isHovering = useRef(false);
 	const chipRef = clientRef || ref;
 
 	const handleButtonKeyDown = useCallback((ev) => {
@@ -98,17 +94,17 @@ const ChipBase = (props) => {
 	}, [chipRef, buttonRef]);
 
 	const handleBlur = useCallback(() => {
-		if (getPointerMode() === true && !overComponent) {
+		if (Spotlight.getPointerMode() === true && !isHovering.current) {
 			buttonRef.current.classList.remove(css.focused);
 		}
 	}, [buttonRef]);
 
 	const handleMouseOver = useCallback(() => {
-		overComponent = true;
+		isHovering.current = true;
 	}, []);
 
 	const handleMouseOut = useCallback(() => {
-		overComponent = false;
+		isHovering.current = false;
 	}, []);
 
 	delete rest.deleteButton;
