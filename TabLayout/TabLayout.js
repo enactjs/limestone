@@ -45,8 +45,12 @@ const TouchableCell = Touchable(Cell);
 
 const isTouchMode = () => (getLastInputType() === 'touch');
 
-const getHorizontalTabWidth = (dataSize, size) => {
+const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 	let widths;
+
+	if (tabSize) {
+		return tabSize;
+	}
 
 	if (size === 'small') {
 		widths = [540, 420, 420];
@@ -63,8 +67,8 @@ const getHorizontalTabWidth = (dataSize, size) => {
 	}
 };
 
-const isHorizontalScrollableTabs = (dataSize, size) => {
-	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size) + TAB_SPACING * (dataSize - 1);
+const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
 	if (typeof window !== 'undefined' && window?.screen?.width) {
 		return window.screen.width < ri.scale(totalTabsWidth);
 	} else {
@@ -265,6 +269,22 @@ const TabLayoutBase = kind({
 		size: PropTypes.oneOf(['small', 'large']),
 
 		/**
+		 * Assign a custom size to horizontal tabs.
+		 *
+		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
+		 * Leave this prop blank to use the default auto-sizing behavior.
+		 * Tabs may also be set to a finite width using this property. This accepts numeric pixel
+		 * values. Be mindful of the value you provide as values that are too wide will run off the
+		 * edge of the screen.
+		 *
+		 * Only applies to `orientation="horizontal"` at this time.
+		 *
+		 * @type {Number}
+		 * @public
+		 */
+		tabSize: PropTypes.number,
+
+		/**
 		 * Type of TabLayout.
 		 *
 		 * @type {('normal'|'popup')}
@@ -435,7 +455,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, offset, onCollapse, onSelect, orientation, size, tabOrientation, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, offset, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -447,7 +467,7 @@ const TabLayoutBase = kind({
 		const contentCellProps = isVertical ? {onFlick: handleFlick} : null;
 		const isScrollable = orientation === 'viertical' ?
 			(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-			isHorizontalScrollableTabs(children.length, size);
+			isHorizontalScrollableTabs(children.length, size, tabSize);
 
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
@@ -472,7 +492,7 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							collapsed={isVertical}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
-							tabSize={!isVertical ? getHorizontalTabWidth(tabs.length, size) : null}
+							tabSize={!isVertical ? getHorizontalTabWidth(tabs.length, size, tabSize) : null}
 							size={size}
 							spotlightDisabled={!collapsed && isVertical}
 							hasScroller={isScrollable}
