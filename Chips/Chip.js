@@ -1,8 +1,6 @@
-import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
-import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
-import ForwardRef from '@enact/ui/ForwardRef';
+import {getTargetByDirectionFromElement, getTargetBySelector} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -12,12 +10,6 @@ import Button from '../Button';
 import Skinnable from '../Skinnable';
 
 import css from './Chip.module.less';
-
-const getNavigableFilter = (node) => {
-	if (!node) return false;
-	const rects = node.getBoundingClientRect();
-	return rects.width !== 0 && rects.height !== 0;
-};
 
 const ChipDefaultProps = {
 	disabled: false
@@ -44,28 +36,28 @@ const ChipDefaultProps = {
  */
 const ChipBase = (props) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, containerRef, deleteButton, disabled, ref, icon, handleDelete, onButtonKeyDown, buttonRef, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, ref, handleDelete, icon, index, orientation, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipContainerRef = useRef(null);
+
+	const containerRef = useRef(null);
 	const clientRef = useRef(null);
-	const isHovering = useRef(false);
+	const deleteButtonRef = useRef(null);
 	const chipRef = clientRef || ref;
 
-	const handleButtonKeyDown = useCallback((ev) => {
-		onButtonKeyDown(ev, css.focused);
-	}, [onButtonKeyDown]);
+	const isHovering = useRef(false);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
-		if (is('left', keyCode) || is('right', keyCode) || is('down', keyCode) || is('up', keyCode)) {
-			const containerId = containerRef.current.dataset.spotlightId;
-
-			Spotlight.set(containerId, {navigableFilter: getNavigableFilter});
-			const nextTarget = getTargetByDirectionFromElement(getDirection(keyCode), target);
-
-			Spotlight.set(containerId, {navigableFilter: null});
+		const direction = getDirection(keyCode);
+		if (direction) {
+			let nextTarget = null;
+			if (target === deleteButtonRef.current.firstChild && direction === 'down' && orientation === 'vertical') {
+				nextTarget = getTargetBySelector('[data-index="' + (index + 1) + '"]');
+			} else {
+				nextTarget = getTargetByDirectionFromElement(direction, target);
+			}
 
 			if (nextTarget === null) {
 				return;
@@ -74,30 +66,29 @@ const ChipBase = (props) => {
 			Spotlight.focus(nextTarget);
 			ev.stopPropagation();
 
-			if (nextTarget !== null && nextTarget !== buttonRef.current.firstChild && nextTarget !== chipRef.current) {
-				buttonRef.current?.classList.remove(css.focused);
+			if (nextTarget !== null && nextTarget !== deleteButtonRef.current.firstChild && nextTarget !== chipRef.current) {
+				deleteButtonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef, buttonRef, containerRef]);
+	}, [orientation, index]);
 
 	const handleMouseLeave = useCallback((ev) => {
-		if (chipContainerRef.current.contains(ev.target)) {
-			buttonRef.current.classList.remove(css.focused);
+		if (containerRef.current.contains(ev.target)) {
+			deleteButtonRef.current.classList.remove(css.focused);
 		}
-	}, [buttonRef]);
+	}, []);
 
 	const handleFocus = useCallback((ev) => {
 		if (ev.target === chipRef.current) {
-			chipRef.current.classList.add(css.selected);
-			buttonRef.current.classList.add(css.focused);
+			deleteButtonRef.current.classList.add(css.focused);
 		}
-	}, [chipRef, buttonRef]);
+	}, []);
 
 	const handleBlur = useCallback(() => {
-		if (Spotlight.getPointerMode() === true && !isHovering.current) {
-			buttonRef.current.classList.remove(css.focused);
+		if (Spotlight.getPointerMode() && !isHovering.current) {
+			deleteButtonRef.current.classList.remove(css.focused);
 		}
-	}, [buttonRef]);
+	}, []);
 
 	const handleMouseOver = useCallback(() => {
 		isHovering.current = true;
@@ -106,9 +97,6 @@ const ChipBase = (props) => {
 	const handleMouseOut = useCallback(() => {
 		isHovering.current = false;
 	}, []);
-
-	delete rest.deleteButton;
-	delete rest.containerId;
 
 	return (
 		<div
@@ -119,11 +107,12 @@ const ChipBase = (props) => {
 			onMouseOver={handleMouseOver}
 			onMouseOut={handleMouseOut}
 			onKeyDown={handleKeyDown}
-			ref={chipContainerRef}
+			ref={containerRef}
 		>
 			<Button
 				css={css}
 				className={chipClassName}
+				data-index={index}
 				disabled={disabled}
 				focusEffect="static"
 				icon={icon ? icon : null}
@@ -134,7 +123,7 @@ const ChipBase = (props) => {
 				{children}
 			</Button>
 			{deleteButton &&
-				<div className={buttonClassName} ref={buttonRef}>
+				<div className={buttonClassName} ref={deleteButtonRef}>
 					<Button
 						backgroundOpacity="transparent"
 						css={css}
@@ -142,7 +131,6 @@ const ChipBase = (props) => {
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
 						onClick={handleDelete}
-						onKeyDown={handleButtonKeyDown}
 					/>
 				</div>
 			}
@@ -168,7 +156,7 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @type {Object.<{icon: (String|Object), onDelete: (Function), position: ('top'|'bottom'|'right')}>|Boolean}
 	 * @public
 	 */
-	deleteButton: PropTypes.oneOf([
+	deleteButton: PropTypes.oneOfType([
 		PropTypes.shape({
 			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 			onDelete: PropTypes.func,
@@ -203,8 +191,7 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
  * @public
  */
 const ChipDecorator = compose(
-	Skinnable,
-	ForwardRef({prop: 'buttonRef'})
+	Skinnable
 );
 
 const Chip = ChipDecorator(ChipBase);

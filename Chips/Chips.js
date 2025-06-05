@@ -32,85 +32,16 @@ const ChipsDefaultProps = {
  * @ui
  * @public
  */
-
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, orientation, ...rest} = chipsProps;
 	const chipsClassNames = classnames(css.chips, css[orientation]);
 
-	const [load, setLoad] = useState(false);
 	const containerRef = useRef(null);
-	const buttonRefs = useRef(Array.isArray(children) ? children.map(() => createRef()) : [createRef()]);
-
-	const onButtonKeyDown = useCallback((ev, focused) => {
-		const {keyCode, target} = ev;
-
-		const containerId = containerRef.current.dataset.spotlightId;
-		const candidate = Spotlight.getSpottableDescendants(containerId);
-		const buttons = candidate.filter((_, index) => index % 2 === 1);
-		const chips = candidate.filter((_, index) => index % 2 === 0);
-		const currentIndex = buttons.findIndex((element) => target === element);
-
-		let nextIndex = currentIndex;
-		let shouldStopPropagation = false;
-		let shouldRemoveFocused = true;
-
-		const isVertical = orientation === 'vertical';
-		const isHorizontal = orientation === 'horizontal';
-
-		if (isVertical) {
-			if (is('up', keyCode)) {
-				nextIndex = Math.max(0, currentIndex - 1);
-
-				if (currentIndex !== 0) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			} else if (is('down', keyCode)) {
-				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-
-				if (currentIndex !== buttons.length - 1) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			}
-		} else if (isHorizontal) {
-			if (is('left', keyCode)) {
-				nextIndex = Math.max(0, currentIndex - 1);
-
-				if (currentIndex !== 0) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			} else if (is('right', keyCode)) {
-				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-
-				if (currentIndex !== buttons.length - 1) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			}
-		}
-
-		if (shouldStopPropagation) {
-			Spotlight.focus(chips[nextIndex]);
-			ev.stopPropagation();
-
-			if (shouldRemoveFocused) {
-				buttonRefs.current[currentIndex].current.classList.remove(focused);
-			}
-		}
-	}, [buttonRefs, orientation]);
-
-	useEffect(() => {
-		if (containerRef.current) {
-			setLoad(true);
-		}
-	}, [containerRef]);
 
 	return (
 		<div className={chipsClassNames} ref={containerRef} {...rest}>
-			{children && load && Children.map(children, (child, idx) => {
+			{children && Children.map(children, (child, idx) => {
 				const handleDelete = (ev) => {
 					ev.stopPropagation();
 
@@ -143,9 +74,8 @@ const ChipsBase = (props) => {
 				if (isValidElement(child)) {
 					return cloneElement(child, {
 						handleDelete,
-						onButtonKeyDown,
-						ref: buttonRefs.current[idx],
-						containerRef: containerRef
+						index: idx,
+						orientation
 					});
 				}
 				return child;
@@ -178,7 +108,12 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
 		enterTo: 'default-element',
-		leaveFor: {up: '#right'}
+		leaveFor: {up: '#right'},
+		navigableFilter: (node) => {
+			if (!node) return false;
+			const rects = node.getBoundingClientRect();
+			return rects.width !== 0 && rects.height !== 0;
+		}
 	})
 );
 
