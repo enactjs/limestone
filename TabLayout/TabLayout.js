@@ -182,6 +182,15 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
+		 * The offset of the tabgroup area from the left and right edges of the screen.
+		 *
+		 * @type {Number}
+		 * @default 132
+		 * @public
+		 */
+		offset: PropTypes.number,
+
+		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -279,6 +288,7 @@ const TabLayoutBase = kind({
 		},
 		index: null,
 		primaryIndex: null,
+		offset: 132,
 		orientation: 'vertical',
 		size: 'large',
 		type: 'normal'
@@ -425,7 +435,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, offset, onCollapse, onSelect, orientation, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.onTabAnimationEnd;
@@ -443,6 +453,7 @@ const TabLayoutBase = kind({
 		const tabGroupProps = {
 			css,
 			primaryIndex,
+			offset,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,

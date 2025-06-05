@@ -191,7 +191,7 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, hasScroller, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, hasScroller, id, noIcons, offset, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -251,7 +251,7 @@ const TabGroupBase = kind({
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
-				style={{"--tabs-width": orientation === "horizontal" ? totalTabsWidth : '100%'}}
+				style={{"--tabs-width": orientation === "horizontal" ? totalTabsWidth : '100%', "--offset": ri.scaleToRem(offset), "--is-scrolled": hasScroller ? '1' : '0'}}
 				{...scrollerProps}
 			>
 				{noIcons ? (

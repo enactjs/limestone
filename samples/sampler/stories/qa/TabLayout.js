@@ -93,7 +93,6 @@ export const WithVariableNumberOfTabs = (args) => {
 			<TabLayout
 				css={isHorizontal ? css : null}
 				orientation={args['orientation']}
-				style={{"--is-scrolled": isHorizontalScrollableTabs(tabs, 'large') ? 1 : 0}}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i}`} icon={tabIcons[i % tabIcons.length]} key={`tab${i}`}>

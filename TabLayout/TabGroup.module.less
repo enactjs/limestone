@@ -75,6 +75,7 @@
 	}
 
 	&.horizontal {
+		margin-left: calc((1 - var(--is-scrolled)) * var(--offset));
 		padding: @lime-tablayout-horizontal-tabs-padding;
 
 		&:not(.hasScroller) {
@@ -83,7 +84,9 @@
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
-			width: var(--tabs-width);
+			width: calc(var(--tabs-width) + var(--is-scrolled) * var(--offset) * 2);
+			padding-left: calc(var(--is-scrolled) * var(--offset));
+			padding-right: calc(var(--is-scrolled) * var(--offset));
 		}
 	}
 

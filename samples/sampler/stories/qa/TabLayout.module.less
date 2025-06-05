@@ -4,21 +4,6 @@
     }
 }
 
-.tabs {
-    --padding-width: 132px;
-
-    .tabGroup {
-        margin-left: calc((1 - var(--is-scrolled)) * var(--padding-width));
-    }
-
-    .tabGroup [role="tablist"] {
-        padding-left: calc(var(--is-scrolled) * var(--padding-width));
-        padding-right: calc(var(--is-scrolled) * var(--padding-width));
-
-        width: calc(var(--tabs-width) + var(--is-scrolled) * var(--padding-width) * 2);
-    }
-}
-
 .scroller {
     padding: 0 132px;
 }
