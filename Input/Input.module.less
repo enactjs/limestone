@@ -49,6 +49,7 @@
 			.position(0);
 			content: '';
 			z-index: -1;
+			border-radius: @lime-input-numbercell-border-radius;
 		}
 	}
 
@@ -69,7 +70,6 @@
 	.submitButton {
 		display: block;
 		margin: @lime-input-overlay-submitbutton-margin;
-		height: @lime-input-overlay-submitbutton-height;
 		width: @lime-input-overlay-submitbutton-width;
 	}
 
@@ -123,7 +123,7 @@
 			margin: @lime-input-fullscreen-numbercell-margin;
 
 			&.password {
-				font-size: @lime-input-numbercell-password-font-size;
+				font-size: @lime-input-fullscreen-numbercell-password-font-size;
 			}
 		}
 
@@ -250,7 +250,7 @@
 			margin: @lime-input-overlay-numbercell-margin;
 
 			&.password {
-				font-size: @lime-input-numbercell-password-font-size;
+				font-size: @lime-input-overlay-numbercell-password-font-size;
 			}
 		}
 
