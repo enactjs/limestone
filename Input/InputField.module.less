@@ -233,22 +233,28 @@
 		.lime-disabled({
 			.bg {
 				.lime-disabled-focus-bg-colors(@bg: {
-					opacity: @lime-inputfield-container-opacity
+					opacity: @lime-inputfield-container-inactive-opacity
 				});
 			}
 
 			.input {
 				color: @lime-inputfield-label-inactive-color;
-				opacity: @lime-inputfield-label-inactive-focused-opacity;
+				opacity: @lime-inputfield-label-inactive-opacity;
+
+				.input-placeholder({
+					opacity: @lime-inputfield-label-inactive-opacity;
+				})
 			}
 
 			.focus({
 				.bg {
 					background-color: @lime-inputfield-container-disabled-focused-color;
 					filter: unset;
+					opacity: @lime-inputfield-container-inactive-focused-opacity;
 				}
 
 				.input {
+					opacity: 1;
 					color: @lime-inputfield-label-inactive-focused-color;
 				}
 			});

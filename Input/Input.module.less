@@ -42,14 +42,13 @@
 	.numberCell {
 		position: relative;
 		z-index: 0;
+		border-radius: @lime-input-numbercell-border-radius;
 
 		&::before {
 			position: absolute;
 			.position(0);
 			content: '';
 			z-index: -1;
-
-			border-radius: @lime-input-numbercell-border-radius;
 		}
 	}
 
@@ -70,6 +69,8 @@
 	.submitButton {
 		display: block;
 		margin: @lime-input-overlay-submitbutton-margin;
+		height: @lime-input-overlay-submitbutton-height;
+		width: @lime-input-overlay-submitbutton-width;
 	}
 
 	.inputArea {
@@ -122,7 +123,7 @@
 			margin: @lime-input-fullscreen-numbercell-margin;
 
 			&.password {
-				font-size: @lime-input-fullscreen-numbercell-password-font-size;
+				font-size: @lime-input-numbercell-password-font-size;
 			}
 		}
 
@@ -247,6 +248,10 @@
 			height: @lime-input-overlay-numbercell-height;
 			font-size: @lime-input-overlay-numbercell-font-size;
 			margin: @lime-input-overlay-numbercell-margin;
+
+			&.password {
+				font-size: @lime-input-numbercell-password-font-size;
+			}
 		}
 
 		.joined {
@@ -352,6 +357,7 @@
 
 			.numberCell.active {
 				color: @lime-input-dot-focused-color;
+				box-shadow: @lime-input-numberfield-active-shadow;
 
 				&::before {
 					.lime-spotlight-focus-bg-colors();
