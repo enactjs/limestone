@@ -2,13 +2,18 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## unreleased
+
+### Changed
+
+- `limestone/Input` styling to match the latest GUI
+
 ## [1.0.0-rc.2] - 2025-06-04
 
 ### Changed
 
 - `limestone/ContextualMenuDecorator` styling to match the latest GUI
 - `limestone/FixedPopupPanels` styling to match the latest GUI
-- `limestone/Input` styling to match the latest GUI
 
 ### Fixed
 

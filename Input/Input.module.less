@@ -18,6 +18,7 @@
 
 	.back {
 		position: absolute;
+		margin: 0;
 
 		.lime-custom-text({
 			.lime-small-button-text();
@@ -99,6 +100,7 @@
 
 	&.fullscreen {
 		.back {
+			left: @lime-input-fullscreen-back-button-left;
 			top: @lime-input-fullscreen-back-button-top;
 
 			.position-start-end(@lime-input-fullscreen-back-button-start, initial);
@@ -181,6 +183,11 @@
 			align-items: center;
 			height: @lime-input-fullscreen-inputarea-height;
 
+			.input,
+			.inputHighlight {
+				width: @lime-input-fullscreen-inputarea-width;
+			}
+
 			.textField {
 				height: @lime-input-fullscreen-textfield-height;
 				max-width: @lime-input-fullscreen-textfield-max-width;
@@ -213,6 +220,7 @@
 
 	&.overlay {
 		width: @lime-input-overlay-width;
+		border-radius: @lime-input-overlay-border-radius;
 
 		.back {
 			top: @lime-input-overlay-back-button-top;
@@ -237,6 +245,11 @@
 
 		.inputArea {
 			margin: @lime-input-overlay-inputarea-margin;
+
+			.input,
+			.inputHighlight {
+				width: @lime-input-overlay-inputarea-width;
+			}
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;
