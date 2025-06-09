@@ -54,7 +54,7 @@ const ChipBase = (props) => {
 	const [index, setIndex] = useState(-1);
 
 	useEffect(() => {
-		if (chipRef.current && deleteButtonRef.current) {
+		if (chipRef.current && deleteButtonRef.current && registerChild) {
 			setIndex(registerChild(chipRef, deleteButtonRef));
 		}
 	}, [registerChild]);
