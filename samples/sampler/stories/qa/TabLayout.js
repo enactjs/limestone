@@ -5,7 +5,7 @@ import {InputField} from '@enact/limestone/Input';
 import Item from '@enact/limestone/Item';
 import {Panel, Header} from '@enact/limestone/Panels';
 import {Scroller} from '@enact/limestone/Scroller';
-import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
+import TabLayout, {isHorizontalScrollableTabs, TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 import Layout, {Cell, Column, Row} from '@enact/ui/Layout';

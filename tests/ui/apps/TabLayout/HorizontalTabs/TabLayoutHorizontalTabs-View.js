@@ -13,7 +13,6 @@ const app = (props) => (
 	<TabLayout
 		{...props}
 		id="tabLayout"
-		offset={0}
 		orientation="horizontal"
 	>
 		{tabsForScroll}

@@ -144,6 +144,8 @@ const Scroller = Skinnable(
 	)
 );
 
+const GroupContainer = SpotlightContainerDecorator(spotlightContainerConfig, Group);
+
 /**
  * A group of tabs
  *
@@ -229,18 +231,20 @@ const TabGroupBase = kind({
 
 		const TAB_SPACING = 48;
 		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
-
-		const groupProps = null;
-		const scrollerProps = {
+		const groupProps = hasScroller ? null : {
+			spotlightId,
+			spotlightDisabled
+		};
+		const scrollerProps = hasScroller ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
 			spotlightId,
 			spotlightDisabled,
 			verticalScrollbar: 'hidden'
-		};
-		const Component = Scroller;
-		const GroupComponent = Group;
+		} : null;
+		const Component = hasScroller ? Scroller : 'div';
+		const GroupComponent = hasScroller ? Group : GroupContainer;
 
 		return (
 			<Component
