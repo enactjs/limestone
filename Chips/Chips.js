@@ -42,7 +42,7 @@ const ChipsBase = (props) => {
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 
-	const getPreviousChip= useCallback((index) => {
+	const getPreviousChip = useCallback((index) => {
 		return childRefs.current
 			.slice()
 			.reverse()
@@ -92,7 +92,7 @@ const ChipsBase = (props) => {
 		}
 
 		return nextTarget;
-	}, [orientation]);
+	}, [getNextChip, getPreviousChip, orientation]);
 
 	const registerChild = useCallback((chipRef) => {
 		childRefs.current.push({chipRef, index: childRefs.current.length});

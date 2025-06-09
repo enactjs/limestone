@@ -83,7 +83,7 @@ const ChipBase = (props) => {
 				deleteButtonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef, index]);
+	}, [chipRef, getNextTargetFromDeleteButton, index]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (containerRef.current.contains(ev.target)) {
