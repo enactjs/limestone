@@ -23,7 +23,7 @@ const ChipsDefaultProps = {
  *  <Chips>
  *  	{chips.map(({id, icon, children}) => {
  *			return (
- *				<Chip key={id} icon={icon} deleteButton={deleteButton} onClick={onClick}>
+ *				<Chip key={id} icon={icon} onClick={onClick}>
  *					{children}
  *				</Chip>
  *     		);
@@ -40,15 +40,22 @@ const ChipsBase = (props) => {
 	const {children, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation]);
 	const childRefs = useRef([]);
-
 	const containerRef = useRef(null);
 
-	const onChipDelete = (ev, index) => {
-		const prevNode = childRefs.current
+	const getPreviousChip= useCallback((index) => {
+		return childRefs.current
 			.slice()
 			.reverse()
 			.find((child) => child.index < index);
-		const nextNode = childRefs.current.find((child) => child.index > index);
+	}, []);
+
+	const getNextChip = useCallback((index) => {
+		return childRefs.current.find((child) => child.index > index);
+	}, []);
+
+	const handleChipDelete = (ev, index) => {
+		const prevNode = getPreviousChip(index);
+		const nextNode = getNextChip(index);
 
 		if (prevNode) {
 			Spotlight.focus(prevNode.chipRef.current);
@@ -74,6 +81,19 @@ const ChipsBase = (props) => {
 		childRefs.current = childRefs.current.filter((child) => child.index !== index);
 	};
 
+	const getNextTargetFromDeleteButton = useCallback((direction, index) => {
+		let nextTarget = null;
+		if ((orientation === 'vertical' && direction === 'up') || (orientation === 'horizontal' && direction === 'left')) {
+			const prevChip = getPreviousChip(index);
+			nextTarget = prevChip ? prevChip.chipRef.current : null;
+		} else if ((orientation === 'vertical' && direction === 'down') || (orientation === 'horizontal' && direction === 'right')) {
+			const nextChip = getNextChip(index);
+			nextTarget = nextChip ? nextChip.chipRef.current : null;
+		}
+
+		return nextTarget;
+	}, [orientation]);
+
 	const registerChild = useCallback((chipRef) => {
 		childRefs.current.push({chipRef, index: childRefs.current.length});
 		return childRefs.current.length - 1;
@@ -83,9 +103,9 @@ const ChipsBase = (props) => {
 		<div className={chipsClassName} ref={containerRef} {...rest}>
 			<ChipsContext
 				value={{
-					onChipDelete,
-					registerChild,
-					orientation
+					getNextTargetFromDeleteButton,
+					handleChipDelete,
+					registerChild
 				}}
 			>
 				{children}
@@ -103,7 +123,7 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 * @type {Node}
 	 * @public
 	 */
-	children: PropTypes.string.isRequired,
+	children: PropTypes.node,
 
 	/**
 	 * The layout orientation of the component.
@@ -115,6 +135,14 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
+/**
+ * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.
+ *
+ * @hoc
+ * @memberof limestone/Chips
+ * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
+ * @public
+ */
 const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
 		enterTo: 'default-element',

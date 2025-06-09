@@ -1,6 +1,6 @@
 import {setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
-import {getTargetByDirectionFromElement, getTargetBySelector} from '@enact/spotlight/src/target';
+import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -37,7 +37,7 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
-	const {onChipDelete, orientation, registerChild} = use(ChipsContext);
+	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
 
@@ -64,9 +64,11 @@ const ChipBase = (props) => {
 		const direction = getDirection(keyCode);
 		if (direction) {
 			let nextTarget = null;
-			if (target === deleteButtonRef.current.firstChild && direction === 'down' && orientation === 'vertical') {
-				nextTarget = getTargetBySelector('[data-chip-index="' + (index + 1) + '"]');
-			} else {
+			if (target === deleteButtonRef.current.firstChild) {
+				nextTarget = getNextTargetFromDeleteButton(direction, index);
+			}
+
+			if (nextTarget === null) {
 				nextTarget = getTargetByDirectionFromElement(direction, target);
 			}
 
@@ -81,7 +83,7 @@ const ChipBase = (props) => {
 				deleteButtonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef, orientation, index]);
+	}, [chipRef, index]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (containerRef.current.contains(ev.target)) {
@@ -110,13 +112,13 @@ const ChipBase = (props) => {
 	}, []);
 
 	const handleDelete = useCallback((ev) => {
-		if (onChipDelete) {
-			onChipDelete(ev, index);
+		if (handleChipDelete) {
+			handleChipDelete(ev, index);
 		}
 		if (deleteButton?.onDelete) {
 			deleteButton.onDelete(ev);
 		}
-	}, [deleteButton, onChipDelete, index]);
+	}, [deleteButton, handleChipDelete, index]);
 
 	return (
 		<div
