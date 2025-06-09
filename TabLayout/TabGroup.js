@@ -144,8 +144,6 @@ const Scroller = Skinnable(
 	)
 );
 
-const GroupContainer = SpotlightContainerDecorator(spotlightContainerConfig, Group);
-
 /**
  * A group of tabs
  *
