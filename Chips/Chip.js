@@ -37,9 +37,9 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
-	const {onChildDelete, orientation, registerChild} = use(ChipsContext);
+	const {onChipDelete, orientation, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, ref, handleDelete, icon, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -54,10 +54,10 @@ const ChipBase = (props) => {
 	const [index, setIndex] = useState(-1);
 
 	useEffect(() => {
-		if (chipRef.current && deleteButtonRef.current && registerChild) {
-			setIndex(registerChild(chipRef, deleteButtonRef));
+		if (chipRef.current && registerChild) {
+			setIndex(registerChild(chipRef));
 		}
-	}, [registerChild]);
+	}, [chipRef, registerChild]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
@@ -65,7 +65,7 @@ const ChipBase = (props) => {
 		if (direction) {
 			let nextTarget = null;
 			if (target === deleteButtonRef.current.firstChild && direction === 'down' && orientation === 'vertical') {
-				nextTarget = getTargetBySelector('[data-index="' + (index + 1) + '"]');
+				nextTarget = getTargetBySelector('[data-chip-index="' + (index + 1) + '"]');
 			} else {
 				nextTarget = getTargetByDirectionFromElement(direction, target);
 			}
@@ -81,7 +81,7 @@ const ChipBase = (props) => {
 				deleteButtonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [orientation, index]);
+	}, [chipRef, orientation, index]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (containerRef.current.contains(ev.target)) {
@@ -93,7 +93,7 @@ const ChipBase = (props) => {
 		if (ev.target === chipRef.current) {
 			deleteButtonRef.current.classList.add(css.focused);
 		}
-	}, []);
+	}, [chipRef]);
 
 	const handleBlur = useCallback(() => {
 		if (Spotlight.getPointerMode() && !isHovering.current) {
@@ -109,6 +109,15 @@ const ChipBase = (props) => {
 		isHovering.current = false;
 	}, []);
 
+	const handleDelete = useCallback((ev) => {
+		if (onChipDelete) {
+			onChipDelete(ev, index);
+		}
+		if (deleteButton?.onDelete) {
+			deleteButton.onDelete(ev);
+		}
+	}, [deleteButton, onChipDelete, index]);
+
 	return (
 		<div
 			{...rest}
@@ -123,7 +132,7 @@ const ChipBase = (props) => {
 			<Button
 				css={css}
 				className={chipClassName}
-				data-index={index}
+				data-chip-index={index}
 				disabled={disabled}
 				focusEffect="static"
 				icon={icon ? icon : null}

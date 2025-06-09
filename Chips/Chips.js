@@ -1,6 +1,8 @@
 import {setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
+import {getAllContainerIds} from '@enact/spotlight/src/container';
+import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -18,7 +20,7 @@ const ChipsDefaultProps = {
  * A container that surrounds the chips.
  *
  * @example
- *  <Chips orientation="vertical">
+ *  <Chips>
  *  	{chips.map(({id, icon, children}) => {
  *			return (
  *				<Chip key={id} icon={icon} deleteButton={deleteButton} onClick={onClick}>
@@ -41,46 +43,47 @@ const ChipsBase = (props) => {
 
 	const containerRef = useRef(null);
 
-	const onChildDelete = (ev, index) => {
-		/*ev.stopPropagation();
+	const onChipDelete = (ev, index) => {
+		const prevNode = childRefs.current
+			.slice()
+			.reverse()
+			.find((child) => child.index < index);
+		const nextNode = childRefs.current.find((child) => child.index > index);
 
-		if (child.props.deleteButton && child.props.deleteButton.onDelete) {
-			child.props.deleteButton.onDelete(ev);
+		if (prevNode) {
+			Spotlight.focus(prevNode.chipRef.current);
+		} else if (nextNode) {
+			Spotlight.focus(nextNode.chipRef.current);
+		} else {
+			const rect = ev.target.getBoundingClientRect();
+			const position = {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2};
+			const containerIds = getAllContainerIds();
+			containerRef.current.dataset.spotlightContainerDisabled = true;
 
-			const containerId = containerRef.current.dataset.spotlightId;
-			const candidate = Spotlight.getSpottableDescendants(containerId);
-			const buttons = candidate.filter((_, index) => index % 2 === 1);
-			const chips = candidate.filter((_, index) => index % 2 === 0);
-			const currentIndex = buttons.findIndex((element) => ev.target === element);
-
-			let nextIndex = currentIndex;
-			let shouldStopPropagation = false;
-
-			if (currentIndex > 0) {
-				nextIndex = Math.max(0, currentIndex - 1);
-				shouldStopPropagation = true;
-			} else {
-				nextIndex = Math.min(chips.length - 1, currentIndex + 1);
-				shouldStopPropagation = true;
+			for (const containerId of containerIds) {
+				const nearestTarget = getNearestTargetFromPosition(position, containerId);
+				if (nearestTarget) {
+					Spotlight.focus(nearestTarget);
+					break;
+				}
 			}
 
-			if (shouldStopPropagation) {
-				Spotlight.focus(chips[nextIndex]);
-				ev.stopPropagation();
-			}
-		}*/
+			containerRef.current.dataset.spotlightContainerDisabled = false;
+		}
+
+		childRefs.current = childRefs.current.filter((child) => child.index !== index);
 	};
 
-	const registerChild = useCallback((chipRef, buttonRef) => {
-		childRefs.current.push({chipRef, buttonRef});
+	const registerChild = useCallback((chipRef) => {
+		childRefs.current.push({chipRef, index: childRefs.current.length});
 		return childRefs.current.length - 1;
 	}, []);
 
 	return (
 		<div className={chipsClassName} ref={containerRef} {...rest}>
-			 <ChipsContext
+			<ChipsContext
 				value={{
-					onChildDelete,
+					onChipDelete,
 					registerChild,
 					orientation
 				}}

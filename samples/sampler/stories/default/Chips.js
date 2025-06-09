@@ -1,5 +1,6 @@
 import {Chip, Chips} from '@enact/limestone/Chips';
-import {select, action} from '@enact/storybook-utils/addons/controls';
+import {action} from '@enact/storybook-utils/addons/actions';
+import {select} from '@enact/storybook-utils/addons/controls';
 import {useState} from 'react';
 
 Chip.displayName = 'Chip';
@@ -21,7 +22,7 @@ export const _Chips = (args) => {
 	const orientation = args['orientation'];
 
 	const handleDelete = (id) => {
-		action('onDelete')();
+		action('onDelete')({id});
 		setChips(chips.filter(chip => chip.id !== id));
 	};
 
