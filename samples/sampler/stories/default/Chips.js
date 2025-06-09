@@ -17,7 +17,7 @@ const defaultChips = [
 	{id:3, children:'chip4', icon: 'ai'}
 ];
 
-export const _Chips = (args) => {
+export const Chips_ = (args) => {
 	const [chips, setChips] = useState(defaultChips);
 	const orientation = args['orientation'];
 
@@ -48,10 +48,10 @@ export const _Chips = (args) => {
 	);
 };
 
-select('orientation', _Chips, ['horizontal', 'vertical'], 'vertical');
+select('orientation', Chips_, ['horizontal', 'vertical'], 'vertical');
 
-_Chips.storyName = 'Chips';
-_Chips.parameters = {
+Chips_.storyName = 'Chips';
+Chips_.parameters = {
 	info: {
 		text: 'The basic Chips'
 	}
