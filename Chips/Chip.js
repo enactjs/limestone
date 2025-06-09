@@ -13,6 +13,22 @@ import {ChipsContext} from './Chips';
 
 import css from './Chip.module.less';
 
+/**
+ * The shape of the chip delete button for {@link limestone/Chips.Chip|Chip}.
+ *
+ * @typedef {Object} chipDeleteButtonShape
+ * @memberof limestone/Chips
+ * @property {String|Object} icon The icon to display in the delete button.
+ * @property {Function} onDelete The function to call when the delete button is clicked.
+ * @property {('top'|'bottom'|'right')} position The position of the delete button relative to the chip.
+ * @public
+ */
+const chipDeleteButtonShape = PropTypes.shape({
+	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	onDelete: PropTypes.func,
+	position: PropTypes.oneOf(['top', 'bottom', 'right'])
+});
+
 const ChipDefaultProps = {
 	disabled: false
 };
@@ -175,15 +191,13 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	/**
 	 * Define the icon, delete handler, and position for the delete button.
 	 *
-	 * @type {Object.<{icon: (String|Object), onDelete: (Function), position: ('top'|'bottom'|'right')}>|Boolean}
+	 * @type {limestone/Chips.chipDeleteButtonShape|Boolean}
 	 * @public
 	 */
 	deleteButton: PropTypes.oneOfType([
-		PropTypes.shape({
-			icon: PropTypes.string || PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-			onDelete: PropTypes.func,
-			position: PropTypes.oneOf(['top', 'bottom', 'right'])}),
-		PropTypes.bool]),
+		chipDeleteButtonShape,
+		PropTypes.bool
+	]),
 
 	/**
 	 * Disables Chip and becomes non-interactive.
@@ -222,5 +236,6 @@ export default Chip;
 export {
 	Chip,
 	ChipBase,
-	ChipDecorator
+	ChipDecorator,
+	chipDeleteButtonShape
 };
