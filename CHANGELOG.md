@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/TabLayout` styling to match the latest GUI
+
 ## [1.0.0-rc.2] - 2025-06-04
 
 ### Changed
@@ -34,7 +40,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/SwitchItem` styling to match the latest GUI
-- `limestone/TabLayout` styling to match the latest GUI
 - `limestone/WizardPanels` styling to match the latest GUI
 
 ### Fixed
