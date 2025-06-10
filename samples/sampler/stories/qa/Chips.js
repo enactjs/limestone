@@ -44,6 +44,7 @@ export const WithDisabled = (args) => {
 						icon={icon}
 						deleteButton={deleteButton}
 						disabled={index % 3 === 0 || index % 5 === 0 ? args.disabled : false}
+						onClick={action('onClick')}
 					>
 						{children}
 					</Chip>

@@ -22,6 +22,7 @@ export const _Chip = (args) => {
 				disabled={args['disabled']}
 				icon={args['icon']}
 				style={{marginLeft: ri.scaleToRem(36)}}
+				onClick={action('onClick')}
 			>
 				{args['children']}
 			</Chip>

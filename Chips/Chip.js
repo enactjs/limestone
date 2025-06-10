@@ -55,7 +55,7 @@ const ChipDefaultProps = {
 const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, icon, ref, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, icon, onClick, ref, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -156,6 +156,7 @@ const ChipBase = (props) => {
 				icon={icon ? icon : null}
 				size="small"
 				onFocus={handleFocus}
+				onClick={onClick}
 				ref={chipRef}
 			>
 				{children}

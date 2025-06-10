@@ -39,6 +39,7 @@ export const Chips_ = (args) => {
 						key={id}
 						icon={icon}
 						deleteButton={deleteButton}
+						onClick={action('onClick')}
 					>
 						{children}
 					</Chip>
