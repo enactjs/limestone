@@ -1,26 +1,29 @@
-import {is} from '@enact/core/keymap';
 import {setDefaultProps} from '@enact/core/util';
-import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import Spotlight from '@enact/spotlight';
+import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
+import {getAllContainerIds} from '@enact/spotlight/src/container';
+import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createRef, isValidElement, useCallback, useEffect, useRef, useState} from 'react';
+import {createContext, useCallback, useRef} from 'react';
 
 import css from './Chips.module.less';
+
+export const ChipsContext = createContext({});
 
 const ChipsDefaultProps = {
 	orientation: 'vertical'
 };
 
 /**
- * A container that surrounds the chip.
+ * A container that surrounds the chips.
  *
  * @example
- *  <Chips orientation="vertical">
+ *  <Chips>
  *  	{chips.map(({id, icon, children}) => {
  *			return (
- *				<Chip key={id} icon={icon} deleteButton={deleteButton} onClick={onClick}>
+ *				<Chip key={id} icon={icon} onClick={onClick}>
  *					{children}
  *				</Chip>
  *     		);
@@ -32,124 +35,81 @@ const ChipsDefaultProps = {
  * @ui
  * @public
  */
-
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, orientation, ...rest} = chipsProps;
-	const chipsClassNames = classnames(css.chips, css[orientation]);
-
-	const [load, setLoad] = useState(false);
+	const chipsClassName = classnames(css.chips, css[orientation]);
+	const childRefs = useRef([]);
 	const containerRef = useRef(null);
-	const buttonRefs = useRef(Array.isArray(children) ? children.map(() => createRef()) : [createRef()]);
 
-	const onButtonKeyDown = useCallback((ev, focused) => {
-		const {keyCode, target} = ev;
+	const getPreviousChip = useCallback((index) => {
+		return childRefs.current
+			.slice()
+			.reverse()
+			.find((child) => child.index < index);
+	}, []);
 
-		const containerId = containerRef.current.dataset.spotlightId;
-		const candidate = Spotlight.getSpottableDescendants(containerId);
-		const buttons = candidate.filter((_, index) => index % 2 === 1);
-		const chips = candidate.filter((_, index) => index % 2 === 0);
-		const currentIndex = buttons.findIndex((element) => target === element);
+	const getNextChip = useCallback((index) => {
+		return childRefs.current.find((child) => child.index > index);
+	}, []);
 
-		let nextIndex = currentIndex;
-		let shouldStopPropagation = false;
-		let shouldRemoveFocused = true;
+	const handleChipDelete = (ev, index) => {
+		const prevNode = getPreviousChip(index);
+		const nextNode = getNextChip(index);
 
-		const isVertical = orientation === 'vertical';
-		const isHorizontal = orientation === 'horizontal';
+		if (prevNode) {
+			Spotlight.focus(prevNode.chipRef.current);
+		} else if (nextNode) {
+			Spotlight.focus(nextNode.chipRef.current);
+		} else {
+			const rect = ev.target.getBoundingClientRect();
+			const position = {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2};
+			const containerIds = getAllContainerIds();
+			containerRef.current.dataset.spotlightContainerDisabled = true;
 
-		if (isVertical) {
-			if (is('up', keyCode)) {
-				nextIndex = Math.max(0, currentIndex - 1);
-
-				if (currentIndex !== 0) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			} else if (is('down', keyCode)) {
-				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-
-				if (currentIndex !== buttons.length - 1) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			}
-		} else if (isHorizontal) {
-			if (is('left', keyCode)) {
-				nextIndex = Math.max(0, currentIndex - 1);
-
-				if (currentIndex !== 0) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
-				}
-			} else if (is('right', keyCode)) {
-				nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
-
-				if (currentIndex !== buttons.length - 1) {
-					shouldStopPropagation = true;
-					shouldRemoveFocused = true;
+			for (const containerId of containerIds) {
+				const nearestTarget = getNearestTargetFromPosition(position, containerId);
+				if (nearestTarget) {
+					Spotlight.focus(nearestTarget);
+					break;
 				}
 			}
+
+			containerRef.current.dataset.spotlightContainerDisabled = false;
 		}
 
-		if (shouldStopPropagation) {
-			Spotlight.focus(chips[nextIndex]);
-			ev.stopPropagation();
+		childRefs.current = childRefs.current.filter((child) => child.index !== index);
+	};
 
-			if (shouldRemoveFocused) {
-				buttonRefs.current[currentIndex].current.classList.remove(focused);
-			}
+	const getNextTargetFromDeleteButton = useCallback((direction, index) => {
+		let nextTarget = null;
+		if ((orientation === 'vertical' && direction === 'up') || (orientation === 'horizontal' && direction === 'left')) {
+			const prevChip = getPreviousChip(index);
+			nextTarget = prevChip ? prevChip.chipRef.current : null;
+		} else if ((orientation === 'vertical' && direction === 'down') || (orientation === 'horizontal' && direction === 'right')) {
+			const nextChip = getNextChip(index);
+			nextTarget = nextChip ? nextChip.chipRef.current : null;
 		}
-	}, [buttonRefs, orientation]);
 
-	useEffect(() => {
-		if (containerRef.current) {
-			setLoad(true);
-		}
-	}, [containerRef]);
+		return nextTarget;
+	}, [getNextChip, getPreviousChip, orientation]);
+
+	const registerChild = useCallback((chipRef) => {
+		childRefs.current.push({chipRef, index: childRefs.current.length});
+		return childRefs.current.length - 1;
+	}, []);
 
 	return (
-		<div className={chipsClassNames} ref={containerRef} {...rest}>
-			{children && load && Children.map(children, (child, idx) => {
-				const handleDelete = (ev) => {
-					ev.stopPropagation();
-
-					if (child.props.deleteButton && child.props.deleteButton.onDelete) {
-						child.props.deleteButton.onDelete(ev);
-
-						const containerId = containerRef.current.dataset.spotlightId;
-						const candidate = Spotlight.getSpottableDescendants(containerId);
-						const buttons = candidate.filter((_, index) => index % 2 === 1);
-						const chips = candidate.filter((_, index) => index % 2 === 0);
-						const currentIndex = buttons.findIndex((element) => ev.target === element);
-
-						let nextIndex = currentIndex;
-						let shouldStopPropagation = false;
-
-						if (currentIndex > 0) {
-							nextIndex = Math.max(0, currentIndex - 1);
-							shouldStopPropagation = true;
-						} else {
-							nextIndex = Math.min(chips.length - 1, currentIndex + 1);
-							shouldStopPropagation = true;
-						}
-
-						if (shouldStopPropagation) {
-							Spotlight.focus(chips[nextIndex]);
-							ev.stopPropagation();
-						}
-					}
-				};
-				if (isValidElement(child)) {
-					return cloneElement(child, {
-						handleDelete,
-						onButtonKeyDown,
-						ref: buttonRefs.current[idx],
-						containerRef: containerRef
-					});
-				}
-				return child;
-			})}
+		<div className={chipsClassName} ref={containerRef} {...rest}>
+			<ChipsContext
+				value={{
+					getNextTargetFromDeleteButton,
+					handleChipDelete,
+					registerChild
+				}}
+			>
+				{children}
+			</ChipsContext>
 		</div>
 	);
 };
@@ -163,7 +123,7 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 * @type {Node}
 	 * @public
 	 */
-	children: PropTypes.string.isRequired,
+	children: PropTypes.node,
 
 	/**
 	 * The layout orientation of the component.
@@ -175,10 +135,23 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
+/**
+ * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.
+ *
+ * @hoc
+ * @memberof limestone/Chips
+ * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
+ * @public
+ */
 const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
 		enterTo: 'default-element',
-		leaveFor: {up: '#right'}
+		leaveFor: {up: '#right'},
+		navigableFilter: (node) => {
+			if (!node) return false;
+			const rects = node.getBoundingClientRect();
+			return rects.width !== 0 && rects.height !== 0;
+		}
 	})
 );
 

@@ -3,11 +3,11 @@ import {action} from '@enact/storybook-utils/addons/actions';
 import {select} from '@enact/storybook-utils/addons/controls';
 import {useState} from 'react';
 
-Chip.displayName = 'Chip';
+Chips.displayName = 'Chips';
 
 export default {
-	title: 'Limestone/Chip',
-	component: 'Chip'
+	title: 'Limestone/Chips',
+	component: 'Chips'
 };
 
 const defaultChips = [
@@ -17,25 +17,28 @@ const defaultChips = [
 	{id:3, children:'chip4', icon: 'ai'}
 ];
 
-export const WithDeleteButton = (args) => {
+export const Chips_ = (args) => {
 	const [chips, setChips] = useState(defaultChips);
 	const orientation = args['orientation'];
 
 	const handleDelete = (id) => {
-		action('onDelete')();
+		action('onDelete')({id});
 		setChips(chips.filter(chip => chip.id !== id));
 	};
 
 	return (
 		<Chips orientation={orientation}>
 			{chips.map(({id, icon, children}) => {
-				const deleteButton = {position: orientation === 'vertical' ? 'right' : 'bottom', onDelete: () => handleDelete(id)};
+				const deleteButton = {
+					position: orientation === 'vertical' ? 'right' : 'bottom',
+					onDelete: () => handleDelete(id)
+				};
+
 				return (
 					<Chip
 						key={id}
 						icon={icon}
 						deleteButton={deleteButton}
-						onClick={action('onClick')}
 					>
 						{children}
 					</Chip>
@@ -45,6 +48,11 @@ export const WithDeleteButton = (args) => {
 	);
 };
 
-select('orientation', WithDeleteButton, ['horizontal', 'vertical'], 'vertical');
+select('orientation', Chips_, ['horizontal', 'vertical'], 'vertical');
 
-WithDeleteButton.storyName = 'with delete button';
+Chips_.storyName = 'Chips';
+Chips_.parameters = {
+	info: {
+		text: 'The basic Chips'
+	}
+};
