@@ -142,26 +142,15 @@
 
 		.keypad {
 			margin: @lime-input-fullscreen-keypad-margin;
-			height: @lime-input-fullscreen-keypad-height;
-			width: @lime-input-fullscreen-keypad-width;
-			display: flex;
-			justify-content: space-between;
-			align-content: center;
+			max-width: 100vw;
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
-				height: @lime-portrait-input-fullscreen-keypad-height;
 				width: @lime-portrait-input-fullscreen-keypad-width;
 			}
 
 			:global(.enact-orientation-portrait):global(.enact-text-large) & {
 				width: @lime-portrait-input-fullscreen-keypad-width-large;
-			}
-		}
-
-		.key {
-			:global(.enact-orientation-portrait) & {
-				margin: @lime-portrait-input-fullscreen-keypad-key-margin;
 			}
 		}
 
@@ -177,12 +166,6 @@
 		}
 
 		.inputArea {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			height: @lime-input-fullscreen-inputarea-height;
-
 			.textField {
 				max-width: @lime-input-fullscreen-textfield-max-width;
 				min-width: @lime-input-fullscreen-textfield-min-width;
@@ -210,9 +193,12 @@
 			.position-start-end(@lime-input-overlay-back-button-start, initial);
 		}
 
+		.titles {
+			margin-bottom: @lime-input-overlay-titles-margin-bottom;
+		}
+
 		.body {
 			padding: @lime-input-overlay-body-padding;
-			gap: @lime-input-overlay-body-gap;
 		}
 
 		.title {
@@ -221,17 +207,8 @@
 			.lime-font-size(@lime-input-overlay-title-font-size, @lime-non-latin-input-overlay-title-font-size);
 		}
 
-		.subtitle {
-			font-size: @lime-input-overlay-subtitle-font-size;
-		}
-
 		.inputArea {
 			margin: @lime-input-overlay-inputarea-margin;
-
-			.input,
-			.inputHighlight {
-				width: @lime-input-overlay-inputarea-width;
-			}
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;
