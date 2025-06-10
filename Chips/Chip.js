@@ -80,7 +80,7 @@ const ChipBase = (props) => {
 		const direction = getDirection(keyCode);
 		if (direction) {
 			let nextTarget = null;
-			if (target === deleteButtonRef.current.firstChild) {
+			if (target === deleteButtonRef.current.firstChild && getNextTargetFromDeleteButton) {
 				nextTarget = getNextTargetFromDeleteButton(direction, index);
 			}
 
