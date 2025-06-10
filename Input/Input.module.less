@@ -43,7 +43,6 @@
 	.numberCell {
 		position: relative;
 		z-index: 0;
-		border-radius: @lime-input-numbercell-border-radius;
 
 		&::before {
 			position: absolute;
@@ -95,12 +94,15 @@
 			margin: @lime-input-keypad-key-margin;
 			height: @lime-input-keypad-key-height;
 			width: @lime-input-keypad-key-width;
+
+			.icon {
+				font-size: @lime-input-keypad-key-font-size;
+			}
 		}
 	}
 
 	&.fullscreen {
 		.back {
-			left: @lime-input-fullscreen-back-button-left;
 			top: @lime-input-fullscreen-back-button-top;
 
 			.position-start-end(@lime-input-fullscreen-back-button-start, initial);
@@ -113,10 +115,6 @@
 
 		.title {
 			.lime-font-size(@lime-input-fullscreen-title-font-size, @lime-non-latin-input-fullscreen-title-font-size);
-		}
-
-		.subtitle {
-			font-size: @lime-input-fullscreen-subtitle-font-size;
 		}
 
 		.numberCell {
@@ -132,9 +130,11 @@
 
 		.joined {
 			min-width: @lime-input-fullscreen-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) / 2 * " @lime-input-font-size ~")";
+			width: ~"calc(var(--input-max-number-length) * " @lime-input-fullscreen-numberfield-font-size ~")";
 			height: @lime-input-fullscreen-numberfield-height;
 			line-height: @lime-input-fullscreen-numberfield-height;
+			letter-spacing: @lime-input-fullscreen-numberfield-letter-spacing;
+			text-indent: @lime-input-fullscreen-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-fullscreen-numberfield-font-size;
 			margin: @lime-input-fullscreen-numberfield-margin;
 			padding: @lime-input-fullscreen-numberfield-padding;
@@ -182,11 +182,6 @@
 			justify-content: center;
 			align-items: center;
 			height: @lime-input-fullscreen-inputarea-height;
-
-			.input,
-			.inputHighlight {
-				width: @lime-input-fullscreen-inputarea-width;
-			}
 
 			.textField {
 				max-width: @lime-input-fullscreen-textfield-max-width;
