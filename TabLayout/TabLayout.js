@@ -69,11 +69,8 @@ const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 
 const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
 	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
-	if (typeof window !== 'undefined' && window?.screen?.width) {
-		return window.screen.width < ri.scale(totalTabsWidth);
-	} else {
-		return false;
-	}
+
+	return ri.getScreenTypeObject().width < ri.scale(totalTabsWidth);
 };
 
 /**
@@ -189,7 +186,7 @@ const TabLayoutBase = kind({
 		 * The offset of the tabgroup area from the left and right edges of the screen.
 		 *
 		 * @type {Number}
-		 * @default 132
+		 * @default 36
 		 * @public
 		 */
 		offset: PropTypes.number,
@@ -308,7 +305,7 @@ const TabLayoutBase = kind({
 		},
 		index: null,
 		primaryIndex: null,
-		offset: 132,
+		offset: 36,
 		orientation: 'vertical',
 		size: 'large',
 		type: 'normal'
@@ -436,10 +433,29 @@ const TabLayoutBase = kind({
 			`anchor${cap(anchorTo)}`,
 			orientation
 		),
-		style: ({dimensions, orientation, style}) => ({
-			...style,
-			'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
-		}),
+		scrollable: ({children, orientation, size, tabSize}) => {
+			const isVertical = orientation === 'vertical';
+			return isVertical ?
+				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(children.length, size, tabSize);
+		},
+		style: ({children, dimensions, offset, orientation, size, style, tabSize}) => {
+			const isVertical = orientation === 'vertical';
+			const scrollable = isVertical ?
+				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(children.length, size, tabSize);
+			const tabSizeValue = !isVertical ? getHorizontalTabWidth(children.length, size, tabSize) : null;
+			const totalTabsWidth = ri.scaleToRem(tabSizeValue * children.length + TAB_SPACING * (children.length - 1));
+
+			return {
+				...style,
+				'--offset': scaleToRem(offset),
+				'--scrollable': scrollable ? '1' : '0',
+				'--tabs-width': !isVertical ? totalTabsWidth : '100%',
+				'--tab-width': scaleToRem(tabSizeValue),
+				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
+			};
+		},
 		index: ({index, primaryIndex}) => {
 			// If `index` is not provided, it defaults to `primaryIndex` or 0.
 			return index ?? primaryIndex ?? 0;
@@ -455,25 +471,23 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, offset, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollable, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
+		delete rest.offset;
 		delete rest.onTabAnimationEnd;
 		delete rest.rtl;
+		delete rest.tabSize;
 
 		const contentSize = (collapsed ? dimensions.content.expanded : dimensions.content.normal);
 		const isVertical = orientation === 'vertical';
 		const ContentCell = isVertical ? TouchableCell : Cell;
 		const contentCellProps = isVertical ? {onFlick: handleFlick} : null;
-		const isScrollable = orientation === 'viertical' ?
-			(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-			isHorizontalScrollableTabs(children.length, size, tabSize);
 
 		// Props that are shared between both of the rendered TabGroup components
 		const tabGroupProps = {
 			css,
 			primaryIndex,
-			offset,
 			onClick: (collapsed ? handleClick : null),
 			onFocus: (collapsed ? handleFocus : null),
 			onFocusTab: onSelect,
@@ -492,10 +506,9 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							collapsed={isVertical}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
-							tabSize={!isVertical ? getHorizontalTabWidth(tabs.length, size, tabSize) : null}
 							size={size}
 							spotlightDisabled={!collapsed && isVertical}
-							hasScroller={isScrollable}
+							scrollable={scrollable}
 						/>
 					</Cell>
 					{isVertical ? <Cell
@@ -506,7 +519,7 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							spotlightId={getTabsSpotlightId(spotlightId, false)}
 							spotlightDisabled={collapsed}
-							hasScroller={isScrollable}
+							scrollable={scrollable}
 						/>
 					</Cell> : null}
 					<ContentCell
@@ -556,8 +569,6 @@ TabLayout.Tab = Tab;
 
 export default TabLayout;
 export {
-	getHorizontalTabWidth,
-	isHorizontalScrollableTabs,
 	TabLayout,
 	TabLayoutBase,
 	TabLayoutContext,

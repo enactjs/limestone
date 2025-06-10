@@ -6,7 +6,6 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import Group from '@enact/ui/Group';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import {Layout} from '@enact/ui/Layout';
-import ri from '@enact/ui/resolution';
 import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
@@ -35,7 +34,6 @@ const TabBase = kind({
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
 		selected: PropTypes.bool,
-		size: PropTypes.number,
 		sprite: PropTypes.object,
 		stopped: PropTypes.bool
 	},
@@ -73,7 +71,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, size, ...rest}) => {
+	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, ...rest}) => {
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -98,8 +96,8 @@ const TabBase = kind({
 			case 'horizontal': {
 				return (
 					<Button
+						minWidth={false}
 						size={buttonSize}
-						style={{minWidth: ri.scaleToRem(size)}}
 						{...rest}
 						{...commonProps}
 					/>
@@ -173,8 +171,7 @@ const TabGroupBase = kind({
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
-		spotlightId: PropTypes.string,
-		tabSize: PropTypes.number
+		spotlightId: PropTypes.string
 	},
 
 	styles: {
@@ -184,14 +181,14 @@ const TabGroupBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, hasScroller, orientation, styler}) => styler.append({collapsed, hasScroller}, orientation),
+		className: ({collapsed, scrollable, orientation, styler}) => styler.append({collapsed, scrollable}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, hasScroller, id, noIcons, offset, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -202,9 +199,8 @@ const TabGroupBase = kind({
 			collapsed,
 			orientation,
 			primaryIndex: collapsed ? null : primaryIndex,
-			primaryTabSpotlightId,
-			size: tabSize
-		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size, tabSize]);
+			primaryTabSpotlightId
+		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
@@ -229,13 +225,11 @@ const TabGroupBase = kind({
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
 
-		const TAB_SPACING = 48;
-		const totalTabsWidth = ri.scaleToRem(tabSize * children.length + TAB_SPACING * (children.length - 1));
-		const groupProps = hasScroller ? null : {
+		const groupProps = scrollable ? null : {
 			spotlightId,
 			spotlightDisabled
 		};
-		const scrollerProps = hasScroller ? {
+		const scrollerProps = scrollable ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
@@ -243,15 +237,14 @@ const TabGroupBase = kind({
 			spotlightDisabled,
 			verticalScrollbar: 'hidden'
 		} : null;
-		const Component = hasScroller ? Scroller : 'div';
-		const GroupComponent = hasScroller ? Group : GroupContainer;
+		const Component = scrollable ? Scroller : 'div';
+		const GroupComponent = scrollable ? Group : GroupContainer;
 
 		return (
 			<Component
 				{...rest}
 				onBlur={onBlur}
 				onFocus={onFocus}
-				style={{"--tabs-width": orientation === "horizontal" ? totalTabsWidth : '100%', "--offset": ri.scaleToRem(offset), "--is-scrolled": hasScroller ? '1' : '0'}}
 				{...scrollerProps}
 			>
 				{noIcons ? (

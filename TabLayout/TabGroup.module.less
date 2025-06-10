@@ -12,6 +12,7 @@
 		&.button {
 			display: block;
 			height: @lime-tablayout-tab-horizontal-button-height;
+			width: var(--tab-width);
 			margin: @lime-tablayout-tab-margin;
 			.padding-start-end(@lime-tablayout-tab-horizontal-padding, @lime-tablayout-tab-horizontal-padding);
 
@@ -76,7 +77,7 @@
 	}
 
 	&.horizontal {
-		margin-left: calc((1 - var(--is-scrolled)) * var(--offset));
+		margin-left: calc((1 - var(--scrollable)) * var(--offset));
 		padding: @lime-tablayout-horizontal-tabs-padding;
 
 		&:not(.hasScroller) {
@@ -85,9 +86,9 @@
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
-			width: calc(var(--tabs-width) + var(--is-scrolled) * var(--offset) * 2);
-			padding-left: calc(var(--is-scrolled) * var(--offset));
-			padding-right: calc(var(--is-scrolled) * var(--offset));
+			width: calc(var(--tabs-width) + var(--scrollable) * var(--offset) * 2);
+			padding-left: calc(var(--scrollable) * var(--offset));
+			padding-right: calc(var(--scrollable) * var(--offset));
 		}
 	}
 
