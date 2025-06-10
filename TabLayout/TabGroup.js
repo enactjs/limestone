@@ -233,9 +233,10 @@ const TabGroupBase = kind({
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
+			scrollbarTrackCss: componentCss,
 			spotlightId,
 			spotlightDisabled,
-			verticalScrollbar: 'hidden'
+			verticalScrollbar: 'auto'
 		} : null;
 		const Component = scrollable ? Scroller : 'div';
 		const GroupComponent = scrollable ? Group : GroupContainer;

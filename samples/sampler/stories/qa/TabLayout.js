@@ -11,9 +11,9 @@ import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 import Layout, {Cell, Column, Row} from '@enact/ui/Layout';
 import {Component, useCallback, useMemo, useState} from 'react';
 
-import css from './TabLayout.module.less';
-
 import {tabIcons} from '../helper/icons';
+
+import css from './TabLayout.module.less';
 
 TabLayout.displayName = 'TabLayout';
 const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
@@ -93,6 +93,7 @@ export const WithVariableNumberOfTabs = (args) => {
 			<TabLayout
 				css={isHorizontal ? css : null}
 				orientation={args['orientation']}
+				offset={132}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i}`} icon={tabIcons[i % tabIcons.length]} key={`tab${i}`}>
@@ -491,16 +492,20 @@ WithInputField.storyName = 'With InputField';
 
 export const WithScroller = (args) => {
 	const tabs = args['Number of Tabs'];
+	const isHorizontal = args['orientation'] === 'horizontal';
 
 	return (
-		<Panel>
+		<Panel css={isHorizontal ? css : null}>
 			<Header title="TabLayout" subtitle="With Scroller" />
 			<TabLayout
+				css={isHorizontal ? css : null}
 				orientation={args['orientation']}
+				tabSize={args['Tab Size'] || null}
+				offset={132}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i + 1}`} key={`tab${i}`}>
-						<Scroller key={'view' + i}>
+						<Scroller className={isHorizontal ? css.scroller : null} key={'view' + i}>
 							<Button>Tab {i + 1} Top</Button>
 							<BodyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ante sit amet dui
@@ -561,6 +566,7 @@ export const WithScroller = (args) => {
 };
 
 range('Number of Tabs', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 8);
+range('Tab Size', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
 select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'horizontal');
 
 WithScroller.storyName = 'With Scroller';

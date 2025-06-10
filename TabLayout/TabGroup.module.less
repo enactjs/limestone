@@ -27,16 +27,15 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
-			padding: @lime-tablayout-tab-vertical-padding-top;
-			.padding-start-end(@lime-tablayout-tab-vertical-padding, @lime-tablayout-tab-vertical-padding);
+			padding: @lime-tablayout-tab-vertical-padding;
 
 			&.collapsed {
 				width: @lime-tablayout-tab-vertical-button-height;
 			}
 
 			&.hasIcon:not(&.collapsed) {
-				padding: @lime-tablayout-tab-vertical-padding-top;
-				.padding-start-end(@lime-tablayout-tab-vertical-padding, @lime-tablayout-tab-vertical-padding);
+				padding: @lime-tablayout-tab-vertical-icon-padding;
+				.padding-start-end(@lime-tablayout-tab-vertical-icon-padding, @lime-tablayout-tab-vertical-icon-padding-right);
 
 				.icon {
 					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
@@ -80,22 +79,21 @@
 		margin-left: calc((1 - var(--scrollable)) * var(--offset));
 		padding: @lime-tablayout-horizontal-tabs-padding;
 
-		&:not(.hasScroller) {
+		&:not(.scrollable) {
 			width: var(--tabs-width);
 		}
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
 			width: calc(var(--tabs-width) + var(--scrollable) * var(--offset) * 2);
-			padding-left: calc(var(--scrollable) * var(--offset));
-			padding-right: calc(var(--scrollable) * var(--offset));
+			.padding-start-end(calc(var(--scrollable) * var(--offset)), calc(var(--scrollable) * var(--offset)))
 		}
 	}
 
 	&.vertical {
 		padding: @lime-tablayout-vertical-tabs-padding;
 
-		&.hasScroller {
+		&.scrollable {
 			height: @lime-tablayout-tab-group-vertical-height;
 		}
 

@@ -7,7 +7,7 @@ import Scroller from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {select} from '@enact/storybook-utils/addons/controls';
+import {range, select} from '@enact/storybook-utils/addons/controls';
 import {scaleToRem} from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
@@ -63,6 +63,7 @@ export const _TabLayout = (args) => {
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
 				size={args['size']}
+				tabSize={args['tabSize'] || null}
 			>
 				<Tab title={tabSelections[tabs][0].title} icon={tabSelections[tabs][0].icon}>
 					<Scroller>{images}</Scroller>
@@ -97,6 +98,7 @@ export const _TabLayout = (args) => {
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
+range('tabSize', _TabLayout, Config, {min: 0, max: 960, step: 60}, 0);
 
 _TabLayout.storyName = 'TabLayout';
 _TabLayout.parameters = {
