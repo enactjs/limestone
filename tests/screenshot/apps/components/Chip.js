@@ -1,4 +1,4 @@
-import Chip from '../../../../Chips';
+import {Chip} from '../../../../Chips';
 import {withConfig} from './utils';
 
 const ChipTests = [

@@ -37,8 +37,8 @@ const ChipsDefaultProps = {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
-	const {children, orientation, ...rest} = chipsProps;
-	const chipsClassName = classnames(css.chips, css[orientation]);
+	const {children, className, orientation, ...rest} = chipsProps;
+	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 
@@ -100,7 +100,7 @@ const ChipsBase = (props) => {
 	}, []);
 
 	return (
-		<div className={chipsClassName} ref={containerRef} {...rest}>
+		<div {...rest} className={chipsClassName} ref={containerRef}>
 			<ChipsContext
 				value={{
 					getNextTargetFromDeleteButton,

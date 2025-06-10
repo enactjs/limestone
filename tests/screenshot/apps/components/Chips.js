@@ -22,7 +22,7 @@ const ChipsTests = [
 		<Chip icon="check">Chip 2</Chip>
 		<Chip icon="check">Chip 3</Chip>
 	</Chips>,
-	<Chips>
+	<Chips orientation="horizontal">
 		<Chip disabled>Chip 1</Chip>
 		<Chip disabled>Chip 2</Chip>
 		<Chip disabled>Chip 3</Chip>
@@ -31,9 +31,9 @@ const ChipsTests = [
 	// When Chips get focus, the focus goes to the Chip
 	...withConfig({focus: true}, [
 		<Chips>
-			<Chip>Focused Chip 1</Chip>
-			<Chip>Chip 2</Chip>
-			<Chip>Chip 3</Chip>
+			<Chip deleteButton>Focused Chip 1</Chip>
+			<Chip deleteButton>Chip 2</Chip>
+			<Chip deleteButton>Chip 3</Chip>
 		</Chips>,
 		<Chips orientation="horizontal">
 			<Chip>Focused Chip 1</Chip>

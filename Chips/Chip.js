@@ -103,19 +103,19 @@ const ChipBase = (props) => {
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (containerRef.current.contains(ev.target)) {
-			deleteButtonRef.current.classList.remove(css.focused);
+			deleteButtonRef.current?.classList.remove(css.focused);
 		}
 	}, []);
 
 	const handleFocus = useCallback((ev) => {
 		if (ev.target === chipRef.current) {
-			deleteButtonRef.current.classList.add(css.focused);
+			deleteButtonRef.current?.classList.add(css.focused);
 		}
 	}, [chipRef]);
 
 	const handleBlur = useCallback(() => {
 		if (Spotlight.getPointerMode() && !isHovering.current) {
-			deleteButtonRef.current.classList.remove(css.focused);
+			deleteButtonRef.current?.classList.remove(css.focused);
 		}
 	}, []);
 
