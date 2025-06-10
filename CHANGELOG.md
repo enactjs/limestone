@@ -2,12 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.0.0-rc.2] - 2025-06-04
 
 ### Changed
 
 - `limestone/Button` font-size for non-latin locale
 - `limestone/ContextualMenuDecorator` styling to match the latest GUI
+- `limestone/FixedPopupPanels` styling to match the latest GUI
 
 ### Fixed
 
