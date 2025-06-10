@@ -7,7 +7,7 @@ const DEFAULT_LENGTH = 4;
 // The cutoff length, at which point the numeric field switches from separated boxes to one box
 const SEPARATE_DIGITS_LIMIT = 6;
 
-const OVERLAY_JOINED_DIGITS_LIMIT = 8;
+const OVERLAY_JOINED_DIGITS_LIMIT = 20;
 const FULLSCREEN_JOINED_DIGITS_LIMIT = 25;
 
 /**
@@ -33,7 +33,7 @@ const calcAriaLabel = function (prefix, type, value = '') {
 };
 
 const convertToPasswordFormat = (value) => {
-	return '*'.repeat(value && value.length);
+	return '●'.repeat(value && value.length);
 };
 
 /**

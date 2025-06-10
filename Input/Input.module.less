@@ -107,6 +107,7 @@
 		}
 
 		.body {
+			justify-content: space-between;
 			padding: @lime-input-fullscreen-padding;
 		}
 
@@ -131,11 +132,9 @@
 
 		.joined {
 			min-width: @lime-input-fullscreen-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) * " @lime-input-fullscreen-numberfield-font-size ~")";
+			width: ~"calc(var(--input-max-number-length) / 2 * " @lime-input-font-size ~")";
 			height: @lime-input-fullscreen-numberfield-height;
 			line-height: @lime-input-fullscreen-numberfield-height;
-			letter-spacing: @lime-input-fullscreen-numberfield-letter-spacing;
-			text-indent: @lime-input-fullscreen-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-fullscreen-numberfield-font-size;
 			margin: @lime-input-fullscreen-numberfield-margin;
 			padding: @lime-input-fullscreen-numberfield-padding;
@@ -151,6 +150,7 @@
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
+				height: @lime-portrait-input-fullscreen-keypad-height;
 				width: @lime-portrait-input-fullscreen-keypad-width;
 			}
 
@@ -189,7 +189,6 @@
 			}
 
 			.textField {
-				height: @lime-input-fullscreen-textfield-height;
 				max-width: @lime-input-fullscreen-textfield-max-width;
 				min-width: @lime-input-fullscreen-textfield-min-width;
 			}
@@ -202,18 +201,6 @@
 		.tooltip {
 			.tooltipLabel {
 				max-width: @lime-input-fullscreen-invalid-tooltip-width;
-			}
-		}
-
-		&.text,
-		&.password,
-		&.url {
-			.inputArea {
-				margin: @lime-input-fullscreen-inputarea-margin;
-
-				:global(.enact-orientation-portrait) & {
-					margin: @lime-portrait-input-fullscreen-text-inputarea-margin;
-				}
 			}
 		}
 	}
@@ -271,8 +258,6 @@
 			width: @lime-input-overlay-numberfield-width;
 			height: @lime-input-overlay-numberfield-height;
 			line-height: @lime-input-overlay-numberfield-height;
-			letter-spacing: @lime-input-overlay-numberfield-letter-spacing;
-			text-indent: @lime-input-overlay-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-overlay-numberfield-font-size;
 			margin: @lime-input-overlay-numberfield-margin;
 			padding: @lime-input-overlay-numberfield-padding;
