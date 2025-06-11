@@ -1,8 +1,10 @@
-import {Chip, Chips} from '@enact/limestone/Chips';
+import {Chip, Chips, ChipsBase} from '@enact/limestone/Chips';
+import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {select} from '@enact/storybook-utils/addons/controls';
 import {useState} from 'react';
 
+const Config = mergeComponentMetadata('Chips', ChipsBase, Chips);
 Chips.displayName = 'Chips';
 
 export default {
@@ -49,7 +51,7 @@ export const Chips_ = (args) => {
 	);
 };
 
-select('orientation', Chips_, ['horizontal', 'vertical'], 'vertical');
+select('orientation', Chips_, ['horizontal', 'vertical'], Config, 'vertical');
 
 Chips_.storyName = 'Chips';
 Chips_.parameters = {

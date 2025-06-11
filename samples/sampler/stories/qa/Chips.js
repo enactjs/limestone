@@ -1,11 +1,11 @@
-import {Chip, Chips} from '@enact/limestone/Chips';
+import Chips, {ChipsBase, Chip} from '@enact/limestone/Chips';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
 import {useState} from 'react';
 
 Chips.displayName = 'Chips';
-const Config = mergeComponentMetadata('Chips', Chips);
+const Config = mergeComponentMetadata('Chips', ChipsBase, Chips);
 
 export default {
 	title: 'Limestone/Chips',
@@ -54,7 +54,7 @@ export const WithDisabled = (args) => {
 	);
 };
 
-select('orientation', WithDisabled, ['horizontal', 'vertical'], 'vertical');
+select('orientation', WithDisabled, ['horizontal', 'vertical'], Config, 'vertical');
 boolean('disabled', WithDisabled, Config, true);
 
 WithDisabled.storyName = 'with disabled';

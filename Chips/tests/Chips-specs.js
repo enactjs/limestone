@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 
-import ChipsBase from '../Chips';
-import ChipBase from '../Chip';
+import {ChipsBase} from '../Chips';
+import {ChipBase} from '../Chip';
 
 describe('Chips', () => {
 	const mockDeleteHandler = jest.fn();
