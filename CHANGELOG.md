@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Chips`, a new container component that groups and manages multiple `limestone/Chips.Chip` for improved layout and interaction
+- `limestone/Icon` supported icon list, adding new icons
 
 ### Changed
 
