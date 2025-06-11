@@ -300,5 +300,5 @@ export default {
 	dislikeline 	  : 0x0F01E9, // dislike_line
 	like			  : 0x0F01EA, // like
 	likeline		  : 0x0F01EB, // line_line
-	soundbarline	  : 0x0F01EC, // soundbar_line
+	soundbarline	  : 0x0F01EC  // soundbar_line
 };
