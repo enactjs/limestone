@@ -111,6 +111,11 @@
 		.body {
 			justify-content: space-between;
 			padding: @lime-input-fullscreen-padding;
+
+			:global(.enact-orientation-portrait) & {
+				padding-left: 0;
+				padding-right: 0;
+			}
 		}
 
 		.title {
@@ -146,11 +151,11 @@
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
-				width: @lime-portrait-input-fullscreen-keypad-width;
+				//width: @lime-portrait-input-fullscreen-keypad-width;
 			}
 
 			:global(.enact-orientation-portrait):global(.enact-text-large) & {
-				width: @lime-portrait-input-fullscreen-keypad-width-large;
+				//width: @lime-portrait-input-fullscreen-keypad-width-large;
 			}
 		}
 
@@ -301,24 +306,23 @@
 			background-color: @lime-input-background-popup-default-color;
 
 			.inputArea {
-				.bg {
-					background-color: @lime-input-inputField-popup-container-color;
-				}
-				
-				.input {
-					.input-placeholder({
-						color: @lime-input-inputField-popup-label-inactive-color;
-					});
-				}
-				
 				.inputField {
 					color: @lime-input-inputField-popup-label-inactive-color;
-				}
 
+					.bg {
+						background-color: @lime-input-inputField-popup-container-color;
+					}
+
+					.input {
+						.input-placeholder({
+							color: @lime-input-inputField-popup-label-inactive-color;
+						});
+					}
+				}
 			}
 
 			.numberCell {
-				color: @lime-input-inputField-password-focused-color;
+				color: @lime-input-dot-color;
 
 				&::before {
 					background-color: @lime-input-inputField-popup-container-color;
