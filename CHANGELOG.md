@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Chips` which is a container for Chip
+
 ### Changed
 
 - `limestone/Chips.Chip` styling to match the latest GUI
