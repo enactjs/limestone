@@ -135,7 +135,7 @@
 
 		.joined {
 			min-width: @lime-input-fullscreen-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) * " @lime-input-fullscreen-numberfield-font-size ~")";
+			width: ~"calc(var(--input-max-number-length) * (" @lime-input-fullscreen-numberfield-font-size "+" @lime-input-fullscreen-numberfield-letter-spacing ~"))";
 			height: @lime-input-fullscreen-numberfield-height;
 			line-height: @lime-input-fullscreen-numberfield-height;
 			letter-spacing: @lime-input-fullscreen-numberfield-letter-spacing;
@@ -171,6 +171,11 @@
 		}
 
 		.inputArea {
+			.input,
+			.inputHighlight {
+				width: @lime-input-fullscreen-inputarea-width;
+			}
+
 			.textField {
 				max-width: @lime-input-fullscreen-textfield-max-width;
 				min-width: @lime-input-fullscreen-textfield-min-width;
@@ -215,6 +220,11 @@
 		.inputArea {
 			margin: @lime-input-overlay-inputarea-margin;
 
+			.input,
+			.inputHighlight {
+				width: @lime-input-overlay-inputarea-width;
+			}
+
 			.textField {
 				width: @lime-input-overlay-textfield-width;
 			}
@@ -235,6 +245,8 @@
 			width: @lime-input-overlay-numberfield-width;
 			height: @lime-input-overlay-numberfield-height;
 			line-height: @lime-input-overlay-numberfield-height;
+			letter-spacing: @lime-input-overlay-numberfield-letter-spacing;
+			text-indent: @lime-input-overlay-numberfield-letter-spacing;
 			font-size: @lime-input-overlay-numberfield-font-size;
 			margin: @lime-input-overlay-numberfield-margin;
 			padding: @lime-input-overlay-numberfield-padding;
@@ -335,8 +347,6 @@
 
 				&::before {
 					.lime-spotlight-focus-bg-colors();
-					// Remove drop shadow for this input-like field
-					box-shadow: none;
 				}
 			}
 
