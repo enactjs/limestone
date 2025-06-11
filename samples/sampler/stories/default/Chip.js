@@ -16,12 +16,11 @@ export default {
 
 export const _Chip = (args) => {
 	return (
-		<div style={{marginTop: ri.scaleToRem(100)}}>
+		<div style={{marginTop: ri.scaleToRem(100), marginLeft: ri.scaleToRem(36)}}>
 			<Chip
 				deleteButton={args['deleteButton']}
 				disabled={args['disabled']}
 				icon={args['icon']}
-				style={{marginLeft: ri.scaleToRem(36)}}
 				onClick={action('onClick')}
 			>
 				{args['children']}
