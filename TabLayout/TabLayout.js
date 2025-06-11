@@ -70,7 +70,7 @@ const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
 	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
 
-	return ri.getScreenTypeObject().width < ri.scale(totalTabsWidth);
+	return (typeof window !== 'undefined' && window?.screen?.width) ? window.screen.width < ri.scale(totalTabsWidth) : false;
 };
 
 /**
