@@ -158,6 +158,7 @@ const ChipBase = (props) => {
 				onFocus={handleFocus}
 				onClick={onClick}
 				ref={chipRef}
+				roundBorder
 			>
 				{children}
 			</Button>
@@ -165,11 +166,11 @@ const ChipBase = (props) => {
 				<div className={buttonClassName} ref={deleteButtonRef}>
 					<Button
 						backgroundOpacity="transparent"
-						css={css}
 						disabled={disabled}
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
 						onClick={handleDelete}
+						roundBorder
 					/>
 				</div>
 			}
