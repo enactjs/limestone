@@ -183,7 +183,10 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
-		 * The offset of the tabgroup area from the left and right edges of the screen.
+		 * The offset of the tabs area from the left and right edges of the screen.
+		 * This option is only applicable when `orientation` is set to `horizontal`.
+		 * The default value set to `36` to have the right position of the tabs in the normal panel.
+		 * If the tabs are supposed to scroll, this value should be set to `132` and the panel should have no padding.
 		 *
 		 * @type {Number}
 		 * @default 36
