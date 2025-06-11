@@ -703,6 +703,7 @@
 @lime-input-keypad-key-width: @lime-input-keypad-key-height;
 @lime-input-keypad-key-font-size: var(--primitive-font-size-90);
 @lime-input-fullscreen-padding: (156px - .extract(@lime-popup-padding, top)[]) (300px - .extract(@lime-popup-padding, right)[]) 0 (300px - .extract(@lime-popup-padding, left)[]);
+@lime-portrait-input-fullscreen-padding: (156px - .extract(@lime-popup-padding, top)[]) (156px - .extract(@lime-popup-padding, right)[]) 0 (156px - .extract(@lime-popup-padding, left)[]);
 @lime-input-fullscreen-numbercell-width: 180px;
 @lime-input-fullscreen-numbercell-height: 240px;
 @lime-input-fullscreen-numbercell-margin: 0 var(--primitive-spacing-18);
@@ -719,8 +720,6 @@
 @lime-input-fullscreen-back-button-top: 108px;
 @lime-input-fullscreen-back-button-start: 132px;
 @lime-input-fullscreen-inputarea-width: 1104px;
-@lime-portrait-input-fullscreen-keypad-width: 702px;
-@lime-portrait-input-fullscreen-keypad-width-large: 846px;
 @lime-portrait-input-fullscreen-keypad-margin: var(--primitive-spacing-132) auto 0 auto;
 @lime-portrait-input-fullscreen-number-inputarea-margin: var(--primitive-spacing-96) 0 0 0;
 @lime-input-overlay-back-button-start: -42px;
@@ -760,7 +759,6 @@
 @lime-inputfield-padding-large: 0 @lime-inputfield-icon-margin;
 @lime-inputfield-password-spacing: var(--primitive-spacing-30);
 @lime-inputfield-text-indent: 0.2em;
-@lime-inputfield-container-opacity: 0.3;
 @lime-inputfield-border-radius: var(--semantic-radius-button);
 @lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
 @lime-inputfield-height: 168px;
