@@ -440,6 +440,20 @@ const IconBase = kind({
  * tips
  * googlehome
  * thinq
+ * livetv
+ * accessibilitytv
+ * homehub
+ * otheriot
+ * sitemap
+ * clickapps
+ * history
+ * moreaction
+ * passwordreset
+ * dislike
+ * dislikeline
+ * like
+ * likeline
+ * soundbarline
  * ```
  *
  * @name iconList
