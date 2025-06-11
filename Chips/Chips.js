@@ -19,16 +19,18 @@ const ChipsDefaultProps = {
 /**
  * A container that surrounds the chips.
  *
- * @example
- *  <Chips>
- *  	{chips.map(({id, icon, children}) => {
- *			return (
- *				<Chip key={id} icon={icon} onClick={onClick}>
- *					{children}
- *				</Chip>
- *     		);
- *		})}
- *  </Chips>
+ * Usage:
+ * ```
+ * <Chips>
+ * 	{chips.map(({id, icon, children}) => {
+ * 		return (
+ * 			<Chip key={id} icon={icon} onClick={onClick}>
+ * 				{children}
+ * 			</Chip>
+ * 		);
+ * 	})}
+ * </Chips>
+ * ```
  *
  * @class ChipsBase
  * @memberof limestone/Chips

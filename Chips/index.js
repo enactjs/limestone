@@ -3,15 +3,15 @@
  *
  * @example
  * <Chips orientation="horizontal">
- * 		<Chip key="key1">
- *			Chip 1
- *		</Chip>
- * 		<Chip key="key2" icon="check" deleteButton={{position: 'bottom'}}>
- * 			Chip 2
- * 		</Chip>
- * 		<Chip key="key3" icon="heart" deleteButton={{position: 'right'}}>
- * 			Chip 3
- * 		</Chip>
+ * 	<Chip key="key1">
+ * 		Chip 1
+ * 	</Chip>
+ * 	<Chip key="key2" icon="check" deleteButton={{position: 'bottom'}}>
+ * 		Chip 2
+ * 	</Chip>
+ * 	<Chip key="key3" icon="heart" deleteButton={{position: 'right'}}>
+ * 		Chip 3
+ * 	</Chip>
  * </Chips>
  *
  * @module limestone/Chips

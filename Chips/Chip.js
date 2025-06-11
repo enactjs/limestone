@@ -36,16 +36,18 @@ const ChipDefaultProps = {
 /**
  * Provides Limestone styled Chip component and behaviors.
  *
- * @example
+ * Usage:
+ * ```
  * <Chip
- *   deleteButton={{
- *     icon: 'closex',
- *     position: 'right'
- *   }}
- *   icon="check"
+ * 	deleteButton={{
+ * 		icon: 'closex',
+ * 		position: 'right'
+ * 	}}
+ * 	icon="check"
  * >
  *  Label
  * </Chip>
+ * ```
  *
  * @class Chip
  * @memberof limestone/Chips
