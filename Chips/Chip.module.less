@@ -1,6 +1,6 @@
 // Chip.module.less
 //
-@import '../styles/variables.less';
+@import "../styles/variables.less";
 
 .chip {
 	position: relative;
@@ -11,10 +11,6 @@
 			margin: @lime-chip-margin;
 			min-width: @lime-chip-min-width;
 		}
-
-		.bg {
-			border-radius: @lime-chip-border-radius;
-		}
 	}
 
 	.deleteButtonContainer {
@@ -24,23 +20,19 @@
 		&.right {
 			top: 0;
 			right: 0;
-			transform: translateX(100% - @lime-chip-margin);
+			transform: translateX(~"calc(100% - " @lime-chip-button-spacing ~")");
 		}
 
 		&.bottom {
-			bottom: @lime-chip-margin;
+			bottom: @lime-chip-button-spacing;
 			left: 50%;
 			transform: translate(-50%, 100%);
 		}
 
 		&.top {
-			top: -100% + @lime-chip-margin;
+			top: ~"calc(-100% + " @lime-chip-button-spacing ~")";
 			left: 50%;
 			transform: translateX(-50%);
-		}
-
-		.deleteButton {
-			margin: @lime-chip-delete-button-margin;
 		}
 	}
 
