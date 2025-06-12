@@ -6,11 +6,9 @@
 	position: relative;
 	display: inline-block;
 
-	.button {
-		&.small {
-			margin: @lime-chip-margin;
-			min-width: @lime-chip-min-width;
-		}
+	.button.small {
+		margin: @lime-chip-margin;
+		min-width: @lime-chip-min-width;
 	}
 
 	.deleteButtonContainer {
@@ -18,19 +16,19 @@
 		display: none;
 
 		&.right {
-			top: 0;
+			top: 50%;
 			right: 0;
-			transform: translateX(~"calc(100% - " @lime-chip-button-spacing ~")");
+			transform: translateY(-50%) translateX(~"calc(100% + " @lime-chip-button-spacing ~")");
 		}
 
 		&.bottom {
-			bottom: @lime-chip-button-spacing;
+			bottom: -@lime-chip-button-spacing;
 			left: 50%;
 			transform: translate(-50%, 100%);
 		}
 
 		&.top {
-			top: ~"calc(-100% + " @lime-chip-button-spacing ~")";
+			top: ~"calc(-100% - " @lime-chip-button-spacing ~")";
 			left: 50%;
 			transform: translateX(-50%);
 		}
