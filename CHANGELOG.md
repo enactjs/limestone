@@ -13,6 +13,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/TabLayout` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/TabLayout` padding for vertical tab to not crop any icons.
+
 ## [1.0.0-rc.2] - 2025-06-04
 
 ### Changed
