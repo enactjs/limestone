@@ -1,5 +1,6 @@
 // CheckboxItem.module.less
 //
+@import "../styles/skin.less";
 
 .checkboxItem {
 	/* Needed to prevent global class being added in the DOM */
@@ -11,4 +12,12 @@
 	.bg {
 		/* Available for customization */
 	}
+
+	.applySkins({
+		&.selected {
+			.bg {
+				background-color: @lime-checkboxitem-item-selected-container-color;
+			}
+		}
+	});
 }
