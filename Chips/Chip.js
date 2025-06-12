@@ -167,6 +167,7 @@ const ChipBase = (props) => {
 			{deleteButton &&
 				<div className={buttonClassName} ref={deleteButtonRef}>
 					<Button
+						css={css}
 						backgroundOpacity="transparent"
 						disabled={disabled}
 						icon={deleteButton?.icon || 'closex'}

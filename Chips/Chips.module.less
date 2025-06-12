@@ -1,8 +1,10 @@
 // Chips.module.less
 //
+@import "../styles/variables.less";
 
 .chips {
-	display: flex;
+	display: inline-flex;
+	gap: @lime-chips-gap;
 
 	&.vertical {
 		flex-direction: column;
