@@ -101,7 +101,7 @@
 
 // Spotlight
 // ---------------------------------------
-@lime-spotlight-font-weight: 600;
+@lime-spotlight-font-weight: var(--primitive-font-weight-semibold);
 @lime-spotlight-outset: 48px;
 @lime-spotlight-focus-animation-duration: 200ms;
 @lime-spotlight-focus-shadow-height: 36px;
@@ -125,8 +125,8 @@
 @lime-button-font-size:             var(--primitive-font-size-60);
 @lime-button-small-font-size-large: var(--primitive-font-size-72);
 @lime-button-small-font-size:       var(--primitive-font-size-54);
-@lime-card-caption-font-size:       60px;
-@lime-card-label-font-size:         48px;
+@lime-card-caption-font-size:       var(--primitive-font-size-60);
+@lime-card-label-font-size:         var(--primitive-font-size-48);
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
@@ -158,9 +158,9 @@
 @lime-item-small-font-size-large:   var(--primitive-font-size-72);
 @lime-item-small-label-font-size:   var(--primitive-font-size-48);
 @lime-keyguide-font-size:           60px;
-@lime-mediaoverlay-caption-font-size: 48px;
-@lime-mediaoverlay-font-size:         48px;
-@lime-mediaoverlay-title-font-size:   60px;
+@lime-mediaoverlay-caption-font-size: var(--primitive-font-size-48);
+@lime-mediaoverlay-font-size:         var(--primitive-font-size-48);
+@lime-mediaoverlay-title-font-size:   var(--primitive-font-size-60);
 @lime-mediaplayer-times-min-width:    186px;
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             var(--primitive-font-size-54);
@@ -199,16 +199,16 @@
 @lime-non-latin-font-family: "Limestone";
 @lime-non-latin-font-family-light: "Limestone";  // Formerly weight: Light
 @lime-non-latin-font-family-bold: "Limestone";   // Formerly weight: Bold
-@lime-non-latin-font-weight: normal;
-@lime-non-latin-font-weight-light: 300;
-@lime-non-latin-font-weight-bold: 700;
-@lime-spottable-font-weight: 600;
+@lime-non-latin-font-weight: var(--primitive-font-weight-regular);
+@lime-non-latin-font-weight-light: var(--primitive-font-weight-light);
+@lime-non-latin-font-weight-bold: var(--primitive-font-weight-bold);
+@lime-spottable-font-weight: var(--primitive-font-weight-semibold);
 @lime-common-line-height: 1.4em;
 @lime-tallglyph-line-height: 1.5em;
 
 // Alert
 @lime-alert-font-family: @lime-font-family;
-@lime-alert-font-weight: 600;
+@lime-alert-font-weight: var(--primitive-font-weight-semibold);
 @lime-alert-line-height: 84px;
 
 // Body
@@ -236,8 +236,8 @@
 @lime-non-latin-button-small-font-weight: @lime-non-latin-font-weight-bold;
 
 // Card
-@lime-card-caption-font-weight: 600;
-@lime-card-label-font-weight: 400;
+@lime-card-caption-font-weight: var(--primitive-font-weight-semibold);
+@lime-card-label-font-weight: var(--primitive-font-weight-regular);
 
 // Heading
 @lime-heading-line-height: 1.25em;
@@ -281,7 +281,7 @@
 
 // Item
 @lime-item-font-weight: @lime-spottable-font-weight;
-@lime-item-label-font-weight: 400;
+@lime-item-label-font-weight: var(--primitive-font-weight-regular);
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
 @lime-item-label-line-height: 1.25em;
@@ -661,7 +661,7 @@
 @lime-iconitem-border-style: solid;
 @lime-iconitem-border-width: 4px;
 @lime-iconitem-focus-transform: scale(1.2);
-@lime-iconitem-font-weight: 600;
+@lime-iconitem-font-weight: var(--primitive-font-weight-semibold);
 @lime-iconitem-icon-margin: @lime-icon-margin @lime-icon-margin 12px;
 @lime-iconitem-label-line-height: 48px;
 @lime-iconitem-label-padding: 0 12px;
@@ -798,14 +798,14 @@
 
 // MediaOverlay
 // ---------------------------------------
-@lime-mediaoverlay-border-radius: 12px;
-@lime-mediaoverlay-caption-margin-top: 30px;
-@lime-mediaoverlay-caption-margin-bottom: @lime-mediaoverlay-caption-margin-top - @lime-mediaoverlay-padding;
-@lime-mediaoverlay-font-weight: 500;
+@lime-mediaoverlay-border-radius: var(--primitive-radius-12);
+@lime-mediaoverlay-caption-margin-top: var(--primitive-spacing-30);
+@lime-mediaoverlay-caption-margin-bottom: var(--primitive-spacing-6);
+@lime-mediaoverlay-font-weight: var(--primitive-font-weight-medium);
 @lime-mediaoverlay-line-height: 1.3em;
-@lime-mediaoverlay-padding: 24px;
-@lime-mediaoverlay-progressbar-margin: 0 6px 6px 6px;
-@lime-mediaoverlay-textlayout-margin: 24px 60px;
+@lime-mediaoverlay-padding: var(--primitive-spacing-24);
+@lime-mediaoverlay-progressbar-margin: 0 var(--primitive-spacing-6) var(--primitive-spacing-6) var(--primitive-spacing-6);
+@lime-mediaoverlay-textlayout-margin: var(--primitive-spacing-24) var(--primitive-spacing-60);
 @lime-mediaoverlay-width: 642px;
 
 // MediaPlayer
@@ -996,11 +996,11 @@
 @lime-spinner-small-line-width: 6px;
 @lime-spinner-line-margin: 24px;
 @lime-spinner-small-line-margin: 12px;
-@lime-spinner-font-weight: bold;
+@lime-spinner-font-weight: var(--primitive-font-weight-bold);
 
 // Steps
 // ---------------------------------------
-@lime-steps-step-number-font-weight: 600;
+@lime-steps-step-number-font-weight: var(--primitive-font-weight-semibold);
 @lime-steps-step-margin: 0 var(--primitive-spacing-30);
 @lime-steps-step-current-opacity: 1;
 @lime-steps-step-future-opacity: 1;
@@ -1054,8 +1054,8 @@
 
 // Tooltip
 // ---------------------------------------
-@lime-tooltip-font-weight: 600;
-@lime-tooltip-transparent-font-weight: normal;
+@lime-tooltip-font-weight: var(--primitive-font-weight-semibold);
+@lime-tooltip-transparent-font-weight: var(--primitive-font-weight-regular);
 @lime-tooltip-offset: 24px;
 @lime-tooltip-transparent-label-offset: 0px;
 @lime-tooltip-arrow-offset: 0;
@@ -1077,7 +1077,7 @@
 @lime-video-slider-tooltip-shift-position-bottom:  @lime-video-slider-tooltip-position-bottom + @lime-video-slider-tooltip-arrow-border-top;
 @lime-video-slider-tooltip-margin-bottom:          6px;
 @lime-video-slider-tooltip-font-size:              48px;
-@lime-video-slider-tooltip-font-weight:            normal;
+@lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
 @lime-video-slider-tooltip-line-height:            72px;
 @lime-video-slider-tooltip-gutter-width:           42px;
 @lime-video-slider-tooltip-thumbnail-border-width: 6px;
@@ -1085,14 +1085,14 @@
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;
 @lime-video-feedback-icon-font-size:               1.25em;
-@lime-video-feedback-mini-font-weight:             normal;
+@lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
 @lime-video-feedback-mini-font-style:              normal;
 @lime-video-feedback-mini-position-top:            60px;
 @lime-video-feedback-mini-position-left:           60px;
 @lime-video-feedback-mini-padding-side:            66px;
 @lime-video-feedback-mini-font-size:               66px;
 @lime-video-feedback-mini-line-height:             120px;
-@lime-video-feedback-message-font-weight:          600;
+@lime-video-feedback-message-font-weight:          var(--primitive-font-weight-semibold);
 @lime-video-player-badge-text-size:                48px;
 @lime-video-player-info-margin:                    0 66px 84px;
 @lime-video-player-padding-bottom:                 60px;
