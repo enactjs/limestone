@@ -28,29 +28,32 @@ describe('Chip', () => {
 		const position = 'top';
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
-		const expected = 'top';
 		const chip = screen.getByTestId('chip');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-		expect(chip).toHaveClass(expected);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 
 	test('should apply `.bottom` when direction prop is `bottom`', () => {
 		const position = 'bottom';
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
-		const expected = 'bottom';
 		const chip = screen.getByTestId('chip');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-		expect(chip).toHaveClass(expected);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 
 	test('should apply `.right` when direction prop is `right`', () => {
 		const position = 'right';
 		render(<ChipBase data-testid="chip" deleteButton={{position}} />);
 
-		const expected = 'right';
 		const chip = screen.getByTestId('chip');
+		const deleteButton = chip.querySelector('.deleteButtonContainer');
 
-		expect(chip).toHaveClass(expected);
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton).toHaveClass(position);
 	});
 });

@@ -42,34 +42,33 @@
 		});
 	}
 
+	// Overrides for Popup
+	&.popup {
+		margin: @lime-fixedpopuppanels-margin;
+		max-height: @fixedpopuppanels-max-height;
+
+		&.left {
+			margin-left: .extract(@lime-fixedpopuppanels-margin, right)[];
+			margin-right: .extract(@lime-fixedpopuppanels-margin, left)[];
+		}
+	}
+
 	// Skin colors
 	.applySkins({
 		background-color: transparent;
 
 		// Overrides for Viewport
 		.viewport {
+			background-color: @lime-fixedpopuppanels-background-color;
 			border-radius: @lime-fixedpopuppanels-border-radius;
-			box-shadow: @lime-fixedpopuppanels-shadow;
+			box-shadow: @lime-overlay-shadow;
 			outline-color: @lime-overlay-outline-color;
-			outline-style: @lime-overlay-outline-style;
 			outline-width: @lime-overlay-outline-width;
+			outline-style: @lime-overlay-outline-style;
 			outline-offset: -@lime-overlay-outline-width;
 
 			:global(.noAnimation) & {
 				box-shadow: none;
-			}
-		}
-
-		&.scrimTranslucent {
-			.viewport {
-				background-color: @lime-fixedpopuppanels-bg-color;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTransparent {
-			.viewport {
-				background-color: @lime-fixedpopuppanels-scrimtransparent-bg-color;
 			}
 		}
 	});
@@ -77,7 +76,6 @@
 
 // Overrides for Panel
 .panel {
-	padding: @lime-fixedpopuppanels-panel-padding;
 	max-height: @fixedpopuppanels-max-height;
 
 	> .body {

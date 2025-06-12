@@ -428,19 +428,21 @@
 
 // Chip
 // ---------------------------------------
-@lime-chip-border-radius: @lime-common-circular-corners;
-@lime-chip-margin: 18px;
+@lime-chip-margin: 0;
+@lime-chip-button-spacing: 12px;
 @lime-chip-min-width: 108px;
-@lime-chip-delete-button-margin: 12px;
+@lime-chips-gap: 36px;
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: 36px 0;
+@lime-contextualmenu-container-padding: var(--primitive-spacing-36) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
-@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + .extract(@lime-contextualmenu-container-padding, top)[] + .extract(@lime-contextualmenu-container-padding, bottom)[]);
+@lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
 @lime-contextualmenu-large-width: 960px;
+@lime-contextualmenu-large-withScrollbar-width: 984px;
 @lime-contextualmenu-small-width: 612px;
+@lime-contextualmenu-small-withScrollbar-width: 636px;
 
 // ContextualPopup
 // ---------------------------------------
@@ -448,7 +450,7 @@
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
-@lime-contextualpopup-offset-small: 36px;
+@lime-contextualpopup-offset-small: 18px;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
@@ -488,12 +490,11 @@
 
 // FixedPopupPanels
 // ---------------------------------------
-@lime-fixedpopuppanels-width: 1140px;
+@lime-fixedpopuppanels-width: 1200px;
 @lime-fixedpopuppanels-half-width: 1716px;
-@lime-fixedpopuppanels-margin: .extract(@lime-popup-position-left-margin, top)[] .extract(@lime-popup-position-left-margin, right)[];
-@lime-fixedpopuppanels-border-radius: @lime-popup-border-radius;
-@lime-fixedpopuppanels-panel-padding: 0;
-@lime-fixedpopuppanels-panel-body-padding: @lime-panel-body-padding-top (108px - (@lime-component-spacing + @lime-spotlight-outset)) (78px - @lime-component-spacing-bottom);
+@lime-fixedpopuppanels-margin: 60px 60px 132px auto;
+@lime-fixedpopuppanels-border-radius: var(--semantic-radius-overlay);
+@lime-fixedpopuppanels-panel-body-padding: var(--primitive-spacing-60);
 
 // FlexiblePopupPanels
 // ---------------------------------------
@@ -1032,20 +1033,23 @@
 @lime-tablayout-collapse-duration: 250ms;
 @lime-tablayout-vertical-content-margin-top: 0;
 @lime-tablayout-horizontal-content-margin-top: var(--primitive-spacing-96);
-@lime-tablayout-horizontal-tabs-margin: 0 @lime-component-spacing;
+@lime-tablayout-horizontal-tabs-margin: 0 18px;
 @lime-tablayout-horizontal-tabs-padding: var(--primitive-spacing-12);
 @lime-tablayout-horizontal-tabs-spacing: var(--primitive-spacing-48);
 @lime-tablayout-vertical-tabs-padding: var(--primitive-spacing-36);
 @lime-tablayout-vertical-tabs-spacing: @lime-tablayout-vertical-tabs-padding;
 @lime-tablayout-tab-vertical-button-height: 156px;
 @lime-tablayout-tab-vertical-margin: var(--primitive-spacing-30);
-@lime-tablayout-tab-vertical-padding: var(--primitive-spacing-48);
-@lime-tablayout-tab-vertical-padding-left: var(--primitive-spacing-30);
-@lime-tablayout-tab-vertical-padding-right: var(--primitive-spacing-48);
+@lime-tablayout-tab-vertical-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-tablayout-tab-vertical-icon-padding: var(--primitive-spacing-30);
+@lime-tablayout-tab-vertical-icon-padding-right: var(--primitive-spacing-48);
 @lime-tablayout-tab-horizontal-button-height: 108px;
 @lime-tablayout-tab-horizontal-small-button-height: 96px;
 @lime-tablayout-tab-horizontal-small-button-line-height: 60px;
 @lime-tablayout-tab-horizontal-padding: var(--primitive-spacing-24);
+@lime-tablayout-tab-group-vertical-height: 1584px;
+@lime-tablayout-tab-group-vertical-scrollbar-track-margin: 36px;
+@lime-tablayout-tab-group-vertical-scrollbar-height: calc(100% - 72px);
 @lime-tablayout-tab-margin: 0;
 
 // Tooltip

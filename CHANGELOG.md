@@ -2,6 +2,28 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Chips`, a new container component that groups and manages multiple `limestone/Chips.Chip` for improved layout and interaction
+
+### Changed
+
+- `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/TabLayout` styling to match the latest GUI
+
+## [1.0.0-rc.2] - 2025-06-04
+
+### Changed
+
+- `limestone/ContextualMenuDecorator` styling to match the latest GUI
+- `limestone/FixedPopupPanels` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/TabLayout` to focus to the last focused tab when focus enters to the tab group
+
 ## [1.0.0-rc.1] - 2025-05-29
 
 ### Added
