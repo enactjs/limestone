@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/TabLayout` padding for collapsed vertical tab with icon.
+
 ## [1.0.0] - 2025-06-13
 
 ### Added
@@ -12,10 +18,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/TabLayout` styling to match the latest GUI
-
-### Fixed
-
-- `limestone/TabLayout` padding for collapsed vertical tab with icon.
 
 ## [1.0.0-rc.2] - 2025-06-04
 
