@@ -7,7 +7,6 @@
 .imageItem {
 	position: relative;
 	font-weight: @lime-imageitem-font-weight;
-	border-radius: @lime-imageitem-border-radius;
 
 	.image {
 		display: block;
@@ -51,7 +50,6 @@
 
 	.caption {
 		font-size: @lime-imageitem-caption-font-size;
-		font-weight: @lime-imageitem-caption-font-weight;
 		line-height: @lime-imageitem-caption-line-height;
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-imageitem-caption-font-size;
@@ -70,9 +68,7 @@
 	&.vertical {
 		&.fullImage {
 			border-radius: 0;
-			margin: @lime-imageitem-vertical-full-image-margin;
-			height: @lime-imageitem-vertical-full-image-height;
-			width: @lime-imageitem-vertical-full-image-width;
+			padding: @lime-imageitem-vertical-full-image-padding;
 
 			.image {
 				transition: transform 200ms ease-in-out, box-shadow 200ms ease-in-out;
@@ -83,17 +79,13 @@
 				}
 			}
 
-			.selectionContainer {
-				&::after {
-					border-width: @lime-imageitem-vertical-full-image-border-width;
-				}
+			.selectionContainer::after {
+				border-width: @lime-imageitem-vertical-full-image-border-width;
 			}
 
 			.focus({
-				.selectionContainer {
-					&::after {
-						border-width: @lime-imageitem-vertical-full-image-focus-border-width;
-					}
+				.selectionContainer::after {
+					border-width: @lime-imageitem-vertical-full-image-focus-border-width;
 				}
 			});
 		}
@@ -133,11 +125,9 @@
 	}
 
 	&.horizontal {
+		.lime-spotlight-padding(@lime-imageitem-horizontal-padding);
 		align-items: center;
-		height: @lime-imageitem-horizontal-height;
 		margin: @lime-imageitem-margin;
-		padding: @lime-imageitem-horizontal-padding;
-		width: @lime-imageitem-horizontal-width;
 
 		.image {
 			width: @lime-imageitem-horizontal-image-width;
@@ -150,11 +140,11 @@
 		}
 
 		&.wideImage {
-			height: @lime-imageitem-horizontal-wideimage-height;
+			padding: @lime-imageitem-horizontal-wideimage-padding;
 
 			.image {
-				height: @lime-imageitem-horizontal-wideimage-image-height;
 				width: @lime-imageitem-horizontal-wideimage-image-width;
+				height: @lime-imageitem-horizontal-wideimage-image-height;
 			}
 		}
 
@@ -189,8 +179,6 @@
 		}
 
 		&.selected {
-			background-color: @lime-imageitem-container-selected-color;
-
 			.caption {
 				color: @lime-imageitem-label-main-selected-color;
 			}
@@ -211,8 +199,6 @@
 
 		&.vertical {
 			&.fullImage {
-				background-color: transparent;
-
 				.selectionContainer::after {
 					border-color: @lime-imageitem-full-image-border-color;
 				}

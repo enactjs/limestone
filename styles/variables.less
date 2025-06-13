@@ -202,7 +202,7 @@
 @lime-non-latin-font-weight: normal;
 @lime-non-latin-font-weight-light: 300;
 @lime-non-latin-font-weight-bold: 700;
-@lime-spottable-font-weight: 600;
+@lime-spottable-font-weight: var(--primitive-font-weight-semibold);
 @lime-common-line-height: 1.4em;
 @lime-tallglyph-line-height: 1.5em;
 
@@ -267,7 +267,6 @@
 @lime-icon-other-font-family: "LG Icons";
 
 // ImageItem
-@lime-imageitem-caption-font-weight: var(--primitive-font-weight-semibold);
 @lime-imageitem-font-weight: @lime-spottable-font-weight;
 @lime-imageitem-label-font-weight: var(--primitive-font-weight-regular);
 
@@ -679,21 +678,17 @@
 @lime-imageitem-label-line-height: 60px;
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
-@lime-imageitem-horizontal-padding: var(--primitive-spacing-48);
+@lime-imageitem-horizontal-padding: 30px;
 @lime-imageitem-horizontal-image-width: 180px;
 @lime-imageitem-horizontal-image-height: @lime-imageitem-horizontal-image-width;
 @lime-imageitem-horizontal-image-margin: 0 var(--primitive-spacing-48) 0 0;
 @lime-imageitem-horizontal-image-margin-rtl: 0 0 0 var(--primitive-spacing-48);
 @lime-imageitem-horizontal-selection-icon-size: 90px;
-@lime-imageitem-horizontal-height: 240px;
-@lime-imageitem-horizontal-width: 1464px;
-@lime-imageitem-horizontal-wideimage-height: 336px;
-@lime-imageitem-horizontal-wideimage-image-height: 240px;
+@lime-imageitem-horizontal-wideimage-padding: var(--primitive-spacing-48);
 @lime-imageitem-horizontal-wideimage-image-width: 426px;
+@lime-imageitem-horizontal-wideimage-image-height: 240px;
 @lime-imageitem-vertical-padding: var(--primitive-spacing-24) var(--primitive-spacing-24) var(--primitive-spacing-30);
-@lime-imageitem-vertical-full-image-height: 498px;
-@lime-imageitem-vertical-full-image-width: @lime-imageitem-vertical-full-image-height;
-@lime-imageitem-vertical-full-image-margin: 0 var(--primitive-spacing-24);
+@lime-imageitem-vertical-full-image-padding: 60px; // 24px(for expanding) + 36px(for showing shadow)
 @lime-imageitem-vertical-full-image-border-width: 2px;
 @lime-imageitem-vertical-full-image-focus-border-width: 6px;
 @lime-imageitem-vertical-captions-margin-top: var(--primitive-spacing-30);

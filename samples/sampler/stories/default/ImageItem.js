@@ -25,11 +25,18 @@ export default {
 };
 
 export const _ImageItem = (args) => {
-	const style = args['children'].length || args['label'] ? {
-		position: 'absolute',
-		width: args['orientation'] === 'vertical' && ri.scaleToRem(768),
-		height: args['orientation'] === 'vertical' && ri.scaleToRem(588)
-	} : {};
+	let style;
+	const hasContent = args['children'].length || args['label'];
+	const isVertical = args['orientation'] === 'vertical';
+	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
+
+	if (!hasContent) {
+		style = {width: ri.scaleToRem(618), height: ri.scaleToRem(618)};
+	} else if (isVertical) {
+		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588)};
+	} else {
+		style = {width: ri.scaleToRem(1464), height: wideHeight};
+	}
 
 	return (
 		<ImageItem
@@ -40,7 +47,10 @@ export const _ImageItem = (args) => {
 			selected={args['selected']}
 			showSelection={args['showSelection']}
 			src={args['src']}
-			style={style}
+			style={{
+				position: 'absolute',
+				...style
+			}}
 			wideImage={args['wideImage']}
 		>
 			{args['children']}
