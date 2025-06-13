@@ -166,7 +166,7 @@
 		}
 
 		.selectionIcon {
-			background-color: @lime-imageitem-selection-icon-bg-color;
+			background-color: @lime-imageitem-selection-container-color;
 			color: @lime-imageitem-selection-icon-color;
 		}
 
@@ -223,11 +223,6 @@
 				.lime-spotlight-focus-bg-colors();
 			}
 
-			.selectionIcon {
-				background-color: @lime-imageitem-focus-selection-icon-bg-color;
-				color: @lime-imageitem-focus-selection-icon-color;
-			}
-
 			.caption {
 				color: @lime-imageitem-label-main-focused-color;
 			}
@@ -239,20 +234,13 @@
 			&.vertical {
 				&.fullImage {
 					.selectionContainer::after {
-						border-color: @lime-imageitem-focus-full-image-border-color;
+						border-color: @lime-imageitem-full-image-focused-border-color;
 					}
 
 					.image {
 						transform: @lime-imageitem-vertical-focus-image-transform;
-						box-shadow: @lime-imageitem-focus-bg-shadow-color;
+						box-shadow: @lime-imageitem-full-image-focused-shadow-color;
 					}
-				}
-			}
-
-			&.selected {
-				.selectionIcon {
-					background-color: @lime-imageitem-selected-focus-selection-icon-bg-color;
-					color: @lime-imageitem-selected-focus-selection-icon-color;
 				}
 			}
 		});
