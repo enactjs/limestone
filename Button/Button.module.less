@@ -220,11 +220,22 @@
 			}
 		}
 
+		.lime-custom-text({
+			min-width: @lime-button-height-large;
+		});
+
+		&.small {
+			min-width: @lime-button-small-height;
+
+			.lime-custom-text({
+				min-width: @lime-button-small-height-large;
+			});
+		}
+
 		&.iconAfter,
 		&.iconBefore,
 		&.large,
 		&.small {
-			min-width: @lime-button-small-height;
 			padding: @lime-button-icon-small-padding;
 			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
 
