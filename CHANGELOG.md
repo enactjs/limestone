@@ -2,6 +2,15 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/CheckboxItem` styling to match the latest GUI
+- `limestone/FlexiblePopupPanels` styling to match the latest GUI
+- `limestone/FormCheckboxItem` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
+
 ## [1.0.0] - 2025-06-13
 
 ### Added
