@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/Input` styling to match the latest GUI
+
 ## [1.0.0] - 2025-06-13
 
 ### Added
@@ -10,7 +16,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
-- `limestone/Input` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/TabLayout` styling to match the latest GUI
 
