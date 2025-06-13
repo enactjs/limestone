@@ -1,7 +1,7 @@
 /* global __dirname */
 
 const webpack = require('@enact/storybook-utils/configs/webpack');
-const {loadCsf} = require('@storybook/csf-tools');
+const {loadCsf} = require('storybook/internal/csf-tools');
 const {readFileSync}  = require('fs');
 
 module.exports = {
