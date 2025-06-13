@@ -158,9 +158,9 @@
 @lime-item-small-font-size-large:   var(--primitive-font-size-72);
 @lime-item-small-label-font-size:   var(--primitive-font-size-48);
 @lime-keyguide-font-size:           60px;
-@lime-mediaoverlay-caption-font-size: var(--primitive-font-size-48);
-@lime-mediaoverlay-font-size:         var(--primitive-font-size-48);
-@lime-mediaoverlay-title-font-size:   var(--primitive-font-size-60);
+@lime-mediaoverlay-caption-font-size:  var(--primitive-font-size-60);
+@lime-mediaoverlay-text-font-size:     var(--primitive-font-size-48);
+@lime-mediaoverlay-subtitle-font-size: var(--primitive-font-size-48);
 @lime-mediaplayer-times-min-width:    186px;
 @lime-mediaplayer-times-text-size:    48px;
 @lime-picker-font-size:             var(--primitive-font-size-54);
@@ -799,14 +799,20 @@
 // MediaOverlay
 // ---------------------------------------
 @lime-mediaoverlay-border-radius: var(--primitive-radius-12);
-@lime-mediaoverlay-caption-margin-top: var(--primitive-spacing-30);
-@lime-mediaoverlay-caption-margin-bottom: var(--primitive-spacing-6);
-@lime-mediaoverlay-font-weight: var(--primitive-font-weight-medium);
+@lime-mediaoverlay-caption-margin-top: var(--primitive-spacing-36);
+@lime-mediaoverlay-caption-margin-bottom: var(--primitive-spacing-36);
+@lime-mediaoverlay-caption-font-weight: var(--primitive-font-weight-semibold);
+@lime-mediaoverlay-focus-caption-margin-top: var(--primitive-spacing-24);
+@lime-mediaoverlay-font-weight: var(--primitive-font-weight-regular);
 @lime-mediaoverlay-line-height: 1.3em;
+@lime-mediaoverlay-caption-line-height: 1.4em;
 @lime-mediaoverlay-padding: var(--primitive-spacing-24);
-@lime-mediaoverlay-progressbar-margin: 0 var(--primitive-spacing-6) var(--primitive-spacing-6) var(--primitive-spacing-6);
+@lime-mediaoverlay-progressbar-margin: var(--primitive-spacing-24);
+@lime-mediaoverlay-text-margin-bottom: var(--primitive-spacing-36);
 @lime-mediaoverlay-textlayout-margin: var(--primitive-spacing-24) var(--primitive-spacing-60);
 @lime-mediaoverlay-width: 642px;
+@lime-mediaoverlay-focus-media-transform: scale(1.1);
+@lime-mediaoverlay-focus-media-border-width: 6px;
 
 // MediaPlayer
 // ---------------------------------------

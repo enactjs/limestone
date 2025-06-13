@@ -10,6 +10,7 @@
 	width: @lime-mediaoverlay-width;
 	height: auto;
 	padding: @lime-mediaoverlay-padding;
+	font-weight: @lime-mediaoverlay-font-weight;
 
 	.bg {
 		position: absolute;
@@ -47,12 +48,12 @@
 
 	.text {
 		.lime-font({
-			font-size: @lime-mediaoverlay-font-size;
+			font-size: @lime-mediaoverlay-text-font-size;
 			line-height: @lime-mediaoverlay-line-height;
 		});
-		font-size: @lime-mediaoverlay-font-size;
+		font-size: @lime-mediaoverlay-text-font-size;
 		line-height: @lime-mediaoverlay-line-height;
-		font-weight: @lime-mediaoverlay-font-weight;
+		margin-bottom: @lime-mediaoverlay-text-margin-bottom;
 	}
 
 	.progressBar {
@@ -72,23 +73,37 @@
     }
 
 	.caption,
-	.subtitle {
+	.title {
 		.lime-font({
 			font-size: @lime-mediaoverlay-caption-font-size;
-			line-height: @lime-mediaoverlay-line-height;
+			line-height: @lime-mediaoverlay-caption-line-height;
 		});
 		font-size: @lime-mediaoverlay-caption-font-size;
+		font-weight: @lime-mediaoverlay-caption-font-weight;
+		line-height: @lime-mediaoverlay-caption-line-height;
+	}
+
+	.subtitle {
+		.lime-font({
+			font-size: @lime-mediaoverlay-subtitle-font-size;
+			line-height: @lime-mediaoverlay-line-height;
+		});
+		font-size: @lime-mediaoverlay-subtitle-font-size;
 		line-height: @lime-mediaoverlay-line-height;
 	}
 
-	.title {
-		.lime-font({
-			font-size: @lime-mediaoverlay-title-font-size;
-			line-height: @lime-mediaoverlay-line-height;
-		});
-		font-size: @lime-mediaoverlay-title-font-size;
-		line-height: @lime-mediaoverlay-line-height;
-	}
+	.focus({
+		.media,
+		.progressBar {
+			transform: @lime-mediaoverlay-focus-media-transform;
+		}
+
+		.captionContainer {
+			> :first-child {
+				margin-top: @lime-mediaoverlay-focus-caption-margin-top;
+			}
+		}
+	});
 
 	.applySkins({
 		.bg {
@@ -97,24 +112,20 @@
 
 		.caption,
 		.title {
-			color: @lime-mediaoverlay-caption-color;
+			color: @lime-mediaoverlay-outer-label-main-color;
+		}
+
+		.text {
+			color: @lime-mediaoverlay-inner-label-main-color;
 		}
 
 		.subtitle {
-			color: @lime-mediaoverlay-subtitle-color;
+			color: @lime-mediaoverlay-outer-label-sub-color;
 		}
 
 		.focus({
-			.lime-spotlight-focus-text-colors();
-
-			.caption,
-			.title,
-			.subtitle {
-				color: inherit;
-			}
-
-			.bg {
-				.lime-spotlight-focus-bg-colors();
+			.media {
+				border: @lime-mediaoverlay-focus-media-border-width solid @lime-mediaoverlay-inner-border-focused;
 			}
 		});
 
