@@ -9,6 +9,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/CheckboxItem` styling to match the latest GUI
 - `limestone/FlexiblePopupPanels` styling to match the latest GUI
 - `limestone/FormCheckboxItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
 
 ## [1.0.0] - 2025-06-13
