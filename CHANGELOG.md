@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Button` width for `iconOnly` and `largeText`.
 - `limestone/TabLayout` padding for collapsed vertical tab with icon.
 
 ## [1.0.0] - 2025-06-13
