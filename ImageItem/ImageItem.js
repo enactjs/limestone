@@ -226,8 +226,7 @@ const ImageItemBase = kind({
 		'data-webos-voice-intent': 'Select',
 		imageIconComponent: Image,
 		orientation: 'vertical',
-		placeholder: defaultPlaceholder,
-		wideImage: false
+		placeholder: defaultPlaceholder
 	},
 
 	styles: {
