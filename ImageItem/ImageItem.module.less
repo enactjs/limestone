@@ -223,6 +223,11 @@
 				.lime-spotlight-focus-bg-colors();
 			}
 
+			.selectionIcon {
+				background-color: @lime-imageitem-selection-container-focused-color;
+				color: @lime-imageitem-selection-icon-focused-color;
+			}
+
 			.caption {
 				color: @lime-imageitem-label-main-focused-color;
 			}
@@ -241,6 +246,13 @@
 						transform: @lime-imageitem-vertical-focus-image-transform;
 						box-shadow: @lime-imageitem-full-image-focused-shadow-color;
 					}
+				}
+			}
+
+			&.selected {
+				.selectionIcon {
+					background-color: @lime-imageitem-selection-conatiner-selected-focused-color;
+					color: @lime-imageitem-selection-icon-selected-focused-color;
 				}
 			}
 		});
