@@ -12,8 +12,9 @@
 		&.button {
 			display: block;
 			height: @lime-tablayout-tab-horizontal-button-height;
+			width: var(--tab-width);
 			margin: @lime-tablayout-tab-margin;
-			.padding-start-end(@lime-tablayout-tab-horizontal-padding);
+			.padding-start-end(@lime-tablayout-tab-horizontal-padding, @lime-tablayout-tab-horizontal-padding);
 
 			&.small {
 				font-size: @lime-tablayout-tab-small-font-size;
@@ -26,14 +27,15 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
-			.padding-start-end(@lime-tablayout-tab-vertical-padding);
+			padding: @lime-tablayout-tab-vertical-padding;
 
 			&.collapsed {
 				width: @lime-tablayout-tab-vertical-button-height;
 			}
 
 			&.hasIcon:not(&.collapsed) {
-				.padding-start-end(@lime-tablayout-tab-vertical-padding-left, @lime-tablayout-tab-vertical-padding-right);
+				padding: @lime-tablayout-tab-vertical-icon-padding;
+				.padding-start-end(@lime-tablayout-tab-vertical-icon-padding, @lime-tablayout-tab-vertical-icon-padding-right);
 
 				.icon {
 					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
@@ -74,19 +76,40 @@
 	}
 
 	&.horizontal {
+		margin-left: calc((1 - var(--scrollable)) * var(--offset));
 		padding: @lime-tablayout-horizontal-tabs-padding;
+
+		&:not(.scrollable) {
+			width: var(--tabs-width);
+		}
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
+			width: calc(var(--tabs-width) + var(--scrollable) * var(--offset) * 2);
+			.padding-start-end(calc(var(--scrollable) * var(--offset)), calc(var(--scrollable) * var(--offset)))
 		}
 	}
 
 	&.vertical {
 		padding: @lime-tablayout-vertical-tabs-padding;
 
+		&.scrollable {
+			height: @lime-tablayout-tab-group-vertical-height;
+		}
+
 		.tabs {
 			flex-direction: column;
 			gap: @lime-tablayout-vertical-tabs-spacing;
+		}
+
+		.scrollbarTrack {
+			margin-top: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			margin-bottom: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			height: @lime-tablayout-tab-group-vertical-scrollbar-height;
+		}
+
+		&.collapsed {
+			height: fit-content;
 		}
 	}
 }

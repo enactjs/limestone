@@ -14,6 +14,7 @@
  *
  * @module limestone/Scroller
  * @exports Scroller
+ * @exports ScrollerBase
  */
 
 import {setDefaultProps} from '@enact/core/util';
@@ -474,6 +475,8 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	verticalScrollThumbAriaLabel: PropTypes.string
 };
 
+const ScrollerBase = Scroller;
+
 Scroller = Skinnable(
 	SpotlightContainerDecorator(
 		{
@@ -493,5 +496,6 @@ Scroller.defaultPropValues = scrollerDefaultProps;
 export default Scroller;
 export {
 	ContentContainerDecorator,
-	Scroller
+	Scroller,
+	ScrollerBase
 };
