@@ -1,7 +1,5 @@
-.bodyText {
-    margin-left: 0;
-    margin-right: 0;
-}
+// PopupTabLayout.module.less
+//
 
 .container {
     width: 100%;
@@ -11,8 +9,10 @@
     padding-top: 36px;
 }
 
-.footer {
-    margin-top: auto;
-    padding-bottom: 30px;
-    text-align: center;
+.scroller {
+    .container();
+    
+    & > :first-child {
+        background-color: transparent;
+    }
 }
