@@ -1,10 +1,11 @@
 import handle, {forProp, forward, forwardCustom, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
+import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Group from '@enact/ui/Group';
 import IdProvider from '@enact/ui/internal/IdProvider';
-import {Cell, Layout} from '@enact/ui/Layout';
+import {Layout} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
@@ -15,16 +16,10 @@ import $L from '../internal/$L';
 import DebounceDecorator from '../internal/DebounceDecorator';
 import Button from '../Button';
 import Skinnable from '../Skinnable';
-import Scroller from '../Scroller';
+import {ScrollerBase} from '../Scroller';
 import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
-
-const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 5;
-const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 7;
-
-// Since Button and Cell both have a `size` prop, TabButton is required to relay the Button.size to Button, rather than Cell.
-const TabButton = ({buttonSize, ...rest}) => (<Button size={buttonSize} {...rest} css={componentCss} />);
 
 const TabBase = kind({
 	name: 'Tab',
@@ -39,7 +34,6 @@ const TabBase = kind({
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
 		selected: PropTypes.bool,
-		size: PropTypes.number,
 		sprite: PropTypes.object,
 		stopped: PropTypes.bool
 	},
@@ -64,13 +58,7 @@ const TabBase = kind({
 			forward('onFocus'),
 			not(forProp('disabled', true)),
 			() => !Spotlight.getPointerMode(),
-			forwardCustom('onFocusTab', (ev, {index, orientation}) => {
-				if (orientation === 'horizontal') {
-					ev.target.scrollIntoView({behavior: 'smooth', block: 'center'});
-				}
-
-				return {selected: index};
-			})
+			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
 		)
 	},
 
@@ -83,8 +71,7 @@ const TabBase = kind({
 		}
 	},
 
-	render: ({buttonSize, children, collapsed, css, orientation, size, ...rest}) => {
-		delete rest.index;
+	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, ...rest}) => {
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -100,18 +87,18 @@ const TabBase = kind({
 			css,
 			focusEffect: 'static',
 			minWidth: false,
-			role: 'tab'
+			role: 'tab',
+			spotlightId: index === primaryIndex ? primaryTabSpotlightId : null
 		};
 
 		switch (orientation) {
 			// Horizontal Cell sizing can auto-size width or be set to a finite value, stretching the Button.
 			case 'horizontal': {
 				return (
-					<Cell
+					<Button
+						minWidth={false}
+						size={buttonSize}
 						{...rest}
-						buttonSize={buttonSize}
-						size={size}
-						component={TabButton}
 						{...commonProps}
 					/>
 				);
@@ -131,19 +118,31 @@ const TabBase = kind({
 
 const Tab = Toggleable({prop: 'stopped', activate: 'onBlur', deactivate: 'onFocus'}, Skinnable(TabBase));
 
-const GroupComponent = SpotlightContainerDecorator(
-	{
-		// using default-element so we always land on the selected tab in order to avoid changing
-		// the view when re-entering the tab group
-		defaultElement: `.${componentCss.selected}`,
-		enterTo: 'default-element',
-		partition: true,
-		// When swapping from unscrolled to scrolled tab group, the container config is lost so this
-		// preserves it across unmounts / remounts
-		preserveId: true
-	},
-	Group
+const spotlightContainerConfig = {
+	// using default-element so we always land on the selected tab in order to avoid changing
+	// the view when re-entering the tab group
+	defaultElement: `.${componentCss.selected}`,
+	enterTo: 'default-element',
+	partition: true,
+	// When swapping from unscrolled to scrolled tab group, the container config is lost so this
+	// preserves it across unmounts / remounts
+	preserveId: true
+};
+
+const Scroller = Skinnable(
+	SpotlightContainerDecorator(
+		{
+			...spotlightContainerConfig,
+			overflow: true
+		},
+		I18nContextDecorator(
+			{rtlProp: 'rtl'},
+			ScrollerBase
+		)
+	)
 );
+
+const GroupContainer = SpotlightContainerDecorator(spotlightContainerConfig, Group);
 
 /**
  * A group of tabs
@@ -172,8 +171,7 @@ const TabGroupBase = kind({
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
-		spotlightId: PropTypes.string,
-		tabSize: PropTypes.number
+		spotlightId: PropTypes.string
 	},
 
 	styles: {
@@ -183,18 +181,26 @@ const TabGroupBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
+		className: ({collapsed, scrollable, orientation, styler}) => styler.append({collapsed, scrollable}, orientation),
 		// check if there's no tab icons
 		noIcons: ({collapsed, orientation, tabs}) => orientation === 'vertical' && collapsed && tabs.filter((tab) => (!tab.icon && !tab.sprite)).length,
 		tabsDisabled: ({tabs}) => tabs.find(tab => tab && !tab.disabled) == null,
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabSize, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
+		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		const itemProps = useMemo(() => ({buttonSize: size, css, collapsed, orientation, size: tabSize}), [css, collapsed, orientation, size, tabSize]);
+		const itemProps = useMemo(() => ({
+			buttonSize: size,
+			css,
+			collapsed,
+			orientation,
+			primaryIndex: collapsed ? null : primaryIndex,
+			primaryTabSpotlightId
+		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
@@ -218,16 +224,22 @@ const TabGroupBase = kind({
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
-		const maxTabs = (isHorizontal ? MAX_TABS_BEFORE_HORIZONTAL_SCROLLING : MAX_TABS_BEFORE_VERTICAL_SCROLLING);
 
-		const useScroller = (children.length > maxTabs);
-		const scrollerProps = useScroller ? {
+		const groupProps = scrollable ? null : {
+			spotlightId,
+			spotlightDisabled
+		};
+		const scrollerProps = scrollable ? {
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
-			hoverToScroll: true,
-			verticalScrollbar: 'hidden'
+			hoverToScroll: !collapsed,
+			scrollbarTrackCss: componentCss,
+			spotlightId,
+			spotlightDisabled,
+			verticalScrollbar: 'auto'
 		} : null;
-		const Component = useScroller ? Scroller : 'div';
+		const Component = scrollable ? Scroller : 'div';
+		const GroupComponent = scrollable ? Group : GroupContainer;
 
 		return (
 			<Component
@@ -260,8 +272,7 @@ const TabGroupBase = kind({
 							select="radio"
 							selected={selectedIndex}
 							selectedProp="selected"
-							spotlightId={spotlightId}
-							spotlightDisabled={spotlightDisabled}
+							{...groupProps}
 						>
 							{children}
 						</GroupComponent>

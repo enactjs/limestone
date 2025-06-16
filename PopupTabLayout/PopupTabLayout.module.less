@@ -75,14 +75,18 @@
 	.applySkins({
 		background-color: transparent;
 
-		.tabGroup {
-			background-color: transparent;
+		.tabs {
+			border-radius: @lime-popuptablayout-tabs-border-radius;
+		}
+
+		.content .panels::before {
+			border-radius: @lime-popuptablayout-content-border-radius;
 		}
 
 		.tabs,
 		.content .panels::before {
-			border-radius: @lime-popuptablayout-tabs-content-border-radius;
-			box-shadow: @lime-popuptablayout-shadow;
+			background-color: @lime-popuptablayout-content-background-color;
+			box-shadow: @lime-overlay-shadow;
 			outline-color: @lime-overlay-outline-color;
 			outline-width: @lime-overlay-outline-width;
 			outline-style: @lime-overlay-outline-style;
@@ -93,21 +97,6 @@
 			.tabs,
 			.content .panels::before {
 				box-shadow: none;
-			}
-		}
-
-		&.scrimTranslucent {
-			.tabs,
-			.content .panels::before {
-				background-color: @lime-popuptablayout-bg-color;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTransparent {
-			.tabs,
-			.content .panels::before {
-				background-color: @lime-popuptablayout-scrimtransparent-bg-color;
 			}
 		}
 	});
