@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/ImageItem` styling to match the latest GUI
+- `limestone/Spinner` styling to match the latest GUI
 
 ## [1.0.0] - 2025-06-13
 
@@ -48,7 +49,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Panels.Header` styling to match the latest GUI
 - `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/ProgressButton` styling to match the latest GUI
-- `limestone/Spinner` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/SwitchItem` styling to match the latest GUI
