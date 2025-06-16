@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/ImageItem` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/Button` width for `iconOnly` and `largeText`.
