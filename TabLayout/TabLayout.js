@@ -19,7 +19,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Changeable} from '@enact/ui/Changeable';
 import {Cell, Layout} from '@enact/ui/Layout';
-import {scaleToRem} from '@enact/ui/resolution';
+import ri, {scaleToRem} from '@enact/ui/resolution';
 import Toggleable from '@enact/ui/Toggleable';
 import Touchable from '@enact/ui/Touchable';
 import ViewManager from '@enact/ui/ViewManager';
@@ -36,11 +36,42 @@ import Tab from './Tab';
 import componentCss from './TabLayout.module.less';
 import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
 
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
+const TAB_SPACING = 48;
+
 const TabLayoutContext = createContext(null);
 
 const TouchableCell = Touchable(Cell);
 
 const isTouchMode = () => (getLastInputType() === 'touch');
+
+const getHorizontalTabWidth = (dataSize, size, tabSize) => {
+	let widths;
+
+	if (tabSize) {
+		return tabSize;
+	}
+
+	if (size === 'small') {
+		widths = [540, 420, 420];
+	} else {
+		widths = [852, 672, 552];
+	}
+
+	if (dataSize < 5) {
+		return widths[0];
+	} else if (dataSize < 6) {
+		return widths[1];
+	} else {
+		return widths[2];
+	}
+};
+
+const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
+
+	return (typeof window !== 'undefined' && window?.screen?.width) ? window.screen.width < ri.scale(totalTabsWidth) : false;
+};
 
 /**
  * Tabbed Layout component.
@@ -152,6 +183,18 @@ const TabLayoutBase = kind({
 		index: PropTypes.number,
 
 		/**
+		 * The offset of the tabs area from the left and right edges of the screen.
+		 * This option is only applicable when `orientation` is set to `horizontal`.
+		 * The default value set to `36` to have the right position of the tabs in the normal panel.
+		 * If the tabs are supposed to scroll, this value should be set to `132` and the panel should have no padding.
+		 *
+		 * @type {Number}
+		 * @default 36
+		 * @public
+		 */
+		offset: PropTypes.number,
+
+		/**
 		 * Called when the tabs are collapsed.
 		 *
 		 * @type {Function}
@@ -256,7 +299,7 @@ const TabLayoutBase = kind({
 		dimensions: {
 			tabs: {
 				collapsed: 216,
-				normal: 882
+				normal: 888
 			},
 			content: {
 				expanded: null,
@@ -265,7 +308,9 @@ const TabLayoutBase = kind({
 		},
 		index: null,
 		primaryIndex: null,
+		offset: 36,
 		orientation: 'vertical',
+		size: 'large',
 		type: 'normal'
 	},
 
@@ -391,10 +436,29 @@ const TabLayoutBase = kind({
 			`anchor${cap(anchorTo)}`,
 			orientation
 		),
-		style: ({dimensions, orientation, style}) => ({
-			...style,
-			'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
-		}),
+		scrollable: ({children, orientation, size, tabSize}) => {
+			const isVertical = orientation === 'vertical';
+			return isVertical ?
+				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(children.length, size, tabSize);
+		},
+		style: ({children, dimensions, offset, orientation, size, style, tabSize}) => {
+			const isVertical = orientation === 'vertical';
+			const scrollable = isVertical ?
+				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(children.length, size, tabSize);
+			const tabSizeValue = !isVertical ? getHorizontalTabWidth(children.length, size, tabSize) : null;
+			const totalTabsWidth = ri.scaleToRem(tabSizeValue * children.length + TAB_SPACING * (children.length - 1));
+
+			return {
+				...style,
+				'--offset': scaleToRem(offset),
+				'--scrollable': scrollable ? '1' : '0',
+				'--tabs-width': !isVertical ? totalTabsWidth : '100%',
+				'--tab-width': scaleToRem(tabSizeValue),
+				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
+			};
+		},
 		index: ({index, primaryIndex}) => {
 			// If `index` is not provided, it defaults to `primaryIndex` or 0.
 			return index ?? primaryIndex ?? 0;
@@ -410,11 +474,13 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, size, tabOrientation, tabSize, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollable, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
+		delete rest.offset;
 		delete rest.onTabAnimationEnd;
 		delete rest.rtl;
+		delete rest.tabSize;
 
 		const contentSize = (collapsed ? dimensions.content.expanded : dimensions.content.normal);
 		const isVertical = orientation === 'vertical';
@@ -442,9 +508,9 @@ const TabLayoutBase = kind({
 						<TabGroup
 							{...tabGroupProps}
 							collapsed={isVertical}
-							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
-							tabSize={!isVertical ? tabSize : null}
+							scrollable={scrollable}
 							size={size}
+							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
 							spotlightDisabled={!collapsed && isVertical}
 						/>
 					</Cell>
@@ -454,6 +520,7 @@ const TabLayoutBase = kind({
 					>
 						<TabGroup
 							{...tabGroupProps}
+							scrollable={scrollable}
 							spotlightId={getTabsSpotlightId(spotlightId, false)}
 							spotlightDisabled={collapsed}
 						/>
