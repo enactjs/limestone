@@ -9,16 +9,20 @@
 @import "../styles/internal/fonts.less";
 
 // Limestone Rules
+@import "~@enovaui/core-tokens/css/spacing-primitive.css";
+@import "~@enovaui/core-tokens/css/typography-primitive.css";
+@import "~@enovaui/webos-tokens/css/color-semantic-dark.css";
+@import "~@enovaui/webos-tokens/css/radius-semantic.css";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .applySkins({
-	color: @lime-text-color;
+	color: var(--semantic-color-on-background-main);
 
 	::selection {
-		color: @lime-selection-color;
-		background-color: @lime-selection-bg-color;
+		color: @lime-input-selection-color;
+		background-color: @lime-input-selection-bg-color;
 	}
 
 	// Disabled Components
@@ -55,6 +59,22 @@
 		// Prevent Chrome's default focus treatment
 		outline: none;
 	}
+
+	/* Light Skin */
+	&:global(.light) {
+		--semantic-color-background-full-default: var(--primitive-color-neutral-gray-85);
+		--semantic-color-on-background-main: var(--primitive-color-neutral-gray-10);
+		--semantic-color-on-background-sub: var(--primitive-color-neutral-gray-35);
+		--semantic-color-background-overlay-default: var(--primitive-color-cool-gray-85);
+		--semantic-color-surface-default-track: var(--primitive-color-neutral-gray-40);
+		--semantic-color-stroke-selection-inactive: var(--primitive-color-neutral-gray-10);
+		--semantic-color-stroke-overlay-default: var(--primitive-color-cool-gray-70);
+	}
+
+	/* High Contrast */
+	&:global(.enact-a11y-high-contrast):global(.highContrast) {
+		--semantic-color-background-overlay-default: var(--primitive-color-black);
+	}
 }
 
 // Skin colors
@@ -65,6 +85,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: @lime-bg-color;
+		background-color: var(--semantic-color-background-full-default);
 	}
 });

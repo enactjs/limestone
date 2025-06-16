@@ -9,7 +9,11 @@ const PopupBaseTests = [
 	<Popup open position="center">Center Popup!</Popup>,
 	<Popup open position="left">Left Popup!</Popup>,
 	<Popup open position="right">Right Popup!</Popup>,
-	<Popup open position="top">Top Popup!</Popup>
+	<Popup open position="top">Top Popup!</Popup>,
+	<Popup open position="bottom left">Bottom Left Popup!</Popup>,
+	<Popup open position="bottom right">Bottom Right Popup!</Popup>,
+	<Popup open position="top left">Top Left Popup!</Popup>,
+	<Popup open position="top right">Top Right Popup!</Popup>
 	// End of [QWTC-1904]
 ];
 

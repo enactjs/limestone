@@ -163,11 +163,11 @@ const PopupBase = kind({
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top')}
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top']),
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
 
 		/**
 		 * The ARIA role for the Popup.
@@ -223,14 +223,14 @@ const PopupBase = kind({
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `aria-live` will be usually `off`.
 		'aria-live': ({'aria-live': live, noAlertRole}) => ((typeof live !== 'undefined') ? live : (!noAlertRole && 'off' || null)),
-		className: ({noOutline, position, styler}) => styler.append(position, position === 'fullscreen' || noOutline ? null : componentCss.outline),
+		className: ({noOutline, position, styler}) => styler.append(position.split(' '), position === 'fullscreen' || noOutline ? null : componentCss.outline),
 		direction: ({position}) => transitionDirection[position],
 		noAnimation: ({noAnimation}) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation,
 		// When passing `role` prop to the Popup, the prop should work first.
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `role` will be usually `alert`.
 		role: ({noAlertRole, role}) => ((typeof role !== 'undefined') ? role : (!noAlertRole && 'alert' || null)),
-		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position)
+		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '))
 	},
 
 	render: ({children, css, direction, noAnimation, onHide, onShow, open, position, spotlightId, spotlightRestrict, transitionContainerClassName, ...rest}) => {
@@ -382,11 +382,11 @@ class Popup extends Component {
 		/**
 		 * Position of the Popup on the screen.
 		 *
-		 * @type {('bottom'|'center'|'fullscreen'|'left'|'right'|'top')}
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
 		 * @default 'bottom'
 		 * @public
 		 */
-		position: PropTypes.oneOf(['bottom', 'center', 'fullscreen', 'left', 'right', 'top']),
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
 
 		/**
 		 * Scrim type.

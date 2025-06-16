@@ -25,6 +25,7 @@
 		.content {
 			margin: 0;
 			overflow: hidden;
+			padding: @lime-alert-fullscreen-content-padding;
 			max-height: 60%; // Set a reasonable cutoff for a maximum bound
 		}
 
@@ -32,12 +33,6 @@
 			.content {
 				.lime-font-size(@lime-alert-notitle-content-font-size, @lime-tallglyph-alert-notitle-content-font-size);
 				.enact-locale-line-height();
-			}
-		}
-
-		&.maxButtons {
-			.buttonContainer {
-				margin-top: @lime-alert-max-buttons-margin-top;
 			}
 		}
 
@@ -56,61 +51,33 @@
 	}
 
 	&.overlay {
+		overflow: hidden;
+
 		.alertImage {
-			margin: @lime-alert-overlay-image-margin;
+			margin-bottom: @lime-alert-overlay-image-margin-bottom;
+			padding: @lime-alert-overlay-image-padding;
 		}
 
 		.buttonContainer {
 			box-sizing: border-box;
+			margin-top: @lime-alert-overlay-buttons-margin-top;
 
 			// Every buttonCell after the first one
 			.buttonCell + .buttonCell {
 				margin-top: @lime-alert-overlay-button-spacing;
 			}
-
-			&.full {
-				margin: @lime-alert-overlay-buttons-margin;
-				.margin-start-end(
-					.extract(@lime-alert-overlay-buttons-margin, left)[],
-					.extract(@lime-alert-overlay-buttons-margin, right)[]
-				);
-				:global(.enact-orientation-portrait) & {
-					margin: @lime-portrait-alert-overlay-buttons-margin;
-					.margin-start-end(.extract(@lime-portrait-alert-overlay-buttons-margin, left)[], .extract(@lime-portrait-alert-overlay-buttons-margin, right)[], parent);
-				}
-			}
 		}
 
 		.content {
+			align-self: stretch;
 			.lime-alert-overlay-content();
+			padding: @lime-alert-overlay-body-padding;
+			margin: 0;
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
 				overflow-wrap: normal;
 				word-break: normal;
-			}
-
-			&.full {
-				width: @lime-alert-overlay-content-width;
-				.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-alert-overlay-text-button-gap);
-				margin-bottom: 0;
-
-				:global(.enact-orientation-portrait) & {
-					width: @lime-portrait-alert-overlay-content-width;
-					.margin-start-end(@lime-alert-overlay-image-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
-				}
-			}
-		}
-
-		&.noImage {
-			.content {
-				.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-alert-overlay-text-button-gap);
-
-				:global(.enact-orientation-portrait) & {
-					width: @lime-portrait-alert-overlay-noimage-content-width;
-					.margin-start-end(@lime-alert-overlay-noimage-text-gap, @lime-portrait-alert-overlay-text-button-gap, parent);
-				}
-
 			}
 		}
 	}
@@ -118,14 +85,13 @@
 
 .popup {
 	&.overlay {
-		width: fit-content;
+		width: @lime-alert-overlay-width;
 		margin-left: auto;
 		margin-right: auto;
 
 		.body {
-			padding-top: @lime-alert-overlay-padding-top-bottom;
-			padding-bottom: @lime-alert-overlay-padding-top-bottom;
-			.padding-start-end(@lime-alert-overlay-padding-left, @lime-alert-overlay-padding-right);
+			padding: @lime-alert-overlay-padding;
+			max-height: @lime-alert-overlay-max-height;
 		}
 	}
 
@@ -133,18 +99,14 @@
 		background-color: @lime-alert-bg-color;
 
 		&.overlay {
-			margin-bottom: @lime-alert-overlay-margin-bottom;
 			border-radius: @lime-alert-overlay-border-radius;
+			outline-style: @lime-alert-overlay-outline-style;
 
 			/* Override colors inside overlay type Alert */
-			--lime-bg-color: @lime-alert-overlay-bg-color;
-			--lime-text-color: @lime-alert-overlay-text-color;
-			--lime-text-sub-color: @lime-alert-overlay-text-sub-color;
-			--lime-focus-text-color: @lime-alert-overlay-focus-text-color;
-			--lime-disabled-selected-color: @lime-alert-overlay-disabled-selected-color;
-			--lime-disabled-selected-bg-color: @lime-alert-overlay-disabled-selected-bg-color;
-			--lime-disabled-selected-focus-color: @lime-alert-overlay-disabled-selected-focus-color;
-			--lime-disabled-selected-focus-bg-color: @lime-alert-overlay-disabled-selected-focus-bg-color;
+			--semantic-color-background-full-default: @lime-alert-overlay-bg-color;
+			--semantic-color-on-background-main: @lime-alert-overlay-text-color;
+			--semantic-color-on-background-sub: @lime-alert-overlay-text-sub-color;
+			--semantic-color-stroke-selection-inactive: @lime-alert-overlay-text-color;
 			--lime-progress-color: @lime-alert-overlay-progress-color;
 			--lime-progress-bg-color: @lime-alert-overlay-progress-bg-color;
 			--lime-progress-bg-color-opacity: @lime-alert-overlay-progress-bg-color-opacity;

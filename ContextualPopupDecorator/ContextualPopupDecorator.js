@@ -279,6 +279,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.adjustedDirection = this.props.direction;
 			this.id = this.generateId();
 			this.clientSiblingRef = createRef(null);
+			this.findClientSiblingRef = createRef(null);
 
 			this.MARGIN = ri.scale(noArrow ? 0 : 12);
 			this.ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width. used for arrow positioning
@@ -311,7 +312,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		getSnapshotBeforeUpdate (prevProps, prevState) {
 			const snapshot = {
-				containerWidth: this.getContainerNodeWidth()
+				containerWidth: this.getContainerNodeWidth(),
+				clientSiblingWidth: this.getClientSiblingNodeWidth()
 			};
 
 			if (prevProps.open && !this.props.open) {
@@ -330,6 +332,10 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		componentDidUpdate (prevProps, prevState, snapshot) {
+			if (snapshot.clientSiblingWidth !== this.getClientSiblingNodeWidth()) {
+				this.clientSiblingRef.current = this.findClientSiblingRef.current();
+			}
+
 			if (prevProps.direction !== this.props.direction ||
 				snapshot.containerWidth !== this.getContainerNodeWidth() ||
 				(prevProps.open && this.props.open)) {
@@ -374,6 +380,10 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		getContainerNodeWidth () {
 			return this.containerNode && this.containerNode.getBoundingClientRect().width || 0;
+		}
+
+		getClientSiblingNodeWidth () {
+			return this.clientSiblingRef.current && this.clientSiblingRef.current.getBoundingClientRect().width || 0;
 		}
 
 		updateLeaveFor (activator) {
@@ -657,8 +667,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.updateLeaveFor(current);
 			this.setState({
 				activator: current
-			});
-			this.spotPopupContent();
+			}, () => this.spotPopupContent());
 		};
 
 		handleClose = () => {
@@ -808,7 +817,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 							</ContextualPopupContainer>
 						</div>
 					</FloatingLayer>
-					<WrappedWithRef {...rest} outermostRef={this.clientSiblingRef} referrerName="ContextualPopup" />
+					<WrappedWithRef {...rest} outermostRef={this.clientSiblingRef} findOutermostRef={this.findClientSiblingRef} referrerName="ContextualPopup" />
 				</div>
 			);
 		}

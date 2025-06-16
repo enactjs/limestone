@@ -71,6 +71,15 @@ const IconBase = kind({
 		flip: PropTypes.oneOf(['auto', 'both', 'horizontal', 'vertical']),
 
 		/**
+		 * The current locale as a
+		 * {@link https://tools.ietf.org/html/rfc5646|BCP 47 language tag}.
+		 *
+		 * @type {String}
+		 * @private
+		*/
+		locale: PropTypes.string,
+
+		/**
 		 * Indicates the content's text direction is right-to-left.
 		 *
 		 * This is set automatically when using {@link ui/Icon.Icon}.
@@ -111,8 +120,11 @@ const IconBase = kind({
 		className: ({size, styler}) => styler.append(
 			(typeof size === 'string' ? size : null)
 		),
-		flip: ({flip, rtl}) => {
+		flip: ({children, flip, locale, rtl}) => {
 			if (flip === 'auto') {
+				if (locale === 'he-IL' && children === 'help') {
+					return null;
+				}
 				return rtl ? 'horizontal' : null;
 			}
 
@@ -125,6 +137,7 @@ const IconBase = kind({
 	},
 
 	render: ({css, size, ...rest}) => {
+		delete rest.locale;
 		delete rest.rtl;
 
 		return UiIconBase.inline({
@@ -148,7 +161,7 @@ const IconBase = kind({
  * arrowhookleft
  * arrowhookright
  * ellipsis
- * check
+ * checkmark
  * triangleup
  * triangleright
  * triangledown
@@ -274,7 +287,6 @@ const IconBase = kind({
  * sound
  * wisa
  * demooptions
- * newfeature
  * youtube
  * ostsearch
  * shopping
@@ -306,7 +318,6 @@ const IconBase = kind({
  * help
  * share
  * files
- * quickstart
  * scheduler
  * recording
  * guide
@@ -334,6 +345,7 @@ const IconBase = kind({
  * profilecheck
  * mediaserver
  * wallpaper
+ * zoom
  * spanner
  * bluetooth
  * moodmode
@@ -396,6 +408,38 @@ const IconBase = kind({
  * alert01
  * alert02
  * calibration
+ * mypage
+ * moodmaker
+ * check
+ * calendar
+ * antenna
+ * av
+ * component
+ * pcpicture
+ * hdmigeneric
+ * hdmi01
+ * hdmi02
+ * hdmi03
+ * hdmi04
+ * dvd
+ * hdmisub
+ * usbport
+ * vcr
+ * soundshare
+ * remotepc
+ * mobileguide
+ * airplay
+ * musicbt
+ * streamingspeaker
+ * insteon
+ * satellite
+ * scart
+ * settopbox
+ * screenshare
+ * pc
+ * tips
+ * googlehome
+ * thinq
  * ```
  *
  * @name iconList
@@ -416,7 +460,7 @@ const IconBase = kind({
 const IconDecorator = compose(
 	Pure,
 	Skinnable,
-	I18nContextDecorator({rtlProp: 'rtl'})
+	I18nContextDecorator({localeProp: 'locale', rtlProp: 'rtl'})
 );
 
 /**

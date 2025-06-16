@@ -215,7 +215,7 @@ const DropdownBase = kind({
 		 * The size of the Dropdown's {@link limestone/Button.Button|Button} component.
 		 *
 		 * @type {('large'|'small')}
-		 * @default 'small'
+		 * @default 'large'
 		 * @public
 		 */
 		size: PropTypes.oneOf(['large', 'small']),
@@ -232,7 +232,7 @@ const DropdownBase = kind({
 		 * Width of the Dropdown.
 		 *
 		 * @type {('huge'|'large'|'x-large'|'medium'|'small'|'tiny')|number}
-		 * @default 'medium'
+		 * @default 'large'
 		 * @public
 		 */
 		width: PropTypes.oneOfType([
@@ -244,8 +244,8 @@ const DropdownBase = kind({
 	defaultProps: {
 		direction: 'below',
 		open: false,
-		size: 'small',
-		width: 'medium'
+		size: 'large',
+		width: 'large'
 	},
 
 	handlers: {
@@ -297,7 +297,7 @@ const DropdownBase = kind({
 				};
 			});
 		},
-		className: ({width, title, styler}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
+		className: ({styler, title, width}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
 		direction: ({direction}) => `${direction} center`,
 		handleSpotlightPause: () => (pauseSpotlight),
 		placeholder: ({children, placeholder = $L('No Selection'), selected}) => {
@@ -313,6 +313,7 @@ const DropdownBase = kind({
 				className={css.title}
 				id={`${id}_title`}
 				size="tiny"
+				spacing="small"
 				style={{width: typeof width === 'number' ? ri.scaleToRem(width) : null}}
 			>
 				{title}
@@ -341,9 +342,10 @@ const DropdownBase = kind({
 					direction={direction}
 					disabled={hasChildren ? disabled : true}
 					focusEffect="static"
-					icon={openDropdown ? 'arrowlargeup' : 'arrowlargedown'}
-					popupProps={popupProps}
+					icon={openDropdown ? 'triangleup' : 'triangledown'}
+					popupClassName={css.contextualPopup}
 					popupComponent={DropdownList}
+					popupProps={popupProps}
 					onClick={onOpen}
 					onClose={onClose}
 					open={openDropdown}

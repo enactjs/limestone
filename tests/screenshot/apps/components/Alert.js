@@ -24,7 +24,15 @@ const fullscreenTests = [
 // Only type: 'overlay' supports children
 const overlayTests = [
 	<Alert open>Alert!</Alert>,
-	<Alert open>{LoremString}</Alert>
+	<Alert open overlayPosition="bottom left">Alert!</Alert>,
+	<Alert open overlayPosition="bottom right">Alert!</Alert>,
+	<Alert open overlayPosition="top left">Alert!</Alert>,
+	<Alert open overlayPosition="top right">Alert!</Alert>,
+	<Alert open>{LoremString}</Alert>,
+	<Alert open overlayPosition="bottom left">{LoremString}</Alert>,
+	<Alert open overlayPosition="bottom right">{LoremString}</Alert>,
+	<Alert open overlayPosition="top left">{LoremString}</Alert>,
+	<Alert open overlayPosition="top right">{LoremString}</Alert>
 ];
 
 // Overlay color test

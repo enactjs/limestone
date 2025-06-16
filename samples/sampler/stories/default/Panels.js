@@ -32,7 +32,6 @@ for (let i = 0; i < 100; i++) {
 }
 
 // Used to render VirtualGridList into Panels
-// eslint-disable-next-line enact/prop-types
 const renderItem = ({index, ...rest}) => {
 	const {caption, source, text} = items[index];
 	return (
@@ -79,7 +78,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -118,7 +116,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -140,7 +137,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>

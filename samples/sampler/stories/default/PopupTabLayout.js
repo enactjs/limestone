@@ -20,6 +20,8 @@ import compose from 'ramda/src/compose';
 import spriteGear2k from '../../images/sprite-gear-2k.png';
 import spriteGear4k from '../../images/sprite-gear-4k.png';
 
+import css from './PopupTabLayout.module.less';
+
 PopupTabLayout.displayName = 'PopupTabLayout';
 const Config = mergeComponentMetadata('PopupTabLayout', PopupBase, Popup, TabLayoutBase, TabLayout);
 
@@ -97,12 +99,14 @@ const PopupTabLayoutSamplesBase = ({args, rtl}) => {
 					<TabPanels index={indexDisplay} onBack={handleDisplayPrev}>
 						<TabPanel>
 							<Header title="Display Settings" type="compact" />
-							<Item onClick={handleDisplayNext} onKeyDown={handleKeyDown(setIndexDisplay, indexDisplay)}>Picture Modes</Item>
-							<Item onClick={handleDisplayNext} onKeyDown={handleKeyDown(setIndexDisplay, indexDisplay)}>Color Adjust</Item>
+							<div className={css.container}>
+								<Item onClick={handleDisplayNext} onKeyDown={handleKeyDown(setIndexDisplay, indexDisplay)}>Picture Modes</Item>
+								<Item onClick={handleDisplayNext} onKeyDown={handleKeyDown(setIndexDisplay, indexDisplay)}>Color Adjust</Item>
+							</div>
 						</TabPanel>
 						<TabPanel>
 							<Header title="Picture Modes" type="compact" />
-							<Scroller>
+							<Scroller className={css.scroller}>
 								<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
 									{[
 										'Vivid',
@@ -126,13 +130,17 @@ const PopupTabLayoutSamplesBase = ({args, rtl}) => {
 					<TabPanels index={indexSound} onBack={handleSoundPrev}>
 						<TabPanel>
 							<Header title="Sound Settings" type="compact" />
-							<Item onClick={handleSoundNext} onKeyDown={handleKeyDown(setIndexSound, indexSound)}>Advanced Audio</Item>
+							<div className={css.container}>
+								<Item onClick={handleSoundNext} onKeyDown={handleKeyDown(setIndexSound, indexSound)}>Advanced Audio</Item>
+							</div>
 						</TabPanel>
 						<TabPanel>
 							<Header title="Advanced Audio Settings" type="compact" />
-							<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
-								{['Balance', 'Fade']}
-							</Group>
+							<div className={css.container}>
+								<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
+									{['Balance', 'Fade']}
+								</Group>
+							</div>
 						</TabPanel>
 					</TabPanels>
 				</Tab>
@@ -144,14 +152,18 @@ const PopupTabLayoutSamplesBase = ({args, rtl}) => {
 					<TabPanels index={indexNetwork} onBack={handleNetworkPrev}>
 						<TabPanel>
 							<Header title="Network Settings" type="compact" />
-							<Item onClick={handleNetworkNext} onKeyDown={handleKeyDown(setIndexNetwork, indexNetwork)}>Wired</Item>
-							<Item onClick={handleNetworkNext} onKeyDown={handleKeyDown(setIndexNetwork, indexNetwork)}>Wireless</Item>
+							<div className={css.container}>
+								<Item onClick={handleNetworkNext} onKeyDown={handleKeyDown(setIndexNetwork, indexNetwork)}>Wired</Item>
+								<Item onClick={handleNetworkNext} onKeyDown={handleKeyDown(setIndexNetwork, indexNetwork)}>Wireless</Item>
+							</div>
 						</TabPanel>
 						<TabPanel>
 							<Header title="Wired Settings" type="compact" />
-							<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
-								{['IP Address', 'Subnet', 'Gateway / Router', 'DNS 1', 'DNS 2']}
-							</Group>
+							<div className={css.container}>
+								<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
+									{['IP Address', 'Subnet', 'Gateway / Router', 'DNS 1', 'DNS 2']}
+								</Group>
+							</div>
 						</TabPanel>
 					</TabPanels>
 				</Tab>
@@ -172,14 +184,18 @@ const PopupTabLayoutSamplesBase = ({args, rtl}) => {
 					<TabPanels index={indexGeneral} onBack={handleGeneralPrev}>
 						<TabPanel>
 							<Header title="General Settings" type="compact" />
-							<Item onClick={handleGeneralNext} onKeyDown={handleKeyDown(setIndexGeneral, indexGeneral)}>About</Item>
-							<Item onClick={handleGeneralNext} onKeyDown={handleKeyDown(setIndexGeneral, indexGeneral)}>Reset</Item>
+							<div className={css.container}>
+								<Item onClick={handleGeneralNext} onKeyDown={handleKeyDown(setIndexGeneral, indexGeneral)}>About</Item>
+								<Item onClick={handleGeneralNext} onKeyDown={handleKeyDown(setIndexGeneral, indexGeneral)}>Reset</Item>
+							</div>
 						</TabPanel>
 						<TabPanel>
 							<Header title="Wired Settings" type="compact" />
-							<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
-								{['Version number', 'Restore factory settings']}
-							</Group>
+							<div className={css.container}>
+								<Group childComponent={Item} component="div" select="radio" selectedProp="selected">
+									{['Version number', 'Restore factory settings']}
+								</Group>
+							</div>
 						</TabPanel>
 					</TabPanels>
 				</Tab>

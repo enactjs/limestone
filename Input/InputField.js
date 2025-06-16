@@ -283,7 +283,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, size, type, value, ...rest}) => {
+	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPasswordtel = type === 'passwordtel';
@@ -298,6 +298,7 @@ const InputFieldBase = kind({
 		delete rest.invalidMessage;
 		delete rest.onBeforeChange;
 		delete rest.rtl;
+		delete rest.size;
 
 		return (
 			<div
@@ -306,7 +307,7 @@ const InputFieldBase = kind({
 				disabled={disabled}
 			>
 				<div className={css.bg} />
-				<InputFieldDecoratorIcon position="before" size={size}>{iconBefore}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
@@ -321,7 +322,7 @@ const InputFieldBase = kind({
 					type={isPasswordtel ? 'tel' : type}
 					value={value}
 				/>
-				<InputFieldDecoratorIcon position="after" size={size}>{iconAfter}</InputFieldDecoratorIcon>
+				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size="large">{iconAfter}</InputFieldDecoratorIcon>
 				{invalidTooltip}
 			</div>
 		);
