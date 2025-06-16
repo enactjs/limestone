@@ -1,10 +1,19 @@
 // DayPicker.module.less
 //
 @import "../styles/variables.less";
+@import "../styles/skin.less";
 
 .dayPicker {
-	.item {
+	.checkboxItem {
 		margin-top: 0;
 		margin-bottom: 0;
+
+		.applySkins({
+			&.selected {
+				.bg {
+					background-color: inherit;
+				}
+			}
+		});
 	}
 }

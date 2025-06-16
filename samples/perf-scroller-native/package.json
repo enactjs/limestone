@@ -22,14 +22,14 @@
     "theme": "limestone"
   },
   "dependencies": {
-    "@enact/core": "^5.0.0-alpha.5",
-    "@enact/i18n": "^5.0.0-alpha.5",
+    "@enact/core": "^5.0.0",
+    "@enact/i18n": "^5.0.0",
     "@enact/limestone": "../../",
-    "@enact/spotlight": "^5.0.0-alpha.5",
-    "@enact/ui": "^5.0.0-alpha.5",
+    "@enact/spotlight": "^5.0.0",
+    "@enact/ui": "^5.0.0",
     "classnames": "^2.5.1",
-    "ilib": "^14.20.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "ilib": "^14.21.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   }
 }

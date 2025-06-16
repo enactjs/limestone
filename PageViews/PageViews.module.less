@@ -42,6 +42,8 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
+		height: @lime-pageviews-steps-height;
+
 		&.hidden {
 			min-height: @lime-pageviews-steps-area-min-height;
 			visibility: hidden;
@@ -106,6 +108,7 @@
 
 	.viewManager {
 		overflow: hidden;
+		border-radius: @lime-pageviews-contents-border-radius;
 	}
 
 	.horizontalLayout {
@@ -113,6 +116,10 @@
 	}
 
 	.applySkins({
+		.viewManager {
+			background-color: @lime-pageviews-bg-color;
+		}
+
 		.steps .step {
 			background-color: @lime-pageviews-picker-icon-active;
 		}
