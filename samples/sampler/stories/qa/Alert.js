@@ -43,8 +43,8 @@ export const WithLongTitle = (args) => (
 			</image>
 		) : null}
 		<buttons>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<Button>Yes</Button>
+			<Button>No</Button>
 		</buttons>
 		{args['children']}
 	</Alert>
@@ -73,8 +73,8 @@ export const WithLongChildren = (args) => (
 			</image>
 		) : null}
 		<buttons>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<Button>Yes</Button>
+			<Button>No</Button>
 		</buttons>
 		{args['children']}
 	</Alert>
@@ -103,8 +103,8 @@ export const WithLongTitleAndLongChildren = (args) => (
 			</image>
 		) : null}
 		<buttons>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<Button>Yes</Button>
+			<Button>No</Button>
 		</buttons>
 		{args['children']}
 	</Alert>
@@ -133,8 +133,8 @@ export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
 			</image> : null
 		}
 		<buttons>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<Button>Yes</Button>
+			<Button>No</Button>
 		</buttons>
 		<div>
 			<div>This is progressbar</div>
@@ -173,9 +173,9 @@ export const WithThumbnailAndScroller = (args) => (
 			<AlertImage src={args['src']} type={args['type (image)']} />
 		</image>
 		<buttons>
-			<Button size="small">Button</Button>
-			<Button size="small">Button</Button>
-			<Button size="small">Button</Button>
+			<Button>Button</Button>
+			<Button>Button</Button>
+			<Button>Button</Button>
 		</buttons>
 		<Row>
 			<AlertImage iconSize="small" src={args['src']} type="icon" />
@@ -208,8 +208,8 @@ export const WithCustomSizeImage = (args) => (
 			<AlertImage src={args['src']} type="thumbnail" css={css} />
 		</image>
 		<buttons>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<Button>Yes</Button>
+			<Button>No</Button>
 		</buttons>
 		Additional text content for Alert
 	</Alert>
