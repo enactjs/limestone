@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ImageItem` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/ImageItem` props `children` and `label` to accept node type
+
 ## [1.0.0] - 2025-06-13
 
 ### Added
