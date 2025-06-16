@@ -24,24 +24,39 @@ export default {
 	component: 'ImageItem'
 };
 
-export const _ImageItem = (args) => (
-	<ImageItem
-		centered={args['centered']}
-		disabled={args['disabled']}
-		label={args['label']}
-		orientation={args['orientation']}
-		selected={args['selected']}
-		showSelection={args['showSelection']}
-		src={args['src']}
-		style={{
-			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1020),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 588 : 240)
-		}}
-	>
-		{args['children']}
-	</ImageItem>
-);
+export const _ImageItem = (args) => {
+	let style;
+	const hasContent = args['children'].length || args['label'];
+	const isVertical = args['orientation'] === 'vertical';
+	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
+
+	if (!hasContent) {
+		style = {width: ri.scaleToRem(618), height: ri.scaleToRem(618)};
+	} else if (isVertical) {
+		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588)};
+	} else {
+		style = {width: ri.scaleToRem(1464), height: wideHeight};
+	}
+
+	return (
+		<ImageItem
+			centered={args['centered']}
+			disabled={args['disabled']}
+			label={args['label']}
+			orientation={args['orientation']}
+			selected={args['selected']}
+			showSelection={args['showSelection']}
+			src={args['src']}
+			style={{
+				position: 'absolute',
+				...style
+			}}
+			wideImage={args['wideImage']}
+		>
+			{args['children']}
+		</ImageItem>
+	);
+};
 
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
@@ -49,8 +64,8 @@ text('label', _ImageItem, Config, 'ImageItem label');
 select('orientation', _ImageItem, prop.orientation, Config);
 boolean('selected', _ImageItem, Config);
 boolean('showSelection', _ImageItem, Config);
+boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
-select('orientation', _ImageItem, prop.orientation, Config);
 text('children', _ImageItem, Config, 'ImageItem Caption');
 
 _ImageItem.storyName = 'ImageItem';
