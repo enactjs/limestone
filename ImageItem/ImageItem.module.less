@@ -150,9 +150,16 @@
 		}
 
 		.selectionIcon {
-			width: @lime-imageitem-horizontal-selection-icon-size;
-			height: @lime-imageitem-horizontal-selection-icon-size;
+			border: 6px solid;
+			border-radius: 50%;
 			line-height: @lime-imageitem-horizontal-selection-icon-size;
+			margin: @lime-imageitem-horizontal-selection-icon-margin;
+			height: @lime-imageitem-horizontal-selection-icon-size;
+			width: @lime-imageitem-horizontal-selection-icon-size;
+
+			.enact-locale-rtl({
+				margin: @lime-imageitem-horizontal-selection-icon-margin-rtl;
+			});
 		}
 	}
 
@@ -194,6 +201,7 @@
 
 			.selectionIcon {
 				background-color: @lime-imageitem-selection-container-selected-color;
+				border-color: @lime-imageitem-selection-container-selected-color;
 				color: @lime-imageitem-selection-icon-selected-color;
 			}
 		}
@@ -205,6 +213,14 @@
 				}
 
 				.lime-focus-highlight(image)
+			}
+		}
+
+		&.horizontal {
+			&:not(.selected) {
+				.selectionIcon {
+					border-color: @lime-imageitem-selection-border-color;
+				}
 			}
 		}
 
@@ -254,6 +270,14 @@
 				.selectionIcon {
 					background-color: @lime-imageitem-selection-container-selected-focused-color;
 					color: @lime-imageitem-selection-icon-selected-focused-color;
+				}
+			}
+
+			&.horizontal {
+				&:not(.selected) {
+					.selectionIcon {
+						border-color: @lime-imageitem-selection-border-focus-color;
+					}
 				}
 			}
 		});
