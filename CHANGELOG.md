@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/ImageItem` styling to match the latest GUI
+- `limestone/ImageItem` to work with new `slotBefore` prop
 
 ## [1.0.0] - 2025-06-13
 
