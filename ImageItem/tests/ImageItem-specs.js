@@ -202,7 +202,7 @@ describe('ImageItem', () => {
 		render(<ImageItemBase orientation="horizontal" selectionComponent={SelectionComponent} showSelection />);
 
 		const expected = 'slotBefore';
-		const actual = screen.getAllByRole('img')[0].previousSibling;
+		const actual = screen.getAllByRole('img')[0].previousElementSibling;
 
 		expect(actual).toHaveClass(expected);
 	});
