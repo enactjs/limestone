@@ -279,6 +279,8 @@ const ImageItemBase = kind({
 	},
 
 	render: ({css, disabled, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+		const isSlotBefore = rest.orientation !== 'vertical' && showSelection;
+
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
@@ -310,13 +312,13 @@ const ImageItemBase = kind({
 					</Image>
 				}
 				slotBefore={
-					rest.orientation !== 'vertical' && showSelection ? (
+					isSlotBefore && (
 						SelectionComponent ? (
 							<SelectionComponent />
 						) : (
 							<Icon className={css.selectionIcon} size="tiny">{rest.selected && 'check'}</Icon>
 						)
-					) : null
+					)
 				}
 			/>
 		);
