@@ -441,14 +441,14 @@ const IconBase = kind({
  * googlehome
  * thinq
  * livetv
- * accessibilitytv
+ * accessibility2
  * homehub
  * otheriot
  * sitemap
  * clickapps
  * history
- * moreaction
- * passwordreset
+ * moreactions
+ * pwreset
  * dislike
  * dislikeline
  * like
