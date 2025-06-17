@@ -201,7 +201,6 @@ describe('ImageItem', () => {
 	test('should support `selectionComponent` prop with horizontal layout', () => {
 		render(<ImageItemBase orientation="horizontal" selectionComponent={SelectionComponent} showSelection />);
 
-		screen.debug();
 		const expected = 'slotBefore';
 		const actual = screen.getAllByRole('img')[0].previousSibling;
 
