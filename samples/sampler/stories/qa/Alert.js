@@ -32,27 +32,27 @@ export default {
 
 const prop = {
 	twoButtons:
-		<buttons>
-			<Button>Button Label</Button>
-			<Button>Button Label</Button>
-		</buttons>,
+	<buttons>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+	</buttons>,
 	twoSmallButtons:
-		<buttons>
-			<Button size="small">Button Label</Button>
-			<Button size="small">Button Label</Button>
-		</buttons>,
+	<buttons>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+	</buttons>,
 	threeButtons:
-		<buttons>
-			<Button>Button Label</Button>
-			<Button>Button Label</Button>
-			<Button>Button Label</Button>
-		</buttons>,
+	<buttons>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+	</buttons>,
 	threeSmallButtons:
-		<buttons>
-			<Button size="small">Button Label</Button>
-			<Button size="small">Button Label</Button>
-			<Button size="small">Button Label</Button>
-		</buttons>
+	<buttons>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+	</buttons>
 };
 
 export const WithLongTitle = (args) => (
