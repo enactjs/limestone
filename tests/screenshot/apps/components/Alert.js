@@ -157,15 +157,28 @@ const dropIn = {
 		/>
 	),
 	oneButton: (
-		<Button size="small">Yes</Button>
+		<Button>Yes</Button>
 	),
 	// we need an array here rather than a fragment due to the impl of Alert that maps over the
 	// array of buttons and wraps them with Cell.
 	twoButtons: [
+		<Button key="yes">Yes</Button>,
+		<Button key="no">No</Button>
+	],
+	twoDisabledButton: [
+		<Button key="yes" disabled>Yes</Button>,
+		<Button key="no" disabled>No</Button>
+	],
+	oneSmallButton: (
+		<Button size="small">Yes</Button>
+	),
+	// we need an array here rather than a fragment due to the impl of Alert that maps over the
+	// array of buttons and wraps them with Cell.
+	twoSmallButtons: [
 		<Button key="yes" size="small">Yes</Button>,
 		<Button key="no" size="small">No</Button>
 	],
-	twoDisabledButton: [
+	twoDisabledSmallButtons: [
 		<Button key="yes" disabled size="small">Yes</Button>,
 		<Button key="no" disabled size="small">No</Button>
 	]
@@ -180,9 +193,9 @@ const LtrTests = [
 	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, fullscreenTests),
 	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenTests),
 	...withProps({type: 'fullscreen', buttons: dropIn.twoDisabledButton}, fullscreenTests),
-	...withProps({type: 'overlay', buttons: dropIn.oneButton}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoButtons}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoDisabledButton}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlayTests),
 
 	// With image
 	// QWTC-1928 start.
@@ -197,8 +210,8 @@ const LtrTests = [
 	// With image and button
 	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, fullscreenTests),
 	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons, image: dropIn.image}, fullscreenTests),
-	...withProps({type: 'overlay', buttons: dropIn.oneButton, image: dropIn.image}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoButtons, image: dropIn.image}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton, image: dropIn.image}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayTests),
 
 	// With other components
 	...withProps({type: 'overlay'}, overlayColorTests),

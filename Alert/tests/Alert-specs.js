@@ -83,7 +83,7 @@ describe('Alert', () => {
 						<AlertImage src="testIconImage.png" type="icon" />
 					</image>
 					<buttons>
-						<Button size="small">yes</Button>
+						<Button>yes</Button>
 					</buttons>
 				</Alert>
 			</FloatingLayerController>
@@ -103,7 +103,7 @@ describe('Alert', () => {
 						<AlertImage src="testThumbnailImage.png" type="thumbnail" />
 					</image>
 					<buttons>
-						<Button size="small">yes</Button>
+						<Button>yes</Button>
 					</buttons>
 				</Alert>
 			</FloatingLayerController>
@@ -203,7 +203,7 @@ describe('AlertOverlay specs', () => {
 						<AlertImage src="testThumbnailImage.png" type="thumbnail" />
 					</image>
 					<buttons>
-						<Button>yes</Button>
+						<Button size="small">yes</Button>
 					</buttons>
 				</Alert>
 			</FloatingLayerController>
