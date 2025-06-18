@@ -312,11 +312,11 @@ const IconButtonDecorator = hoc((config, Wrapped) => {
  * @public
  */
 const ButtonDecorator = compose(
+	UiButtonDecorator,
 	Pure,
 	IconButtonDecorator,
 	TooltipDecorator({tooltipDestinationProp: 'decoration'}),  // Future note: This should eventually be conditionally applied via hooks (after refactoring)
 	MarqueeDecorator({css: componentCss}),
-	UiButtonDecorator,
 	Spottable,
 	Skinnable
 );

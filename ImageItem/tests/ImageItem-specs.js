@@ -171,4 +171,22 @@ describe('ImageItem', () => {
 
 		expect(actual).toBeChecked();
 	});
+
+	test('should support `wideImage` prop', () => {
+		render(<ImageItemBase orientation="horizontal" wideImage />);
+
+		const expected = 'wideImage';
+		const actual = screen.getAllByRole('img')[0].parentElement;
+
+		expect(actual).toHaveClass(expected);
+	});
+
+	test('should not apply `wideImage` with vertical', () => {
+		render(<ImageItemBase wideImage />);
+
+		const expected = 'wideImage';
+		const actual = screen.getAllByRole('img')[0].parentElement;
+
+		expect(actual).not.toHaveClass(expected);
+	});
 });
