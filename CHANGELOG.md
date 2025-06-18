@@ -4,9 +4,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+
 ### Changed
 
+- `limestone/Alert` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 
 ## [1.0.0] - 2025-06-13
 
