@@ -278,8 +278,8 @@ const ImageItemBase = kind({
 		})
 	},
 
-	render: ({css, disabled, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
-		const isSlotBefore = rest.orientation === 'horizontal' && showSelection;
+	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+		const isSlotBefore = orientation === 'horizontal' && showSelection;
 
 		delete rest.centered;
 		delete rest.imageIconComponent;
@@ -298,9 +298,10 @@ const ImageItemBase = kind({
 				aria-disabled={disabled}
 				css={css}
 				disabled={disabled}
+				orientation={orientation}
 				imageComponent={
 					<Image>
-						{rest.orientation === 'vertical' && showSelection ? (
+						{orientation === 'vertical' && showSelection ? (
 							<div className={css.selectionContainer}>
 								{SelectionComponent ? (
 									<SelectionComponent />
