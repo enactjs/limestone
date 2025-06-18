@@ -11,6 +11,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/Alert` styling to match the latest GUI
+- `limestone/Button` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 
 ### Fixed
@@ -50,7 +51,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/BodyText` styling to match the latest GUI
-- `limestone/Button` styling to match the latest GUI
 - `limestone/DatePicker` styling to match the latest GUI
 - `limestone/DayPicker` styling to match the latest GUI
 - `limestone/Heading` prop `size` default value to `tiny` and styling to match the latest GUI
