@@ -87,14 +87,14 @@
 			}
 
 			.client {
-				margin-inline-start: @lime-button-colordot-width;
-				padding-inline-start: @lime-button-colordot-h-margin; // The gap between the color-dot and the content matches the space between the regular icon and the text
+				margin-inline-start: @lime-button-colordot-h-margin;
+				padding-inline-start: @lime-button-colordot-h-padding; // The gap between the color-dot and the content matches the space between the regular icon and the text
 
 				&::before {
 					// Colored side-bar
 					bottom: 50%;
 					transform: translateY(50%);
-					.position-start-end(-@lime-button-colordot-width, initial);
+					.position-start-end(calc((@lime-button-colordot-h-margin + @lime-button-colordot-width) / 2 * -1) , initial);
 				}
 			}
 		}
@@ -174,11 +174,11 @@
 			// Standard Button Scenario
 			&.minWidth {
 				.client {
-					margin-inline-start: @lime-button-small-colordot-width;
+					margin-inline-start: @lime-button-small-colordot-h-margin;
 
 					&::before {
 						bottom: 50%;
-						.position-start-end(-@lime-button-small-colordot-width, initial);
+						.position-start-end(calc((@lime-button-small-colordot-h-margin + @lime-button-small-colordot-width) / 2 * -1), initial);
 					}
 				}
 
@@ -323,6 +323,10 @@
 			.bg {
 				opacity: @lime-button-bg-opacity;
 			}
+
+			.icon {
+				color: @lime-button-fill-icon-color;
+			}
 		}
 
 		&.transparent {
@@ -361,10 +365,6 @@
 			.lime-taparea(@lime-button-small-height);
 		}
 
-		.icon {
-			color: @lime-button-fill-icon-color;
-		}
-
 		&.iconOnly {
 			.bg {
 				border: @lime-button-icononly-bg-border;
@@ -393,7 +393,7 @@
 
 			&.bordered {
 				.bg {
-					.lime-button-outline-selected-colors();
+					.lime-button-outline-selected-bg-colors();
 					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
 				}
 
@@ -410,7 +410,7 @@
 
 			&.transparent {
 				.bg {
-					.lime-button-transparent-selected-colors();
+					.lime-button-transparent-selected-bg-colors();
 					opacity: @lime-button-transparent-selected-bg-opacity;
 				}
 
