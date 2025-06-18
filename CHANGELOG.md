@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ImageItem` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/TooltipDecorator` to change position if client component changes size
+
 ## [1.0.0] - 2025-06-13
 
 ### Added
@@ -29,7 +33,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/TabLayout` to focus to the last focused tab when focus enters to the tab group
-- `limestone/TooltipDecorator` to change position if client component changes size
 
 ## [1.0.0-rc.1] - 2025-05-29
 
