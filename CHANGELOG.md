@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+
 ### Changed
 
 - `limestone/Alert` styling to match the latest GUI
