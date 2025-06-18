@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/ImageItem` props `children` and `label` to accept node type
 - `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 
 ## [1.0.0] - 2025-06-13
