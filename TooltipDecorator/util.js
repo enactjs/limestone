@@ -108,15 +108,24 @@ const adjustDirection = function (tooltipDirection, overflow, rtl) {
 const adjustTransform = function (clientNode, tooltipDirection, tooltipPosition) {
 	const componentNodes = clientNode?.childNodes.length ? [clientNode, ...clientNode.childNodes] : [clientNode];
 	const nodePositions = clientNode.getBoundingClientRect();
-	const horizontal = ((nodePositions.right - nodePositions.left) * 0.1) / 2;
-	const vertical = ((nodePositions.bottom - nodePositions.top) * 0.1) / 2;
-
 	let hasTransform = false;
+	let transformMatrix = [];
+
 	componentNodes.forEach(node => {
-		if (window.getComputedStyle(node).transitionProperty === 'transform') hasTransform = true;
+		if (window.getComputedStyle(node).transitionProperty === 'transform') {
+			hasTransform = true;
+			const matrix = window.getComputedStyle(node).transform.split('(')[1].split(')')[0].split(',');
+			transformMatrix = [
+				parseFloat(matrix[0]) - 1,
+				parseFloat(matrix[3]) - 1
+			];
+		}
 	});
 
 	if (!hasTransform) return tooltipPosition;
+
+	const horizontal = ((nodePositions.right - nodePositions.left) * transformMatrix[0]) / 2,
+		vertical = ((nodePositions.bottom - nodePositions.top) * transformMatrix[1]) / 2;
 
 	switch (tooltipDirection) {
 		case 'above':
