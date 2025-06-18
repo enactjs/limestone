@@ -4,13 +4,21 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+
 ### Changed
 
+- `limestone/Alert` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 
 ### Fixed
 
-- `limestone/Button` width for `iconOnly` and `largeText`.
+- `limestone/Button` width for `iconOnly` and `largeText`
+- `limestone/ImageItem` props `children` and `label` to accept node type
+- `limestone/Panels.Header` dimensions of back Button for `largeText`
+- `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 - `limestone/TabLayout` padding for collapsed vertical tab with icon.
 
 ## [1.0.0] - 2025-06-13
