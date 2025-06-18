@@ -279,7 +279,7 @@ const ImageItemBase = kind({
 	},
 
 	render: ({css, disabled, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
-		const isSlotBefore = rest.orientation !== 'vertical' && showSelection;
+		const isSlotBefore = rest.orientation === 'horizontal' && showSelection;
 
 		delete rest.centered;
 		delete rest.imageIconComponent;
