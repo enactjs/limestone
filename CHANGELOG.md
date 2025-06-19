@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/PageViews` indicator styling to match the latest GUI
+- `limestone/Tooltip` styling to match the latest GUI
 
 ### Fixed
 
@@ -62,7 +63,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/SwitchItem` styling to match the latest GUI
-- `limestone/Tooltip` styling to match the latest GUI
 - `limestone/WizardPanels` styling to match the latest GUI
 
 ### Fixed
