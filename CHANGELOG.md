@@ -4,13 +4,21 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+- `limestone/ImageItem` prop `wideImage` to support wide image
+
 ### Changed
 
+- `limestone/Alert` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
+- `limestone/PageViews` indicator styling to match the latest GUI
 
 ### Fixed
 
+- `limestone/ImageItem` props `children` and `label` to accept node type
 - `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 
 ## [1.0.0] - 2025-06-13
