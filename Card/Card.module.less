@@ -133,6 +133,11 @@
 			align-self: stretch;
 		}
 
+		.imageCell {
+			width: var(--card-image-width);
+			height: var(--card-image-height);
+		}
+
 		.imageIcon {
 			height: @lime-card-vertical-image-icon-size;
 			width: @lime-card-vertical-image-icon-size;
@@ -159,6 +164,11 @@
 	&.horizontal {
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
+		}
+
+		.imageCell {
+			width: var(--card-image-width);
+			height: var(--card-image-height);
 		}
 	}
 

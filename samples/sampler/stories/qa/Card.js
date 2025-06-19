@@ -18,7 +18,15 @@ const renderItem = ({index, ...rest}) => {
 	const {children, label, source} = items[index];
 
 	return (
-		<Card {...rest} label={label} src={source} style={{padding: '24px'}}>
+		<Card
+			{...rest}
+			label={label}
+			src={source}
+			style={{
+				width: 768,
+				height: 648
+			}}
+		>
 			{children}
 		</Card>
 	);
@@ -68,7 +76,7 @@ export const WithAsyncRender = (args) => (
 	<VirtualGridList
 		dataSize={updateDataSize(args['dataSize'])}
 		direction={args['direction']}
-		itemSize={{minHeight: ri.scale(570), minWidth: ri.scale(688)}}
+		itemSize={{minHeight: ri.scale(648), minWidth: ri.scale(768)}}
 		itemRenderer={renderItem}
 	/>
 );
