@@ -33,6 +33,16 @@ const defaultImageItemTests = [
 	<ImageItem src={img} orientation="horizontal" label="Short" showSelection>Short</ImageItem>,
 	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection>Short</ImageItem>,
 
+	// Wide Image
+	<ImageItem src={img} orientation="horizontal" wideImage />,
+	<ImageItem src={img} orientation="horizontal" wideImage >Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" wideImage />,
+	<ImageItem src={img} orientation="horizontal" imageIconSrc={img} wideImage />,
+	<ImageItem src={img} orientation="horizontal" label="Short" wideImage >Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" imageIconSrc={img} wideImage >Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" showSelection wideImage >Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection wideImage >Short</ImageItem>,
+
 	// Focused
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
 		// Vertical
