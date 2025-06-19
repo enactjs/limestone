@@ -40,6 +40,35 @@ const prop = {
 				<Button>Button Label</Button>
 			</buttons>
 		)
+	},
+	smallButtons: {
+		'no buttons': null,
+		'1 button': (
+			<buttons>
+				<Button size="small">Button Label</Button>
+			</buttons>
+		),
+		'2 buttons': (
+			<buttons>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+			</buttons>
+		),
+		'3 buttons': (
+			<buttons>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+			</buttons>
+		),
+		'4 buttons': (
+			<buttons>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+				<Button size="small">Button Label</Button>
+			</buttons>
+		)
 	}
 };
 
@@ -61,7 +90,7 @@ export const _Alert = (args) => (
 				<AlertImage iconSize={args['iconSize']} src={args['src']} type={args['type (image)']} />
 			</image>
 		) : null}
-		{prop.buttons[args['buttons']]}
+		{args['type'] === 'fullscreen' ? prop.buttons[args['buttons']] : prop.smallButtons[args['buttons']]}
 		{args['children']}
 	</Alert>
 );

@@ -78,7 +78,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -117,7 +116,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -139,7 +137,6 @@ export const Panels_ = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>

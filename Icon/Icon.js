@@ -161,7 +161,7 @@ const IconBase = kind({
  * arrowhookleft
  * arrowhookright
  * ellipsis
- * check
+ * checkmark
  * triangleup
  * triangleright
  * triangledown
@@ -287,7 +287,6 @@ const IconBase = kind({
  * sound
  * wisa
  * demooptions
- * newfeature
  * youtube
  * ostsearch
  * shopping
@@ -319,7 +318,6 @@ const IconBase = kind({
  * help
  * share
  * files
- * quickstart
  * scheduler
  * recording
  * guide
@@ -347,6 +345,7 @@ const IconBase = kind({
  * profilecheck
  * mediaserver
  * wallpaper
+ * zoom
  * spanner
  * bluetooth
  * moodmode
@@ -409,6 +408,52 @@ const IconBase = kind({
  * alert01
  * alert02
  * calibration
+ * mypage
+ * moodmaker
+ * check
+ * calendar
+ * antenna
+ * av
+ * component
+ * pcpicture
+ * hdmigeneric
+ * hdmi01
+ * hdmi02
+ * hdmi03
+ * hdmi04
+ * dvd
+ * hdmisub
+ * usbport
+ * vcr
+ * soundshare
+ * remotepc
+ * mobileguide
+ * airplay
+ * musicbt
+ * streamingspeaker
+ * insteon
+ * satellite
+ * scart
+ * settopbox
+ * screenshare
+ * pc
+ * tips
+ * googlehome
+ * thinq
+ * livetv
+ * accessibility2
+ * homehub
+ * otheriot
+ * sitemap
+ * clickapps
+ * history
+ * moreactions
+ * pwreset
+ * dislike
+ * dislikeline
+ * like
+ * likeline
+ * soundbarline
  * ```
  *
  * @name iconList
