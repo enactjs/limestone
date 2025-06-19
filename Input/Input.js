@@ -341,7 +341,8 @@ const InputPopupBase = kind({
 			if (maxLength != null) return maxLength;
 			return DEFAULT_LENGTH;
 		},
-		popupClassName: ({popupType, type, styler}) => styler.join('popup', popupType, type)
+		popupClassName: ({popupType, type, styler}) => styler.join('inputPopup', popupType, type),
+		inputAreaClassName: ({children, styler}) => styler.join('inputArea', children ? 'withButtons' : '')
 	},
 
 	render: ({
@@ -351,6 +352,7 @@ const InputPopupBase = kind({
 		css,
 		defaultValue,
 		disabled,
+		inputAreaClassName,
 		inputFieldSpotlightId,
 		noBackButton,
 		noSubmitButton,
@@ -400,6 +402,7 @@ const InputPopupBase = kind({
 					id={id}
 					aria-label={popupAriaLabel}
 					aria-labelledby={ariaLabelledBy}
+					css={css}
 					onClose={onClose}
 					onShow={onShow}
 					position={popupType === 'fullscreen' ? 'fullscreen' : 'center'}
@@ -410,7 +413,7 @@ const InputPopupBase = kind({
 					role="region"
 				>
 					{popupType === 'fullscreen' ? backButton : null}
-					<Layout orientation="vertical" align={`center ${numberMode ? 'space-between' : ''}`} className={css.body}>
+					<Layout orientation="vertical" className={css.inputBody}>
 						<Cell shrink className={css.titles}>
 							{popupType === 'fullscreen' ?
 								heading :
@@ -421,11 +424,12 @@ const InputPopupBase = kind({
 							}
 							<Heading id={`${id}_subtitle`} size="subtitle" marqueeOn="render" alignment="center" className={css.subtitle}>{subtitle}</Heading>
 						</Cell>
-						<Cell shrink className={css.inputArea}>
+						<Cell shrink className={inputAreaClassName}>
 							{numberMode ?
 								<NumberField
 									{...inputProps}
 									announce={announce}
+									buttonSize={popupType === 'fullscreen' ? 'large' : 'small'}
 									maxLength={limitNumberLength(popupType, maxLength)}
 									minLength={limitNumberLength(popupType, minLength)}
 									defaultValue={defaultValue}

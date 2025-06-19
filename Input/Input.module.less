@@ -8,7 +8,7 @@
 	display: inline;
 }
 
-.popup {
+.inputPopup {
 	.numberField,
 	.number,
 	.password,
@@ -25,7 +25,7 @@
 		});
 	}
 
-	.body {
+	.inputBody {
 		line-height: 0; // This removes an undesirable layout shift occurring when a number is entered into the numberCells (Popup adds a line-height to all children).
 	}
 
@@ -70,7 +70,6 @@
 	.submitButton {
 		display: block;
 		margin: @lime-input-overlay-submitbutton-margin;
-		width: @lime-input-overlay-submitbutton-width;
 	}
 
 	.inputArea {
@@ -92,6 +91,7 @@
 
 		.key {
 			margin: @lime-input-keypad-key-margin;
+			padding: @lime-input-keypad-key-padding;
 			height: @lime-input-keypad-key-height;
 			width: @lime-input-keypad-key-width;
 
@@ -108,8 +108,7 @@
 			.position-start-end(@lime-input-fullscreen-back-button-start, initial);
 		}
 
-		.body {
-			justify-content: space-between;
+		.inputBody {
 			padding: @lime-input-fullscreen-padding;
 
 			:global(.enact-orientation-portrait) & {
@@ -117,8 +116,16 @@
 			}
 		}
 
+		.titles {
+			height: @lime-input-fullscreen-title-height;
+		}
+
 		.title {
 			.lime-font-size(@lime-input-fullscreen-title-font-size, @lime-non-latin-input-fullscreen-title-font-size);
+		}
+
+		.separated {
+			gap: @lime-input-fullscreen-numbercell-gap;
 		}
 
 		.numberCell {
@@ -138,10 +145,13 @@
 			height: @lime-input-fullscreen-numberfield-height;
 			line-height: @lime-input-fullscreen-numberfield-height;
 			letter-spacing: @lime-input-fullscreen-numberfield-letter-spacing;
-			text-indent: @lime-input-fullscreen-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-fullscreen-numberfield-font-size;
 			margin: @lime-input-fullscreen-numberfield-margin;
 			padding: @lime-input-fullscreen-numberfield-padding;
+
+			&.password {
+				font-size: @lime-input-fullscreen-numbercell-password-font-size;
+			}
 		}
 
 		.keypad {
@@ -159,21 +169,11 @@
 			justify-content: center;
 		}
 
-		.inputArea,
-		.buttonArea {
-			margin-top: @lime-input-popup-component-v-spacing;
-		}
-
 		.inputArea {
-			.input,
-			.inputHighlight {
-				width: @lime-input-fullscreen-inputarea-width;
-			}
-
-			.textField {
-				max-width: @lime-input-fullscreen-textfield-max-width;
-				min-width: @lime-input-fullscreen-textfield-min-width;
-			}
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-number-inputarea-margin;
@@ -185,21 +185,29 @@
 				max-width: @lime-input-fullscreen-invalid-tooltip-width;
 			}
 		}
+
+		&:not(.number, .passwordnumber) {
+			.inputArea {
+				height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-vkb-height~")";
+			}
+		}
+
+		&.number, &.passwordnumber {
+			.inputArea {
+				height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-footer-height~")";
+				margin: @lime-input-fullscreen-numbertype-margin;
+
+				&.withButtons {
+					height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-footer-withbuttons-height~")";
+					margin: @lime-input-fullscreen-numbertype-withbuttons-margin;
+				}
+			}
+		}
 	}
 
 	&.overlay {
-		min-width: @lime-input-overlay-width;
+		width: @lime-input-overlay-width;
 		border-radius: @lime-input-overlay-border-radius;
-
-		.back {
-			top: @lime-input-overlay-back-button-top;
-
-			.position-start-end(@lime-input-overlay-back-button-start, initial);
-		}
-
-		.titles {
-			margin-bottom: @lime-input-overlay-titles-margin-bottom;
-		}
 
 		.body {
 			padding: @lime-input-overlay-body-padding;
@@ -213,11 +221,6 @@
 
 		.inputArea {
 			margin: @lime-input-overlay-inputarea-margin;
-
-			.input,
-			.inputHighlight {
-				width: @lime-input-overlay-inputarea-width;
-			}
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;
@@ -240,10 +243,13 @@
 			height: @lime-input-overlay-numberfield-height;
 			line-height: @lime-input-overlay-numberfield-height;
 			letter-spacing: @lime-input-overlay-numberfield-letter-spacing;
-			text-indent: @lime-input-overlay-numberfield-letter-spacing;
 			font-size: @lime-input-overlay-numberfield-font-size;
 			margin: @lime-input-overlay-numberfield-margin;
 			padding: @lime-input-overlay-numberfield-padding;
+
+			&.password {
+				font-size: @lime-input-overlay-numbercell-password-font-size;
+			}
 		}
 
 		.keypad {
@@ -275,6 +281,7 @@
 		background-color: @lime-input-fullscreen-background-color;
 
 		.numberCell {
+			color: @lime-input-fullscreen-dot-color;
 			&::before {
 				background-color: @lime-inputfield-container-color;
 			}
@@ -309,38 +316,37 @@
 		}
 
 		&.overlay {
-			background-color: @lime-input-background-popup-default-color;
+			background-color: @lime-input-overlay-background-color;
 
 			.inputArea {
 				.inputField {
-					color: @lime-input-inputField-popup-label-inactive-color;
+					color: @lime-input-inputfield-popup-label-inactive-color;
 
 					.bg {
-						background-color: @lime-input-inputField-popup-container-color;
+						background-color: @lime-input-inputfield-popup-container-color;
 					}
 
 					.input {
 						.input-placeholder({
-							color: @lime-input-inputField-popup-label-inactive-color;
+							color: @lime-input-inputfield-popup-label-inactive-color;
 						});
 					}
 				}
 			}
 
 			.numberCell {
-				color: @lime-input-dot-color;
+				color: @lime-input-overlay-dot-color;
 
 				&::before {
-					background-color: @lime-input-inputField-popup-container-color;
+					background-color: @lime-input-inputfield-popup-container-color;
 				}
 			}
 
 			.numberCell.active {
-				color: @lime-input-dot-focused-color;
-				box-shadow: @lime-input-numberfield-active-shadow;
-
 				&::before {
 					.lime-spotlight-focus-bg-colors();
+					// Remove drop shadow for this input-like field
+					box-shadow: none;
 				}
 			}
 

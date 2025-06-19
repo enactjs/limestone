@@ -216,18 +216,18 @@
 // Input
 // ---------------------------------------
 @lime-input-disabled-bg-focused-color: var(--semantic-color-surface-default-disabled-focused);
-@lime-input-dot-focused-color: var(--semantic-color-on-surface-main-focused);
 @lime-input-fullscreen-background-color: var(--semantic-color-background-full-default);
-@lime-input-background-popup-default-color: var(--semantic-color-background-popup-default);
-@lime-input-button-popup-transparent-icon-color: var(--semantic-color-on-surface-popup-input-field);
-@lime-input-button-popup-transparent-label-color: var(--semantic-color-on-surface-popup-input-field);
+@lime-input-fullscreen-dot-color: var(--semantic-color-on-surface-input-field);
+@lime-input-overlay-background-color: var(--semantic-color-background-popup-default);
+@lime-input-overlay-dot-color: var(--semantic-color-on-surface-popup-input-field);
+@lime-input-dot-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-input-button-popup-transparent-icon-color: var(--semantic-color-on-background-popup-main);
+@lime-input-button-popup-transparent-label-color: var(--semantic-color-on-background-popup-main);
 @lime-input-header-popup-label-main-color: var(--semantic-color-on-background-popup-main);
 @lime-input-header-popup-label-sub-color: var(--semantic-color-on-background-popup-sub);
-@lime-input-dot-color: var(--semantic-color-on-surface-popup-input-field);
-@lime-input-inputField-popup-container-color: var(--semantic-color-surface-popup-input-field);
-@lime-input-inputField-popup-label-inactive-color: var(--semantic-color-on-surface-popup-input-field);
+@lime-input-inputfield-popup-container-color: var(--semantic-color-surface-popup-input-field);
+@lime-input-inputfield-popup-label-inactive-color: var(--semantic-color-on-surface-popup-input-field);
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
-@lime-input-numberfield-active-shadow: 0px 24px 36px 0px @lime-shadow-color;
 @lime-input-numberfield-disabled-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
 @lime-input-numberfield-disabled-opacity: @lime-disabled-focus-bg-opacity;
 @lime-input-selection-color: #4c5059;
@@ -237,14 +237,11 @@
 // ---------------------------------------
 @lime-inputfield-container-color: var(--semantic-color-surface-input-field);
 @lime-inputfield-container-disabled-focused-color: @lime-input-disabled-bg-focused-color;
-@lime-inputfield-container-inactive-focused-opacity: 0.5;
-@lime-inputfield-container-inactive-opacity: 0.3;
+@lime-inputfield-container-opacity: 0.3;
 @lime-inputfield-cursor-color: var(--semantic-color-on-surface-accent);
 @lime-inputfield-label-active-color: var(--semantic-color-on-surface-main-focused);
-@lime-inputfield-label-inactive-color: var(--semantic-color-on-surface-input-field);
-@lime-inputfield-label-inactive-focused-color: var(--semantic-color-on-surface-main-focused);
-@lime-inputfield-label-inactive-focused-opacity: 0.4;
-@lime-inputfield-label-inactive-opacity: 0.4;
+@lime-inputfield-label-inactive-color: ~"color(from" var(--semantic-color-on-surface-input-field) ~"srgb r g b / 0.4)";
+@lime-inputfield-label-inactive-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.4)";
 @lime-inputfield-label-success-color: var(--semantic-color-on-surface-input-field);
 @lime-inputfield-invalid-color: @lime-invalid-color;
 @lime-inputfield-invalid-tooltip-color: var(--semantic-color-on-background-default-error);
