@@ -97,12 +97,6 @@
 		.progressBar {
 			transform: @lime-mediaoverlay-focus-media-transform;
 		}
-
-		.captionContainer {
-			> :first-child {
-				margin-top: @lime-mediaoverlay-focus-caption-margin-top;
-			}
-		}
 	});
 
 	.applySkins({
@@ -125,7 +119,7 @@
 
 		.focus({
 			.media {
-				border: @lime-mediaoverlay-focus-media-border-width solid @lime-mediaoverlay-inner-border-focused;
+				outline: @lime-mediaoverlay-focus-media-outline-width solid @lime-mediaoverlay-inner-border-focused;
 			}
 		});
 
