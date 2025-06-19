@@ -19,21 +19,18 @@
 
 		.title,
 		.content {
+			font-weight: @lime-alert-font-weight;
 			max-width: @lime-alert-fullscreen-max-width;
+
+			:global(.enact-orientation-portrait) & {
+				max-width: @lime-portrait-alert-fullscreen-max-width;
+			}
 		}
 
 		.content {
-			margin: 0;
+			margin: @lime-alert-fullscreen-content-margin;
 			overflow: hidden;
-			padding: @lime-alert-fullscreen-content-padding;
 			max-height: 60%; // Set a reasonable cutoff for a maximum bound
-		}
-
-		&.noTitle {
-			.content {
-				.lime-font-size(@lime-alert-notitle-content-font-size, @lime-tallglyph-alert-notitle-content-font-size);
-				.enact-locale-line-height();
-			}
 		}
 
 		.title {
@@ -42,11 +39,6 @@
 
 		.buttonContainer {
 			margin-top: @lime-alert-buttons-margin-top;
-
-			// Every buttonCell after the first one
-			.buttonCell + .buttonCell {
-				margin-top: @lime-alert-fullscreen-button-spacing;
-			}
 		}
 	}
 
@@ -61,11 +53,6 @@
 		.buttonContainer {
 			box-sizing: border-box;
 			margin-top: @lime-alert-overlay-buttons-margin-top;
-
-			// Every buttonCell after the first one
-			.buttonCell + .buttonCell {
-				margin-top: @lime-alert-overlay-button-spacing;
-			}
 		}
 
 		.content {
@@ -96,10 +83,11 @@
 	}
 
 	.applySkins({
-		background-color: @lime-alert-bg-color;
+		background-color: @lime-alert-full-bg-color;
 
 		&.overlay {
 			border-radius: @lime-alert-overlay-border-radius;
+			outline-style: @lime-alert-overlay-outline-style;
 
 			/* Override colors inside overlay type Alert */
 			--semantic-color-background-full-default: @lime-alert-overlay-bg-color;
