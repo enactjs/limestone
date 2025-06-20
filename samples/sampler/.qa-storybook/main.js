@@ -9,7 +9,10 @@ module.exports = {
 		disableTelemetry: true
 	},
 	features: {
+		backgrounds: false,
+		interactions: false,
 		postcss: false,
+		viewport: false,
 		warnOnLegacyHierarchySeparator: false
 	},
 	framework: {
