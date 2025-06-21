@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/ContextualPopup` `large` type `offset`
 - `limestone/Icon` supported icon list, adding new icons
 
 ### Changed
