@@ -33,12 +33,13 @@ import componentCss from './Card.module.less';
 
 const getDefaultImageSize = (orientation) => {
 	const sizes = {
-        vertical: { width: 768, height: 432 },
-        horizontal: { width: 596, height: 336 }
-    };
+		vertical: {width: 768, height: 432},
+		horizontal: {width: 596, height: 336}
+	};
 
-    return sizes[orientation];
-}
+	return sizes[orientation];
+};
+
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -276,7 +277,7 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, imageSize: imageSizeProp, primaryBadgeSrc,secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, imageSize: imageSizeProp, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.centered;
 		delete rest.label;
 		delete rest.secondaryLabel;
