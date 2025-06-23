@@ -143,7 +143,7 @@ const CardBase = kind({
 		 * * `width` - The width of the image
 
   		 * @type {Object}
-		 * @default {width: 768, height: 432}
+		 * @default {width: 768, height: 432} for vertical orientation, {width: 596, height: 336} for horizontal orientation
 		 * @public
 		 */
 		imageSize: PropTypes.shape({
