@@ -106,11 +106,11 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 			/**
 			 * Offset from the activator to apply to the position of the popup.
 			 *
-			 * @type {('none'|'overlap'|'small')}
+			 * @type {('none'|'overlap'|'small'|'large')}
 			 * @default 'overlap'
 			 * @public
 			 */
-			offset: PropTypes.oneOf(['none', 'overlap', 'small']),
+			offset: PropTypes.oneOf(['none', 'overlap', 'small', 'large']),
 
 			/**
 			 * Called when the user has attempted to close the popup.
