@@ -70,7 +70,7 @@ select(
 	],
 	Config
 );
-select('offset', _ContextualMenuDecorator, ['none', 'overlap', 'small'], Config);
+select('offset', _ContextualMenuDecorator, ['none', 'overlap', 'small', 'large'], Config);
 select('popupWidth', _ContextualMenuDecorator, ['auto', 'small', 'large'], Config);
 text('button string', _ContextualMenuDecorator, Config, 'Contextual Button');
 
