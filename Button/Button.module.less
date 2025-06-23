@@ -574,9 +574,33 @@
 				}
 			}
 
+			&.bordered {
+				.bg {
+					background-color: @lime-button-outline-container-color;
+				}
+			}
+
+			&.transparent.selected {
+				.bg {
+					opacity: @lime-button-transparent-disabled-selected-bg-opacity;
+				}
+			}
+
+			&.bordered.selected {
+				.bg {
+					.lime-button-outline-selected-colors();
+				}
+			}
+
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors();
+					background-color: @lime-button-fill-container-disabled-focused-color;
+				}
+
+				&.bordered {
+					.bg {
+						border: @lime-button-border-width solid @lime-button-fill-container-disabled-focused-color;
+					}
 				}
 
 				.client {
