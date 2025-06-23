@@ -192,10 +192,9 @@ const AlertBase = kind({
 				return BodyText;
 			}
 		},
-		className: ({image, title, type, styler}) => styler.append(
+		className: ({image, type, styler}) => styler.append(
 			{
-				noImage: !image,
-				noTitle: (type === 'fullscreen') && !title
+				noImage: !image
 			},
 			type
 		)
