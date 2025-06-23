@@ -8,7 +8,7 @@
 	display: inline;
 }
 
-.popup {
+.inputPopup {
 	.numberField,
 	.number,
 	.password,
@@ -18,13 +18,14 @@
 
 	.back {
 		position: absolute;
+		margin: 0;
 
 		.lime-custom-text({
 			.lime-small-button-text();
 		});
 	}
 
-	.body {
+	.inputBody {
 		line-height: 0; // This removes an undesirable layout shift occurring when a number is entered into the numberCells (Popup adds a line-height to all children).
 	}
 
@@ -48,7 +49,6 @@
 			.position(0);
 			content: '';
 			z-index: -1;
-
 			border-radius: @lime-input-numbercell-border-radius;
 		}
 	}
@@ -79,6 +79,7 @@
 			.tooltipLabel {
 				font-size: @lime-input-invalid-tooltip-font-size;
 				font-weight: @lime-input-invalid-tooltip-font-weight;
+				line-height: @lime-input-invalid-tooltip-line-height;
 			}
 		}
 	}
@@ -87,6 +88,17 @@
 		.enact-locale-rtl({
 			direction: ltr;
 		});
+
+		.key {
+			margin: @lime-input-keypad-key-margin;
+			padding: @lime-input-keypad-key-padding;
+			height: @lime-input-keypad-key-height;
+			width: @lime-input-keypad-key-width;
+
+			.icon {
+				font-size: @lime-input-keypad-key-font-size;
+			}
+		}
 	}
 
 	&.fullscreen {
@@ -96,12 +108,24 @@
 			.position-start-end(@lime-input-fullscreen-back-button-start, initial);
 		}
 
-		.body {
+		.inputBody {
 			padding: @lime-input-fullscreen-padding;
+
+			:global(.enact-orientation-portrait) & {
+				padding: @lime-portrait-input-fullscreen-padding;
+			}
+		}
+
+		.titles {
+			height: @lime-input-fullscreen-title-height;
 		}
 
 		.title {
 			.lime-font-size(@lime-input-fullscreen-title-font-size, @lime-non-latin-input-fullscreen-title-font-size);
+		}
+
+		.separated {
+			gap: @lime-input-fullscreen-numbercell-gap;
 		}
 
 		.numberCell {
@@ -109,18 +133,25 @@
 			height: @lime-input-fullscreen-numbercell-height;
 			font-size: @lime-input-fullscreen-numbercell-font-size;
 			margin: @lime-input-fullscreen-numbercell-margin;
+
+			&.password {
+				font-size: @lime-input-fullscreen-numbercell-password-font-size;
+			}
 		}
 
 		.joined {
 			min-width: @lime-input-fullscreen-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) * " @lime-input-fullscreen-numberfield-font-size ~")";
+			width: ~"calc(var(--input-max-number-length) * (" @lime-input-fullscreen-numberfield-font-size ~"+" @lime-input-fullscreen-numberfield-letter-spacing~" / 2))";
 			height: @lime-input-fullscreen-numberfield-height;
 			line-height: @lime-input-fullscreen-numberfield-height;
 			letter-spacing: @lime-input-fullscreen-numberfield-letter-spacing;
-			text-indent: @lime-input-fullscreen-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-fullscreen-numberfield-font-size;
 			margin: @lime-input-fullscreen-numberfield-margin;
 			padding: @lime-input-fullscreen-numberfield-padding;
+
+			&.password {
+				font-size: @lime-input-fullscreen-numbercell-password-font-size;
+			}
 		}
 
 		.keypad {
@@ -129,19 +160,6 @@
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
-				width: @lime-portrait-input-fullscreen-keypad-width;
-			}
-
-			:global(.enact-orientation-portrait):global(.enact-text-large) & {
-				width: @lime-portrait-input-fullscreen-keypad-width-large;
-			}
-		}
-
-		.key {
-			margin: @lime-input-fullscreen-keypad-key-margin;
-
-			:global(.enact-orientation-portrait) & {
-				margin: @lime-portrait-input-fullscreen-keypad-key-margin;
 			}
 		}
 
@@ -151,15 +169,11 @@
 			justify-content: center;
 		}
 
-		.inputArea,
-		.buttonArea {
-			margin-top: @lime-input-popup-component-v-spacing;
-		}
-
 		.inputArea {
-			.textField {
-				width: @lime-input-fullscreen-textfield-width;
-			}
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-number-inputarea-margin;
@@ -172,28 +186,31 @@
 			}
 		}
 
-		&.text,
-		&.password,
-		&.url {
+		&:not(.number, .passwordnumber) {
 			.inputArea {
-				margin: @lime-input-fullscreen-inputarea-margin;
+				height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-vkb-height~")";
+			}
+		}
 
-				:global(.enact-orientation-portrait) & {
-					margin: @lime-portrait-input-fullscreen-text-inputarea-margin;
+		&.number, &.passwordnumber {
+			.inputArea {
+				height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-footer-height~")";
+				margin: @lime-input-fullscreen-numbertype-margin;
+
+				&.withButtons {
+					height: ~"calc(100% - "@lime-input-fullscreen-title-height~" - "@lime-input-fullscreen-footer-withbuttons-height~")";
+					margin: @lime-input-fullscreen-numbertype-withbuttons-margin;
 				}
 			}
 		}
 	}
 
 	&.overlay {
-		.back {
-			top: @lime-input-overlay-back-button-top;
-
-			.position-start-end(@lime-input-overlay-back-button-start, initial);
-		}
+		width: @lime-input-overlay-width;
+		border-radius: @lime-input-overlay-border-radius;
 
 		.body {
-			padding: @lime-input-overlay-padding;
+			padding: @lime-input-overlay-body-padding;
 		}
 
 		.title {
@@ -204,6 +221,9 @@
 
 		.inputArea {
 			margin: @lime-input-overlay-inputarea-margin;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;
@@ -215,32 +235,41 @@
 			height: @lime-input-overlay-numbercell-height;
 			font-size: @lime-input-overlay-numbercell-font-size;
 			margin: @lime-input-overlay-numbercell-margin;
+
+			&.password {
+				font-size: @lime-input-overlay-numbercell-password-font-size;
+			}
 		}
 
 		.joined {
-			min-width: @lime-input-overlay-numberfield-width;
-			width: ~"calc(var(--input-max-number-length) * " @lime-input-overlay-numberfield-font-size ~")";
+			width: @lime-input-overlay-numberfield-width;
 			height: @lime-input-overlay-numberfield-height;
 			line-height: @lime-input-overlay-numberfield-height;
 			letter-spacing: @lime-input-overlay-numberfield-letter-spacing;
-			text-indent: @lime-input-overlay-numberfield-letter-spacing; // account for the letter spacing offset
 			font-size: @lime-input-overlay-numberfield-font-size;
 			margin: @lime-input-overlay-numberfield-margin;
 			padding: @lime-input-overlay-numberfield-padding;
+
+			&.password {
+				font-size: @lime-input-overlay-numbercell-password-font-size;
+			}
 		}
 
 		.keypad {
 			margin: @lime-input-overlay-keypad-margin;
 			width: @lime-input-overlay-keypad-width;
+			justify-content: flex-end;
+			column-gap: @lime-input-overlay-keypad-gap;
 
-			:global(.enact-text-large) & {
+			// Temporarily disabled to avoid breaking layout
+			/*:global(.enact-text-large) & {
 				width: @lime-input-overlay-keypad-width-large;
-			}
+			}*/
 		}
 
 		.buttonArea {
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
 			justify-content: center;
 			margin: @lime-input-overlay-buttonarea-margin;
 		}
@@ -256,8 +285,9 @@
 		background-color: @lime-input-fullscreen-background-color;
 
 		.numberCell {
+			color: @lime-input-fullscreen-dot-color;
 			&::before {
-				background-color: @lime-input-bg-color;
+				background-color: @lime-inputfield-container-color;
 			}
 		}
 
@@ -291,6 +321,56 @@
 
 		&.overlay {
 			background-color: @lime-input-overlay-background-color;
+
+			.inputArea {
+				.inputField {
+					color: @lime-input-inputfield-popup-label-inactive-color;
+
+					.bg {
+						background-color: @lime-input-inputfield-popup-container-color;
+					}
+
+					.input {
+						.input-placeholder({
+							color: @lime-input-inputfield-popup-label-inactive-color;
+						});
+					}
+				}
+			}
+
+			.numberCell {
+				color: @lime-input-overlay-dot-color;
+
+				&::before {
+					background-color: @lime-input-inputfield-popup-container-color;
+				}
+			}
+
+			.numberCell.active {
+				&::before {
+					.lime-spotlight-focus-bg-colors();
+					// Remove drop shadow for this input-like field
+					box-shadow: none;
+				}
+			}
+
+			.keypad {
+				.key {
+					color: @lime-input-button-popup-transparent-label-color;
+				}
+			}
+
+			.title {
+				color: @lime-input-header-popup-label-main-color;
+			}
+
+			.subtitle {
+				color: @lime-input-header-popup-label-sub-color;
+			}
+
+			.back {
+				color: @lime-input-button-popup-transparent-icon-color;
+			}
 		}
 	});
 }
