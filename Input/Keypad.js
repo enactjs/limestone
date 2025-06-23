@@ -50,6 +50,7 @@ const Key = kind({
 		delete rest.onKeyButtonClick;
 		return (
 			<Button
+				css={css}
 				{...rest}
 				size="large"
 				icon={children}
