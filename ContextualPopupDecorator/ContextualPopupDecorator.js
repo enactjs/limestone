@@ -134,11 +134,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			 *
 			 * Only applies when `noArrow` is `true`.
 			 *
-			 * @type {('none'|'overlap'|'small')}
+			 * @type {('none'|'overlap'|'small'|'large')}
 			 * @default 'small'
 			 * @public
 			 */
-			offset: PropTypes.oneOf(['none', 'overlap', 'small']),
+			offset: PropTypes.oneOf(['none', 'overlap', 'small', 'large']),
 
 			/**
 			 * Called when the user has attempted to close the popup.
