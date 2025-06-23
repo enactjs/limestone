@@ -59,7 +59,7 @@ const populateItems = ({index}) => {
 			src: imageSrcs[index % 5],
 			size: {
 				width: index === 6 ? ri.scaleToRem(178) : ri.scaleToRem(230),
-				height: index === 6 ? ri.scaleToRem(178) :ri.scaleToRem(230)
+				height: index === 6 ? ri.scaleToRem(178) : ri.scaleToRem(230)
 			}
 		} : null,
 		label: (function () {
