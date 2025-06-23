@@ -453,6 +453,7 @@
 @lime-contextualpopup-arrow-width: 60px;
 @lime-contextualpopup-offset-overlap: 36px;	// used as inverse of small to cause overlap
 @lime-contextualpopup-offset-small: 18px;
+@lime-contextualpopup-offset-large: 36px;
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
@@ -464,6 +465,8 @@
 @lime-dropdown-margin: 0 @lime-spotlight-outset; // this extra margin used to align dropdown container with the outer element
 @lime-dropdown-padding: 0 var(--primitive-spacing-48);
 @lime-dropdown-min-width: @lime-button-min-width;
+@lime-dropdown-icon-margin: var(--primitive-spacing-36);
+@lime-dropdown-title-padding: 36px 24px;
 @lime-dropdown-title-min-width: (@lime-dropdown-min-width - .extract(@lime-dropdown-title-padding, left)[] * 2);
 @lime-dropdown-tiny-width: 480px;
 @lime-dropdown-tiny-title-width: (@lime-dropdown-tiny-width - .extract(@lime-dropdown-title-padding, left)[] * 2);
@@ -487,8 +490,6 @@
 @lime-dropdown-list-min-width: @lime-dropdown-min-width;
 @lime-dropdown-list-max-height: (@lime-dropdown-max-items * @lime-item-height + @lime-item-shadow-height);
 @lime-dropdown-list-max-height-large: (@lime-dropdown-max-items * @lime-item-small-height-large + @lime-item-shadow-height);
-@lime-dropdown-list-item-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
-@lime-dropdown-title-padding: 36px 24px;
 
 // FixedPopupPanels
 // ---------------------------------------
