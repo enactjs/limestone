@@ -8,12 +8,15 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ContextualPopup` `large` type `offset`
 - `limestone/Icon` supported icon list, adding new icons
+- `limestone/ImageItem` prop `wideImage` to support wide image
 
 ### Changed
 
 - `limestone/Alert` styling to match the latest GUI
+- `limestone/Button` styling to match the latest GUI
 - `limestone/Dropdown` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
+- `limestone/Input` styling to match the latest GUI
 - `limestone/PageViews` indicator styling to match the latest GUI
 - `limestone/TabLayout` vertical to be collapsed in portrait mode
 

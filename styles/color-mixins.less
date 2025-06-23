@@ -143,12 +143,34 @@
 .lime-button-resting-bg-color () {
 	background-color: @lime-button-fill-container-color;
 }
+
 .lime-button-selected-bg-color () {
 	background-color: @lime-button-fill-container-selected-color;
 	filter+_: @lime-button-filter-selected;
 }
+
+.lime-button-outline-selected-bg-color () {
+	background-color: @lime-button-outline-container-selected-color;
+	filter+_: @lime-button-filter-selected;
+}
+
+.lime-button-transparent-selected-bg-color () {
+	background-color: @lime-button-transparent-container-selected-color;
+	filter+_: @lime-button-filter-selected;
+}
+
 .lime-button-focus-bg-color () {
 	background-color: @lime-button-fill-container-focused-color;
+	filter+_: @lime-button-filter-focused;
+}
+
+.lime-button-outline-focus-bg-color () {
+	background-color: @lime-button-outline-container-focused-color;
+	filter+_: @lime-button-filter-focused;
+}
+
+.lime-button-transparent-focus-bg-color () {
+	background-color: @lime-button-transparent-container-focused-color;
 	filter+_: @lime-button-filter-focused;
 }
 
@@ -170,9 +192,39 @@
 	});
 }
 
+.lime-button-outline-selected-colors (@bg: {}, @shadow: {}) {
+	.lime-bg-colors({
+		.lime-button-outline-selected-bg-color();
+		@bg();
+		@shadow();
+	});
+}
+
+.lime-button-transparent-selected-colors (@bg: {}, @shadow: {}) {
+	.lime-bg-colors({
+		.lime-button-transparent-selected-bg-color();
+		@bg();
+		@shadow();
+	});
+}
+
 .lime-button-focus-bg-colors (@bg: {}, @shadow: {}) {
 	.lime-spotlight-focus-bg-colors(@bg: {
 		.lime-button-focus-bg-color();
+		@bg();
+	}, @shadow);
+}
+
+.lime-button-outline-focus-bg-colors (@bg: {}, @shadow: {}) {
+	.lime-spotlight-focus-bg-colors(@bg: {
+		.lime-button-outline-focus-bg-color();
+		@bg();
+	}, @shadow);
+}
+
+.lime-button-transparent-focus-bg-colors (@bg: {}, @shadow: {}) {
+	.lime-spotlight-focus-bg-colors(@bg: {
+		.lime-button-transparent-focus-bg-color();
 		@bg();
 	}, @shadow);
 }
