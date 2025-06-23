@@ -16,8 +16,8 @@ const imageObj = {
 		uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
 	},
 	size: {
-		height: ri.scaleToRem(150),
-		width: ri.scaleToRem(150)
+		height: ri.scaleToRem(178),
+		width: ri.scaleToRem(178)
 	}
 };
 
@@ -30,8 +30,8 @@ export const _IconItem = (args) => {
 	const image = Object.assign({}, args['image'], args['label'] === '' &&
 		{
 			size: {
-				height: ri.scaleToRem(231),
-				width: ri.scaleToRem(231)
+				height: ri.scaleToRem(230),
+				width: ri.scaleToRem(230)
 			}
 		});
 
@@ -47,8 +47,8 @@ export const _IconItem = (args) => {
 			labelOn={args['labelOn']}
 			style={{
 				position: 'absolute',
-				height: args['height'] !== 0 && ri.scale(args['height']),
-				width: args['width'] !== 0 && ri.scale(args['width'])
+				height: args['height'] && ri.scale(args['height']),
+				width: args['width'] && ri.scale(args['width'])
 			}}
 			title={args['title']}
 			titleOn={args['titleOn']}
@@ -64,8 +64,8 @@ object('image', _IconItem, Config, imageObj);
 text('label', _IconItem, Config, 'USB');
 select('labelColor', _IconItem, ['light', 'dark'], Config);
 select('labelOn', _IconItem, ['focus', 'render'], Config);
-number('width', _IconItem, Config, 0);
-number('height', _IconItem, Config, 0);
+number('width', _IconItem, Config, null);
+number('height', _IconItem, Config, null);
 text('title', _IconItem, Config);
 select('titleOn', _IconItem, ['focus', 'render'], Config);
 

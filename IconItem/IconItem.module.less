@@ -35,7 +35,6 @@
 
 	.image {
 		display: block;
-		margin: @lime-iconitem-image-margin;
 		height: @lime-iconitem-image-height;
 		width: @lime-iconitem-image-width;
 	}
@@ -96,27 +95,27 @@
 	// Skin colors
 	.applySkins({
 		&.bordered .content {
-			border-color: @lime-iconitem-tile-inner-border-color;
+			border-color: @lime-iconitem-inner-border-color;
 		}
 
 		.content {
-			background-color: @lime-iconitem-tile-inner-container-color;
+			background-color: @lime-iconitem-inner-container-color;
 		}
 
 		.icon {
-			color: @lime-iconitem-tile-inner-icon-color;
+			color: @lime-iconitem-inner-icon-color;
 		}
 
 		.label {
-			color: @lime-iconitem-tile-inner-label-color;
+			color: @lime-iconitem-inner-label-color;
 		}
 
 		&.darkLabel .label {
-			color: @lime-iconitem-tile-inner-label-dark-color;
+			color: @lime-iconitem-inner-label-dark-color;
 		}
 
 		.title {
-			color: @lime-iconitem-tile-outer-label-main-color;
+			color: @lime-iconitem-outer-label-main-color;
 		}
 
 		.disabled ({
@@ -124,5 +123,15 @@
 		});
 
 		.lime-focus-highlight(content);
+
+		.focus({
+			.content {
+				box-shadow: @lime-iconitem-focused-shadow;
+			}
+
+			.icon {
+				color: @lime-iconitem-inner-icon-color;
+			}
+		});
 	});
 }
