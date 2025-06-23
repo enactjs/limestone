@@ -94,7 +94,7 @@ export const With5WaySelectableActivator = (args) => (
 			popupComponent={renderPopup}
 			spotlightRestrict={args['spotlightRestrict']}
 		>
-			Hello Contextual Button
+			Hello Contextual Popup Button
 		</ContextualPopupWithActivator>
 	</div>
 );
@@ -213,7 +213,7 @@ export const WithButtonTooltip = () => (
 			popupComponent={renderButtonWithTooltip}
 			spotlightRestrict="self-only"
 		>
-			Contextual Button
+			Hello Contextual Popup Button
 		</ContextualPopupWithActivator>
 	</div>
 );
