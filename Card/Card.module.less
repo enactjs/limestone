@@ -132,10 +132,6 @@
 			gap: @lime-card-vertical-captions-gap;
 			align-self: stretch;
 		}
-		.image {
-			width: var(--card-image-width);
-			height: var(--card-image-height);
-		}
 
 		.imageIcon {
 			height: @lime-card-vertical-image-icon-size;
@@ -149,6 +145,11 @@
 
 		&.hasContainer .captions {
 			padding: @lime-card-vertical-has-container-captions-padding;
+		}
+
+		&:not(.captionOverlay) .image {
+			width: var(--card-image-width);
+			height: var(--card-image-height);
 		}
 
 		&:not(.hasContainer) .image {
