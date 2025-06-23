@@ -79,17 +79,34 @@
 // ---------------------------------------
 @lime-button-fill-label-color: var(--semantic-color-on-surface-main);
 @lime-button-fill-container-color: var(--semantic-color-surface-default);
+@lime-button-fill-icon-color: var(--semantic-color-on-surface-main);
+@lime-button-fill-label-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-button-fill-container-focused-color: var(--semantic-color-surface-default-focused);
+@lime-button-fill-icon-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-fill-label-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-button-fill-container-selected-color: var(--semantic-color-surface-default-selected);
+@lime-button-fill-container-disabled-focused-color: var(--semantic-color-surface-default-disabled-focused);
+@lime-button-fill-icon-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-label-color: @lime-button-fill-label-color;
 @lime-button-outline-container-color: ~"color(from" var(--semantic-color-surface-default) ~"srgb r g b / 0.5)";
 @lime-button-outline-border-color: var(--semantic-color-stroke-button-outline);
+@lime-button-outline-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-outline-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-outline-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-container-selected-color: ~"color(from" var(--semantic-color-surface-default-selected) ~"srgb r g b / 0.5)";
 @lime-button-outline-border-selected-color: var(--semantic-color-stroke-main-selected);
-@lime-button-fill-container-focused-color: var(--semantic-color-surface-default-focused);
-@lime-button-fill-label-selected-color: var(--semantic-color-on-surface-main);
-@lime-button-fill-container-selected-color: var(--semantic-color-surface-default-selected);
+@lime-button-transparent-label-color: var(--semantic-color-on-background-main);
+@lime-button-transparent-icon-color: @lime-button-transparent-label-color;
+@lime-button-transparent-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-transparent-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-transparent-icon-focused-color: @lime-button-fill-icon-focused-color;
+@lime-button-transparent-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-transparent-container-selected-color: @lime-button-fill-container-selected-color;
+@lime-button-transparent-icon-selected-color: @lime-button-fill-icon-selected-color;
+@lime-button-text-shadow: @lime-header-text-shadow;
 @lime-button-filter-focused: none;
 @lime-button-filter-selected: none;
-@lime-button-transparent-fill-text-color: var(--semantic-color-on-background-main);
 @lime-button-icononly-bg-focused-color: '';
-@lime-button-text-shadow: @lime-header-text-shadow;
 
 // Card
 // ---------------------------------------
