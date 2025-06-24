@@ -212,6 +212,10 @@
 	&.iconOnly {
 		min-width: @lime-button-height;
 
+		.lime-custom-text({
+			min-width: @lime-button-height-large;
+		});
+
 		.client {
 			padding: 0;
 
@@ -220,14 +224,25 @@
 			}
 		}
 
-		&.iconAfter,
-		&.iconBefore,
-		&.large,
+		&.large {
+			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
+			.padding-start-end(.extract(@lime-button-icon-padding, left)[], .extract(@lime-button-icon-padding, right)[]);
+		}
+
 		&.small {
 			min-width: @lime-button-small-height;
 			padding: @lime-button-icon-small-padding;
 			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
 
+			.lime-custom-text({
+				min-width: @lime-button-small-height-large;
+			});
+		}
+
+		&.iconAfter,
+		&.iconBefore,
+		&.large,
+		&.small {
 			.icon {
 				margin: 0; // reset margins for `IconButton`
 
@@ -245,10 +260,6 @@
 					height: @lime-button-icon-only-colordot-height;
 				}
 			}
-		}
-
-		&.large {
-			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
 		}
 
 		&.red,
