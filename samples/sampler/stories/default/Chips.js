@@ -13,15 +13,36 @@ export default {
 	component: 'Chips'
 };
 
-const defaultChips = [
-	{id:0, children:'chip1', icon: 'check'},
-	{id:1, children:'chip2', icon: 'heart'},
-	{id:2, children:'This is a very long chip3', icon: 'channel'},
-	{id:3, children:'chip4', icon: 'ai'}
-];
+let chipIdCounter = 0;
+
+const generateSingleChip = (index) => {
+	const icons = ['check', 'heart', 'channel', 'ai', 'star', 'home', 'music', 'search'];
+	const chipLabels = [
+		'chip1',
+		'chip2',
+		'This is a very long chip3',
+		'chip4',
+		'favorite',
+		'home',
+		'music player',
+		'search tool'
+	];
+
+	return {
+		id: `chip-${++chipIdCounter}`,
+		children: chipLabels[index % chipLabels.length] || `chip${index + 1}`,
+		icon: icons[index % icons.length]
+	};
+};
+
+const generateChips = (count) => {
+	return Array.from({length: count}, (_, index) => generateSingleChip(index));
+};
+
+const initialChips = generateChips(8);
 
 export const Chips_ = (args) => {
-	const [chips, setChips] = useState(defaultChips);
+	const [chips, setChips] = useState(initialChips);
 	const orientation = args['orientation'];
 
 	const handleDelete = (id) => {
@@ -30,25 +51,30 @@ export const Chips_ = (args) => {
 	};
 
 	return (
-		<Chips orientation={orientation} style={{margin: ri.scaleToRem(36)}}>
-			{chips.map(({id, icon, children}) => {
-				const deleteButton = {
-					position: orientation === 'vertical' ? 'right' : 'bottom',
-					onDelete: () => handleDelete(id)
-				};
+		<div style={{margin: ri.scaleToRem(36)}}>
+			<Chips
+				orientation={orientation}
+			>
+				{chips.map(({id, icon, children}) => {
+					const deleteButton = {
+						position: orientation === 'vertical' ? 'right' : 'bottom',
+						onDelete: () => handleDelete(id)
+					};
 
-				return (
-					<Chip
-						key={id}
-						icon={icon}
-						deleteButton={deleteButton}
-						onClick={action('onClick')}
-					>
-						{children}
-					</Chip>
-				);
-			})}
-		</Chips>
+					return (
+						<Chip
+							key={id}
+							id={id}
+							icon={icon}
+							deleteButton={deleteButton}
+							onClick={action('onClick')}
+						>
+							{children}
+						</Chip>
+					);
+				})}
+			</Chips>
+		</div>
 	);
 };
 
@@ -57,6 +83,6 @@ select('orientation', Chips_, ['horizontal', 'vertical'], Config, 'vertical');
 Chips_.storyName = 'Chips';
 Chips_.parameters = {
 	info: {
-		text: 'The basic Chips'
+		text: 'The basic Chips with delete functionality'
 	}
 };
