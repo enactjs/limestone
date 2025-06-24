@@ -68,18 +68,18 @@ const WizardPanelTests = withConfig({
 		)
 	},
 	// Test no buttons
-	<WizardPanels index={0} title="WizardPanel">
+	<WizardPanels index={0}>
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 		<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 	</WizardPanels>,
-	<WizardPanels index={1} title="WizardPanel">
+	<WizardPanels index={1}>
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 		<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 	</WizardPanels>,
 	{
 		locale: 'ar-SA',
 		component: (
-			<WizardPanels index={0} title="WizardPanel">
+			<WizardPanels index={0}>
 				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 			</WizardPanels>
@@ -88,7 +88,7 @@ const WizardPanelTests = withConfig({
 	{
 		locale: 'ar-SA',
 		component: (
-			<WizardPanels index={1} title="WizardPanel">
+			<WizardPanels index={1}>
 				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 			</WizardPanels>
