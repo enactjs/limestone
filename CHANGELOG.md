@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+
 ## [1.1.0] - 2025-06-25
 
 ### Added
@@ -19,7 +25,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
 - `limestone/PageViews` indicator styling to match the latest GUI
-- `limestone/TabLayout` vertical to be collapsed in portrait mode
 
 ### Fixed
 
