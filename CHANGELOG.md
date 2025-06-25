@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
+
 ## [1.1.0] - 2025-06-25
 
 ### Added
