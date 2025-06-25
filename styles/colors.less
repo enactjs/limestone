@@ -72,24 +72,41 @@
 
 // Alert
 // ---------------------------------------
-@lime-alert-bg-color: var(--semantic-color-background-full-default);
+@lime-alert-full-bg-color: var(--semantic-color-background-full-default);
 @lime-alert-overlay-shadow: 0 36px 48px 0 @lime-shadow-color;
 
 // Button
 // ---------------------------------------
 @lime-button-fill-label-color: var(--semantic-color-on-surface-main);
 @lime-button-fill-container-color: var(--semantic-color-surface-default);
+@lime-button-fill-icon-color: var(--semantic-color-on-surface-main);
+@lime-button-fill-label-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-button-fill-container-focused-color: var(--semantic-color-surface-default-focused);
+@lime-button-fill-icon-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-fill-label-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-button-fill-container-selected-color: var(--semantic-color-surface-default-selected);
+@lime-button-fill-container-disabled-focused-color: var(--semantic-color-surface-default-disabled-focused);
+@lime-button-fill-icon-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-label-color: @lime-button-fill-label-color;
 @lime-button-outline-container-color: ~"color(from" var(--semantic-color-surface-default) ~"srgb r g b / 0.5)";
 @lime-button-outline-border-color: var(--semantic-color-stroke-button-outline);
+@lime-button-outline-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-outline-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-outline-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-container-selected-color: ~"color(from" var(--semantic-color-surface-default-selected) ~"srgb r g b / 0.5)";
 @lime-button-outline-border-selected-color: var(--semantic-color-stroke-main-selected);
-@lime-button-fill-container-focused-color: var(--semantic-color-surface-default-focused);
-@lime-button-fill-label-selected-color: var(--semantic-color-on-surface-main);
-@lime-button-fill-container-selected-color: var(--semantic-color-surface-default-selected);
+@lime-button-transparent-label-color: var(--semantic-color-on-background-main);
+@lime-button-transparent-icon-color: @lime-button-transparent-label-color;
+@lime-button-transparent-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-transparent-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-transparent-icon-focused-color: @lime-button-fill-icon-focused-color;
+@lime-button-transparent-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-transparent-container-selected-color: @lime-button-fill-container-selected-color;
+@lime-button-transparent-icon-selected-color: @lime-button-fill-icon-selected-color;
+@lime-button-text-shadow: @lime-header-text-shadow;
 @lime-button-filter-focused: none;
 @lime-button-filter-selected: none;
-@lime-button-transparent-fill-text-color: var(--semantic-color-on-background-main);
 @lime-button-icononly-bg-focused-color: '';
-@lime-button-text-shadow: @lime-header-text-shadow;
 
 // Card
 // ---------------------------------------
@@ -150,7 +167,6 @@
 
 // Dropdown
 // ---------------------------------------
-@lime-dropdown-title-text-color: var(--semantic-color-on-surface-sub);
 @lime-dropdown-label-selected-color: var(--semantic-color-on-surface-main-selected);
 
 // FixedPopupPanels
@@ -215,11 +231,18 @@
 
 // Input
 // ---------------------------------------
-@lime-input-bg-color: var(--semantic-color-surface-input-field);
 @lime-input-disabled-bg-focused-color: var(--semantic-color-surface-default-disabled-focused);
-@lime-input-dot-focused-color: var(--semantic-color-on-surface-main-focused);
 @lime-input-fullscreen-background-color: var(--semantic-color-background-full-default);
-@lime-input-overlay-background-color: @lime-popup-bg-color;
+@lime-input-fullscreen-dot-color: var(--semantic-color-on-surface-input-field);
+@lime-input-overlay-background-color: var(--semantic-color-background-popup-default);
+@lime-input-overlay-dot-color: var(--semantic-color-on-surface-popup-input-field);
+@lime-input-dot-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-input-button-popup-transparent-icon-color: var(--semantic-color-on-background-popup-main);
+@lime-input-button-popup-transparent-label-color: var(--semantic-color-on-background-popup-main);
+@lime-input-header-popup-label-main-color: var(--semantic-color-on-background-popup-main);
+@lime-input-header-popup-label-sub-color: var(--semantic-color-on-background-popup-sub);
+@lime-input-inputfield-popup-container-color: var(--semantic-color-surface-popup-input-field);
+@lime-input-inputfield-popup-label-inactive-color: var(--semantic-color-on-surface-popup-input-field);
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
 @lime-input-numberfield-disabled-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
 @lime-input-numberfield-disabled-opacity: @lime-disabled-focus-bg-opacity;
@@ -228,13 +251,14 @@
 
 // InputField
 // ---------------------------------------
-@lime-inputfield-container-color: @lime-input-bg-color;
+@lime-inputfield-container-color: var(--semantic-color-surface-input-field);
 @lime-inputfield-container-disabled-focused-color: @lime-input-disabled-bg-focused-color;
+@lime-inputfield-container-opacity: 0.3;
 @lime-inputfield-cursor-color: var(--semantic-color-on-surface-accent);
 @lime-inputfield-label-active-color: var(--semantic-color-on-surface-main-focused);
-@lime-inputfield-label-inactive-color: var(--semantic-color-on-surface-input-field);
-@lime-inputfield-label-inactive-focused-color: var(--semantic-color-on-surface-main-focused);
-@lime-inputfield-label-inactive-focused-opacity: 0.4;
+@lime-inputfield-label-inactive-color: ~"color(from" var(--semantic-color-on-surface-input-field) ~"srgb r g b / 0.4)";
+@lime-inputfield-label-inactive-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.4)";
+@lime-inputfield-label-success-color: var(--semantic-color-on-surface-input-field);
 @lime-inputfield-invalid-color: @lime-invalid-color;
 @lime-inputfield-invalid-tooltip-color: var(--semantic-color-on-background-default-error);
 
@@ -277,6 +301,8 @@
 
 // PageViews
 // ---------------------------------------
+@lime-pageviews-indicator-icon-active: var(--semantic-color-surface-default-indicator);
+@lime-pageviews-indicator-icon-inactive: var(--semantic-color-surface-default-indicator);
 @lime-pageviews-bg-color: ~"color(from" var(--semantic-color-surface-default-group) ~"srgb r g b / 0.1)";
 
 // Picker
