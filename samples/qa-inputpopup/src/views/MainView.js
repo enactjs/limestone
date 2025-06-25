@@ -22,12 +22,12 @@ const MainView = () => {
 	}, []);
 
 	const InputPopupWithDefaultValue = useCallback(() => {
-		return <InputPopup defaultValue={defaultValue} onClose={handleOnChangeDefaultValue} open={openInputPopup} />;
-	}, [defaultValue, handleOnChangeDefaultValue, openInputPopup]);
+		return <InputPopup defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopup} />;
+	}, [defaultValue, handleOnClickInputPopup, openInputPopup]);
 
 	const InputPopupBaseWithDefaultValue = useCallback(() => {
-		return <InputPopupBase defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopupBase} />;
-	}, [defaultValue, handleOnClickInputPopup, openInputPopupBase]);
+		return <InputPopupBase defaultValue={defaultValue} onClose={handleOnClickInputPopupBase} open={openInputPopupBase} />;
+	}, [defaultValue, handleOnClickInputPopupBase, openInputPopupBase]);
 
 	return (
 		<Panel>
