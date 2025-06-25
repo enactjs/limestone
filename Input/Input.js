@@ -384,6 +384,7 @@ const InputPopupBase = kind({
 			<Button
 				aria-label={backButtonAriaLabel == null ? $L('go to previous') : backButtonAriaLabel}
 				className={css.back}
+				css={css}
 				disabled={disabled}
 				icon="arrowhookleft"
 				iconFlip="auto"
