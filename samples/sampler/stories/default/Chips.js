@@ -51,30 +51,26 @@ export const Chips_ = (args) => {
 	};
 
 	return (
-		<div style={{margin: ri.scaleToRem(36)}}>
-			<Chips
-				orientation={orientation}
-			>
-				{chips.map(({id, icon, children}) => {
-					const deleteButton = {
-						position: orientation === 'vertical' ? 'right' : 'bottom',
-						onDelete: () => handleDelete(id)
-					};
+		<Chips orientation={orientation} style={{margin: ri.scaleToRem(36)}}>
+			{chips.map(({id, icon, children}) => {
+				const deleteButton = {
+					position: orientation === 'vertical' ? 'right' : 'bottom',
+					onDelete: () => handleDelete(id)
+				};
 
-					return (
-						<Chip
-							key={id}
-							id={id}
-							icon={icon}
-							deleteButton={deleteButton}
-							onClick={action('onClick')}
-						>
-							{children}
-						</Chip>
-					);
-				})}
-			</Chips>
-		</div>
+				return (
+					<Chip
+						key={id}
+						id={id}
+						icon={icon}
+						deleteButton={deleteButton}
+						onClick={action('onClick')}
+					>
+						{children}
+					</Chip>
+				);
+			})}
+		</Chips>
 	);
 };
 
@@ -83,6 +79,6 @@ select('orientation', Chips_, ['horizontal', 'vertical'], Config, 'vertical');
 Chips_.storyName = 'Chips';
 Chips_.parameters = {
 	info: {
-		text: 'The basic Chips with delete functionality'
+		text: 'The basic Chips'
 	}
 };
