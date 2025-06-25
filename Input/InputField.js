@@ -244,7 +244,7 @@ const InputFieldBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'inputField',
-		publicClassNames: ['inputField', 'input', 'inputHighlight', 'tooltip', 'tooltipLabel']
+		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'tooltip', 'tooltipLabel']
 	},
 
 	handlers: {

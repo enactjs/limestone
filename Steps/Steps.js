@@ -26,8 +26,8 @@ import Skinnable from '../Skinnable';
 
 import componentCss from './Steps.module.less';
 
-const PageIndicator = ({className}) => {
-	const mergedClasses = classNames(componentCss.pageIndicator, className);
+const PageIndicator = ({className, css}) => {
+	const mergedClasses = classNames(css.pageIndicator, className);
 	return (<div className={mergedClasses} />);
 };
 
@@ -198,7 +198,7 @@ const StepsBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'steps',
-		publicClassNames: ['steps', 'step', 'numbers', 'past', 'current', 'future']
+		publicClassNames: ['steps', 'step', 'numbers', 'past', 'current', 'future', 'pageIndicator']
 	},
 
 	computed: {
@@ -238,7 +238,7 @@ const StepsBase = kind({
 		}
 	},
 
-	render: ({iconComponent, size, steps, ...rest}) => {
+	render: ({css, iconComponent, size, steps, ...rest}) => {
 		delete rest.current;
 		delete rest.currentIcon;
 		delete rest.futureIcon;
@@ -252,7 +252,7 @@ const StepsBase = kind({
 				{...rest}
 				component="div"
 				childComponent={iconComponent}
-				itemProps={{size}}
+				itemProps={{css, size}}
 			>
 				{steps}
 			</Repeater>

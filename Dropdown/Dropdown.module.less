@@ -9,11 +9,6 @@
 	margin: @lime-dropdown-margin;
 	min-width: @lime-dropdown-min-width;
 
-	.button {
-		padding: @lime-dropdown-padding;
-		margin: 0;
-	}
-
 	&.tinyWidth {
 		.title {
 			width: @lime-dropdown-tiny-title-width;
@@ -83,6 +78,8 @@
 	.button {
 		min-width: unset;
 		max-width: unset;
+		padding: @lime-dropdown-padding;
+		margin: 0;
 
 		&:not([disabled]) {
 			.focus({
@@ -94,14 +91,11 @@
 				}
 			});
 		}
-	}
 
-	// Skin colors
-	.applySkins({
-		.title {
-			color: @lime-dropdown-title-text-color;
+		.icon {
+			.margin-start-end(@lime-dropdown-icon-margin, 0);
 		}
-	});
+	}
 }
 
 .dropdownList {
@@ -141,10 +135,6 @@
 	.lime-custom-text({
 		max-height: @lime-dropdown-list-max-height-large;
 	});
-
-	.item {
-		padding: @lime-dropdown-list-item-padding;
-	}
 
 	// Skin colors
 	.applySkins({

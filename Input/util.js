@@ -32,8 +32,8 @@ const calcAriaLabel = function (prefix, type, value = '') {
 	return `${prefix} ${value} ${hint}`;
 };
 
-const convertToPasswordFormat = (value) => {
-	return '*'.repeat(value && value.length);
+const convertToPasswordFormat = (value, replacement = '*') => {
+	return replacement.repeat(value && value.length);
 };
 
 /**

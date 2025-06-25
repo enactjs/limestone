@@ -286,5 +286,19 @@ export default {
 	pc                : 0x0F01DB, // pc
 	tips              : 0x0F01DC, // tips
 	googlehome        : 0x0F01DD, // google_home
-	thinq             : 0x0F01DE // thinq
+	thinq             : 0x0F01DE, // thinq
+	livetv            : 0x0F01DF, // live_tv
+	accessibility2    : 0x0F01E0, // accessibility2
+	homehub           : 0x0F01E1, // homehub
+	otheriot          : 0x0F01E2, // otheriot
+	sitemap           : 0x0F01E3, // sitemap
+	clickapps         : 0x0F01E4, // clickapps
+	history           : 0x0F01E5, // history
+	moreactions       : 0x0F01E6, // more_actions
+	pwreset           : 0x0F01E7, // pw_reset
+	dislike           : 0x0F01E8, // dislike
+	dislikeline       : 0x0F01E9, // dislike_line
+	like              : 0x0F01EA, // like
+	likeline          : 0x0F01EB, // like_line
+	soundbarline      : 0x0F01EC  // soundbar_line
 };

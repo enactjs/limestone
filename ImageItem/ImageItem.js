@@ -62,10 +62,10 @@ const ImageItemBase = kind({
 		/**
 		 * The primary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		children: PropTypes.string,
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -139,10 +139,10 @@ const ImageItemBase = kind({
 		/**
 		 * A secondary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		label: PropTypes.string,
+		label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * The layout orientation of the component.
@@ -210,7 +210,16 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * Changes the image from a scale `1:1` to `16:9` in horizontal orientation.
+		 *
+		 * @type {Boolean}
+		 * @default 'false'
+		 * @public
+		 */
+		wideImage: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -263,8 +272,9 @@ const ImageItemBase = kind({
 					captions
 			);
 		},
-		className: ({children, imageIconSrc, label, orientation, styler}) => styler.append({
-			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc
+		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
+			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
+			wideImage: orientation === 'horizontal' && wideImage
 		})
 	},
 
@@ -273,6 +283,7 @@ const ImageItemBase = kind({
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
 		delete rest.label;
+		delete rest.wideImage;
 
 		if (showSelection) {
 			rest['role'] = 'checkbox';

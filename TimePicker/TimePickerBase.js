@@ -1,5 +1,5 @@
 import kind from '@enact/core/kind';
-import {Fragment, useEffect, useState} from 'react';
+import {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 
 import $L from '../internal/$L';
@@ -34,14 +34,10 @@ const HourPicker = (props) => {
 	const [noAnimation, setNoAnimation] = useState(false);
 	const [prevValue, setPrevValue] = useState(value);
 
-	useEffect(() => {
-		if (prevValue !== value) {
-			const hoursArray = hasMeridiem ? hours12 : hours24;
-
-			setNoAnimation(hoursArray[prevValue] === hoursArray[value]);
-			setPrevValue(value);
-		}
-	}, [hasMeridiem, prevValue, value]);
+	if (prevValue !== value) {
+		setNoAnimation(hours[prevValue] === hours[value]);
+		setPrevValue(value);
+	}
 
 	return (
 		<DateComponentPicker {...rest} noAnimation={noAnimation} value={value}>
