@@ -24,15 +24,14 @@ describe('Chips', () => {
 			</ChipBase>
 		]
 	};
-
 	function getAllDeleteButtons () {
 		// Look for buttons that are inside deleteButtonContainer
 		const container = document.querySelector('.chips');
 		const deleteButtonContainers = container?.querySelectorAll('.deleteButtonContainer') || [];
 		const deleteButtons = [];
 
-		deleteButtonContainers.forEach(container => {
-			const button = container.querySelector('[role="button"]');
+		deleteButtonContainers.forEach(buttonContainer => {
+			const button = buttonContainer.querySelector('[role="button"]');
 			if (button) {
 				deleteButtons.push(button);
 			}
@@ -131,7 +130,6 @@ describe('Chips', () => {
 		expect(screen.getByText('Chip 1')).toBeInTheDocument();
 		expect(screen.getByText('Chip 2')).toBeInTheDocument();
 	});
-
 	it('should handle chips with different delete button positions', () => {
 		const mixedPositionProps = {
 			orientation: 'vertical',
@@ -152,12 +150,16 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		const {container} = render(<ChipsBase {...mixedPositionProps} />);
+		render(<ChipsBase {...mixedPositionProps} />);
 
-		const deleteButtons = container.querySelectorAll('.deleteButtonContainer');
+		const deleteButtons = getAllDeleteButtons();
 		expect(deleteButtons).toHaveLength(2);
-		expect(deleteButtons[0]).toHaveClass('top');
-		expect(deleteButtons[1]).toHaveClass('bottom');
+
+		// Verify that the delete buttons have the correct positioning classes
+		const chip1DeleteButton = deleteButtons[0].closest('.deleteButtonContainer');
+		const chip2DeleteButton = deleteButtons[1].closest('.deleteButtonContainer');
+		expect(chip1DeleteButton).toHaveClass('top');
+		expect(chip2DeleteButton).toHaveClass('bottom');
 	});
 
 	it('should handle click events on chip buttons', () => {
