@@ -23,7 +23,7 @@ const defaultIconItemTests = [
 	<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" style={styleWithTitle} />,
 	<IconItem background="#000000" icon="usb" label="Label" title="App title" titleOn="focus" style={styleWithTitle} />,
 	<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" titleOn="focus" style={styleWithTitle} />,
-	
+
 	// Image type
 	<IconItem background="#ffffff" image={imageProp} style={style} />,
 	<IconItem background="radial-gradient(crimson, skyblue)" image={imageProp} style={style} />,
@@ -38,7 +38,7 @@ const defaultIconItemTests = [
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelOn="focus" title="App title" style={styleWithTitle} />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" title="App title" titleOn="focus" style={styleWithTitle} />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelOn="focus" title="App title" titleOn="focus" style={styleWithTitle} />,
-	
+
 	// Focused
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
 		// Icon type
@@ -53,7 +53,7 @@ const defaultIconItemTests = [
 		<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" style={styleWithTitle} />,
 		<IconItem background="#000000" icon="usb" label="Label" title="App title" titleOn="focus" style={styleWithTitle} />,
 		<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" titleOn="focus" style={styleWithTitle} />,
-		
+
 		// Image type
 		<IconItem background="#ffffff" image={imageProp} style={style} />,
 		<IconItem background="radial-gradient(crimson, skyblue)" image={imageProp} style={style} />,
@@ -73,16 +73,16 @@ const defaultIconItemTests = [
 
 const IconItemTests = [
 	...defaultIconItemTests,
-	
+
 	// Bordered
 	...withProps({bordered:true}, defaultIconItemTests),
-	
+
 	// Disabled
 	...withProps({disabled: true}, defaultIconItemTests),
-	
+
 	// Bordered and disabled.
 	...withProps({bordered: true, disabled: true}, defaultIconItemTests),
-	
+
 	...withConfig({
 		focusRing: true,
 		focus: true
