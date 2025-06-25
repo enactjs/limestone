@@ -18,16 +18,16 @@ const MainView = () => {
 	}, []);
 
 	const handleOnClickInputPopupBase = useCallback(() => {
-		setOpenInputPopup(prev => !prev);
+		setOpenInputPopupBase(prev => !prev);
 	}, []);
 
 	const InputPopupWithDefaultValue = useCallback(() => {
-		return <InputPopup defaultValue={defaultValue} onClose={handleOnChangeDefaultValue} open={openInputPopup} />
-	}, [defaultValue, handleOnChangeDefaultValue, open]);
+		return <InputPopup defaultValue={defaultValue} onClose={handleOnChangeDefaultValue} open={openInputPopup} />;
+	}, [defaultValue, handleOnChangeDefaultValue, openInputPopup]);
 
 	const InputPopupBaseWithDefaultValue = useCallback(() => {
-		return <InputPopupBase className={'test-77777'} defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopupBase} />
-	}, [defaultValue, handleOnClickInputPopup, open]);
+		return <InputPopupBase defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopupBase} />;
+	}, [defaultValue, handleOnClickInputPopup, openInputPopupBase]);
 
 	return (
 		<Panel>
