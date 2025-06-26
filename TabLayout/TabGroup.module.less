@@ -33,8 +33,11 @@
 				width: @lime-tablayout-tab-vertical-button-height;
 			}
 
-			&.hasIcon:not(&.collapsed) {
+			&.hasIcon {
 				padding: @lime-tablayout-tab-vertical-icon-padding;
+			}
+
+			&.hasIcon:not(&.collapsed) {
 				.padding-start-end(@lime-tablayout-tab-vertical-icon-padding, @lime-tablayout-tab-vertical-icon-padding-right);
 
 				.icon {
