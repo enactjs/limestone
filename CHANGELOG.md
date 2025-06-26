@@ -8,6 +8,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/IconItem` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/FixedPopupPanels` to work with `noAnimation`
+- `limestone/FlexiblePopupPanels` to work with `noAnimation`
+
 ## [1.1.0] - 2025-06-25
 
 ### Added
@@ -29,8 +34,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Button` min-width for `iconOnly` button in large text mode
-- `limestone/FixedPopupPanels` to work with `noAnimation`
-- `limestone/FlexiblePopupPanels` to work with `noAnimation`
 - `limestone/ImageItem` props `children` and `label` to accept node type
 - `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 
