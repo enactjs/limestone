@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Card` prop `imageSize` to set the size of card image
+
 ### Changed
 
 - `limestone/IconItem` styling to match the latest GUI
@@ -18,7 +22,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Card` props `imageSize` to set the size of card image
 - `limestone/ContextualPopup` `large` type `offset`
 - `limestone/Icon` supported icon list, adding new icons
 - `limestone/ImageItem` prop `wideImage` to support wide image
