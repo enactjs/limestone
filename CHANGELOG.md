@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/IconItem` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
