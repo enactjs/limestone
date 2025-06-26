@@ -10,6 +10,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/FixedPopupPanels` to work with `noAnimation`
+- `limestone/FlexiblePopupPanels` to work with `noAnimation`
 - `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
 
 ## [1.1.0] - 2025-06-25
