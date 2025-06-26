@@ -12,6 +12,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/FixedPopupPanels` to work with `noAnimation`
 - `limestone/FlexiblePopupPanels` to work with `noAnimation`
+- `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
 
 ## [1.1.0] - 2025-06-25
 
@@ -36,7 +37,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Button` min-width for `iconOnly` button in large text mode
 - `limestone/ImageItem` props `children` and `label` to accept node type
 - `limestone/TimePicker` flickering on the hour picker when the meridiem value change
-- `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
 
 ## [1.0.0] - 2025-06-13
 
