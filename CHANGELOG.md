@@ -4,6 +4,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/IconItem` styling to match the latest GUI
+
+## [1.1.0] - 2025-06-25
+
 ### Added
 
 - `limestone/ContextualPopup` `large` type `offset`

@@ -135,8 +135,8 @@
 @lime-heading-tiny-font-size:       48px;
 @lime-heading-subtitle-font-size:   #guide.header[standard-subtitle-font-size];
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
-@lime-iconitem-label-font-size:     42px;
-@lime-iconitem-title-font-size:     36px;
+@lime-iconitem-label-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-title-font-size:     var(--primitive-font-size-48);
 @lime-imageitem-caption-font-size:  var(--primitive-font-size-60);
 @lime-imageitem-label-font-size:    var(--primitive-font-size-48);
 @lime-input-font-size:              var(--primitive-font-size-78);
@@ -265,6 +265,10 @@
 // Icon
 @lime-icon-font-family: "Limestone Icons";
 @lime-icon-other-font-family: "LG Icons";
+
+// IconItem
+@lime-iconitem-label-font-weight: var(--primitive-font-weight-semibold);
+@lime-iconitem-title-font-weight: var(--primitive-font-weight-semibold);
 
 // ImageItem
 @lime-imageitem-font-weight: @lime-spottable-font-weight;
@@ -661,16 +665,23 @@
 
 // IconItem
 // ---------------------------------------
-@lime-iconitem-border-radius: 48px;
+@lime-iconitem-height: 256px;
+@lime-iconitem-width: 334px;
+@lime-iconitem-title-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~"+ 24px)";
+@lime-iconitem-border-radius: var(--semantic-radius-container);
 @lime-iconitem-border-style: solid;
 @lime-iconitem-border-width: 4px;
-@lime-iconitem-focus-transform: scale(1.2);
-@lime-iconitem-font-weight: 600;
-@lime-iconitem-icon-margin: @lime-icon-margin @lime-icon-margin 12px;
-@lime-iconitem-label-line-height: 48px;
-@lime-iconitem-label-padding: 0 12px;
-@lime-iconitem-title-line-height: 42px;
-@lime-iconitem-title-margin: 18px 0 0 0;
+@lime-iconitem-focus-transform: scale(1.1);
+@lime-iconitem-icon-margin: 0;
+@lime-iconitem-icon-height: 120px;
+@lime-iconitem-icon-width: @lime-iconitem-icon-height;
+@lime-iconitem-image-height: 230px;
+@lime-iconitem-image-width: @lime-iconitem-image-height;
+@lime-iconitem-label-image-height: ~"calc("@lime-iconitem-height ~"- "@lime-iconitem-label-line-height ~"- 24px)";
+@lime-iconitem-label-line-height: 54px;
+@lime-iconitem-label-padding: 0 var(--primitive-spacing-12);
+@lime-iconitem-title-line-height: 60px;
+@lime-iconitem-title-margin: var(--primitive-spacing-24) 0 0 0;
 
 // ImageItem
 // ---------------------------------------
