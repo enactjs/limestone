@@ -46,8 +46,7 @@ const getCardSize = (orientation, captionOverlay, imageSize, label, secondaryLab
 			width: 1320,
 			height: 336
 		};
-	}
-	else if (orientation === 'vertical') {
+	} else if (orientation === 'vertical') {
 		const defaultImageSize = getDefaultImageSize(orientation);
 		const imageWidth = imageSize?.width ?? defaultImageSize.width;
 		const imageHeight = imageSize?.height ?? defaultImageSize.height;
@@ -56,37 +55,37 @@ const getCardSize = (orientation, captionOverlay, imageSize, label, secondaryLab
 			return {
 				width: imageWidth,
 				height: imageHeight
-			}
+			};
 		}
 
 		const baseCaptionHeight = 84 + 72; // base caption height + image icon height
 		const labelHeight = label ? 60 : 0;
-        const secondaryLabelHeight = secondaryLabel ? 60 : 0;
-        const imageIconHeight = imageIconSrc ? 180 : 0;
+		const secondaryLabelHeight = secondaryLabel ? 60 : 0;
+		const imageIconHeight = imageIconSrc ? 180 : 0;
 
 		// With secondary label
-        if (secondaryLabel) {
-            return {
-                width: imageWidth,
-                height: imageHeight + baseCaptionHeight + labelHeight + secondaryLabelHeight
-            };
-        }
+		if (secondaryLabel) {
+			return {
+				width: imageWidth,
+				height: imageHeight + baseCaptionHeight + labelHeight + secondaryLabelHeight
+			};
+		}
 
-        // With image icon
-        if (imageIconSrc) {
-            return {
-                width: imageWidth,
-                height: imageHeight + 72 + imageIconHeight
-            };
-        }
+		// With image icon
+		if (imageIconSrc) {
+			return {
+				width: imageWidth,
+				height: imageHeight + 72 + imageIconHeight
+			};
+		}
 
-        // Default case
-        return {
-            width: imageWidth,
-            height: imageHeight + baseCaptionHeight + labelHeight
-        };
+		// Default case
+		return {
+			width: imageWidth,
+			height: imageHeight + baseCaptionHeight + labelHeight
+		};
 	}
-}
+};
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
