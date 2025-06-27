@@ -23,8 +23,9 @@ const renderItem = ({index, ...rest}) => {
 			label={label}
 			src={source}
 			style={{
-				width: 768,
-				height: 648
+				width: ri.scaleToRem(768),
+				height: ri.scaleToRem(648),
+				padding: ri.scaleToRem(24)
 			}}
 		>
 			{children}
@@ -76,7 +77,7 @@ export const WithAsyncRender = (args) => (
 	<VirtualGridList
 		dataSize={updateDataSize(args['dataSize'])}
 		direction={args['direction']}
-		itemSize={{minHeight: ri.scale(648), minWidth: ri.scale(768)}}
+		itemSize={{minWidth: ri.scale(768), minHeight: ri.scale(648)}}
 		itemRenderer={renderItem}
 	/>
 );

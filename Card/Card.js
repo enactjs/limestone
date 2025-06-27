@@ -143,7 +143,7 @@ const CardBase = kind({
 		 * * `width` - The width of the image
 
   		 * @type {Object}
-		 * @default {width: 768, height: 432} for vertical orientation, {width: 596, height: 336} for horizontal orientation
+		 * @default {height: 432, width: 768}
 		 * @public
 		 */
 		imageSize: PropTypes.shape({
@@ -277,7 +277,7 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, imageSize: imageSizeProp, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.centered;
 		delete rest.label;
 		delete rest.secondaryLabel;
@@ -285,7 +285,7 @@ const CardBase = kind({
 		delete rest.hasContainer;
 		delete rest.roundedImage;
 
-		const imageSize = imageSizeProp || getDefaultImageSize(rest.orientation);
+		const defaultImageSize = getDefaultImageSize(rest.orientation);
 
 		return (
 			<UiCard
@@ -306,8 +306,8 @@ const CardBase = kind({
 				}
 				style={{
 					...style,
-					'--card-image-height': ri.scaleToRem(imageSize.height),
-					'--card-image-width': ri.scaleToRem(imageSize.width)
+					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
+					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width)
 				}}
 			/>
 		);

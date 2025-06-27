@@ -32,6 +32,7 @@ export const _Card = (args) => (
 		centered={args['centered']}
 		disabled={args['disabled']}
 		imageIconSrc={args['imageIconSrc']}
+		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
 		// eslint-disable-next-line no-undefined
 		label={args['label'] ? args['label'] : undefined}
@@ -45,8 +46,8 @@ export const _Card = (args) => (
 		src={args['src']}
 		style={{
 			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1320),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 708 : 336)
+			width: ri.scaleToRem(args['orientation'] === 'horizontal' ? 1320 : undefined),
+			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 708 : undefined)
 		}}
 	>
 		{args['children']}
