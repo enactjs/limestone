@@ -44,11 +44,6 @@ export const _Card = (args) => (
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
 		src={args['src']}
-		style={{
-			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'horizontal' ? 1320 : undefined),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 708 : undefined)
-		}}
 	>
 		{args['children']}
 	</Card>

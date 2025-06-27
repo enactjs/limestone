@@ -139,9 +139,8 @@
 			margin: @lime-card-vertical-image-icon-margin;
 		}
 
-		&:not(.captionOverlay) {
-			width: var(--card-image-width);
-		}
+		height: var(--card-height);
+		width: var(--card-width);
 
 		&.captionOverlay .captions {
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
@@ -165,7 +164,8 @@
 	}
 
 	&.horizontal {
-		height: var(--card-image-height);
+		width: var(--card-width);
+		height: var(--card-height);
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;

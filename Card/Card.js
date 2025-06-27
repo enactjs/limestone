@@ -40,6 +40,53 @@ const getDefaultImageSize = (orientation) => {
 	return sizes[orientation];
 };
 
+const getCardSize = (orientation, captionOverlay, imageSize, label, secondaryLabel, imageIconSrc) => {
+	if (orientation === 'horizontal') {
+		return {
+			width: 1320,
+			height: 336
+		};
+	}
+	else if (orientation === 'vertical') {
+		const defaultImageSize = getDefaultImageSize(orientation);
+		const imageWidth = imageSize?.width ?? defaultImageSize.width;
+		const imageHeight = imageSize?.height ?? defaultImageSize.height;
+
+		if (captionOverlay) {
+			return {
+				width: imageWidth,
+				height: imageHeight
+			}
+		}
+
+		const baseCaptionHeight = 84 + 72; // base caption height + image icon height
+		const labelHeight = label ? 60 : 0;
+        const secondaryLabelHeight = secondaryLabel ? 60 : 0;
+        const imageIconHeight = imageIconSrc ? 180 : 0;
+
+		// With secondary label
+        if (secondaryLabel) {
+            return {
+                width: imageWidth,
+                height: imageHeight + baseCaptionHeight + labelHeight + secondaryLabelHeight
+            };
+        }
+
+        // With image icon
+        if (imageIconSrc) {
+            return {
+                width: imageWidth,
+                height: imageHeight + 72 + imageIconHeight
+            };
+        }
+
+        // Default case
+        return {
+            width: imageWidth,
+            height: imageHeight + baseCaptionHeight + labelHeight
+        };
+	}
+}
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -277,11 +324,8 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, imageSize, imageIconSrc, label, primaryBadgeSrc, secondaryBadgeSrc, secondaryLabel, style, ...rest}) => {
 		delete rest.centered;
-		delete rest.label;
-		delete rest.secondaryLabel;
-		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
 
@@ -307,7 +351,9 @@ const CardBase = kind({
 				style={{
 					...style,
 					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
-					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width)
+					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width),
+					'--card-width': ri.scaleToRem(getCardSize(rest.orientation, rest.captionOverlay, imageSize, label, secondaryLabel, imageIconSrc).width),
+					'--card-height': ri.scaleToRem(getCardSize(rest.orientation, rest.captionOverlay, imageSize, label, secondaryLabel, imageIconSrc).height)
 				}}
 			/>
 		);
