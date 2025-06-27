@@ -4,12 +4,17 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Chip` prop `id` to manage focus properly
+
 ### Changed
 
 - `limestone/IconItem` styling to match the latest GUI
 
 ### Fixed
 
+- `limestone/Chips` to handle focus properly when `children` changes
 - `limestone/FixedPopupPanels` to work with `noAnimation`
 - `limestone/FlexiblePopupPanels` to work with `noAnimation`
 - `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
