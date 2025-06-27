@@ -116,11 +116,11 @@ const ContextualPopupBase = kind({
 		/**
 		 * Offset from the activator to apply to the position of the popup.
 		 *
-		 * @type {('none'|'overlap'|'small')}
+		 * @type {('none'|'overlap'|'small'|'large')}
 		 * @default 'small'
 		 * @public
 		 */
-		offset: PropTypes.oneOf(['none', 'overlap', 'small']),
+		offset: PropTypes.oneOf(['none', 'overlap', 'small', 'large']),
 
 		/**
 		 * Shows the arrow.
