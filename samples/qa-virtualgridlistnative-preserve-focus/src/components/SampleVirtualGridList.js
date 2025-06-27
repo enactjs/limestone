@@ -40,7 +40,7 @@ const SampleVirtualGridList = ({index, onClick, ...rest}) => {
 				minWidth: ri.scale(678), // 606px(size of expanded ImageItem) + 36px(for shadow) * 2
 				minHeight: ri.scale(678) // 606px(size of expanded ImageItem) + 36px(for shadow) * 2
 			}}
-			spacing={ri.scale(-132)} // -(ImageItem padding(48px(for expanding) + 36px(for shadow)) * 2 - 36px(for the gap between items))
+			spacing={ri.scale(-84)} // -(ImageItem padding(36px(for shadow)) * 2 - 36px(for the gap between items))
 			spotlightId={id} // Set a unique ID to preserve last focus
 		/>
 	);
