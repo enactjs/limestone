@@ -1,7 +1,7 @@
 import Button from '@enact/limestone/Button';
+import Heading from '@enact/limestone/Heading';
 import {InputField, InputPopup, InputPopupBase} from '@enact/limestone/Input';
 import {Panel, Header} from '@enact/limestone/Panels';
-import Heading from '@enact/limestone/Heading';
 import {useCallback, useState} from 'react';
 
 const MainView = () => {
