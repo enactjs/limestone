@@ -4,6 +4,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/IconItem` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/FixedPopupPanels` to work with `noAnimation`
+- `limestone/FlexiblePopupPanels` to work with `noAnimation`
+- `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
+
+## [1.1.0] - 2025-06-25
+
 ### Added
 
 - `limestone/ContextualPopup` `large` type `offset`
@@ -14,6 +26,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Button` styling to match the latest GUI
+- `limestone/Button` font-size for non-latin locale
 - `limestone/Dropdown` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
@@ -21,6 +34,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Button` min-width for `iconOnly` button in large text mode
 - `limestone/ImageItem` props `children` and `label` to accept node type
 - `limestone/TimePicker` flickering on the hour picker when the meridiem value change
 

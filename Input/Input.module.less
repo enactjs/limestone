@@ -161,6 +161,12 @@
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
 			}
+
+			:global(.enact-text-large) & {
+				.key {
+					height: @lime-button-height-large;
+				}
+			}
 		}
 
 		.buttonArea {
@@ -262,9 +268,12 @@
 			column-gap: @lime-input-overlay-keypad-gap;
 
 			// Temporarily disabled to avoid breaking layout
-			/*:global(.enact-text-large) & {
+			:global(.enact-text-large) & {
 				width: @lime-input-overlay-keypad-width-large;
-			}*/
+				.key {
+					height: @lime-button-height-large;
+				}
+			}
 		}
 
 		.buttonArea {
@@ -357,6 +366,10 @@
 			.keypad {
 				.key {
 					color: @lime-input-button-popup-transparent-label-color;
+
+					.icon {
+						color: @lime-input-button-popup-transparent-label-color;
+					}
 				}
 			}
 
@@ -370,6 +383,10 @@
 
 			.back {
 				color: @lime-input-button-popup-transparent-icon-color;
+
+				.icon {
+					color: @lime-input-button-popup-transparent-icon-color;
+				}
 			}
 		}
 	});
