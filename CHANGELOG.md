@@ -10,6 +10,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/IconItem` styling to match the latest GUI
 - `limestone/KeyGuide` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/FixedPopupPanels` to work with `noAnimation`
+- `limestone/FlexiblePopupPanels` to work with `noAnimation`
+- `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
+
 ## [1.1.0] - 2025-06-25
 
 ### Added
