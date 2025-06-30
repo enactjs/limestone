@@ -62,10 +62,10 @@ const ImageItemBase = kind({
 		/**
 		 * The primary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		children: PropTypes.string,
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -139,10 +139,10 @@ const ImageItemBase = kind({
 		/**
 		 * A secondary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		label: PropTypes.string,
+		label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * The layout orientation of the component.
