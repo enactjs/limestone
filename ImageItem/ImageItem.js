@@ -275,7 +275,19 @@ const ImageItemBase = kind({
 		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
 			wideImage: orientation === 'horizontal' && wideImage
-		})
+		}),
+		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
+			const size = orientation === 'vertical' ? 'medium' : 'tiny';
+			const children = orientation === 'vertical' ? 'checkmark' : selected && 'checkmark';
+
+			return (
+				SelectionComponent ? (
+					<SelectionComponent />
+				) : (
+					<Icon className={css.selectionIcon} size={size}>{children}</Icon>
+				)
+			);
+		}
 	},
 
 	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
@@ -303,24 +315,12 @@ const ImageItemBase = kind({
 					<Image>
 						{orientation === 'vertical' && showSelection ? (
 							<div className={css.selectionContainer}>
-								{SelectionComponent ? (
-									<SelectionComponent />
-								) : (
-									<Icon className={css.selectionIcon} size="medium">checkmark</Icon>
-								)}
+								{SelectionComponent}
 							</div>
 						) : null}
 					</Image>
 				}
-				slotBefore={
-					isSlotBefore && (
-						SelectionComponent ? (
-							<SelectionComponent />
-						) : (
-							<Icon className={css.selectionIcon} size="tiny">{rest.selected && 'checkmark'}</Icon>
-						)
-					)
-				}
+				slotBefore={isSlotBefore && SelectionComponent}
 			/>
 		);
 	}
