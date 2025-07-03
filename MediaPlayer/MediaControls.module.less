@@ -12,16 +12,24 @@
 	}
 
 	.mediaControls {
-		text-align: center;
-		direction: ltr;
-		white-space: nowrap;
+		height: @lime-mediaplayer-controls-height;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: @lime-mediaplayer-controls-gap;
+		margin-top: @lime-mediaplayer-controls-margin-top;
 
-		> *:first-child {
-			margin-inline-start: 0;
+		.button {
+			height: @lime-mediaplayer-button-height;
+			min-width: @lime-mediaplayer-button-height;
+			margin: 0;
+			padding: @lime-mediaplayer-button-padding;
 		}
 	}
 
 	.actionGuide {
+		height: @lime-mediaplayer-controls-actionguide-height;
+		padding-bottom: @lime-mediaplayer-controls-actionguide-padding-bottom;
 		padding-top: @lime-mediaplayer-controls-actionguide-padding-top;
 		transition: opacity @lime-mediaplayer-controls-actionguide-time linear;
 
@@ -55,17 +63,6 @@
 
 		> :first-child {
 			margin-top: @lime-mediaplayer-controls-moreComponents-margin-top;
-		}
-	}
-
-	.button {
-		height: @lime-mediaplayer-button-height;
-		min-width: @lime-mediaplayer-button-height;
-		margin: 0;
-		margin-inline-start: @lime-mediaplayer-controls-button-margin-start;
-
-		.client {
-			padding: @lime-mediaplayer-button-client-padding;
 		}
 	}
 
