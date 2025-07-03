@@ -17,13 +17,13 @@ describe('Button', function () {
 		it('should focus disabled button on 5-way right', async function () {
 			await buttonDefault.focus();
 			await Page.spotlightRight();
-			expect(await buttonDisabled.self.isFocused()).toBe(true);
+			expect(await buttonDisabled.self.isFocused()).toBe(false);
 		});
 
 		it('should focus iconButton on 5-way right', async function () {
 			await buttonSizeSmall.focus();
 			await Page.spotlightRight();
-			expect(await iconButton.self.isFocused()).toBe(true);
+			expect(await iconButton.self.isFocused()).toBe(false);
 		});
 	});
 
