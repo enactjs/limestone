@@ -44,7 +44,7 @@ const FeedbackIconBase = kind({
 	render: ({children, ...rest}) => {
 		if (children) {
 			return (
-				<Icon {...rest}>{children}</Icon>
+				<Icon {...rest} size="large">{children}</Icon>
 			);
 		}
 
