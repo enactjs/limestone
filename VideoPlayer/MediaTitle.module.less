@@ -5,6 +5,7 @@
 @import "../styles/skin.less";
 
 .titleFrame {
+	width: ~"calc(100% - 2 * "@lime-mediaplayer-times-min-width~")";
 	--infoComponentsOffset: 0;
 
 	@badges-present-transition: transform 500ms ease-in-out;
@@ -20,7 +21,6 @@
 
 	// Title
 	.title {
-		width: 100%;
 		font-size: @lime-video-player-label-font-size;
 		font-weight: @lime-video-player-label-font-weight;
 		line-height: @lime-video-player-label-line-height;
