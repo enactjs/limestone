@@ -21,6 +21,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/FixedPopupPanels` to work with `noAnimation`
 - `limestone/FlexiblePopupPanels` to work with `noAnimation`
 - `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
+- `limestone/TooltipDecorator` to change position if wrapped component changes size
 - `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
 
 ## [1.1.0] - 2025-06-25
