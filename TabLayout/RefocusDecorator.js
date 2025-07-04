@@ -1,7 +1,7 @@
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import css from './TabGroup.module.less';
 
@@ -42,8 +42,11 @@ function useScreenOrientation () {
 
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function RefocusDecorator ({collapsed, index, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
+	function RefocusDecorator ({collapsed, index, onCollapse, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
+
+		const screenOrientation = useScreenOrientation();
+		const screenOrientationRef = useRef(null);
 
 		// generate an id for the component (and a derived id for the tabs) so we can refocus them
 		// generating a different ID by orientation so swapping orientations doesn't clear container
@@ -68,6 +71,13 @@ const RefocusDecorator = Wrapped => {
 			});
 		}, [collapsed, orientation, spotlightId]);
 
+		useEffect(() => {
+			if (screenOrientationRef.current !== screenOrientation) {
+				onCollapse();
+				screenOrientationRef.current = screenOrientation;
+			}
+		}, [onCollapse, screenOrientation]);
+
 		const handleTabAnimationEnd = useCallback((ev) => {
 			if (onTabAnimationEnd) {
 				onTabAnimationEnd(ev);
@@ -84,16 +94,14 @@ const RefocusDecorator = Wrapped => {
 
 		}, [collapsed, onTabAnimationEnd, spotlightId]);
 
-		const screenOrientation = useScreenOrientation();
-
 		return (
 			<Wrapped
 				{...rest}
 				collapsed={collapsed}
 				index={index}
+				onCollapse={onCollapse}
 				onTabAnimationEnd={handleTabAnimationEnd}
 				orientation={orientation}
-				screenOrientation={screenOrientation}
 				spotlightId={spotlightId}
 			/>
 		);
