@@ -44,20 +44,19 @@ const ChipsBase = (props) => {
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 
-	const getPreviousChip = useCallback((index) => {
-		return childRefs.current
-			.slice()
-			.reverse()
-			.find((child) => child.index < index);
+	const getPreviousChip = useCallback((id) => {
+		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
+		return currentIndex > 0 ? childRefs.current[currentIndex - 1] : null;
 	}, []);
 
-	const getNextChip = useCallback((index) => {
-		return childRefs.current.find((child) => child.index > index);
+	const getNextChip = useCallback((id) => {
+		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
+		return currentIndex >= 0 && currentIndex < childRefs.current.length - 1 ? childRefs.current[currentIndex + 1] : null;
 	}, []);
 
-	const handleChipDelete = (ev, index) => {
-		const prevNode = getPreviousChip(index);
-		const nextNode = getNextChip(index);
+	const handleChipDelete = (ev, id) => {
+		const prevNode = getPreviousChip(id);
+		const nextNode = getNextChip(id);
 
 		if (prevNode) {
 			Spotlight.focus(prevNode.chipRef.current);
@@ -80,26 +79,45 @@ const ChipsBase = (props) => {
 			containerRef.current.dataset.spotlightContainerDisabled = false;
 		}
 
-		childRefs.current = childRefs.current.filter((child) => child.index !== index);
+		childRefs.current = childRefs.current.filter((child) => child.id !== id);
 	};
 
-	const getNextTargetFromDeleteButton = useCallback((direction, index) => {
+	const getNextTargetFromDeleteButton = useCallback((direction, id) => {
 		let nextTarget = null;
 		if ((orientation === 'vertical' && direction === 'up') || (orientation === 'horizontal' && direction === 'left')) {
-			const prevChip = getPreviousChip(index);
+			const prevChip = getPreviousChip(id);
 			nextTarget = prevChip ? prevChip.chipRef.current : null;
 		} else if ((orientation === 'vertical' && direction === 'down') || (orientation === 'horizontal' && direction === 'right')) {
-			const nextChip = getNextChip(index);
+			const nextChip = getNextChip(id);
 			nextTarget = nextChip ? nextChip.chipRef.current : null;
 		}
 
 		return nextTarget;
 	}, [getNextChip, getPreviousChip, orientation]);
 
-	const registerChild = useCallback((chipRef) => {
-		childRefs.current.push({chipRef, index: childRefs.current.length});
-		return childRefs.current.length - 1;
-	}, []);
+	const registerChild = useCallback((chipRef, id) => {
+		if (!childRefs.current.some(child => child.id === id)) {
+			childRefs.current.push({chipRef, id});
+
+			// Sort childRefs to match the order of children array
+			const childrenArray = Array.isArray(children) ? children : [];
+			const childrenIdOrder = childrenArray
+				.map(child => child && child.props && child.props.id)
+				.filter(Boolean); // Remove null, undefined
+
+			childRefs.current.sort((a, b) => {
+				const indexA = childrenIdOrder.indexOf(a.id);
+				const indexB = childrenIdOrder.indexOf(b.id);
+
+				// IDs not in children array go to the end
+				if (indexA === -1 && indexB === -1) return 0;
+				if (indexA === -1) return 1;
+				if (indexB === -1) return -1;
+
+				return indexA - indexB;
+			});
+		}
+	}, [children]);
 
 	return (
 		<div {...rest} className={chipsClassName} ref={containerRef}>

@@ -346,6 +346,7 @@ const DropdownBase = kind({
 					popupClassName={css.contextualPopup}
 					popupComponent={DropdownList}
 					popupProps={popupProps}
+					offset="large"
 					onClick={onOpen}
 					onClose={onClose}
 					open={openDropdown}
