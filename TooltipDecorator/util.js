@@ -286,8 +286,8 @@ const getLabelOffset = function (tooltipNode, tooltipDirection, tooltipPosition,
 };
 
 export {
-	adjustDirection,
 	adjustAnchor,
+	adjustDirection,
 	adjustTransform,
 	calcOverflow,
 	getLabelOffset,

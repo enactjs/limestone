@@ -8,7 +8,7 @@ import ri from '@enact/ui/resolution';
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import {Tooltip, defaultArrowAnchor, defaultDirection} from './Tooltip';
-import {adjustDirection, adjustAnchor, calcOverflow, getLabelOffset, getPosition, adjustTransform} from './util';
+import {adjustAnchor, adjustDirection, adjustTransform, calcOverflow, getLabelOffset, getPosition} from './util';
 
 let currentTooltip; // needed to know whether we should stop a showing job when unmounting
 
