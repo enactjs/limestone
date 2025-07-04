@@ -59,6 +59,11 @@ const ContextualPopupDecoratorTests = [
 		<ContextualPopupButtonNoArrow direction="below center" offset="small" />,
 		<ContextualPopupButtonNoArrow direction="left middle" offset="small" />,
 		<ContextualPopupButtonNoArrow direction="right middle" offset="small" />,
+		<ContextualPopupButtonNoArrow offset="large" />,
+		<ContextualPopupButtonNoArrow direction="above center" offset="large" />,
+		<ContextualPopupButtonNoArrow direction="below center" offset="large" />,
+		<ContextualPopupButtonNoArrow direction="left middle" offset="large" />,
+		<ContextualPopupButtonNoArrow direction="right middle" offset="large" />,
 		// *************************************************************
 		// locale = 'ar-SA'
 		// *************************************************************
@@ -73,7 +78,8 @@ const ContextualPopupDecoratorTests = [
 			// *************************************************************
 			<ContextualPopupButtonNoArrow offset="none" />,
 			<ContextualPopupButtonNoArrow offset="overlap" />,
-			<ContextualPopupButtonNoArrow offset="small" />
+			<ContextualPopupButtonNoArrow offset="small" />,
+			<ContextualPopupButtonNoArrow offset="large" />
 		])
 	]),
 	// *************************************************************
