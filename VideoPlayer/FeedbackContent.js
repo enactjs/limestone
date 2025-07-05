@@ -41,10 +41,10 @@ const FeedbackContentBase = kind({
 
 		/**
 		 * Refers to one of the following possible media playback states.
-		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'`,
 		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
 		 *
-		 * Each state understands where its related icon should be positioned, and whether it should
+		 * Each state understands where its related icon should be positioned and whether it should
 		 * respond to changes to the `visible` property.
 		 *
 		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.

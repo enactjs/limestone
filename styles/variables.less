@@ -163,8 +163,7 @@
 @lime-mediaoverlay-caption-font-size: 48px;
 @lime-mediaoverlay-font-size:         48px;
 @lime-mediaoverlay-title-font-size:   60px;
-@lime-mediaplayer-times-min-width:    186px;
-@lime-mediaplayer-times-text-size:    48px;
+@lime-mediaplayer-times-text-size:    var(--primitive-font-size-48);
 @lime-picker-font-size:             var(--primitive-font-size-54);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
@@ -843,16 +842,24 @@
 @lime-mediaplayer-button-client-padding: 0 18px;
 @lime-mediaplayer-button-border-radius: 96px;
 @lime-mediaplayer-button-height: 180px;
-@lime-mediaplayer-controls-actionguide-padding-top: 78px;
+@lime-mediaplayer-button-padding: var(--primitive-spacing-36);
+@lime-mediaplayer-controls-actionguide-height: 168px;
+@lime-mediaplayer-controls-actionguide-padding-bottom: 0;
+@lime-mediaplayer-controls-actionguide-padding-top: var(--primitive-spacing-72);
 @lime-mediaplayer-controls-actionguide-time: 0.2s;		// Length of the animation
 @lime-mediaplayer-controls-button-margin-start: 90px;
+@lime-mediaplayer-controls-gap: var(--primitive-spacing-120);
+@lime-mediaplayer-controls-height: 180px;
+@lime-mediaplayer-controls-margin-top: 36px;
 @lime-mediaplayer-controls-morebuttons-margin-start: 228px;
 @lime-mediaplayer-controls-moreComponents-margin-top: 42px;
 @lime-mediaplayer-controls-moreComponents-time: 0.3s;		// Length of the animation
 @lime-mediaplayer-slider-height: 12px;
 @lime-mediaplayer-slider-knob-resting-state-scale: @lime-slider-knob-resting-state-scale;
 @lime-mediaplayer-slider-knob-size: 48px;
-@lime-mediaplayer-slider-tap-area: 162px;
+@lime-mediaplayer-slider-tap-area: 60px;
+@lime-mediaplayer-times-line-height: 60px;
+@lime-mediaplayer-times-min-width: 192px;
 
 // PageViews
 // ---------------------------------------
@@ -1104,8 +1111,8 @@
 
 // Video
 // ---------------------------------------
-@lime-video-back-button-left:                      150px;
-@lime-video-back-button-top:                       114px;
+@lime-video-back-button-left:                      132px;
+@lime-video-back-button-top:                       102px;
 @lime-video-slider-tooltip-arrow-border-left-right: 18px;
 @lime-video-slider-tooltip-arrow-border-top:       24px;
 @lime-video-slider-tooltip-position-bottom:        42px;
@@ -1114,25 +1121,33 @@
 @lime-video-slider-tooltip-font-size:              48px;
 @lime-video-slider-tooltip-font-weight:            normal;
 @lime-video-slider-tooltip-line-height:            72px;
-@lime-video-slider-tooltip-gutter-width:           42px;
+@lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-12);
 @lime-video-slider-tooltip-thumbnail-border-width: 6px;
 @lime-video-slider-tooltip-thumbnail-width:  426px;
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;
 @lime-video-feedback-icon-font-size:               1.25em;
-@lime-video-feedback-mini-font-weight:             normal;
-@lime-video-feedback-mini-font-style:              normal;
-@lime-video-feedback-mini-position-top:            60px;
-@lime-video-feedback-mini-position-left:           60px;
-@lime-video-feedback-mini-padding-side:            66px;
-@lime-video-feedback-mini-font-size:               66px;
-@lime-video-feedback-mini-line-height:             120px;
-@lime-video-feedback-message-font-weight:          600;
-@lime-video-player-badge-text-size:                48px;
-@lime-video-player-info-margin:                    0 66px 84px;
-@lime-video-player-padding-bottom:                 60px;
-@lime-video-player-padding-side:                   84px;
-@lime-video-player-title-size:                     78px;
+@lime-video-feedback-margin:                       24px;
+@lime-video-feedback-mini-font-size:               var(--primitive-font-size-60);
+@lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
+@lime-video-feedback-mini-height:                  168px;
+@lime-video-feedback-mini-line-height:             @lime-common-line-height;
+@lime-video-feedback-mini-margin-bottom:           72px;
+@lime-video-feedback-message-font-weight:          var(--primitive-font-weight-semibold);
+@lime-video-player-badge-text-size:                var(--primitive-font-size-48);
+@lime-video-player-info-font-size:                 var(--primitive-font-size-54);
+@lime-video-player-info-font-weight:               var(--primitive-font-weight-regular);
+@lime-video-player-info-height:                    84px;
+@lime-video-player-info-line-height:               72px;
+@lime-video-player-info-padding:                   var(--primitive-spacing-72) var(--primitive-spacing-48) 0;
+@lime-video-player-info-margin-bottom:             60px;
+@lime-video-player-slider-container-height:        132px;
+@lime-video-player-slider-container-padding:       0 var(--primitive-spacing-48);
+@lime-video-player-padding-bottom:                 0;
+@lime-video-player-padding-side:                   132px;
+@lime-video-player-label-font-size:                var(--primitive-font-size-90);
+@lime-video-player-label-font-weight:              var(--primitive-font-weight-semibold);
+@lime-video-player-label-line-height:              120px;
 
 // VirtualList
 // ---------------------------------------
