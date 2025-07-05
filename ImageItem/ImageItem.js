@@ -23,6 +23,7 @@ import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
+import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
@@ -30,6 +31,9 @@ import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './ImageItem.module.less';
+
+const Checkbox = Skinnable(CheckboxBase);
+Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
@@ -277,16 +281,13 @@ const ImageItemBase = kind({
 			wideImage: orientation === 'horizontal' && wideImage
 		}),
 		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
-			const size = orientation === 'vertical' ? 'medium' : 'tiny';
-			const children = orientation === 'vertical' ? 'checkmark' : selected && 'checkmark';
-
-			return (
-				SelectionComponent ? (
-					<SelectionComponent />
-				) : (
-					<Icon className={css.selectionIcon} size={size}>{children}</Icon>
-				)
-			);
+			if (SelectionComponent) {
+				return <SelectionComponent />;
+			} else if (orientation === 'vertical') {
+				return <Icon className={css.selectionIcon} >checkmark</Icon>;
+			} else {
+				return <Checkbox className={css.selectionIcon} selected={selected} size="tiny" />;
+			}
 		}
 	},
 
