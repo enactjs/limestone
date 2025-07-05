@@ -193,7 +193,7 @@ describe('ImageItem', () => {
 	test('should be `checked` when `showSelection` and `selected` props are true with horizontal layout', () => {
 		render(<ImageItemBase orientation="horizontal" showSelection selected />);
 
-		const actual = screen.getByRole('checkbox');
+		const actual = screen.getAllByRole('checkbox')[0];
 
 		expect(actual).toBeChecked();
 	});
