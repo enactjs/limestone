@@ -72,7 +72,7 @@ select(
 	Config
 );
 boolean('noAutoDismiss', _ContextualPopupDecorator, Config);
-select('offset', _ContextualPopupDecorator, ['none', 'overlap', 'small'], Config);
+select('offset', _ContextualPopupDecorator, ['none', 'overlap', 'small', 'large'], Config);
 select('spotlightRestrict', _ContextualPopupDecorator, ['none', 'self-first', 'self-only'], Config);
 text('button string', _ContextualPopupDecorator, Config, 'Hello Contextual Button');
 text('popup string', _ContextualPopupDecorator, {groupId: 'Popup'}, 'Hello Contextual Popup');
