@@ -1,7 +1,6 @@
 // DateComponentPicker.module.less
 //
 @import '../../styles/mixins.less';
-@import '../../styles/skin.less';
 @import '../../styles/variables.less';
 
 .dateComponentPicker {
@@ -16,12 +15,4 @@
 		padding: 36px @lime-spotlight-outset;
 		white-space: nowrap;
 	}
-
-	.applySkins({
-		color: @lime-picker-datetime-label-color;
-
-		.focus({
-			color: @lime-picker-datetime-label-focused-color;
-		});
-	});
 }
