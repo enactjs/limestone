@@ -54,6 +54,8 @@
 	box-sizing: border-box;
 	vertical-align: middle;
 	align-items: center;
+	height: @lime-inputfield-height;
+	width: @lime-inputfield-width;
 
 	.iconBefore {
 		.margin-start-end(0, @lime-inputfield-icon-margin);
@@ -147,7 +149,7 @@
 	// Skin colors
 	.applySkins({
 		caret-color: @lime-inputfield-cursor-color;
-		color: @lime-inputfield-label-inactive-color;
+		color: @lime-inputfield-label-success-color;
 
 		.bg {
 			background-color: @lime-inputfield-container-color;
@@ -156,7 +158,6 @@
 		.input {
 			background: transparent;
 			color: inherit;
-			opacity: @lime-inputfield-label-inactive-focused-opacity;
 
 			.input-placeholder({
 				color: @lime-inputfield-label-inactive-color;
@@ -164,11 +165,9 @@
 
 			&:focus-within {
 				color: @lime-inputfield-label-active-color;
-				opacity: 1;
 
 				.input-placeholder({
 					color: @lime-inputfield-label-inactive-focused-color;
-					opacity: @lime-inputfield-label-inactive-focused-opacity;
 				});
 			}
 		}
@@ -193,7 +192,7 @@
 
 		// For when the field container has spotlight focus
 		.focus({
-			color: @lime-inputfield-label-inactive-focused-color;
+			color: @lime-inputfield-label-active-color;
 
 			.bg {
 				.lime-spotlight-focus-bg-colors();
@@ -239,7 +238,6 @@
 
 			.input {
 				color: @lime-inputfield-label-inactive-color;
-				opacity: @lime-inputfield-label-inactive-focused-opacity;
 			}
 
 			.focus({
