@@ -29,7 +29,6 @@ import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import equals from 'ramda/src/equals';
 import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
