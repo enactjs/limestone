@@ -4,13 +4,31 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Chip` prop `id` to manage focus properly
+
 ### Changed
 
+- `limestone/ActionGuide` styling to match the latest GUI
 - `limestone/CheckboxItem` styling to match the latest GUI
 - `limestone/FlexiblePopupPanels` styling to match the latest GUI
 - `limestone/FormCheckboxItem` styling to match the latest GUI
+- `limestone/IconItem` styling to match the latest GUI
+- `limestone/ImageItem` styling to match the latest GUI
+- `limestone/KeyGuide` styling to match the latest GUI
 - `limestone/MediaOverlay` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
+- `limestone/VideoPlayer` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Chips` to handle focus properly when `children` changes
+- `limestone/FixedPopupPanels` to work with `noAnimation`
+- `limestone/FlexiblePopupPanels` to work with `noAnimation`
+- `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
+- `limestone/TooltipDecorator` to change position if wrapped component changes size
+- `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
 
 ## [1.1.0] - 2025-06-25
 

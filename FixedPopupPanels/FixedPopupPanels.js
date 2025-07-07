@@ -70,9 +70,9 @@ const fixedPopupPanelsHandlers = {
  * @ui
  * @public
  */
-const FixedPopupPanelsBase = (props) => {
+const FixedPopupPanelsBase = ({noAnimation, ...props}) => {
 	const handlers = useHandlers(fixedPopupPanelsHandlers, props);
-	return <Viewport {...props} {...handlers} noAnimation={typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION} />;
+	return <Viewport {...props} {...handlers} noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation} />;
 };
 
 /**

@@ -377,7 +377,7 @@ const InputPopupBase = kind({
 	}) => {
 		const id = `inputPopup`;
 		const ariaLabelledBy = popupAriaLabel ? null : `${id}_title ${id}_subtitle`;
-		const inputProps = extractInputFieldProps({disabled, ...rest});
+		const {value, ...inputProps} = extractInputFieldProps({disabled, ...rest});
 		const numberMode = (numberInputField !== 'field') && (type === 'number' || type === 'passwordnumber');
 		// Set up the back button
 		const backButton = (!noBackButton ? (
@@ -433,7 +433,7 @@ const InputPopupBase = kind({
 									buttonSize={popupType === 'fullscreen' ? 'large' : 'small'}
 									maxLength={limitNumberLength(popupType, maxLength)}
 									minLength={limitNumberLength(popupType, minLength)}
-									defaultValue={defaultValue}
+									defaultValue={defaultValue || value}
 									onBeforeChange={onBeforeChange}
 									onComplete={onNumberComplete}
 									showKeypad
@@ -450,7 +450,7 @@ const InputPopupBase = kind({
 									size={size}
 									autoFocus
 									type={type}
-									defaultValue={defaultValue}
+									defaultValue={defaultValue || value}
 									placeholder={placeholder}
 									onBeforeChange={onBeforeChange}
 									onKeyDown={onInputKeyDown}

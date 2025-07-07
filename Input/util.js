@@ -72,6 +72,7 @@ const extractInputFieldProps = function (props) {
 			case 'pattern':
 			case 'required':
 			case 'size':
+			case 'value':
 				inputProps[key] = props[key];
 				delete props[key];
 		}
