@@ -1017,16 +1017,18 @@
 // Slider
 // ---------------------------------------
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
+@lime-slider-bar-vertical-min-height: 240px;
+@lime-slider-bar-padding: 24px;
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: @lime-slider-knob-width;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-knob-height-large: @lime-slider-knob-height;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-knob-resting-state-scale: 0.75;
-@lime-slider-tooltip-above-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness / -2);
-@lime-slider-tooltip-before-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness / -2);
+@lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness);
 
 // Spinner
 // ---------------------------------------
