@@ -57,7 +57,6 @@
 		.moreButtonsComponents {
 			> * {
 				margin: 0;
-				margin-inline-start: @lime-mediaplayer-controls-morebuttons-margin-start;
 
 				&:first-child {
 					margin-inline-start: 0;
@@ -66,7 +65,13 @@
 		}
 
 		> :first-child {
+			gap: @lime-mediaplayer-controls-moreComponents-gap;
 			margin-top: @lime-mediaplayer-controls-moreComponents-margin-top;
+		}
+
+		> :nth-child(2) {
+			margin-left: @lime-mediaplayer-controls-moreComponents-bottomComponents-margin-left;
+			margin-right: @lime-mediaplayer-controls-moreComponents-bottomComponents-margin-right;
 		}
 	}
 

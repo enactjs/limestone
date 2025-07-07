@@ -878,13 +878,6 @@ const VideoPlayerBase = class extends Component {
 	}
 
 	componentDidUpdate (prevProps, prevState) {
-		if (this.titleRef && this.state.infoVisible &&
-			(!prevState.infoVisible || !equals(this.props.infoComponents, prevProps.infoComponents))
-		) {
-			const node = this.titleRef;
-			node.style.setProperty('--infoComponentsOffset', `${node.offsetHeight}px`);
-		}
-
 		if (
 			!this.state.mediaControlsVisible && prevState.mediaControlsVisible !== this.state.mediaControlsVisible ||
 			!this.state.mediaSliderVisible && prevState.mediaSliderVisible !== this.state.mediaSliderVisible

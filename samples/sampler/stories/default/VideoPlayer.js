@@ -187,13 +187,13 @@ export const _VideoPlayer = (args) => {
 				>
 					<bottomComponents>
 						<VirtualGridList
-							style={{height: ri.scale(240), marginTop: ri.scale(60)}}
+							style={{height: ri.scale(324), marginTop: ri.scale(60)}}
 							horizontalScrollbar={'hidden'}
 							dataSize={size}
 							direction="horizontal"
 							itemSize={{
-								minWidth: ri.scale(320),
-								minHeight: ri.scale(270)
+								minWidth: ri.scale(324),
+								minHeight: ri.scale(324)
 							}}
 							itemRenderer={renderItem}
 							spacing={ri.scale(12)}

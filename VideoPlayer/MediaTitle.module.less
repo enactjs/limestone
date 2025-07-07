@@ -6,7 +6,6 @@
 
 .titleFrame {
 	width: ~"calc(100% - 2 * "@lime-mediaplayer-times-min-width~")";
-	--infoComponentsOffset: 0;
 
 	@badges-present-transition: transform 500ms ease-in-out;
 
@@ -26,10 +25,6 @@
 		line-height: @lime-video-player-label-line-height;
 		transition: @badges-present-transition;
 		.font-kerning;
-
-		&.infoVisible {
-			transform: translateY(~"calc(var(--infoComponentsOffset) * -1)") translateZ(0);
-		}
 
 		.enact-locale-tallglyph({
 			// The font-size .times is the same as .title in tallglyph locales so no
