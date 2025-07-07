@@ -141,7 +141,7 @@ const KeyGuideBase = kind({
 						...child,
 						slotBefore: isColorKey ? (
 							<div className={css[icon]} />
-						) : <Icon className={css.icon}>{icon}</Icon>
+						) : <Icon className={css.icon} size="large" >{icon}</Icon>
 					};
 				}) : [];
 			}

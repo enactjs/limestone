@@ -112,14 +112,14 @@ const FlexiblePopupPanelsBase = kind({
 		onBack: ({onChange}) => onChange
 	},
 
-	render: (props) => {
+	render: ({noAnimation, ...props}) => {
 		delete props.nextButtonVisibility;
 		delete props.onChange;
 		delete props.onNextClick;
 		delete props.onPrevClick;
 		delete props.prevButtonVisibility;
 
-		return (<Viewport {...props} noAnimation={typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION} />);
+		return (<Viewport {...props} noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation} />);
 	}
 });
 
