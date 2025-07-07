@@ -200,11 +200,11 @@ export const _VideoPlayer = (args) => {
 							hoverToScroll
 						/>
 					</bottomComponents>
-					<Button size="small" icon="list" />
-					<Button size="small" icon="playspeed" />
-					<Button size="small" icon="speakercenter" />
-					<Button size="small" icon="miniplayer" />
-					<Button size="small" icon="subtitle" />
+					<Button icon="list" />
+					<Button icon="playspeed" />
+					<Button icon="speakercenter" />
+					<Button icon="miniplayer" />
+					<Button icon="subtitle" />
 				</MediaControls>
 			</VideoPlayer>
 		</div>
