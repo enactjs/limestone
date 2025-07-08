@@ -42,7 +42,7 @@ function useScreenOrientation () {
 
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function RefocusDecorator ({collapsed, index, onCollapse, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
+	function RefocusDecorator ({collapsed, collapseOnPortrait = true, index, onCollapse, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
 
 		const screenOrientation = useScreenOrientation();
@@ -72,11 +72,20 @@ const RefocusDecorator = Wrapped => {
 		}, [collapsed, orientation, spotlightId]);
 
 		useEffect(() => {
-			if (screenOrientationRef.current !== screenOrientation) {
-				onCollapse();
+			if (collapseOnPortrait && screenOrientationRef.current !== screenOrientation) {
+				if (screenOrientation === 'portrait') {
+					const currentFocusedElement = document.querySelector(':focus'),
+						tabsSpotlightId = getTabsSpotlightId(spotlightId, false),
+						tabsContainer = getContainerNode(tabsSpotlightId);
+
+					if (tabsContainer && !tabsContainer.contains(currentFocusedElement)) {
+						onCollapse();
+					}
+				}
+
 				screenOrientationRef.current = screenOrientation;
 			}
-		}, [onCollapse, screenOrientation]);
+		}, [collapseOnPortrait, onCollapse, screenOrientation, spotlightId]);
 
 		const handleTabAnimationEnd = useCallback((ev) => {
 			if (onTabAnimationEnd) {
