@@ -92,7 +92,6 @@
 @lime-overlay-outline-width: 0.021rem; // 1px
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
-@lime-common-circular-corners: 9000px; // A value large enough that when applied to any node via border-radius produces a completely round corner
 
 // Locale
 // ---------------------------------------
@@ -430,7 +429,7 @@
 
 // Checkbox
 // ---------------------------------------
-@lime-checkbox-border-radius: @lime-common-circular-corners;
+@lime-checkbox-border-radius: var(--semantic-radius-full);
 @lime-checkbox-border-width: 4px;
 @lime-checkbox-container-position: ((@lime-icon-tiny-size - 132px) / 2);  // Container's total dimensions should be `132px` defined in the GUI spec
 @lime-checkbox-container-border-radius: var(--semantic-radius-button);
@@ -697,9 +696,9 @@
 @lime-imageitem-horizontal-padding: 30px;
 @lime-imageitem-horizontal-image-width: 180px;
 @lime-imageitem-horizontal-image-height: @lime-imageitem-horizontal-image-width;
-@lime-imageitem-horizontal-image-margin: 0 var(--primitive-spacing-48) 0 0;
-@lime-imageitem-horizontal-image-margin-rtl: 0 0 0 var(--primitive-spacing-48);
-@lime-imageitem-horizontal-selection-icon-size: 90px;
+@lime-imageitem-horizontal-image-margin: var(--primitive-spacing-48);
+@lime-imageitem-horizontal-selection-icon-margin-left: var(--primitive-spacing-12);
+@lime-imageitem-horizontal-selection-icon-margin-right: var(--primitive-spacing-48);
 @lime-imageitem-horizontal-wideimage-padding: var(--primitive-spacing-48);
 @lime-imageitem-horizontal-wideimage-image-width: 426px;
 @lime-imageitem-horizontal-wideimage-image-height: 240px;
@@ -978,7 +977,7 @@
 	// 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
 	// this value must be specifically considered as to not impose layout issues related to, for
 	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
-@lime-radioitem-icon-border-radius: @lime-common-circular-corners;
+@lime-radioitem-icon-border-radius: var(--semantic-radius-full);
 @lime-radioitem-icon-margin: var(--primitive-spacing-24);
 
 // Scrim
@@ -1018,16 +1017,18 @@
 // Slider
 // ---------------------------------------
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
+@lime-slider-bar-vertical-min-height: 240px;
+@lime-slider-bar-padding: 24px;
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: @lime-slider-knob-width;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-knob-height-large: @lime-slider-knob-height;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-knob-resting-state-scale: 0.75;
-@lime-slider-tooltip-above-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness / -2);
-@lime-slider-tooltip-before-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness / -2);
+@lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness);
 
 // Spinner
 // ---------------------------------------
@@ -1039,7 +1040,9 @@
 @lime-spinner-small-line-width: 6px;
 @lime-spinner-line-margin: 24px;
 @lime-spinner-small-line-margin: 12px;
-@lime-spinner-font-weight: bold;
+@lime-spinner-font-weight: var(--primitive-font-weight-semibold);
+@lime-spinner-client-height: 132px;
+@lime-spinner-client-line-height: @lime-common-line-height;
 
 // Steps
 // ---------------------------------------

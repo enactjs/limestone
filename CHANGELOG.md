@@ -12,7 +12,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ActionGuide` styling to match the latest GUI
 - `limestone/IconItem` styling to match the latest GUI
+- `limestone/ImageItem` styling to match the latest GUI
 - `limestone/KeyGuide` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` styling to match the latest GUI
+- `limestone/TimePicker` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
 ### Fixed
@@ -21,6 +25,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/FixedPopupPanels` to work with `noAnimation`
 - `limestone/FlexiblePopupPanels` to work with `noAnimation`
 - `limestone/InputPopup` prop `defaultValue` to be displayed when it's set
+- `limestone/TooltipDecorator` to change position if wrapped component changes size
 - `limestone/WizardPanels` title visibility when `prevButton` or `nextButton` are set to `false`
 
 ## [1.1.0] - 2025-06-25
