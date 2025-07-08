@@ -23,6 +23,7 @@ import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
+import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
@@ -30,6 +31,9 @@ import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './ImageItem.module.less';
+
+const Checkbox = Skinnable(CheckboxBase);
+Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
@@ -275,10 +279,21 @@ const ImageItemBase = kind({
 		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
 			wideImage: orientation === 'horizontal' && wideImage
-		})
+		}),
+		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
+			if (SelectionComponent) {
+				return <SelectionComponent />;
+			} else if (orientation === 'vertical') {
+				return <Icon className={css.selectionIcon} >checkmark</Icon>;
+			} else {
+				return <Checkbox className={css.selectionIcon} selected={selected} size="tiny" />;
+			}
+		}
 	},
 
-	render: ({css, disabled, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+		const isSlotBefore = orientation === 'horizontal' && showSelection;
+
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
@@ -296,19 +311,17 @@ const ImageItemBase = kind({
 				aria-disabled={disabled}
 				css={css}
 				disabled={disabled}
+				orientation={orientation}
 				imageComponent={
 					<Image>
-						{showSelection ? (
+						{orientation === 'vertical' && showSelection ? (
 							<div className={css.selectionContainer}>
-								{SelectionComponent ? (
-									<SelectionComponent />
-								) : (
-									<Icon className={css.selectionIcon}>check</Icon>
-								)}
+								{SelectionComponent}
 							</div>
 						) : null}
 					</Image>
 				}
+				slotBefore={isSlotBefore && SelectionComponent}
 			/>
 		);
 	}

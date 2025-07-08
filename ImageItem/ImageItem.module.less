@@ -22,32 +22,6 @@
 		}
 	}
 
-	.selectionContainer {
-		background-color: transparent;
-		pointer-events: none;
-		.position(0);
-		position: absolute;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		&::after {
-			content: '';
-			position: absolute;
-			.position(0);
-			border-width: @lime-imageitem-image-border-width;
-			border-style: solid;
-		}
-
-		.selectionIcon {
-			position: relative;
-			display: block;
-			border-radius: 50%;
-			margin: 0;
-		}
-	}
-
 	.caption {
 		font-size: @lime-imageitem-caption-font-size;
 		line-height: @lime-imageitem-caption-line-height;
@@ -95,10 +69,33 @@
 			margin: @lime-imageitem-margin;
 		}
 
-		.selectionIcon {
-			width: @lime-imageitem-vertical-selection-icon-size;
-			height: @lime-imageitem-vertical-selection-icon-size;
-			line-height: @lime-imageitem-vertical-selection-icon-size;
+		.selectionContainer {
+			background-color: transparent;
+			pointer-events: none;
+			.position(0);
+			position: absolute;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&::after {
+				content: '';
+				position: absolute;
+				.position(0);
+				border-width: @lime-imageitem-image-border-width;
+				border-style: solid;
+			}
+
+			.selectionIcon {
+				position: relative;
+				display: block;
+				border-radius: @lime-checkbox-border-radius;
+				margin: 0;
+				width: @lime-imageitem-vertical-selection-icon-size;
+				height: @lime-imageitem-vertical-selection-icon-size;
+				line-height: @lime-imageitem-vertical-selection-icon-size;
+			}
 		}
 
 		.captions {
@@ -133,11 +130,8 @@
 		.image {
 			width: @lime-imageitem-horizontal-image-width;
 			height: @lime-imageitem-horizontal-image-height;
-			margin: @lime-imageitem-horizontal-image-margin;
 
-			.enact-locale-rtl({
-				margin: @lime-imageitem-horizontal-image-margin-rtl;
-			});
+			.margin-start-end(0, @lime-imageitem-horizontal-image-margin);
 		}
 
 		&.wideImage {
@@ -150,9 +144,7 @@
 		}
 
 		.selectionIcon {
-			width: @lime-imageitem-horizontal-selection-icon-size;
-			height: @lime-imageitem-horizontal-selection-icon-size;
-			line-height: @lime-imageitem-horizontal-selection-icon-size;
+			.margin-start-end(@lime-imageitem-horizontal-selection-icon-margin-left, @lime-imageitem-horizontal-selection-icon-margin-right);
 		}
 	}
 
@@ -192,7 +184,7 @@
 				border-color: @lime-imageitem-selected-image-border-color;
 			}
 
-			.selectionIcon {
+			&.vertical .selectionIcon {
 				background-color: @lime-imageitem-selection-container-selected-color;
 				color: @lime-imageitem-selection-icon-selected-color;
 			}
@@ -248,10 +240,8 @@
 						box-shadow: @lime-imageitem-full-image-focused-shadow-color;
 					}
 				}
-			}
 
-			&.selected {
-				.selectionIcon {
+				&.selected .selectionIcon {
 					background-color: @lime-imageitem-selection-container-selected-focused-color;
 					color: @lime-imageitem-selection-icon-selected-focused-color;
 				}
