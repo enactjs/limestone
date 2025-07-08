@@ -15,6 +15,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/KeyGuide` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` styling to match the latest GUI
+- `limestone/TimePicker` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
 ### Fixed
