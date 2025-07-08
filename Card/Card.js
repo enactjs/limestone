@@ -58,12 +58,13 @@ const getCardSize = (orientation, captionOverlay, imageSize) => {
 			};
 		}
 
-        return {
-            width: imageWidth,
-            height: 'auto'
-        };
+		return {
+			width: imageWidth,
+			height: 'auto'
+		};
 	}
 };
+
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -301,8 +302,11 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, imageSize, imageIconSrc, label, primaryBadgeSrc, secondaryBadgeSrc, secondaryLabel, style, ...rest}) => {
+	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.centered;
+		delete rest.label;
+		delete rest.secondaryLabel;
+		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
 
