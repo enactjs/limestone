@@ -129,6 +129,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.incrementer('month').click();
+					await Page.delay(200);
 					const {month: value} = await extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
 					expect(value).toBe(expected);
@@ -140,6 +141,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.decrementer('month').click();
+					await Page.delay(200);
 					const {month: value} = await extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
 					expect(value).toBe(expected);
@@ -165,6 +167,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.decrementer('day').click();
+					await Page.delay(200);
 					const {day: value} = await extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).toBe(expected);
@@ -176,6 +179,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.incrementer('year').click();
+					await Page.delay(200);
 					const {year: value} = await extractValues(datePicker);
 					const expected = year + 1;
 					expect(value).toBe(expected);
@@ -187,6 +191,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.decrementer('year').click();
+					await Page.delay(200);
 					const {year: value} = await extractValues(datePicker);
 					const expected = year - 1;
 					expect(value).toBe(expected);
