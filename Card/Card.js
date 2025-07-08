@@ -40,7 +40,7 @@ const getDefaultImageSize = (orientation) => {
 	return sizes[orientation];
 };
 
-const getCardSize = (orientation, captionOverlay, imageSize, label, secondaryLabel, imageIconSrc) => {
+const getCardSize = (orientation, captionOverlay, imageSize) => {
 	if (orientation === 'horizontal') {
 		return {
 			width: 1320,
@@ -58,32 +58,10 @@ const getCardSize = (orientation, captionOverlay, imageSize, label, secondaryLab
 			};
 		}
 
-		const baseCaptionHeight = 84 + 72; // base caption height + image icon height
-		const labelHeight = label ? 60 : 0;
-		const secondaryLabelHeight = secondaryLabel ? 60 : 0;
-		const imageIconHeight = imageIconSrc ? 180 : 0;
-
-		// With secondary label
-		if (secondaryLabel) {
-			return {
-				width: imageWidth,
-				height: imageHeight + baseCaptionHeight + labelHeight + secondaryLabelHeight
-			};
-		}
-
-		// With image icon
-		if (imageIconSrc) {
-			return {
-				width: imageWidth,
-				height: imageHeight + 72 + imageIconHeight
-			};
-		}
-
-		// Default case
-		return {
-			width: imageWidth,
-			height: imageHeight + baseCaptionHeight + labelHeight
-		};
+        return {
+            width: imageWidth,
+            height: 'auto'
+        };
 	}
 };
 /**
@@ -329,6 +307,7 @@ const CardBase = kind({
 		delete rest.roundedImage;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
+		const cardSize = getCardSize(rest.orientation, rest.captionOverlay, imageSize);
 
 		return (
 			<UiCard
@@ -351,8 +330,8 @@ const CardBase = kind({
 					...style,
 					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
 					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width),
-					'--card-width': ri.scaleToRem(getCardSize(rest.orientation, rest.captionOverlay, imageSize, label, secondaryLabel, imageIconSrc).width),
-					'--card-height': ri.scaleToRem(getCardSize(rest.orientation, rest.captionOverlay, imageSize, label, secondaryLabel, imageIconSrc).height)
+					'--card-width': ri.scaleToRem(cardSize.width),
+					'--card-height': cardSize.height === 'auto' ? 'auto' : ri.scaleToRem(cardSize.height)
 				}}
 			/>
 		);
