@@ -42,7 +42,6 @@ import RangePicker from '../views/RangePicker';
 import ReadAlert from '../views/ReadAlert';
 import Region from '../views/Region';
 import Scroller from '../views/Scroller';
-import ScrollerComponent from '../../../../Scroller';
 import Slider from '../views/Slider';
 import Spinner from '../views/Spinner';
 import Switch from '../views/Switch';
@@ -155,7 +154,6 @@ const AppBase = ({className, rtl, updateLocale, ...rest}) => {
 		<div className={classnames(className, debugAriaClass)}>
 			<Layout {...rest} className={appCss.layout}>
 				<Cell component={Menu} id="menu" size="20%" spotlightId="menu">
-					<Cell component={ScrollerComponent}>
 						<div className={appCss.jumpToView}>Jump To View: {jumpToView}</div>
 						{views.map((view, i) => (
 							<Item
@@ -169,7 +167,6 @@ const AppBase = ({className, rtl, updateLocale, ...rest}) => {
 								{view.title}
 							</Item>
 						))}
-					</Cell>
 				</Cell>
 				<Cell component={ViewManager} index={selected}>
 					{views.map((view, i) => (
