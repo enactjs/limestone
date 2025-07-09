@@ -9,15 +9,10 @@ import TabLayout, {TabLayoutBase, Tab} from '../TabLayout';
 const keyDown = (keyCode) => (tab) => fireEvent.keyDown(tab, {keyCode});
 const keyUp = (keyCode) => (tab) => fireEvent.keyUp(tab, {keyCode});
 
-const setLandscapeOrientation = () => {
-	Object.defineProperty(window, 'innerWidth', {configurable: true, value: 1920});
-	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1080});
-}
-
 const setPortraitOrientation = () => {
 	Object.defineProperty(window, 'innerWidth', {configurable: true, value: 1080});
 	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1920});
-}
+};
 
 const leftKeyDown = keyDown(37);
 const leftKeyUp = keyUp(37);
