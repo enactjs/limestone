@@ -9,6 +9,16 @@ import TabLayout, {TabLayoutBase, Tab} from '../TabLayout';
 const keyDown = (keyCode) => (tab) => fireEvent.keyDown(tab, {keyCode});
 const keyUp = (keyCode) => (tab) => fireEvent.keyUp(tab, {keyCode});
 
+const setLandscapeOrientation = () => {
+	Object.defineProperty(window, 'innerWidth', {configurable: true, value: 1920});
+	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1080});
+}
+
+const setPortraitOrientation = () => {
+	Object.defineProperty(window, 'innerWidth', {configurable: true, value: 1080});
+	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1920});
+}
+
 const leftKeyDown = keyDown(37);
 const leftKeyUp = keyUp(37);
 const enterKeyDown = keyDown(13);
@@ -422,5 +432,48 @@ describe('TabLayout specs', () => {
 
 		const selectedContent = screen.getByText('Test2Content');
 		expect(selectedContent).toBeVisible();
+	});
+
+	test('should update orientation on window resize and collapse tabs', () => {
+		render(
+			<TabLayout
+				orientation="vertical"
+				data-testid="tabLayout"
+			>
+				<Tab title="Home">
+					<div>Home</div>
+				</Tab>
+			</TabLayout>
+		);
+
+		setPortraitOrientation();
+		fireEvent(window, new Event('resize'));
+
+		const expected = 'collapsed';
+		const actual = screen.getByTestId('tabLayout');
+
+		expect(actual).toHaveClass(expected);
+	});
+
+	test('should update orientation on window resize and not collapse tabs when \'collapseOnPortrait\' is false', () => {
+		render(
+			<TabLayout
+				collapseOnPortrait={false}
+				data-testid="tabLayout"
+				orientation="vertical"
+			>
+				<Tab title="Home">
+					<div>Home</div>
+				</Tab>
+			</TabLayout>
+		);
+
+		setPortraitOrientation();
+		fireEvent(window, new Event('resize'));
+
+		const expected = 'expanded';
+		const actual = screen.getByTestId('tabLayout');
+
+		expect(actual).not.toHaveClass(expected);
 	});
 });
