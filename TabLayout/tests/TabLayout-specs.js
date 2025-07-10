@@ -15,12 +15,21 @@ const setPortraitOrientation = () => {
 	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1920});
 };
 
+const spySpotlight = () => {
+	jest.spyOn(Spotlight, 'setPointerMode');
+	jest.spyOn(Spotlight, 'move');
+};
+
 const leftKeyDown = keyDown(37);
 const leftKeyUp = keyUp(37);
 const enterKeyDown = keyDown(13);
 const enterKeyUp = keyUp(13);
 
 describe('TabLayout specs', () => {
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	test('should be able to render \'Tab\' outside \'TabLayout\'', () => {
 		render(<Tab title="Single Tab" />);
 
@@ -476,7 +485,7 @@ describe('TabLayout specs', () => {
 	test('should set the tab size for all tabs in horizontal orientation', () => {
 		const tabSize = 300;
 
-		const {container} = render(
+		render(
 			<TabLayoutBase
 				data-testid="tabLayout"
 				orientation="horizontal"
@@ -491,7 +500,7 @@ describe('TabLayout specs', () => {
 			</TabLayoutBase>
 		);
 
-		const tabLayout = container.querySelector('.tabLayout');
+		const tabLayout = screen.getByTestId('tabLayout');
 
 		expect(tabLayout.style.getPropertyValue('--tab-width')).toBe(scaleToRem(tabSize));
 	});
@@ -499,7 +508,7 @@ describe('TabLayout specs', () => {
 	test('should set the specific tab size for all tabs in horizontal orientation and size small', () => {
 		const tabSize = 420;
 
-		const {container} = render(
+		render(
 			<TabLayoutBase
 				data-testid="tabLayout"
 				orientation="horizontal"
@@ -513,8 +522,120 @@ describe('TabLayout specs', () => {
 			</TabLayoutBase>
 		);
 
-		const tabLayout = container.querySelector('.tabLayout');
+		const tabLayout = screen.getByTestId('tabLayout');
 
 		expect(tabLayout.style.getPropertyValue('--tab-width')).toBe(scaleToRem(tabSize));
+	});
+
+	test('should move spotlight right when Enter is pressed on expanded tab and anchorTo is left', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="left" collapsed={false} orientation="vertical">
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('right');
+	});
+
+	test('should move spotlight left when Enter is pressed on expanded tab and anchorTo is right', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="right" collapsed={false} orientation="vertical">
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('left');
+	});
+
+	test('should move spotlight left when Enter is pressed on expanded tab and anchorTo is start and rtl is true', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="start" collapsed={false} orientation="vertical" rtl>
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('left');
+	});
+
+	test('should move spotlight right when Enter is pressed on expanded tab and anchorTo is start and rtl is false', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="start" collapsed={false} orientation="vertical" rtl={false}>
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('right');
+	});
+
+	test('should move spotlight left when Enter is pressed on expanded tab and anchorTo is end and rtl is false', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="end" collapsed={false} orientation="vertical" rtl={false}>
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('left');
+	});
+
+	test('should move spotlight right when Enter is pressed on expanded tab and anchorTo is end and rtl is true', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout anchorTo="end" collapsed={false} orientation="vertical" rtl>
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('right');
+	});
+
+	test('should move spotlight down when Enter is pressed on expanded tab and orientation is horizontal', () => {
+		spySpotlight();
+
+		render(
+			<TabLayout collapsed={false} orientation="horizontal">
+				<Tab title="Home" data-testid="homeTab" />
+			</TabLayout>
+		);
+
+		const tab = screen.getByTestId('homeTab');
+		enterKeyUp(tab);
+
+		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
+		expect(Spotlight.move).toHaveBeenCalledWith('down');
 	});
 });

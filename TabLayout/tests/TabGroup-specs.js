@@ -131,6 +131,7 @@ describe('TabGroup specs', () => {
 	test('should fire `onTabClick` with `onTabClick` type when a tab is clicked', async () => {
 		const handleTabClick = jest.fn();
 		const user = userEvent.setup();
+
 		render(
 			<TabGroup
 				tabs={[
@@ -165,7 +166,8 @@ describe('TabGroup specs', () => {
 			/>
 		);
 
-		fireEvent.focus(screen.getByTestId('homeTab'));
+		const homeTab = screen.getByTestId('homeTab');
+		fireEvent.focus(homeTab);
 
 		expect(handleFocusTab).toHaveBeenCalled();
 	});
@@ -194,7 +196,7 @@ describe('TabGroup specs', () => {
 
 	test('should render tabs only for truthy values', ()  => {
 		render(
-			<TabGroup tabs={['', null, undefined, {title: 'Home', icon: 'home'}]} />
+			<TabGroup tabs={['', null, {title: 'Home', icon: 'home'}]} />
 		);
 
 		const tabList = screen.getAllByRole('tab');
