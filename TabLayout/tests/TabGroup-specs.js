@@ -1,5 +1,6 @@
+import Spotlight from '@enact/spotlight';
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import TabGroup from '../TabGroup';
@@ -146,5 +147,58 @@ describe('TabGroup specs', () => {
 		const actual = handleTabClick.mock.calls.length && handleTabClick.mock.calls[0][0];
 
 		expect(actual).toMatchObject(expected);
+	});
+
+	test('should fire `onFocusTab` when tab is focused', () => {
+		const handleFocusTab = jest.fn();
+		jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(false);
+
+		render(
+			<TabGroup
+				onFocus={handleFocusTab}
+				orientation="vertical"
+				tabs={[
+					{title: 'Home', icon: 'home', 'data-testid': 'homeTab'},
+					{title: 'Button', icon: 'demosync'},
+					{title: 'Item', icon: 'playcircle'}
+				]}
+			/>
+		);
+
+		fireEvent.focus(screen.getByTestId('homeTab'));
+
+		expect(handleFocusTab).toHaveBeenCalled();
+	});
+
+	test('should set the size for all tabs in horizontal orientation', () => {
+		const size = 456;
+
+		render(
+			<TabGroup
+				orientation="horizontal"
+				size={size}
+				tabs={[
+					{title: 'Home', icon: 'home'},
+					{title: 'Button', icon: 'demosync'},
+					{title: 'Item', icon: 'playcircle'}
+				]}
+			/>
+		);
+
+		const tabs = screen.getAllByRole('tab');
+
+		tabs.forEach((tab) => {
+			expect(tab).toHaveClass(`${size}`);
+		});
+	});
+
+	test('should render tabs only for truthy values', ()  => {
+		render(
+			<TabGroup tabs={['', null, undefined, {title: 'Home', icon: 'home'}]} />
+		);
+
+		const tabList = screen.getAllByRole('tab');
+
+		expect(tabList.length).toEqual(1);
 	});
 });

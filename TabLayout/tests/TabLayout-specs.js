@@ -1,4 +1,5 @@
 import Spotlight from '@enact/spotlight';
+import {scaleToRem} from '@enact/ui/resolution';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -470,5 +471,50 @@ describe('TabLayout specs', () => {
 		const actual = screen.getByTestId('tabLayout');
 
 		expect(actual).not.toHaveClass(expected);
+	});
+
+	test('should set the tab size for all tabs in horizontal orientation', () => {
+		const tabSize = 300;
+
+		const {container} = render(
+			<TabLayoutBase
+				data-testid="tabLayout"
+				orientation="horizontal"
+				tabSize={tabSize}
+			>
+				<Tab title="Home">
+					<div>Home</div>
+				</Tab>
+				<Tab icon="playcircle" title="Item">
+					<div>Item</div>
+				</Tab>
+			</TabLayoutBase>
+		);
+
+		const tabLayout = container.querySelector('.tabLayout');
+
+		expect(tabLayout.style.getPropertyValue('--tab-width')).toBe(scaleToRem(tabSize));
+	});
+
+	test('should set the specific tab size for all tabs in horizontal orientation and size small', () => {
+		const tabSize = 420;
+
+		const {container} = render(
+			<TabLayoutBase
+				data-testid="tabLayout"
+				orientation="horizontal"
+				size="small"
+			>
+				<Tab title="Tab 1" />
+				<Tab title="Tab 2" />
+				<Tab title="Tab 3" />
+				<Tab title="Tab 4" />
+				<Tab title="Tab 5" />
+			</TabLayoutBase>
+		);
+
+		const tabLayout = container.querySelector('.tabLayout');
+
+		expect(tabLayout.style.getPropertyValue('--tab-width')).toBe(scaleToRem(tabSize));
 	});
 });
