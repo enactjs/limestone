@@ -332,7 +332,7 @@ const WizardPanelsBase = kind({
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
 			const totalNum = (typeof total === 'number' && total > 0) ? total : totalPanels;
 			const step = noSteps ? '' : new IString($L('Step {current} of {total}')).format({current: stepNum, total: totalNum});
-			return `${step} ${title} ${subtitle}`;
+			return `${step}${title} ${subtitle}`;
 		},
 		className: ({noSteps, noSubtitle, styler}) => styler.append(
 			{
