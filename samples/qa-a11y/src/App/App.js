@@ -60,6 +60,7 @@ import Home from './Home';
 import View from './View';
 
 const Menu = SpotlightContainerDecorator({enterTo: 'last-focused'}, 'div');
+const ScrollerComponent = SpotlightContainerDecorator({enterTo: 'last-focused', overflow: true}, ScrollerBase);
 
 const views = [
 	{title: 'About qa-a11y', view: Home},
@@ -155,7 +156,7 @@ const AppBase = ({className, rtl, updateLocale, ...rest}) => {
 		<div className={classnames(className, debugAriaClass)}>
 			<Layout {...rest} className={appCss.layout}>
 				<Cell component={Menu} id="menu" size="20%" spotlightId="menu">
-					<Cell component={ScrollerBase}>
+					<Cell component={ScrollerComponent}>
 						<div className={appCss.jumpToView}>Jump To View: {jumpToView}</div>
 						{views.map((view, i) => (
 							<Item
