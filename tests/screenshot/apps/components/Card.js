@@ -55,7 +55,15 @@ const CardTests = [
 	...withProps({centered: true}, defaultCardTests),
 
 	// Focused
-	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests)
+	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
+
+	...withConfig({
+		focusRing: true,
+		focus: true
+	}, [
+		<Card src={img} css={css} label="Short">Short</Card>,
+		<Card src={img} css={css} label="Short" roundedImage>Short</Card>
+	])
 ];
 
 export default CardTests;
