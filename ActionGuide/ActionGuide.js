@@ -106,7 +106,7 @@ const ActionGuideBase = kind({
 	render: ({buttonAriaLabel, children, css, disabled, icon, onClick, ...rest}) => {
 		return (
 			<div {...rest}>
-				<Button aria-label={buttonAriaLabel ? buttonAriaLabel : $L('More')} css={css} className={css.icon} disabled={disabled} icon={icon} minWidth={false} onClick={onClick} size="small" />
+				<Button aria-label={buttonAriaLabel ? buttonAriaLabel : $L('More')} css={css} className={css.icon} disabled={disabled} icon={icon} minWidth={false} onClick={onClick} />
 				<Marquee className={css.label} marqueeOn="render" alignment="center">{children}</Marquee>
 			</div>
 		);

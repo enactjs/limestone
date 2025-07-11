@@ -8,12 +8,14 @@
 	position: relative;
 	transition: transform 200ms ease-in-out;
 	will-change: transform;
+	height: @lime-iconitem-height;
+	width: @lime-iconitem-width;
 
 	.content {
 		box-sizing: border-box;
 		background-size: contain;
 		border-radius: @lime-iconitem-border-radius;
-		font-weight: @lime-iconitem-font-weight;
+		justify-content: center;
 	}
 
 	&.bordered .content {
@@ -21,13 +23,27 @@
 		border-style: @lime-iconitem-border-style;
 	}
 
-	&:not(.labelOnFocus) .icon {
-		margin: @lime-iconitem-icon-margin;
+	&.hasLabel {
+		.image {
+			height: @lime-iconitem-label-image-height;
+		}
+	}
+
+	&.hasTitle {
+		height: @lime-iconitem-title-height;
 	}
 
 	.image {
 		display: block;
-		margin: 0;
+		height: @lime-iconitem-image-height;
+		width: @lime-iconitem-image-width;
+	}
+
+	.icon {
+		margin: @lime-iconitem-icon-margin;
+		height: @lime-iconitem-icon-height;
+		width: @lime-iconitem-icon-width;
+		line-height: @lime-iconitem-icon-height;
 	}
 
 	.labelContainer {
@@ -36,12 +52,14 @@
 
 	.label {
 		font-size: @lime-iconitem-label-font-size;
+		font-weight: @lime-iconitem-label-font-weight;
 		line-height: @lime-iconitem-label-line-height;
 		padding: @lime-iconitem-label-padding;
 	}
 
 	.title {
 		font-size: @lime-iconitem-title-font-size;
+		font-weight: @lime-iconitem-title-font-weight;
 		line-height: @lime-iconitem-title-line-height;
 		margin: @lime-iconitem-title-margin;
 	}
@@ -60,10 +78,6 @@
 		transform: @lime-iconitem-focus-transform;
 
 		&.labelOnFocus {
-			.icon {
-				margin: @lime-iconitem-icon-margin;
-			}
-
 			.label, .labelContainer {
 				display: block;
 			}
@@ -81,15 +95,27 @@
 	// Skin colors
 	.applySkins({
 		&.bordered .content {
-			border-color: @lime-iconitem-border-color;
+			border-color: @lime-iconitem-inner-border-color;
+		}
+
+		.content {
+			background-color: @lime-iconitem-inner-container-color;
+		}
+
+		.icon {
+			color: @lime-iconitem-inner-icon-color;
 		}
 
 		.label {
-			color: @lime-iconitem-label-color;
+			color: @lime-iconitem-inner-label-color;
 		}
 
 		&.darkLabel .label {
-			color: @lime-iconitem-label-dark-color;
+			color: @lime-iconitem-inner-label-dark-color;
+		}
+
+		.title {
+			color: @lime-iconitem-outer-label-main-color;
 		}
 
 		.disabled ({
@@ -97,5 +123,15 @@
 		});
 
 		.lime-focus-highlight(content);
+
+		.focus({
+			.content {
+				box-shadow: @lime-iconitem-focused-shadow;
+			}
+
+			.icon {
+				color: @lime-iconitem-inner-icon-color;
+			}
+		});
 	});
 }
