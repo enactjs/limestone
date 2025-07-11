@@ -460,10 +460,10 @@ describe('TabLayout specs', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should update orientation on window resize and not collapse tabs when \'collapseOnPortrait\' is false', () => {
+	test('should update orientation on window resize and not collapse tabs when \'blockCollapseOnPortrait\' is set', () => {
 		render(
 			<TabLayout
-				collapseOnPortrait={false}
+				blockCollapseOnPortrait
 				data-testid="tabLayout"
 				orientation="vertical"
 			>
