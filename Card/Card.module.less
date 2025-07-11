@@ -222,6 +222,10 @@
 		}
 
 		&.vertical {
+			&:not(.hasContainer) {
+				.lime-focus-highlight(image);
+			}
+
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
@@ -249,7 +253,7 @@
 				}
 			}
 
-			&.vertical:not(.hasContainer) .selectionContainer {
+			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
 				border-color: @lime-card-border-focused-color;
 			}
 		});
