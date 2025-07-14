@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons
+
 ## [1.2.0] - 2025-07-11
 
 ### Added
