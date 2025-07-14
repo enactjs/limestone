@@ -40,31 +40,6 @@ const getDefaultImageSize = (orientation) => {
 	return sizes[orientation];
 };
 
-const getCardSize = (orientation, captionOverlay, imageSize) => {
-	if (orientation === 'horizontal') {
-		return {
-			width: 1320,
-			height: 336
-		};
-	} else if (orientation === 'vertical') {
-		const defaultImageSize = getDefaultImageSize(orientation);
-		const imageWidth = imageSize?.width ?? defaultImageSize.width;
-		const imageHeight = imageSize?.height ?? defaultImageSize.height;
-
-		if (captionOverlay) {
-			return {
-				width: imageWidth,
-				height: imageHeight
-			};
-		}
-
-		return {
-			width: imageWidth,
-			height: 'auto'
-		};
-	}
-};
-
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -311,7 +286,6 @@ const CardBase = kind({
 		delete rest.roundedImage;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
-		const cardSize = getCardSize(rest.orientation, rest.captionOverlay, imageSize);
 
 		return (
 			<UiCard
@@ -333,9 +307,7 @@ const CardBase = kind({
 				style={{
 					...style,
 					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
-					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width),
-					'--card-width': ri.scaleToRem(cardSize.width),
-					'--card-height': cardSize.height === 'auto' ? 'auto' : ri.scaleToRem(cardSize.height)
+					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width)
 				}}
 			/>
 		);
