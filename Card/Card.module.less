@@ -125,6 +125,9 @@
 	}
 
 	&.vertical {
+		width: var(--card-image-width);
+		height: auto;
+
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
 			display: flex;
@@ -133,14 +136,15 @@
 			align-self: stretch;
 		}
 
+		.image {
+			height: var(--card-image-height);
+		}
+
 		.imageIcon {
 			height: @lime-card-vertical-image-icon-size;
 			width: @lime-card-vertical-image-icon-size;
 			margin: @lime-card-vertical-image-icon-margin;
 		}
-
-		width: var(--card-image-width);
-		height: auto;
 
 		&.captionOverlay .captions {
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
@@ -148,10 +152,6 @@
 
 		&.hasContainer .captions {
 			padding: @lime-card-vertical-has-container-captions-padding;
-		}
-
-		&:not(.captionOverlay) .image {
-			height: var(--card-image-height);
 		}
 
 		&:not(.hasContainer) .image {
