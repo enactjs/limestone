@@ -10,7 +10,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useMemo} from 'react';
+import {useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 import DebounceDecorator from '../internal/DebounceDecorator';
@@ -189,7 +189,7 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollerPosition, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -222,6 +222,8 @@ const TabGroupBase = kind({
 				return null;
 			}
 		}).filter(tab => tab != null), [onFocusTab, tabs]);
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const scrollToRef = useRef(null);
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
@@ -231,17 +233,25 @@ const TabGroupBase = kind({
 			spotlightDisabled
 		};
 		const scrollerProps = scrollable ? {
+			cbScrollTo: (fn) => {
+				scrollToRef.current = fn;
+			},
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
-			noScrollByWheel: !collapsed,
+			noScrollByWheel: collapsed,
+			onScrollStop,
 			scrollbarTrackCss: componentCss,
-			spotlightId,
 			spotlightDisabled,
+			spotlightId,
 			verticalScrollbar: 'auto'
 		} : null;
 		const Component = scrollable ? Scroller : 'div';
 		const GroupComponent = scrollable ? Group : GroupContainer;
+
+		if (collapsed && !isHorizontal && scrollable && scrollToRef.current) {
+			scrollToRef.current({animate: false, position: scrollerPosition});
+		}
 
 		return (
 			<Component

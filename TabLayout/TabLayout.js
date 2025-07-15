@@ -310,6 +310,7 @@ const TabLayoutBase = kind({
 		primaryIndex: null,
 		offset: 36,
 		orientation: 'vertical',
+		scrollerPosition: {x: 0, y: 0},
 		size: 'large',
 		type: 'normal'
 	},
@@ -390,6 +391,10 @@ const TabLayoutBase = kind({
 				Spotlight.move(moveTo);
 			}
 		},
+		onScrollStop: handle(
+			forProp('orientation', 'vertical'),
+			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}) => ({scrollerPosition :{x: scrollLeft, y: scrollTop}}))
+		),
 		onSelect: handle(
 			forwardCustom('onSelect', ({selected}) => ({index: selected}))
 		),
@@ -474,7 +479,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollable, size, tabOrientation, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollerPosition, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.onExpand;
 		delete rest.offset;
@@ -509,6 +514,7 @@ const TabLayoutBase = kind({
 							{...tabGroupProps}
 							collapsed={isVertical}
 							scrollable={scrollable}
+							scrollerPosition={scrollerPosition}
 							size={size}
 							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
 							spotlightDisabled={!collapsed && isVertical}
@@ -520,6 +526,7 @@ const TabLayoutBase = kind({
 					>
 						<TabGroup
 							{...tabGroupProps}
+							onScrollStop={onScrollStop}
 							scrollable={scrollable}
 							spotlightId={getTabsSpotlightId(spotlightId, false)}
 							spotlightDisabled={collapsed}
@@ -546,6 +553,7 @@ const TabLayoutBase = kind({
 const TabLayoutDecorator = compose(
 	Toggleable({prop: 'collapsed', activate: 'onCollapse', deactivate: 'onExpand'}),
 	Changeable({prop: 'index', change: 'onSelect'}),
+	Changeable({prop: 'scrollerPosition', change: 'onScrollStop'}),
 	RefocusDecorator,
 	SpotlightContainerDecorator({
 		// using last-focused so we return to the last focused if it exists but fall through to
