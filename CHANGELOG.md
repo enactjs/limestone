@@ -6,7 +6,17 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Card` focus ring feature
+- `limestone/Card` prop `imageSize` to set the size of card image
+- `limestone/Icon` supported icon list, adding new icons
+
+### Changed
+
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+
+### Fixed
+
+- `limestone/Card` when `focus ring` is true
+- `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
 

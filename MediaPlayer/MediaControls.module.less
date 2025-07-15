@@ -24,6 +24,10 @@
 			min-width: @lime-mediaplayer-button-height;
 			margin: 0;
 			padding: @lime-mediaplayer-button-padding;
+
+			.icon {
+				--icon-size: @lime-mediaplayer-button-icon-size;
+			}
 		}
 	}
 
@@ -53,7 +57,6 @@
 		.moreButtonsComponents {
 			> * {
 				margin: 0;
-				margin-inline-start: @lime-mediaplayer-controls-morebuttons-margin-start;
 
 				&:first-child {
 					margin-inline-start: 0;
@@ -62,6 +65,7 @@
 		}
 
 		> :first-child {
+			gap: @lime-mediaplayer-controls-moreComponents-gap;
 			margin-top: @lime-mediaplayer-controls-moreComponents-margin-top;
 		}
 	}
