@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Card` prop `imageSize` to set the size of card image
+- `limestone/TabLayout` maintain the same scroller position when `Tabs` are collapsed or expanded
 
 ## [1.2.0] - 2025-07-11
 
