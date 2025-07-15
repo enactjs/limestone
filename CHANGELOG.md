@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Card` prop `imageSize` to set the size of card image
+
 ### Changed
 
 - All components in `light` skin and high-contrast mode styling to match the latest GUI
