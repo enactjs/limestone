@@ -23,8 +23,6 @@ const renderItem = ({index, ...rest}) => {
 			label={label}
 			src={source}
 			style={{
-				width: ri.scaleToRem(768),
-				height: ri.scaleToRem(648),
 				padding: ri.scaleToRem(24)
 			}}
 		>
