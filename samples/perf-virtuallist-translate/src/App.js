@@ -48,6 +48,7 @@ const VirtualListSample = (props) => {
 			itemRenderer={renderItem}
 			itemSize={ri.scale(156)}
 			scrollMode="translate"
+			style={{backgroundColor: 'black', borderRadius: 0}}
 		/>
 	);
 };
