@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- All components in `light` skin and high-contrast mode styling to match the latest GUI
+
 ## [1.2.0] - 2025-07-11
 
 ### Added
