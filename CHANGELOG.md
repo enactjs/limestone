@@ -15,7 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Card` when `focus ring` is true
+- `limestone/Card` when `focusRing` mode
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
