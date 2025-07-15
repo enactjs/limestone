@@ -9,8 +9,13 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` prop `imageSize` to set the size of card image
 - `limestone/Icon` supported icon list, adding new icons
 
+### Changed
+
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+
 ### Fixed
 
+- `limestone/Card` for `focusRing` mode
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
@@ -27,7 +32,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/KeyGuide` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
 - `limestone/Spinner` styling to match the latest GUI
-- `limestone/TabLayout` vertical to be collapsed in portrait mode
 - `limestone/TimePicker` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
