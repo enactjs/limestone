@@ -60,8 +60,8 @@ const CardTests = [
 		focusRing: true,
 		focus: true
 	}, [
-		<Card src={img} css={css} label="Focus ring label">Short</Card>,
-		<Card src={img} css={css} label="Focus ring label" roundedImage>Short</Card>
+		<Card src={img} label="Focus ring label">Short</Card>,
+		<Card src={img} label="Focus ring label" roundedImage>Short</Card>
 	])
 ];
 
