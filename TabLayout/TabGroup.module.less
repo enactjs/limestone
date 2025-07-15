@@ -27,6 +27,7 @@
 	&.vertical {
 		&.button {
 			height: @lime-tablayout-tab-vertical-button-height;
+			margin: @lime-tablayout-tab-margin;
 			padding: @lime-tablayout-tab-vertical-padding;
 
 			&.collapsed {
@@ -111,7 +112,7 @@
 			height: @lime-tablayout-tab-group-vertical-scrollbar-height;
 		}
 
-		&.collapsed {
+		&.collapsed:has(.noIcons) {
 			height: fit-content;
 		}
 	}

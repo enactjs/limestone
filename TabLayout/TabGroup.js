@@ -63,7 +63,7 @@ const TabBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
+		className: ({collapsed, noIcons, orientation, styler}) => styler.append({collapsed}, noIcons, orientation),
 		iconComponent: ({sprite, stopped}) => {
 			if (sprite) {
 				return (<Sprite stopped={stopped} {...sprite} />);
@@ -72,6 +72,7 @@ const TabBase = kind({
 	},
 
 	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, ...rest}) => {
+		delete rest.noIcons;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -233,6 +234,7 @@ const TabGroupBase = kind({
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
+			noScrollByWheel: !collapsed,
 			scrollbarTrackCss: componentCss,
 			spotlightId,
 			spotlightDisabled,
@@ -250,9 +252,10 @@ const TabGroupBase = kind({
 			>
 				{noIcons ? (
 					<TabBase
-						icon="list"
 						collapsed
 						disabled={tabsDisabled}
+						icon="list"
+						noIcons="noIcons"
 						onSpotlightDisappear={onBlurList}
 						spotlightDisabled={tabsSpotlightDisabled}
 					/>
