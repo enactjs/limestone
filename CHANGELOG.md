@@ -27,6 +27,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/KeyGuide` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
 - `limestone/Spinner` styling to match the latest GUI
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
 - `limestone/TimePicker` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
