@@ -32,7 +32,7 @@ const defaultCardTests = [
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
 
-	// // Horizontal
+	// Horizontal
 	<Card src={img} orientation="horizontal">Short</Card>,
 	<Card src={img} orientation="horizontal" selected>Short</Card>,
 	<Card src={img} orientation="horizontal" label="Short">Short</Card>,
