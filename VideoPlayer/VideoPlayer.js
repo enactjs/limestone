@@ -29,7 +29,6 @@ import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import equals from 'ramda/src/equals';
 import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
@@ -878,13 +877,6 @@ const VideoPlayerBase = class extends Component {
 	}
 
 	componentDidUpdate (prevProps, prevState) {
-		if (this.titleRef && this.state.infoVisible &&
-			(!prevState.infoVisible || !equals(this.props.infoComponents, prevProps.infoComponents))
-		) {
-			const node = this.titleRef;
-			node.style.setProperty('--infoComponentsOffset', `${node.offsetHeight}px`);
-		}
-
 		if (
 			!this.state.mediaControlsVisible && prevState.mediaControlsVisible !== this.state.mediaControlsVisible ||
 			!this.state.mediaSliderVisible && prevState.mediaSliderVisible !== this.state.mediaSliderVisible
