@@ -6,7 +6,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Card` prop `imageSize` to set the size of card image
 - `limestone/Icon` supported icon list, adding new icons
+
+### Fixed
+
+- `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
 
