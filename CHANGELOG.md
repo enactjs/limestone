@@ -6,19 +6,38 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Card` prop `imageSize` to set the size of card image
+- `limestone/Icon` supported icon list, adding new icons
+
+### Changed
+
+- `limestone/CheckboxItem` styling to match the latest GUI
+- `limestone/FlexiblePopupPanels` styling to match the latest GUI
+- `limestone/FormCheckboxItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+
+### Fixed
+
+- `limestone/Card` for `focusRing` mode
+- `limestone/VideoPlayer` size of the icons from the control buttons
+
+## [1.2.0] - 2025-07-11
+
+### Added
+
 - `limestone/Chip` prop `id` to manage focus properly
 
 ### Changed
 
 - `limestone/ActionGuide` styling to match the latest GUI
-- `limestone/CheckboxItem` styling to match the latest GUI
-- `limestone/FlexiblePopupPanels` styling to match the latest GUI
-- `limestone/FormCheckboxItem` styling to match the latest GUI
 - `limestone/IconItem` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/KeyGuide` styling to match the latest GUI
-- `limestone/MediaOverlay` styling to match the latest GUI
-- `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` styling to match the latest GUI
+- `limestone/TimePicker` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
 ### Fixed

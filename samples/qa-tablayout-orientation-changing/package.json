@@ -1,7 +1,7 @@
 {
-  "name": "perf-virtuallist-translate",
+  "name": "qa-tablayout",
   "version": "0.1.0",
-  "description": "Perf VirtualList Translate",
+  "description": "A qa sample for testing TabLayout",
   "author": "",
   "main": "src/index.js",
   "scripts": {
@@ -18,16 +18,17 @@
   "private": true,
   "repository": "",
   "enact": {
-    "title": "Perf VirtualList Translate",
+    "title": "QA TabLayout",
     "theme": "limestone"
   },
   "dependencies": {
-    "@enact/core": "^5.1.0",
-    "@enact/i18n": "^5.1.0",
+    "@enact/core": "^5.0.0",
+    "@enact/i18n": "^5.0.0",
     "@enact/limestone": "../../",
-    "@enact/spotlight": "^5.1.0",
-    "@enact/ui": "^5.1.0",
+    "@enact/spotlight": "^5.0.0",
+    "@enact/ui": "^5.0.0",
     "ilib": "^14.21.1",
+    "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   }

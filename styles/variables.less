@@ -426,6 +426,8 @@
 @lime-card-vertical-image-icon-margin: 0;
 @lime-card-vertical-caption-overlay-captions-padding: 48px;
 @lime-card-vertical-has-container-captions-padding: 36px 48px;
+@lime-card-horizontal-width: 1320px;
+@lime-card-horizontal-height: 336px;
 @lime-card-horizontal-captions-padding: 48px;
 
 // Checkbox
@@ -848,6 +850,7 @@
 @lime-mediaplayer-button-client-padding: 0 18px;
 @lime-mediaplayer-button-border-radius: 96px;
 @lime-mediaplayer-button-height: 180px;
+@lime-mediaplayer-button-icon-size: 108px;
 @lime-mediaplayer-button-padding: var(--primitive-spacing-36);
 @lime-mediaplayer-controls-actionguide-height: 168px;
 @lime-mediaplayer-controls-actionguide-padding-bottom: 0;
@@ -857,8 +860,8 @@
 @lime-mediaplayer-controls-gap: var(--primitive-spacing-120);
 @lime-mediaplayer-controls-height: 180px;
 @lime-mediaplayer-controls-margin-top: 36px;
-@lime-mediaplayer-controls-morebuttons-margin-start: 228px;
-@lime-mediaplayer-controls-moreComponents-margin-top: 42px;
+@lime-mediaplayer-controls-moreComponents-gap: 204px;
+@lime-mediaplayer-controls-moreComponents-margin-top: 60px;
 @lime-mediaplayer-controls-moreComponents-time: 0.3s;		// Length of the animation
 @lime-mediaplayer-slider-height: 12px;
 @lime-mediaplayer-slider-knob-resting-state-scale: @lime-slider-knob-resting-state-scale;
@@ -1023,16 +1026,18 @@
 // Slider
 // ---------------------------------------
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
+@lime-slider-bar-vertical-min-height: 240px;
+@lime-slider-bar-padding: 24px;
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: @lime-slider-knob-width;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-knob-height-large: @lime-slider-knob-height;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-knob-resting-state-scale: 0.75;
-@lime-slider-tooltip-above-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness / -2);
-@lime-slider-tooltip-before-offset: (@lime-progressbar-bar-thickness / 2);
-@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness / -2);
+@lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
+@lime-slider-tooltip-after-offset: (@lime-progressbar-bar-thickness);
 
 // Spinner
 // ---------------------------------------
@@ -1044,7 +1049,9 @@
 @lime-spinner-small-line-width: 6px;
 @lime-spinner-line-margin: 24px;
 @lime-spinner-small-line-margin: 12px;
-@lime-spinner-font-weight: var(--primitive-font-weight-bold);
+@lime-spinner-font-weight: var(--primitive-font-weight-semibold);
+@lime-spinner-client-height: 132px;
+@lime-spinner-client-line-height: @lime-common-line-height;
 
 // Steps
 // ---------------------------------------

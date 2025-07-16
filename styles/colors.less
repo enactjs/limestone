@@ -309,7 +309,7 @@
 
 // MediaSlider
 // ---------------------------------------
-@lime-mediaslider-bar-bg-color: @lime-slider-bar-bg-color;
+@lime-mediaslider-bar-bg-color: @lime-slider-track-color;
 @lime-mediaslider-disabled-bar-opacity: 0.3;
 @lime-mediaslider-fill-bg-color: var(--semantic-color-on-surface-accent);
 
@@ -322,9 +322,11 @@
 // Picker
 // ---------------------------------------
 @lime-picker-label-color: var(--semantic-color-on-background-main);
+@lime-picker-icon-color: var(--semantic-color-on-background-main);
 @lime-picker-container-color: var(--semantic-color-surface-default);
 @lime-picker-indicator-color: var(--semantic-color-on-surface-main);
 @lime-picker-indicator-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-picker-icon-focused-color: var(--semantic-color-on-surface-main-focused);
 @lime-picker-joined-label-color: var(--semantic-color-on-surface-main);
 
 // Popup
@@ -381,23 +383,17 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-bar-bg-color: @lime-progressbar-track-color;
-@lime-slider-load-bg-color: @lime-progressbar-track-buffer-color;
-@lime-slider-fill-bg-color: var(--semantic-color-surface-accent);
-@lime-slider-knob-bg-color: @lime-slider-fill-bg-color;
-@lime-slider-knob-border-color: transparent;
-@lime-slider-focus-bar-bg-color: @lime-slider-bar-bg-color;
-@lime-slider-focus-load-bg-color: @lime-slider-load-bg-color;
-@lime-slider-focus-fill-bg-color: var(--semantic-color-surface-default-focused);
-@lime-slider-focus-knob-bg-color: @lime-slider-focus-fill-bg-color;
-@lime-slider-focus-knob-border-color: @lime-slider-knob-border-color;
-@lime-slider-focus-knob-shadow: 0 6px 12px @lime-shadow-color;
-@lime-slider-active-bar-bg-color: @lime-slider-focus-bar-bg-color;
-@lime-slider-active-load-bg-color: @lime-slider-focus-load-bg-color;
-@lime-slider-active-fill-bg-color: @lime-slider-focus-fill-bg-color;
-@lime-slider-disabled-bar-opacity: 0.4;
-@lime-slider-disabled-focus-knob-bg-color: @lime-slider-focus-knob-bg-color;
-@lime-slider-disabled-knob-bg-color: var(--semantic-color-surface-default-handle);
+@lime-slider-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-slider-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
+@lime-slider-track-active-color: var(--semantic-color-surface-accent);
+@lime-slider-track-active-focused-color: var(--semantic-color-surface-accent);
+@lime-slider-handle-color: var(--semantic-color-surface-default-handle);
+@lime-slider-handle-border-color: transparent;
+@lime-slider-handle-focused-border-color: @lime-slider-handle-border-color;
+@lime-slider-handle-focused-color: var(--semantic-color-surface-default-focused);
+@lime-slider-handle-disabled-color: transparent;
+@lime-slider-handle-focused-shadow: 0 24px 36px @lime-shadow-color;
+@lime-slider-disabled-bar-opacity: 0.3;
 
 // Spinner
 // ---------------------------------------
@@ -405,8 +401,7 @@
 @lime-spinner-head-color: @lime-spinner-color;
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
 @lime-spinner-bg-color: var(--semantic-color-surface-default);
-@lime-spinner-text-color: var(--semantic-color-on-surface-main);
-@lime-spinner-text-shadow-color: @lime-shadow-color;
+@lime-spinner-label-color: var(--semantic-color-on-background-sub);
 
 // Steps
 // ---------------------------------------

@@ -125,12 +125,19 @@
 	}
 
 	&.vertical {
+		width: var(--card-image-width);
+		height: auto;
+
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
 			display: flex;
 			align-items: center;
 			gap: @lime-card-vertical-captions-gap;
 			align-self: stretch;
+		}
+
+		.image {
+			height: var(--card-image-height);
 		}
 
 		.imageIcon {
@@ -157,8 +164,15 @@
 	}
 
 	&.horizontal {
+		width: @lime-card-horizontal-width;
+		height: @lime-card-horizontal-height;
+
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
+		}
+
+		.image {
+			width: var(--card-image-width);
 		}
 	}
 
@@ -222,6 +236,10 @@
 		}
 
 		&.vertical {
+			&:not(.hasContainer) {
+				.lime-focus-highlight(image);
+			}
+
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
@@ -249,7 +267,7 @@
 				}
 			}
 
-			&.vertical:not(.hasContainer) .selectionContainer {
+			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
 				border-color: @lime-card-border-focused-color;
 			}
 		});
