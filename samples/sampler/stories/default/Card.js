@@ -2,7 +2,6 @@ import {Card, CardBase} from '@enact/limestone/Card';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
-import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -32,6 +31,7 @@ export const _Card = (args) => (
 		centered={args['centered']}
 		disabled={args['disabled']}
 		imageIconSrc={args['imageIconSrc']}
+		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
 		// eslint-disable-next-line no-undefined
 		label={args['label'] ? args['label'] : undefined}
@@ -43,11 +43,6 @@ export const _Card = (args) => (
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
 		src={args['src']}
-		style={{
-			position: 'absolute',
-			width: ri.scaleToRem(args['orientation'] === 'vertical' ? 768 : 1500),
-			height: ri.scaleToRem(args['orientation'] === 'vertical' ? 708 : 336)
-		}}
 	>
 		{args['children']}
 	</Card>
@@ -57,6 +52,7 @@ boolean('captionOverlay', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
+object('imageSize', _Card, Config);
 boolean('hasContainer', _Card, Config);
 text('label', _Card, Config, 'Card label');
 select('orientation', _Card, prop.orientation, Config);

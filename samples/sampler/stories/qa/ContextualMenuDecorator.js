@@ -34,7 +34,7 @@ const prop = {
 		'right middle',
 		'right top'
 	],
-	offset: ['none', 'overlap', 'small'],
+	offset: ['none', 'overlap', 'small', 'large'],
 	popupWidth: ['auto', 'small', 'large']
 };
 

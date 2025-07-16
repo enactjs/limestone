@@ -172,6 +172,7 @@ export const _VideoPlayer = (args) => {
 				</infoComponents>
 				<MediaControls
 					actionGuideButtonAriaLabel={args['actionGuideButtonAriaLabel']}
+					actionGuideLabel={args['actionGuideLabel']}
 					jumpBackwardAriaLabel={args['jumpBackwardAriaLabel']}
 					jumpBackwardIcon={args['jumpBackwardIcon']}
 					jumpButtonsDisabled={args['jumpButtonsDisabled']}
@@ -186,24 +187,24 @@ export const _VideoPlayer = (args) => {
 				>
 					<bottomComponents>
 						<VirtualGridList
-							style={{height: ri.scale(240), marginTop: ri.scale(60)}}
+							style={{height: ri.scale(324), marginTop: ri.scale(60)}}
 							horizontalScrollbar={'hidden'}
 							dataSize={size}
 							direction="horizontal"
 							itemSize={{
-								minWidth: ri.scale(320),
-								minHeight: ri.scale(270)
+								minWidth: ri.scale(324),
+								minHeight: ri.scale(324)
 							}}
 							itemRenderer={renderItem}
 							spacing={ri.scale(12)}
 							hoverToScroll
 						/>
 					</bottomComponents>
-					<Button size="small" icon="list" />
-					<Button size="small" icon="playspeed" />
-					<Button size="small" icon="speakercenter" />
-					<Button size="small" icon="miniplayer" />
-					<Button size="small" icon="subtitle" />
+					<Button icon="list" />
+					<Button icon="playspeed" />
+					<Button icon="speakercenter" />
+					<Button icon="miniplayer" />
+					<Button icon="subtitle" />
 				</MediaControls>
 			</VideoPlayer>
 		</div>
@@ -238,6 +239,12 @@ text(
 	_VideoPlayer,
 	MediaControlsConfig,
 	''
+);
+text(
+	'actionGuideLabel',
+	_VideoPlayer,
+	MediaControlsConfig,
+	'Please Scroll or Press Down Button'
 );
 text('jumpBackwardAriaLabel', _VideoPlayer, MediaControlsConfig, '');
 select('jumpBackwardIcon', _VideoPlayer, icons, MediaControlsConfig, 'jumpbackward');

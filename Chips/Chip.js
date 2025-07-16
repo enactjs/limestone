@@ -4,7 +4,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {use, useCallback, useEffect, useRef, useState} from 'react';
+import {use, useCallback, useEffect, useRef} from 'react';
 
 import Button from '../Button';
 import Skinnable from '../Skinnable';
@@ -57,7 +57,7 @@ const ChipDefaultProps = {
 const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, icon, onClick, ref, ...rest} = chipProps;
+	const {children, className, deleteButton, disabled, icon, id, onClick, ref, ...rest} = chipProps;
 
 	const chipClassName = classnames(className, deleteButton?.position);
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
@@ -69,13 +69,24 @@ const ChipBase = (props) => {
 
 	const isHovering = useRef(false);
 
-	const [index, setIndex] = useState(-1);
-
 	useEffect(() => {
 		if (chipRef.current && registerChild) {
-			setIndex(registerChild(chipRef));
+			registerChild(chipRef, id);
 		}
-	}, [chipRef, registerChild]);
+	}, [chipRef, registerChild, id]);
+
+	useEffect(() => {
+		const handleDocumentClick = (ev) => {
+			if (containerRef.current && !containerRef.current.contains(ev.target)) {
+				deleteButtonRef.current?.classList.remove(css.focused);
+			}
+		};
+
+		document.addEventListener('click', handleDocumentClick, true);
+		return () => {
+			document.removeEventListener('click', handleDocumentClick, true);
+		};
+	}, []);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, target} = ev;
@@ -83,7 +94,7 @@ const ChipBase = (props) => {
 		if (direction) {
 			let nextTarget = null;
 			if (target === deleteButtonRef.current.firstChild && getNextTargetFromDeleteButton) {
-				nextTarget = getNextTargetFromDeleteButton(direction, index);
+				nextTarget = getNextTargetFromDeleteButton(direction, id);
 			}
 
 			if (nextTarget === null) {
@@ -101,7 +112,7 @@ const ChipBase = (props) => {
 				deleteButtonRef.current?.classList.remove(css.focused);
 			}
 		}
-	}, [chipRef, getNextTargetFromDeleteButton, index]);
+	}, [chipRef, getNextTargetFromDeleteButton, id]);
 
 	const handleMouseLeave = useCallback((ev) => {
 		if (containerRef.current.contains(ev.target)) {
@@ -131,12 +142,12 @@ const ChipBase = (props) => {
 
 	const handleDelete = useCallback((ev) => {
 		if (handleChipDelete) {
-			handleChipDelete(ev, index);
+			handleChipDelete(ev, id);
 		}
 		if (deleteButton?.onDelete) {
 			deleteButton.onDelete(ev);
 		}
-	}, [deleteButton, handleChipDelete, index]);
+	}, [deleteButton, handleChipDelete, id]);
 
 	return (
 		<div
@@ -152,7 +163,7 @@ const ChipBase = (props) => {
 			<Button
 				css={css}
 				className={chipClassName}
-				data-chip-index={index}
+				data-chip-index={id}
 				disabled={disabled}
 				focusEffect="static"
 				icon={icon ? icon : null}
@@ -192,6 +203,15 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @public
 	 */
 	children: PropTypes.string.isRequired,
+
+	/**
+	 * Unique identifier for the chip.
+	 *
+	 * @type {String}
+	 * @required
+	 * @public
+	 */
+	id: PropTypes.string.isRequired,
 
 	/**
 	 * Define the icon, delete handler, and position for the delete button.

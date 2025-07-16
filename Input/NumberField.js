@@ -68,6 +68,7 @@ const NumberFieldBase = kind({
 
 	propTypes: {
 		announce: PropTypes.func,
+		buttonSize: PropTypes.oneOf(['small', 'large']),
 		css: PropTypes.object,
 		disabled: PropTypes.bool,
 		invalid: PropTypes.bool,
@@ -85,6 +86,7 @@ const NumberFieldBase = kind({
 	},
 
 	defaultProps: {
+		buttonSize: 'large',
 		maxLength: DEFAULT_LENGTH,
 		minLength: 0,
 		numberInputField: 'auto',
@@ -153,11 +155,11 @@ const NumberFieldBase = kind({
 				);
 			}
 		},
-		submitButton: ({css, disabled, invalid, maxLength, minLength, noSubmitButton, onSubmit, value, numberInputField}) => {
+		submitButton: ({buttonSize, css, disabled, invalid, maxLength, minLength, noSubmitButton, onSubmit, value, numberInputField}) => {
 			const isDisabled = disabled || invalid || (normalizeValue(value, maxLength).toString().length < minLength);
 
 			if (!noSubmitButton && (minLength !== maxLength || !getSeparated(numberInputField, maxLength))) {
-				return <Button className={css.submitButton} disabled={isDisabled} onClick={onSubmit}>{$L('Submit')}</Button>;
+				return <Button className={css.submitButton} disabled={isDisabled} onClick={onSubmit} size={buttonSize}>{$L('Submit')}</Button>;
 			} else {
 				return null;
 			}
@@ -173,6 +175,7 @@ const NumberFieldBase = kind({
 	render: ({css, disabled, invalidTooltip, maxLength, numberInputField, onAdd, onRemove, showKeypad, submitButton, type, value, ...rest}) => {
 		const password = (type === 'password');
 		delete rest.announce;
+		delete rest.buttonSize;
 		delete rest.invalid;
 		delete rest.invalidMessage;
 		delete rest.minLength;
@@ -209,7 +212,7 @@ const NumberFieldBase = kind({
 		} else {
 			field = (
 				<div {...rest} disabled={disabled}>
-					{password ? convertToPasswordFormat(value) : value}
+					{password ? convertToPasswordFormat(value, '●') : value}
 				</div>
 			);
 		}

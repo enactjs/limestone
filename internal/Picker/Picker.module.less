@@ -100,6 +100,7 @@
 		.decrementer,
 		.incrementer {
 			width: @lime-picker-incrementer-width;
+			min-width: @lime-picker-incrementer-width;
 			height: @lime-picker-incrementer-width;
 			margin: 0;
 			padding: 0;
@@ -208,6 +209,7 @@
 
 		&.vertical {
 			.valueWrapper {
+				font-size: @lime-picker-joined-font-size;
 				height: @lime-picker-joined-value-height;
 				line-height: @lime-picker-joined-value-height;
 			}
@@ -227,6 +229,10 @@
 	// Skin colors
 	.applySkins({
 		color: @lime-picker-label-color;
+
+		.icon {
+			color: @lime-picker-icon-color;
+		}
 
 		&.joined {
 			&.horizontal:not(.arrow) {
@@ -285,6 +291,10 @@
 							.lime-disabled-focus-content-colors();
 						}
 					});
+
+					.icon {
+						color: @lime-picker-icon-focused-color;
+					}
 
 					.indicator {
 						background-color: @lime-picker-indicator-focused-color;

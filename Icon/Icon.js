@@ -454,6 +454,8 @@ const IconBase = kind({
  * like
  * likeline
  * soundbarline
+ * jumpforward
+ * jumpbackward
  * ```
  *
  * @name iconList
