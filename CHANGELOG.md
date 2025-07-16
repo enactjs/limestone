@@ -7,7 +7,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Card` prop `imageSize` to set the size of card image
-- `limestone/TabLayout` maintain the same scroller position when `Tabs` are collapsed or expanded
+- `limestone/Icon` supported icon list, adding new icons
+
+### Changed
+
+- All components in `light` skin and high-contrast mode styling to match the latest GUI
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+
+### Fixed
+
+- `limestone/Card` for `focusRing` mode
+- `limestone/TabLayout` to maintain the same scroller position when `Tabs` are collapsed or expanded
+- `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
 

@@ -112,6 +112,16 @@ const TabLayoutBase = kind({
 		anchorTo: PropTypes.oneOf(['left', 'right', 'start', 'end']),
 
 		/**
+		 * Prevents the tab list from automatically collapsing when the screen orientation changes to portrait mode.
+		 *
+		 * Only applies to `orientation="vertical".
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		blockCollapseOnPortrait: PropTypes.bool,
+
+		/**
 		 * Collection of {@link limestone/TabLayout.Tab|Tabs} to render.
 		 *
 		 * @type {Node}
@@ -481,6 +491,7 @@ const TabLayoutBase = kind({
 
 	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollerPosition, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
+		delete rest.blockCollapseOnPortrait;
 		delete rest.onExpand;
 		delete rest.offset;
 		delete rest.onTabAnimationEnd;
