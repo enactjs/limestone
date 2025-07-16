@@ -11,6 +11,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- All components in `light` skin and high-contrast mode styling to match the latest GUI
 - `limestone/TabLayout` vertical to be collapsed in portrait mode
 
 ### Fixed
