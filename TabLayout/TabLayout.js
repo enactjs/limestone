@@ -37,7 +37,7 @@ import componentCss from './TabLayout.module.less';
 import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
 
 const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
-const TAB_SPACING = 24;
+const TAB_SPACING = 48;
 
 const TabLayoutContext = createContext(null);
 
