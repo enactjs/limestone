@@ -112,10 +112,6 @@
 .panel {
 	pointer-events: none;
 
-	> .body {
-		padding: 0;
-	}
-
 	.bodyLayout {
 		// This `-webkit-fill-available` value is a bit funny. It only updates
 		// after a "hard" layout recalculation, not all the time, so the content
@@ -132,10 +128,20 @@
 		pointer-events: auto;
 	}
 
-	.header {
-		margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[];
-		margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[];
+	&.auto,
+	&.small,
+	&.large {
+		.body {
+			padding: @lime-flexiblepopuppanels-body-padding;
+		}
 
+		.header {
+			margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[] + .extract(@lime-flexiblepopuppanels-body-padding, left)[];
+			margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[] + .extract(@lime-flexiblepopuppanels-body-padding, right)[];
+		}
+	}
+
+	.header {
 		&.showBack {
 			margin-left: @lime-flexiblepopuppanels-header-padding;
 		}
@@ -184,7 +190,9 @@
 	}
 
 	&.small {
-		width: @panel-small-width;
+		.content, .header {
+			width: @lime-flexiblepopuppanels-small-width;
+		}
 	}
 
 	// Customize control over transitioning between panels of different dimensions.
@@ -195,7 +203,9 @@
 	}
 
 	&.large {
-		width: @panel-large-width;
+		.content, .header {
+			width: @lime-flexiblepopuppanels-large-width;
+		}
 	}
 
 	&.large	+ &.small {
