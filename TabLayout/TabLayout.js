@@ -537,6 +537,7 @@ const TabLayoutBase = kind({
 					>
 						<TabGroup
 							{...tabGroupProps}
+							collapsed={collapsed}
 							onScrollStop={onScrollStop}
 							scrollable={scrollable}
 							spotlightId={getTabsSpotlightId(spotlightId, false)}

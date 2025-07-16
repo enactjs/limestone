@@ -234,7 +234,7 @@ const TabGroupBase = kind({
 		};
 		const scrollerProps = scrollable ? {
 			cbScrollTo: (fn) => {
-				scrollToRef.current = fn;
+				scrollToRef.current = (collapsed ? fn : null);
 			},
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
@@ -249,7 +249,7 @@ const TabGroupBase = kind({
 		const Component = scrollable ? Scroller : 'div';
 		const GroupComponent = scrollable ? Group : GroupContainer;
 
-		if (collapsed && !isHorizontal && !noIcons && scrollable && scrollToRef.current) {
+		if (!isHorizontal && !noIcons && scrollToRef.current) {
 			scrollToRef.current({animate: false, position: scrollerPosition});
 		}
 
