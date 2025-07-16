@@ -37,7 +37,7 @@ import componentCss from './TabLayout.module.less';
 import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
 
 const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
-const TAB_SPACING = 48;
+const TAB_SPACING = 24;
 
 const TabLayoutContext = createContext(null);
 
@@ -70,7 +70,7 @@ const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
 	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
 
-	return (typeof window !== 'undefined' && window?.screen?.width) ? window.screen.width < ri.scale(totalTabsWidth) : false;
+	return (typeof window !== 'undefined' && window?.innerWidth) ? window.innerWidth < ri.scale(totalTabsWidth) : false;
 };
 
 /**

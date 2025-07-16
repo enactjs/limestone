@@ -16,6 +16,10 @@
 			margin: @lime-tablayout-tab-margin;
 			.padding-start-end(@lime-tablayout-tab-horizontal-padding, @lime-tablayout-tab-horizontal-padding);
 
+			&:before {
+				right: 0;
+			}
+
 			&.small {
 				font-size: @lime-tablayout-tab-small-font-size;
 				height: @lime-tablayout-tab-horizontal-small-button-height;
@@ -74,6 +78,8 @@
 }
 
 .tabGroup {
+	border-radius: @lime-tablayout-border-radius;
+
 	.tabs {
 		display: flex;
 	}
@@ -88,8 +94,7 @@
 
 		.tabs {
 			gap: @lime-tablayout-horizontal-tabs-spacing;
-			width: calc(var(--tabs-width) + var(--scrollable) * var(--offset) * 2);
-			.padding-start-end(calc(var(--scrollable) * var(--offset)), calc(var(--scrollable) * var(--offset)))
+			width: calc(var(--tabs-width) - var(--scrollable) * var(--offset) * 2);
 		}
 	}
 
@@ -120,7 +125,6 @@
 .applySkins({
 	.tabGroup {
 		background-color: @lime-tablayout-tab-group-container-color;
-		border-radius: @lime-tablayout-border-radius;
 
 		// Apply transparent background to the child component so if the Scroller is used, then it will not have doubled background color
 		> :first-child {
