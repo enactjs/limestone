@@ -30,6 +30,31 @@ export default {
 	component: 'Alert'
 };
 
+const prop = {
+	twoButtons:
+	<buttons>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+	</buttons>,
+	twoSmallButtons:
+	<buttons>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+	</buttons>,
+	threeButtons:
+	<buttons>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+		<Button>Button Label</Button>
+	</buttons>,
+	threeSmallButtons:
+	<buttons>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+		<Button size="small">Button Label</Button>
+	</buttons>
+};
+
 export const WithLongTitle = (args) => (
 	<Alert
 		open={args['open']}
@@ -42,10 +67,7 @@ export const WithLongTitle = (args) => (
 				<AlertImage src={args['src']} type={args['type (image)']} />
 			</image>
 		) : null}
-		<buttons>
-			<Button>Yes</Button>
-			<Button>No</Button>
-		</buttons>
+		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
 		{args['children']}
 	</Alert>
 );
@@ -72,10 +94,7 @@ export const WithLongChildren = (args) => (
 				<AlertImage src={args['src']} type={args['type (image)']} />
 			</image>
 		) : null}
-		<buttons>
-			<Button>Yes</Button>
-			<Button>No</Button>
-		</buttons>
+		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
 		{args['children']}
 	</Alert>
 );
@@ -102,10 +121,7 @@ export const WithLongTitleAndLongChildren = (args) => (
 				<AlertImage src={args['src']} type={args['type (image)']} />
 			</image>
 		) : null}
-		<buttons>
-			<Button>Yes</Button>
-			<Button>No</Button>
-		</buttons>
+		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
 		{args['children']}
 	</Alert>
 );
@@ -132,10 +148,7 @@ export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
 				<AlertImage src={args['src']} type={args['type (image)']} />
 			</image> : null
 		}
-		<buttons>
-			<Button>Yes</Button>
-			<Button>No</Button>
-		</buttons>
+		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
 		<div>
 			<div>This is progressbar</div>
 			<ProgressBar progress={0.5} />
@@ -172,11 +185,7 @@ export const WithThumbnailAndScroller = (args) => (
 		<image>
 			<AlertImage src={args['src']} type={args['type (image)']} />
 		</image>
-		<buttons>
-			<Button>Button</Button>
-			<Button>Button</Button>
-			<Button>Button</Button>
-		</buttons>
+		{args['type'] === 'fullscreen' ? prop.threeButtons : prop.threeSmallButtons}
 		<Row>
 			<AlertImage iconSize="small" src={args['src']} type="icon" />
 			<Scroller className={css.scroller}>
@@ -196,3 +205,23 @@ select('type (image)', WithThumbnailAndScroller, ['icon', 'thumbnail'], ImageCon
 text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
 
 WithThumbnailAndScroller.storyName = 'with thumbnail and scroller';
+
+export const WithCustomSizeImage = (args) => (
+	<Alert
+		open={args['open']}
+		onClose={action('onClose')}
+		title="Fullscreen Alert Title"
+		type={args['type']}
+	>
+		<image>
+			<AlertImage src={args['src']} type="thumbnail" css={css} />
+		</image>
+		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+		Additional text content for Alert
+	</Alert>
+);
+
+boolean('open', WithCustomSizeImage, Config);
+text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
+
+WithCustomSizeImage.storyName = 'with custom size image';

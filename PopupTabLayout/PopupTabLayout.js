@@ -10,15 +10,19 @@
  */
 
 import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} from '@enact/core/handle';
+import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import useHandlers from '@enact/core/useHandlers';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
+import Pause from '@enact/spotlight/Pause';
+import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
+import {IdProvider} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {useContext, useEffect} from 'react';
+import {Component, use, useEffect} from 'react';
 import compose from 'ramda/src/compose';
 
 import Skinnable from '../Skinnable';
@@ -32,6 +36,11 @@ import componentCss from './PopupTabLayout.module.less';
 const popupPropList = ['noAutoDismiss', 'onHide', 'onKeyDown', 'onShow', 'open',
 	'position', 'scrimType', 'spotlightId', 'spotlightRestrict', 'id', 'className',
 	'style', 'noAnimation', 'onClose'];
+
+const OptimizedContainer = SpotlightContainerDecorator(
+	{enterTo: 'default-element', preserveId: true},
+	'div'
+);
 
 /**
  * Tabbed Layout component in a floating Popup.
@@ -184,6 +193,14 @@ const PopupTabLayoutBase = kind({
 		open: PropTypes.bool,
 
 		/**
+		 * Optimizes PopupTabLayout without Popup when true.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		optimized: PropTypes.bool,
+
+		/**
 		 * Orientation of the tabs.
 		 *
 		 * @type {('vertical')}
@@ -259,11 +276,12 @@ const PopupTabLayoutBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, scrimType, styler}) => styler.append({collapsed}, `scrim${cap(scrimType)}`),
-		noAnimation: ({noAnimation}) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation
+		className: ({collapsed, optimized, scrimType, styler}) => styler.append({collapsed, optimized}, `scrim${cap(scrimType)}`),
+		noAnimation: ({noAnimation}) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation,
+		PopupComponent: ({optimized}) => optimized ? OptimizedContainer : Popup
 	},
 
-	render: ({children, css, ...rest}) => {
+	render: ({children, css, optimized, PopupComponent, ...rest}) => {
 		// Extract all relevant popup props
 		const popupProps = {};
 		for (const prop in rest) {
@@ -273,8 +291,20 @@ const PopupTabLayoutBase = kind({
 			}
 		}
 
+		if (!optimized) {
+			popupProps.noAlertRole = true;
+			popupProps.noOutline = true;
+			popupProps.css = css;
+		} else {
+			delete popupProps.noAnimation;
+			delete popupProps.noAutoDismiss;
+			delete popupProps.onHide;
+			delete popupProps.onShow;
+			delete popupProps.scrimType;
+		}
+
 		return (
-			<Popup {...popupProps} css={css} noAlertRole noOutline>
+			<PopupComponent {...popupProps}>
 				<TabLayout
 					{...rest}
 					css={css}
@@ -284,9 +314,74 @@ const PopupTabLayoutBase = kind({
 				>
 					{children}
 				</TabLayout>
-			</Popup>
+			</PopupComponent>
 		);
 	}
+});
+
+const OptimizedFocusDecorator = hoc((config, Wrapped) => {
+	return class extends Component {
+		static displayName = 'OptimizedFocusDecorator';
+
+		static propTypes = /** @lends sandstone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
+			/**
+			 * Controls the visibility of the PopupTabLayout.
+			 *
+			 * @type {Boolean}
+			 * @private
+			 */
+			open: PropTypes.bool,
+
+			/**
+			 * Optimizes PopupTabLayout without Popup when true.
+			 *
+			 * @type {Boolean}
+			 * @private
+			 */
+			optimized: PropTypes.bool,
+
+			/**
+			 * The container id.
+			 *
+			 * @type {String}
+			 * @private
+			 */
+			spotlightId: PropTypes.string
+		};
+
+		constructor (props) {
+			super(props);
+			if (props.optimized) {
+				this.paused = new Pause('PopupTabLayout');
+				if (props.open) {
+					this.paused.pause();
+				}
+			}
+		}
+
+		componentDidMount () {
+			if (this.props.optimized && this.props.open) {
+				this.paused.resume();
+				Spotlight.focus(this.props.spotlightId);
+			}
+		}
+
+		componentDidUpdate (prevProps) {
+			if (this.props.optimized && this.props.open !== prevProps.open) {
+				if (this.props.open) {
+					Spotlight.focus(this.props.spotlightId);
+				}
+			}
+		}
+
+		render () {
+			if (this.props.optimized) {
+				return <Wrapped {...this.props} style={!this.props.open ? {display: 'none'} : null} />;
+			} else {
+				return <Wrapped {...this.props} />;
+			}
+		}
+	};
 });
 
 
@@ -300,6 +395,8 @@ const PopupTabLayoutBase = kind({
  * @public
  */
 const PopupTabLayoutDecorator = compose(
+	IdProvider({idProp: 'spotlightId', prefix: 'lime-popuptablayout-', generateProp: null}),
+	OptimizedFocusDecorator,
 	Skinnable
 );
 
@@ -407,7 +504,7 @@ const tabPanelsHandlers = {
  * @public
  */
 const TabPanelsBase = ({rtl, ... rest}) => {
-	const onTransition = useContext(TabLayoutContext);
+	const onTransition = use(TabLayoutContext);
 	const handlers = useHandlers(tabPanelsHandlers, {rtl, ...rest}, {onTransition});
 
 	return <Panels noCloseButton {...rest} css={componentCss} {...handlers} />;

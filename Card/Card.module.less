@@ -1,0 +1,275 @@
+// Card.module.less
+//
+@import '../styles/mixins.less';
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.selected-border(@color: white, @z-index: 1) {
+	&::before {
+		content: '';
+		position: absolute;
+		.position(0);
+		border-width: @lime-card-image-border-width;
+		border-style: solid;
+		border-color: @color;
+		z-index: @z-index;
+	}
+}
+
+.card {
+	position: relative;
+	margin: @lime-card-margin;
+
+	.image {
+		position: relative;
+	}
+
+	.selectionContainer {
+		pointer-events: none;
+		position: absolute;
+		.position(0);
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border-width: @lime-card-image-border-width;
+		border-style: solid;
+
+		.selectionIcon {
+			width: @lime-card-selection-icon-size;
+			height: @lime-card-selection-icon-size;
+			border-radius: @lime-card-selection-icon-border-radius;
+			margin: @lime-card-selection-icon-margin;
+			line-height: @lime-card-selection-icon-line-height;
+			z-index: 3;
+		}
+	}
+
+	.primaryBadge, .secondaryBadge {
+		position: absolute;
+		width: @lime-card-badge-size;
+		height: @lime-card-badge-size;
+		margin: @lime-card-badge-margin;
+		top: @lime-card-badge-top;
+	}
+	.primaryBadge {
+		left: @lime-card-badge-left;
+	}
+	.secondaryBadge {
+		right: @lime-card-badge-right;
+	}
+
+	.caption {
+		height: @lime-card-caption-height;
+		font-size: @lime-card-caption-font-size;
+		line-height: @lime-card-caption-line-height;
+		font-weight: @lime-card-caption-font-weight;
+	}
+
+	.label {
+		height: @lime-card-label-height;
+		font-size: @lime-card-label-font-size;
+		line-height: @lime-card-label-line-height;
+		font-weight: @lime-card-label-font-weight;
+	}
+
+	&.selected {
+		.image::after {
+			content: '';
+			position: absolute;
+			.position(0);
+			z-index: 1;
+		}
+	}
+
+	&.roundedImage {
+		border-radius: @lime-card-border-radius;
+
+		&.selected {
+			&::before {
+				border-radius: @lime-card-border-radius;
+			}
+
+			.image::after {
+				border-radius: @lime-card-border-radius;
+			}
+
+			&.vertical.hasContainer .image::after {
+				border-bottom-left-radius: unset;
+				border-bottom-right-radius: unset;
+			}
+
+			&.horizontal .image::after {
+				border-radius: @lime-card-border-radius;
+				border-top-right-radius: unset;
+				border-bottom-right-radius: unset;
+			}
+		}
+
+		&.vertical {
+			.selectionContainer, .image {
+				border-radius: @lime-card-border-radius;
+			}
+
+			&.hasContainer .image {
+				border-bottom-left-radius: unset;
+				border-bottom-right-radius: unset;
+			}
+		}
+
+		&.horizontal .image {
+			border-top-left-radius: @lime-card-border-radius;
+			border-bottom-left-radius: @lime-card-border-radius;
+		}
+	}
+
+	&.vertical {
+		width: var(--card-image-width);
+		height: auto;
+
+		.captions {
+			padding: @lime-card-vertical-captions-padding;
+			display: flex;
+			align-items: center;
+			gap: @lime-card-vertical-captions-gap;
+			align-self: stretch;
+		}
+
+		.image {
+			height: var(--card-image-height);
+		}
+
+		.imageIcon {
+			height: @lime-card-vertical-image-icon-size;
+			width: @lime-card-vertical-image-icon-size;
+			margin: @lime-card-vertical-image-icon-margin;
+		}
+
+		&.captionOverlay .captions {
+			padding: @lime-card-vertical-caption-overlay-captions-padding;
+		}
+
+		&.hasContainer .captions {
+			padding: @lime-card-vertical-has-container-captions-padding;
+		}
+
+		&:not(.hasContainer) .image {
+			z-index: 1;
+		}
+
+		&.selected:not(.hasContainer) .selectionContainer {
+			z-index: 3;
+		}
+	}
+
+	&.horizontal {
+		width: @lime-card-horizontal-width;
+		height: @lime-card-horizontal-height;
+
+		.captions {
+			padding: @lime-card-horizontal-captions-padding;
+		}
+
+		.image {
+			width: var(--card-image-width);
+		}
+	}
+
+	.focus({
+		&.hasContainer {
+			transform: scale(1.1);
+			transition: transform 200ms ease-in-out;
+
+			&.roundedImage::before {
+				border-radius: @lime-card-border-radius;
+			}
+		}
+
+		&.vertical {
+			&:not(.captionOverlay):not(.hasContainer) .image,
+			&.captionOverlay {
+				transform: scale(1.1);
+				transition: transform 200ms ease-in-out;
+			}
+
+			&:not(.hasContainer) .selectionContainer {
+				z-index: 5;
+			}
+		}
+	});
+
+	// Skin colors
+	.applySkins({
+		.selectionContainer {
+			border-color: transparent;
+			.selectionIcon {
+				color: transparent;
+			}
+		}
+
+		&.selected .selectionIcon {
+			background-color: @lime-card-selection-container-selected-color;
+			color: @lime-card-selection-icon-selected-color;
+		}
+
+		&.hasContainer {
+			background-color: @lime-card-container-color;
+
+			&.selected {
+				.selected-border(@lime-card-border-selected-color, 5);
+			}
+		}
+
+		&.selected {
+			.image::after {
+				background: @lime-card-scrim-color;
+			}
+		}
+
+		.caption {
+			color: @lime-card-label-main-color;
+		}
+
+		.label {
+			color: @lime-card-label-sub-color;
+		}
+
+		&.vertical {
+			&:not(.hasContainer) {
+				.lime-focus-highlight(image);
+			}
+
+			&.selected:not(.hasContainer) .selectionContainer {
+				border-color: @lime-card-border-selected-color;
+			}
+		}
+
+		.focus({
+			.selectionIcon {
+				color: @lime-card-selection-icon-color;
+			}
+
+			&.selected .selectionIcon {
+				color: @lime-card-selection-icon-selected-color;
+			}
+
+			&.hasContainer {
+				background-color: @lime-card-container-focused-color;
+				.selected-border(@lime-card-border-focused-color, 5);
+
+				.caption {
+					color: @lime-card-label-main-focused-color;
+				}
+
+				.label {
+					color: @lime-card-label-sub-focused-color;
+				}
+			}
+
+			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
+				border-color: @lime-card-border-focused-color;
+			}
+		});
+	})
+}

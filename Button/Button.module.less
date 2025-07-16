@@ -7,9 +7,9 @@
 .button {
 	// default is size="large"
 	.lime-large-button-text();
-	height: @lime-button-height;
 	line-height: (@lime-button-height - (2 * @lime-button-border-width));
-	min-width: @lime-button-height;
+	height: @lime-button-height;
+	min-width: @lime-button-min-width;
 	max-width: @lime-button-max-width;
 	padding: 0 @lime-button-h-padding;
 	margin: @lime-button-margin;
@@ -30,7 +30,13 @@
 	}
 
 	&.focusExpand {
-		margin: @lime-button-focusexpand-margin;
+		margin: @lime-button-margin;
+	}
+
+	&.centered {
+		.marquee {
+			flex-grow: 0;
+		}
 	}
 
 	.client {
@@ -44,10 +50,6 @@
 	}
 
 	// Button with icon and text
-	&.hasIcon {
-		padding: 0 @lime-button-with-icon-h-padding;
-	}
-
 	&.iconAfter {
 		.client {
 			flex-direction: row-reverse;
@@ -85,14 +87,14 @@
 			}
 
 			.client {
-				margin-inline-start: @lime-button-colordot-width;
-				padding-inline-start: @lime-button-colordot-h-margin; // The gap between the color-dot and the content matches the space between the regular icon and the text
+				margin-inline-start: @lime-button-colordot-h-margin;
+				padding-inline-start: @lime-button-colordot-h-padding; // The gap between the color-dot and the content matches the space between the regular icon and the text
 
 				&::before {
 					// Colored side-bar
 					bottom: 50%;
 					transform: translateY(50%);
-					.position-start-end(-@lime-button-colordot-width, initial);
+					.position-start-end(calc((@lime-button-colordot-h-margin + @lime-button-colordot-width) / 2 * -1) , initial);
 				}
 			}
 		}
@@ -123,27 +125,27 @@
 	}
 
 	&.minWidth {
-		min-width: @lime-button-min-width;
+		min-width: @lime-button-min-width-default;
 	}
 
 	&.small {
 		.lime-small-button-text();
-		height: @lime-button-small-height;
-		min-width: @lime-button-small-height;
-		max-width: @lime-button-small-max-width;
 		line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+		height: @lime-button-small-height;
+		min-width: @lime-button-small-min-width;
+		max-width: @lime-button-small-max-width;
 		margin: @lime-button-small-margin;
 		padding-left: @lime-button-small-h-padding;
 		padding-right: @lime-button-small-h-padding;
 		--button-height: $height;
 
 		&.focusExpand {
-			margin: @lime-button-small-focusexpand-margin;
+			margin: @lime-button-small-margin;
 		}
 
 		// Standard Button Scenario
 		&.minWidth {
-			min-width: @lime-button-small-min-width;
+			min-width: @lime-button-small-min-width-default;
 		}
 
 		.icon {
@@ -166,17 +168,17 @@
 			.client::before {
 				bottom: @lime-button-small-colordot-bottom;
 				width: @lime-button-small-colordot-width;
-				height: @lime-button-colordot-height;
+				height: @lime-button-small-colordot-height;
 			}
 
 			// Standard Button Scenario
 			&.minWidth {
 				.client {
-					margin-inline-start: @lime-button-small-colordot-width;
+					margin-inline-start: @lime-button-small-colordot-h-margin;
 
 					&::before {
 						bottom: 50%;
-						.position-start-end(-@lime-button-small-colordot-width, initial);
+						.position-start-end(calc((@lime-button-small-colordot-h-margin + @lime-button-small-colordot-width) / 2 * -1), initial);
 					}
 				}
 
@@ -201,13 +203,19 @@
 			--button-height: $height;
 
 			&.minWidth {
-				min-width: @lime-button-small-min-width;
+				min-width: @lime-button-small-min-width-default;
 			}
 		});
 	}
 
 	// IconButton rules
 	&.iconOnly {
+		min-width: @lime-button-height;
+
+		.lime-custom-text({
+			min-width: @lime-button-height-large;
+		});
+
 		.client {
 			padding: 0;
 
@@ -216,13 +224,25 @@
 			}
 		}
 
+		&.large {
+			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
+			.padding-start-end(.extract(@lime-button-icon-padding, left)[], .extract(@lime-button-icon-padding, right)[]);
+		}
+
+		&.small {
+			min-width: @lime-button-small-height;
+			padding: @lime-button-icon-small-padding;
+			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
+
+			.lime-custom-text({
+				min-width: @lime-button-small-height-large;
+			});
+		}
+
 		&.iconAfter,
 		&.iconBefore,
 		&.large,
 		&.small {
-			padding: @lime-button-icon-small-padding;
-			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
-
 			.icon {
 				margin: 0; // reset margins for `IconButton`
 
@@ -240,10 +260,6 @@
 					height: @lime-button-icon-only-colordot-height;
 				}
 			}
-		}
-
-		&.large {
-			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
 		}
 
 		&.red,
@@ -290,27 +306,42 @@
 
 		&,
 		:global(.enact-a11y-high-contrast) & {
-			color: @lime-button-text-color;
+			color: @lime-button-fill-label-color;
 		}
 
 		.bg {
 			.lime-button-resting-bg-colors();
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
-			border-color: @lime-button-border-color;
+			border-color: @lime-button-outline-border-color;
 			border-radius: @lime-button-border-radius;
 		}
 
+		&.bordered {
+			.bg {
+				background-color: @lime-button-outline-container-color;
+				border: @lime-button-border-width solid @lime-button-outline-border-color;
+			}
+
+			.client {
+				color: @lime-button-outline-label-color;
+			}
+		}
+
 		&.opaque {
-			color: @lime-button-text-color;
+			color: @lime-button-fill-label-color;
 
 			.bg {
 				opacity: @lime-button-bg-opacity;
 			}
+
+			.icon {
+				color: @lime-button-fill-icon-color;
+			}
 		}
 
 		&.transparent {
-			color: @lime-button-transparent-text-color;
+			color: @lime-button-transparent-label-color;
 
 			.bg {
 				opacity: @lime-button-transparent-bg-opacity;
@@ -319,19 +350,26 @@
 			&.shadowed .client {
 				text-shadow: @lime-button-text-shadow;
 			}
+
+			.icon {
+				color: @lime-button-transparent-icon-color;
+			}
 		}
 
 		&.red .client::before {
-			background-color: @lime-remote-button-red-color;
+			background-color: @lime-colorkey-icon-red;
 		}
+
 		&.green .client::before {
-			background-color: @lime-remote-button-green-color;
+			background-color: @lime-colorkey-icon-green;
 		}
+
 		&.yellow .client::before {
-			background-color: @lime-remote-button-yellow-color;
+			background-color: @lime-colorkey-icon-yellow;
 		}
+
 		&.blue .client::before {
-			background-color: @lime-remote-button-blue-color;
+			background-color: @lime-colorkey-icon-blue;
 		}
 
 		&.small {
@@ -352,10 +390,27 @@
 		}
 
 		&.selected {
-			color: @lime-button-selected-text-color;
-
 			.bg {
 				.lime-button-selected-colors();
+			}
+
+			.client {
+				color: @lime-button-fill-label-selected-color;
+			}
+
+			.icon {
+				color: @lime-button-fill-icon-selected-color;
+			}
+
+			&.bordered {
+				.bg {
+					.lime-button-outline-selected-colors();
+					border: @lime-button-border-width solid @lime-button-outline-border-selected-color;
+				}
+
+				.client {
+					color: @lime-button-outline-label-selected-color;
+				}
 			}
 
 			&.opaque {
@@ -366,16 +421,55 @@
 
 			&.transparent {
 				.bg {
+					.lime-button-transparent-selected-colors();
 					opacity: @lime-button-transparent-selected-bg-opacity;
+				}
+
+				.client {
+					color: @lime-button-transparent-label-selected-color;
+				}
+
+				.icon {
+					color: @lime-button-transparent-icon-selected-color;
 				}
 			}
 		}
 
 		.focus({
-			.lime-spotlight-focus-text-colors();
-
 			.bg {
 				.lime-button-focus-bg-colors();
+			}
+
+			.client {
+				color: @lime-button-fill-label-focused-color;
+			}
+
+			.icon {
+				color: @lime-button-fill-icon-focused-color;
+			}
+
+			&.bordered {
+				.bg {
+					.lime-button-outline-focus-bg-colors();
+				}
+
+				.client {
+					color: @lime-button-outline-label-focused-color;
+				}
+			}
+
+			&.transparent {
+				.bg {
+					.lime-button-transparent-focus-bg-colors();
+				}
+
+				.client {
+					color: @lime-button-transparent-label-focused-color;
+				}
+
+				.icon {
+					color: @lime-button-transparent-icon-focused-color;
+				}
 			}
 
 			.client {
@@ -384,7 +478,7 @@
 
 			&.iconOnly {
 				.bg {
-					background-color: @lime-button-focus-icononly-bg-color;
+					background-color: @lime-button-icononly-bg-focused-color;
 				}
 			}
 
@@ -432,9 +526,19 @@
 		:global(.noAnimation) & {
 			.focus({
 				.bg {
-					.lime-button-focus-bg-colors(@shadow: {
-						box-shadow: none;
-					});
+					.lime-button-focus-bg-colors(@shadow: {box-shadow: none;});
+				}
+
+				&.bordered {
+					.bg {
+						.lime-button-outline-focus-bg-colors(@shadow: {box-shadow: none;});
+					}
+				}
+
+				&.transparent {
+					.bg {
+						.lime-button-transparent-focus-bg-colors(@shadow: {box-shadow: none;});
+					}
 				}
 
 				&.focusExpand {
@@ -481,9 +585,33 @@
 				}
 			}
 
+			&.bordered {
+				.bg {
+					background-color: @lime-button-outline-container-color;
+				}
+			}
+
+			&.transparent.selected {
+				.bg {
+					opacity: @lime-button-transparent-disabled-selected-bg-opacity;
+				}
+			}
+
+			&.bordered.selected {
+				.bg {
+					.lime-button-outline-selected-colors();
+				}
+			}
+
 			.focus({
 				.bg {
-					.lime-disabled-focus-bg-colors();
+					background-color: @lime-button-fill-container-disabled-focused-color;
+				}
+
+				&.bordered {
+					.bg {
+						border: @lime-button-border-width solid @lime-button-fill-container-disabled-focused-color;
+					}
 				}
 
 				.client {

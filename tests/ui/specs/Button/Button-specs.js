@@ -20,10 +20,10 @@ describe('Button', function () {
 			expect(await buttonDisabled.self.isFocused()).toBe(true);
 		});
 
-		it('should focus buttonSizeSmall button on 5-way left', async function () {
-			await iconButton.focus();
-			await Page.spotlightLeft();
-			expect(await buttonSizeSmall.self.isFocused()).toBe(true);
+		it('should focus iconButton on 5-way right', async function () {
+			await buttonSizeSmall.focus();
+			await Page.spotlightRight();
+			expect(await iconButton.self.isFocused()).toBe(true);
 		});
 	});
 

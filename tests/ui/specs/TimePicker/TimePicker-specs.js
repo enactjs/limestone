@@ -158,6 +158,7 @@ describe('TimePicker', function () {
 				it('should increase the hour when incrementing the picker', async function () {
 					const {hour} = await extractValues(timePicker);
 					await timePicker.incrementer('hour').click();
+					await Page.delay(200);
 					const {hour: value} = await extractValues(timePicker);
 					const expected = hour < 12 ? hour + 1 : 1;
 					expect(value).toBe(expected);
@@ -166,6 +167,7 @@ describe('TimePicker', function () {
 				it('should decrease the hour when decrementing the picker]', async function () {
 					const {hour} = await extractValues(timePicker);
 					await timePicker.decrementer('hour').click();
+					await Page.delay(200);
 					const {hour: value} = await extractValues(timePicker);
 					const expected = hour > 1 ? hour - 1 : 12;
 					expect(value).toBe(expected);
@@ -176,6 +178,7 @@ describe('TimePicker', function () {
 					await timePicker.minute.click();
 					await browser.waitUntil(async () => await timePicker.minute.isFocused(), {timeout: 1500,  interval: 100});
 					await timePicker.incrementer('minute').click();
+					await Page.delay(200);
 					const {minute: value} = await extractValues(timePicker);
 					const expected = minute !== 59 ? minute + 1 : 0;
 					expect(value).toBe(expected);
@@ -186,6 +189,7 @@ describe('TimePicker', function () {
 					await timePicker.minute.click();
 					await browser.waitUntil(async () => await timePicker.minute.isFocused(), {timeout: 1500,  interval: 100});
 					await timePicker.decrementer('minute').click();
+					await Page.delay(200);
 					const {minute: value} = await extractValues(timePicker);
 					const expected = minute !== 0 ? minute - 1 : 59;
 					expect(value).toBe(expected);

@@ -41,28 +41,34 @@ export const _FixedPopupPanels = (args) => (
 					<title>FixedPopupPanels Title</title>
 					<subtitle>A panel type for options views</subtitle>
 				</Header>
-				<BodyText>Example text inside an FixedPopupPanels Panel</BodyText>
-				<Item>Example Item 1</Item>
-				<Item>Example Item 2</Item>
-				<Item>Example Item 3</Item>
+				<BodyText className={css.bodyText}>Example text inside an FixedPopupPanels Panel</BodyText>
+				<div className={css.container}>
+					<Item>Example Item 1</Item>
+					<Item>Example Item 2</Item>
+					<Item>Example Item 3</Item>
+				</div>
 			</Panel>
 			<Panel>
 				<Header>
 					<title>Another Panel</title>
 					<subtitle>This is the second page</subtitle>
 				</Header>
-				<BodyText>Woo woo</BodyText>
-				<Item>Example Item 1 on Panel 2</Item>
-				<Item>Example Item 2 on Panel 2</Item>
-				<Item>Example Item 3 on Panel 2</Item>
+				<BodyText className={css.bodyText}>Woo woo</BodyText>
+				<div className={css.container}>
+					<Item>Example Item 1 on Panel 2</Item>
+					<Item>Example Item 2 on Panel 2</Item>
+					<Item>Example Item 3 on Panel 2</Item>
+				</div>
 			</Panel>
 			<Panel>
 				<Header>
 					<title>FixedPopupPanels Panel</title>
 					<subtitle>This is the third page</subtitle>
 				</Header>
-				<Item>Example Item 1 on Panel 3</Item>
-				<Item>Example Item 2 on Panel 3</Item>
+				<div className={css.container}>
+					<Item>Example Item 1 on Panel 3</Item>
+					<Item>Example Item 2 on Panel 3</Item>
+				</div>
 				<footer className={css.footer}>
 					<Button>Button 1</Button>
 					<Button>Button 2</Button>

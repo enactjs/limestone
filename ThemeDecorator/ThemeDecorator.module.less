@@ -9,17 +9,20 @@
 @import "../styles/internal/fonts.less";
 
 // Limestone Rules
+@import "~@enovaui/core-tokens/css/spacing-primitive.css";
+@import "~@enovaui/core-tokens/css/typography-primitive.css";
+@import "~@enovaui/webos-tokens/css/color-semantic-dark.css";
+@import "~@enovaui/webos-tokens/css/radius-semantic.css";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
-@import "../styles/alias-tokens.css";
 
 .applySkins({
-	color: var(--lime-alias-color-on-surface-main);
+	color: var(--semantic-color-on-background-main);
 
 	::selection {
 		color: @lime-input-selection-color;
-		background-color:@lime-input-selection-bg-color;
+		background-color: @lime-input-selection-bg-color;
 	}
 
 	// Disabled Components
@@ -59,21 +62,12 @@
 
 	/* Light Skin */
 	&:global(.light) {
-		--lime-alias-color-surface-full: var(--ref-color-base-85);
-		--lime-alias-color-on-surface-main: var(--ref-color-base-10);
-		--lime-alias-color-on-surface-sub: var(--ref-color-base-35);
-		--lime-alias-color-on-selection-icon-selected-disabled-focused: var(--ref-color-base-65);
-		--lime-alias-color-on-selection-icon-selected-disabled: var(--ref-color-base-65);
-		--lime-alias-color-on-selection-bg-active-disabled: var(--ref-color-base-60);
-		--lime-alias-color-on-selection-bg-active-disabled-focused: var(--ref-color-base-60);
-		--lime-alias-color-surface-overlay: var(--ref-color-secondary-85);
-		--lime-alias-color-progress-bar: var(--lime-alias-color-accent);
-		--lime-alias-color-progress-bg: var(--ref-color-base-40-a70);
+		@import-json "../node_modules/@enovaui/webos-tokens/json/color-semantic-light.json";
 	}
 
 	/* High Contrast */
 	&:global(.enact-a11y-high-contrast):global(.highContrast) {
-		--lime-alias-color-surface-overlay: var(--ref-color-base-0);
+		@import-json "../node_modules/@enovaui/webos-tokens/json/color-semantic-high-contrast.json";
 	}
 }
 
@@ -85,6 +79,6 @@
 .applySkins({
 	&.bg,
 	> .bg {
-		background-color: var(--lime-alias-color-surface-full);
+		background-color: var(--semantic-color-background-full-default);
 	}
 });

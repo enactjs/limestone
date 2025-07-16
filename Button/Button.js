@@ -59,6 +59,14 @@ const ButtonBase = kind({
 		backgroundOpacity: PropTypes.oneOf(['opaque', 'transparent']),
 
 		/**
+		 * Adds a border to the button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		bordered: PropTypes.bool,
+
+		/**
 		 * Centers the contents.
 		 *
 		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
@@ -224,8 +232,9 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
+		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
+				bordered,
 				centered,
 				collapsable,
 				collapsed,
@@ -246,13 +255,14 @@ const ButtonBase = kind({
 
 	render: ({css, ...rest}) => {
 		delete rest.backgroundOpacity;
+		delete rest.bordered;
 		delete rest.centered;
 		delete rest.color;
 		delete rest.collapsable;
 		delete rest.collapsed;
+		delete rest.focusEffect;
 		delete rest.iconOnly;
 		delete rest.iconPosition;
-		delete rest.focusEffect;
 		delete rest.roundBorder;
 		delete rest.shadowed;
 
@@ -302,11 +312,11 @@ const IconButtonDecorator = hoc((config, Wrapped) => {
  * @public
  */
 const ButtonDecorator = compose(
+	UiButtonDecorator,
 	Pure,
 	IconButtonDecorator,
 	TooltipDecorator({tooltipDestinationProp: 'decoration'}),  // Future note: This should eventually be conditionally applied via hooks (after refactoring)
 	MarqueeDecorator({css: componentCss}),
-	UiButtonDecorator,
 	Spottable,
 	Skinnable
 );

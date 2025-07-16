@@ -911,7 +911,7 @@ describe('Popup', function () {
 				// Position the pointer inside popup to the right of the Cancel button (step 4-1).
 				await $('#popup7').moveTo(); // pointer is positioned in the center of popup to the right of Cancel button
 				// Click on the blank area to change to 5-way.
-				await $('#popup7').click();
+				await $('#popup7').click({x: 50});
 				await Page.spotlightLeft();
 				expect(await popup.buttonCancel.isFocused()).toBe(true);
 

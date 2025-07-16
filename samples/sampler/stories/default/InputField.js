@@ -23,14 +23,14 @@ export default {
 export const _InputField = (args) => (
 	<InputField
 		autoFocus={args['autoFocus']}
-		onBeforeChange={action('onBeforeChange')}
-		onChange={action('onChange')}
 		disabled={args['disabled']}
 		dismissOnEnter={args['dismissOnEnter']}
 		iconAfter={args['iconAfter']}
 		iconBefore={args['iconBefore']}
 		invalid={args['invalid']}
 		invalidMessage={args['invalidMessage']}
+		onBeforeChange={action('onBeforeChange')}
+		onChange={action('onChange')}
 		placeholder={args['placeholder']}
 		size={args['size']}
 		type={args['type']}

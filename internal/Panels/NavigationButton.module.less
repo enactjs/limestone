@@ -6,12 +6,14 @@
 
 .button.hasIcon {
 	&.small {
+		min-width: @lime-button-small-height;
 		padding: @lime-button-icon-small-padding;
 		& .bg {
 			width: @lime-button-small-height;
 		}
 	}
 	&.large {
+		min-width: @lime-button-height;
 		padding: @lime-button-icon-padding;
 		& .bg {
 			width: @lime-button-height;
@@ -32,7 +34,7 @@
 	}
 	.applySkins({
 		.client :not(.icon) {
-			color: var(--lime-alias-color-on-surface-main);
+			color: var(--semantic-color-on-background-main);
 		}
 	});
 }

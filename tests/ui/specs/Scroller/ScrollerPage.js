@@ -129,7 +129,7 @@ class ScrollerPage extends Page {
 			const clickPositionFromCenter = way === 'Down' ? 300 : -300;
 			await $(`${verticalscrollbarSelector}`).click({y: clickPositionFromCenter});
 		} else if (direction === 'horizontal') {
-			const clickPositionFromCenter = way === 'Left' ? -500 : 500;
+			const clickPositionFromCenter = way === 'Left' ? -400 : 400;
 			await $(`${horizontalscrollbarSelector}`).click({x: clickPositionFromCenter});
 		}
 	}
