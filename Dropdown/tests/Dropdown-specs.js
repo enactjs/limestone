@@ -184,7 +184,7 @@ describe('Dropdown', () => {
 		);
 
 		const lessChildrenExpected = 2;
-		const lessChildrenActual = screen.getByRole('list').children;
+		const lessChildrenActual = screen.getByRole('group').children;
 
 		expect(lessChildrenActual).toHaveLength(lessChildrenExpected);
 
@@ -199,7 +199,7 @@ describe('Dropdown', () => {
 		);
 
 		const moreChildrenExpected = 3;
-		const moreChildrenActual = screen.getByRole('list').children;
+		const moreChildrenActual = screen.getByRole('group').children;
 
 		expect(moreChildrenActual).toHaveLength(moreChildrenExpected);
 	});
@@ -233,6 +233,23 @@ describe('Dropdown', () => {
 		const actual = screen.getByRole('checkbox');
 
 		expect(actual).toHaveAttribute('aria-checked', expected);
+	});
+
+	test('should set the `aria-posinset` and `aria-setsize` state of the item in the list', () => {
+		render(
+			<FloatingLayerController>
+				<DropdownBase open title={title}>
+					{children}
+				</DropdownBase>
+			</FloatingLayerController>
+		);
+
+		const posinsetExpected = '1';
+		const setsizeExpected = '3';
+		const actual = screen.getByRole('group').children[0].children[0];
+
+		expect(actual).toHaveAttribute('aria-posinset', posinsetExpected);
+		expect(actual).toHaveAttribute('aria-setsize', setsizeExpected);
 	});
 
 	test('should pass through members of child objects to props for each item', () => {
@@ -269,7 +286,7 @@ describe('Dropdown', () => {
 			</FloatingLayerController>
 		);
 
-		const actual = within(screen.getByRole('list')).getByRole('button');
+		const actual = within(screen.getByRole('group')).getByRole('button');
 
 		expect(actual).toHaveAttribute('aria-checked', 'false');
 	});
@@ -285,7 +302,7 @@ describe('Dropdown', () => {
 			</FloatingLayerController>
 		);
 
-		const firstItem = screen.getByRole('list').children[0].children[0];
+		const firstItem = screen.getByRole('group').children[0].children[0];
 
 		await user.click(firstItem);
 
@@ -301,7 +318,7 @@ describe('Dropdown', () => {
 					{children}
 				</DropdownList>
 			);
-			const firstItem = screen.getByRole('list').children[0].children[0];
+			const firstItem = screen.getByRole('group').children[0].children[0];
 
 			await user.click(firstItem);
 
