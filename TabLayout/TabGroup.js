@@ -167,8 +167,10 @@ const TabGroupBase = kind({
 		onBlurList: PropTypes.func,
 		onFocus: PropTypes.func,
 		onFocusTab: PropTypes.func,
+		onScrollStop: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
+		scrollPosition: PropTypes.object,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
@@ -189,7 +191,7 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollerPosition, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollPosition, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -233,8 +235,8 @@ const TabGroupBase = kind({
 			spotlightDisabled
 		};
 		const scrollerProps = scrollable ? {
-			cbScrollTo: (fn) => {
-				scrollToRef.current = (collapsed ? fn : null);
+			cbScrollTo: (scrollTo) => {
+				scrollToRef.current = (collapsed ? scrollTo : null);
 			},
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
@@ -250,7 +252,7 @@ const TabGroupBase = kind({
 		const GroupComponent = scrollable ? Group : GroupContainer;
 
 		if (!isHorizontal && !noIcons && scrollToRef.current) {
-			scrollToRef.current({animate: false, position: scrollerPosition});
+			scrollToRef.current({animate: false, position: scrollPosition});
 		}
 
 		return (
