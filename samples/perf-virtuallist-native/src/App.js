@@ -41,13 +41,14 @@ const VirtualListNativeSample = (props) => {
 	), []);
 
 	return (
-		<VirtualList
-			{...props}
-			cbScrollTo={getScrollTo}
-			dataSize={items.length}
-			itemRenderer={renderItem}
-			itemSize={ri.scale(156)}
-		/>
+		<div {...props}>
+			<VirtualList
+				cbScrollTo={getScrollTo}
+				dataSize={items.length}
+				itemRenderer={renderItem}
+				itemSize={ri.scale(156)}
+			/>
+		</div>
 	);
 };
 

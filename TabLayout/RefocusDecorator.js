@@ -1,7 +1,7 @@
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {useLayoutEffect, useEffect, useCallback} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import css from './TabGroup.module.less';
 
@@ -20,10 +20,33 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 	)
 );
 
+function useScreenOrientation () {
+	const getOrientation = () =>
+		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+
+	const [orientation, setOrientation] = useState(getOrientation());
+
+	useEffect(() => {
+		const handleResize = () => {
+			setOrientation(getOrientation());
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		// Cleanup
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return orientation;
+}
+
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function RefocusDecorator ({collapsed, index, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
+	function RefocusDecorator ({blockCollapseOnPortrait, collapsed, index, onCollapse, onTabAnimationEnd, orientation, spotlightId, ...rest}) {
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
+
+		const screenOrientation = useScreenOrientation();
+		const screenOrientationRef = useRef(null);
 
 		// generate an id for the component (and a derived id for the tabs) so we can refocus them
 		// generating a different ID by orientation so swapping orientations doesn't clear container
@@ -48,6 +71,22 @@ const RefocusDecorator = Wrapped => {
 			});
 		}, [collapsed, orientation, spotlightId]);
 
+		useEffect(() => {
+			if (!blockCollapseOnPortrait && screenOrientationRef.current !== screenOrientation) {
+				if (screenOrientation === 'portrait') {
+					const currentFocusedElement = document.querySelector(':focus'),
+						tabsSpotlightId = getTabsSpotlightId(spotlightId, false),
+						tabsContainer = getContainerNode(tabsSpotlightId);
+
+					if (tabsContainer && !tabsContainer.contains(currentFocusedElement)) {
+						onCollapse();
+					}
+				}
+
+				screenOrientationRef.current = screenOrientation;
+			}
+		}, [blockCollapseOnPortrait, onCollapse, screenOrientation, spotlightId]);
+
 		const handleTabAnimationEnd = useCallback((ev) => {
 			if (onTabAnimationEnd) {
 				onTabAnimationEnd(ev);
@@ -69,6 +108,7 @@ const RefocusDecorator = Wrapped => {
 				{...rest}
 				collapsed={collapsed}
 				index={index}
+				onCollapse={onCollapse}
 				onTabAnimationEnd={handleTabAnimationEnd}
 				orientation={orientation}
 				spotlightId={spotlightId}
