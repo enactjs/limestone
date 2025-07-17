@@ -11,6 +11,8 @@ import {use} from 'react';
 import LocaleSwitch from '../LocaleSwitch';
 import ScrollModeSwitch from '../ScrollModeSwitch';
 
+import styles from './PanelHeader.module.less';
+
 import {
 	addItem as addItemAction,
 	changeDataSize as changeDataSizeAction,
@@ -107,19 +109,19 @@ const PanelHeader = (props) => {
 				<Row style={{direction: 'ltr'}}>
 					<Cell>
 						<label>dataSize:</label>
-						<Input size="small" onChange={setData} style={inputWidth} type="number" value={dataSize} />
+						<Input css={styles} size="small" onChange={setData} style={inputWidth} type="number" value={dataSize} />
 					</Cell>
 					<Cell>
 						<label>minHeightSize:</label>
-						<Input size="small" onChange={changeMinHeight} style={inputWidth} type="number" value={minHeight} />
+						<Input css={styles} size="small" onChange={changeMinHeight} style={inputWidth} type="number" value={minHeight} />
 					</Cell>
 					<Cell>
 						<label>minWidthSize:</label>
-						<Input size="small" onChange={changeMinWidth} style={inputWidth} type="number" value={minWidth} />
+						<Input css={styles} size="small" onChange={changeMinWidth} style={inputWidth} type="number" value={minWidth} />
 					</Cell>
 					<Cell>
 						<label>spacingSize:</label>
-						<Input size="small" onChange={changeSpacing} style={inputWidth} type="number" value={spacing} />
+						<Input css={styles} size="small" onChange={changeSpacing} style={inputWidth} type="number" value={spacing} />
 					</Cell>
 				</Row>
 			}

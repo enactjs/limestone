@@ -66,6 +66,7 @@ const MainPanel = ({...rest}) => {
 					<Cell shrink>
 						<label>DataSize:</label>
 						<Input
+							css={css}
 							onChange={handleChange}
 							placeholder={`${listItems.length}`}
 							size="small"
