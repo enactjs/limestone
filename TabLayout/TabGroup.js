@@ -30,6 +30,7 @@ const TabBase = kind({
 		css: PropTypes.object,
 		icon: PropTypes.string,
 		index: PropTypes.number,
+		noIcons: PropTypes.string,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
