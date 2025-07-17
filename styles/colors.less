@@ -24,27 +24,11 @@
 
 // Overlay Alert
 // ---------------------------------------
-
-// common colors
-@lime-alert-overlay-bg-color: var(--lime-alert-overlay-bg-color, var(--semantic-color-background-popup-default));
+@lime-alert-overlay-bg-color: var(--semantic-color-background-popup-default);
 @lime-alert-overlay-bg-color-opacity: 1;
-@lime-alert-overlay-text-color: var(--lime-alert-overlay-text-color, var(--semantic-color-on-background-popup-main));
-@lime-alert-overlay-text-sub-color: var(--lime-alert-overlay-text-sub-color, var(--semantic-color-on-background-popup-sub));
-@lime-alert-overlay-focus-text-color: var(--lime-alert-overlay-focus-text-color, var(--semantic-color-on-surface-main-focused));
-@lime-alert-overlay-disabled-selected-color: var(--lime-alert-overlay-disabled-selected-color, var(--primitive-color-neutral-gray-65));
-@lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, var(--primitive-color-neutral-gray-60));
-@lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, var(--primitive-color-neutral-gray-65));
-@lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, var(--primitive-color-neutral-gray-60));
+@lime-alert-overlay-label-color: var(--semantic-color-on-background-popup-main);
+@lime-alert-overlay-label-sub-color: var(--semantic-color-on-background-popup-sub);
 @lime-alert-overlay-outline-style: none;
-
-// component colors
-@lime-alert-overlay-progress-color: var(--lime-alert-overlay-progress-color, var(--semantic-color-surface-accent));
-@lime-alert-overlay-progress-bg-color: var(--lime-alert-overlay-progress-bg-color, var(--semantic-color-surface-popup-default-track));
-@lime-alert-overlay-progress-bg-color-opacity: var(--lime-alert-overlay-progress-bg-color-opacity, 1);
-@lime-alert-overlay-checkbox-color: var(--lime-alert-overlay-checkbox-color, var(--semantic-color-on-surface-main-selected));
-@lime-alert-overlay-checkbox-disabled-selected-text-color: var(--lime-alert-overlay-checkbox-disabled-selected-text-color, var(--primitive-color-neutral-gray-65));
-@lime-alert-overlay-formcheckboxitem-focus-text-color: var(--lime-alert-overlay-formcheckboxitem-focus-text-color, @lime-alert-overlay-focus-text-color);
-@lime-alert-overlay-item-disabled-focus-bg-color: var(--lime-alert-overlay-item-disabled-focus-bg-color, var(--semantic-color-surface-default-disabled-focused));
 
 // Disabled Opacity
 // ---------------------------------------
@@ -204,7 +188,7 @@
 // ---------------------------------------
 @lime-iconitem-disabled-opacity: 0.3;
 @lime-iconitem-inner-label-color: var(--semantic-color-on-surface-white);
-@lime-iconitem-inner-label-dark-color: var(--semantic-color-on-background-popup-main);
+@lime-iconitem-inner-label-dark-color: var(--semantic-color-on-surface-main-focused);
 @lime-iconitem-outer-label-main-color: var(--semantic-color-on-background-main);
 @lime-iconitem-inner-border-color: var(--semantic-color-stroke-white);
 @lime-iconitem-inner-icon-color: var(--semantic-color-on-surface-white);
@@ -417,6 +401,7 @@
 
 // TabLayout
 // ---------------------------------------
+@lime-tablayout-tab-button-selected-color: var(--semantic-color-on-background-main);
 @lime-tablayout-tab-container-selected-color: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
 @lime-tablayout-tab-group-container-color: ~"color(from" var(--semantic-color-surface-default-group) ~"srgb r g b / 0.1)";
 
