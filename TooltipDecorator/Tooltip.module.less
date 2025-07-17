@@ -10,9 +10,14 @@
 	transform: rotate(@rotate) skew(@skewX, @skewY);
 }
 
-.centerTail (@origin, @rotate, @skew) {
-	transform-origin: @origin;
-	transform: rotate(@rotate) skew(@skew, @skew);
+.centerTail () {
+	clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+	transform: translateX(-50%);
+}
+
+.centerTail (@position) when (@position = left) or (@position = right) {
+	clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+	transform: translateY(-50%);
 }
 
 .tooltip {
@@ -37,21 +42,18 @@
 			height: 100%;
 		}
 	}
-	&.rightArrow,
-	&.leftArrow {
+	&.topArrow,
+	&.bottomArrow,
+	&.middleArrow {
 		.tooltipArrow {
 			width: @lime-tooltip-point-height;
 			height: @lime-tooltip-point-width;
 		}
 	}
 	&.centerArrow .tooltipArrow {
-		width: @lime-tooltip-point-height;
-		height: @lime-tooltip-point-width;
 		left: 50%;
 	}
 	&.middleArrow .tooltipArrow {
-		width: @lime-tooltip-point-width;
-		height: @lime-tooltip-point-height;
 		top: 50%;
 	}
 
@@ -61,9 +63,10 @@
 		.lime-small-button-text();
 		font-size: @lime-tooltip-label-font-size;
 		font-weight: @lime-tooltip-font-weight;
-		line-height: @lime-tooltip-label-height;
+		line-height: @lime-tooltip-label-line-height;
 		white-space: nowrap;
 		width: var(--lime-tooltip-label-width); // assign a width if necessary, but without a width, "auto" is just fine.
+		max-width: @lime-tooltip-max-width;
 		padding: @lime-tooltip-padding;
 		border-radius: @lime-tooltip-border-radius;
 
@@ -129,7 +132,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(top right; -45deg; -45deg; -5deg);
+					.tail(top right; -45deg; -45deg; 0);
 				}
 			}
 
@@ -145,7 +148,7 @@
 
 				&::after {
 					top: @lime-tooltip-arrow-offset;
-					.centerTail(top left; 45deg; 5deg);
+					.centerTail();
 				}
 			}
 		}
@@ -156,7 +159,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(top left; 45deg; 45deg; 5deg);
+					.tail(top left; 45deg; 45deg; 0);
 				}
 			}
 
@@ -181,7 +184,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(bottom right; 45deg; 45deg; 5deg);
+					.tail(bottom right; 45deg; 45deg; 0);
 				}
 			}
 
@@ -194,7 +197,7 @@
 		&.centerArrow {
 			.tooltipArrow::after {
 				bottom: @lime-tooltip-arrow-offset;
-				.centerTail(bottom left; -45deg; -5deg);
+				.centerTail();
 			}
 		}
 
@@ -204,7 +207,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(bottom left; -45deg; -45deg; -5deg);
+					.tail(bottom left; -45deg; -45deg; 0);
 				}
 			}
 
@@ -229,7 +232,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(bottom right; -45deg; 5deg; 45deg);
+					.tail(bottom right; -45deg; 0; 45deg);
 				}
 			}
 
@@ -241,7 +244,7 @@
 		&.middleArrow {
 			.tooltipArrow::after {
 				right: @lime-tooltip-arrow-offset;
-				.centerTail(top right; 45deg; -5deg);
+				.centerTail(left);
 			}
 		}
 
@@ -250,7 +253,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(top right; 45deg; 5deg; -45deg);
+					.tail(top right; 45deg; 0; -45deg);
 				}
 			}
 
@@ -275,7 +278,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(bottom left; 45deg; -5deg; -45deg);
+					.tail(bottom left; 45deg; 0; -45deg);
 				}
 			}
 
@@ -287,7 +290,7 @@
 		&.middleArrow {
 			.tooltipArrow::after {
 				left: @lime-tooltip-arrow-offset;
-				.centerTail(top left; -45deg; 5deg);
+				.centerTail(right);
 			}
 		}
 
@@ -296,7 +299,7 @@
 				overflow: hidden;
 
 				&::after {
-					.tail(top left; -45deg; 5deg; 45deg);
+					.tail(top left; -45deg; 0; 45deg);
 				}
 			}
 			.tooltipLabel {
@@ -449,12 +452,12 @@
 		}
 
 		.tooltipArrow::after {
-			background: @lime-tooltip-bg-color;
+			background: @lime-tooltip-container;
 		}
 
 		.tooltipLabel {
-			color: @lime-tooltip-text-color;
-			background-color: @lime-tooltip-bg-color;
+			color: @lime-tooltip-label;
+			background-color: @lime-tooltip-container;
 		}
 	});
 }
