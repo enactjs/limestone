@@ -247,12 +247,13 @@ const TabGroupBase = kind({
 			scrollbarTrackCss: componentCss,
 			spotlightDisabled,
 			spotlightId,
-			verticalScrollbar: 'auto'
+			verticalScrollbar: collapsed ? 'hidden' : 'auto'
 		} : null;
 		const Component = scrollable ? Scroller : 'div';
 		const GroupComponent = scrollable ? Group : GroupContainer;
 
-		if (!isHorizontal && !noIcons && scrollToRef.current) {
+		if (!scrollable) scrollToRef.current = null;
+		if (!noIcons && scrollToRef.current) {
 			scrollToRef.current({animate: false, position: scrollPosition});
 		}
 

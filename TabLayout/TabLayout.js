@@ -67,8 +67,8 @@ const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 	}
 };
 
-const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
-	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
+const isHorizontalScrollableTabs = (dataSize, offset, size, tabSize) => {
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1) + 2 * offset;
 
 	return (typeof window !== 'undefined' && window?.innerWidth) ? window.innerWidth < ri.scale(totalTabsWidth) : false;
 };
@@ -462,17 +462,17 @@ const TabLayoutBase = kind({
 			`anchor${cap(anchorTo)}`,
 			orientation
 		),
-		scrollable: ({children, orientation, size, tabSize}) => {
+		scrollable: ({children, offset, orientation, size, tabSize}) => {
 			const isVertical = orientation === 'vertical';
 			return isVertical ?
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-				isHorizontalScrollableTabs(children.length, size, tabSize);
+				isHorizontalScrollableTabs(children.length, offset, size, tabSize);
 		},
 		style: ({children, dimensions, offset, orientation, size, style, tabSize}) => {
 			const isVertical = orientation === 'vertical';
 			const scrollable = isVertical ?
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-				isHorizontalScrollableTabs(children.length, size, tabSize);
+				isHorizontalScrollableTabs(children.length, offset, size, tabSize);
 			const tabSizeValue = !isVertical ? getHorizontalTabWidth(children.length, size, tabSize) : null;
 			const totalTabsWidth = ri.scaleToRem(tabSizeValue * children.length + TAB_SPACING * (children.length - 1));
 
