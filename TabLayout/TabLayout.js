@@ -414,7 +414,7 @@ const TabLayoutBase = kind({
 		onScrollStop: handle(
 			forProp('collapsed', false),
 			forProp('orientation', 'vertical'),
-			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}) => ({scrollPosition :{x: scrollLeft, y: scrollTop}}))
+			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}) => ({scrollPosition: {x: scrollLeft, y: scrollTop}}))
 		),
 		onSelect: handle(
 			forwardCustom('onSelect', ({selected}) => ({index: selected}))
