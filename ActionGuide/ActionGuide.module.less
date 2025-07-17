@@ -9,27 +9,34 @@
 	max-width: @lime-actionguide-max-width;
 	margin: 0 auto;
 	line-height: 0;
+	padding: @lime-actionguide-padding;
+
+	.button {
+		margin: @lime-actionguide-icon-margin;
+		height: @lime-actionguide-icon-height;
+		min-width: @lime-actionguide-icon-height;
+		width: @lime-actionguide-icon-height;
+	}
 
 	.label {
 		.lime-font({
 			font-size: @lime-actionguide-label-font-size;
 		});
 		font-size: @lime-actionguide-label-font-size;
+		font-weight: @lime-actionguide-label-font-weight;
 		height: @lime-actionguide-label-height;
 		line-height: @lime-actionguide-label-height;
 	}
 
-	.icon {
-		margin: @lime-actionguide-icon-margin;
-	}
-
 	.applySkins({
 		.icon {
-			color: @lime-actionguide-icon-color;
+			.icon {
+				color: @lime-actionguide-media-icon-color;
+			}
 		}
 
 		.label {
-			color: @lime-actionguide-label-color;
+			color: @lime-actionguide-media-label-color;
 		}
 	});
 }

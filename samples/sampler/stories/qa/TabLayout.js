@@ -7,15 +7,27 @@ import {Panel, Header} from '@enact/limestone/Panels';
 import {Scroller} from '@enact/limestone/Scroller';
 import TabLayout, {TabLayoutBase, Tab} from '@enact/limestone/TabLayout';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {range, select} from '@enact/storybook-utils/addons/controls';
-import {Component, useState} from 'react';
+import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
+import Layout, {Cell, Column, Row} from '@enact/ui/Layout';
+import {Component, useCallback, useMemo, useState} from 'react';
 
 import {tabIcons} from '../helper/icons';
+
+import css from './TabLayout.module.less';
 
 TabLayout.displayName = 'TabLayout';
 const Config = mergeComponentMetadata('TabLayout', TabLayoutBase, TabLayout);
 
 const tabsWithIcons = [
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
+	{title: 'Home', icon: 'home'},
+	{title: 'Button', icon: 'gear'},
+	{title: 'Item', icon: 'trash'},
 	{title: 'Home', icon: 'home'},
 	{title: 'Button', icon: 'gear'},
 	{title: 'Item', icon: 'trash'}
@@ -73,16 +85,19 @@ export default {
 
 export const WithVariableNumberOfTabs = (args) => {
 	const tabs = args['Number of Tabs'];
+	const isHorizontal = args['orientation'] === 'horizontal';
 
 	return (
-		<Panel>
+		<Panel css={isHorizontal ? css : null}>
 			<Header title="TabLayout" subtitle="With variable number of tabs" />
 			<TabLayout
+				css={isHorizontal ? css : null}
 				orientation={args['orientation']}
+				offset={132}
 			>
 				{Array.from({length: tabs}, (v, i) => (
 					<TabLayout.Tab title={`Tab ${i}`} icon={tabIcons[i % tabIcons.length]} key={`tab${i}`}>
-						<Scroller key={'view' + i}>
+						<Scroller className={isHorizontal ? css.scroller : null} key={'view' + i}>
 							<Button>Tab {i} Top</Button>
 							<BodyText>
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ante sit amet dui
@@ -474,3 +489,248 @@ export const WithInputField = () => {
 };
 
 WithInputField.storyName = 'With InputField';
+
+export const WithScroller = (args) => {
+	const tabs = args['Number of Tabs'];
+	const isHorizontal = args['orientation'] === 'horizontal';
+
+	return (
+		<Panel css={isHorizontal ? css : null}>
+			<Header title="TabLayout" subtitle="With Scroller" />
+			<TabLayout
+				css={isHorizontal ? css : null}
+				orientation={args['orientation']}
+				tabSize={args['Tab Size'] || null}
+				offset={132}
+			>
+				{Array.from({length: tabs}, (v, i) => (
+					<TabLayout.Tab title={`Tab ${i + 1}`} key={`tab${i}`}>
+						<Scroller className={isHorizontal ? css.scroller : null} key={'view' + i}>
+							<Button>Tab {i + 1} Top</Button>
+							<BodyText>
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ut ante sit amet dui
+								cursus tempus ut nec nisl. In scelerisque, nunc in interdum varius, dolor magna
+								auctor tellus, quis mattis mauris lectus vel metus. Maecenas tempus quam ac
+								dignissim gravida. Integer ut posuere sapien. Duis consequat vitae libero nec
+								posuere. Curabitur sagittis mauris vel massa cursus, et mollis est malesuada.
+								Vestibulum ante libero, gravida id purus eget, varius porttitor ipsum. Suspendisse
+								quis consequat sem, eget gravida est. Morbi pulvinar diam vel mattis lacinia.
+								Integer eget est quis augue tincidunt tincidunt quis at nisi. Duis at massa nunc.
+								Cras malesuada, sem quis aliquet vulputate, ante ipsum congue ante, eu volutpat
+								ipsum sem posuere ante. Suspendisse potenti. Nullam in lacinia mi.
+							</BodyText>
+							<BodyText>
+								Donec ac ultricies nunc, quis pharetra orci. Mauris semper blandit sodales. Morbi eu
+								mollis eros. Fusce id lacinia massa. Nam vitae eleifend arcu. Ut ex leo, semper at
+								lectus ullamcorper, congue dignissim nunc. Etiam volutpat est mauris. Nullam ut
+								tellus vehicula, tempus urna ac, gravida urna. Nunc diam lorem, dictum consectetur
+								libero vitae, aliquet tristique nibh. Maecenas tellus nibh, convallis et consectetur
+								at, semper ac lacus. Quisque efficitur id risus eget fringilla. Vestibulum ac nibh
+								viverra, efficitur tortor vitae, auctor eros. Nulla sit amet sagittis libero, a
+								rhoncus nulla. Phasellus vitae tellus ut enim porttitor congue. Vestibulum ante
+								ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+							</BodyText>
+							<BodyText>
+								Vivamus at augue eget justo finibus commodo ut a urna. Pellentesque eu tempus
+								libero, a tristique risus. Sed vel posuere elit. Nulla faucibus nisl turpis, id
+								ultricies massa rutrum sit amet. Suspendisse aliquet suscipit convallis. Quisque
+								convallis, ipsum nec feugiat vulputate, mi dolor posuere nisi, vel iaculis urna
+								lacus sit amet massa. Ut a velit urna. Morbi id massa dui. Class aptent taciti
+								sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer
+								pharetra eros eget turpis maximus, in fermentum nisl bibendum. Phasellus mattis urna
+								et libero malesuada, sed rutrum dolor dignissim.
+							</BodyText>
+							<BodyText>
+								Sed vel nunc lobortis lectus tincidunt viverra. Nullam lobortis eros vel congue
+								pellentesque. Donec faucibus felis non neque volutpat dapibus. Nam id mi vel ligula
+								maximus imperdiet at eget sapien. Duis in eros lobortis, maximus risus commodo,
+								dignissim erat. Suspendisse semper magna leo, eget tincidunt est laoreet non.
+								Phasellus nec posuere ipsum, at egestas urna. Fusce pellentesque finibus magna, eget
+								hendrerit enim aliquam condimentum.
+							</BodyText>
+							<BodyText>
+								Donec at dolor eget ante faucibus gravida a eget erat. In vehicula nibh eu venenatis
+								ullamcorper. Nulla nisl justo, tempus vitae felis et, molestie posuere augue. Morbi
+								pellentesque lacinia lacus quis bibendum. Integer nec nisi id mauris gravida
+								scelerisque eu eu nibh. Sed accumsan ut ligula at aliquam. Quisque odio ex, viverra
+								sit amet lectus scelerisque, sollicitudin ornare ante. Vestibulum arcu augue,
+								vehicula vel pellentesque sed, aliquam ut nunc.
+							</BodyText>
+							<Button>Tab {i + 1} Bottom</Button>
+						</Scroller>
+					</TabLayout.Tab>
+				))}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+range('Number of Tabs', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 8);
+range('Tab Size', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+WithScroller.storyName = 'With Scroller';
+WithScroller.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithPrimaryIndex = (args) => {
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With primary index" />
+			<TabLayout
+				orientation={args['orientation']}
+				primaryIndex={args['primaryIndex']}
+			>
+				{tabsWithIcons.map((tab, i) => (
+					<TabLayout.Tab title={tab.title} icon={tab.icon} key={`tab${i}`}>
+						<Button>Tab {i + 1}</Button>
+					</TabLayout.Tab>
+				))}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+select('orientation', WithPrimaryIndex, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('primaryIndex', WithPrimaryIndex, {groupId: 'TabLayout'}, {min: 0, max: 2, step: 1}, 0);
+
+WithPrimaryIndex.storyName = 'With primary index';
+WithPrimaryIndex.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithRestoredFocus = (args) => {
+	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
+
+	const [dynamicList, setDynamicList] = useState(list);
+
+	const handleAddList = useCallback(() => {
+		const newList = [...dynamicList];
+		newList.push(`Added Tab ${newList.length + 1}`);
+		setDynamicList(newList);
+	}, [dynamicList]);
+
+	const handleResetList = useCallback(() => {
+		setDynamicList(list);
+	}, [list]);
+
+	const tabList = () => {
+		return dynamicList.map((tab) => {
+			return (
+				<Tab key={tab} title={tab}>
+					<Header title={tab} />
+					<Item>Tab Item</Item>
+					<Button onClick={handleAddList}>
+						Add Tab
+					</Button>
+					<Button onClick={handleResetList}>
+						Reset Tabs
+					</Button>
+				</Tab>
+			);
+		});
+	};
+
+	return (
+		<Panel>
+			<Header title="TabLayout" subtitle="With restored focus" />
+			<TabLayout
+				orientation={args['orientation']}
+				tabSize={args['tabSize']}
+			>
+				{tabList()}
+			</TabLayout>
+		</Panel>
+	);
+};
+
+range('tabSize', WithRestoredFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRestoredFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+WithRestoredFocus.storyName = 'with restored focus';
+WithRestoredFocus.parameters = {
+	props: {
+		noPanel: true
+	}
+};
+
+export const WithRetainedFocus = (args) => {
+	const list = useMemo(() => ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen'], []);
+
+	const [dynamicList, setDynamicList] = useState(list);
+
+	const handleAddList = useCallback(() => {
+		const newList = [...dynamicList];
+		newList.push(`Added Tab ${newList.length + 1}`);
+		setDynamicList(newList);
+	}, [dynamicList]);
+
+	const handleResetList = useCallback(() => {
+		setDynamicList(list);
+	}, [list]);
+
+	const tabList = () => {
+		return dynamicList.map((tab) => {
+			return (
+				<Tab key={tab} title={tab}>
+					<Header title={tab} />
+					<Item>Tab Item</Item>
+					<Button onClick={handleAddList}>
+						Add Tab
+					</Button>
+					<Button onClick={handleResetList}>
+						Reset Tabs
+					</Button>
+				</Tab>
+			);
+		});
+	};
+
+	const isHorizontal = args['orientation'] === 'horizontal';
+	const LayoutComponent = isHorizontal ? Row : Column;
+
+	return (
+		<Panel>
+			<Header noCloseButton={args['noCloseButton']} title="TabLayout" subtitle="With retained focus" />
+			<Layout orientation={args['orientation']} style={{height:'100%'}}>
+				{!args['hideFirstButton'] &&
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+						<Button minWidth={false}>First</Button>
+					</LayoutComponent>
+				}
+				<Cell>
+					<TabLayout
+						orientation={args['orientation']}
+						tabSize={args['tabSize']}
+					>
+						{tabList()}
+					</TabLayout>
+				</Cell>
+				{!args['hideSecondButton'] &&
+					<LayoutComponent style={{alignItems: args['alignButtons'], ...(!isHorizontal && {height: 'fit-content'})}}>
+						<Button minWidth={false}>Second</Button>
+					</LayoutComponent>
+				}
+			</Layout>
+		</Panel>
+	);
+};
+
+boolean('hideFirstButton', WithRetainedFocus, TabLayout, false);
+boolean('hideSecondButton', WithRetainedFocus, TabLayout, false);
+select('alignButtons', WithRetainedFocus, ['start', 'center', 'end'], TabLayout, 'start');
+range('tabSize', WithRetainedFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
+select('orientation', WithRetainedFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+
+
+WithRetainedFocus.storyName = 'With retained focus';
+WithRetainedFocus.parameters = {
+	props: {
+		noPanel: true
+	}
+};

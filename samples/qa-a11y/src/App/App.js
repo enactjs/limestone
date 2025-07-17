@@ -1,5 +1,6 @@
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Item from '@enact/limestone/Item';
+import {ScrollerBase} from '@enact/limestone/Scroller';
 import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -59,6 +60,7 @@ import Home from './Home';
 import View from './View';
 
 const Menu = SpotlightContainerDecorator({enterTo: 'last-focused'}, 'div');
+const ScrollerComponent = SpotlightContainerDecorator({enterTo: 'last-focused', overflow: true}, ScrollerBase);
 
 const views = [
 	{title: 'About qa-a11y', view: Home},
@@ -154,19 +156,21 @@ const AppBase = ({className, rtl, updateLocale, ...rest}) => {
 		<div className={classnames(className, debugAriaClass)}>
 			<Layout {...rest} className={appCss.layout}>
 				<Cell component={Menu} id="menu" size="20%" spotlightId="menu">
-					<div className={appCss.jumpToView}>Jump To View: {jumpToView}</div>
-					{views.map((view, i) => (
-						<Item
-							aria-label={view.title}
-							className={appCss.navItem}
-							data-menu={i}
-							key={i}
-							onClick={handleChangeView(i)}
-							slotBefore={('00' + i).slice(-2)}
-						>
-							{view.title}
-						</Item>
-					))}
+					<Cell component={ScrollerComponent}>
+						<div className={appCss.jumpToView}>Jump To View: {jumpToView}</div>
+						{views.map((view, i) => (
+							<Item
+								aria-label={view.title}
+								className={appCss.navItem}
+								data-menu={i}
+								key={i}
+								onClick={handleChangeView(i)}
+								slotBefore={('00' + i).slice(-2)}
+							>
+								{view.title}
+							</Item>
+						))}
+					</Cell>
 				</Cell>
 				<Cell component={ViewManager} index={selected}>
 					{views.map((view, i) => (

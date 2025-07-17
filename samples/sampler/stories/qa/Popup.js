@@ -64,7 +64,7 @@ export const UsingSpotlightRestrict = (args) => (
 boolean('open', UsingSpotlightRestrict, Popup, true);
 boolean('noAnimation', UsingSpotlightRestrict, Popup, false);
 boolean('noAutoDismiss', UsingSpotlightRestrict, Popup, false);
-select('position', UsingSpotlightRestrict, ['bottom', 'center', 'fullscreen', 'left', 'right', 'top'], Popup, 'bottom');
+select('position', UsingSpotlightRestrict, ['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right'], Popup, 'bottom');
 select('scrimType', UsingSpotlightRestrict, ['none', 'translucent', 'transparent'], Popup, 'translucent');
 select('spotlightRestrict', UsingSpotlightRestrict, ['self-first', 'self-only'], Popup, 'self-only');
 text('children', UsingSpotlightRestrict, Popup, 'Hello Popup');

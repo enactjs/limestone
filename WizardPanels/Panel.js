@@ -1,5 +1,5 @@
 import Slottable from '@enact/ui/Slottable';
-import {useContext, useEffect} from 'react';
+import {use, useEffect} from 'react';
 
 import {PanelsContext} from '../internal/Panels/PanelsRouter';
 
@@ -21,7 +21,7 @@ function PanelBase ({
 	subtitle,
 	title
 }) {
-	const set = useContext(PanelsContext);
+	const set = use(PanelsContext);
 
 	useEffect(() => {
 		if (set) {

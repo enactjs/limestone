@@ -6,40 +6,78 @@
 
 .keyGuide {
 	position: absolute;
-	width: @lime-keyguide-width;
-	right: @lime-keyguide-position-right;
-	bottom: @lime-keyguide-position-bottom;
-	padding: @lime-keyguide-padding;
+
+	&.iconGuide {
+		border-radius: @lime-keyguide-icon-border-radius;
+		display: flex;
+		flex-direction: column;
+		width: @lime-keyguide-icon-width;
+		right: @lime-keyguide-icon-position-right;
+		bottom: @lime-keyguide-icon-position-bottom;
+		padding: @lime-keyguide-icon-padding;
+		gap: @lime-keyguide-icon-gap;
+	}
+
+	&.imageGuide {
+		padding: @lime-keyguide-image-padding;
+	}
 
 	.item {
 		.lime-font({
 			font-size: @lime-keyguide-font-size;
 		});
 		font-size: @lime-keyguide-font-size;
+		font-weight: @lime-keyguide-font-weight;
 		height: @lime-keyguide-item-height;
 		margin: 0;
+		padding: 0;
 
 		.icon {
 			margin: 0;
 		}
 
 		.slotBefore {
-			margin-inline-end: @lime-keyguide-icon-margin-right;
+			margin-inline-end: @lime-keyguide-icon-icon-margin-right;
+
+			.red,
+			.green,
+			.yellow,
+			.blue {
+				width: @lime-keyguide-colordot-width;
+				height: @lime-keyguide-colordot-height;
+				margin: @lime-keyguide-colordot-margin;
+				border-radius: @lime-keyguide-colordot-border-radius;
+			}
 		}
 	}
 
-	.red,
-	.green,
-	.yellow,
-	.blue {
-		width: @lime-keyguide-colordot-width;
-		height: @lime-keyguide-colordot-height;
-		margin: @lime-keyguide-colordot-margin;
-		border-radius: @lime-keyguide-colordot-border-radius;
+	.imageItem {
+		height: @lime-keyguide-image-item-height;
+		width: @lime-keyguide-image-item-width;
+		align-items: center;
+		justify-content: center;
+
+		.image {
+			width: @lime-keyguide-image-image-width;
+			height: @lime-keyguide-image-image-height;
+			margin: @lime-keyguide-image-margin;
+			margin-inline-end: @lime-keyguide-image-image-margin-right;
+		}
+
+		.text {
+			height: 100%;
+			margin: @lime-keyguide-image-margin;
+			overflow: hidden;
+			align-content: center;
+
+			.bodyText {
+				margin: @lime-keyguide-image-margin;
+			}
+		}
 	}
 
 	.applySkins({
-		background: @lime-keyguide-bg-color;
+		background: @lime-keyguide-container-color;
 
 		.red {
 			background-color: @lime-keyguide-colordot-red-color;
@@ -55,7 +93,56 @@
 		}
 
 		.item {
-			color: @lime-keyguide-item-color;
+			color: @lime-keyguide-label-color;
+
+			.icon {
+				color: @lime-keyguide-icon-color;
+			}
 		}
-	})
+
+		.imageItem {
+			.bodyText {
+				color: @lime-keyguide-label-color;
+			}
+		}
+
+		&.iconGuide {
+			box-shadow: @lime-keyguide-icon-shadow;
+		}
+
+		&.imageGuide {
+			box-shadow: @lime-keyguide-image-shadow;
+		}
+
+		&:not(.noArrow):after {
+			position: absolute;
+			border-width: @lime-keyguide-arrow-border-width;
+			border-style: solid;
+			content: '';
+		}
+		&.bottomArrow:after {
+			border-color: @lime-keyguide-container-color transparent transparent transparent;
+			left: 50%;
+			top: 100%;
+			transform: translateX(-50%);
+		}
+		&.topArrow:after {
+			border-color: transparent transparent @lime-keyguide-container-color transparent;
+			left: 50%;
+			bottom: 100%;
+			transform: translateX(-50%);
+		}
+		&.leftArrow:after {
+			border-color: transparent @lime-keyguide-container-color transparent transparent ;
+			right: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+		&.rightArrow:after {
+			border-color: transparent transparent transparent @lime-keyguide-container-color;
+			left: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	});
 }

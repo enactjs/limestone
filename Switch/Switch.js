@@ -17,7 +17,6 @@ import Spottable from '@enact/spotlight/Spottable';
 import Touchable from '@enact/ui/Touchable';
 import Toggleable from '@enact/ui/Toggleable';
 
-import Icon from '../Icon';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Switch.module.less';
@@ -27,7 +26,6 @@ import componentCss from './Switch.module.less';
  *
  * @class SwitchBase
  * @memberof limestone/Switch
- * @extends limestone/Icon.Icon
  * @ui
  * @public
  */
@@ -35,8 +33,6 @@ const SwitchBase = kind({
 	name: 'Switch',
 
 	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
-		children: PropTypes.string,
-
 		css: PropTypes.object,
 
 		/**
@@ -68,7 +64,6 @@ const SwitchBase = kind({
 	},
 
 	defaultProps: {
-		children: 'circle',
 		noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION,
 		selected: false
 	},
@@ -86,7 +81,7 @@ const SwitchBase = kind({
 		})
 	},
 
-	render: ({children, css, disabled, selected, ...rest}) => {
+	render: ({css, disabled, selected, ...rest}) => {
 		delete rest.noAnimation;
 
 		return (
@@ -99,12 +94,7 @@ const SwitchBase = kind({
 			>
 				<div className={css.bg} />
 				<div className={css.client}>
-					<Icon
-						size="small"
-						className={css.icon}
-					>
-						{children}
-					</Icon>
+					<div className={css.icon} />
 				</div>
 			</div>
 		);

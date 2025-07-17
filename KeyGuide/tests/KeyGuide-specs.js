@@ -105,4 +105,59 @@ describe('KeyGuide Specs', () => {
 
 		expect(actual).not.toHaveClass(expected);
 	});
+
+	test('should have `image` if children has `imageSrc`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide open type="image">
+					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const image = screen.getAllByRole('img')[0];
+
+		expect(image).toBeInTheDocument();
+	});
+
+	test('should have `imageGuide` className if children has `imageSrc`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide data-testid="keyguide" open type="image">
+					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByTestId('keyguide');
+
+		const expected = 'imageGuide';
+		expect(keyGuide).toHaveClass(expected);
+	});
+
+	test('should have `topArrow` className when arrowPosition is set to `top`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide data-testid="keyguide" open arrowPosition="top">
+					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByTestId('keyguide');
+
+		const expected = 'topArrow';
+		expect(keyGuide).toHaveClass(expected);
+	});
+
+	test('should have `noArrow` className when arrowPosition is set to `none`', () => {
+		render(
+			<FloatingLayerController>
+				<KeyGuide data-testid="keyguide" open arrowPosition="none">
+					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
+				</KeyGuide>
+			</FloatingLayerController>
+		);
+		const keyGuide = screen.getByTestId('keyguide');
+
+		const expected = 'noArrow';
+		expect(keyGuide).toHaveClass(expected);
+	});
 });
