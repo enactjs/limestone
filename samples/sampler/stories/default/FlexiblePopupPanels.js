@@ -19,6 +19,10 @@ const propOptions = {
 
 const Config = mergeComponentMetadata('FlexiblePopupPanels', FlexiblePopupPanelsBase, FlexiblePopupPanels);
 const PanelConfig = mergeComponentMetadata('Panel', PanelBase, Panel);
+Config.defaultProps = {
+	scrimType: 'translucent',
+	spotlightRestrict: 'self-only'
+};
 
 export default {
 	title: 'Limestone/FlexiblePopupPanels',
@@ -115,13 +119,12 @@ boolean('noAnimation', FlexiblePopupPanels_, Config);
 boolean('noAutoDismiss', FlexiblePopupPanels_, Config);
 boolean('noCloseButton', FlexiblePopupPanels_, Config);
 select('prevButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
-select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config, 'translucent');
+select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config);
 select(
 	'spotlightRestrict',
 	FlexiblePopupPanels_,
 	['self-first', 'self-only'],
-	Config,
-	'self-only'
+	Config
 );
 select('size', FlexiblePopupPanels_, propOptions.size, PanelConfig);
 boolean('custom first Panel prevButton', FlexiblePopupPanels_, PanelConfig);
