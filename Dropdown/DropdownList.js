@@ -6,6 +6,7 @@ import {WithRef} from '@enact/core/internal/WithRef';
 import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import ri from '@enact/ui/resolution';
+import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useRef, useState} from 'react';
@@ -156,12 +157,13 @@ const DropdownListBase = kind({
 
 		return (
 			<div role="region" aria-labelledby={`${id}_dropdownlist`}>
-				<div id={`${id}_dropdownlist`} aria-label={$L('Dropdown list opened')} />
+				<div id={`${id}_dropdownlist`} aria-label={new IString($L('Dropdown list opened {total} items in total')).format({total: dataSize})} />
 				<VirtualList
 					{...rest}
 					cbScrollTo={scrollTo}
 					dataSize={dataSize}
 					itemSize={ri.scale(itemSize)}
+					role="group"
 					scrollbarTrackCss={css}
 					style={{
 						backgroundColor: 'transparent',
