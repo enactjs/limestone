@@ -126,6 +126,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(1);
+			await Page.delay(200);
 
 			const expected = 'Button A';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -141,6 +142,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(2);
+			await Page.delay(200);
 
 			const expected = 'OK';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -160,6 +162,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(3);
+			await Page.delay(200);
 
 			expect(await (await wizardPanels.prevButton()).isFocused()).toBe(true);
 		});
@@ -180,6 +183,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(4);
+			await Page.delay(200);
 
 			const expected = 'Second';
 			const actual = await browser.execute(getFocusedTextContent);
