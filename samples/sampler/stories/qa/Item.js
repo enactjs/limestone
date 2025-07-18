@@ -5,8 +5,8 @@ import Item, {ItemBase} from '@enact/limestone/Item';
 import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
-import {Row} from '@enact/ui/Layout';
 import UiItem, {ItemBase as UiItemBase} from '@enact/ui/Item';
+import {Row} from '@enact/ui/Layout';
 import {scale} from '@enact/ui/resolution';
 import {useCallback, useState} from 'react';
 
