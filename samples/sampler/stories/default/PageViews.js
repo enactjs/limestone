@@ -8,8 +8,8 @@ PageViews.displayName = 'PageViews';
 
 const Config = mergeComponentMetadata('PageViews', PageViews);
 Config.defaultProps = {
-	pageIndicatorType: 'dot',
-	pageIndicatorPosition: 'bottom'
+	pageIndicatorPosition: 'bottom',
+	pageIndicatorType: 'dot'
 };
 
 const propOptions = {
