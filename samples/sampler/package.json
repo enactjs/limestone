@@ -24,7 +24,7 @@
     "@enact/i18n": "^5.1.0",
     "@enact/limestone": "../../",
     "@enact/spotlight": "^5.1.0",
-    "@enact/storybook-utils": "^6.0.0",
+    "@enact/storybook-utils": "^7.0.0",
     "@enact/ui": "^5.1.0",
     "@storybook/addon-docs": "^9.0.12",
     "@storybook/react-webpack5": "^9.0.12",
