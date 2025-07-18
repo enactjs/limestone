@@ -268,7 +268,7 @@ const useEventFocus = (props, instances, context) => {
 	const {scrollContainerRef, scrollContentHandle} = instances;
 	const {removeScaleEffect} = context;
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		function handleFocus (ev) {
 			// only for VirtualGridList
 			// To make the focused item cover other near items
