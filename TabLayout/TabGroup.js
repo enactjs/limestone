@@ -30,7 +30,7 @@ const TabBase = kind({
 		css: PropTypes.object,
 		icon: PropTypes.string,
 		index: PropTypes.number,
-		noIcons: PropTypes.string,
+		noIcons: PropTypes.bool,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
@@ -64,7 +64,7 @@ const TabBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, noIcons, orientation, styler}) => styler.append({collapsed}, noIcons, orientation),
+		className: ({collapsed, noIcons, orientation, styler}) => styler.append({collapsed, noIcons: noIcons}, orientation),
 		iconComponent: ({sprite, stopped}) => {
 			if (sprite) {
 				return (<Sprite stopped={stopped} {...sprite} />);
@@ -269,7 +269,7 @@ const TabGroupBase = kind({
 						collapsed
 						disabled={tabsDisabled}
 						icon="list"
-						noIcons="noIcons"
+						noIcons
 						onSpotlightDisappear={onBlurList}
 						spotlightDisabled={tabsSpotlightDisabled}
 					/>
