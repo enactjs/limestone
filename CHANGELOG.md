@@ -18,6 +18,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Card` for `focusRing` mode
+- `limestone/Popup` to restore focus properly when popup hides
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
