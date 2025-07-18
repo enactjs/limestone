@@ -5,7 +5,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import utilEvent from '@enact/ui/useScroll/utilEvent';
 import clamp from 'ramda/src/clamp';
-import {useCallback, useEffect, useLayoutEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 const
 	isDown = is('down'),
