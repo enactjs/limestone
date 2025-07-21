@@ -39,6 +39,9 @@ const ButtonTests = [
 	<Button icon="plus" iconPosition="before">click me</Button>,
 	<Button icon="plus" iconPosition="before" size="large">click me</Button>,
 
+	// centered = true
+	<Button centered icon="plus">click me</Button>,
+
 	// Icon only, iconPosition = before (Default) + icon + iconPosition + small (default) + large
 	<Button icon="minus" iconPosition="after" />,
 	<Button icon="minus" iconPosition="after" size="large" />,

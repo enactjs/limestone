@@ -32,8 +32,8 @@ const calcAriaLabel = function (prefix, type, value = '') {
 	return `${prefix} ${value} ${hint}`;
 };
 
-const convertToPasswordFormat = (value) => {
-	return '*'.repeat(value && value.length);
+const convertToPasswordFormat = (value, replacement = '*') => {
+	return replacement.repeat(value && value.length);
 };
 
 /**
@@ -72,6 +72,7 @@ const extractInputFieldProps = function (props) {
 			case 'pattern':
 			case 'required':
 			case 'size':
+			case 'value':
 				inputProps[key] = props[key];
 				delete props[key];
 		}

@@ -22,32 +22,6 @@
 		}
 	}
 
-	.selectionContainer {
-		background-color: transparent;
-		pointer-events: none;
-		.position(0);
-		position: absolute;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		&::after {
-			content: '';
-			position: absolute;
-			.position(0);
-			border-width: @lime-imageitem-image-border-width;
-			border-style: solid;
-		}
-
-		.selectionIcon {
-			position: relative;
-			display: block;
-			border-radius: 50%;
-			margin: 0;
-		}
-	}
-
 	.caption {
 		font-size: @lime-imageitem-caption-font-size;
 		line-height: @lime-imageitem-caption-line-height;
@@ -58,8 +32,8 @@
 
 	.label {
 		font-size: @lime-imageitem-label-font-size;
+		font-weight: @lime-imageitem-label-font-weight;
 		line-height: @lime-imageitem-label-line-height;
-		margin-top: @lime-imageitem-label-margin-top;
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-imageitem-label-font-size;
 		});
@@ -67,6 +41,7 @@
 
 	&.vertical {
 		&.fullImage {
+			border-radius: 0;
 			padding: @lime-imageitem-vertical-full-image-padding;
 
 			.image {
@@ -77,6 +52,16 @@
 					transition: transform 200ms ease-in-out;
 				}
 			}
+
+			.selectionContainer::after {
+				border-width: @lime-imageitem-vertical-full-image-border-width;
+			}
+
+			.focus({
+				.selectionContainer::after {
+					border-width: @lime-imageitem-vertical-full-image-focus-border-width;
+				}
+			});
 		}
 
 		&:not(.fullImage) {
@@ -84,13 +69,37 @@
 			margin: @lime-imageitem-margin;
 		}
 
-		.selectionIcon {
-			width: @lime-imageitem-vertical-selection-icon-size;
-			height: @lime-imageitem-vertical-selection-icon-size;
-			line-height: @lime-imageitem-vertical-selection-icon-size;
+		.selectionContainer {
+			background-color: transparent;
+			pointer-events: none;
+			.position(0);
+			position: absolute;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&::after {
+				content: '';
+				position: absolute;
+				.position(0);
+				border-width: @lime-imageitem-image-border-width;
+				border-style: solid;
+			}
+
+			.selectionIcon {
+				position: relative;
+				display: block;
+				border-radius: @lime-checkbox-border-radius;
+				margin: 0;
+				width: @lime-imageitem-vertical-selection-icon-size;
+				height: @lime-imageitem-vertical-selection-icon-size;
+				line-height: @lime-imageitem-vertical-selection-icon-size;
+			}
 		}
 
 		.captions {
+			align-items: center;
 			margin-top: @lime-imageitem-vertical-captions-margin-top;
 		}
 
@@ -115,22 +124,27 @@
 
 	&.horizontal {
 		.lime-spotlight-padding(@lime-imageitem-horizontal-padding);
+		align-items: center;
 		margin: @lime-imageitem-margin;
 
 		.image {
 			width: @lime-imageitem-horizontal-image-width;
 			height: @lime-imageitem-horizontal-image-height;
-			margin: @lime-imageitem-horizontal-image-margin;
 
-			.enact-locale-rtl({
-				margin: @lime-imageitem-horizontal-image-margin-rtl;
-			});
+			.margin-start-end(0, @lime-imageitem-horizontal-image-margin);
+		}
+
+		&.wideImage {
+			padding: @lime-imageitem-horizontal-wideimage-padding;
+
+			.image {
+				width: @lime-imageitem-horizontal-wideimage-image-width;
+				height: @lime-imageitem-horizontal-wideimage-image-height;
+			}
 		}
 
 		.selectionIcon {
-			width: @lime-imageitem-horizontal-selection-icon-size;
-			height: @lime-imageitem-horizontal-selection-icon-size;
-			line-height: @lime-imageitem-horizontal-selection-icon-size;
+			.margin-start-end(@lime-imageitem-horizontal-selection-icon-margin-left, @lime-imageitem-horizontal-selection-icon-margin-right);
 		}
 	}
 
@@ -145,31 +159,43 @@
 		}
 
 		.selectionIcon {
-			background-color: @lime-imageitem-selection-icon-bg-color;
+			background-color: @lime-imageitem-selection-container-color;
 			color: @lime-imageitem-selection-icon-color;
 		}
 
 		.caption {
-			color: @lime-imageitem-caption-color;
+			color: @lime-imageitem-label-main-color;
 		}
 
 		.label {
-			color: @lime-imageitem-label-color;
+			color: @lime-imageitem-label-sub-color;
 		}
 
 		&.selected {
+			.caption {
+				color: @lime-imageitem-label-main-selected-color;
+			}
+
+			.label {
+				color: @lime-imageitem-label-sub-selected-color;
+			}
+
 			.selectionContainer::after {
 				border-color: @lime-imageitem-selected-image-border-color;
 			}
 
-			.selectionIcon {
-				background-color: @lime-imageitem-selected-selection-icon-bg-color;
-				color: @lime-imageitem-selected-selection-icon-color;
+			&.vertical .selectionIcon {
+				background-color: @lime-imageitem-selection-container-selected-color;
+				color: @lime-imageitem-selection-icon-selected-color;
 			}
 		}
 
 		&.vertical {
 			&.fullImage {
+				.selectionContainer::after {
+					border-color: @lime-imageitem-full-image-border-color;
+				}
+
 				.lime-focus-highlight(image)
 			}
 		}
@@ -177,8 +203,13 @@
 		.focus({
 			.lime-spotlight-focus-text-colors();
 
-			.disabled ({
-				opacity: @lime-disabled-opacity;
+			.disabled({
+				opacity: @lime-disabled-focus-content-opacity;
+
+				.caption,
+				.label {
+					opacity: @lime-disabled-focus-content-opacity;
+				}
 			});
 
 			&::before {
@@ -186,26 +217,33 @@
 			}
 
 			.selectionIcon {
-				background-color: @lime-imageitem-focus-selection-icon-bg-color;
-				color: @lime-imageitem-focus-selection-icon-color;
+				background-color: @lime-imageitem-selection-container-focused-color;
+				color: @lime-imageitem-selection-icon-focused-color;
 			}
 
-			.caption,
+			.caption {
+				color: @lime-imageitem-label-main-focused-color;
+			}
+
 			.label {
-				color: inherit;
+				color: @lime-imageitem-label-sub-focused-color;
 			}
 
 			&.vertical {
-				&.fullImage .image {
-					transform: @lime-imageitem-vertical-focus-image-transform;
-					box-shadow: @lime-imageitem-focus-bg-shadow;
-				}
-			}
+				&.fullImage {
+					.selectionContainer::after {
+						border-color: @lime-imageitem-full-image-focused-border-color;
+					}
 
-			&.selected {
-				.selectionIcon {
-					background-color: @lime-imageitem-selected-focus-selection-icon-bg-color;
-					color: @lime-imageitem-selected-focus-selection-icon-color;
+					.image {
+						transform: @lime-imageitem-vertical-focus-image-transform;
+						box-shadow: @lime-imageitem-full-image-focused-shadow-color;
+					}
+				}
+
+				&.selected .selectionIcon {
+					background-color: @lime-imageitem-selection-container-selected-focused-color;
+					color: @lime-imageitem-selection-icon-selected-focused-color;
 				}
 			}
 		});

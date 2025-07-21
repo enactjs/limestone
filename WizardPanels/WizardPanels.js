@@ -326,11 +326,12 @@ const WizardPanelsBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({'aria-label': label, current, index, noSteps, subtitle, title}) => {
+		'aria-label': ({'aria-label': label, current, index, noSteps, subtitle, title, total, totalPanels}) => {
 			if (label) return label;
 
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
-			const step = noSteps ? '' : new IString($L('step {num}')).format({num: stepNum}) + ' ';
+			const totalNum = (typeof total === 'number' && total > 0) ? total : totalPanels;
+			const step = noSteps ? '' : new IString($L('Step {current} of {total}')).format({current: stepNum, total: totalNum});
 			return `${step}${title} ${subtitle}`;
 		},
 		className: ({noSteps, noSubtitle, styler}) => styler.append(
@@ -381,8 +382,8 @@ const WizardPanelsBase = kind({
 		delete rest.noSteps;
 		delete rest.total;
 
-		const isPrevButtonVisible = prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0);
-		const isNextButtonVisible = nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1);
+		const isPrevButtonVisible = prevButton !== false && (prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0));
+		const isNextButtonVisible = nextButton !== false && (nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1));
 
 		return (
 			<DecoratedPanelBase

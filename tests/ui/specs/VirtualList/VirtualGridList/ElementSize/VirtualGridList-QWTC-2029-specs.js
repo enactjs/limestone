@@ -5,7 +5,7 @@ describe('Change Spacing', function () {
 		await Page.open();
 	});
 
-	it('should change spotlight size when spaceing change [QWTC-2029]', async function () {
+	it('should change spotlight size when spacing changes [QWTC-2029]', async function () {
 		// Check default Spacing size.
 		const defaultSpacingWidth = (await Page.itemSpacing(0, 1)).width;
 		const defaultSpacingHeight = (await Page.itemSpacing(0, 5)).height;
@@ -26,6 +26,7 @@ describe('Change Spacing', function () {
 
 		// Step 4: Knobs > VirtualGridList > spacing > 2
 		await Page.spotlightDown();
+		await Page.spotlightRight();
 		await Page.spotlightSelect();
 		await Page.backSpace();
 		await Page.backSpace();

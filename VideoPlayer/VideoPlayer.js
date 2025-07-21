@@ -25,12 +25,10 @@ import Announce from '@enact/ui/AnnounceDecorator/Announce';
 import ComponentOverride from '@enact/ui/ComponentOverride';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import {FloatingLayerContext} from '@enact/ui/FloatingLayer/FloatingLayerDecorator';
-import ForwardRef from "@enact/ui/ForwardRef";
 import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import equals from 'ramda/src/equals';
 import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
@@ -87,13 +85,13 @@ RootComponent.propTypes = {
 };
 
 const SpottableDiv = Touchable(Spottable('div'));
-const RootContainer = ForwardRef({prop: 'playerRef'}, SpotlightContainerDecorator(
+const RootContainer = SpotlightContainerDecorator(
 	{
 		enterTo: 'default-element',
 		defaultElement: [`.${css.controlsHandleAbove}`, `.${css.controlsFrame}`]
 	},
 	RootComponent
-));
+);
 
 const ControlsContainer = SpotlightContainerDecorator(
 	{
@@ -879,13 +877,6 @@ const VideoPlayerBase = class extends Component {
 	}
 
 	componentDidUpdate (prevProps, prevState) {
-		if (this.titleRef && this.state.infoVisible &&
-			(!prevState.infoVisible || !equals(this.props.infoComponents, prevProps.infoComponents))
-		) {
-			const node = this.titleRef;
-			node.style.setProperty('--infoComponentsOffset', `${node.offsetHeight}px`);
-		}
-
 		if (
 			!this.state.mediaControlsVisible && prevState.mediaControlsVisible !== this.state.mediaControlsVisible ||
 			!this.state.mediaSliderVisible && prevState.mediaSliderVisible !== this.state.mediaSliderVisible
@@ -2057,7 +2048,7 @@ const VideoPlayerBase = class extends Component {
 			<RootContainer
 				className={css.videoPlayer + ' enact-fit' + (className ? ' ' + className : '')}
 				onClick={this.activityDetected}
-				ref={this.playerRef}
+				playerRef={this.playerRef}
 				spotlightDisabled={spotlightDisabled}
 				spotlightId={spotlightId}
 				style={style}
@@ -2083,14 +2074,6 @@ const VideoPlayerBase = class extends Component {
 
 				{this.state.bottomControlsRendered ?
 					<div className={css.fullscreen} {...controlsAriaProps}>
-						<FeedbackContent
-							className={css.miniFeedback}
-							playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
-							playbackState={this.pulsedPlaybackState || this.prevCommand}
-							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
-						>
-							{secondsToTime(this.state.sliderTooltipTime, durFmt)}
-						</FeedbackContent>
 						{
 							this.state.mediaControlsVisible ?
 								<Button
@@ -2099,7 +2082,6 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
-									size="small"
 								/> :
 								null
 						}
@@ -2112,6 +2094,14 @@ const VideoPlayerBase = class extends Component {
 								Only render when `this.state.mediaControlsVisible` is true in order for `Marquee`
 								to make calculations correctly in `MediaTitle`.
 							*/}
+							<FeedbackContent
+								className={css.miniFeedback}
+								playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
+								playbackState={this.pulsedPlaybackState || this.prevCommand}
+								visible={this.state.miniFeedbackVisible && !noMiniFeedback}
+							>
+								{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
+							</FeedbackContent>
 							{this.state.mediaSliderVisible ?
 								<div className={css.infoFrame}>
 									<MediaTitle

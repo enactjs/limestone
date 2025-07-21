@@ -95,7 +95,7 @@
 
 	&.horizontal {
 		@h-gap: (@lime-slider-knob-width / 2);
-		@v-gap: @lime-slider-knob-height - @lime-slider-bar-height;
+		@v-gap: @lime-slider-bar-padding;
 		width: auto;
 		padding: @v-gap @h-gap;
 
@@ -118,7 +118,7 @@
 		@h-gap: (@lime-slider-knob-height - @lime-slider-bar-height);
 		@v-gap: (@lime-slider-knob-width / 2);
 		padding: @v-gap @h-gap;
-		min-height: 240px;
+		min-height: @lime-slider-bar-vertical-min-height;
 		display: inline-block;
 		vertical-align: top;
 
@@ -140,56 +140,40 @@
 
 	.applySkins({
 		.bar {
-			background-color: @lime-slider-bar-bg-color;
+			background-color: @lime-slider-track-color;
 		}
 
 		.fill {
-			background-color: @lime-slider-fill-bg-color;
+			background-color: @lime-slider-track-active-color;
 		}
 
 		.load {
-			background-color: @lime-slider-load-bg-color;
+			background-color: @lime-slider-track-buffer-color;
 		}
 
 		.knob::before {
-			background-color: @lime-slider-knob-bg-color;
-			border-color: @lime-slider-knob-border-color;
+			background-color: @lime-slider-handle-color;
+			border-color: @lime-slider-handle-border-color;
 		}
 
 		.focus({
 			background-color: transparent;
 
-			.bar {
-				background-color: @lime-slider-focus-bar-bg-color;
-			}
-
 			.fill {
-				background-color: @lime-slider-focus-fill-bg-color;
-			}
-
-			.load {
-				background-color: @lime-slider-focus-load-bg-color;
+				background-color: @lime-slider-track-active-color;
 			}
 
 			.knob::before {
-				background-color: @lime-slider-focus-knob-bg-color;
-				border-color: @lime-slider-focus-knob-border-color;
-				box-shadow: @lime-slider-focus-knob-shadow;
-				transform: @knob-transform-resting;
+				background-color: @lime-slider-handle-focused-color;
+				border-color: @lime-slider-handle-focused-border-color;
+				box-shadow: @lime-slider-handle-focused-shadow;
+				transform: @knob-transform-active;
 			}
 
 			&.active,
 			&.pressed {
-				.bar {
-					background-color: @lime-slider-active-bar-bg-color;
-				}
-
 				.fill {
-					background-color: @lime-slider-active-fill-bg-color;
-				}
-
-				.load {
-					background-color: @lime-slider-active-load-bg-color;
+					background-color: @lime-slider-track-active-focused-color;
 				}
 
 				.knob::before {
@@ -198,35 +182,21 @@
 			}
 
 			.disabled({
-				.bar {
-					opacity: @lime-slider-disabled-bar-opacity;
-				}
-
 				.knob::before {
-					background-color: @lime-slider-disabled-focus-knob-bg-color;
-					border-color: @lime-slider-focus-knob-border-color;
 					transform: @knob-transform-resting;
 				}
 			});
 		});
 
 		:global(.spotlight-input-touch) &.pressed {
-			.bar {
-				background-color: @lime-slider-active-bar-bg-color;
-			}
-
 			.fill {
-				background-color: @lime-slider-active-fill-bg-color;
-			}
-
-			.load {
-				background-color: @lime-slider-active-load-bg-color;
+				background-color: @lime-slider-track-active-focused-color;
 			}
 
 			.knob::before {
-				background-color: @lime-slider-focus-knob-bg-color;
-				border-color: @lime-slider-focus-knob-border-color;
-				box-shadow: @lime-slider-focus-knob-shadow;
+				background-color: @lime-slider-handle-focused-color;
+				border-color: @lime-slider-handle-focused-border-color;
+				box-shadow:  @lime-slider-handle-focused-shadow;
 				transform: @knob-transform-active;
 			}
 		}
@@ -254,15 +224,11 @@
 		}
 
 		.disabled({
-			opacity: 1;
-
-			.bar {
-				opacity: @lime-slider-disabled-bar-opacity;
-			}
+			opacity: @lime-slider-disabled-bar-opacity;
 
 			.knob::before {
-				background-color: @lime-slider-disabled-knob-bg-color;
-				border-color: @lime-slider-knob-border-color;
+				background-color: @lime-slider-handle-disabled-color;
+				border-color: @lime-slider-handle-border-color;
 			}
 
 			&.showAnchor {
@@ -293,7 +259,7 @@
 		&.showAnchor {
 			.progressBar {
 				&::after {
-					background-color: @lime-progressbar-bar-bg-color;
+					background-color: @lime-progressbar-track-color;
 				}
 			}
 		}

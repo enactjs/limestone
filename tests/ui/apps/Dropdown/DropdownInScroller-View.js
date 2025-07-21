@@ -12,7 +12,7 @@ const items = (itemCount, optionText = 'Option') => (new Array(itemCount)).fill(
 
 const app = (props) => (
 	<div {...props}>
-		<Scroller style={{height: scaleToRem(250)}} id="scroller">
+		<Scroller style={{height: scaleToRem(300)}} id="scroller">
 			<Dropdown title="Dropdown 1" id="dropdown1">
 				{items(3)}
 			</Dropdown>

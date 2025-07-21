@@ -16,8 +16,8 @@ const imageObj = {
 		uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
 	},
 	size: {
-		width: ri.scaleToRem(150),
-		height: ri.scaleToRem(150)
+		height: ri.scaleToRem(178),
+		width: ri.scaleToRem(178)
 	}
 };
 
@@ -26,27 +26,37 @@ export default {
 	component: 'IconItem'
 };
 
-export const _IconItem = (args) => (
-	<IconItem
-		background={args['background']}
-		bordered={args['bordered']}
-		disabled={args['disabled']}
-		icon={args['icon']}
-		image={args['image']}
-		label={args['label']}
-		labelColor={args['labelColor']}
-		labelOn={args['labelOn']}
-		style={{
-			position: 'absolute',
-			width: ri.scale(args['width']),
-			height: ri.scale(args['height'])
-		}}
-		title={args['title']}
-		titleOn={args['titleOn']}
-	/>
-);
+export const _IconItem = (args) => {
+	const image = Object.assign({}, args['image'], args['label'] === '' &&
+		{
+			size: {
+				height: ri.scaleToRem(230),
+				width: ri.scaleToRem(230)
+			}
+		});
 
-text('background', _IconItem, Config, '#1b1b1b');
+	return (
+		<IconItem
+			background={args['background']}
+			bordered={args['bordered']}
+			disabled={args['disabled']}
+			icon={args['icon']}
+			image={image}
+			label={args['label']}
+			labelColor={args['labelColor']}
+			labelOn={args['labelOn']}
+			style={{
+				position: 'absolute',
+				height: args['height'] && ri.scale(args['height']),
+				width: args['width'] && ri.scale(args['width'])
+			}}
+			title={args['title']}
+			titleOn={args['titleOn']}
+		/>
+	);
+};
+
+text('background', _IconItem, Config, '#26282b');
 boolean('bordered', _IconItem, Config, true);
 boolean('disabled', _IconItem, Config);
 select('icon', _IconItem, ['', ...iconNames], Config, 'usb');
@@ -54,8 +64,8 @@ object('image', _IconItem, Config, imageObj);
 text('label', _IconItem, Config, 'USB');
 select('labelColor', _IconItem, ['light', 'dark'], Config);
 select('labelOn', _IconItem, ['focus', 'render'], Config);
-number('width', _IconItem, Config, 312);
-number('height', _IconItem, Config, 240);
+number('width', _IconItem, Config, null);
+number('height', _IconItem, Config, null);
 text('title', _IconItem, Config);
 select('titleOn', _IconItem, ['focus', 'render'], Config);
 
