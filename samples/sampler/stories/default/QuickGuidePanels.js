@@ -2,11 +2,14 @@ import Button from '@enact/limestone/Button';
 import {Panel} from '@enact/limestone/Panels';
 import Popup from '@enact/limestone/Popup';
 import SwitchItem from '@enact/limestone/SwitchItem';
-import QuickGuidePanels from '@enact/limestone/QuickGuidePanels';
+import {QuickGuidePanels, QuickGuidePanelsBase} from '@enact/limestone/QuickGuidePanels';
 import {action} from '@enact/storybook-utils/addons/actions';
+import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {number, select} from '@enact/storybook-utils/addons/controls';
 
 import css from './QuickGuidePanels.module.less';
+
+const Config = mergeComponentMetadata('QuickGuidePanels', QuickGuidePanelsBase);
 
 QuickGuidePanels.displayName = 'QuickGuidePanels';
 
@@ -88,8 +91,8 @@ export const _QuickGuidePanels = (args) => {
 };
 
 number('current', _QuickGuidePanels, 0);
-select('nextButtonVisibility', _QuickGuidePanels, propOptions.buttonVisibility, 'auto');
-select('prevButtonVisibility', _QuickGuidePanels, propOptions.buttonVisibility, 'auto');
+select('nextButtonVisibility', _QuickGuidePanels, propOptions.buttonVisibility, Config);
+select('prevButtonVisibility', _QuickGuidePanels, propOptions.buttonVisibility, Config);
 number('total', _QuickGuidePanels, 0);
 
 _QuickGuidePanels.storyName = 'QuickGuidePanels';
