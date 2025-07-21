@@ -1111,16 +1111,17 @@
 // ---------------------------------------
 @lime-tooltip-font-weight: var(--primitive-font-weight-semibold);
 @lime-tooltip-transparent-font-weight: var(--primitive-font-weight-regular);
-@lime-tooltip-offset: 24px;
+@lime-tooltip-offset: var(--primitive-spacing-24);
 @lime-tooltip-transparent-label-offset: 0px;
 @lime-tooltip-arrow-offset: 0;
-@lime-tooltip-point-width: 25px; // actual value is 24px. +1px to ensure no gaps
-@lime-tooltip-point-height: 25px; // actual value is 24px. +1px to ensure no gaps
-@lime-tooltip-border-radius: 12px;
-@lime-tooltip-label-height: 1.5em;
-@lime-tooltip-padding: (15px - ((81px - 63px) / 2)) 48px; // Including the math for the difference in measured height of the node (81px) vs the GUI spec (63px) (we mismatch due to i18n line-height guidelines). The GUI Guide also says 15px padding, so we include that in the math for clarity.
-@lime-tooltip-margin-offset: 18px; // GUI for the length of the arrow
+@lime-tooltip-point-width: 31px; // actual value is 30px. +1px to ensure no gaps
+@lime-tooltip-point-height: 37px; // actual value is 36px. +1px to ensure no gaps
+@lime-tooltip-border-radius: var(--semantic-radius-button);
+@lime-tooltip-label-line-height: 72px;
+@lime-tooltip-padding: var(--primitive-spacing-12) var(--primitive-spacing-48);
+@lime-tooltip-margin-offset: var(--primitive-spacing-18); // GUI for the length of the arrow
 @lime-tooltip-marquee-width: 600px;
+@lime-tooltip-max-width: 1200px;
 
 // Video
 // ---------------------------------------
