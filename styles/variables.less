@@ -163,7 +163,6 @@
 @lime-mediaoverlay-caption-font-size:  var(--primitive-font-size-60);
 @lime-mediaoverlay-text-font-size:     var(--primitive-font-size-48);
 @lime-mediaoverlay-subtitle-font-size: var(--primitive-font-size-48);
-@lime-mediaplayer-times-min-width:    186px;
 @lime-mediaplayer-times-text-size:    var(--primitive-font-size-48);
 @lime-picker-font-size:             var(--primitive-font-size-54);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
@@ -511,11 +510,11 @@
 // FlexiblePopupPanels
 // ---------------------------------------
 @lime-flexiblepopuppanels-min-width: 1140px;
-@lime-flexiblepopuppanels-margin: 108px 0;
+@lime-flexiblepopuppanels-margin: 60px 0;
 @lime-flexiblepopuppanels-padding: 0 60px (36px + (18px * 1.75));  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
 @lime-flexiblepopuppanels-panel-border-radius: var(--semantic-radius-overlay);
 @lime-flexiblepopuppanels-panel-margin: 0 60px;
-@lime-flexiblepopuppanels-panel-padding: var(--primitive-spacing-120) var(--primitive-spacing-60);
+@lime-flexiblepopuppanels-panel-padding: 60px (60px - @lime-component-spacing);
 @lime-flexiblepopuppanels-body-padding: 0 108px;
 @lime-flexiblepopuppanels-navbutton-margin: 0;
 @lime-flexiblepopuppanels-small-width: 600px;

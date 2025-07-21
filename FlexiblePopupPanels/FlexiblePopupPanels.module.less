@@ -24,6 +24,20 @@
 			// If the margin or padding configuration changes, this will likely need to be updated.
 			height: ~"calc(100vh -" ((extract(@lime-flexiblepopuppanels-margin, 1) * 2) + extract(@lime-flexiblepopuppanels-padding, 1) + extract(@lime-flexiblepopuppanels-padding, 1)) ~")";
 		}
+
+		&.noNavButton {
+			.bodyLayout {
+				padding-left: 0;
+
+				.content {
+					margin-left: 0;
+				}
+			}
+
+			.header {
+				margin-left: 0;
+			}
+		}
 	}
 
 	// this block is "tricks" the layout so the following .navButton rules position the before
@@ -121,6 +135,7 @@
 		// and not expand beyond that.
 		max-height: -webkit-fill-available; // Expand to the bounds, then stop.
 		pointer-events: auto;
+		padding: @lime-flexiblepopuppanels-body-padding;
 	}
 
 	// Target class-less Header container to capture pointer events that fall into the margin of header, outside its DOM box.
@@ -132,7 +147,7 @@
 	&.small,
 	&.large {
 		.body {
-			padding: @lime-flexiblepopuppanels-body-padding;
+			padding: 0;
 		}
 
 		.header {

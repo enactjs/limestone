@@ -44,7 +44,8 @@ export const _Image = (args) => (
 				padding: '0.1em 1em',
 				fontWeight: 100,
 				fontStyle: 'italic',
-				fontSize: '32px'
+				fontSize: ri.scaleToRem(42),
+				width: ri.scaleToRem(636)
 			}}
 		>
 			Image Boundary
