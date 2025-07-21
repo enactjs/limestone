@@ -13,7 +13,7 @@
         "@enact/i18n": "^5.1.0",
         "@enact/limestone": "../../",
         "@enact/spotlight": "^5.1.0",
-        "@enact/storybook-utils": "^7.0.0",
+        "@enact/storybook-utils": "^7.0.1",
         "@enact/ui": "^5.1.0",
         "@storybook/addon-docs": "^9.0.12",
         "@storybook/react-webpack5": "^9.0.12",
@@ -378,11 +378,10 @@
       }
     },
     "node_modules/@enact/storybook-utils": {
-      "version": "7.0.0",
-      "resolved": "https://registry.npmjs.org/@enact/storybook-utils/-/storybook-utils-7.0.0.tgz",
-      "integrity": "sha512-+rxbWC2H27+AIMcILg39nflB9wqrqy5bvtcxzVhlO7za5+44U/8kqtvFa/2jxZKw5lSJFigf3iQPB/BFwgEisg==",
+      "version": "7.0.1",
+      "resolved": "https://registry.npmjs.org/@enact/storybook-utils/-/storybook-utils-7.0.1.tgz",
+      "integrity": "sha512-r+DNSzWc583VwhgAGJWgjlLckP5cCAFL8Bmvd8KQfnq/WHXKzJF71vjA1/DKfE+N2dLnuSYscMWLKZ/DAYMqpA==",
       "hasShrinkwrap": true,
-      "license": "Apache-2.0",
       "dependencies": {
         "@daltontan/postcss-import-json": "^1.1.1",
         "@enact/dev-utils": "^7.0.1",
