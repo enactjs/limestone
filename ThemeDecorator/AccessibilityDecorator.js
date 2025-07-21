@@ -52,9 +52,9 @@ const AccessibilityDecorator = hoc((config, Wrapped) => {
 		}, [textSize]);
 
 		return (
-			<ResizeContext.Provider value={resizeRegistry.current.register}>
+			<ResizeContext value={resizeRegistry.current.register}>
 				<Wrapped className={combinedClassName} skinVariants={variants} {...rest} />
-			</ResizeContext.Provider>
+			</ResizeContext>
 		);
 	};
 
