@@ -86,14 +86,14 @@ const FlexiblePopupPanelsBase = kind({
 		 * @public
 		 */
 		prevButtonVisibility: PropTypes.oneOf(['auto', 'always', 'never']),
-		
+
 		/**
 		 * Indicates the locale's text direction is right-to-left.
 		 *
 		 * @type {Boolean}
 		 * @private
 		 */
-		rtl: PropTypes.bool,
+		rtl: PropTypes.bool
 	},
 
 	defaultProps: {
