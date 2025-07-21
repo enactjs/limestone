@@ -1,11 +1,11 @@
-import Input, {InputBase} from '@enact/limestone/Input';
+import Input, {InputBase, InputPopupBase} from '@enact/limestone/Input';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 
 import {propOptions, inputData} from './common/Input_Common';
 
 Input.displayName = 'Input';
-const Config = mergeComponentMetadata('Input', InputBase, Input);
+const Config = mergeComponentMetadata('Input', InputPopupBase, InputBase, Input);
 
 export default {
 	title: 'Limestone/Input/Text/Fullscreen',
