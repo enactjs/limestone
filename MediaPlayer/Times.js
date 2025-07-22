@@ -38,7 +38,7 @@ const TimesBase = kind({
 		 * @public
 		 */
 		current: PropTypes.number,
-		
+
 		/**
 		 * Checks if currentTime and totalTime should include the hour.
 		 *

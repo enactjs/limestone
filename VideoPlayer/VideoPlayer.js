@@ -244,7 +244,7 @@ const VideoPlayerBase = class extends Component {
 		 * @public
 		 */
 		feedbackHideDelay: PropTypes.number,
-		
+
 		/**
 		 * Checks if currentTime and totalTime should include the hour.
 		 *
@@ -665,7 +665,7 @@ const VideoPlayerBase = class extends Component {
 		 * @private
 		 */
 		setApiProvider: PropTypes.func,
-		
+
 
 		/**
 		 * The video source.
@@ -2004,7 +2004,7 @@ const VideoPlayerBase = class extends Component {
 			videoComponent: VideoComponent,
 			...mediaProps
 		} = this.props;
-console.log(disabled, includeTimeHour)
+
 		delete mediaProps.announce;
 		delete mediaProps.autoCloseTimeout;
 		delete mediaProps.children;
