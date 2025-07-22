@@ -99,7 +99,6 @@ const TimesBase = kind({
 		delete rest.formatter;
 		delete rest.includeTimeHour;
 		delete rest.total;
-		
 
 		return (
 			<div {...rest}>
