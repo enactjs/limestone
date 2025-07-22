@@ -145,6 +145,7 @@ export const _VideoPlayer = (args) => {
 				backButtonAriaLabel={args['backButtonAriaLabel']}
 				disabled={args['disabled']}
 				feedbackHideDelay={args['feedbackHideDelay']}
+				includeTimeHour={args['includeTimeHour']}
 				initialJumpDelay={args['initialJumpDelay']}
 				jumpDelay={args['jumpDelay']}
 				loop={args['loop']}
@@ -217,6 +218,7 @@ number('autoCloseTimeout', _VideoPlayer, Config, 7000);
 text('backButtonAriaLabel', _VideoPlayer, Config, 'go to previous');
 boolean('disabled', _VideoPlayer, Config);
 number('feedbackHideDelay', _VideoPlayer, Config, 3000);
+boolean('includeTimeHour', _VideoPlayer, Config);
 number('initialJumpDelay', _VideoPlayer, Config, 400);
 number('jumpDelay', _VideoPlayer, Config, 200);
 boolean('loop', _VideoPlayer, Config, true);

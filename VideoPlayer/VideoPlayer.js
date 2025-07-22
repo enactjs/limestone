@@ -244,6 +244,16 @@ const VideoPlayerBase = class extends Component {
 		 * @public
 		 */
 		feedbackHideDelay: PropTypes.number,
+		
+		/**
+		 * Checks if currentTime and totalTime should include the hour.
+		 *
+		 *
+		 * @type {Boolean}
+		 * @public
+		 * @default false
+		 */
+		includeTimeHour: PropTypes.bool,
 
 		/**
 		 * Components placed below the title.
@@ -655,6 +665,7 @@ const VideoPlayerBase = class extends Component {
 		 * @private
 		 */
 		setApiProvider: PropTypes.func,
+		
 
 		/**
 		 * The video source.
@@ -777,6 +788,7 @@ const VideoPlayerBase = class extends Component {
 	static defaultProps = {
 		autoCloseTimeout: 5000,
 		feedbackHideDelay: 3000,
+		includeTimeHour: false,
 		initialJumpDelay: 400,
 		jumpBy: 30,
 		jumpDelay: 200,
@@ -1982,6 +1994,7 @@ const VideoPlayerBase = class extends Component {
 			noSlider,
 			noSpinner,
 			selection,
+			includeTimeHour,
 			spotlightDisabled,
 			spotlightId,
 			style,
@@ -1991,7 +2004,7 @@ const VideoPlayerBase = class extends Component {
 			videoComponent: VideoComponent,
 			...mediaProps
 		} = this.props;
-
+console.log(disabled, includeTimeHour)
 		delete mediaProps.announce;
 		delete mediaProps.autoCloseTimeout;
 		delete mediaProps.children;
@@ -2114,7 +2127,7 @@ const VideoPlayerBase = class extends Component {
 										{infoComponents}
 									</MediaTitle>
 									{noSlider ?
-										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} /> :
+										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} includeTimeHour={includeTimeHour} /> :
 										null
 									}
 								</div> :
@@ -2124,7 +2137,7 @@ const VideoPlayerBase = class extends Component {
 								null :
 								<div className={css.sliderContainer}>
 									{this.state.mediaSliderVisible ?
-										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} /> :
+										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} includeTimeHour={includeTimeHour}  /> :
 										null
 									}
 									<MediaSlider
@@ -2154,7 +2167,7 @@ const VideoPlayerBase = class extends Component {
 										/>
 									</MediaSlider>
 									{this.state.mediaSliderVisible ?
-										<Times noCurrentTime total={this.state.duration} formatter={durFmt} /> :
+										<Times noCurrentTime total={this.state.duration} formatter={durFmt} includeTimeHour={includeTimeHour} /> :
 										null
 									}
 								</div>
