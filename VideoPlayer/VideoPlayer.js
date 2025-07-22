@@ -666,7 +666,6 @@ const VideoPlayerBase = class extends Component {
 		 */
 		setApiProvider: PropTypes.func,
 
-
 		/**
 		 * The video source.
 		 *
