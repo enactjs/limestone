@@ -306,12 +306,14 @@ export const EditableList = (args) => {
 	}, [items]);
 
 	useEffect(() => {
-		divRef.current.addEventListener('keydown', (ev) => {
-			const {keyCode} = ev;
-			if (isCancel(keyCode)) {
-				setEditMode(false);
-			}
-		});
+		if (divRef.current) {
+			divRef.current.addEventListener('keydown', (ev) => {
+				const {keyCode} = ev;
+				if (isCancel(keyCode)) {
+					setEditMode(false);
+				}
+			});
+		}
 	}, [divRef]);
 
 	return (
