@@ -97,7 +97,9 @@ const TimesBase = kind({
 	render: ({currentPeriod, currentReadable, noCurrentTime, noSeparator, noTotalTime, totalPeriod, totalReadable, ...rest}) => {
 		delete rest.current;
 		delete rest.formatter;
+		delete rest.includeTimeHour;
 		delete rest.total;
+		
 
 		return (
 			<div {...rest}>
