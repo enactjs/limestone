@@ -343,7 +343,7 @@ describe('VideoPlayer', function () {
 			await videoPlayerProps2.nextButton.click();
 			await Page.delay(250);
 
-			expect(await videoPlayerProps2.mediaControlsTime.getText()).toBe('00:00:00');
+			expect(await videoPlayerProps2.mediaControlsTime.getText()).toBe('00:00');
 		});
 
 		it('should display info component', async function () {
