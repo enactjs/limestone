@@ -2127,7 +2127,7 @@ const VideoPlayerBase = class extends Component {
 										{infoComponents}
 									</MediaTitle>
 									{noSlider ?
-										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} includeTimeHour={includeTimeHour} /> :
+										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} includeTimeHour /> :
 										null
 									}
 								</div> :
@@ -2137,7 +2137,7 @@ const VideoPlayerBase = class extends Component {
 								null :
 								<div className={css.sliderContainer}>
 									{this.state.mediaSliderVisible ?
-										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} includeTimeHour={includeTimeHour}  /> :
+										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} includeTimeHour  /> :
 										null
 									}
 									<MediaSlider
@@ -2167,7 +2167,7 @@ const VideoPlayerBase = class extends Component {
 										/>
 									</MediaSlider>
 									{this.state.mediaSliderVisible ?
-										<Times noCurrentTime total={this.state.duration} formatter={durFmt} includeTimeHour={includeTimeHour} /> :
+										<Times noCurrentTime total={this.state.duration} formatter={durFmt} includeTimeHour /> :
 										null
 									}
 								</div>
