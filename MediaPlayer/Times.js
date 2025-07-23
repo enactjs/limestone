@@ -42,10 +42,9 @@ const TimesBase = kind({
 		/**
 		 * Checks if current time and total time should include the hour.
 		 *
-		 *
 		 * @type {Boolean}
-		 * @public
 		 * @default false
+		 * @public
 		 */
 		includeHour: PropTypes.bool,
 

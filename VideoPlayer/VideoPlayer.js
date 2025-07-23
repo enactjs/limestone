@@ -248,10 +248,9 @@ const VideoPlayerBase = class extends Component {
 		/**
 		 * Checks if current time and total time should include the hour.
 		 *
-		 *
 		 * @type {Boolean}
-		 * @public
 		 * @default false
+		 * @public
 		 */
 		includeTimeHour: PropTypes.bool,
 
