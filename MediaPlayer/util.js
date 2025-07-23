@@ -57,8 +57,6 @@ const secondsToTime = (seconds, durfmt, config) => {
 
 		if (includeHour && !parsedTime.hour) {
 			return '00:' + timeString;
-		} else if (includeHour && parsedTime.hour) {
-			return '0' + timeString;
 		} else {
 			return timeString;
 		}

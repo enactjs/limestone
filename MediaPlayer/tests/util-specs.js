@@ -67,7 +67,7 @@ describe('util', () => {
 	describe('secondsToTime', () => {
 		test('should return hour unit string when seconds is 3600 sec or more and includeHour is true', () => {
 			const seconds = 4850;
-			const expected = '01:20:50';
+			const expected = '1:20:50';
 			const actual = secondsToTime(seconds, getDurFmt('en'), {includeHour: true});
 
 			expect(actual).toEqual(expected);
