@@ -139,6 +139,10 @@
 @lime-checkbox-border-indeterminate-disabled-color: @lime-checkbox-border-indeterminate-color;
 @lime-checkbox-border-indeterminate-disabled-focused-color: @lime-checkbox-border-indeterminate-focused-color;
 
+// CheckboxItem
+// ---------------------------------------
+@lime-checkboxitem-item-container-selected-color: transparent;
+
 // ContextualPopup
 // ---------------------------------------
 @lime-contextualpopup-container-color: var(--semantic-color-surface-context-group);
@@ -159,15 +163,17 @@
 
 // FlexiblePopupPanels
 // ---------------------------------------
-@lime-flexiblepopuppanels-panel-bg-color: @lime-popup-bg-color;
+@lime-flexiblepopuppanels-panel-bg-color: var(--semantic-color-background-overlay-default);
 @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-shadow-color;
+@lime-flexiblepopuppanels-panel-shadow: 0 36px 48px 0 @lime-shadow-color;
 
 // FormCheckboxItem
 // ---------------------------------------
-@lime-formcheckboxitem-disabled-text-color: inherit;
-@lime-formcheckboxitem-disabled-focus-text-color: @lime-formcheckboxitem-disabled-text-color;
-@lime-formcheckboxitem-focus-text-color: var(--semantic-color-on-background-main);
+@lime-formcheckboxitem-label-main-disabled-color: inherit;
+@lime-formcheckboxitem-label-main-disabled-focused-color: @lime-formcheckboxitem-label-main-disabled-color;
+@lime-formcheckboxitem-label-main-focused-color: var(--semantic-color-on-background-main);
+@lime-formcheckboxitem-label-sub-focused-color: var(--semantic-color-on-background-sub);
+@lime-formcheckboxitem-item-container-selected-color: transparent;
 
 // Header
 // ---------------------------------------
@@ -273,8 +279,10 @@
 
 // MediaOverlay
 // ---------------------------------------
-@lime-mediaoverlay-caption-color: var(--semantic-color-on-background-main);
-@lime-mediaoverlay-subtitle-color: var(--semantic-color-on-background-sub);
+@lime-mediaoverlay-inner-label-main-color: var(--semantic-color-on-surface-main);
+@lime-mediaoverlay-outer-label-main-color: var(--semantic-color-on-background-main);
+@lime-mediaoverlay-outer-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-mediaoverlay-inner-border-focused: var(--semantic-color-stroke-main-focused);
 
 // MediaPlayer
 // ---------------------------------------
@@ -332,6 +340,7 @@
 @lime-radioitem-icon-focused-color: transparent;
 @lime-radioitem-icon-selected-color: var(--semantic-color-on-surface-main-selected);
 @lime-radioitem-icon-selected-focused-color: @lime-radioitem-icon-selected-color;
+@lime-radioitem-item-container-selected-color: transparent;
 @lime-radioitem-container-color: transparent;
 @lime-radioitem-container-focused-color: transparent;
 @lime-radioitem-container-selected-color: var(--semantic-color-surface-accent);
