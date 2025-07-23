@@ -28,6 +28,7 @@ export default {
 export const _Card = (args) => (
 	<Card
 		captionOverlay={args['captionOverlay']}
+		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
 		disabled={args['disabled']}
 		imageIconSrc={args['imageIconSrc']}
@@ -49,6 +50,7 @@ export const _Card = (args) => (
 );
 
 boolean('captionOverlay', _Card, Config);
+boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));

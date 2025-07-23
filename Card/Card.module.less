@@ -150,6 +150,12 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlayOnFocus {
+			&.captionOverlay .captions {
+				visibility: hidden;
+			}
+		}
+
 		&.hasContainer .captions {
 			padding: @lime-card-vertical-has-container-captions-padding;
 		}
@@ -191,6 +197,12 @@
 			&.captionOverlay {
 				transform: scale(1.1);
 				transition: transform 200ms ease-in-out;
+			}
+
+			&.captionOverlayOnFocus {
+				&.captionOverlay .captions {
+					visibility: visible;
+				}
 			}
 
 			&:not(.hasContainer) .selectionContainer {
@@ -236,6 +248,10 @@
 		}
 
 		&.vertical {
+			&.captionOverlay .captions {
+				background: @lime-card-captions-gradient-color
+			}
+
 			&:not(.hasContainer) {
 				.lime-focus-highlight(image);
 			}

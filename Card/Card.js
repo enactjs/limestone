@@ -83,7 +83,16 @@ const CardBase = kind({
 		captionOverlay: PropTypes.bool,
 
 		/**
-		 * Centers the cations when `imageIconSrc` is not provided.
+		 * Determines whether the caption will be placed over the image and shown only on card focus.
+		 * It only applies when `orientation` is `'vertical'`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		captionOverlayOnFocus: PropTypes.bool,
+
+		/**
+		 * Centers the captions when `imageIconSrc` is not provided.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -229,6 +238,7 @@ const CardBase = kind({
 		'aria-label': ({children, label, secondaryLabel, selected}) => {
 			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' selected' : ''}`;
 		},
+		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
 		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
@@ -270,14 +280,16 @@ const CardBase = kind({
 					captions
 			);
 		},
-		className: ({captionOverlay, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
+			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
 		})
 	},
 
 	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
 		delete rest.secondaryLabel;
