@@ -3,6 +3,7 @@ import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {object, select} from '@enact/storybook-utils/addons/controls';
 import {ImageBase as UiImageBase} from '@enact/ui/Image';
+import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -27,7 +28,8 @@ export const _Image = (args) => (
 		onError={action('error')}
 		onLoad={action('loaded')}
 		style={{
-			border: '#ffa500 dashed 1px'
+			border: '#ffa500 dashed 1px',
+			marginTop: ri.scaleToRem(96)
 		}}
 	>
 		<label
@@ -42,7 +44,8 @@ export const _Image = (args) => (
 				padding: '0.1em 1em',
 				fontWeight: 100,
 				fontStyle: 'italic',
-				fontSize: '32px'
+				fontSize: ri.scaleToRem(42),
+				width: ri.scaleToRem(636)
 			}}
 		>
 			Image Boundary

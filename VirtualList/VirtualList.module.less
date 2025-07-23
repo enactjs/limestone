@@ -1,0 +1,17 @@
+// VirtualList.module.less
+//
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.scrollContainer {
+    border-radius: @lime-virtuallist-container-border-radius;
+};
+
+.applySkins({
+    .scrollContainer {
+        background-color: @lime-virtuallist-container-color;
+    }
+    .scrollContainer > :first-child {
+        background-color: transparent;
+    }
+});

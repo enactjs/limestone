@@ -197,7 +197,7 @@ const PanelBase = kind({
 					<Cell align="center" shrink className={css.navCellBefore}>
 						<NavigationButton
 							aria-label={$L('Previous')}
-							backgroundOpacity="transparent"
+							backgroundOpacity="opaque"
 							component={prevButton}
 							className={css.navButton}
 							icon="arrowlargeleft"
@@ -217,7 +217,7 @@ const PanelBase = kind({
 					<Cell align="center" shrink className={css.navCellAfter}>
 						<NavigationButton
 							aria-label={$L('Next')}
-							backgroundOpacity="transparent"
+							backgroundOpacity="opaque"
 							component={nextButton}
 							className={css.navButton}
 							icon="arrowlargeright"

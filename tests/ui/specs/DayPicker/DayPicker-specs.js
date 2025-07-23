@@ -30,6 +30,7 @@ describe('DayPicker', function () {
 				await Page.spotlightDown();
 				await Page.spotlightSelect();
 				await Page.spotlightSelect();
+
 				expect(await dayPicker.item(1).getAttribute('aria-checked')).toBe('false');
 			});
 		});
@@ -70,6 +71,7 @@ describe('DayPicker', function () {
 			it('should not select option with 5-way', async function () {
 				await Page.spotlightRight();
 				await Page.spotlightSelect();
+
 				expect(await dayPicker.item(0).getAttribute('aria-checked')).toBe('false');
 			});
 		});
@@ -77,6 +79,7 @@ describe('DayPicker', function () {
 		describe('pointer', function () {
 			it('should not select option with click', async function () {
 				await dayPicker.item(0).click();
+
 				expect(await dayPicker.item(0).getAttribute('aria-checked')).toBe('false');
 			});
 		});

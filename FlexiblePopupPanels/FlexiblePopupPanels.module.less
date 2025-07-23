@@ -24,6 +24,20 @@
 			// If the margin or padding configuration changes, this will likely need to be updated.
 			height: ~"calc(100vh -" ((extract(@lime-flexiblepopuppanels-margin, 1) * 2) + extract(@lime-flexiblepopuppanels-padding, 1) + extract(@lime-flexiblepopuppanels-padding, 1)) ~")";
 		}
+
+		&.noNavButton {
+			.bodyLayout {
+				padding-left: 0;
+
+				.content {
+					margin-left: 0;
+				}
+			}
+
+			.header {
+				margin-left: 0;
+			}
+		}
 	}
 
 	// this block is "tricks" the layout so the following .navButton rules position the before
@@ -112,10 +126,6 @@
 .panel {
 	pointer-events: none;
 
-	> .body {
-		padding: 0;
-	}
-
 	.bodyLayout {
 		// This `-webkit-fill-available` value is a bit funny. It only updates
 		// after a "hard" layout recalculation, not all the time, so the content
@@ -125,6 +135,7 @@
 		// and not expand beyond that.
 		max-height: -webkit-fill-available; // Expand to the bounds, then stop.
 		pointer-events: auto;
+		padding: @lime-flexiblepopuppanels-body-padding;
 	}
 
 	// Target class-less Header container to capture pointer events that fall into the margin of header, outside its DOM box.
@@ -132,12 +143,16 @@
 		pointer-events: auto;
 	}
 
-	.header {
-		margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[];
-		margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[];
+	&.auto,
+	&.small,
+	&.large {
+		.body {
+			padding: 0;
+		}
 
-		&.showBack {
-			margin-left: @lime-flexiblepopuppanels-header-padding;
+		.header {
+			margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[] + .extract(@lime-flexiblepopuppanels-body-padding, left)[];
+			margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[] + .extract(@lime-flexiblepopuppanels-body-padding, right)[];
 		}
 	}
 
@@ -184,7 +199,9 @@
 	}
 
 	&.small {
-		width: @panel-small-width;
+		.content, .header {
+			width: @lime-flexiblepopuppanels-small-width;
+		}
 	}
 
 	// Customize control over transitioning between panels of different dimensions.
@@ -195,7 +212,9 @@
 	}
 
 	&.large {
-		width: @panel-large-width;
+		.content, .header {
+			width: @lime-flexiblepopuppanels-large-width;
+		}
 	}
 
 	&.large	+ &.small {

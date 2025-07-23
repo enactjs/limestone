@@ -10,7 +10,7 @@ import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, useContext, useState} from 'react';
+import {Children, use, useState} from 'react';
 
 import $L from '../internal/$L';
 import Button from '../Button';
@@ -334,6 +334,8 @@ const HeaderBase = kind({
 	},
 
 	defaultProps: {
+		backButtonBackgroundOpacity: 'transparent',
+		closeButtonBackgroundOpacity: 'transparent',
 		marqueeOn: 'render',
 		noSubtitle: false,
 		type: 'standard'
@@ -346,11 +348,13 @@ const HeaderBase = kind({
 	},
 
 	computed: {
-		className: ({centered, children, noSubtitle, type, shadowed, styler, subtitle}) => styler.append(
+		className: ({backButtonAvailable, centered, children, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}) => styler.append(
 			{
 				centered,
 				noSubtitle,
 				shadowed,
+				slotAfter: slotAfter || !noCloseButton,
+				slotBefore: slotBefore || (backButtonAvailable && !noBackButton),
 				// This likely doesn't need to be as verbose as it is, with the first 2 conditionals
 				withChildren: hasChildren(children),
 				withSubtitle: subtitle
@@ -381,7 +385,6 @@ const HeaderBase = kind({
 					id={subtitleId}
 					size="subtitle"
 					spacing="auto"
-					marqueeDisabled={type === 'wizard'}
 					marqueeOn={marqueeOn}
 					forceDirection={direction}
 					alignment={centered ? 'center' : null}
@@ -459,7 +462,6 @@ const HeaderBase = kind({
 				iconFlip="auto"
 				onClick={onBack}
 				shadowed={shadowed}
-				size="small"
 			/>
 		) : null);
 
@@ -472,7 +474,6 @@ const HeaderBase = kind({
 				icon="closex"
 				onClick={onClose}
 				shadowed={shadowed}
-				size="small"
 			/>
 		) : null);
 
@@ -514,7 +515,7 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
-		const {type: panelsType} = useContext(PanelsStateContext);
+		const {type: panelsType} = use(PanelsStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
 

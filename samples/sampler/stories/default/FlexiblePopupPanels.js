@@ -12,6 +12,8 @@ import ri from '@enact/ui/resolution';
 import {useState} from 'react';
 import compose from 'ramda/src/compose';
 
+import css from "./FlexiblePopupPanels.module.less";
+
 const propOptions = {
 	buttonVisibility: ['auto', 'always', 'never'],
 	size: ['auto', 'small', 'large']
@@ -19,13 +21,19 @@ const propOptions = {
 
 const Config = mergeComponentMetadata('FlexiblePopupPanels', FlexiblePopupPanelsBase, FlexiblePopupPanels);
 const PanelConfig = mergeComponentMetadata('Panel', PanelBase, Panel);
+Config.defaultProps = {
+	nextButtonVisibility: 'auto',
+	prevButtonVisibility: 'auto',
+	scrimType: 'translucent',
+	spotlightRestrict: 'self-only'
+};
 
 export default {
 	title: 'Limestone/FlexiblePopupPanels',
 	component: 'FlexiblePopupPanels'
 };
 
-export const _FlexiblePopupPanels = (args) => {
+export const FlexiblePopupPanels_ = (args) => {
 	const defaultOpen = false;
 	const [open, setOpenState] = useState(defaultOpen);
 	const toggleOpen = () => setOpenState(!open);
@@ -77,7 +85,7 @@ export const _FlexiblePopupPanels = (args) => {
 					}
 				>
 					<Header title="First List" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 						<Item onClick={nextPanel}>Item 2</Item>
 						<Item onClick={nextPanel}>Item 3</Item>
@@ -99,7 +107,7 @@ export const _FlexiblePopupPanels = (args) => {
 					}
 				>
 					<Header title="Third panel" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 					</Scroller>
 				</Panel>
@@ -109,26 +117,25 @@ export const _FlexiblePopupPanels = (args) => {
 	);
 };
 
-boolean('fullHeight', _FlexiblePopupPanels, Config);
-select('nextButtonVisibility', _FlexiblePopupPanels, propOptions.buttonVisibility, Config);
-boolean('noAnimation', _FlexiblePopupPanels, Config);
-boolean('noAutoDismiss', _FlexiblePopupPanels, Config);
-boolean('noCloseButton', _FlexiblePopupPanels, Config);
-select('prevButtonVisibility', _FlexiblePopupPanels, propOptions.buttonVisibility, Config);
-select('scrimType', _FlexiblePopupPanels, ['none', 'translucent', 'transparent'], Config, 'translucent');
+boolean('fullHeight', FlexiblePopupPanels_, Config);
+select('nextButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
+boolean('noAnimation', FlexiblePopupPanels_, Config);
+boolean('noAutoDismiss', FlexiblePopupPanels_, Config);
+boolean('noCloseButton', FlexiblePopupPanels_, Config);
+select('prevButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
+select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config);
 select(
 	'spotlightRestrict',
-	_FlexiblePopupPanels,
+	FlexiblePopupPanels_,
 	['self-first', 'self-only'],
-	Config,
-	'self-only'
+	Config
 );
-select('size', _FlexiblePopupPanels, propOptions.size, PanelConfig);
-boolean('custom first Panel prevButton', _FlexiblePopupPanels, PanelConfig);
-boolean('custom last Panel nextButton', _FlexiblePopupPanels, PanelConfig);
+select('size', FlexiblePopupPanels_, propOptions.size, PanelConfig);
+boolean('custom first Panel prevButton', FlexiblePopupPanels_, PanelConfig);
+boolean('custom last Panel nextButton', FlexiblePopupPanels_, PanelConfig);
 
-_FlexiblePopupPanels.storyName = 'FlexiblePopupPanels';
-_FlexiblePopupPanels.parameters = {
+FlexiblePopupPanels_.storyName = 'FlexiblePopupPanels';
+FlexiblePopupPanels_.parameters = {
 	info: {
 		text:
 			'Intended for use with a single "control" at a time, to maximize the amount of background visible.'

@@ -22,17 +22,37 @@ import kind from '@enact/core/kind';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Pure from '@enact/ui/internal/Pure';
+import {Cell, Row} from '@enact/ui/Layout';
 import Repeater from '@enact/ui/Repeater';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
+import BodyText from '../BodyText';
 import Icon from '../Icon';
+import Image from '../Image';
 import {ItemBase} from '../Item';
 import {MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
+
 import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
+
+const ImageItemBase = ({children, imageSrc}) => {
+	return (
+		<Row className={componentCss.imageItem}>
+			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
+			<Cell shrink={false} className={componentCss.text}>
+				<BodyText className={componentCss.bodyText}>{children}</BodyText>
+			</Cell>
+		</Row>
+	);
+};
+
+ImageItemBase.propTypes = {
+	children: PropTypes.node,
+	imageSrc: PropTypes.string
+};
 
 /**
  * A Key Guide component.
@@ -50,20 +70,38 @@ const KeyGuideBase = kind({
 
 	propTypes: /** @lends limestone/KeyGuide.KeyGuideBase.prototype */ {
 		/**
+		 * The direction of the arrow.
+		 * If `'none'`, no arrow is shown.
+		 * `'bottom'`, `'left'`, `'right'`, and `'top'` can be used to position the arrow.
+		 * Arrow is only displayed in image-based guides.
+		 *
+		 * @type {String}
+		 * @public
+		 * @default 'none'
+		 */
+		arrowPosition: PropTypes.oneOf(['bottom', 'left', 'right', 'top', 'none']),
+
+		/**
 		 * The items to be displayed in the `KeyGuide` when `open`.
 		 *
-		 * Takes an array of objects. The properties will be passed onto an `Item` component.
-		 * The object requires `children`, and a unique `key` property. If the `icon` property is one
+		 * For icon-based guides, it takes an array of objects. The properties will be passed onto an `Item` component.
+		 * The object requires `children` and a unique `key` property. If the `icon` property is one
 		 * of `'red'`, `'green'`, `'yellow'` or '`blue'`, a corresponding color bar is shown.
 		 *
-		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>}
+		 * For image-based guides, it takes an object. The object requires `children` and `imageSrc` properties.
+		 * The `children` property is the text to be displayed and the `imageSrc` property is the path to the image to display.
+
+		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>|Object.<{children: (String|Component), imageSrc: (String|Object)}>}
 		 * @public
 		 */
 		children: PropTypes.arrayOf(PropTypes.shape({
 			children: EnactPropTypes.renderable.isRequired,
 			key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-		})),
+		})) || PropTypes.shape({
+			children: EnactPropTypes.renderable.isRequired,
+			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+		}),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -72,6 +110,7 @@ const KeyGuideBase = kind({
 		 * The following classes are supported:
 		 *
 		 * * `keyGuide` - The root component class
+		 * * `imageGuide` - Applied to an image-based keyGuide
 		 *
 		 * @type {Object}
 		 * @public
@@ -87,40 +126,63 @@ const KeyGuideBase = kind({
 		open: PropTypes.bool
 	},
 
+	defaultProps: {
+		arrowPosition: 'none'
+	},
+
 	computed: {
-		children: ({children, css}) => (
-			children ? children.map(({icon, ...child}) => {
-				const isColorKey = colorKeys.includes(icon);
-				return {
-					...child,
-					slotBefore: isColorKey ? (
-						<div className={css[icon]} />
-					) : <Icon className={css.icon}>{icon}</Icon>
-				};
-			}) : []
+		children: ({children, css}) => {
+			if (children?.imageSrc) {
+				return children;
+			} else {
+				return children ? children.map(({icon, ...child}) => {
+					const isColorKey = colorKeys.includes(icon);
+					return {
+						...child,
+						slotBefore: isColorKey ? (
+							<div className={css[icon]} />
+						) : <Icon className={css.icon} size="large" >{icon}</Icon>
+					};
+				}) : [];
+			}
+		},
+		className: ({arrowPosition, children, styler}) => styler.append(
+			Array.isArray(children) ? 'iconGuide' : 'imageGuide',
+			arrowPosition === 'none' || Array.isArray(children) ? 'noArrow' : `${arrowPosition}Arrow`
 		),
-		open: ({children, open}) => (children && children.length > 0 && open)
+		open: ({children, open}) => (children && (children.imageSrc || children.length > 0) && open)
 	},
 
 	styles: {
 		css: componentCss,
 		className: 'keyGuide',
-		publicClassNames: ['keyGuide']
+		publicClassNames: ['keyGuide', 'imageGuide']
 	},
 
-	render: ({open, css, ...rest}) => {
+	render: ({className, css, children, open, ...rest}) => {
+		delete rest.arrowPosition;
+
 		return (
 			<FloatingLayer
 				noAutoDismiss
 				open={open}
 				scrimType="none"
 			>
-				<Repeater
-					{...rest}
-					component="div"
-					childComponent={ItemBase}
-					itemProps={{css, marqueeOn: 'render'}}
-				/>
+				{Array.isArray(children) ? (
+					<Repeater
+						{...rest}
+						component="div"
+						className={className}
+						childComponent={ItemBase}
+						itemProps={{css, marqueeOn: 'render'}}
+					>
+						{children}
+					</Repeater>
+				) : (
+					<div {...rest} className={className}>
+						<ImageItemBase {...children} />
+					</div>
+				)}
 			</FloatingLayer>
 		);
 	}

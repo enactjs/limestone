@@ -2,7 +2,7 @@
 
 import {Panels} from '@enact/limestone/Panels';
 import ThemeDecorator from '@enact/limestone/ThemeDecorator';
-import {useContext} from 'react';
+import {use} from 'react';
 
 import {
 	decreaseIndex as decreaseAction,
@@ -13,8 +13,8 @@ import {
 import MainPanel from '../views/MainPanel';
 
 const App = (props) => {
-	const dispatch = useContext(IndexDispatchContext);
-	const {index} = useContext(IndexContext);
+	const dispatch = use(IndexDispatchContext);
+	const {index} = use(IndexContext);
 	const pushPanel = () => dispatch(increaseAction());
 	const popPanel = () => dispatch(decreaseAction());
 

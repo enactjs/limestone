@@ -49,7 +49,7 @@ const populateItems = ({index}) => {
 	const color = Math.floor(Math.random() * (0x1000000 - 0x101010) + 0x101010).toString(16);
 	const iconItemProps = {
 		background: (function () {
-			if (index < 2) return '#1b1b1b';
+			if (index < 2) return '';
 			else if (index % 6 === 0) return '#ffffff';
 			else return '#' + color;
 		})(),
@@ -58,8 +58,8 @@ const populateItems = ({index}) => {
 		image: index > 1 ? {
 			src: imageSrcs[index % 5],
 			size: {
-				width: ri.scaleToRem(150),
-				height: ri.scaleToRem(150)
+				width: index === 6 ? ri.scaleToRem(178) : ri.scaleToRem(230),
+				height: index === 6 ? ri.scaleToRem(178) : ri.scaleToRem(230)
 			}
 		} : null,
 		label: (function () {
@@ -79,7 +79,6 @@ for (let i = 0; i < 20; i++) {
 }
 
 const Container = SpotlightContainerDecorator('div');
-const ContainerDivWithLeaveForConfig = SpotlightContainerDecorator({leaveFor: {left: '', right: ''}}, 'div');
 const TouchableDiv = Touchable('div');
 
 export const EditableIcon = (args) => {
@@ -277,11 +276,11 @@ export const EditableIcon = (args) => {
 										onMouseLeave={onMouseLeaveItem}
 										style={{order: index + 1}}
 									>
-										<ContainerDivWithLeaveForConfig className={css.removeButtonContainer}>
+										<div className={css.removeButtonContainer}>
 											{item.hidden ? null : <Button aria-label="Delete" className={css.removeButton} onClick={onClickRemoveButton} icon="trash" />}
 											{item.hidden ? null : <Button aria-label="Hide" className={css.removeButton} onClick={onClickHideButton} icon="minus" />}
 											{item.hidden ? <Button aria-label="Show" className={css.removeButton} onClick={onClickShowButton} icon="plus" /> : null}
-										</ContainerDivWithLeaveForConfig>
+										</div>
 										<IconItem
 											{...item.iconItemProps}
 											aria-label={`Icon ${item.index}`}

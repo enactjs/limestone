@@ -1,5 +1,6 @@
 // PageViews.module.less
 //
+@import "../styles/skin.less";
 @import "../styles/variables.less";
 
 .pageViews {
@@ -26,16 +27,27 @@
 		height: @lime-button-height;
 		top: ~"calc(50% - "@lime-button-height / 2 ~")";
 		z-index: 10;
+		pointer-events: none;
+
+		& [role='button'] {
+			pointer-events: auto;
+		}
 	}
 
 	&.number .navButtonCell {
 		width: @lime-pageviews-number-navigation-button-area-width;
+
+		.navButton {
+			margin: 0;
+		}
 	}
 
 	.stepsRow {
 		align-items: center;
 		justify-content: center;
 		text-align: center;
+		height: @lime-pageviews-steps-height;
+
 		&.hidden {
 			min-height: @lime-pageviews-steps-area-min-height;
 			visibility: hidden;
@@ -45,10 +57,15 @@
 	&.number .stepsRow {
 		min-height: @lime-pageviews-number-steps-area-min-height;
 		.pageNumber {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-evenly;
+			padding: @lime-pageviews-navigation-text-area-padding;
 			width: @lime-pageviews-number-steps-number-width;
-		}
-		.separator {
-			width: @lime-pageviews-number-steps-separator-width;
+
+			.separator {
+				width: @lime-pageviews-number-steps-separator-width;
+			}
 		}
 	}
 
@@ -56,6 +73,28 @@
 		display: flex;
 		align-items: center;
 		min-height: @lime-pageviews-dot-steps-area-min-height;
+		gap: @lime-pageviews-indicator-icon-gap;
+
+		.step {
+			height: @lime-pageviews-dot-step-size;
+			width: @lime-pageviews-dot-step-size;
+			margin: 0;
+
+			&.current {
+				height: @lime-pageviews-dot-highlighted-step-size;
+				width: @lime-pageviews-dot-highlighted-step-size;
+			}
+
+			&.future, &.past {
+				opacity: @lime-pageviews-indicator-icon-opacity;
+			}
+		}
+
+		.pageIndicator {
+			&.past, &.current, &.future {
+				/* CSS Overrides */
+			}
+		}
 	}
 
 	&.fullContents .stepsRow {
@@ -65,6 +104,11 @@
 
 	&.fullContents.indicatorBottom .stepsRow {
 		bottom: @lime-pageviews-full-contents-bottom-steps-bottom;
+		pointer-events: none;
+
+		& [role='button'] {
+			pointer-events: auto;
+		}
 	}
 
 	.contentsArea {
@@ -74,9 +118,24 @@
 
 	.viewManager {
 		overflow: hidden;
+		border-radius: @lime-pageviews-contents-border-radius;
 	}
 
 	.horizontalLayout {
 		height: 100%;
 	}
+
+	.applySkins({
+		.viewManager {
+			background-color: @lime-pageviews-bg-color;
+		}
+
+		.steps .step {
+			background-color: @lime-pageviews-indicator-icon-active;
+
+			&.future, &.past {
+				background-color: @lime-pageviews-indicator-icon-inactive;
+			}
+		}
+	});
 }

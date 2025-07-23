@@ -19,6 +19,9 @@ import compose from 'ramda/src/compose';
 import {svgGenerator} from '../helper/svg';
 
 const Config = mergeComponentMetadata('Panels', Panels);
+Config.defaultProps.backButtonBackgroundOpacity = 'transparent';
+Config.defaultProps.closeButtonBackgroundOpacity = 'transparent';
+
 const HeaderConfig = mergeComponentMetadata('Header', Header);
 
 const items = [];
@@ -32,7 +35,6 @@ for (let i = 0; i < 100; i++) {
 }
 
 // Used to render VirtualGridList into Panels
-// eslint-disable-next-line enact/prop-types
 const renderItem = ({index, ...rest}) => {
 	const {caption, source, text} = items[index];
 	return (
@@ -49,7 +51,7 @@ export default {
 	component: 'Panels'
 };
 
-export const _Panels = (args) => {
+export const Panels_ = (args) => {
 	// hooks
 	const initialState = 0;
 	const [panelIndex, setState] = useState(initialState);
@@ -79,7 +81,6 @@ export const _Panels = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -118,7 +119,6 @@ export const _Panels = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -140,7 +140,6 @@ export const _Panels = (args) => {
 					<Button
 						icon="arrowlargeright"
 						iconFlip="auto"
-						size="small"
 						slot="slotAfter"
 						onClick={forward} // eslint-disable-line react/jsx-no-bind
 					/>
@@ -215,26 +214,24 @@ export const _Panels = (args) => {
 
 select(
 	'backButtonBackgroundOpacity',
-	_Panels,
+	Panels_,
 	['opaque', 'transparent'],
-	Config,
-	'transparent'
+	Config
 );
 select(
 	'closeButtonBackgroundOpacity',
-	_Panels,
+	Panels_,
 	['opaque', 'transparent'],
-	Config,
-	'transparent'
+	Config
 );
-boolean('noAnimation', _Panels, Panels, false);
-boolean('noBackButton', _Panels, Panels, false);
-boolean('noCloseButton', _Panels, Panels, false);
+boolean('noAnimation', Panels_, Panels, false);
+boolean('noBackButton', Panels_, Panels, false);
+boolean('noCloseButton', Panels_, Panels, false);
 
-boolean('centered', _Panels, HeaderConfig);
+boolean('centered', Panels_, HeaderConfig);
 
-_Panels.storyName = 'Panels';
-_Panels.parameters = {
+Panels_.storyName = 'Panels';
+Panels_.parameters = {
 	props: {
 		noPanels: true
 	}
