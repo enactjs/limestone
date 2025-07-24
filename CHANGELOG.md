@@ -8,6 +8,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Card` prop `imageSize` to set the size of card image
 - `limestone/Icon` supported icon list, adding new icons
+- `limestone/MediaPlayer.Times` prop `includeHour` to conditionally show hour for current and total time
+- `limestone/VideoPlayer` prop `includeTimeHour` to conditionally show hour for current and total time
 
 ### Changed
 
@@ -26,6 +28,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` for `focusRing` mode
 - `limestone/Card` `background` for captions
 - `limestone/Popup` to restore focus properly when popup hides
+- `limestone/QuickGuidePanels` navigation buttons position
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11

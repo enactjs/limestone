@@ -246,6 +246,15 @@ const VideoPlayerBase = class extends Component {
 		feedbackHideDelay: PropTypes.number,
 
 		/**
+		 * Checks if current time and total time should include the hour.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		includeTimeHour: PropTypes.bool,
+
+		/**
 		 * Components placed below the title.
 		 *
 		 * Typically, these will be media descriptor icons, like how many audio channels, what codec
@@ -777,6 +786,7 @@ const VideoPlayerBase = class extends Component {
 	static defaultProps = {
 		autoCloseTimeout: 5000,
 		feedbackHideDelay: 3000,
+		includeTimeHour: false,
 		initialJumpDelay: 400,
 		jumpBy: 30,
 		jumpDelay: 200,
@@ -1982,6 +1992,7 @@ const VideoPlayerBase = class extends Component {
 			noSlider,
 			noSpinner,
 			selection,
+			includeTimeHour,
 			spotlightDisabled,
 			spotlightId,
 			style,
@@ -2114,7 +2125,7 @@ const VideoPlayerBase = class extends Component {
 										{infoComponents}
 									</MediaTitle>
 									{noSlider ?
-										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} /> :
+										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} includeHour={includeTimeHour} /> :
 										null
 									}
 								</div> :
@@ -2124,7 +2135,7 @@ const VideoPlayerBase = class extends Component {
 								null :
 								<div className={css.sliderContainer}>
 									{this.state.mediaSliderVisible ?
-										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} /> :
+										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} includeHour={includeTimeHour}  /> :
 										null
 									}
 									<MediaSlider
@@ -2154,7 +2165,7 @@ const VideoPlayerBase = class extends Component {
 										/>
 									</MediaSlider>
 									{this.state.mediaSliderVisible ?
-										<Times noCurrentTime total={this.state.duration} formatter={durFmt} /> :
+										<Times noCurrentTime total={this.state.duration} formatter={durFmt} includeHour={includeTimeHour} /> :
 										null
 									}
 								</div>

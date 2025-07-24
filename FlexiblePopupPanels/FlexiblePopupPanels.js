@@ -120,8 +120,8 @@ const FlexiblePopupPanelsBase = kind({
 		}),
 		onBack: ({onChange}) => onChange,
 		className: ({children, nextButtonVisibility, prevButtonVisibility, rtl, styler}) => {
-			const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && children.length > 1));
-			const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && children.length > 1));
+			const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && children?.length > 1));
+			const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && children?.length > 1));
 
 			return styler.append(
 				{
