@@ -100,7 +100,7 @@ boolean('blockCollapseOnPortrait', _TabLayout, Config);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
-boolean('custom tabSize', _TabLayout, TabLayout, false);
+boolean('custom tabSize', _TabLayout, Config, false);
 range('tabSize', _TabLayout, Config, {min: 300, max: 960, step: 60}, 300, {if: {arg: 'custom tabSize'}});
 
 _TabLayout.storyName = 'TabLayout';
