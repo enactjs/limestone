@@ -10,7 +10,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useMemo} from 'react';
+import {useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 import DebounceDecorator from '../internal/DebounceDecorator';
@@ -30,6 +30,7 @@ const TabBase = kind({
 		css: PropTypes.object,
 		icon: PropTypes.string,
 		index: PropTypes.number,
+		noIcons: PropTypes.bool,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
@@ -63,7 +64,7 @@ const TabBase = kind({
 	},
 
 	computed: {
-		className: ({collapsed, orientation, styler}) => styler.append({collapsed}, orientation),
+		className: ({collapsed, noIcons, orientation, styler}) => styler.append({collapsed, noIcons: noIcons}, orientation),
 		iconComponent: ({sprite, stopped}) => {
 			if (sprite) {
 				return (<Sprite stopped={stopped} {...sprite} />);
@@ -72,6 +73,7 @@ const TabBase = kind({
 	},
 
 	render: ({buttonSize, index, children, collapsed, css, primaryIndex, primaryTabSpotlightId, orientation, ...rest}) => {
+		delete rest.noIcons;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
 		delete rest.stopped;
@@ -166,8 +168,10 @@ const TabGroupBase = kind({
 		onBlurList: PropTypes.func,
 		onFocus: PropTypes.func,
 		onFocusTab: PropTypes.func,
+		onScrollStop: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
+		scrollPosition: PropTypes.object,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
@@ -188,7 +192,7 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onSelect, orientation, primaryIndex, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollPosition, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -221,6 +225,8 @@ const TabGroupBase = kind({
 				return null;
 			}
 		}).filter(tab => tab != null), [onFocusTab, tabs]);
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const scrollToRef = useRef(null);
 
 		const isHorizontal = orientation === 'horizontal';
 		const groupComponent = (isHorizontal ? Layout : 'div'); // Only horizontal needs the arrangement capabilities of `Layout`
@@ -230,16 +236,26 @@ const TabGroupBase = kind({
 			spotlightDisabled
 		};
 		const scrollerProps = scrollable ? {
+			cbScrollTo: (scrollTo) => {
+				scrollToRef.current = (collapsed ? scrollTo : null);
+			},
 			direction: isHorizontal ? 'horizontal' : 'vertical',
 			horizontalScrollbar: 'hidden',
 			hoverToScroll: !collapsed,
+			noScrollByWheel: collapsed,
+			onScrollStop,
 			scrollbarTrackCss: componentCss,
-			spotlightId,
 			spotlightDisabled,
-			verticalScrollbar: 'auto'
+			spotlightId,
+			verticalScrollbar: collapsed ? 'hidden' : 'auto'
 		} : null;
 		const Component = scrollable ? Scroller : 'div';
 		const GroupComponent = scrollable ? Group : GroupContainer;
+
+		if (!scrollable) scrollToRef.current = null;
+		if (!noIcons && scrollToRef.current) {
+			scrollToRef.current({animate: false, position: scrollPosition});
+		}
 
 		return (
 			<Component
@@ -250,9 +266,10 @@ const TabGroupBase = kind({
 			>
 				{noIcons ? (
 					<TabBase
-						icon="list"
 						collapsed
 						disabled={tabsDisabled}
+						icon="list"
+						noIcons
 						onSpotlightDisappear={onBlurList}
 						spotlightDisabled={tabsSpotlightDisabled}
 					/>
