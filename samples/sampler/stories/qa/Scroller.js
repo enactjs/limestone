@@ -1318,3 +1318,26 @@ export const WithFixedPopupPanels = () => {
 };
 
 WithFixedPopupPanels.storyName = 'With FixedPopupPanels';
+
+export const WithInputField = () => {
+	const [open, setOpenState] = useState(false);
+
+	const handleOpen = useCallback(() => {
+		setOpenState(true);
+	}, []);
+
+	const handleClose = useCallback(() => {
+		setOpenState(false);
+	}, []);
+
+	return (
+		<Panel>
+            <Header title="Main Panel" />
+            <Scroller>
+                <InputField />
+            </Scroller>
+        </Panel>
+	);
+};
+
+WithInputField.storyName = 'With InputField';
