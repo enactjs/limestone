@@ -63,6 +63,10 @@ const VideoPlayerTests = [
 		wrapper: {full: true}
 	},
 	{
+		component: commonVideoPlayer({src: videoUrl, includeTimeHour: true}),
+		wrapper: {full: true}
+	},
+	{
 		component: commonVideoPlayer({src: '', poster: posterUrl, title: videoTitle, noSlider: true}),
 		wrapper: {full: true}
 	},

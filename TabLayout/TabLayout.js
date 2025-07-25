@@ -67,10 +67,10 @@ const getHorizontalTabWidth = (dataSize, size, tabSize) => {
 	}
 };
 
-const isHorizontalScrollableTabs = (dataSize, size, tabSize) => {
-	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1);
+const isHorizontalScrollableTabs = (dataSize, offset, size, tabSize) => {
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1) + 2 * offset;
 
-	return (typeof window !== 'undefined' && window?.screen?.width) ? window.screen.width < ri.scale(totalTabsWidth) : false;
+	return (typeof window !== 'undefined' && window?.innerWidth) ? window.innerWidth < ri.scale(totalTabsWidth) : false;
 };
 
 /**
@@ -270,6 +270,16 @@ const TabLayoutBase = kind({
 		rtl: PropTypes.bool,
 
 		/**
+		 * The scroll position of the tab list.
+		 * This property maintains the vertical scroll position of the tabs when they are scrollable and collapsed.
+		 *
+		 * @type {{x: number, y: number}}
+		 * @default {x: 0, y: 0}
+		 * @private
+		 */
+		scrollPosition: PropTypes.object,
+
+		/**
 		 * The size of the horizontal tab.
 		 *
 		 * @type {('small'|'large')}
@@ -320,6 +330,7 @@ const TabLayoutBase = kind({
 		primaryIndex: null,
 		offset: 36,
 		orientation: 'vertical',
+		scrollPosition: {x: 0, y: 0},
 		size: 'large',
 		type: 'normal'
 	},
@@ -400,6 +411,11 @@ const TabLayoutBase = kind({
 				Spotlight.move(moveTo);
 			}
 		},
+		onScrollStop: handle(
+			forProp('collapsed', false),
+			forProp('orientation', 'vertical'),
+			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}) => ({scrollPosition: {x: scrollLeft, y: scrollTop}}))
+		),
 		onSelect: handle(
 			forwardCustom('onSelect', ({selected}) => ({index: selected}))
 		),
@@ -446,17 +462,17 @@ const TabLayoutBase = kind({
 			`anchor${cap(anchorTo)}`,
 			orientation
 		),
-		scrollable: ({children, orientation, size, tabSize}) => {
+		scrollable: ({children, offset, orientation, size, tabSize}) => {
 			const isVertical = orientation === 'vertical';
 			return isVertical ?
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-				isHorizontalScrollableTabs(children.length, size, tabSize);
+				isHorizontalScrollableTabs(children.length, offset, size, tabSize);
 		},
 		style: ({children, dimensions, offset, orientation, size, style, tabSize}) => {
 			const isVertical = orientation === 'vertical';
 			const scrollable = isVertical ?
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
-				isHorizontalScrollableTabs(children.length, size, tabSize);
+				isHorizontalScrollableTabs(children.length, offset, size, tabSize);
 			const tabSizeValue = !isVertical ? getHorizontalTabWidth(children.length, size, tabSize) : null;
 			const totalTabsWidth = ri.scaleToRem(tabSizeValue * children.length + TAB_SPACING * (children.length - 1));
 
@@ -484,7 +500,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onSelect, orientation, scrollable, size, tabOrientation, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollPosition, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.blockCollapseOnPortrait;
 		delete rest.onExpand;
@@ -519,10 +535,11 @@ const TabLayoutBase = kind({
 						<TabGroup
 							{...tabGroupProps}
 							collapsed={isVertical}
+							scrollPosition={scrollPosition}
 							scrollable={scrollable}
 							size={size}
-							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
 							spotlightDisabled={!collapsed && isVertical}
+							spotlightId={getTabsSpotlightId(spotlightId, isVertical)}
 						/>
 					</Cell>
 					{isVertical ? <Cell
@@ -531,9 +548,10 @@ const TabLayoutBase = kind({
 					>
 						<TabGroup
 							{...tabGroupProps}
+							onScrollStop={onScrollStop}
 							scrollable={scrollable}
-							spotlightId={getTabsSpotlightId(spotlightId, false)}
 							spotlightDisabled={collapsed}
+							spotlightId={getTabsSpotlightId(spotlightId, false)}
 						/>
 					</Cell> : null}
 					<ContentCell
@@ -557,6 +575,7 @@ const TabLayoutBase = kind({
 const TabLayoutDecorator = compose(
 	Toggleable({prop: 'collapsed', activate: 'onCollapse', deactivate: 'onExpand'}),
 	Changeable({prop: 'index', change: 'onSelect'}),
+	Changeable({prop: 'scrollPosition', change: 'onScrollStop'}),
 	RefocusDecorator,
 	SpotlightContainerDecorator({
 		// using last-focused so we return to the last focused if it exists but fall through to
