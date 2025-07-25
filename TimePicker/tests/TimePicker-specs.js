@@ -25,7 +25,7 @@ describe('TimePicker', () => {
 		const expectedType = {type: 'onChange', value: new Date(2000, 6, 15, 4, 30)};
 		const actual = handleChange.mock.calls.length && handleChange.mock.calls[0][0];
 
-		expect(handleChange).toBeCalledTimes(expected);
+		expect(handleChange).toHaveBeenCalledTimes(expected);
 		expect(actual).toMatchObject(expectedType);
 	});
 
@@ -43,7 +43,7 @@ describe('TimePicker', () => {
 		const expectedType = {type: 'onChange', value: new Date(2000, 6, 15, 3, 31)};
 		const actual = handleChange.mock.calls.length && handleChange.mock.calls[0][0];
 
-		expect(handleChange).toBeCalledTimes(expected);
+		expect(handleChange).toHaveBeenCalledTimes(expected);
 		expect(actual).toMatchObject(expectedType);
 	});
 
@@ -61,7 +61,7 @@ describe('TimePicker', () => {
 		const expectedType = {type: 'onChange', value: new Date(2000, 6, 15, 15, 30)};
 		const actual = handleChange.mock.calls.length && handleChange.mock.calls[0][0];
 
-		expect(handleChange).toBeCalledTimes(expected);
+		expect(handleChange).toHaveBeenCalledTimes(expected);
 		expect(actual).toMatchObject(expectedType);
 	});
 
