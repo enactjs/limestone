@@ -277,6 +277,10 @@ const RangePickerBase = kind({
 		wrap: PropTypes.bool
 	},
 
+	defaultProps: {
+		orientation: 'horizontal'
+	},
+
 	styles: {
 		css: componentCss,
 		className: 'rangePicker',
@@ -315,7 +319,7 @@ const RangePickerBase = kind({
 		delete rest.padded;
 		return (
 			<>
-				{title ? <Heading className={classnames(css.title, {[css.inlineTitle]: inlineTitle})} size="tiny">{title}</Heading> : null}
+				{title ? <Heading css={css} className={classnames(css.title, {[css.inlineTitle]: inlineTitle})} size="tiny">{title}</Heading> : null}
 				<Picker {...rest} css={css} data-webos-voice-labels-ext={voiceLabel} index={0} reverse={false} type="number" value={value}>
 					<PickerItem key={value} marqueeDisabled style={{direction: 'ltr'}}>{label}</PickerItem>
 				</Picker>

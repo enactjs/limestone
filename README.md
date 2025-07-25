@@ -1,8 +1,11 @@
 # @enact/limestone [![npm (scoped)](https://img.shields.io/npm/v/@enact/limestone.svg?style=flat-square)](https://www.npmjs.com/package/@enact/limestone)
 
-> The set of components for an Enact-based application targeting smart TVs.
+The set of components for an Enact-based application targeting smart TVs.
 
-![image](https://github.com/enactjs/limestone/assets/4288375/169e675e-7e82-41d2-a83e-94a83f2b8f8d)
+<!--
+TODO
+Insert Limestone settings app image here
+-->
 
 ## Usage
 
@@ -47,7 +50,7 @@ npm test
 
 Unless otherwise specified, all content, including all source code files and documentation files in this repository are:
 
-Copyright (c) 2012-2024 LG Electronics
+Copyright (c) 2012-2025 LG Electronics
 
 Unless otherwise specified or set forth in the NOTICE file, all content, including all source code files and documentation files in this repository are: Licensed under the Apache License, Version 2.0 (the "License"); you may not use this content except in compliance with the License. You may obtain a copy of the License at
 

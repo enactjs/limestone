@@ -6,8 +6,6 @@ import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 import {VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 
-import css from './VirtualList.module.less';
-
 const prop = {
 		scrollbarOption: ['auto', 'hidden', 'visible'],
 		scrollModeOption: ['native', 'translate'],
@@ -19,7 +17,7 @@ const prop = {
 	},
 	items = [],
 	defaultDataSize = 1000,
-	// eslint-disable-next-line enact/prop-types, enact/display-name
+	// eslint-disable-next-line enact/display-name
 	renderItem = (size) => ({index, ...rest}) => {
 		return (
 			<Item {...rest} style={{height: ri.unit(size, 'rem')}}>
@@ -52,7 +50,6 @@ export default {
 
 export const _VirtualList = (args) => (
 	<VirtualList
-		className={css.verticalPadding}
 		dataSize={updateDataSize(args['dataSize'])}
 		horizontalScrollbar={args['horizontalScrollbar']}
 		hoverToScroll={args['hoverToScroll']}

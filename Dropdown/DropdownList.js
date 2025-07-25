@@ -6,6 +6,7 @@ import {WithRef} from '@enact/core/internal/WithRef';
 import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import ri from '@enact/ui/resolution';
+import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useRef, useState} from 'react';
@@ -124,23 +125,27 @@ const DropdownListBase = kind({
 				<Item
 					{...rest}
 					{...restChild}
+					css={css}
 					key={key}
 					slotAfter={slotAfter}
 					data-selected={isSelected}
 					// eslint-disable-next-line react/jsx-no-bind
 					onClick={() => forward('onSelect', {data, selected: index}, props)}
-					size="small"
+					size="large"
 				/>
 			);
 		}
 	},
 
 	computed: {
-		className: ({width, styler}) => styler.append(typeof width === 'string' ? width : null),
+		className: ({children, styler, width}) => styler.append(
+			typeof width === 'string' ? width : null,
+			{verticalScrollbar: children?.length > 5}
+		),
 		dataSize: ({children}) => children ? children.length : 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
-		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 126 : 126)
-		itemSize: () => 126
+		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 156 : 156)
+		itemSize: () => 156
 	},
 
 	render: ({dataSize, id, itemSize, scrollTo, width, ...rest}) => {
@@ -152,13 +157,16 @@ const DropdownListBase = kind({
 
 		return (
 			<div role="region" aria-labelledby={`${id}_dropdownlist`}>
-				<div id={`${id}_dropdownlist`} aria-label={$L('Dropdown list opened')} />
+				<div id={`${id}_dropdownlist`} aria-label={new IString($L('Dropdown list opened {total} items in total')).format({total: dataSize})} />
 				<VirtualList
 					{...rest}
 					cbScrollTo={scrollTo}
 					dataSize={dataSize}
 					itemSize={ri.scale(itemSize)}
+					role="group"
+					scrollbarTrackCss={css}
 					style={{
+						backgroundColor: 'transparent',
 						height: ri.scaleToRem((itemSize * dataSize) + 36),
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}
@@ -237,7 +245,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				animate: false,
 				focus: true,
 				index: selected,
-				offset: ri.scale(126 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
+				offset: ri.scale(156 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
 				stickTo: 'start' // offset from the top of the dropdown
 			});
 
