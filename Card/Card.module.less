@@ -6,7 +6,13 @@
 
 .image-outline(@radius: 0) {
 	&:not(:focus):not(&.hasContainer):not(&.selected) .image {
-		outline: @lime-card-image-outline-width solid @lime-card-image-outline-color;
+		&::before {
+			content: '';
+			position: absolute;
+			.position(0);
+			border: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
+			border-radius: @radius;
+		}
 	}
 }
 
@@ -40,8 +46,7 @@
 		justify-content: center;
 
 		border-width: @lime-card-image-border-width;
-		outline-width: @lime-card-image-border-width;
-		outline-style: solid;
+		border-style: solid;
 
 		.selectionIcon {
 			width: @lime-card-selection-icon-size;
@@ -158,9 +163,23 @@
 				padding: @lime-card-vertical-caption-overlay-captions-padding;
 			}
 
-			&.roundedImage .captions {
+			.captions::before {
+				content: '';
+				position: absolute;
+				.position(0);
+				margin-bottom: @lime-card-image-resting-border-width;
+				margin-inline: auto;
+				width: ~"calc(100% - 2 * "@lime-card-image-resting-border-width~")";
+			}
+
+			&.roundedImage .captions::before {
 				border-bottom-left-radius: @lime-card-border-radius;
 				border-bottom-right-radius: @lime-card-border-radius;
+			}
+
+			&.selected .captions::before {
+				margin-bottom: @lime-card-image-border-width;
+				width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
 			}
 		}
 
@@ -211,6 +230,11 @@
 			&.captionOverlay {
 				transform: scale(1.1);
 				transition: transform 200ms ease-in-out;
+
+				.captions::before {
+					margin-bottom: @lime-card-image-border-width;
+					width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
+				}
 			}
 
 			&.captionOverlayOnFocus {
@@ -228,7 +252,7 @@
 	// Skin colors
 	.applySkins({
 		.selectionContainer {
-			outline-color: transparent;
+			border-color: transparent;
 			.selectionIcon {
 				color: transparent;
 			}
@@ -262,7 +286,7 @@
 		}
 
 		&.vertical {
-			&.captionOverlay .captions {
+			&.captionOverlay .captions::before {
 				background: @lime-card-captions-gradient-color;
 			}
 
@@ -275,7 +299,7 @@
 			}
 
 			&.selected:not(.hasContainer) .selectionContainer {
-				outline-color: @lime-card-border-selected-color;
+				border-color: @lime-card-border-selected-color;
 			}
 
 			.image-outline();
@@ -304,7 +328,7 @@
 			}
 
 			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
-				outline-color: @lime-card-border-focused-color;
+				border-color: @lime-card-border-focused-color;
 			}
 		});
 	})
