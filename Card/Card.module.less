@@ -230,11 +230,11 @@
 			&.captionOverlay {
 				transform: scale(1.1);
 				transition: transform 200ms ease-in-out;
+			}
 
-				.captions::before {
-					margin-bottom: @lime-card-image-border-width;
-					width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
-				}
+			&.captionOverlay.captions::before {
+				margin-bottom: @lime-card-image-border-width;
+				width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
 			}
 
 			&.captionOverlayOnFocus {
