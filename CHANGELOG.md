@@ -26,6 +26,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Card` for `focusRing` mode
 - `limestone/Popup` to restore focus properly when popup hides
+- `sandstone/Scroller` to prevent the native scrolling behavior caused by keydown events only when a popup is open
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
 ## [1.2.0] - 2025-07-11
