@@ -4,7 +4,7 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.image-outline(@radius: 0) {
+.image-resting-border(@radius: 0) {
 	&:not(:focus):not(&.hasContainer):not(&.selected) .image {
 		&::before {
 			content: '';
@@ -295,14 +295,14 @@
 			}
 
 			&.roundedImage {
-				.image-outline(@lime-card-border-radius);
+				.image-resting-border(@lime-card-border-radius);
 			}
 
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
 
-			.image-outline();
+			.image-resting-border();
 		}
 
 		.focus({
