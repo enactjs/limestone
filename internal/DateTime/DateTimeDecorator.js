@@ -50,7 +50,8 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 		return null;
 	});
 
-	const Decorator = (props) => {
+	// eslint-disable-next-line no-shadow
+	const DateTimeDecorator = (props) => {
 		const newValue = toTime(props.value);
 		const [initialValue, setInitialValue] = useState(null);
 		const [value, setValue] = useState(newValue || Date.now());
@@ -198,8 +199,8 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 		);
 	};
 
-	Decorator.displayName = 'DateTimeDecorator';
-	Decorator.propTypes = /** @lends limestone/internal/DateTimeDecorator.DateTimeDecorator.prototype */ {
+	DateTimeDecorator.displayName = 'DateTimeDecorator';
+	DateTimeDecorator.propTypes = /** @lends limestone/internal/DateTimeDecorator.DateTimeDecorator.prototype */ {
 		/**
 		 * The current locale as a
 		 * {@link https://tools.ietf.org/html/rfc5646|BCP 47 language tag}.
@@ -253,7 +254,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 	return I18nContextDecorator(
 		{rtlProp: 'rtl', localeProp: 'locale'},
 		Changeable(
-			Decorator
+			DateTimeDecorator
 		)
 	);
 });
