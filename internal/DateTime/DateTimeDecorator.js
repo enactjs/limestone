@@ -200,6 +200,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 	};
 
 	DateTimeDecorator.displayName = 'DateTimeDecorator';
+	
 	DateTimeDecorator.propTypes = /** @lends limestone/internal/DateTimeDecorator.DateTimeDecorator.prototype */ {
 		/**
 		 * The current locale as a
