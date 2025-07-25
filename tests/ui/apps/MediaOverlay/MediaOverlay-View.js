@@ -33,7 +33,7 @@ const app = (props) => <div {...props}>
 		progress={0.5}
 		showProgress
 		subtitle="Media Overlay very long subtitle"
-		text="Media Overlay very long text"
+		text="Media Overlay extremely long text"
 		title="Media Overlay very long title"
 	>
 		<source src={videos.Sintel} />

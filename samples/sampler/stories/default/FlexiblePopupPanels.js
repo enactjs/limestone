@@ -12,6 +12,8 @@ import ri from '@enact/ui/resolution';
 import {useState} from 'react';
 import compose from 'ramda/src/compose';
 
+import css from "./FlexiblePopupPanels.module.less";
+
 const propOptions = {
 	buttonVisibility: ['auto', 'always', 'never'],
 	size: ['auto', 'small', 'large']
@@ -83,7 +85,7 @@ export const FlexiblePopupPanels_ = (args) => {
 					}
 				>
 					<Header title="First List" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 						<Item onClick={nextPanel}>Item 2</Item>
 						<Item onClick={nextPanel}>Item 3</Item>
@@ -105,7 +107,7 @@ export const FlexiblePopupPanels_ = (args) => {
 					}
 				>
 					<Header title="Third panel" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 					</Scroller>
 				</Panel>

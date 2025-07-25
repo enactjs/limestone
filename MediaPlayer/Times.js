@@ -40,6 +40,15 @@ const TimesBase = kind({
 		current: PropTypes.number,
 
 		/**
+		 * Checks if current time and total time should include the hour.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		includeHour: PropTypes.bool,
+
+		/**
 		 * Removes the current time.
 		 *
 		 * @type {Boolean}
@@ -67,6 +76,7 @@ const TimesBase = kind({
 
 	defaultProps: {
 		current: 0,
+		includeHour: false,
 		total: 0
 	},
 
@@ -77,15 +87,16 @@ const TimesBase = kind({
 
 	computed: {
 		currentPeriod:   ({current}) => secondsToPeriod(current),
-		currentReadable: ({current, formatter}) => secondsToTime(current, formatter, {includeHour: true}),
+		currentReadable: ({current, formatter, includeHour}) => secondsToTime(current, formatter, {includeHour}),
 		noSeparator: ({noCurrentTime, noTotalTime}) => noCurrentTime || noTotalTime,
 		totalPeriod:     ({total}) => secondsToPeriod(total),
-		totalReadable:   ({total, formatter}) => secondsToTime(total, formatter, {includeHour: true})
+		totalReadable:   ({total, formatter, includeHour}) => secondsToTime(total, formatter, {includeHour})
 	},
 
 	render: ({currentPeriod, currentReadable, noCurrentTime, noSeparator, noTotalTime, totalPeriod, totalReadable, ...rest}) => {
 		delete rest.current;
 		delete rest.formatter;
+		delete rest.includeHour;
 		delete rest.total;
 
 		return (
