@@ -4,9 +4,10 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.captions-border(@color: white, @width: 0) {
-	border-bottom: @width solid @color;
-	border-inline: @width solid @color;
+.captions-background-size() {
+	border: none;
+	bottom: @lime-card-image-border-width;
+	width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
 }
 
 .image-resting-border(@radius: 0) {
@@ -278,11 +279,12 @@
 			&.captionOverlay {
 				.captions::before {
 					background: @lime-card-captions-gradient-color;
-					.captions-border(@lime-card-image-resting-border-color, @lime-card-image-resting-border-width)
+					border-bottom: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
+					border-inline: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
 				}
 
 				&.selected .captions::before {
-					.captions-border(@lime-card-border-selected-color, @lime-card-image-border-width);
+					.captions-background-size();
 				}
 			}
 
@@ -303,7 +305,7 @@
 
 		.focus({
 			&.captionOverlay .captions::before {
-				.captions-border(@lime-card-border-focused-color, @lime-card-image-border-width);
+				.captions-background-size();
 			}
 
 			.selectionIcon {
