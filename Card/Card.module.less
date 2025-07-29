@@ -4,20 +4,15 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.captions-background-size() {
-	border: none;
-	bottom: @lime-card-image-border-width;
-	width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
-}
-
 .image-resting-border(@radius: 0) {
-	&:not(:focus):not(&.hasContainer):not(&.selected) .image {
+	&:not(:focus):not(&.hasContainer):not(&.selected) {
 		&::before {
 			content: '';
 			position: absolute;
 			.position(0);
 			border: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
 			border-radius: @radius;
+			z-index: 5;
 		}
 	}
 }
@@ -173,7 +168,6 @@
 				content: '';
 				position: absolute;
 				.position(0);
-				margin-inline: auto;
 			}
 
 			&.roundedImage .captions::before {
@@ -279,17 +273,21 @@
 			&.captionOverlay {
 				.captions::before {
 					background: @lime-card-captions-gradient-color;
-					border-bottom: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
-					border-inline: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
 				}
 
-				&.selected .captions::before {
-					.captions-background-size();
+				&.selected {
+					.selected-border(@lime-card-border-selected-color, 5);
 				}
+
+				.image-resting-border();
 			}
 
 			&:not(.hasContainer) {
 				.lime-focus-highlight(image);
+
+				.selectionContainer {
+					border: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
+				}
 			}
 
 			&.roundedImage {
@@ -299,13 +297,11 @@
 			&.selected:not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
-
-			.image-resting-border();
 		}
 
 		.focus({
-			&.captionOverlay .captions::before {
-				.captions-background-size();
+			&.captionOverlay {
+				.selected-border(@lime-card-border-focused-color, 5);
 			}
 
 			.selectionIcon {
