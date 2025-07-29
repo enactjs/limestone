@@ -4,6 +4,11 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
+.captions-border(@color: white, @width: 0) {
+	border-bottom: @width solid @color;
+	border-inline: @width solid @color;
+}
+
 .image-resting-border(@radius: 0) {
 	&:not(:focus):not(&.hasContainer):not(&.selected) .image {
 		&::before {
@@ -167,19 +172,12 @@
 				content: '';
 				position: absolute;
 				.position(0);
-				margin-bottom: @lime-card-image-resting-border-width;
 				margin-inline: auto;
-				width: ~"calc(100% - 2 * "@lime-card-image-resting-border-width~")";
 			}
 
 			&.roundedImage .captions::before {
 				border-bottom-left-radius: @lime-card-border-radius;
 				border-bottom-right-radius: @lime-card-border-radius;
-			}
-
-			&.selected .captions::before {
-				margin-bottom: @lime-card-image-border-width;
-				width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
 			}
 		}
 
@@ -230,11 +228,6 @@
 				transition: transform 200ms ease-in-out;
 			}
 
-			&.captionOverlay .captions::before {
-				margin-bottom: @lime-card-image-border-width;
-				width: ~"calc(100% - 2 * "@lime-card-image-border-width~")";
-			}
-
 			&.captionOverlayOnFocus .captions {
 				visibility: visible;
 			}
@@ -282,8 +275,15 @@
 		}
 
 		&.vertical {
-			&.captionOverlay .captions::before {
-				background: @lime-card-captions-gradient-color;
+			&.captionOverlay {
+				.captions::before {
+					background: @lime-card-captions-gradient-color;
+					.captions-border(@lime-card-image-resting-border-color, @lime-card-image-resting-border-width)
+				}
+
+				&.selected .captions::before {
+					.captions-border(@lime-card-border-selected-color, @lime-card-image-border-width);
+				}
 			}
 
 			&:not(.hasContainer) {
@@ -302,6 +302,10 @@
 		}
 
 		.focus({
+			&.captionOverlay .captions::before {
+				.captions-border(@lime-card-border-focused-color, @lime-card-image-border-width);
+			}
+
 			.selectionIcon {
 				color: @lime-card-selection-icon-color;
 			}
