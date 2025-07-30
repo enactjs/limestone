@@ -35,7 +35,7 @@ describe('MediaSlider', () => {
 		const slider = screen.getByTestId('mediaslider-id');
 		focus(slider);
 
-		expect(handleFocus).toBeCalled();
+		expect(handleFocus).toHaveBeenCalled();
 	});
 
 	test('should forward `onBlur` when blurred', () => {
@@ -48,7 +48,7 @@ describe('MediaSlider', () => {
 		const slider = screen.getByTestId('mediaslider-id');
 		blur(slider);
 
-		expect(handleBlur).toBeCalled();
+		expect(handleBlur).toHaveBeenCalled();
 	});
 
 	test('should forward `onKeyDown` when key pressed', () => {
@@ -65,7 +65,7 @@ describe('MediaSlider', () => {
 
 		const expected = 2;
 
-		expect(handleKeyDown).toBeCalledTimes(expected);
+		expect(handleKeyDown).toHaveBeenCalledTimes(expected);
 	});
 
 	test('should forward `onKeyUp` when active', () => {
@@ -79,7 +79,7 @@ describe('MediaSlider', () => {
 
 		activate(slider);
 
-		expect(handleKeyUp).toBeCalled();
+		expect(handleKeyUp).toHaveBeenCalled();
 	});
 
 	test('should forward `onKnobMove` when mouseOver event occurs', () => {
@@ -93,7 +93,7 @@ describe('MediaSlider', () => {
 
 		fireEvent.mouseOver(slider, {clientX: 10});
 
-		expect(handleKnobMove).toBeCalled();
+		expect(handleKnobMove).toHaveBeenCalled();
 	});
 
 	test('should forward `onKnobMove` when mouseMove event occurs', () => {
@@ -108,7 +108,7 @@ describe('MediaSlider', () => {
 		fireEvent.mouseEnter(slider);
 		fireEvent.mouseMove(slider, {clientX: 10});
 
-		expect(handleKnobMove).toBeCalled();
+		expect(handleKnobMove).toHaveBeenCalled();
 	});
 
 	test('should forward `onKnobMove` when touchMove event occurs', () => {
@@ -125,6 +125,6 @@ describe('MediaSlider', () => {
 		const touches = [{clientX: 10}];
 		fireEvent.touchMove(slider, {touches});
 
-		expect(handleKnobMove).toBeCalled();
+		expect(handleKnobMove).toHaveBeenCalled();
 	});
 });

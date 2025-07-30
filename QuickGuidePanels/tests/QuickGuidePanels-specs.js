@@ -188,7 +188,7 @@ describe('QuickGuidePanels Specs', () => {
 			await user.click(nextButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 2, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 2, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handleNextClick.mock.calls.length && handleNextClick.mock.calls[0][0];
@@ -219,7 +219,7 @@ describe('QuickGuidePanels Specs', () => {
 			await user.click(prevButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 1, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handlePrevClick.mock.calls.length && handlePrevClick.mock.calls[0][0];
