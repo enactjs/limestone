@@ -4,16 +4,13 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.image-resting-border(@radius: 0) {
-	&:not(:focus):not(&.hasContainer):not(&.selected) {
-		&::before {
-			content: '';
-			position: absolute;
-			.position(0);
-			border: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
-			border-radius: @radius;
-			z-index: 5;
-		}
+.resting-border(@z-index: 1) {
+	&::before {
+		content: '';
+		position: absolute;
+		.position(0);
+		border: @lime-card-image-resting-border-width solid red;
+		z-index: @z-index;
 	}
 }
 
@@ -159,21 +156,8 @@
 			margin: @lime-card-vertical-image-icon-margin;
 		}
 
-		&.captionOverlay {
-			.captions {
-				padding: @lime-card-vertical-caption-overlay-captions-padding;
-			}
-
-			.captions::before {
-				content: '';
-				position: absolute;
-				.position(0);
-			}
-
-			&.roundedImage .captions::before {
-				border-bottom-left-radius: @lime-card-border-radius;
-				border-bottom-right-radius: @lime-card-border-radius;
-			}
+		&.captionOverlay .captions {
+			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
 		&.captionOverlayOnFocus .captions {
@@ -271,7 +255,7 @@
 
 		&.vertical {
 			&.captionOverlay {
-				.captions::before {
+				.captions {
 					background: @lime-card-captions-gradient-color;
 				}
 
@@ -279,19 +263,15 @@
 					.selected-border(@lime-card-border-selected-color, 5);
 				}
 
-				.image-resting-border();
+				.resting-border(5);
 			}
 
 			&:not(.hasContainer) {
 				.lime-focus-highlight(image);
 
-				.selectionContainer {
-					border: @lime-card-image-resting-border-width solid @lime-card-image-resting-border-color;
+				.image {
+					.resting-border(5);
 				}
-			}
-
-			&.roundedImage {
-				.image-resting-border(@lime-card-border-radius);
 			}
 
 			&.selected:not(.hasContainer) .selectionContainer {
