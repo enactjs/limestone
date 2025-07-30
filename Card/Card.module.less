@@ -4,12 +4,13 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.resting-border(@z-index: 1) {
+.resting-border(@radius: 0, @z-index: 1) {
 	&::before {
 		content: '';
 		position: absolute;
 		.position(0);
-		border: @lime-card-resting-border-width solid @lime-card-resting-border-color;
+		border: @lime-card-resting-border-width solid red;
+		border-radius: @radius;
 		z-index: @z-index;
 	}
 }
@@ -263,14 +264,26 @@
 					.selected-border(@lime-card-border-selected-color, 5);
 				}
 
-				.resting-border(5);
+				&:not(&.selected):not(:focus) {
+					.resting-border(0, 5);
+
+					&.roundedImage {
+						.resting-border(@lime-card-border-radius, 5);
+					}
+				}
 			}
 
 			&:not(.hasContainer) {
 				.lime-focus-highlight(image);
 
-				&:not(&.selected) .image {
-					.resting-border(5);
+				&:not(&.selected):not(&:focus) {
+					.image {
+						.resting-border(0, 5);
+					}
+
+					&.roundedImage .image {
+						.resting-border(@lime-card-border-radius, 5);
+					}
 				}
 			}
 
@@ -280,10 +293,6 @@
 		}
 
 		.focus({
-			&.captionOverlay {
-				.selected-border(@lime-card-border-focused-color, 5);
-			}
-
 			.selectionIcon {
 				color: @lime-card-selection-icon-color;
 			}
@@ -302,6 +311,16 @@
 
 				.label {
 					color: @lime-card-label-sub-focused-color;
+				}
+			}
+
+			&.vertical {
+				&.captionOverlay {
+					.selected-border(@lime-card-border-focused-color, 5);
+
+					&.roundedImage::before {
+						border-radius: @lime-card-border-radius;
+					}
 				}
 			}
 
