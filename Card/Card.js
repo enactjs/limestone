@@ -15,6 +15,7 @@
  * @exports CardDecorator
  */
 
+import {forProp, forward, handle, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
@@ -232,6 +233,13 @@ const CardBase = kind({
 	styles: {
 		css: componentCss,
 		publicClassNames: true
+	},
+
+	handlers: {
+		onClick: handle(
+			not(forProp('disabled', true)),
+			forward('onClick')
+		)
 	},
 
 	computed: {

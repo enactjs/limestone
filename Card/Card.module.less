@@ -4,14 +4,15 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.resting-border(@radius: 0, @z-index: 1) {
+.resting-border(@position: 0, @radius: 0, @z-index: 1) {
 	&::before {
 		content: '';
 		position: absolute;
-		.position(0);
-		box-shadow: inset 0 0 0 @lime-card-resting-border-width @lime-card-resting-border-color;
+		.position(@position);
+		box-shadow: inset 0 0 0 @lime-card-resting-border-width red;
 		border-radius: @radius;
 		z-index: @z-index;
+		box-sizing: border-box;
 	}
 }
 
@@ -265,10 +266,10 @@
 				}
 
 				&:not(&.selected):not(:focus) {
-					.resting-border(0, 5);
+					.resting-border(0, 0, 5);
 
 					&.roundedImage {
-						.resting-border(@lime-card-border-radius, 5);
+						.resting-border(0, @lime-card-border-radius, 5);
 					}
 				}
 			}
@@ -277,12 +278,12 @@
 				.lime-focus-highlight(image);
 
 				&:not(&.selected):not(&:focus) {
-					.image {
-						.resting-border(0, 5);
+					.selectionContainer {
+						.resting-border(-@lime-card-image-border-width, 0, 5);
 					}
 
-					&.roundedImage .image {
-						.resting-border(@lime-card-border-radius, 5);
+					&.roundedImage .selectionContainer {
+						.resting-border(-@lime-card-image-border-width, @lime-card-border-radius, 5);
 					}
 				}
 			}
