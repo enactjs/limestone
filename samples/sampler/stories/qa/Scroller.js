@@ -1318,3 +1318,14 @@ export const WithFixedPopupPanels = () => {
 };
 
 WithFixedPopupPanels.storyName = 'With FixedPopupPanels';
+
+export const WithInputField = () => {
+	return (
+		<Scroller>
+			<InputField autoFocus />
+			<div style={{height: ri.scaleToRem(2400)}} />
+		</Scroller>
+	);
+};
+
+WithInputField.storyName = 'With InputField';
