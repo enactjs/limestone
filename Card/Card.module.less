@@ -5,7 +5,7 @@
 @import '../styles/skin.less';
 
 .resting-border(@z-index: 1) {
-	&::after {
+	&::before {
 		content: '';
 		position: absolute;
 		.position(0);
@@ -16,7 +16,7 @@
 }
 
 .selected-border(@color: white, @z-index: 1, @type: before) {
-	@styles: {
+	&::before {
 		content: '';
 		position: absolute;
 		.position(0);
@@ -24,18 +24,6 @@
 		border-style: solid;
 		border-color: @color;
 		z-index: @z-index;
-	}
-
-	& when (@type = before) {
-		&::before {
-			@styles();
-		}
-	}
-
-	& when (@type = after) {
-		&::after {
-			@styles();
-		}
 	}
 }
 
@@ -273,7 +261,7 @@
 				}
 
 				&.selected:not(:focus) {
-					.selected-border(@lime-card-border-selected-color, 5, after);
+					.selected-border(@lime-card-border-selected-color, 5);
 				}
 
 				&:not(.selected) {
@@ -300,7 +288,7 @@
 			}
 
 			&.captionOverlay {
-				.selected-border(@lime-card-border-focused-color, 5, after);
+				.selected-border(@lime-card-border-focused-color, 5);
 			}
 
 			&.selected .selectionIcon {
