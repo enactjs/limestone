@@ -1,5 +1,6 @@
 import {Card, CardBase} from '@enact/limestone/Card';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
+import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
 
@@ -36,6 +37,7 @@ export const _Card = (args) => (
 		hasContainer={args['hasContainer']}
 		// eslint-disable-next-line no-undefined
 		label={args['label'] ? args['label'] : undefined}
+		onClick={action('onClick')}
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
 		roundedImage={args['roundedImage']}
