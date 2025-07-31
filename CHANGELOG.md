@@ -10,6 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Icon` supported icon list, adding new icons
 - `limestone/MediaPlayer.Times` prop `includeHour` to conditionally show hour for current and total time
 - `limestone/VideoPlayer` prop `includeTimeHour` to conditionally show hour for current and total time
+- `limestone/Scroller` with `editable` prop to work properly with deployed apps
 
 ### Changed
 
