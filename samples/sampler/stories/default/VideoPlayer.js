@@ -121,7 +121,8 @@ export const _VideoPlayer = (args) => {
 					args['video scale'] +
 					')',
 				outline: 'teal dashed 1px',
-				height: '70vh'
+				height: '70vh',
+				marginTop: ri.scaleToRem(96)
 			}}
 		>
 			<label
@@ -135,7 +136,7 @@ export const _VideoPlayer = (args) => {
 					padding: '0.1em 1em',
 					fontWeight: 100,
 					fontStyle: 'italic',
-					fontSize: '32px'
+					fontSize: ri.scaleToRem(32)
 				}}
 			>
 				VideoPlayer Edge
