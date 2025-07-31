@@ -553,7 +553,7 @@ describe('WizardPanels Specs', () => {
 			await user.click(nextButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 2, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 2, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handleNextClick.mock.calls.length && handleNextClick.mock.calls[0][0];
@@ -607,7 +607,7 @@ describe('WizardPanels Specs', () => {
 			await user.click(prevButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 1, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handlePrevClick.mock.calls.length && handlePrevClick.mock.calls[0][0];
@@ -681,7 +681,7 @@ describe('WizardPanels Specs', () => {
 			await waitFor(() => {
 				const expected = {type: 'onBack', stopPropagation: expect.any(Function)};
 
-				expect(spy).toBeCalledWith(expect.objectContaining(expected));
+				expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
 			});
 		}
 	);
@@ -708,7 +708,7 @@ describe('WizardPanels Specs', () => {
 			await waitFor(() => {
 				const expected = {type: 'onBack', stopPropagation: expect.any(Function)};
 
-				expect(spy).toBeCalledWith(expect.objectContaining(expected));
+				expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
 			});
 		}
 	);
