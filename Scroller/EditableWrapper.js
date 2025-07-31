@@ -210,7 +210,7 @@ const EditableWrapper = (props) => {
 	}, [customCss.noBefore, customCss.noAfter]);
 
 	const startEditing = useCallback((item) => {
-		if (item?.dataset?.index && (!item.hasAttribute('disabled') || item.hasAttribute('isHiding'))) {
+		if (item?.dataset?.index && (!item.hasAttribute('disabled') || item.hasAttribute('data-is-hiding'))) {
 			item.classList.add(componentCss.selected, customCss.selected);
 			mutableRef.current.selectedItem = item;
 			mutableRef.current.focusedItem?.classList.remove(customCss.focused);
@@ -390,7 +390,7 @@ const EditableWrapper = (props) => {
 		const {selectedItem} = mutableRef.current;
 		const {rtl} = scrollContainerHandle.current;
 
-		if (selectedItem && !selectedItem.hasAttribute('isHiding')) {
+		if (selectedItem && !selectedItem.hasAttribute('data-is-hiding')) {
 			// Bail out when index is out of scope
 			if (toIndex < mutableRef.current.hideIndex && toIndex >= 0) {
 				const {fromIndex, itemWidth, moveDirection, prevToIndex, rearrangedItems} = mutableRef.current;
@@ -506,7 +506,7 @@ const EditableWrapper = (props) => {
 				item.style.order -= 1;
 			});
 			targetItem.style.order = orders.length;
-			targetItem.setAttribute('isHiding', true);
+			targetItem.setAttribute('data-is-hiding', true);
 
 			finalizeEditing(orders);
 		}
@@ -526,7 +526,7 @@ const EditableWrapper = (props) => {
 			orders.splice(mutableRef.current.hideIndex, 0, targetItemOrder);
 
 			mutableRef.current.hideIndex += 1;
-			targetItem.removeAttribute('isHiding');
+			targetItem.removeAttribute('data-is-hiding');
 
 			finalizeEditing(orders);
 		}
