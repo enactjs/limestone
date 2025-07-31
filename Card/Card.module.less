@@ -4,20 +4,19 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
-.resting-border(@position: 0, @radius: 0, @z-index: 1) {
-	&::before {
+.resting-border(@z-index: 1) {
+	&::after {
 		content: '';
 		position: absolute;
-		.position(@position);
-		box-shadow: inset 0 0 0 @lime-card-resting-border-width red;
-		border-radius: @radius;
+		.position(0);
+		border: @lime-card-resting-border-width solid @lime-card-captions-gradient-color;
+		border-radius: inherit;
 		z-index: @z-index;
-		box-sizing: border-box;
 	}
 }
 
-.selected-border(@color: white, @z-index: 1) {
-	&::before {
+.selected-border(@color: white, @z-index: 1, @type: before) {
+	@styles: {
 		content: '';
 		position: absolute;
 		.position(0);
@@ -25,6 +24,18 @@
 		border-style: solid;
 		border-color: @color;
 		z-index: @z-index;
+	}
+
+	& when (@type = before) {
+		&::before {
+			@styles();
+		}
+	}
+
+	& when (@type = after) {
+		&::after {
+			@styles();
+		}
 	}
 }
 
@@ -261,34 +272,24 @@
 					background: @lime-card-captions-gradient-color;
 				}
 
-				&.selected {
-					.selected-border(@lime-card-border-selected-color, 5);
+				&.selected:not(:focus) {
+					.selected-border(@lime-card-border-selected-color, 5, after);
 				}
 
-				&:not(&.selected):not(:focus) {
-					.resting-border(0, 0, 5);
-
-					&.roundedImage {
-						.resting-border(0, @lime-card-border-radius, 5);
-					}
+				&:not(.selected) {
+					.resting-border(5);
 				}
 			}
 
 			&:not(.hasContainer) {
 				.lime-focus-highlight(image);
 
-				&:not(&.selected):not(&:focus) {
-					.selectionContainer {
-						.resting-border(-@lime-card-image-border-width, 0, 5);
-					}
-
-					&.roundedImage .selectionContainer {
-						.resting-border(-@lime-card-image-border-width, @lime-card-border-radius, 5);
-					}
+				&:not(.selected):not(:focus) .image {
+					.resting-border(5);
 				}
 			}
 
-			&.selected:not(.hasContainer) .selectionContainer {
+			&.selected:not(.captionOverlay):not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
 		}
@@ -296,6 +297,10 @@
 		.focus({
 			.selectionIcon {
 				color: @lime-card-selection-icon-color;
+			}
+
+			&.captionOverlay {
+				.selected-border(@lime-card-border-focused-color, 5, after);
 			}
 
 			&.selected .selectionIcon {
@@ -315,17 +320,7 @@
 				}
 			}
 
-			&.vertical {
-				&.captionOverlay {
-					.selected-border(@lime-card-border-focused-color, 5);
-
-					&.roundedImage::before {
-						border-radius: @lime-card-border-radius;
-					}
-				}
-			}
-
-			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
+			&.vertical:not(.captionOverlay):not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
 				border-color: @lime-card-border-focused-color;
 			}
 		});
