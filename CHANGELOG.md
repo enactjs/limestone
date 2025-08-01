@@ -25,6 +25,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Card` for `focusRing` mode
+- `limestone/Icon` medium size
 - `limestone/Popup` to restore focus properly when popup hides
 - `limestone/QuickGuidePanels` navigation buttons position
 - `limestone/Scroller` to prevent the native scrolling behavior caused by keydown events only when a popup is open
