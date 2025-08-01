@@ -350,7 +350,7 @@ const InputPopupBase = kind({
 	computed: {
 		buttons: ({buttons}) => {
 			return mapAndFilterChildren(buttons, (button, index) => (
-				<Cell key={`button${index}`} id="test" shrink>
+				<Cell key={`button${index}`} shrink>
 					{button}
 				</Cell>
 			)) || null;
