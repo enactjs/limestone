@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - All components in `light` skin and high-contrast mode styling to match the latest GUI
 - `limestone/CheckboxItem` styling to match the latest GUI
+- `limestone/CheckboxItem` styling to match the latest GUI
 - `limestone/FlexiblePopupPanels` styling to match the latest GUI
 - `limestone/FormCheckboxItem` styling to match the latest GUI
 - `limestone/MediaOverlay` styling to match the latest GUI
