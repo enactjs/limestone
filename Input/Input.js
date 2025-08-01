@@ -1,11 +1,12 @@
 import {handle, forKey, forward, forwardCustom} from '@enact/core/handle';
 import kind from '@enact/core/kind';
-import {extractAriaProps} from '@enact/core/util';
+import {extractAriaProps, mapAndFilterChildren} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import {useAnnounce} from '@enact/ui/AnnounceDecorator';
 import Changeable from '@enact/ui/Changeable';
 import Pure from '@enact/ui/internal/Pure';
+import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
 import Layout, {Cell} from '@enact/ui/Layout';
 import classnames from 'classnames';
@@ -56,6 +57,19 @@ const InputPopupBase = kind({
 		 * @public
 		 */
 		backButtonAriaLabel: PropTypes.string,
+
+		/**
+		 * Buttons to be included under the component.
+		 *
+		 * Typically, up to 3 buttons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
+		buttons: PropTypes.oneOfType([
+			PropTypes.element,
+			PropTypes.arrayOf(PropTypes.element)
+		]),
 
 		/**
 		 * Customize component style
@@ -334,6 +348,13 @@ const InputPopupBase = kind({
 	},
 
 	computed: {
+		buttons: ({buttons}) => {
+			return mapAndFilterChildren(buttons, (button, index) => (
+				<Cell key={`button${index}`} id="test" shrink>
+					{button}
+				</Cell>
+			)) || null;
+		},
 		maxLength: ({length, maxLength}) => (length || maxLength),
 		minLength: ({length, maxLength, minLength}) => {
 			if (length) return length;
@@ -342,12 +363,13 @@ const InputPopupBase = kind({
 			return DEFAULT_LENGTH;
 		},
 		popupClassName: ({popupType, type, styler}) => styler.join('inputPopup', popupType, type),
-		inputAreaClassName: ({children, styler}) => styler.join('inputArea', children ? 'withButtons' : '')
+		inputAreaClassName: ({buttons, styler}) => styler.join('inputArea', buttons ? 'withButtons' : '')
 	},
 
 	render: ({
 		announce,
 		backButtonAriaLabel,
+		buttons,
 		children,
 		css,
 		defaultValue,
@@ -457,8 +479,15 @@ const InputPopupBase = kind({
 									spotlightId={inputFieldSpotlightId}
 								/>
 							}
+							<Cell shrink className={css.contentArea}>
+								{children}
+							</Cell>
 						</Cell>
-						<Cell shrink className={css.buttonArea}>{children}</Cell>
+						{buttons ?
+							<Cell shrink className={css.buttonArea}>
+								{buttons}
+							</Cell> : null
+						}
 					</Layout>
 				</Popup>
 			</div>
@@ -617,6 +646,7 @@ const AnnounceDecorator = Wrapped => (function AnnounceDecorator (props) {
 const InputDecorator = compose(
 	Pure,
 	Toggleable({activate: 'onOpenPopup', deactivate: 'onClose', prop: 'open'}),
+	Slottable({slots: ['buttons']}),
 	Changeable({change: 'onComplete'}),
 	AnnounceDecorator,
 	Skinnable
