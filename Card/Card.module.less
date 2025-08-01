@@ -4,6 +4,17 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
+.resting-border(@z-index: 1) {
+	&::before {
+		content: '';
+		position: absolute;
+		.position(0);
+		border: @lime-card-resting-border-width solid @lime-card-resting-border-color;
+		border-radius: inherit;
+		z-index: @z-index;
+	}
+}
+
 .selected-border(@color: white, @z-index: 1) {
 	&::before {
 		content: '';
@@ -150,6 +161,10 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlayOnFocus .captions {
+			visibility: hidden;
+		}
+
 		&.hasContainer .captions {
 			padding: @lime-card-vertical-has-container-captions-padding;
 		}
@@ -191,6 +206,10 @@
 			&.captionOverlay {
 				transform: scale(1.1);
 				transition: transform 200ms ease-in-out;
+			}
+
+			&.captionOverlayOnFocus .captions {
+				visibility: visible;
 			}
 
 			&:not(.hasContainer) .selectionContainer {
@@ -236,11 +255,29 @@
 		}
 
 		&.vertical {
-			&:not(.hasContainer) {
-				.lime-focus-highlight(image);
+			&.captionOverlay {
+				.captions {
+					background: @lime-card-captions-gradient-color;
+				}
+
+				&.selected:not(:focus) {
+					.selected-border(@lime-card-border-selected-color, 5);
+				}
+
+				&:not(.selected) {
+					.resting-border(5);
+				}
 			}
 
-			&.selected:not(.hasContainer) .selectionContainer {
+			&:not(.hasContainer) {
+				.lime-focus-highlight(image);
+
+				&:not(.selected):not(:focus) .image {
+					.resting-border(5);
+				}
+			}
+
+			&.selected:not(.captionOverlay):not(.hasContainer) .selectionContainer {
 				border-color: @lime-card-border-selected-color;
 			}
 		}
@@ -248,6 +285,10 @@
 		.focus({
 			.selectionIcon {
 				color: @lime-card-selection-icon-color;
+			}
+
+			&.captionOverlay {
+				.selected-border(@lime-card-border-focused-color, 5);
 			}
 
 			&.selected .selectionIcon {
@@ -267,7 +308,7 @@
 				}
 			}
 
-			&.vertical:not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
+			&.vertical:not(.captionOverlay):not(.hasContainer):not(:global(.focusRing)) .selectionContainer {
 				border-color: @lime-card-border-focused-color;
 			}
 		});
