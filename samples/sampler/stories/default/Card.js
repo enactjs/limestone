@@ -1,5 +1,6 @@
 import {Card, CardBase} from '@enact/limestone/Card';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
+import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
 
@@ -28,6 +29,7 @@ export default {
 export const _Card = (args) => (
 	<Card
 		captionOverlay={args['captionOverlay']}
+		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
 		disabled={args['disabled']}
 		imageIconSrc={args['imageIconSrc']}
@@ -35,6 +37,7 @@ export const _Card = (args) => (
 		hasContainer={args['hasContainer']}
 		// eslint-disable-next-line no-undefined
 		label={args['label'] ? args['label'] : undefined}
+		onClick={action('onClick')}
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
 		roundedImage={args['roundedImage']}
@@ -49,6 +52,7 @@ export const _Card = (args) => (
 );
 
 boolean('captionOverlay', _Card, Config);
+boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
