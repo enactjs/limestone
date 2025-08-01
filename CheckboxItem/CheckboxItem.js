@@ -138,6 +138,10 @@ const CheckboxItemBase = kind({
 		publicClassNames: ['checkboxItem', 'bg', 'selected']
 	},
 
+	computed: {
+		className: ({label, styler}) => styler.append({hasLabel: label != null})
+	},
+
 	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
 		<Item
 			data-webos-voice-intent="SelectCheckItem"
