@@ -2,6 +2,7 @@ import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 
+import Button from "../../Button";
 import {InputPopup} from '../Input';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
@@ -11,7 +12,9 @@ describe('InputPopup Specs', () => {
 		const placeholder = 'InputPopup Placeholder';
 		render(
 			<FloatingLayerController>
-				<InputPopup open placeholder={placeholder} />
+				<InputPopup open placeholder={placeholder}>
+					<Button>Button</Button>
+				</InputPopup>
 			</FloatingLayerController>
 		);
 
