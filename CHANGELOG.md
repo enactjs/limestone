@@ -33,6 +33,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/QuickGuidePanels` navigation buttons position
 - `limestone/Scroller` to prevent the native scrolling behavior caused by keydown events only when a popup is open
 - `limestone/Scroller` to restore focus when focus is lost after scroll by voice control
+- `limestone/Scroller` with `editable` prop to work properly with deployed apps
 - `limestone/TabLayout` to maintain the same scroller position when `Tabs` are collapsed or expanded
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
