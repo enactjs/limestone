@@ -14,6 +14,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - All components in `light` skin and high-contrast mode styling to match the latest GUI
+- `limestone/Card` to display `captions` on focus
 - `limestone/CheckboxItem` styling to match the latest GUI
 - `limestone/FlexiblePopupPanels` styling to match the latest GUI
 - `limestone/FormCheckboxItem` styling to match the latest GUI
@@ -25,9 +26,13 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Card` for `focusRing` mode
+- `limestone/Card` `background` for captions
+- `limestone/Icon` medium size
 - `limestone/Popup` to restore focus properly when popup hides
 - `limestone/QuickGuidePanels` navigation buttons position
 - `limestone/Scroller` to prevent the native scrolling behavior caused by keydown events only when a popup is open
+- `limestone/Scroller` to restore focus when focus is lost after scroll by voice control
+- `limestone/Scroller` with `editable` prop to work properly with deployed apps
 - `limestone/TabLayout` to maintain the same scroller position when `Tabs` are collapsed or expanded
 - `limestone/VideoPlayer` size of the icons from the control buttons
 
