@@ -17,6 +17,7 @@ import Spottable from '@enact/spotlight/Spottable';
 import Touchable from '@enact/ui/Touchable';
 import Toggleable from '@enact/ui/Toggleable';
 
+import Motion from '../Motion';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Switch.module.less';
@@ -78,10 +79,18 @@ const SwitchBase = kind({
 		className: ({noAnimation, selected, styler}) => styler.append({
 			animated: !noAnimation,
 			selected
-		})
+		}),
+
+		icon: ({css, selected}) => {
+			return (
+				<Motion triggerMotion={selected} type="bounce">
+					<div className={css.icon} />
+				</Motion>
+			)
+		}
 	},
 
-	render: ({css, disabled, selected, ...rest}) => {
+	render: ({css, disabled, icon, selected, ...rest}) => {
 		delete rest.noAnimation;
 
 		return (
@@ -94,7 +103,7 @@ const SwitchBase = kind({
 			>
 				<div className={css.bg} />
 				<div className={css.client}>
-					<div className={css.icon} />
+					{icon}
 				</div>
 			</div>
 		);

@@ -1,1 +1,58 @@
 // Motion Tokens
+
+/* ---------------------------------------
+Animations
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-motion: var(--lime-bounce-animation-name) var(--lime-bounce-motion-duration) var(--lime-bounce-motion-easing-function);
+}
+
+/* ---------------------------------------
+Durations
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-motion-duration: 300ms;
+}
+
+/* ---------------------------------------
+Easing functions
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-motion-easing-function: ease-in-out;
+}
+
+/* ---------------------------------------
+Keyframes names
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-animation-name: bounce-motion;
+}
+
+/* ---------------------------------------
+Keyframes values
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-motion-offset-value: 10px;
+}
+
+/* ---------------------------------------
+Keyframes
+------------------------------------------ */
+
+/* Bounce
+	------------------------------------------ */
+@keyframes bounce-motion {
+	0% {transform: translateX(0);}
+	50% {transform: translateX(var(--lime-bounce-motion-offset-value));}
+	100% {transform: translateX(0);}
+}
