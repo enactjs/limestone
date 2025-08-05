@@ -1,4 +1,6 @@
+import Button from '../../../../Button';
 import Input from '../../../../Input';
+import Item from '../../../../Item';
 
 import {withConfig, withProps} from './utils';
 
@@ -12,7 +14,21 @@ const BaseTests = [
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="passwordnumber" />,
 	<Input open title="Input Test" subtitle="Additional text" value="https://enactjs.com" type="url" />,
-	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" length={10} />
+	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" length={10} />,
+	<Input open title="Input Test" subtitle="Input with content">
+		<Item>Item content</Item>
+	</Input>,
+	<Input open title="Input Test" subtitle="Input with content and buttons">
+		<Item>Item content</Item>
+		<buttons>
+			<Button>Button text</Button>
+		</buttons>
+	</Input>,
+	<Input open title="Input Test" subtitle="Input with buttons">
+		<buttons>
+			<Button>Button text 1</Button>
+		</buttons>
+	</Input>
 ];
 
 const InputTests = [
