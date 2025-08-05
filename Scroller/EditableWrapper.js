@@ -272,7 +272,10 @@ const EditableWrapper = (props) => {
 	}, [customCss.focused, findItemNode]);
 
 	const handleClickCapture = useCallback((ev) => {
-		if (ev.target?.parentNode?.parentNode.getAttribute('role') === 'button') {
+		const isButtonBg = ev.target.getAttribute('role') === 'button';
+		const isButtonClient = ev.target?.parentNode.getAttribute('role') === 'button';
+		const isButtonIcon = ev.target?.parentNode?.parentNode.getAttribute('role') === 'button';
+		if (isButtonBg || isButtonClient || isButtonIcon) {
 			return;
 		}
 		// Consume the event to prevent Item behavior
@@ -284,9 +287,10 @@ const EditableWrapper = (props) => {
 	}, []);
 
 	const handleMouseDown = useCallback((ev) => {
-		const isButton = ev.target.getAttribute('role') === 'button';
-		const isIcon = ev.target?.parentNode?.parentNode.getAttribute('role') === 'button';
-		if (isButton || isIcon) {
+		const isButtonBg = ev.target.getAttribute('role') === 'button';
+		const isButtonClient = ev.target?.parentNode.getAttribute('role') === 'button';
+		const isButtonIcon = ev.target?.parentNode?.parentNode.getAttribute('role') === 'button';
+		if (isButtonBg || isButtonClient || isButtonIcon) {
 			return;
 		}
 		if (mutableRef.current.selectedItem) {
