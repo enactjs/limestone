@@ -284,7 +284,9 @@ const EditableWrapper = (props) => {
 	}, []);
 
 	const handleMouseDown = useCallback((ev) => {
-		if (ev.target?.parentNode?.parentNode.getAttribute('role') === 'button') {
+		const isButton = ev.target.getAttribute('role') === 'button';
+		const isIcon = ev.target?.parentNode?.parentNode.getAttribute('role') === 'button';
+		if (isButton || isIcon) {
 			return;
 		}
 		if (mutableRef.current.selectedItem) {
