@@ -4,6 +4,7 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Input from '../Input';
+import Button from '../../Button';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
 
@@ -11,7 +12,12 @@ describe('Input specs', () => {
 	test('should be rendered opened if open is set to true', () => {
 		render(
 			<FloatingLayerController>
-				<Input open />
+				<Input open >
+					<buttons>
+						<Button>Button 1</Button>
+						<Button>Button 2</Button>
+					</buttons>
+				</Input>
 			</FloatingLayerController>
 		);
 		const actual = screen.getAllByLabelText('- Input field')[0].parentElement.nextElementSibling.children.length > 0;
