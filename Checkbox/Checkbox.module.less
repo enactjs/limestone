@@ -136,6 +136,25 @@
 		text-align: center;
 	}
 
+	&.selected {
+		.icon::after {
+			content: '';
+			position: absolute;
+			.position(0);
+			background-color: inherit;
+			animation: reveal 2s forwards;
+		}
+	}
+
+	@keyframes reveal {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+
 	//
 	// Checkbox supports several states, each of which has a different set of colors.
 	// All supported states are as follows:
