@@ -1,4 +1,35 @@
 // Motion Variables
 @import "./motion-tokens.less";
+@import "./mixins.less";
 
-@lime-bounce-motion: var(--lime-bounce-motion);
+@lime-switch-bounce-motion: var(--lime-bounce-motion);
+
+.lime-toggle-motion(@offset: 0, @duration: 400ms) {
+	animation: bounce-motion @duration ease-in-out;
+
+	@keyframes bounce-motion {
+		0% {transform: translateX(0)}
+		50% {transform: translateX(@offset)}
+		80% {transform: translateX((-@offset / 2))}
+		100% {transform: translateX(0)}
+	}
+}
+
+.lime-check-motion() {
+		&::after {
+			content: '';
+			position: absolute;
+			.position(0);
+			background-color: inherit;
+			animation: reveal 400ms forwards;
+		}
+
+	@keyframes reveal {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+}

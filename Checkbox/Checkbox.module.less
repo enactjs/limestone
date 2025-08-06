@@ -1,8 +1,9 @@
 // Checkbox.module.less
 //
-@import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/motions.less";
 @import "../styles/skin.less";
+@import "../styles/variables.less";
 
 // Assign the colors all in one place
 .checkbox-colors (@color, @bg, @border) {
@@ -136,23 +137,8 @@
 		text-align: center;
 	}
 
-	&.selected {
-		.icon::after {
-			content: '';
-			position: absolute;
-			.position(0);
-			background-color: inherit;
-			animation: reveal 500ms forwards;
-		}
-	}
-
-	@keyframes reveal {
-		0% {
-			transform: translateX(0);
-		}
-		100% {
-			transform: translateX(100%);
-		}
+	&.selected .icon {
+		.lime-check-motion();
 	}
 
 	//
