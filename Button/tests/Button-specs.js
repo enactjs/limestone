@@ -237,7 +237,7 @@ describe('Button', () => {
 
 			await user.click(button);
 
-			expect(handleClick).toBeCalled();
+			expect(handleClick).toHaveBeenCalled();
 		});
 
 		test('should not call onClick when disabled', async () => {
@@ -249,7 +249,7 @@ describe('Button', () => {
 
 			await user.click(button);
 
-			expect(handleClick).not.toBeCalled();
+			expect(handleClick).not.toHaveBeenCalled();
 		});
 
 		test('should have "Select" voice intent in the node of "role=button"', () => {

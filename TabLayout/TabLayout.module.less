@@ -50,6 +50,10 @@
 		.content {
 			margin-top: @lime-tablayout-horizontal-content-margin-top;
 		}
+
+		.tabs {
+			.padding-start-end(calc(var(--scrollable) * var(--offset)), calc(var(--scrollable) * var(--offset)));
+		}
 	}
 
 	&.vertical {

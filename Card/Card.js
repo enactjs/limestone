@@ -15,10 +15,12 @@
  * @exports CardDecorator
  */
 
+import {forProp, forward, handle, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Row} from '@enact/ui/Layout';
+import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
@@ -29,6 +31,15 @@ import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
+
+const getDefaultImageSize = (orientation) => {
+	const sizes = {
+		vertical: {width: 768, height: 432},
+		horizontal: {width: 596, height: 336}
+	};
+
+	return sizes[orientation];
+};
 
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
@@ -73,7 +84,16 @@ const CardBase = kind({
 		captionOverlay: PropTypes.bool,
 
 		/**
-		 * Centers the cations when `imageIconSrc` is not provided.
+		 * Determines whether the caption will be placed over the image and shown only on card focus.
+		 * It only applies when `orientation` is `'vertical'`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		captionOverlayOnFocus: PropTypes.bool,
+
+		/**
+		 * Centers the captions when `imageIconSrc` is not provided.
 		 *
 		 * @type {Boolean}
 		 * @public
@@ -124,6 +144,22 @@ const CardBase = kind({
 		 * @public
 		 */
 		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the image.
+		 *
+		 * The following properties should be provided:
+ 		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+
+  		 * @type {Object}
+		 * @default {height: 432, width: 768}
+		 * @public
+		 */
+		imageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
 
 		/**
 		 * A secondary caption displayed with the image.
@@ -199,10 +235,22 @@ const CardBase = kind({
 		publicClassNames: true
 	},
 
+	handlers: {
+		onClick: handle(
+			not(forProp('disabled', true)),
+			forward('onClick')
+		),
+		onKeyUp: handle(
+			not(forProp('disabled', true)),
+			forward('onKeyUp')
+		)
+	},
+
 	computed: {
 		'aria-label': ({children, label, secondaryLabel, selected}) => {
 			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' selected' : ''}`;
 		},
+		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
 		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
@@ -244,20 +292,24 @@ const CardBase = kind({
 					captions
 			);
 		},
-		className: ({captionOverlay, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
+			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
 		})
 	},
 
-	render: ({css, primaryBadgeSrc, secondaryBadgeSrc, ...rest}) => {
+	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
 		delete rest.secondaryLabel;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
+
+		const defaultImageSize = getDefaultImageSize(rest.orientation);
 
 		return (
 			<UiCard
@@ -276,6 +328,11 @@ const CardBase = kind({
 						</div>
 					</Image>
 				}
+				style={{
+					...style,
+					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
+					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width)
+				}}
 			/>
 		);
 	}

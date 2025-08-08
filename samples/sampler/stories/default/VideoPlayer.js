@@ -121,7 +121,8 @@ export const _VideoPlayer = (args) => {
 					args['video scale'] +
 					')',
 				outline: 'teal dashed 1px',
-				height: '70vh'
+				height: '70vh',
+				marginTop: ri.scaleToRem(96)
 			}}
 		>
 			<label
@@ -135,7 +136,7 @@ export const _VideoPlayer = (args) => {
 					padding: '0.1em 1em',
 					fontWeight: 100,
 					fontStyle: 'italic',
-					fontSize: '32px'
+					fontSize: ri.scaleToRem(32)
 				}}
 			>
 				VideoPlayer Edge
@@ -145,6 +146,7 @@ export const _VideoPlayer = (args) => {
 				backButtonAriaLabel={args['backButtonAriaLabel']}
 				disabled={args['disabled']}
 				feedbackHideDelay={args['feedbackHideDelay']}
+				includeTimeHour={args['includeTimeHour']}
 				initialJumpDelay={args['initialJumpDelay']}
 				jumpDelay={args['jumpDelay']}
 				loop={args['loop']}
@@ -187,24 +189,24 @@ export const _VideoPlayer = (args) => {
 				>
 					<bottomComponents>
 						<VirtualGridList
-							style={{height: ri.scale(240), marginTop: ri.scale(60)}}
+							style={{height: ri.scale(324), marginTop: ri.scale(60)}}
 							horizontalScrollbar={'hidden'}
 							dataSize={size}
 							direction="horizontal"
 							itemSize={{
-								minWidth: ri.scale(320),
-								minHeight: ri.scale(270)
+								minWidth: ri.scale(324),
+								minHeight: ri.scale(324)
 							}}
 							itemRenderer={renderItem}
 							spacing={ri.scale(12)}
 							hoverToScroll
 						/>
 					</bottomComponents>
-					<Button size="small" icon="list" />
-					<Button size="small" icon="playspeed" />
-					<Button size="small" icon="speakercenter" />
-					<Button size="small" icon="miniplayer" />
-					<Button size="small" icon="subtitle" />
+					<Button icon="list" />
+					<Button icon="playspeed" />
+					<Button icon="speakercenter" />
+					<Button icon="miniplayer" />
+					<Button icon="subtitle" />
 				</MediaControls>
 			</VideoPlayer>
 		</div>
@@ -217,6 +219,7 @@ number('autoCloseTimeout', _VideoPlayer, Config, 7000);
 text('backButtonAriaLabel', _VideoPlayer, Config, 'go to previous');
 boolean('disabled', _VideoPlayer, Config);
 number('feedbackHideDelay', _VideoPlayer, Config, 3000);
+boolean('includeTimeHour', _VideoPlayer, Config);
 number('initialJumpDelay', _VideoPlayer, Config, 400);
 number('jumpDelay', _VideoPlayer, Config, 200);
 boolean('loop', _VideoPlayer, Config, true);

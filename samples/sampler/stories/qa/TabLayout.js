@@ -157,8 +157,8 @@ export const WithVariableNumberOfTabs = (args) => {
 	);
 };
 
-range('Number of Tabs', WithVariableNumberOfTabs, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 3);
-select('orientation', WithVariableNumberOfTabs, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('Number of Tabs', WithVariableNumberOfTabs, {groupId: 'TabLayout'}, {min: 1, max: 20, step: 1}, 3);
+select('orientation', WithVariableNumberOfTabs, ['vertical', 'horizontal'], Config, 'vertical');
 
 WithVariableNumberOfTabs.storyName = 'With variable number of tabs';
 WithVariableNumberOfTabs.parameters = {
@@ -238,8 +238,8 @@ export const WithTabsWithoutIcons = (args) => {
 	);
 };
 
-range('Number of Tabs', WithTabsWithoutIcons, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 3);
-select('orientation', WithTabsWithoutIcons, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('Number of Tabs', WithTabsWithoutIcons, {groupId: 'TabLayout'}, {min: 1, max: 20, step: 1}, 3);
+select('orientation', WithTabsWithoutIcons, ['vertical', 'horizontal'], Config, 'vertical');
 
 WithTabsWithoutIcons.storyName = 'With tabs without icons';
 WithTabsWithoutIcons.parameters = {
@@ -324,8 +324,8 @@ export const WithDisabledTabs = (args) => {
 	);
 };
 
-range('Number of Tabs', WithDisabledTabs, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 3);
-select('orientation', WithDisabledTabs, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('Number of Tabs', WithDisabledTabs, {groupId: 'TabLayout'}, {min: 1, max: 20, step: 1}, 3);
+select('orientation', WithDisabledTabs, ['vertical', 'horizontal'], Config, 'vertical');
 
 WithDisabledTabs.storyName = 'With disabled tabs';
 WithDisabledTabs.parameters = {
@@ -405,8 +405,8 @@ export const WithAllDisabledTabs = (args) => {
 	);
 };
 
-range('Number of Tabs', WithAllDisabledTabs, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 3);
-select('orientation', WithAllDisabledTabs, ['vertical', 'horizontal'], TabLayout, 'vertical');
+range('Number of Tabs', WithAllDisabledTabs, {groupId: 'TabLayout'}, {min: 1, max: 20, step: 1}, 3);
+select('orientation', WithAllDisabledTabs, ['vertical', 'horizontal'], Config, 'vertical');
 
 WithAllDisabledTabs.storyName = 'With all disabled tabs';
 WithAllDisabledTabs.parameters = {
@@ -565,9 +565,10 @@ export const WithScroller = (args) => {
 	);
 };
 
-range('Number of Tabs', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 20, step: 1}, 8);
-range('Tab Size', WithScroller, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
-select('orientation', WithScroller, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+range('Number of Tabs', WithScroller, {groupId: 'TabLayout'}, {min: 1, max: 20, step: 1}, 8);
+boolean('Custom Tab Size', WithScroller, Config, false);
+range('Tab Size', WithScroller, {groupId: 'TabLayout'}, {min: 300, max: 960, step: 60}, 960, {if: {arg: 'Custom Tab Size'}});
+select('orientation', WithScroller, ['vertical', 'horizontal'], Config, 'horizontal');
 
 WithScroller.storyName = 'With Scroller';
 WithScroller.parameters = {
@@ -594,7 +595,7 @@ export const WithPrimaryIndex = (args) => {
 	);
 };
 
-select('orientation', WithPrimaryIndex, ['vertical', 'horizontal'], TabLayout, 'vertical');
+select('orientation', WithPrimaryIndex, ['vertical', 'horizontal'], Config, 'vertical');
 range('primaryIndex', WithPrimaryIndex, {groupId: 'TabLayout'}, {min: 0, max: 2, step: 1}, 0);
 
 WithPrimaryIndex.storyName = 'With primary index';
@@ -649,8 +650,9 @@ export const WithRestoredFocus = (args) => {
 	);
 };
 
-range('tabSize', WithRestoredFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
-select('orientation', WithRestoredFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+boolean('custom tabSize', WithRestoredFocus, Config, false);
+range('tabSize', WithRestoredFocus, {groupId: 'TabLayout'}, {min: 300, max: 960, step: 60}, 960, {if: {arg: 'custom tabSize'}});
+select('orientation', WithRestoredFocus, ['vertical', 'horizontal'], Config, 'horizontal');
 
 WithRestoredFocus.storyName = 'with restored focus';
 WithRestoredFocus.parameters = {
@@ -721,11 +723,12 @@ export const WithRetainedFocus = (args) => {
 	);
 };
 
-boolean('hideFirstButton', WithRetainedFocus, TabLayout, false);
-boolean('hideSecondButton', WithRetainedFocus, TabLayout, false);
-select('alignButtons', WithRetainedFocus, ['start', 'center', 'end'], TabLayout, 'start');
-range('tabSize', WithRetainedFocus, {groupId: 'TabLayout'}, {min: 0, max: 960, step: 60}, 960);
-select('orientation', WithRetainedFocus, ['vertical', 'horizontal'], TabLayout, 'horizontal');
+boolean('hideFirstButton', WithRetainedFocus, Config, false);
+boolean('hideSecondButton', WithRetainedFocus, Config, false);
+select('alignButtons', WithRetainedFocus, ['start', 'center', 'end'], Config, 'start');
+boolean('custom tabSize', WithRetainedFocus, Config, false);
+range('tabSize', WithRetainedFocus, {groupId: 'TabLayout'}, {min: 300, max: 960, step: 60}, 960, {if: {arg: 'custom tabSize'}});
+select('orientation', WithRetainedFocus, ['vertical', 'horizontal'], Config, 'horizontal');
 
 
 WithRetainedFocus.storyName = 'With retained focus';

@@ -12,6 +12,8 @@ import ri from '@enact/ui/resolution';
 import {useState} from 'react';
 import compose from 'ramda/src/compose';
 
+import css from "./FlexiblePopupPanels.module.less";
+
 const propOptions = {
 	buttonVisibility: ['auto', 'always', 'never'],
 	size: ['auto', 'small', 'large']
@@ -19,6 +21,12 @@ const propOptions = {
 
 const Config = mergeComponentMetadata('FlexiblePopupPanels', FlexiblePopupPanelsBase, FlexiblePopupPanels);
 const PanelConfig = mergeComponentMetadata('Panel', PanelBase, Panel);
+Config.defaultProps = {
+	nextButtonVisibility: 'auto',
+	prevButtonVisibility: 'auto',
+	scrimType: 'translucent',
+	spotlightRestrict: 'self-only'
+};
 
 export default {
 	title: 'Limestone/FlexiblePopupPanels',
@@ -77,7 +85,7 @@ export const FlexiblePopupPanels_ = (args) => {
 					}
 				>
 					<Header title="First List" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 						<Item onClick={nextPanel}>Item 2</Item>
 						<Item onClick={nextPanel}>Item 3</Item>
@@ -99,7 +107,7 @@ export const FlexiblePopupPanels_ = (args) => {
 					}
 				>
 					<Header title="Third panel" />
-					<Scroller style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
+					<Scroller className={css.scroller} style={{width: size === 'auto' ? ri.scaleToRem(900) : null}}>
 						<Item onClick={nextPanel}>Item 1</Item>
 					</Scroller>
 				</Panel>
@@ -115,13 +123,12 @@ boolean('noAnimation', FlexiblePopupPanels_, Config);
 boolean('noAutoDismiss', FlexiblePopupPanels_, Config);
 boolean('noCloseButton', FlexiblePopupPanels_, Config);
 select('prevButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
-select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config, 'translucent');
+select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config);
 select(
 	'spotlightRestrict',
 	FlexiblePopupPanels_,
 	['self-first', 'self-only'],
-	Config,
-	'self-only'
+	Config
 );
 select('size', FlexiblePopupPanels_, propOptions.size, PanelConfig);
 boolean('custom first Panel prevButton', FlexiblePopupPanels_, PanelConfig);

@@ -2,6 +2,42 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.3.0] - 2025-08-08
+
+### Added
+
+- `limestone/Card` prop `imageSize` to set the size of card image
+- `limestone/Icon` supported icon list, adding new icons
+- `limestone/Input` prop `buttons`
+- `limestone/MediaPlayer.Times` prop `includeHour` to conditionally show hour for current and total time
+- `limestone/VideoPlayer` prop `includeTimeHour` to conditionally show hour for current and total time
+
+### Changed
+
+- All components in `light` skin and high-contrast mode styling to match the latest GUI
+- `limestone/Card` to display `captions` on focus
+- `limestone/CheckboxItem` styling to match the latest GUI
+- `limestone/FlexiblePopupPanels` styling to match the latest GUI
+- `limestone/FormCheckboxItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
+- `limestone/TabLayout` vertical to be collapsed in portrait mode
+- `limestone/Tooltip` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` for `focusRing` mode
+- `limestone/Card` `background` for captions
+- `limestone/Icon` medium size
+- `limestone/Popup` to restore focus properly when popup hides
+- `limestone/QuickGuidePanels` navigation buttons position
+- `limestone/Scroller` to prevent the native scrolling behavior caused by keydown events only when a popup is open
+- `limestone/Scroller` to restore focus when focus is lost after scroll by voice control
+- `limestone/Scroller` with `editable` prop to work properly with deployed apps
+- `limestone/Scroller` with `editable` prop to recognize button if clickEvent is triggered for `Button` background 
+- `limestone/TabLayout` to maintain the same scroller position when `Tabs` are collapsed or expanded
+- `limestone/VideoPlayer` size of the icons from the control buttons
+
 ## [1.2.0] - 2025-07-11
 
 ### Added

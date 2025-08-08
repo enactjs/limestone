@@ -306,12 +306,14 @@ export const EditableList = (args) => {
 	}, [items]);
 
 	useEffect(() => {
-		divRef.current.addEventListener('keydown', (ev) => {
-			const {keyCode} = ev;
-			if (isCancel(keyCode)) {
-				setEditMode(false);
-			}
-		});
+		if (divRef.current) {
+			divRef.current.addEventListener('keydown', (ev) => {
+				const {keyCode} = ev;
+				if (isCancel(keyCode)) {
+					setEditMode(false);
+				}
+			});
+		}
 	}, [divRef]);
 
 	return (
@@ -1316,3 +1318,14 @@ export const WithFixedPopupPanels = () => {
 };
 
 WithFixedPopupPanels.storyName = 'With FixedPopupPanels';
+
+export const WithInputField = () => {
+	return (
+		<Scroller>
+			<InputField autoFocus />
+			<div style={{height: ri.scaleToRem(2400)}} />
+		</Scroller>
+	);
+};
+
+WithInputField.storyName = 'With InputField';

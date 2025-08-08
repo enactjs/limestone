@@ -62,19 +62,12 @@
 
 	/* Light Skin */
 	&:global(.light) {
-		--semantic-color-background-full-default: var(--primitive-color-neutral-gray-85);
-		--semantic-color-on-background-main: var(--primitive-color-neutral-gray-10);
-		--semantic-color-on-background-sub: var(--primitive-color-neutral-gray-35);
-		--semantic-color-background-overlay-default: var(--primitive-color-cool-gray-85);
-		--semantic-color-surface-default-track: var(--primitive-color-neutral-gray-40);
-		--semantic-color-surface-default-disabled-focused: var(--primitive-color-cool-gray-80);
-		--semantic-color-stroke-selection-inactive: var(--primitive-color-neutral-gray-10);
-		--semantic-color-stroke-overlay-default: var(--primitive-color-cool-gray-70);
+		@import-json "~@enovaui/webos-tokens/json/color-semantic-light.json";
 	}
 
 	/* High Contrast */
 	&:global(.enact-a11y-high-contrast):global(.highContrast) {
-		--semantic-color-background-overlay-default: var(--primitive-color-black);
+		@import-json "~@enovaui/webos-tokens/json/color-semantic-high-contrast.json";
 	}
 }
 

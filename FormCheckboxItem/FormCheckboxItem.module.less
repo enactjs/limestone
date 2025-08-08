@@ -21,15 +21,19 @@
 .item {
 	.applySkins({
 		.focus({
-			color: @lime-formcheckboxitem-focus-text-color;
+			color: @lime-formcheckboxitem-label-main-focused-color;
 
 			.bg {
 				background-color: transparent;
 				opacity: 0;
 			}
 
+			.label {
+				color: @lime-formcheckboxitem-label-sub-focused-color;
+			}
+
 			.disabled({
-				color: @lime-formcheckboxitem-disabled-focus-text-color;
+				color: @lime-formcheckboxitem-label-main-disabled-focused-color;
 
 				.bg {
 					opacity: 0;
@@ -47,8 +51,14 @@
 			});
 		});
 
+		&.selected {
+			.bg {
+				background-color: @lime-formcheckboxitem-item-container-selected-color;
+			}
+		}
+
 		.disabled({
-			color: @lime-formcheckboxitem-disabled-text-color;
+			color: @lime-formcheckboxitem-label-main-disabled-color;
 		})
 	});
 }

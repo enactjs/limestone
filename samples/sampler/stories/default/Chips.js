@@ -6,6 +6,7 @@ import ri from '@enact/ui/resolution';
 import {useState} from 'react';
 
 const Config = mergeComponentMetadata('Chips', ChipsBase, Chips);
+Config.defaultProps.orientation = 'vertical';
 Chips.displayName = 'Chips';
 
 export default {
@@ -74,7 +75,7 @@ export const Chips_ = (args) => {
 	);
 };
 
-select('orientation', Chips_, ['horizontal', 'vertical'], Config, 'vertical');
+select('orientation', Chips_, ['horizontal', 'vertical'], Config);
 
 Chips_.storyName = 'Chips';
 Chips_.parameters = {

@@ -1,5 +1,7 @@
 // CheckboxItem.module.less
 //
+@import "../styles/skin.less";
+@import "../styles/mixins.less";
 
 .checkboxItem {
 	/* Needed to prevent global class being added in the DOM */
@@ -8,7 +10,29 @@
 		/* Available for customization */
 	}
 
+	padding: @lime-checkboxitem-padding;
+
+	.enact-locale-rtl({
+		padding: @lime-checkboxitem-padding-rtl;
+	});
+
 	.bg {
 		/* Available for customization */
 	}
+
+	&.hasLabel {
+		padding: @lime-checkboxitem-withlabel-padding;
+
+		.enact-locale-rtl({
+			padding: @lime-checkboxitem-withlabel-padding-rtl;
+		});
+	}
+
+	.applySkins({
+		&.selected {
+			.bg {
+				background-color: @lime-checkboxitem-item-container-selected-color;
+			}
+		}
+	});
 }
