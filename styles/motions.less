@@ -2,34 +2,26 @@
 @import "./motion-tokens.less";
 @import "./mixins.less";
 
-@lime-switch-bounce-motion: var(--lime-bounce-motion);
+/* ---------------------------------------
+Motion Variables
+------------------------------------------ */
+@lime-bounce-motion: var(--lime-bounce-motion);
+@lime-check-motion: var(--lime-check-motion);
 
-.lime-toggle-motion(@offset: 0, @duration: 400ms) {
-	animation: bounce-motion @duration ease-in-out;
-
-	@keyframes bounce-motion {
-		0% {transform: translateX(0)}
-		50% {transform: translateX(@offset)}
-		80% {transform: translateX((-@offset / 2))}
-		100% {transform: translateX(0)}
-	}
+/* ---------------------------------------
+Motion Mixins
+------------------------------------------ */
+.lime-toggle-motion(@offset: var(--lime-bounce-motion-offset-value), @duration: var(--lime-bounce-motion-duration)) {
+	animation: var(--lime-bounce-animation-name) @duration var(--lime-bounce-motion-easing-function);
+	--lime-bounce-motion-offset-value: @offset;
 }
 
 .lime-check-motion() {
-		&::after {
-			content: '';
-			position: absolute;
-			.position(0);
-			background-color: inherit;
-			animation: reveal 400ms forwards;
-		}
-
-	@keyframes reveal {
-		0% {
-			transform: translateX(0);
-		}
-		100% {
-			transform: translateX(100%);
-		}
+	&::after {
+		content: '';
+		position: absolute;
+		.position(0);
+		background-color: inherit;
+		animation: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
 	}
 }

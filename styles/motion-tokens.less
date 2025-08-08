@@ -7,42 +7,36 @@ Animations
 	/* Bounce
 	------------------------------------------ */
 	--lime-bounce-motion: var(--lime-bounce-animation-name) var(--lime-bounce-motion-duration) var(--lime-bounce-motion-easing-function);
+	--lime-check-motion: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
 }
 
 /* ---------------------------------------
-Durations
+Animations properties
 ------------------------------------------ */
 :root {
-	/* Bounce
+	/* ---------------------------------------
+	Durations
 	------------------------------------------ */
-	--lime-bounce-motion-duration: 300ms;
-}
+	--lime-motion-default-duration: 400ms;
+	--lime-bounce-motion-duration: var(--lime-motion-default-duration);
+	--lime-check-motion-duration: var(--lime-motion-default-duration);
 
-/* ---------------------------------------
-Easing functions
------------------------------------------- */
-:root {
-	/* Bounce
+	/* ---------------------------------------
+	Easing functions
 	------------------------------------------ */
-	--lime-bounce-motion-easing-function: ease-in-out;
-}
+	--lime-default-motion-easing-function: linear;
+	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
 
-/* ---------------------------------------
-Keyframes names
------------------------------------------- */
-:root {
-	/* Bounce
+	/* ---------------------------------------
+	Keyframes names
 	------------------------------------------ */
 	--lime-bounce-animation-name: bounce-motion;
-}
+	--lime-check-animation-name: check-motion;
 
-/* ---------------------------------------
-Keyframes values
------------------------------------------- */
-:root {
-	/* Bounce
+	/* ---------------------------------------
+	Keyframes values
 	------------------------------------------ */
-	--lime-bounce-motion-offset-value: 10px;
+	--lime-bounce-motion-offset-value: 12px;
 }
 
 /* ---------------------------------------
@@ -52,7 +46,15 @@ Keyframes
 /* Bounce
 	------------------------------------------ */
 @keyframes bounce-motion {
-	0% {transform: translateX(0);}
-	50% {transform: translateX(var(--lime-bounce-motion-offset-value));}
-	100% {transform: translateX(0);}
+	0% {transform: translateX(0)}
+	50% {transform: translateX(var(--lime-bounce-motion-offset-value))}
+	80% {transform: translateX(~'calc(var(--lime-bounce-motion-offset-value) / -2)')}
+	100% {transform: translateX(0)}
+}
+
+/* Check
+	------------------------------------------ */
+@keyframes check-motion {
+	0% {transform: translateX(0)}
+	100% {transform: translateX(100%)}
 }
