@@ -970,22 +970,33 @@ export const WithNestedScrollerInVerticalScroller = (args) => {
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The first nested scroller.</Item>
+					<br />
+					<Item>&lt;The first nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the upper scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the upper horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the first nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 			<Scroller
@@ -1009,22 +1020,33 @@ export const WithNestedScrollerInVerticalScroller = (args) => {
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The second nested scroller.</Item>
+					<br />
+					<Item>&lt;The second nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the lower scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the lower horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the second nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 		</Scroller>
@@ -1049,7 +1071,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 		scrollMode={args['scrollMode']}
 		verticalScrollbar="visible"
 	>
-		<div style={{display: 'flex', width: ri.scaleToRem(4800), height: ri.scaleToRem(798)}}>
+		<div style={{display: 'flex', width: ri.scaleToRem(1200), height: ri.scaleToRem(200)}}>
 			<Scroller
 				direction={args['direction']}
 				focusableScrollbar={args['focusableScrollbar']}
@@ -1067,25 +1089,36 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 				<div
 					style={{
 						backgroundColor: '#444',
-						width: ri.scaleToRem(4800)
+						width: ri.scaleToRem(1200)
 					}}
 				>
-					<Item>The first nested scroller.</Item>
+					<br />
+					<Item>&lt;The first nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the upper scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the upper horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the first nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 			<Scroller
@@ -1105,25 +1138,35 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 				<div
 					style={{
 						backgroundColor: '#444',
-						width: ri.scaleToRem(4800)
+						width: ri.scaleToRem(1200)
 					}}
 				>
-					<Item>The second nested scroller.</Item>
+					<br />
+					<Item>&lt;The second nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the lower scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the lower horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the second nested scroller.&gt;</Item>
 				</div>
 			</Scroller>
 		</div>
