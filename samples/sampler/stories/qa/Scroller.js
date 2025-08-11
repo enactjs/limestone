@@ -1071,7 +1071,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 		scrollMode={args['scrollMode']}
 		verticalScrollbar="visible"
 	>
-		<div style={{display: 'flex', width: ri.scaleToRem(4800), height: ri.scaleToRem(789)}}>
+		<div style={{display: 'flex', width: ri.scaleToRem(4800), height: ri.scaleToRem(798)}}>
 			<Scroller
 				direction={args['direction']}
 				focusableScrollbar={args['focusableScrollbar']}
