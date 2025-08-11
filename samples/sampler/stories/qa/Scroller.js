@@ -1071,7 +1071,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 		scrollMode={args['scrollMode']}
 		verticalScrollbar="visible"
 	>
-		<div style={{display: 'flex', width: ri.scaleToRem(1200), height: ri.scaleToRem(200)}}>
+		<div style={{display: 'flex', width: ri.scaleToRem(4800), height: ri.scaleToRem(789)}}>
 			<Scroller
 				direction={args['direction']}
 				focusableScrollbar={args['focusableScrollbar']}
@@ -1089,7 +1089,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 				<div
 					style={{
 						backgroundColor: '#444',
-						width: ri.scaleToRem(1200)
+						width: ri.scaleToRem(4800)
 					}}
 				>
 					<br />
@@ -1138,7 +1138,7 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 				<div
 					style={{
 						backgroundColor: '#444',
-						width: ri.scaleToRem(1200)
+						width: ri.scaleToRem(4800)
 					}}
 				>
 					<br />
