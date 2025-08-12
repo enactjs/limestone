@@ -18,14 +18,14 @@ describe('Change Spacing', function () {
 		await Page.backSpace();
 		await Page.numPad(0);
 		await Page.numPad(0);
-		await Page.spotlightUp();
+		await Page.spotlightLeft();
+		await Page.spotlightLeft();
 
 		// Step 3-1 Verify: The gap between items grow bigger. The spacing should be 100 for FHD.
 		expect((await Page.itemSpacing(0, 1)).width).toBe(100);
 		expect((await Page.itemSpacing(0, 4)).height).toBe(100);
 
 		// Step 4: Knobs > VirtualGridList > spacing > 2
-		await Page.spotlightDown();
 		await Page.spotlightRight();
 		await Page.spotlightSelect();
 		await Page.backSpace();
