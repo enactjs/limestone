@@ -128,7 +128,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(1);
-			await Page.delay(500);
+			await Page.delay(200);
 
 			const expected = 'Button A';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -144,7 +144,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(2);
-			await Page.delay(500);
+			await Page.delay(200);
 
 			const expected = 'OK';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -164,6 +164,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(3);
+			await Page.delay(200);
 
 			expect(await (await wizardPanels.prevButton()).isFocused()).toBe(true);
 		});
@@ -184,6 +185,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(4);
+			await Page.delay(200);
 
 			const expected = 'Second';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -199,6 +201,7 @@ describe('WizardPanels', function () {
 			// Step 3 Verify: View 2 page content displays and Spotlight is on Button A button
 			await wizardPanels.waitForLeave(1);
 			expect(await wizardPanels.view2.isExisting()).toBe(true);
+			await Page.delay(200);
 			const firstActual = await browser.execute(getFocusedTextContent);
 			expect(firstActual).toBe('Button A');
 
@@ -208,6 +211,7 @@ describe('WizardPanels', function () {
 			// Step 4 Verify: View 1 page content displays and Spotlight is on OK button
 			await wizardPanels.waitForLeave(2);
 			expect(await wizardPanels.view1.isExisting()).toBe(true);
+			await Page.delay(200);
 			const secondActual = await browser.execute(getFocusedTextContent);
 			expect(secondActual).toBe('OK');
 		});
