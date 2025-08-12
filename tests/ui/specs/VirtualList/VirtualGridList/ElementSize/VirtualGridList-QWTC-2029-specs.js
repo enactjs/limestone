@@ -20,6 +20,7 @@ describe('Change Spacing', function () {
 		await Page.numPad(0);
 		await Page.spotlightLeft();
 		await Page.spotlightLeft();
+		await Page.delay(100);
 
 		// Step 3-1 Verify: The gap between items grow bigger. The spacing should be 100 for FHD.
 		expect((await Page.itemSpacing(0, 1)).width).toBe(100);
@@ -32,6 +33,7 @@ describe('Change Spacing', function () {
 		await Page.backSpace();
 		await Page.backKey();
 		await Page.spotlightRight();
+		await Page.delay(100);
 
 		// Step 4-1 Verify: The gap between items grow shrink. The spacing should be 1 for FHD.
 		expect((await Page.itemSpacing(0, 1)).width).toBe(1);
