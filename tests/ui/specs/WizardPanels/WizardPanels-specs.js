@@ -16,6 +16,7 @@ describe('WizardPanels', function () {
 			it('should select contents', async function () {
 				await wizardPanels.focusNextButton();
 				await Page.spotlightSelect();
+				await Page.delay(200);
 
 				const expected = 'Button A';
 				const actual = await browser.execute(getFocusedTextContent);
@@ -33,6 +34,7 @@ describe('WizardPanels', function () {
 		it('should navigate between views', async function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
+			await Page.delay(500);
 
 			await wizardPanels.waitForLeave(1);
 			expect(await wizardPanels.view2.isExisting()).toBe(true);
@@ -126,6 +128,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(1);
+			await Page.delay(500);
 
 			const expected = 'Button A';
 			const actual = await browser.execute(getFocusedTextContent);
@@ -141,6 +144,7 @@ describe('WizardPanels', function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
 			await wizardPanels.waitForLeave(2);
+			await Page.delay(500);
 
 			const expected = 'OK';
 			const actual = await browser.execute(getFocusedTextContent);
