@@ -27,8 +27,8 @@ const prop = {
 	color: ['', 'red', 'green', 'yellow', 'blue'],
 	focusEffect: ['expand', 'static'],
 	longText: {
-		'A Loooooooooooooooooog Button': 'A Loooooooooooooooooog Button',
-		'BUTTON   WITH   EXTRA   SPACES': 'BUTTON   WITH   EXTRA   SPACES'
+		'A Loooooooooooooooooooooooog Button': 'A Loooooooooooooooooooooooog Button',
+		'BUTTON   WITH   EXTRA   SPACES BUTTON   WITH   EXTRA   SPACES': 'BUTTON   WITH   EXTRA   SPACES BUTTON   WITH   EXTRA   SPACES'
 	},
 	tallText: {
 		'ฟิ ไั ஒ து': 'ฟิ้ ไั ஒ து',
@@ -66,7 +66,7 @@ select('icon', WithLongText, prop.icons, Config);
 boolean('minWidth', WithLongText, Config, true);
 boolean('selected', WithLongText, Config);
 select('size', WithLongText, ['small', 'large'], Config);
-select('value', WithLongText, prop.longText, Config, 'A Loooooooooooooooooog Button');
+select('value', WithLongText, prop.longText, Config, 'A Loooooooooooooooooooooooog Button');
 
 WithLongText.storyName = 'with long text';
 
@@ -356,3 +356,16 @@ KitchenSink.parameters = {
 		hideNoControlsWarning: true
 	}
 };
+
+export const WithColoredIcon = (args) => (
+	<Button
+		css={css}
+		icon={args['icon']}
+	>
+		Click me!
+	</Button>
+);
+
+select('icon', WithColoredIcon, prop.icons, Config, 'heart');
+
+WithColoredIcon.storyName = 'with colored icon';

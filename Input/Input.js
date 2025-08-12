@@ -1,11 +1,12 @@
 import {handle, forKey, forward, forwardCustom} from '@enact/core/handle';
 import kind from '@enact/core/kind';
-import {extractAriaProps} from '@enact/core/util';
+import {extractAriaProps, mapAndFilterChildren} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import {useAnnounce} from '@enact/ui/AnnounceDecorator';
 import Changeable from '@enact/ui/Changeable';
 import Pure from '@enact/ui/internal/Pure';
+import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
 import Layout, {Cell} from '@enact/ui/Layout';
 import classnames from 'classnames';
@@ -56,6 +57,19 @@ const InputPopupBase = kind({
 		 * @public
 		 */
 		backButtonAriaLabel: PropTypes.string,
+
+		/**
+		 * Buttons to be included under the component.
+		 *
+		 * Typically, up to 3 buttons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
+		buttons: PropTypes.oneOfType([
+			PropTypes.element,
+			PropTypes.arrayOf(PropTypes.element)
+		]),
 
 		/**
 		 * Customize component style
@@ -334,6 +348,13 @@ const InputPopupBase = kind({
 	},
 
 	computed: {
+		buttons: ({buttons}) => {
+			return mapAndFilterChildren(buttons, (button, index) => (
+				<Cell key={`button${index}`} shrink>
+					{button}
+				</Cell>
+			)) || null;
+		},
 		maxLength: ({length, maxLength}) => (length || maxLength),
 		minLength: ({length, maxLength, minLength}) => {
 			if (length) return length;
@@ -341,16 +362,19 @@ const InputPopupBase = kind({
 			if (maxLength != null) return maxLength;
 			return DEFAULT_LENGTH;
 		},
-		popupClassName: ({popupType, type, styler}) => styler.join('popup', popupType, type)
+		popupClassName: ({popupType, type, styler}) => styler.join('inputPopup', popupType, type),
+		inputAreaClassName: ({buttons, styler}) => styler.join('inputArea', buttons ? 'withButtons' : '')
 	},
 
 	render: ({
 		announce,
 		backButtonAriaLabel,
+		buttons,
 		children,
 		css,
 		defaultValue,
 		disabled,
+		inputAreaClassName,
 		inputFieldSpotlightId,
 		noBackButton,
 		noSubmitButton,
@@ -375,18 +399,18 @@ const InputPopupBase = kind({
 	}) => {
 		const id = `inputPopup`;
 		const ariaLabelledBy = popupAriaLabel ? null : `${id}_title ${id}_subtitle`;
-		const inputProps = extractInputFieldProps({disabled, ...rest});
+		const {value, ...inputProps} = extractInputFieldProps({disabled, ...rest});
 		const numberMode = (numberInputField !== 'field') && (type === 'number' || type === 'passwordnumber');
 		// Set up the back button
 		const backButton = (!noBackButton ? (
 			<Button
 				aria-label={backButtonAriaLabel == null ? $L('go to previous') : backButtonAriaLabel}
 				className={css.back}
+				css={css}
 				disabled={disabled}
 				icon="arrowhookleft"
 				iconFlip="auto"
 				onClick={onClose}
-				size="small"
 			/>
 		) : null);
 		const heading = <Heading id={`${id}_title`} size="title" marqueeOn="render" alignment="center" className={css.title}>{title}</Heading>;
@@ -401,6 +425,7 @@ const InputPopupBase = kind({
 					id={id}
 					aria-label={popupAriaLabel}
 					aria-labelledby={ariaLabelledBy}
+					css={css}
 					onClose={onClose}
 					onShow={onShow}
 					position={popupType === 'fullscreen' ? 'fullscreen' : 'center'}
@@ -411,7 +436,7 @@ const InputPopupBase = kind({
 					role="region"
 				>
 					{popupType === 'fullscreen' ? backButton : null}
-					<Layout orientation="vertical" align={`center ${numberMode ? 'space-between' : ''}`} className={css.body}>
+					<Layout orientation="vertical" className={css.inputBody}>
 						<Cell shrink className={css.titles}>
 							{popupType === 'fullscreen' ?
 								heading :
@@ -422,14 +447,15 @@ const InputPopupBase = kind({
 							}
 							<Heading id={`${id}_subtitle`} size="subtitle" marqueeOn="render" alignment="center" className={css.subtitle}>{subtitle}</Heading>
 						</Cell>
-						<Cell shrink className={css.inputArea}>
+						<Cell shrink className={inputAreaClassName}>
 							{numberMode ?
 								<NumberField
 									{...inputProps}
 									announce={announce}
+									buttonSize={popupType === 'fullscreen' ? 'large' : 'small'}
 									maxLength={limitNumberLength(popupType, maxLength)}
 									minLength={limitNumberLength(popupType, minLength)}
-									defaultValue={defaultValue}
+									defaultValue={defaultValue || value}
 									onBeforeChange={onBeforeChange}
 									onComplete={onNumberComplete}
 									showKeypad
@@ -446,15 +472,22 @@ const InputPopupBase = kind({
 									size={size}
 									autoFocus
 									type={type}
-									defaultValue={defaultValue}
+									defaultValue={defaultValue || value}
 									placeholder={placeholder}
 									onBeforeChange={onBeforeChange}
 									onKeyDown={onInputKeyDown}
 									spotlightId={inputFieldSpotlightId}
 								/>
 							}
+							<Cell shrink className={css.contentArea}>
+								{children}
+							</Cell>
 						</Cell>
-						<Cell shrink className={css.buttonArea}>{children}</Cell>
+						{buttons ?
+							<Cell shrink className={css.buttonArea}>
+								{buttons}
+							</Cell> : null
+						}
 					</Layout>
 				</Popup>
 			</div>
@@ -613,6 +646,7 @@ const AnnounceDecorator = Wrapped => (function AnnounceDecorator (props) {
 const InputDecorator = compose(
 	Pure,
 	Toggleable({activate: 'onOpenPopup', deactivate: 'onClose', prop: 'open'}),
+	Slottable({slots: ['buttons']}),
 	Changeable({change: 'onComplete'}),
 	AnnounceDecorator,
 	Skinnable

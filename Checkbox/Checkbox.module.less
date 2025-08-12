@@ -1,8 +1,9 @@
 // Checkbox.module.less
 //
-@import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/skin.less";
+@import "../styles/variables.less";
 
 // Assign the colors all in one place
 .checkbox-colors (@color, @bg, @border) {
@@ -40,19 +41,19 @@
 @checkbox-resting: {
 	.checkbox-states(
 		.checkbox-colors(
-			@lime-checkbox-text-color,
-			@lime-checkbox-bg-color,
+			@lime-checkbox-icon-color,
+			@lime-checkbox-container-color,
 			@lime-checkbox-border-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-selected-text-color,
-			@lime-checkbox-selected-bg-color,
-			@lime-checkbox-selected-border-color
+			@lime-checkbox-icon-selected-color,
+			@lime-checkbox-container-selected-color,
+			@lime-checkbox-border-selected-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-indeterminate-text-color,
-			@lime-checkbox-indeterminate-bg-color,
-			@lime-checkbox-indeterminate-border-color
+			@lime-checkbox-icon-indeterminate-color,
+			@lime-checkbox-container-indeterminate-color,
+			@lime-checkbox-border-indeterminate-color
 		);
 	);
 };
@@ -63,23 +64,23 @@
 		// Gathered rules into a rules-set to include the .bg selector in the resting block
 		{
 			.checkbox-colors(
-				@lime-checkbox-focus-text-color,
-				@lime-checkbox-focus-bg-color,
-				@lime-checkbox-focus-border-color
+				@lime-checkbox-icon-focused-color,
+				@lime-checkbox-container-focused-color,
+				@lime-checkbox-border-focused-color
 			);
 			.bg {
 				.lime-spotlight-focus-bg-colors();
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-selected-focus-text-color,
-			@lime-checkbox-selected-focus-bg-color,
-			@lime-checkbox-selected-focus-border-color
+			@lime-checkbox-icon-selected-focused-color,
+			@lime-checkbox-container-selected-focused-color,
+			@lime-checkbox-border-selected-focused-color
 		);
 		.checkbox-colors(
-			@lime-checkbox-indeterminate-focus-text-color,
-			@lime-checkbox-indeterminate-focus-bg-color,
-			@lime-checkbox-indeterminate-focus-border-color
+			@lime-checkbox-icon-indeterminate-focused-color,
+			@lime-checkbox-container-indeterminate-focused-color,
+			@lime-checkbox-border-indeterminate-focused-color
 		);
 	);
 };
@@ -91,9 +92,9 @@
 			// No custom rules for this state
 		};
 		.checkbox-colors(
-			@lime-checkbox-disabled-selected-text-color,
-			@lime-checkbox-disabled-selected-bg-color,
-			@lime-checkbox-disabled-selected-border-color
+			@lime-checkbox-icon-selected-disabled-color,
+			@lime-checkbox-container-selected-disabled-color,
+			@lime-checkbox-border-selected-disabled-color
 		);
 		{
 			// No custom rules for this state
@@ -107,17 +108,19 @@
 		{
 			// No custom rules for this state
 			.bg {
-				background-color: @lime-checkbox-standalone-bg-disabled-focus-bg-color;
+				background-color: @lime-checkbox-container-standalone-disabled-focused-color;
 			}
 		};
 		.checkbox-colors(
-			@lime-checkbox-focus-disabled-selected-text-color,
-			@lime-checkbox-focus-disabled-selected-bg-color,
-			@lime-checkbox-focus-disabled-selected-border-color
+			@lime-checkbox-icon-selected-disabled-focused-color,
+			@lime-checkbox-container-selected-disabled-focused-color,
+			@lime-checkbox-border-selected-disabled-focused-color
 		);
-		{
-			// No custom rules for this state
-		};
+		.checkbox-colors(
+			@lime-checkbox-icon-indeterminate-focused-color,
+			@lime-checkbox-container-indeterminate-focused-color,
+			@lime-checkbox-border-indeterminate-focused-color
+		);
 	);
 };
 
@@ -132,6 +135,10 @@
 		border-radius: @lime-checkbox-border-radius;
 		position: relative;
 		text-align: center;
+	}
+
+	&.selected .icon {
+		.lime-check-motion();
 	}
 
 	//
@@ -182,14 +189,16 @@
 		// Disabled
 		.lime-disabled({
 			.icon {
-				.lime-disabled-focus-content-colors();
+				.lime-disabled-colors();
 			}
-
-			@checkbox-disabled-resting();
 
 			// Disabled + Focus
 			.focus({
 				@checkbox-disabled-focus();
+
+				.icon {
+					.lime-disabled-focus-content-colors();
+				}
 			});
 		});
 	});
@@ -215,7 +224,7 @@
 
 .applySkins({
 	.disabled({
-		& .checkbox {
+		&.checkbox {
 			@checkbox-disabled-resting();
 		}
 	});

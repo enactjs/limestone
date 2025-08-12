@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import LocaleSwitch from '../LocaleSwitch';
 import ScrollModeSwitch from '../ScrollModeSwitch';
 
+import styles from './Controls.module.less';
+
 const Controls = ({handleFocusableScrollbar, handleHeight, handleScrollMode, handleWidth, height, nativeScroll, width}) => {
 	const inputWidth = {width: '5em'};
 
@@ -13,11 +15,11 @@ const Controls = ({handleFocusableScrollbar, handleHeight, handleScrollMode, han
 		<Row style={{direction: 'ltr'}}>
 			<Cell>
 				<label>height:</label>
-				<Input size="small" onChange={handleHeight} style={inputWidth} type="number" value={height} />
+				<Input css={styles} size="small" onChange={handleHeight} style={inputWidth} type="number" value={height} />
 			</Cell>
 			<Cell>
 				<label>width:</label>
-				<Input size="small" onChange={handleWidth} style={inputWidth} type="number" value={width} />
+				<Input css={styles} size="small" onChange={handleWidth} style={inputWidth} type="number" value={width} />
 			</Cell>
 			<Cell
 				component={CheckboxItem}

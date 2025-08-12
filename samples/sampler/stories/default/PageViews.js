@@ -7,6 +7,11 @@ import {Cell, Row, Column} from '@enact/ui/Layout';
 PageViews.displayName = 'PageViews';
 
 const Config = mergeComponentMetadata('PageViews', PageViews);
+Config.defaultProps = {
+	pageIndicatorPosition: 'bottom',
+	pageIndicatorType: 'dot'
+};
+
 const propOptions = {
 	pageIndicatorPosition: ['bottom', 'top'],
 	pageIndicatorType: ['dot', 'number']

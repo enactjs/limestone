@@ -1,5 +1,6 @@
 // Switch.module.less
 //
+@import "../styles/motion-mixins.less";
 @import "../styles/mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
@@ -18,19 +19,22 @@
 	}
 
 	.icon {
+		border-radius: 50%;
 		visibility: visible;
-		left: 0;
+		height: @lime-switch-icon-height;
 		width: @lime-switch-icon-height;
-		height: inherit;
 		font-size: @lime-switch-icon-font-size;
 		line-height: @lime-switch-icon-line-height;
 		margin: 0;
+		position: absolute;
 		vertical-align: top;
+		top: @lime-switch-icon-top;
+		left: @lime-switch-icon-top;
 	}
 
 	&.selected {
 		.icon {
-			left: (@lime-switch-width - @lime-switch-height);
+			left: (@lime-switch-width - @lime-switch-icon-height - @lime-switch-icon-top);
 		}
 	}
 
@@ -40,7 +44,11 @@
 		}
 
 		.icon {
-			transition: left 200ms, color 200ms;
+			transition: left 200ms, background-color 200ms;
+		}
+
+		&.selected .icon {
+			.lime-toggle-motion(@lime-switch-icon-top);
 		}
 	}
 
@@ -50,7 +58,7 @@
 
 		.bg {
 			position: absolute;
-			.position(@lime-switch-spottable-position-top-bottom, @lime-switch-spottable-position-left-right);
+			.position(@lime-switch-spottable-position);
 			z-index: -1;
 		}
 	});
@@ -58,32 +66,31 @@
 	// Skin colors
 	.applySkins({
 		.client {
-			background-color: @lime-switch-bg-color;
+			background-color: @lime-switch-container-inactive-color;
 		}
 
 		.icon {
-			background-color: transparent;
-			color: @lime-switch-color;
+			background-color: @lime-switch-handle-inactive-color;
 		}
 
 		&.selected {
 			.client {
-				background-color: @lime-switch-selected-bg-color;
+				background-color: @lime-switch-container-active-color;
 			}
 
 			.icon {
-				color: @lime-switch-selected-color;
+				background-color: @lime-switch-handle-active-color;
 			}
 		}
 
 		.disabled({
 			&.selected {
 				.client {
-					background-color: @lime-switch-disabled-selected-bg-color;
+					background-color: @lime-switch-container-active-disabled-color;
 				}
 
 				.icon {
-					color: @lime-switch-disabled-selected-color;
+					background-color: @lime-switch-handle-active-disabled-color;
 				}
 			}
 		});
@@ -104,12 +111,12 @@
 			}
 
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-handle-inactive-focused-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-handle-active-focused-color;
 				}
 			}
 		});
@@ -136,7 +143,6 @@
 				}
 			});
 		});
-
 	});
 }
 
@@ -145,12 +151,12 @@
 	.focus({
 		.switch {
 			.icon {
-				color: @lime-switch-focus-color;
+				background-color: @lime-switch-handle-inactive-focused-color;
 			}
 
 			&.selected {
 				.icon {
-					color: @lime-switch-selected-focus-color;
+					background-color: @lime-switch-handle-active-focused-color;
 				}
 			}
 		}
@@ -162,11 +168,11 @@
 		.switch {
 			&.selected {
 				.client {
-					background-color: @lime-switch-disabled-selected-bg-color;
+					background-color: @lime-switch-container-active-disabled-color;
 				}
 
 				.icon {
-					color: @lime-switch-disabled-selected-color;
+					background-color: @lime-switch-handle-active-disabled-color;
 				}
 			}
 		}

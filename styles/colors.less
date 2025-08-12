@@ -7,116 +7,28 @@
 
 // Remote button colors
 // ---------------------------------------
-@lime-remote-button-red-color:     #e1777e; // #ff6d78; // #da3c3c; // #e71b1c;
-@lime-remote-button-green-color:   #7fd563; // #6ff467; // #21c171; // #339966;
-@lime-remote-button-yellow-color:  #d3b85f; // #ffc600; // #dac139; // #fddb24;
-@lime-remote-button-blue-color:    #5185c1; // #0084ff; // #5677d0; // #4764b4;
-
+@lime-colorkey-icon-red:     #ff6d78;
+@lime-colorkey-icon-green:   #93d371;
+@lime-colorkey-icon-yellow:  #ffc600;
+@lime-colorkey-icon-blue:    #0084ff;
 
 // UI Conceptual Colors
 // ---------------------------------------
 
-// common colors
-@lime-bg-color: var(--lime-bg-color, #000000);
+@lime-overlay-outline-color: var(--semantic-color-stroke-overlay-default);
+@lime-overlay-outline-style: solid;
+@lime-overlay-shadow: 0 36px 48px @lime-shadow-color;
 
-@lime-text-color: var(--lime-text-color, #ffffff); // #ffffff
-@lime-text-sub-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.3)";
-@lime-shadow-base-color: var(--lime-shadow-color, #000000);
-@lime-shadow-color: ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.3)";
-@lime-component-text-color: var(--lime-component-text-color, #ffffff);
-@lime-component-text-sub-color: var(--lime-component-text-sub-color, #abaeb3);
-@lime-component-bg-color: var(--lime-component-bg-color, #5b5d66);
-@lime-component-active-indicator-bg-color: var(--lime-component-active-indicator-bg-color, #e6e6e6);
-@lime-component-inactive-indicator-bg-color: var(--lime-component-inactive-indicator-bg-color, #9da2a7);
-
-@lime-focus-text-color: var(--lime-focus-text-color, #ffffff);
-@lime-focus-bg-color: var(--lime-focus-bg-color, #ffffff);
-@lime-component-focus-text-color: var(--lime-component-focus-text-color, #262626);
-@lime-component-focus-active-indicator-bg-color: var(--lime-component-focus-active-indicator-bg-color, #4c5059);
-@lime-component-focus-inactive-indicator-bg-color: var(--lime-component-focus-inactive-indicator-bg-color, #b8b9bb);
-
-@lime-selected-color: var(--lime-selected-color, #e6e6e6);
-@lime-selected-text-color: var(--lime-selected-text-color, @lime-text-color);
-@lime-selected-bg-color: var(--lime-selected-bg-color, #26282b);
-
-//@lime-selected-focus-text-color: var(--lime-selected-focus-text-color);
-//@lime-selected-focus-bg-color: var(--lime-selected-focus-bg-color);
-
-//@lime-disabled-text-color: var(--lime-disabled-text-color);
-//@lime-disabled-bg-color: var(--lime-disabled-bg-color);
-
-//@lime-disabled-focus-text-color: var(--lime-disabled-focus-text-color);
-@lime-disabled-focus-bg-color: var(--lime-disabled-focus-bg-color, #b3b3b3);
-
-@lime-disabled-selected-color: var(--lime-disabled-selected-color, #4c5059);
-//@lime-disabled-selected-text-color: var(--lime-disabled-selected-text-color);
-@lime-disabled-selected-bg-color: var(--lime-disabled-selected-bg-color, #e6e6e6);
-
-@lime-disabled-selected-focus-color: var(--lime-disabled-selected-focus-color, @lime-disabled-selected-bg-color);
-//@lime-disabled-selected-focus-text-color: var(--lime-disabled-selected-focus-text-color);
-@lime-disabled-selected-focus-bg-color: var(--lime-disabled-selected-focus-bg-color, @lime-disabled-selected-color);
-
-//@lime-fullscreen-text-color: var(--lime-fullscreen-text-color);
-@lime-fullscreen-bg-color: var(--lime-fullscreen-bg-color, @lime-bg-color);
-
-//@lime-overlay-text-color: var(--lime-overlay-text-color);
-@lime-overlay-text-shadow: 0 4px 4px ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.75)";
-@lime-overlay-bg-color: var(--lime-overlay-bg-color, #575e66);
-@lime-overlay-outline-color: var(--lime-overlay-outline-color, transparent);
-@lime-overlay-outline-style: var(--lime-overlay-outline-style, none);
-
-@lime-selection-color: var(--lime-selection-color, #4c5059);
-@lime-selection-bg-color: var(--lime-selection-bg-color, #3399ff);
-
-@lime-toggle-off-color: var(--lime-toggle-off-color, #aeaeae);
-@lime-toggle-off-bg-color: var(--lime-toggle-off-bg-color, #777777);
-@lime-toggle-on-color: var(--lime-toggle-on-color, @lime-selected-color);
-@lime-toggle-on-bg-color: var(--lime-toggle-on-bg-color, #30ad6b);
-
-@lime-progress-color: var(--lime-progress-color, #e6e6e6);
-@lime-progress-bg-color: var(--lime-progress-bg-color, #373a41);
-@lime-progress-bg-color-opacity: var(--lime-progress-bg-color-opacity, 1);
-@lime-progress-highlighted-color: var(--lime-progress-highlighted-color, #ffffff);
-@lime-progress-slider-color: var(--lime-progress-slider-color, #8d9298);
-
-@lime-invalid-color: #ff0000;
-@lime-invalid-sub-color: #fb5656;
-
-// component colors
-@lime-checkbox-color: var(--lime-checkbox-color, @lime-text-color);
-@lime-checkbox-disabled-selected-text-color: var(--lime-checkbox-disabled-selected-text-color, @lime-disabled-selected-color);
-@lime-formcheckboxitem-focus-text-color: var(--lime-formcheckboxitem-focus-text-color, @lime-focus-text-color);
-@lime-iconitem-border-color: var(--lime-iconitem-border-color, #707070);
-@lime-item-disabled-focus-bg-color: var(--lime-item-disabled-focus-bg-color, #e6e6e6);
-@lime-keyguide-bg-base-color: var(--lime-keyguide-bg-color, #373a41);
-@lime-keyguide-bg-color-opacity: var(--lime-keyguide-bg-color-opacity, 0.9);
-@lime-slider-disabled-knob-bg-color: var(--lime-slider-disabled-knob-bg-color, #666666);
-@lime-spinner-color: var(--lime-spinner-color, #ffffff);
-@lime-steps-pageindicator-bg-color: var(--lime-steps-pageindicator-bg-color, #6f7680);
+@lime-invalid-color: #ff0000; // TBD
+@lime-shadow-color: ~"color(from" var(--semantic-color-on-background-black) ~"srgb r g b / 0.35)";
 
 // Overlay Alert
 // ---------------------------------------
-
-// common colors
-@lime-alert-overlay-bg-color: var(--lime-alert-overlay-bg-color, #cacbcc);
-@lime-alert-overlay-bg-color-opacity: 0.95;
-@lime-alert-overlay-text-color: var(--lime-alert-overlay-text-color, #2e3239);
-@lime-alert-overlay-text-sub-color: var(--lime-alert-overlay-text-sub-color, #2e3239);
-@lime-alert-overlay-focus-text-color: var(--lime-alert-overlay-focus-text-color, #575e66);
-@lime-alert-overlay-disabled-selected-color: var(--lime-alert-overlay-disabled-selected-color, #ffffff);
-@lime-alert-overlay-disabled-selected-bg-color: var(--lime-alert-overlay-disabled-selected-bg-color, #788688);
-@lime-alert-overlay-disabled-selected-focus-color: var(--lime-alert-overlay-disabled-selected-focus-color, #e6e6e6);
-@lime-alert-overlay-disabled-selected-focus-bg-color: var(--lime-alert-overlay-disabled-selected-focus-bg-color, #4c5059);
-
-// component colors
-@lime-alert-overlay-progress-color: var(--lime-alert-overlay-progress-color, #373a41);
-@lime-alert-overlay-progress-bg-color: var(--lime-alert-overlay-progress-bg-color, #a1a1a1);
-@lime-alert-overlay-progress-bg-color-opacity: var(--lime-alert-overlay-progress-bg-color-opacity, 0.4);
-@lime-alert-overlay-checkbox-color: var(--lime-alert-overlay-checkbox-color, #858b92);
-@lime-alert-overlay-checkbox-disabled-selected-text-color: var(--lime-alert-overlay-checkbox-disabled-selected-text-color, #ffffff);
-@lime-alert-overlay-formcheckboxitem-focus-text-color: var(--lime-alert-overlay-formcheckboxitem-focus-text-color, @lime-alert-overlay-focus-text-color);
-@lime-alert-overlay-item-disabled-focus-bg-color: var(--lime-alert-overlay-item-disabled-focus-bg-color, #989ca2);
-
+@lime-alert-overlay-bg-color: var(--semantic-color-background-popup-default);
+@lime-alert-overlay-bg-color-opacity: 1;
+@lime-alert-overlay-label-color: var(--semantic-color-on-background-popup-main);
+@lime-alert-overlay-label-sub-color: var(--semantic-color-on-background-popup-sub);
+@lime-alert-overlay-outline-style: none;
 
 // Disabled Opacity
 // ---------------------------------------
@@ -126,12 +38,11 @@
 @lime-disabled-focus-content-color-opacity: 0.4;
 @lime-disabled-focus-bg-opacity: 0.585;  // This value brings the standard focus-background-color to the disabled+focus color specs
 
-
 // Spotlight and State
 // ---------------------------------------
-@lime-spotlight-text-color:           @lime-component-focus-text-color; // Used in color-mixins.less, QA Sampler Marquee
-@lime-spotlight-bg-color:             @lime-focus-bg-color; // If this changes, update Button bg-color mixins in color-mixins.less
-@lime-spotlight-focus-shadow:         0 36px 36px @lime-shadow-color; // Used in color-mixins.less
+@lime-spotlight-text-color:           var(--semantic-color-on-surface-main-focused); // Used in color-mixins.less, QA Sampler Marquee
+@lime-spotlight-bg-color:             var(--semantic-color-surface-default-focused); // If this changes, update Button bg-color mixins in color-mixins.less
+@lime-spotlight-focus-shadow:         0 24px 36px @lime-shadow-color; // Used in color-mixins.less
 
 
 // ---------------------------------------
@@ -140,81 +51,131 @@
 
 // ActionGuide
 // ---------------------------------------
-@lime-actionguide-icon-color: @lime-actionguide-label-color;
-@lime-actionguide-label-color: @lime-text-sub-color;
+@lime-actionguide-media-icon-color: var(--semantic-color-on-background-actionguide);
+@lime-actionguide-media-label-color: var(--semantic-color-on-background-actionguide);
 
 // Alert
 // ---------------------------------------
-@lime-alert-bg-color: @lime-fullscreen-bg-color;
-@lime-alert-overlay-shadow: 0 36px 36px @lime-shadow-color;
+@lime-alert-full-bg-color: var(--semantic-color-background-full-default);
+@lime-alert-overlay-shadow: 0 36px 48px 0 @lime-shadow-color;
 
 // Button
 // ---------------------------------------
-@lime-button-text-color: @lime-component-text-color;
-@lime-button-bg-color: @lime-component-bg-color;
-@lime-button-border-color: transparent;
-@lime-button-focus-bg-color: @lime-focus-bg-color;
-@lime-button-selected-text-color: @lime-component-text-color;
-@lime-button-selected-bg-color: @lime-selected-bg-color;
-@lime-button-focus-filter: none;
-@lime-button-selected-filter: none;
-@lime-button-transparent-text-color: @lime-text-color;
-@lime-button-focus-icononly-bg-color: '';
+@lime-button-fill-label-color: var(--semantic-color-on-surface-main);
+@lime-button-fill-container-color: var(--semantic-color-surface-default);
+@lime-button-fill-icon-color: var(--semantic-color-on-surface-main);
+@lime-button-fill-label-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-button-fill-container-focused-color: var(--semantic-color-surface-default-focused);
+@lime-button-fill-icon-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-fill-label-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-button-fill-container-selected-color: var(--semantic-color-surface-default-selected);
+@lime-button-fill-container-disabled-focused-color: var(--semantic-color-surface-default-disabled-focused);
+@lime-button-fill-icon-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-label-color: @lime-button-fill-label-color;
+@lime-button-outline-container-color: ~"color(from" var(--semantic-color-surface-default) ~"srgb r g b / 0.5)";
+@lime-button-outline-border-color: var(--semantic-color-stroke-button-outline);
+@lime-button-outline-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-outline-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-outline-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-outline-container-selected-color: ~"color(from" var(--semantic-color-surface-default-selected) ~"srgb r g b / 0.5)";
+@lime-button-outline-border-selected-color: var(--semantic-color-stroke-main-selected);
+@lime-button-transparent-label-color: var(--semantic-color-on-background-main);
+@lime-button-transparent-icon-color: @lime-button-transparent-label-color;
+@lime-button-transparent-label-focused-color: @lime-button-fill-label-focused-color;
+@lime-button-transparent-container-focused-color: @lime-button-fill-container-focused-color;
+@lime-button-transparent-icon-focused-color: @lime-button-fill-icon-focused-color;
+@lime-button-transparent-label-selected-color: @lime-button-fill-label-selected-color;
+@lime-button-transparent-container-selected-color: @lime-button-fill-container-selected-color;
+@lime-button-transparent-icon-selected-color: @lime-button-fill-icon-selected-color;
 @lime-button-text-shadow: @lime-header-text-shadow;
+@lime-button-filter-focused: none;
+@lime-button-filter-selected: none;
+@lime-button-icononly-bg-focused-color: '';
+
+// Card
+// ---------------------------------------
+@lime-card-captions-gradient-color: linear-gradient(180deg, transparent 0%, ~"color(from" var(--semantic-color-on-surface-black) ~"srgb r g b / 0.7)" 100%);
+@lime-card-container-color: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
+@lime-card-selection-icon-color: transparent;
+@lime-card-selection-icon-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-card-selection-container-selected-color: var(--semantic-color-surface-accent);
+@lime-card-border-selected-color: var(--semantic-color-stroke-main-selected);
+@lime-card-container-focused-color: var(--semantic-color-surface-default-focused);
+@lime-card-border-focused-color: var(--semantic-color-stroke-main-focused);
+@lime-card-resting-border-color: var(--semantic-color-stroke-main);
+@lime-card-scrim-color: ~"color(from" var(--semantic-color-scrim-default) ~"srgb r g b / 0.5)";
+@lime-card-label-main-color: var(--semantic-color-on-background-main);
+@lime-card-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-card-label-main-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-card-label-sub-focused-color: var(--semantic-color-on-surface-sub-focused);
 
 // Checkbox
 // ---------------------------------------
-@lime-checkbox-text-color: transparent;
-@lime-checkbox-bg-color: transparent;
-@lime-checkbox-border-color: @lime-checkbox-color;
-@lime-checkbox-disabled-selected-bg-color: @lime-disabled-selected-bg-color;
-@lime-checkbox-disabled-selected-border-color: @lime-checkbox-disabled-selected-bg-color;
-@lime-checkbox-focus-disabled-selected-text-color: @lime-disabled-selected-focus-color;
-@lime-checkbox-focus-disabled-selected-bg-color: @lime-disabled-selected-focus-bg-color;
-@lime-checkbox-focus-disabled-selected-border-color: @lime-checkbox-focus-disabled-selected-bg-color;
-@lime-checkbox-focus-text-color: @lime-checkbox-text-color;
-@lime-checkbox-focus-bg-color: @lime-checkbox-bg-color;
-@lime-checkbox-focus-border-color: @lime-component-focus-text-color;
-@lime-checkbox-selected-text-color: @lime-selected-color;
-@lime-checkbox-selected-bg-color: @lime-toggle-on-bg-color;
-@lime-checkbox-selected-border-color: @lime-checkbox-selected-bg-color;
-@lime-checkbox-selected-focus-text-color: @lime-checkbox-selected-text-color;
-@lime-checkbox-selected-focus-bg-color: @lime-checkbox-selected-bg-color;
-@lime-checkbox-selected-focus-border-color: @lime-checkbox-selected-focus-bg-color;
-@lime-checkbox-indeterminate-text-color: @lime-checkbox-border-color;
-@lime-checkbox-indeterminate-bg-color: @lime-checkbox-bg-color;
-@lime-checkbox-indeterminate-border-color: @lime-checkbox-border-color;
-@lime-checkbox-indeterminate-focus-text-color: @lime-component-focus-text-color;
-@lime-checkbox-indeterminate-focus-bg-color: @lime-checkbox-focus-bg-color;
-@lime-checkbox-indeterminate-focus-border-color: @lime-checkbox-focus-border-color;
-@lime-checkbox-standalone-bg-disabled-focus-bg-color: @lime-disabled-focus-bg-color;
+@lime-checkbox-container-color: transparent;
+@lime-checkbox-container-focused-color: @lime-checkbox-container-color;
+@lime-checkbox-container-selected-color: var(--semantic-color-surface-accent);
+@lime-checkbox-container-selected-focused-color: @lime-checkbox-container-selected-color;
+@lime-checkbox-container-selected-disabled-color: @lime-checkbox-container-selected-color;
+@lime-checkbox-container-selected-disabled-focused-color:  @lime-checkbox-container-selected-color;
+@lime-checkbox-container-indeterminate-color: @lime-checkbox-container-color;
+@lime-checkbox-container-indeterminate-focused-color: @lime-checkbox-container-indeterminate-color;
+@lime-checkbox-container-standalone-disabled-focused-color: @lime-item-container-disabled-focused-color;
+@lime-checkbox-icon-color: transparent;
+@lime-checkbox-icon-focused-color: @lime-checkbox-icon-color;
+@lime-checkbox-icon-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-checkbox-icon-selected-focused-color: @lime-checkbox-icon-selected-color;
+@lime-checkbox-icon-selected-disabled-color: @lime-checkbox-icon-selected-color;
+@lime-checkbox-icon-selected-disabled-focused-color: @lime-checkbox-icon-selected-color;
+@lime-checkbox-icon-indeterminate-color: @lime-checkbox-border-color;
+@lime-checkbox-icon-indeterminate-focused-color: @lime-checkbox-border-focused-color;
+@lime-checkbox-border-color: var(--semantic-color-stroke-selection-inactive);
+@lime-checkbox-border-focused-color: var(--semantic-color-stroke-selection-inactive-focused);
+@lime-checkbox-border-selected-color: @lime-checkbox-container-selected-color;
+@lime-checkbox-border-selected-focused-color: @lime-checkbox-border-selected-color;
+@lime-checkbox-border-selected-disabled-color: @lime-checkbox-border-selected-color;
+@lime-checkbox-border-selected-disabled-focused-color: @lime-checkbox-border-selected-color;
+@lime-checkbox-border-disabled-color: @lime-checkbox-border-color;
+@lime-checkbox-border-disabled-focused-color: @lime-checkbox-border-focused-color;
+@lime-checkbox-border-indeterminate-color: var(--semantic-color-stroke-selection-inactive);
+@lime-checkbox-border-indeterminate-focused-color: var(--semantic-color-stroke-selection-inactive-focused);
+@lime-checkbox-border-indeterminate-disabled-color: @lime-checkbox-border-indeterminate-color;
+@lime-checkbox-border-indeterminate-disabled-focused-color: @lime-checkbox-border-indeterminate-focused-color;
+
+// CheckboxItem
+// ---------------------------------------
+@lime-checkboxitem-item-container-selected-color: transparent;
 
 // ContextualPopup
 // ---------------------------------------
-@lime-contextualpopup-bg-color: @lime-overlay-bg-color;
-@lime-contextualpopup-shadow: 0 24px 60px @lime-shadow-color;
+@lime-contextualpopup-container-color: var(--semantic-color-surface-context-group);
+@lime-contextualpopup-border-color: var(--semantic-color-stroke-overlay-default);
+@lime-contextualpopup-shadow: 0px 36px 48px 0px @lime-shadow-color;
+
+// DateTime
+// ---------------------------------------
+@lime-datetime-label-color: @lime-heading-label-main-color;
 
 // Dropdown
 // ---------------------------------------
-@lime-dropdown-title-color: @lime-text-sub-color;
-@lime-dropdown-selected-text-color: @lime-selected-text-color;
+@lime-dropdown-label-selected-color: var(--semantic-color-on-surface-main-selected);
 
 // FixedPopupPanels
 // ---------------------------------------
-@lime-fixedpopuppanels-bg-color: @lime-popup-bg-color;
-@lime-fixedpopuppanels-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-fixedpopuppanels-shadow: 0 36px 36px @lime-shadow-color;
+@lime-fixedpopuppanels-background-color: var(--semantic-color-background-overlay-default);
 
 // FlexiblePopupPanels
 // ---------------------------------------
-@lime-flexiblepopuppanels-panel-bg-color: @lime-popup-bg-color;
+@lime-flexiblepopuppanels-panel-bg-color: var(--semantic-color-background-overlay-default);
 @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-flexiblepopuppanels-panel-shadow: 0 36px 36px @lime-shadow-color;
+@lime-flexiblepopuppanels-panel-shadow: 0 36px 48px 0 @lime-shadow-color;
 
 // FormCheckboxItem
 // ---------------------------------------
-@lime-formcheckboxitem-disabled-text-color: inherit;
-@lime-formcheckboxitem-disabled-focus-text-color: @lime-formcheckboxitem-disabled-text-color;
+@lime-formcheckboxitem-label-main-disabled-color: inherit;
+@lime-formcheckboxitem-label-main-disabled-focused-color: @lime-formcheckboxitem-label-main-disabled-color;
+@lime-formcheckboxitem-label-main-focused-color: var(--semantic-color-on-background-main);
+@lime-formcheckboxitem-label-sub-focused-color: var(--semantic-color-on-background-sub);
+@lime-formcheckboxitem-item-container-selected-color: transparent;
 
 // Header
 // ---------------------------------------
@@ -222,9 +183,10 @@
 
 // Heading
 // ---------------------------------------
-@lime-heading-text-color: @lime-text-color;
-@lime-heading-border-color: @lime-heading-text-color;
-@lime-heading-subtitle-text-color: @lime-text-sub-color;
+@lime-heading-label-main-color: var(--semantic-color-on-background-main);
+@lime-heading-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-heading-label-tiny-color: var(--semantic-color-on-background-heading);
+@lime-heading-border-color: @lime-heading-label-main-color;
 
 // HolePunchScrim
 // ---------------------------------------
@@ -232,209 +194,242 @@
 
 // IconItem
 // ---------------------------------------
-@lime-iconitem-disabled-opacity: 0.4;
-@lime-iconitem-label-color: @lime-text-color;
-@lime-iconitem-label-dark-color: @lime-component-focus-text-color;
+@lime-iconitem-disabled-opacity: 0.3;
+@lime-iconitem-inner-label-color: var(--semantic-color-on-surface-white);
+@lime-iconitem-inner-label-dark-color: var(--semantic-color-on-surface-main-focused);
+@lime-iconitem-outer-label-main-color: var(--semantic-color-on-background-main);
+@lime-iconitem-inner-border-color: var(--semantic-color-stroke-white);
+@lime-iconitem-inner-icon-color: var(--semantic-color-on-surface-white);
+@lime-iconitem-inner-container-color: var(--semantic-color-surface-default-placeholder);
+@lime-iconitem-focused-shadow: 0 36px 48px @lime-shadow-color;
 
 // ImageItem
 // ---------------------------------------
-@lime-imageitem-caption-color: @lime-text-color;
-@lime-imageitem-label-color: @lime-text-sub-color;
 @lime-imageitem-image-border-color: transparent;
+@lime-imageitem-label-main-color: var(--semantic-color-on-background-main);
+@lime-imageitem-label-main-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-imageitem-label-main-selected-color: var(--semantic-color-on-background-main);
+@lime-imageitem-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-imageitem-label-sub-focused-color: var(--semantic-color-on-surface-sub-focused);
+@lime-imageitem-label-sub-selected-color: var(--semantic-color-on-background-sub);
+@lime-imageitem-selected-image-border-color: ~"color(from" var(--semantic-color-on-surface-main-selected) ~"srgb r g b / 0.7)";
+@lime-imageitem-selection-container-color: transparent;
 @lime-imageitem-selection-icon-color: transparent;
-@lime-imageitem-selection-icon-bg-color: transparent;
-@lime-imageitem-focus-bg-shadow: 0 36px 36px @lime-shadow-color;
-@lime-imageitem-focus-selection-icon-color: @lime-imageitem-selection-icon-color;
-@lime-imageitem-focus-selection-icon-bg-color: @lime-imageitem-selection-icon-bg-color;
-@lime-imageitem-selected-selection-icon-color: @lime-selected-color;
-@lime-imageitem-selected-selection-icon-bg-color: @lime-toggle-on-bg-color;
-@lime-imageitem-selected-image-border-color: ~"color(from" @lime-selected-color ~"srgb r g b / 0.7)";
-@lime-imageitem-selected-focus-selection-icon-color: @lime-imageitem-selected-selection-icon-color;
-@lime-imageitem-selected-focus-selection-icon-bg-color: @lime-imageitem-selected-selection-icon-bg-color;
+@lime-imageitem-selection-container-selected-color: var(--semantic-color-surface-accent);
+@lime-imageitem-selection-icon-selected-color: var(--semantic-color-on-surface-white);
+@lime-imageitem-selection-container-focused-color: @lime-imageitem-selection-container-color;
+@lime-imageitem-selection-icon-focused-color: @lime-imageitem-selection-icon-color;
+@lime-imageitem-selection-container-selected-focused-color: @lime-imageitem-selection-container-selected-color;
+@lime-imageitem-selection-icon-selected-focused-color: @lime-imageitem-selection-icon-selected-color;
+@lime-imageitem-full-image-focused-shadow-color: 0 36px 36px @lime-shadow-color;
+@lime-imageitem-full-image-border-color: var(--semantic-color-stroke-main);
+@lime-imageitem-full-image-focused-border-color: var(--semantic-color-stroke-main-focused);
 
 // Input
 // ---------------------------------------
-@lime-input-fullscreen-background-color: @lime-fullscreen-bg-color;
-@lime-input-overlay-background-color: @lime-popup-bg-color;
-@lime-input-numbercell-background-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.2)";
+@lime-input-disabled-bg-focused-color: var(--semantic-color-surface-default-disabled-focused);
+@lime-input-fullscreen-background-color: var(--semantic-color-background-full-default);
+@lime-input-fullscreen-dot-color: var(--semantic-color-on-surface-input-field);
+@lime-input-overlay-background-color: var(--semantic-color-background-popup-default);
+@lime-input-overlay-dot-color: var(--semantic-color-on-surface-popup-input-field);
+@lime-input-dot-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-input-button-popup-transparent-icon-color: var(--semantic-color-on-background-popup-main);
+@lime-input-button-popup-transparent-label-color: var(--semantic-color-on-background-popup-main);
+@lime-input-header-popup-label-main-color: var(--semantic-color-on-background-popup-main);
+@lime-input-header-popup-label-sub-color: var(--semantic-color-on-background-popup-sub);
+@lime-input-inputfield-popup-container-color: var(--semantic-color-surface-popup-input-field);
+@lime-input-inputfield-popup-label-inactive-color: var(--semantic-color-on-surface-popup-input-field);
 @lime-input-invalid-tooltip-color: @lime-inputfield-invalid-tooltip-color;
-@lime-input-numberfield-disabled-color: ~"color(from" @lime-component-focus-text-color ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
+@lime-input-numberfield-disabled-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b /" @lime-disabled-focus-content-color-opacity ~")";
 @lime-input-numberfield-disabled-opacity: @lime-disabled-focus-bg-opacity;
+@lime-input-selection-color: #4c5059;
+@lime-input-selection-bg-color: #3399ff;
 
 // InputField
 // ---------------------------------------
-@lime-inputfield-text-color: @lime-text-color;
-@lime-inputfield-placeholder-color: ~"color(from" @lime-component-text-color ~"srgb r g b / 0.2)";
-@lime-inputfield-placeholder-active-color: ~"color(from" @lime-component-focus-text-color ~"srgb r g b / 0.4)";
-@lime-inputfield-focus-text-color: @lime-component-focus-text-color;
-@lime-inputfield-disabled-text-color: inherit;
+@lime-inputfield-container-color: var(--semantic-color-surface-input-field);
+@lime-inputfield-container-disabled-focused-color: @lime-input-disabled-bg-focused-color;
+@lime-inputfield-container-opacity: 0.3;
+@lime-inputfield-cursor-color: var(--semantic-color-on-surface-accent);
+@lime-inputfield-label-active-color: var(--semantic-color-on-surface-main-focused);
+@lime-inputfield-label-inactive-color: ~"color(from" var(--semantic-color-on-surface-input-field) ~"srgb r g b / 0.4)";
+@lime-inputfield-label-inactive-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.4)";
+@lime-inputfield-label-success-color: var(--semantic-color-on-surface-input-field);
 @lime-inputfield-invalid-color: @lime-invalid-color;
-@lime-inputfield-invalid-tooltip-color: @lime-invalid-sub-color;
+@lime-inputfield-invalid-tooltip-color: var(--semantic-color-on-background-default-error);
 
 // Item
 // ---------------------------------------
-@lime-item-label-color: @lime-text-sub-color;
-@lime-item-focus-label-color: inherit;
-@lime-item-focus-background: '';
+@lime-item-label-main-selected-color: var(--semantic-color-on-background-main);
+@lime-item-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-item-label-sub-focused-color: var(--semantic-color-on-surface-sub-focused);
+@lime-item-label-sub-selected-color: var(--semantic-color-on-background-sub);
+@lime-item-container-selected-color: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
+@lime-item-container-disabled-focused-color: var(--semantic-color-surface-default-disabled-focused);
 
 // KeyGuide
 // ---------------------------------------
-@lime-keyguide-bg-color: ~"color(from" @lime-keyguide-bg-base-color ~"srgb r g b /" @lime-keyguide-bg-color-opacity ~")";
-@lime-keyguide-item-color: @lime-text-sub-color;
-@lime-keyguide-colordot-red-color: @lime-remote-button-red-color;
-@lime-keyguide-colordot-green-color: @lime-remote-button-green-color;
-@lime-keyguide-colordot-yellow-color: @lime-remote-button-yellow-color;
-@lime-keyguide-colordot-blue-color: @lime-remote-button-blue-color;
+@lime-keyguide-container-color: var(--semantic-color-surface-overlay-default);
+@lime-keyguide-label-color: var(--semantic-color-on-surface-overlay-main);
+@lime-keyguide-icon-color: var(--semantic-color-on-surface-overlay-sub);
+@lime-keyguide-colordot-red-color: @lime-colorkey-icon-red;
+@lime-keyguide-colordot-green-color: @lime-colorkey-icon-green;
+@lime-keyguide-colordot-yellow-color: @lime-colorkey-icon-yellow;
+@lime-keyguide-colordot-blue-color: @lime-colorkey-icon-blue;
+@lime-keyguide-icon-shadow: 0px 36px 48px 0px rgba(0, 0, 0, 0.35);
+@lime-keyguide-image-shadow: 0px 24px 36px 0px rgba(0, 0, 0, 0.35);
 
 // MediaOverlay
 // ---------------------------------------
-@lime-mediaoverlay-caption-color: @lime-text-color;
-@lime-mediaoverlay-subtitle-color: @lime-text-sub-color;
+@lime-mediaoverlay-inner-label-main-color: var(--semantic-color-on-surface-main);
+@lime-mediaoverlay-outer-label-main-color: var(--semantic-color-on-background-main);
+@lime-mediaoverlay-outer-label-sub-color: var(--semantic-color-on-background-sub);
+@lime-mediaoverlay-inner-border-focused: var(--semantic-color-stroke-main-focused);
 
 // MediaPlayer
 // ---------------------------------------
-@lime-mediaplayer-slider-knob-color: @lime-progress-color;
-@lime-mediaplayer-slider-tooltip-text-shadow: @lime-overlay-text-shadow;
+@lime-mediaplayer-slider-knob-color: var(--semantic-color-on-surface-accent);
+@lime-mediaplayer-slider-tooltip-text-shadow: 0 4px 4px @lime-shadow-color;
 
 // MediaSlider
 // ---------------------------------------
-@lime-mediaslider-bar-bg-color: ~"color(from" @lime-progress-color ~"srgb r g b / 0.3)";
+@lime-mediaslider-bar-bg-color: @lime-slider-track-color;
 @lime-mediaslider-disabled-bar-opacity: 0.3;
-@lime-mediaslider-fill-bg-color: @lime-progress-color;
+@lime-mediaslider-fill-bg-color: var(--semantic-color-on-surface-accent);
+
+// PageViews
+// ---------------------------------------
+@lime-pageviews-indicator-icon-active: var(--semantic-color-surface-default-indicator);
+@lime-pageviews-indicator-icon-inactive: var(--semantic-color-surface-default-indicator);
+@lime-pageviews-bg-color: ~"color(from" var(--semantic-color-surface-default-group) ~"srgb r g b / 0.1)";
 
 // Picker
 // ---------------------------------------
-@lime-picker-text-color: @lime-text-color;
-@lime-picker-indicator-active-bg-color: @lime-component-active-indicator-bg-color;
-@lime-picker-indicator-active-focus-bg-color: @lime-component-focus-active-indicator-bg-color;
-@lime-picker-indicator-inactive-bg-color: @lime-component-inactive-indicator-bg-color;
-@lime-picker-indicator-inactive-focus-bg-color: @lime-component-focus-inactive-indicator-bg-color;
-@lime-picker-joined-horizontal-text-color: @lime-component-text-color;
-@lime-picker-joined-horizontal-bg-color: @lime-component-bg-color;
-@lime-picker-joined-text-color: @lime-text-color;
-@lime-picker-joined-incrementer-color: ~"color(from" @lime-component-text-sub-color ~"srgb r g b / 0.5)";
-@lime-picker-joined-focus-incrementer-color: @lime-component-focus-text-color;
-@lime-picker-joined-focus-disabled-text-color: @lime-picker-indicator-active-focus-bg-color;
-@lime-picker-joined-focus-disabled-indicator-bg-color: @lime-picker-indicator-active-focus-bg-color;
-@lime-picker-joined-focus-disabled-indicator-opacity: 0.9;
-@lime-picker-joined-focus-disabled-indicator-active-opacity: 1;
+@lime-picker-label-color: var(--semantic-color-on-background-main);
+@lime-picker-icon-color: var(--semantic-color-on-background-main);
+@lime-picker-container-color: var(--semantic-color-surface-default);
+@lime-picker-indicator-color: var(--semantic-color-on-surface-main);
+@lime-picker-indicator-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-picker-icon-focused-color: var(--semantic-color-on-surface-main-focused);
+@lime-picker-joined-label-color: var(--semantic-color-on-surface-main);
 
 // Popup
 // ---------------------------------------
-@lime-popup-bg-color: ~"color(from" @lime-overlay-bg-color ~"srgb r g b / 0.9)";
-@lime-popup-scrimtransparent-bg-color: ~"color(from" @lime-overlay-bg-color ~"srgb r g b / 0.95)";
+@lime-popup-bg-color: ~"color(from" var(--semantic-color-background-overlay-default) ~"srgb r g b / 0.9)";
+@lime-popup-scrimtransparent-bg-color: ~"color(from" var(--semantic-color-background-overlay-default) ~"srgb r g b / 0.95)";
 
 // PopupTabLayout
 // ---------------------------------------
-@lime-popuptablayout-bg-color: @lime-popup-bg-color;
-@lime-popuptablayout-scrimtransparent-bg-color: @lime-popup-scrimtransparent-bg-color;
-@lime-popuptablayout-shadow: 0 42px 24px @lime-shadow-color;
+@lime-popuptablayout-content-background-color: var(--semantic-color-background-overlay-default);
 
 // ProgressBar
 // ---------------------------------------
-@lime-progressbar-bar-bg-color: ~"color(from" @lime-progress-bg-color ~"srgb r g b /" @lime-progress-bg-color-opacity ~")";
-@lime-progressbar-load-bg-color: ~"color(from" @lime-progress-color ~"srgb r g b / 0.3)";
-@lime-progressbar-fill-bg-color: @lime-progress-color;
-@lime-progressbar-highlighted-fill-bg-color: @lime-progress-highlighted-color;
+@lime-progressbar-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-progressbar-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
+@lime-progressbar-track-active-color: var(--semantic-color-surface-accent);
+@lime-progressbar-track-active-focused-color: var(--semantic-color-surface-default-focused);
 
 // ProgressButton
 // ---------------------------------------
-@lime-progressbutton-bar-color: @lime-component-text-sub-color;
-@lime-progressbutton-focus-fill-color: @lime-component-focus-text-color;
+@lime-progressbutton-track-color: ~"color(from" var(--semantic-color-on-surface-white) ~"srgb r g b / 0.2)";
+@lime-progressbutton-track-active-color: var(--semantic-color-on-surface-main);
+@lime-progressbutton-track-focused-color: ~"color(from" var(--semantic-color-on-surface-main-focused) ~"srgb r g b / 0.2)";
+@lime-progressbutton-track-active-focused-color: var(--semantic-color-on-surface-main-focused);
 
 // RadioItem
 // ---------------------------------------
-@lime-radioitem-indicator-color: transparent;
-@lime-radioitem-indicator-bg-color: transparent;
-@lime-radioitem-indicator-border-color: @lime-text-color;
-@lime-radioitem-focus-indicator-color: transparent;
-@lime-radioitem-focus-indicator-bg-color: transparent;
-@lime-radioitem-focus-indicator-border-color: @lime-component-focus-text-color;
-@lime-radioitem-selected-indicator-color: @lime-selected-color;
-@lime-radioitem-selected-indicator-bg-color: @lime-toggle-on-bg-color;
-@lime-radioitem-selected-indicator-border-color: @lime-radioitem-selected-indicator-bg-color;
-@lime-radioitem-selected-focus-indicator-color: @lime-radioitem-selected-indicator-color;
-@lime-radioitem-selected-focus-indicator-bg-color:  @lime-radioitem-selected-indicator-bg-color;
-@lime-radioitem-selected-focus-indicator-border-color: @lime-radioitem-selected-focus-indicator-bg-color;
-@lime-radioitem-disabled-selected-color: @lime-disabled-selected-color;
-@lime-radioitem-disabled-selected-bg-color: @lime-disabled-selected-bg-color;
-@lime-radioitem-disabled-selected-border-color: @lime-radioitem-disabled-selected-bg-color;
-@lime-radioitem-focus-disabled-selected-color: @lime-disabled-selected-focus-color;
-@lime-radioitem-focus-disabled-selected-bg-color: @lime-disabled-selected-focus-bg-color;
-@lime-radioitem-focus-disabled-selected-border-color: @lime-radioitem-focus-disabled-selected-bg-color;
+@lime-radioitem-icon-color: transparent;
+@lime-radioitem-icon-focused-color: transparent;
+@lime-radioitem-icon-selected-color: var(--semantic-color-on-surface-main-selected);
+@lime-radioitem-icon-selected-focused-color: @lime-radioitem-icon-selected-color;
+@lime-radioitem-item-container-selected-color: transparent;
+@lime-radioitem-container-color: transparent;
+@lime-radioitem-container-focused-color: transparent;
+@lime-radioitem-container-selected-color: var(--semantic-color-surface-accent);
+@lime-radioitem-container-selected-focused-color: @lime-radioitem-container-selected-color;
+@lime-radioitem-border-color: var(--semantic-color-stroke-selection-inactive);
+@lime-radioitem-border-focused-color: var(--semantic-color-stroke-selection-inactive-focused);
+@lime-radioitem-border-selected-color: @lime-radioitem-container-selected-color;
+@lime-radioitem-border-selected-focused-color: @lime-radioitem-container-selected-focused-color;
 
 // Scrollbar
 // ---------------------------------------
-@lime-scrollbar-track-bg-color: ~"color(from" @lime-progress-bg-color ~"srgb r g b / 0.5)";
-@lime-scrollbar-thumb-bg-color: ~"color(from" @lime-progress-color ~"srgb r g b / 0.6)";
-@lime-scrollbar-thumb-focus-bg-color: @lime-focus-bg-color;
-@lime-scrollbar-thumb-focus-direction-indicator-color: ~"color(from" @lime-component-focus-text-color ~"srgb r g b / 0.4)";
+@lime-scroll-track-color: transparent;
+@lime-scroll-track-focused-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.5)" ;
+@lime-scroll-handle-color: var(--semantic-color-surface-scroll-handle);
+@lime-scroll-handle-focused-color: var(--semantic-color-surface-default-focused);
+@lime-scroll-arrow-color: var(--semantic-color-on-surface-accent);
 @lime-scrollbar-thumb-focus-box-shadow-color: @lime-shadow-color;
 
 // Scroller
 // ---------------------------------------
-@lime-scroll-focusablebody-focus-bg-color: ~"color(from" @lime-focus-bg-color ~"srgb r g b / 0.1)";
+@lime-scroll-focusablebody-focus-bg-color: ~"color(from" var(--semantic-color-surface-default-focused) ~"srgb r g b / 0.1)";
 
 // Slider
 // ---------------------------------------
-@lime-slider-bar-bg-color: @lime-progressbar-bar-bg-color;
-@lime-slider-load-bg-color: @lime-progressbar-load-bg-color;
-@lime-slider-fill-bg-color: @lime-progress-slider-color;
-@lime-slider-knob-bg-color: @lime-slider-fill-bg-color;
-@lime-slider-knob-border-color: transparent;
-@lime-slider-focus-bar-bg-color: @lime-slider-bar-bg-color;
-@lime-slider-focus-load-bg-color: @lime-slider-load-bg-color;
-@lime-slider-focus-fill-bg-color: @lime-focus-bg-color;
-@lime-slider-focus-knob-bg-color: @lime-slider-focus-fill-bg-color;
-@lime-slider-focus-knob-border-color: @lime-slider-knob-border-color;
-@lime-slider-focus-knob-shadow: 0 6px 12px ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.5)";
-@lime-slider-active-bar-bg-color: @lime-slider-focus-bar-bg-color;
-@lime-slider-active-load-bg-color: @lime-slider-focus-load-bg-color;
-@lime-slider-active-fill-bg-color: @lime-slider-focus-fill-bg-color;
-@lime-slider-disabled-bar-opacity: 0.4;
-@lime-slider-disabled-focus-knob-bg-color: @lime-slider-focus-knob-bg-color;
+@lime-slider-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-slider-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
+@lime-slider-track-active-color: var(--semantic-color-surface-accent);
+@lime-slider-track-active-focused-color: var(--semantic-color-surface-accent);
+@lime-slider-handle-color: var(--semantic-color-surface-default-handle);
+@lime-slider-handle-border-color: transparent;
+@lime-slider-handle-focused-border-color: @lime-slider-handle-border-color;
+@lime-slider-handle-focused-color: var(--semantic-color-surface-default-focused);
+@lime-slider-handle-disabled-color: transparent;
+@lime-slider-handle-focused-shadow: 0 24px 36px @lime-shadow-color;
+@lime-slider-disabled-bar-opacity: 0.3;
 
 // Spinner
 // ---------------------------------------
+@lime-spinner-color: var(--semantic-color-on-background-main);
 @lime-spinner-head-color: @lime-spinner-color;
 @lime-spinner-empty-color: ~"color(from" @lime-spinner-color ~"srgb r g b / 0.2)";
-@lime-spinner-bg-color: @lime-component-bg-color;
-@lime-spinner-text-color: @lime-component-text-color;
-@lime-spinner-text-shadow-color: @lime-shadow-color;
+@lime-spinner-bg-color: var(--semantic-color-surface-default);
+@lime-spinner-label-color: var(--semantic-color-on-background-sub);
 
 // Steps
 // ---------------------------------------
-@lime-steps-pageindicator-current-bg-color: @lime-component-text-color;
+@lime-steps-indicator-icon-active-color: var(--semantic-color-surface-default-indicator);
+@lime-steps-indicator-icon-inactive-color: ~"color(from" var(--semantic-color-surface-default-indicator) ~"srgb r g b / 0.4)";
+@lime-steps-step-icon-success-color: var(--semantic-color-on-background-main);
+@lime-steps-step-label-active-color: var(--semantic-color-on-background-accent);
+@lime-steps-step-label-inactive-color: var(--semantic-color-on-background-main);
 
 // Switch
 // ---------------------------------------
-@lime-switch-color: @lime-toggle-off-color;
-@lime-switch-bg-color: @lime-toggle-off-bg-color;
-@lime-switch-focus-color: @lime-switch-color;
-@lime-switch-selected-color: @lime-toggle-on-color;
-@lime-switch-selected-bg-color: @lime-toggle-on-bg-color;
-@lime-switch-selected-focus-color: @lime-switch-selected-color;
-@lime-switch-disabled-selected-color: @lime-switch-color;
-@lime-switch-disabled-selected-bg-color: @lime-switch-bg-color;
+@lime-switch-handle-inactive-color: var(--semantic-color-surface-toggle-handle);
+@lime-switch-container-inactive-color: var(--semantic-color-surface-toggle);
+@lime-switch-handle-inactive-focused-color: @lime-switch-handle-inactive-color;
+@lime-switch-handle-active-color: var(--semantic-color-on-surface-main);
+@lime-switch-container-active-color: var(--semantic-color-surface-toggle-active);
+@lime-switch-handle-active-focused-color: @lime-switch-handle-active-color;
+@lime-switch-container-active-disabled-color: var(--semantic-color-surface-toggle-active);
+@lime-switch-handle-active-disabled-color: var(--semantic-color-on-surface-main);
+
+// SwitchItem
+// ---------------------------------------
+@lime-switchitem-item-selected-container-color: transparent;
 
 // TabLayout
 // ---------------------------------------
-@lime-tablayout-tab-horizontal-border-color: ~"color(from" @lime-text-color ~"srgb r g b / 0.5)";
-@lime-tablayout-tab-horizontal-selected-border-color: @lime-selected-color;
+@lime-tablayout-tab-button-selected-color: var(--semantic-color-on-background-main);
+@lime-tablayout-tab-container-selected-color: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
+@lime-tablayout-tab-group-container-color: ~"color(from" var(--semantic-color-surface-default-group) ~"srgb r g b / 0.1)";
 
 // Tooltip
 // ---------------------------------------
-@lime-tooltip-bg-color:               @lime-focus-bg-color;
-@lime-tooltip-text-color:             @lime-component-focus-text-color;
-@lime-tooltip-shadow:                 0 18px 12px @lime-shadow-color;
+@lime-tooltip-container: var(--semantic-color-surface-white);
+@lime-tooltip-label: var(--semantic-color-on-surface-black);
+@lime-tooltip-shadow: 0 24px 36px @lime-shadow-color;
 
 // VideoPlayer
 // ---------------------------------------
-@lime-video-feedback-mini-bg-color: fade(#000000, 50%); // should be black
-@lime-video-feedback-mini-text-color: @lime-focus-text-color;
-@lime-video-slider-tooltip-color: @lime-text-color;
-@lime-video-slider-tooltip-thumbnail-border-color: @lime-text-color;
+@lime-video-slider-tooltip-color: var(--semantic-color-on-background-main);
+@lime-video-slider-tooltip-thumbnail-border-color: var(--semantic-color-on-background-main);
 @lime-video-player-bottom-bg-color: transparent;
-@lime-video-player-title-color: @lime-focus-text-color;
-@lime-video-player-title-text-shadow: 0 4px 4px ~"color(from" @lime-shadow-base-color ~"srgb r g b / 0.75)";
+@lime-video-player-label-color: var(--semantic-color-on-background-main);
 @lime-video-player-scrim-gradient-color: linear-gradient(180deg, transparent 0%, #000 100%);
+
+// VirtualList
+// ---------------------------------------
+@lime-virtuallist-container-color: ~"color(from" var(--semantic-color-surface-default-group) ~"srgb r g b / 0.1)";

@@ -7,6 +7,12 @@ const SimpleTab = (props) => (
 	</Tab>
 );
 
+const SimpleTabLargeText = (props) => (
+	<Tab {...props}>
+		<div>{`Large Text View ${props.title}`}</div>
+	</Tab>
+);
+
 const tabs = [
 	SimpleTab({title: 'One'}),
 	SimpleTab({title: 'Two'}),
@@ -16,6 +22,32 @@ const tabs = [
 	SimpleTab({title: 'Six'})
 ];
 
+const tabsLargeText = [
+	SimpleTabLargeText({title: 'One Large'}),
+	SimpleTabLargeText({title: 'Two Large'}),
+	SimpleTabLargeText({title: 'Three Large'}),
+	SimpleTabLargeText({title: 'Four Large'}),
+	SimpleTabLargeText({title: 'Five Large'}),
+	SimpleTabLargeText({title: 'Six Large'})
+];
+
+const tabsForScroll = [
+	SimpleTab({title: 'One'}),
+	SimpleTab({title: 'Two'}),
+	SimpleTab({title: 'Three'}),
+	SimpleTab({title: 'Four'}),
+	SimpleTab({title: 'Five'}),
+	SimpleTab({title: 'Six'}),
+	SimpleTab({title: 'Seven'}),
+	SimpleTab({title: 'Eight'}),
+	SimpleTab({title: 'Nine'}),
+	SimpleTab({title: 'Ten'}),
+	SimpleTab({title: 'Eleven'}),
+	SimpleTab({title: 'Twelve'}),
+	SimpleTab({title: 'Thirteen'}),
+	SimpleTab({title: 'Fourteen'})
+];
+
 const tabsWithIcons = [
 	SimpleTab({title: 'One', icon: 'star'}),
 	SimpleTab({title: 'Two', icon: 'home'}),
@@ -23,6 +55,15 @@ const tabsWithIcons = [
 	SimpleTab({title: 'Four', icon: 'lock'}),
 	SimpleTab({title: 'Five', icon: 'info'}),
 	SimpleTab({title: 'Six', icon: 'picture'})
+];
+
+const tabsWithIconsLargeText = [
+	SimpleTabLargeText({title: 'One Large', icon: 'star'}),
+	SimpleTabLargeText({title: 'Two Large', icon: 'home'}),
+	SimpleTabLargeText({title: 'Three Large', icon: 'plug'}),
+	SimpleTabLargeText({title: 'Four Large', icon: 'lock'}),
+	SimpleTabLargeText({title: 'Five Large', icon: 'info'}),
+	SimpleTabLargeText({title: 'Six Large', icon: 'picture'})
 ];
 
 const oneTabWithIcons = [
@@ -173,6 +214,14 @@ const TabLayoutTests = [
 		component: <TabLayout type="popup">{tabs}</TabLayout>,
 		wrapper: {full: true}
 	},
+	{
+		component: <TabLayout index={13}>{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		component: <TabLayout index={13} orientation="horizontal">{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
 	// start of [QWTC-2616]
 	<TabLayout orientation="vertical">
 		{Array.from({length: 20}, (v, i) => (
@@ -221,6 +270,35 @@ const TabLayoutTests = [
 	{
 		locale: 'ar-SA',
 		component: <TabLayout orientation="horizontal" selected={1}>{tabs}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		locale: 'ar-SA',
+		component: <TabLayout index={9}>{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		locale: 'ar-SA',
+		component: <TabLayout index={9} orientation="horizontal" tabSize={900}>{tabsForScroll}</TabLayout>,
+		wrapper: {full: true}
+	},
+	// *************************************************************
+	// Large Text
+	// textSize: 'large'
+	// *************************************************************
+	{
+		textSize: 'large',
+		component: <TabLayout selected={1}>{tabsLargeText}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		textSize: 'large',
+		component: <TabLayout selected={1}>{tabsWithIconsLargeText}</TabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		textSize: 'large',
+		component: <TabLayout collapsed selected={2}>{tabsWithIconsLargeText}</TabLayout>,
 		wrapper: {full: true}
 	}
 ];

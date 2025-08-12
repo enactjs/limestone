@@ -44,8 +44,8 @@ class app extends Component {
 				>
 					<div
 						style={{
-							height: ri.scaleToRem(720, 'rem'),
-							width: ri.scaleToRem(14400, 'rem'),
+							height: ri.scaleToRem(720),
+							width: ri.scaleToRem(19200),
 							padding: '1px'
 						}}
 					>

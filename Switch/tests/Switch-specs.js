@@ -54,6 +54,6 @@ describe('Switch Specs', () => {
 		expect(actual).toHaveClass(expectedClass);
 
 		const expectedTimes = 1;
-		expect(handleToggle).toBeCalledTimes(expectedTimes);
+		expect(handleToggle).toHaveBeenCalledTimes(expectedTimes);
 	});
 });

@@ -6,35 +6,49 @@
 
 .tab {
 	font-size: @lime-tablayout-tab-font-size;
+	margin: @lime-tablayout-tab-margin;
 
 	&.horizontal {
 		&.button {
 			display: block;
-			margin: @lime-tablayout-tab-horizontal-margin;
-			padding: @lime-tablayout-tab-horizontal-padding;
 			height: @lime-tablayout-tab-horizontal-button-height;
+			width: var(--tab-width);
+			margin: @lime-tablayout-tab-margin;
+			.padding-start-end(@lime-tablayout-tab-horizontal-padding, @lime-tablayout-tab-horizontal-padding);
 
-			.client {
-				.lime-spotlight-margin();
+			&:before {
+				right: 0;
 			}
 
-			&.selected {
-				.client::after {
-					content: "";
-					position: absolute;
-					.position(auto, 0, 0, 0);
-					height: @lime-tablayout-tab-horizontal-selected-border-width;
-				}
+			&.small {
+				font-size: @lime-tablayout-tab-small-font-size;
+				height: @lime-tablayout-tab-horizontal-small-button-height;
+				line-height: @lime-tablayout-tab-horizontal-small-button-line-height;
 			}
 		}
 	}
 
 	&.vertical {
-		margin-bottom: @lime-tablayout-tab-vertical-margin-bottom;
-
 		&.button {
-			display: block;
 			height: @lime-tablayout-tab-vertical-button-height;
+			padding: @lime-tablayout-tab-vertical-padding;
+
+			&.collapsed {
+				width: @lime-tablayout-tab-vertical-button-height;
+			}
+
+			&.hasIcon {
+				padding: @lime-tablayout-tab-vertical-icon-padding;
+			}
+
+			&.hasIcon:not(&.collapsed) {
+				.padding-start-end(@lime-tablayout-tab-vertical-icon-padding, @lime-tablayout-tab-vertical-icon-padding-right);
+
+				.icon {
+					.margin-start-end(0, @lime-tablayout-tab-vertical-margin);
+				}
+			}
+
 			.lime-custom-text({
 				font-size: @lime-tablayout-tab-font-size;
 				min-width: @lime-button-height;
@@ -51,42 +65,81 @@
 	}
 
 	.applySkins({
-		&.horizontal {
-			&.button {
-				&.selected {
-					.bg {
-						opacity: 0;
-					}
+		&.button {
+			&.selected {
+				background-color: @lime-tablayout-tab-container-selected-color;
+
+				.bg {
+					opacity: 0;
 				}
-
-				.client::after {
-					background-color: @lime-tablayout-tab-horizontal-selected-border-color;
-				}
-
-				.focus({
-					.bg {
-						opacity: 1;
-					}
-
-					.client::after {
-						background-color: unset;
-					}
-				});
 			}
 		}
 	});
 }
 
+.tabGroup {
+	.tabs {
+		display: flex;
+	}
+
+	&.horizontal {
+		margin-left: calc((1 - var(--scrollable)) * var(--offset));
+		padding: @lime-tablayout-horizontal-tabs-padding;
+
+		&:not(.scrollable) {
+			width: var(--tabs-width);
+		}
+
+		.tabs {
+			gap: @lime-tablayout-horizontal-tabs-spacing;
+			width: calc(var(--tabs-width) - var(--scrollable) * var(--offset) * 2);
+		}
+	}
+
+	&.vertical {
+		padding: @lime-tablayout-vertical-tabs-padding;
+
+		&.scrollable {
+			height: @lime-tablayout-tab-group-vertical-height;
+		}
+
+		.tabs {
+			flex-direction: column;
+			gap: @lime-tablayout-vertical-tabs-spacing;
+		}
+
+		.scrollbarTrack {
+			margin-top: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			margin-bottom: @lime-tablayout-tab-group-vertical-scrollbar-track-margin;
+			height: @lime-tablayout-tab-group-vertical-scrollbar-height;
+		}
+
+		&.collapsed:has(.noIcons) {
+			height: fit-content;
+		}
+	}
+}
+
 .applySkins({
 	.tabGroup {
-		.horizontalLine {
-			width: 100%;
-			margin: 0;
-			border: 0 none transparent;
-			border-bottom: @lime-tablayout-tab-horizontal-border-width solid @lime-tablayout-tab-horizontal-border-color;
+		background-color: @lime-tablayout-tab-group-container-color;
+		border-radius: @lime-tablayout-border-radius;
+
+		// Apply transparent background to the child component so if the Scroller is used, then it will not have doubled background color
+		> :first-child {
+			background: transparent;
 		}
 
 		.tab {
+			&.button {
+				&.selected {
+					.icon,
+					.client {
+						color: @lime-tablayout-tab-button-selected-color;
+					}
+				}
+			}
+
 			&.vertical {
 				&.button {
 					&.selected {
