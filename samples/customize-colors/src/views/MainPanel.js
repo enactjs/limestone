@@ -16,7 +16,7 @@ const MainPanel = kind({
 			<Button>Button changed from root</Button>
 			<Column style={containerColors}>
 				<Button>Button changed from container</Button>
-				<Button style= {buttonColors} >Button changed from component</Button>
+				<Button style={buttonColors} >Button changed from component</Button>
 			</Column>
 		</Panel>
 	)
