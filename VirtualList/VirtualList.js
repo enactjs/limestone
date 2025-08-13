@@ -14,7 +14,7 @@ import {gridListItemSizeShape, itemSizesShape, VirtualListBasic as UiVirtualList
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import {warn} from '../internal/validators';
+import {warning} from '../internal/validators';
 import useScroll from '../useScroll';
 import HoverToScroll from '../useScroll/HoverToScroll';
 import Scrollbar from '../useScroll/Scrollbar';
@@ -82,8 +82,8 @@ let VirtualList = (props) => {
 			itemSize
 		};
 
-	warn(
-		(itemSizeProps.itemSizes && rest.cbScrollTo),
+	warning(
+		itemSizeProps.itemSizes && rest.cbScrollTo,
 		'VirtualList with `minSize` in `itemSize` prop does not support `cbScrollTo` prop'
 	);
 
