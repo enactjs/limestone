@@ -13,8 +13,8 @@ import {ResizeContext} from '@enact/ui/Resizable';
 import {gridListItemSizeShape, itemSizesShape, VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import warning from 'warning';
 
+import {warn} from '../internal/validators';
 import useScroll from '../useScroll';
 import HoverToScroll from '../useScroll/HoverToScroll';
 import Scrollbar from '../useScroll/Scrollbar';
@@ -82,8 +82,8 @@ let VirtualList = (props) => {
 			itemSize
 		};
 
-	warning(
-		!itemSizeProps.itemSizes || !rest.cbScrollTo,
+	warn(
+		(itemSizeProps.itemSizes && rest.cbScrollTo),
 		'VirtualList with `minSize` in `itemSize` prop does not support `cbScrollTo` prop'
 	);
 

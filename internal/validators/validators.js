@@ -9,15 +9,17 @@
  * Issues a warning to the console
  *
  * @function
- * @param {String} msg				Event name
+ * @param {Boolean} condition Condition for trigger
+ * @param {String} msg Event name
  *
  * @returns {undefined}
  * @memberof limestone/internal/validators
  * @private
  */
-export const warn = (msg) => {
-	if (typeof console !== 'undefined') {
-		console.warn(msg);	// eslint-disable-line no-console
+export const warn = (condition, msg) => {
+	if (process.env.NODE_ENV === 'production') return;
+	if (typeof console !== 'undefined' && condition) {
+		console.warn('Warning: ' + msg);	// eslint-disable-line no-console
 	}
 };
 
