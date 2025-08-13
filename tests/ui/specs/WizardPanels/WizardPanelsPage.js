@@ -11,10 +11,12 @@ class WizardPanelsInterface {
 
 	async waitForEnter (view, timeout = 1000) {
 		await this['view' + view].waitForExist({timeout});
+		await this.self.delay(100);
 	}
 
 	async waitForLeave (view, timeout = 2000) {
 		await this['view' + view].waitForExist({timeout, reverse: true});
+		await this.self.delay(100);
 	}
 
 	async focusNextButton () {
