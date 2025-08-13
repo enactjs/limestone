@@ -13,7 +13,7 @@ for the expected changes. You can find the variables used in limestone here: [Li
 For this demo I want to change the colors of a focused button (`--semantic-color-on-surface-main-focused` and `--semantic-color-surface-default-focused`).
 Then I create a config file for my changes inside `src` file. There I create three different configs to use inside my app.
 
-First config, called `appColors`, will be applied as close to the root of the app as possible. This config will affect the 
+The first config, called `appColors`, will be applied as close to the root of the app as possible. This config will affect the 
 entire app. This is not recommended as our colors are responsible for multiple components and this kind of change can have
  unexpected behavior.
 
