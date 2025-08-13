@@ -119,9 +119,9 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		delete wrappedComponentProps.noSharedState;
 
 		return (
-			<SharedState.Provider value={sharedState.current}>
+			<SharedState value={sharedState.current}>
 				<Wrapped {...wrappedComponentProps} />
-			</SharedState.Provider>
+			</SharedState>
 		);
 	};
 

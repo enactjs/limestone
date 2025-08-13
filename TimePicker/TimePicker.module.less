@@ -9,6 +9,7 @@
 		vertical-align: inherit;
 		display: inline-block;
 		margin: @lime-timepicker-colon-margin;
+		font-weight: @lime-picker-font-weight;
 	}
 
 	.pickers {
@@ -22,13 +23,16 @@
 				order: 3;
 				margin-inline-start: .extract(@lime-datecomponentpicker-margin, left)[];
 			}
+
 			.timeSeparator {
 				order: 2;
 			}
+
 			.minutePicker {
 				order: 1;
 				margin-inline-start: 0;
 			}
+
 			.meridiemPicker {
 				order: 4;
 			}

@@ -23,14 +23,17 @@ import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
+import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
+import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
-import AsyncRenderChildren from './AsyncRenderChildren';
-
 import componentCss from './ImageItem.module.less';
+
+const Checkbox = Skinnable(CheckboxBase);
+Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
@@ -63,10 +66,10 @@ const ImageItemBase = kind({
 		/**
 		 * The primary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		children: PropTypes.string,
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -140,10 +143,10 @@ const ImageItemBase = kind({
 		/**
 		 * A secondary caption displayed with the image.
 		 *
-		 * @type {String}
+		 * @type {String|Node}
 		 * @public
 		 */
-		label: PropTypes.string,
+		label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 
 		/**
 		 * The layout orientation of the component.
@@ -211,7 +214,16 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * Changes the image from a scale `1:1` to `16:9` in horizontal orientation.
+		 *
+		 * @type {Boolean}
+		 * @default 'false'
+		 * @public
+		 */
+		wideImage: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -264,16 +276,29 @@ const ImageItemBase = kind({
 					captions
 			);
 		},
-		className: ({children, imageIconSrc, label, orientation, styler}) => styler.append({
-			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc
-		})
+		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
+			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
+			wideImage: orientation === 'horizontal' && wideImage
+		}),
+		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
+			if (SelectionComponent) {
+				return <SelectionComponent />;
+			} else if (orientation === 'vertical') {
+				return <Icon className={css.selectionIcon} >checkmark</Icon>;
+			} else {
+				return <Checkbox className={css.selectionIcon} selected={selected} size="tiny" />;
+			}
+		}
 	},
 
-	render: ({css, disabled, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+		const isSlotBefore = orientation === 'horizontal' && showSelection;
+
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
 		delete rest.label;
+		delete rest.wideImage;
 
 		if (showSelection) {
 			rest['role'] = 'checkbox';
@@ -286,19 +311,17 @@ const ImageItemBase = kind({
 				aria-disabled={disabled}
 				css={css}
 				disabled={disabled}
+				orientation={orientation}
 				imageComponent={
 					<Image>
-						{showSelection ? (
+						{orientation === 'vertical' && showSelection ? (
 							<div className={css.selectionContainer}>
-								{SelectionComponent ? (
-									<SelectionComponent />
-								) : (
-									<Icon className={css.selectionIcon}>check</Icon>
-								)}
+								{SelectionComponent}
 							</div>
 						) : null}
 					</Image>
 				}
+				slotBefore={isSlotBefore && SelectionComponent}
 			/>
 		);
 	}

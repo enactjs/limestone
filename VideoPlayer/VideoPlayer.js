@@ -25,12 +25,10 @@ import Announce from '@enact/ui/AnnounceDecorator/Announce';
 import ComponentOverride from '@enact/ui/ComponentOverride';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import {FloatingLayerContext} from '@enact/ui/FloatingLayer/FloatingLayerDecorator';
-import ForwardRef from "@enact/ui/ForwardRef";
 import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import equals from 'ramda/src/equals';
 import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
@@ -87,13 +85,13 @@ RootComponent.propTypes = {
 };
 
 const SpottableDiv = Touchable(Spottable('div'));
-const RootContainer = ForwardRef({prop: 'playerRef'}, SpotlightContainerDecorator(
+const RootContainer = SpotlightContainerDecorator(
 	{
 		enterTo: 'default-element',
 		defaultElement: [`.${css.controlsHandleAbove}`, `.${css.controlsFrame}`]
 	},
 	RootComponent
-));
+);
 
 const ControlsContainer = SpotlightContainerDecorator(
 	{
@@ -246,6 +244,15 @@ const VideoPlayerBase = class extends Component {
 		 * @public
 		 */
 		feedbackHideDelay: PropTypes.number,
+
+		/**
+		 * Checks if current time and total time should include the hour.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		includeTimeHour: PropTypes.bool,
 
 		/**
 		 * Components placed below the title.
@@ -779,6 +786,7 @@ const VideoPlayerBase = class extends Component {
 	static defaultProps = {
 		autoCloseTimeout: 5000,
 		feedbackHideDelay: 3000,
+		includeTimeHour: false,
 		initialJumpDelay: 400,
 		jumpBy: 30,
 		jumpDelay: 200,
@@ -879,13 +887,6 @@ const VideoPlayerBase = class extends Component {
 	}
 
 	componentDidUpdate (prevProps, prevState) {
-		if (this.titleRef && this.state.infoVisible &&
-			(!prevState.infoVisible || !equals(this.props.infoComponents, prevProps.infoComponents))
-		) {
-			const node = this.titleRef;
-			node.style.setProperty('--infoComponentsOffset', `${node.offsetHeight}px`);
-		}
-
 		if (
 			!this.state.mediaControlsVisible && prevState.mediaControlsVisible !== this.state.mediaControlsVisible ||
 			!this.state.mediaSliderVisible && prevState.mediaSliderVisible !== this.state.mediaSliderVisible
@@ -1991,6 +1992,7 @@ const VideoPlayerBase = class extends Component {
 			noSlider,
 			noSpinner,
 			selection,
+			includeTimeHour,
 			spotlightDisabled,
 			spotlightId,
 			style,
@@ -2057,7 +2059,7 @@ const VideoPlayerBase = class extends Component {
 			<RootContainer
 				className={css.videoPlayer + ' enact-fit' + (className ? ' ' + className : '')}
 				onClick={this.activityDetected}
-				ref={this.playerRef}
+				playerRef={this.playerRef}
 				spotlightDisabled={spotlightDisabled}
 				spotlightId={spotlightId}
 				style={style}
@@ -2083,14 +2085,6 @@ const VideoPlayerBase = class extends Component {
 
 				{this.state.bottomControlsRendered ?
 					<div className={css.fullscreen} {...controlsAriaProps}>
-						<FeedbackContent
-							className={css.miniFeedback}
-							playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
-							playbackState={this.pulsedPlaybackState || this.prevCommand}
-							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
-						>
-							{secondsToTime(this.state.sliderTooltipTime, durFmt)}
-						</FeedbackContent>
 						{
 							this.state.mediaControlsVisible ?
 								<Button
@@ -2099,7 +2093,6 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
-									size="small"
 								/> :
 								null
 						}
@@ -2112,6 +2105,14 @@ const VideoPlayerBase = class extends Component {
 								Only render when `this.state.mediaControlsVisible` is true in order for `Marquee`
 								to make calculations correctly in `MediaTitle`.
 							*/}
+							<FeedbackContent
+								className={css.miniFeedback}
+								playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
+								playbackState={this.pulsedPlaybackState || this.prevCommand}
+								visible={this.state.miniFeedbackVisible && !noMiniFeedback}
+							>
+								{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
+							</FeedbackContent>
 							{this.state.mediaSliderVisible ?
 								<div className={css.infoFrame}>
 									<MediaTitle
@@ -2124,7 +2125,7 @@ const VideoPlayerBase = class extends Component {
 										{infoComponents}
 									</MediaTitle>
 									{noSlider ?
-										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} /> :
+										<Times current={this.state.currentTime} total={this.state.duration} formatter={durFmt} includeHour={includeTimeHour} /> :
 										null
 									}
 								</div> :
@@ -2134,7 +2135,7 @@ const VideoPlayerBase = class extends Component {
 								null :
 								<div className={css.sliderContainer}>
 									{this.state.mediaSliderVisible ?
-										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} /> :
+										<Times noTotalTime current={this.state.currentTime} formatter={durFmt} includeHour={includeTimeHour}  /> :
 										null
 									}
 									<MediaSlider
@@ -2164,7 +2165,7 @@ const VideoPlayerBase = class extends Component {
 										/>
 									</MediaSlider>
 									{this.state.mediaSliderVisible ?
-										<Times noCurrentTime total={this.state.duration} formatter={durFmt} /> :
+										<Times noCurrentTime total={this.state.duration} formatter={durFmt} includeHour={includeTimeHour} /> :
 										null
 									}
 								</div>

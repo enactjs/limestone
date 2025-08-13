@@ -6,10 +6,12 @@ import {Header} from '@enact/limestone/Panels';
 import {InputField as Input} from '@enact/limestone/Input';
 import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
-import {useContext} from 'react';
+import {use} from 'react';
 
 import LocaleSwitch from '../LocaleSwitch';
 import ScrollModeSwitch from '../ScrollModeSwitch';
+
+import styles from './PanelHeader.module.less';
 
 import {
 	addItem as addItemAction,
@@ -30,8 +32,8 @@ import createRecord from '../../utils';
 const PanelHeader = (props) => {
 	const {nativeScroll, onChangeDirection, onChangeScrollMode, ...rest} = props;
 
-	const dispatch = useContext(RecordDispatchContext);
-	const {dataSize, minHeight, minWidth, showOverlay, spacing} = useContext(RecordContext);
+	const dispatch = use(RecordDispatchContext);
+	const {dataSize, minHeight, minWidth, showOverlay, spacing} = use(RecordContext);
 
 	const tooltipText = showOverlay ? 'Previous' : 'Selection';
 	const inputWidth = {width: '5em'};
@@ -107,19 +109,19 @@ const PanelHeader = (props) => {
 				<Row style={{direction: 'ltr'}}>
 					<Cell>
 						<label>dataSize:</label>
-						<Input size="small" onChange={setData} style={inputWidth} type="number" value={dataSize} />
+						<Input css={styles} size="small" onChange={setData} style={inputWidth} type="number" value={dataSize} />
 					</Cell>
 					<Cell>
 						<label>minHeightSize:</label>
-						<Input size="small" onChange={changeMinHeight} style={inputWidth} type="number" value={minHeight} />
+						<Input css={styles} size="small" onChange={changeMinHeight} style={inputWidth} type="number" value={minHeight} />
 					</Cell>
 					<Cell>
 						<label>minWidthSize:</label>
-						<Input size="small" onChange={changeMinWidth} style={inputWidth} type="number" value={minWidth} />
+						<Input css={styles} size="small" onChange={changeMinWidth} style={inputWidth} type="number" value={minWidth} />
 					</Cell>
 					<Cell>
 						<label>spacingSize:</label>
-						<Input size="small" onChange={changeSpacing} style={inputWidth} type="number" value={spacing} />
+						<Input css={styles} size="small" onChange={changeSpacing} style={inputWidth} type="number" value={spacing} />
 					</Cell>
 				</Row>
 			}

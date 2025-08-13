@@ -135,7 +135,11 @@ const CheckboxItemBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'checkboxItem',
-		publicClassNames: ['checkboxItem']
+		publicClassNames: ['checkboxItem', 'bg', 'selected']
+	},
+
+	computed: {
+		className: ({label, styler}) => styler.append({hasLabel: label != null})
 	},
 
 	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (

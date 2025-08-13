@@ -18,11 +18,11 @@ const prop = {
 	},
 	buttons: {
 		'no buttons': null,
-		'1 button': <Button size="small" icon="ellipsis" />,
+		'1 button': <Button icon="ellipsis" />,
 		'2 buttons': (
 			<Fragment>
-				<Button size="small" icon="search" />
-				<Button size="small" icon="ellipsis" />
+				<Button icon="search" />
+				<Button icon="ellipsis" />
 			</Fragment>
 		)
 	},
@@ -96,16 +96,14 @@ select(
 	'backButtonBackgroundOpacity',
 	PanelsHeader,
 	['opaque', 'transparent'],
-	Config,
-	'transparent'
+	Config
 );
 boolean('centered', PanelsHeader, Config);
 select(
 	'closeButtonBackgroundOpacity',
 	PanelsHeader,
 	['opaque', 'transparent'],
-	Config,
-	'transparent'
+	Config
 );
 select('marqueeOn', PanelsHeader, prop.marqueeOn, Config);
 boolean('noCloseButton', PanelsHeader, Config);

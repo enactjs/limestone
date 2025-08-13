@@ -38,16 +38,14 @@
 
 	.fullscreen {
 		.miniFeedback {
-			.lime-font-number();
-			position: absolute;
-			z-index: 50;  // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
-			top: @lime-video-feedback-mini-position-top;
-			left: @lime-video-feedback-mini-position-left;
-			font-weight: @lime-video-feedback-mini-font-weight;
-			font-style: @lime-video-feedback-mini-font-style;
+			display: inline-flex;
+			align-items: center;
 			font-size: @lime-video-feedback-mini-font-size;
-			padding: 0 @lime-video-feedback-mini-padding-side;
+			font-weight: @lime-video-feedback-mini-font-weight;
+			height: @lime-video-feedback-mini-height;
 			line-height: @lime-video-feedback-mini-line-height;
+			margin-bottom: @lime-video-feedback-mini-margin-bottom;
+			z-index: 50;  // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
 			bottom: auto;
 			pointer-events: none;
 		}
@@ -86,12 +84,15 @@
 
 			.infoFrame {
 				display: flex;
-				margin: @lime-video-player-info-margin;
+				padding: @lime-video-player-info-padding;
+				margin-bottom: @lime-video-player-info-margin-bottom;
 			}
 
 			.sliderContainer {
 				display: flex;
 				align-items: center;
+				height: @lime-video-player-slider-container-height;
+				padding: @lime-video-player-slider-container-padding;
 
 				> *:first-child {
 					text-align: right;
@@ -114,22 +115,17 @@
 	.applySkins({
 		.fullscreen {
 			.miniFeedback {
-				background-color: @lime-video-feedback-mini-bg-color;
-				color: @lime-video-feedback-mini-text-color;
+				color: @lime-video-player-label-color;
 			}
 
 			.bottom {
 				background-color: @lime-video-player-bottom-bg-color;
-
-				.infoFrame {
-					text-shadow: @lime-video-player-title-text-shadow;
-				}
 			}
 		}
 
 		.overlay {
 			&.scrim::after {
-				background: @lime-video-player-scrim-gradient-color
+				background: @lime-video-player-scrim-gradient-color;
 			}
 		}
 	});

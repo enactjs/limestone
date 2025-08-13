@@ -1,10 +1,10 @@
 // Alert
 // ---------------------------------------
-@lime-alert-overlay-border-radius: @lime-popup-border-radius;
+@lime-alert-overlay-border-radius: var(--semantic-radius-popup);
 
 // Button
 // ---------------------------------------
-@lime-button-border-radius: 12px;
+@lime-button-border-radius: var(--semantic-radius-button);
 @lime-button-bg-border-width: '';
 @lime-button-bg-border-style: none;
 @lime-button-icononly-border-radius: '';
@@ -12,11 +12,7 @@
 
 // ContextualPopup
 // ---------------------------------------
-@lime-contextualpopup-border-radius: (@lime-button-border-radius * 2);
-
-// Dropdown
-// ---------------------------------------
-@lime-dropdown-border-radius: @lime-button-border-radius;
+@lime-contextualpopup-border-radius: var(--semantic-radius-container);
 
 // Heading
 @lime-heading-font-style: normal;
@@ -28,8 +24,8 @@
 
 // Item
 // ---------------------------------------
-@lime-item-font-weight: 600;
-@lime-item-border-radius: 12px;
+@lime-item-font-weight: var(--primitive-font-weight-semibold);
+@lime-item-border-radius: var(--primitive-radius-12);
 
 // Scroller
 // ---------------------------------------

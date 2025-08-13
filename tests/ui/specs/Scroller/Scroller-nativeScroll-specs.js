@@ -45,10 +45,11 @@ describe('Scroller', function () {
 
 			// Step 6: Press Back key (or 'esc' with Chrome) or 5-way Select.
 			await ScrollerPage.backKey();
-			// Step 6 Verify: Spolight is on the box surrounding the item and scrollbars.
+			// Step 6 Verify: Spotlight is on the box surrounding the item and scrollbars.
 			expect(await ScrollerPage.focusableBody.isFocused()).toBe(true);
 
 			// Step 7: Press 5-Way Up.
+			await ScrollerPage.spotlightUp();
 			await ScrollerPage.spotlightUp();
 			// Step 7 Verify: Spotlight is on the (x) button.
 			expect(await ScrollerPage.buttonTop.isFocused()).toBe(true);
@@ -216,11 +217,12 @@ describe('Scroller', function () {
 			await ScrollerPage.spotlightSelect();
 			await ScrollerPage.spotlightDown();
 			await ScrollerPage.spotlightSelect();
+			const initialVerticalScrollThumbPosition = (await ScrollerPage.getScrollThumbPosition()).vertical;
 			// Step 4: Click on the Left Padding area of the verticalScrollbar and below the Scroll thumb.
 			await ScrollerPage.clickScrollTrack('vertical', 'Down');
 			await ScrollerPage.delay(1000);
 			// Step 4-1 Verify: The Scroller scrolls Down.
-			expect((await ScrollerPage.getScrollThumbPosition()).vertical).toBe('1');
+			expect((await ScrollerPage.getScrollThumbPosition()).vertical > initialVerticalScrollThumbPosition).toBe(true);
 			// Step 5: Click on the Right Padding area of the verticalScrollbar and above the Scroll thumb.
 			await ScrollerPage.clickScrollTrack('vertical', 'Up');
 			await ScrollerPage.delay(1000);
@@ -276,6 +278,7 @@ describe('Scroller', function () {
 			await ScrollerPage.spotlightSelect();
 			await ScrollerPage.spotlightDown();
 			await ScrollerPage.spotlightSelect();
+			const initialVerticalScrollThumbPosition = (await ScrollerPage.getScrollThumbPosition()).vertical;
 			// Step 4-1 Verify: The scroller displays in RTL (Right To Left).
 			// Since the visual part of UI Test cannot be checked, it is judged by the position of the scrollbar according to locale.
 			expect(await ScrollerPage.getVerticalScrollOffsetLeft()).toBe(0);
@@ -290,7 +293,7 @@ describe('Scroller', function () {
 			// Step 5: Click on the verticalScrollbar below the scroll thumb a few times until the bottom text displays.
 			await ScrollerPage.clickScrollTrack('vertical', 'Down');
 			await ScrollerPage.delay(1000);
-			expect((await ScrollerPage.getScrollThumbPosition()).vertical).toBe('1');
+			expect((await ScrollerPage.getScrollThumbPosition()).vertical > initialVerticalScrollThumbPosition).toBe(true);
 			// Step 6: Click on the horizontalScrollbar on the left of the scroll thumb a few times (some text still displays).
 			const initialHorizontalScrollThumbPosition = (await ScrollerPage.getScrollThumbPosition()).horizontal;
 			await ScrollerPage.clickScrollTrack('horizontal', 'Left');

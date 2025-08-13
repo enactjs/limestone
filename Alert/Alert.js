@@ -11,11 +11,8 @@ import kind from '@enact/core/kind';
 import {mapAndFilterChildren} from '@enact/core/util';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
-import ri from '@enact/ui/resolution';
 import Slottable from '@enact/ui/Slottable';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import {Children} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -73,6 +70,7 @@ const AlertBase = kind({
 		 * * `alert` - The root class name
 		 * * `content` - The content component class
 		 * * `fullscreen` - Applied to a `type='fullscreen'` alert
+		 * * `overlay` - Applied to a `type='overlay'` alert
 		 * * `title` - The title component class
 		 *
 		 * @type {Object}
@@ -126,6 +124,23 @@ const AlertBase = kind({
 		open: PropTypes.bool,
 
 		/**
+		 * Position of the Alert when type=`overlay`.
+		 *
+		 * There are five types:
+		 *
+		 * * `center` - Popup in the center of the screen
+		 * * `bottom left` - Popup in the bottom left of the screen
+		 * * `bottom right` - Popup in the bottom right of the screen
+		 * * `top left` - Popup in the top left of the screen
+		 * * `top right` - Popup in the top right of the screen
+		 *
+		 * @type {('bottom left'|'bottom right'|'center'|'top left'|'top right')}
+		 * @default 'center'
+		 * @public
+		 */
+		overlayPosition: PropTypes.oneOf(['bottom left', 'bottom right', 'center', 'top left', 'top right']),
+
+		/**
 		 * The primary text displayed.
 		 *
 		 * Only shown when `type="fullscreen"`.
@@ -152,13 +167,14 @@ const AlertBase = kind({
 
 	defaultProps: {
 		open: false,
+		overlayPosition: 'center',
 		type: 'fullscreen'
 	},
 
 	styles: {
 		css: componentCss,
 		className: 'alert',
-		publicClassNames: ['alert', 'content', 'fullscreen', 'title']
+		publicClassNames: ['alert', 'content', 'fullscreen', 'overlay', 'title']
 	},
 
 	computed: {
@@ -176,32 +192,19 @@ const AlertBase = kind({
 				return BodyText;
 			}
 		},
-		className: ({buttons, image, title, type, styler}) => styler.append(
+		className: ({image, type, styler}) => styler.append(
 			{
-				maxButtons: (buttons && Children.toArray(buttons).filter(Boolean).length > 2),
-				noImage: !image,
-				noTitle: (type === 'fullscreen') && !title
+				noImage: !image
 			},
 			type
-		),
-		overflow: ({buttons}) => {
-			if (typeof window !== 'undefined' && buttons) {
-				const contentWidth = ri.scale(1200); // If you will change this value, please change @lime-alert-overlay-content-width too.
-				const buttonsWidth = ri.scale(540 + 126); // If you will change this value, please change @lime-button-min-width + @lime-alert-overlay-buttons-margin too.
-
-				return window.innerWidth < contentWidth + buttonsWidth;
-			}
-
-			return false;
-		}
+		)
 	},
 
-	render: ({buttons, contentComponent, children, css, id, image, overflow, title, type, ...rest}) => {
+	render: ({buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
-		const position = (type === 'overlay' ? 'bottom' : type);
+		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
-		const layoutOrientation = (fullscreen || overflow ? 'vertical' : 'horizontal');
 
 		return (
 			<div aria-owns={id} className={css.alertWrapper}>
@@ -213,14 +216,14 @@ const AlertBase = kind({
 					css={css}
 					position={position}
 				>
-					<Layout align="center center" orientation={layoutOrientation}>
+					<Layout align="center center" orientation="vertical">
 						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
 						{showTitle ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
-						<Cell shrink align={fullscreen || overflow ? 'center' : ''} component={contentComponent} className={classnames(css.content, overflow ? null : css.full)} id={`${id}_content`}>
+						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
 							{children}
 						</Cell>
 						{buttons ?
-							<Cell align={fullscreen || overflow ? '' : 'end'} shrink className={classnames(css.buttonContainer, overflow ? null : css.full)}>
+							<Cell shrink className={css.buttonContainer}>
 								<Layout align="center" orientation="vertical" id={`${id}_buttons`}>
 									{buttons}
 								</Layout>

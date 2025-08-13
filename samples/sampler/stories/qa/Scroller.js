@@ -306,12 +306,14 @@ export const EditableList = (args) => {
 	}, [items]);
 
 	useEffect(() => {
-		divRef.current.addEventListener('keydown', (ev) => {
-			const {keyCode} = ev;
-			if (isCancel(keyCode)) {
-				setEditMode(false);
-			}
-		});
+		if (divRef.current) {
+			divRef.current.addEventListener('keydown', (ev) => {
+				const {keyCode} = ev;
+				if (isCancel(keyCode)) {
+					setEditMode(false);
+				}
+			});
+		}
 	}, [divRef]);
 
 	return (
@@ -548,7 +550,7 @@ ListOfThingsInFixedPopupPanels.storyName = 'List of things in FixedPopupPanels';
 const imageItems = [];
 
 const renderImageItem = (props, index) => {
-	const {text, subText, source} = props; // eslint-disable-line enact/prop-types
+	const {text, subText, source} = props;
 
 	return (
 		<ImageItem
@@ -968,22 +970,33 @@ export const WithNestedScrollerInVerticalScroller = (args) => {
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The first nested scroller.</Item>
+					<br />
+					<Item>&lt;The first nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the upper scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the upper horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the first nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 			<Scroller
@@ -1007,22 +1020,33 @@ export const WithNestedScrollerInVerticalScroller = (args) => {
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The second nested scroller.</Item>
+					<br />
+					<Item>&lt;The second nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the lower scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the lower horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the second nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 		</Scroller>
@@ -1068,22 +1092,33 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The first nested scroller.</Item>
+					<br />
+					<Item>&lt;The first nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the upper scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the upper horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the first nested scroller.&gt;</Item>
+					<br />
 				</div>
 			</Scroller>
 			<Scroller
@@ -1106,22 +1141,32 @@ export const WithNestedScrollerInHorizontalScroller = (args) => (
 						width: ri.scaleToRem(4800)
 					}}
 				>
-					<Item>The second nested scroller.</Item>
+					<br />
+					<Item>&lt;The second nested scroller.&gt;</Item>
+					<br />
+					<br />
+					<br />
+					<Item>This is the lower scroller.</Item>
 					<br />
 					<br />
 					<Item>
-						This is the lower horizontal scroller. If noScrollByWheel is not specified, this
-						scroller will be scrolled by wheel and the outer scroller will not be scrolled.
+						If noScrollByWheel is not specified, <br />
+						this scroller will be scrolled by wheel and the outer scroller will not be scrolled until the end of this scroller.
 					</Item>
 					<br />
 					<br />
 					<Item>
-						If noScrollByWheel is specified, this scroller will NOT be scrolled by wheel but the
-						outer scroller will be scrolled.
+						If noScrollByWheel is specified, <br />
+						this scroller will NOT be scrolled by wheel but the outer scroller will be scrolled.
 					</Item>
 					<br />
 					<br />
 					<Item>To set or unset noScrollByWheel prop, click CONTROLS below.</Item>
+					<br />
+					<br />
+					<br />
+					<br />
+					<Item>&lt;The end of the second nested scroller.&gt;</Item>
 				</div>
 			</Scroller>
 		</div>
@@ -1239,7 +1284,7 @@ boolean('spotlightDisabled', WithInputFields, Config, false);
 
 WithInputFields.storyName = 'With InputFields';
 
-const renderImageItemForVG = ({index, ...rest}) => { // eslint-disable-line enact/prop-types
+const renderImageItemForVG = ({index, ...rest}) => {
 	const {text, subText, source} = imageItems[index];
 
 	return (
@@ -1316,3 +1361,14 @@ export const WithFixedPopupPanels = () => {
 };
 
 WithFixedPopupPanels.storyName = 'With FixedPopupPanels';
+
+export const WithInputField = () => {
+	return (
+		<Scroller>
+			<InputField autoFocus />
+			<div style={{height: ri.scaleToRem(2400)}} />
+		</Scroller>
+	);
+};
+
+WithInputField.storyName = 'With InputField';

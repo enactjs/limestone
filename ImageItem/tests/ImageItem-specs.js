@@ -171,4 +171,39 @@ describe('ImageItem', () => {
 
 		expect(actual).toBeChecked();
 	});
+
+	test('should support `wideImage` prop', () => {
+		render(<ImageItemBase orientation="horizontal" wideImage />);
+
+		const expected = 'wideImage';
+		const actual = screen.getAllByRole('img')[0].parentElement;
+
+		expect(actual).toHaveClass(expected);
+	});
+
+	test('should not apply `wideImage` with vertical', () => {
+		render(<ImageItemBase wideImage />);
+
+		const expected = 'wideImage';
+		const actual = screen.getAllByRole('img')[0].parentElement;
+
+		expect(actual).not.toHaveClass(expected);
+	});
+
+	test('should be `checked` when `showSelection` and `selected` props are true with horizontal layout', () => {
+		render(<ImageItemBase orientation="horizontal" showSelection selected />);
+
+		const actual = screen.getAllByRole('checkbox')[0];
+
+		expect(actual).toBeChecked();
+	});
+
+	test('should support `selectionComponent` prop with horizontal layout', () => {
+		render(<ImageItemBase orientation="horizontal" selectionComponent={SelectionComponent} showSelection />);
+
+		const expected = 'slotBefore';
+		const actual = screen.getAllByRole('img')[0].previousElementSibling;
+
+		expect(actual).toHaveClass(expected);
+	});
 });

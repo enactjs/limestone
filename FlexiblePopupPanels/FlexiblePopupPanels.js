@@ -1,5 +1,6 @@
 import kind from '@enact/core/kind';
 import {mapAndFilterChildren} from '@enact/core/util';
+import {I18nContextDecorator} from "@enact/i18n/I18nDecorator";
 import PropTypes from 'prop-types';
 import {cloneElement} from 'react';
 
@@ -84,7 +85,15 @@ const FlexiblePopupPanelsBase = kind({
 		 * @default 'auto'
 		 * @public
 		 */
-		prevButtonVisibility: PropTypes.oneOf(['auto', 'always', 'never'])
+		prevButtonVisibility: PropTypes.oneOf(['auto', 'always', 'never']),
+
+		/**
+		 * Indicates the locale's text direction is right-to-left.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		rtl: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -109,17 +118,27 @@ const FlexiblePopupPanelsBase = kind({
 
 			return cloneElement(child, props);
 		}),
-		onBack: ({onChange}) => onChange
+		onBack: ({onChange}) => onChange,
+		className: ({children, nextButtonVisibility, prevButtonVisibility, rtl, styler}) => {
+			const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && children?.length > 1));
+			const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && children?.length > 1));
+
+			return styler.append(
+				{
+					noNavButton: ((rtl && !isNextButtonVisible) || (!rtl && !isPrevButtonVisible))
+				}
+			);
+		}
 	},
 
-	render: (props) => {
+	render: ({noAnimation, ...props}) => {
 		delete props.nextButtonVisibility;
 		delete props.onChange;
 		delete props.onNextClick;
 		delete props.onPrevClick;
 		delete props.prevButtonVisibility;
 
-		return (<Viewport {...props} noAnimation={typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION} />);
+		return (<Viewport {...props} noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation} />);
 	}
 });
 
@@ -133,7 +152,7 @@ const FlexiblePopupPanels = PopupDecorator(
 		panelType: 'flexiblePopup'
 	},
 	NavButtonFocusDecorator(
-		FlexiblePopupPanelsBase
+		I18nContextDecorator({rtlProp: 'rtl'}, FlexiblePopupPanelsBase)
 	)
 );
 

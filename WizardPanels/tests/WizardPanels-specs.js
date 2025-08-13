@@ -52,9 +52,9 @@ describe('WizardPanels Specs', () => {
 			);
 
 			const expected = 'subtitle';
-			const actual = screen.getByText(viewSubtitle);
+			const headerSubtitle = screen.getByText(viewSubtitle);
 
-			expect(actual).toHaveClass(expected);
+			expect(headerSubtitle.parentElement.parentElement).toHaveClass(expected);
 		}
 	);
 
@@ -553,7 +553,7 @@ describe('WizardPanels Specs', () => {
 			await user.click(nextButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 2, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 2, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handleNextClick.mock.calls.length && handleNextClick.mock.calls[0][0];
@@ -607,7 +607,7 @@ describe('WizardPanels Specs', () => {
 			await user.click(prevButton);
 
 			await waitFor(() => {
-				expect(handleChange).toBeCalledWith({index: 1, type: 'onChange'});
+				expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
 			});
 			await waitFor(() => {
 				const actual = handlePrevClick.mock.calls.length && handlePrevClick.mock.calls[0][0];
@@ -681,7 +681,7 @@ describe('WizardPanels Specs', () => {
 			await waitFor(() => {
 				const expected = {type: 'onBack', stopPropagation: expect.any(Function)};
 
-				expect(spy).toBeCalledWith(expect.objectContaining(expected));
+				expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
 			});
 		}
 	);
@@ -708,7 +708,7 @@ describe('WizardPanels Specs', () => {
 			await waitFor(() => {
 				const expected = {type: 'onBack', stopPropagation: expect.any(Function)};
 
-				expect(spy).toBeCalledWith(expect.objectContaining(expected));
+				expect(spy).toHaveBeenCalledWith(expect.objectContaining(expected));
 			});
 		}
 	);
@@ -823,8 +823,9 @@ describe('WizardPanels Specs', () => {
 		'should reflect the aria-label when "current" is set',
 		async () => {
 			const current = 2;
+			const total = 4;
 			render(
-				<WizardPanels current={current}>
+				<WizardPanels current={current} total={total}>
 					<Panel />
 					<Panel />
 					<Panel />
@@ -832,7 +833,7 @@ describe('WizardPanels Specs', () => {
 			);
 
 			const header = screen.getByRole('region').children[0].children[0];
-			const expected = `step ${current}  `;
+			const expected = `Step ${current} of ${total} `;
 
 			await waitFor(() => {
 				expect(header).toHaveAttribute('aria-label', expected);
