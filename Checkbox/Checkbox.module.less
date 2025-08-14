@@ -1,8 +1,9 @@
 // Checkbox.module.less
 //
-@import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/skin.less";
+@import "../styles/variables.less";
 
 // Assign the colors all in one place
 .checkbox-colors (@color, @bg, @border) {
@@ -134,6 +135,10 @@
 		border-radius: @lime-checkbox-border-radius;
 		position: relative;
 		text-align: center;
+	}
+
+	&.selected .icon {
+		.lime-check-motion();
 	}
 
 	//
