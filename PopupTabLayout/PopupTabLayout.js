@@ -323,7 +323,7 @@ const OptimizedFocusDecorator = hoc((config, Wrapped) => {
 	return class extends Component {
 		static displayName = 'OptimizedFocusDecorator';
 
-		static propTypes = /** @lends sandstone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
+		static propTypes = /** @lends limestone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
 			/**
 			 * Controls the visibility of the PopupTabLayout.
 			 *
