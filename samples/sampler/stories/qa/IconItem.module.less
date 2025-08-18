@@ -93,7 +93,9 @@
 			:global(.enact-a11y-focus-ring) & {
 				transform: none;
 			}
-			transform: scale(1.2);
+			.focus({
+				transform: scale(1.1);
+			});
 		}
 	}
 
@@ -103,13 +105,15 @@
 		}
 
 		.editableIconItem {
-			transform: scale(1.2);
 			:global(.enact-a11y-focus-ring) & {
 				.content {
 					.lime-focus-ring();
 				}
 				transform: none;
 			}
+			.focus({
+				transform: scale(1.1);
+			});
 		}
 
 		.arrow() {

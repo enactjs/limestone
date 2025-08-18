@@ -2,7 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.3.1] - 2025-08-14
+
+### Changed
+
+- Global variable from `ILIB_SANDSTONE_PATH` to `ILIB_LIMESTONE_PATH`
+
+## [1.3.0] - 2025-08-08
 
 ### Added
 
