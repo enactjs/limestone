@@ -204,7 +204,7 @@ describe('VirtualList', () => {
 
 	describe('ScrollTo', () => {
 		test('should warn if both \'minSize\' in \'itemSize\' prop and \'cbScrollTo\' prop are given', () => {
-			const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+			const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 			const variableItemSize = {
 				minSize: itemSize,
 				size: [100, 200, 300, 400, 100, 200, 300, 400, 100, 200]
