@@ -87,7 +87,6 @@
 
 		&.overlay {
 			border-radius: @lime-alert-overlay-border-radius;
-			outline-style: @lime-alert-overlay-outline-style;
 
 			/* Override colors inside overlay type Alert */
 			--semantic-color-on-background-main: @lime-alert-overlay-label-color;
@@ -99,6 +98,10 @@
 
 			:global(.noAnimation) & {
 				box-shadow: none;
+			}
+
+			:not(:global(.highContrast)) {
+				outline-style: @lime-alert-overlay-outline-style;
 			}
 		}
 	});
