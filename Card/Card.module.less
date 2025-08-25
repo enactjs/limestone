@@ -260,6 +260,11 @@
 					background: @lime-card-captions-gradient-color;
 				}
 
+				&.roundedImage .captions {
+					border-bottom-left-radius: @lime-card-border-radius;
+					border-bottom-right-radius: @lime-card-border-radius;
+				}
+
 				&.selected:not(:focus) {
 					.selected-border(@lime-card-border-selected-color, 5);
 				}
@@ -287,7 +292,7 @@
 				color: @lime-card-selection-icon-color;
 			}
 
-			&.captionOverlay {
+			&.captionOverlay:not(:global(.focusRing)) {
 				.selected-border(@lime-card-border-focused-color, 5);
 			}
 

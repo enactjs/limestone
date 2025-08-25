@@ -6,7 +6,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `Outline` and `background-color` for high-contrast mode
+- `limestone/Alert` to show the outline appropriately in high-contrast mode
+- `limestone/Card` `background` and `border` for `focusRing` mode
+- `limestone/KeyGuide` to show the outline appropriately in high-contrast mode
+- `limestone/PopupTabLayout` to show the background color appropriately in high-contrast mode
 
 ## [1.3.1] - 2025-08-14
 
