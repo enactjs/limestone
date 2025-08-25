@@ -2,10 +2,11 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## unreleased
+## [unreleased]
 
 ### Fixed
 
+- `limestone/Card` `background` and `border` for `focusRing` mode
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
 ## [1.3.1] - 2025-08-14
