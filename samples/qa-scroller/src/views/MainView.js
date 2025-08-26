@@ -1,96 +1,51 @@
-import DatePicker from '@enact/limestone/DatePicker';
-import {InputField as Input} from '@enact/limestone/Input';
+import * as React from 'react';
+
+import Button from '@enact/limestone/Button';
 import Item from '@enact/limestone/Item';
-import {Panel, Header} from '@enact/limestone/Panels';
-import Picker from '@enact/limestone/Picker';
-import RadioItem from '@enact/limestone/RadioItem';
 import Scroller from '@enact/limestone/Scroller';
-import TimePicker from '@enact/limestone/TimePicker';
-import Group from '@enact/ui/Group';
-import ri from '@enact/ui/resolution';
-import {useCallback, useState} from 'react';
+import FixedPopupPanels, {Panel, Header} from '@enact/limestone/FixedPopupPanels';
+import * as Panels from '@enact/limestone/Panels';
 
-import Controls from '../components/Controls';
+import css from './ScrollerHeight.module.less';
 
-const
-	airports = [
-		'San Francisco Airport Terminal Gate 1',
-		'Boston Airport Terminal Gate 2',
-		'Tokyo Airport Terminal Gate 3',
-		'נמל התעופה בן גוריון טרמינל הבינלאומי'
-	],
-	data = [],
-	itemData = [];
+const ScrollIssue = () => {
+	const [index, setIndex] = React.useState(0);
 
-for (let i = 0; i < 20; i++) {
-	data.push(airports[i % 4]);
-}
+	const handleBack = React.useCallback(() => {
+		setIndex(0);
+	}, []);
 
-for (let i = 0; i < 50; i++) {
-	itemData.push(`Item ${i}`);
-}
+	const handleClick = React.useCallback(() => {
+		setIndex(1);
+	}, []);
 
-const MainView = () => {
-	const [focusableScrollbar, setFocusableScrollbar] = useState(false);
-	const [height, setHeight] = useState(4000);
-	const [nativeScroll, setNativeScroll] = useState(true);
-	const [width, setWidth] = useState(2000);
-
-	const getScaledSize = (size) => ri.scale(parseInt(size) || 0);
-
-	const handleFocusableScrollbar = useCallback(() => setFocusableScrollbar(!focusableScrollbar), [focusableScrollbar]);
-	const handleHeight = useCallback(({value}) => setHeight(value), []);
-	const handleScrollMode = useCallback(({selected: selNativeScroll}) => setNativeScroll(selNativeScroll), []);
-	const handleWidth = useCallback(({value}) => setWidth(value), []);
+	const handleClick2 = React.useCallback(() => {
+		setIndex(0);
+	}, []);
 
 	return (
-		<Panel>
-			<Header title="Scroller" type="mini">
-				<Controls
-					handleFocusableScrollbar={handleFocusableScrollbar}
-					handleHeight={handleHeight}
-					handleScrollMode={handleScrollMode}
-					handleWidth={handleWidth}
-					height={height}
-					nativeScroll={nativeScroll}
-					width={width}
-				/>
-			</Header>
-			<Scroller
-				focusableScrollbar={focusableScrollbar}
-				key={nativeScroll ? 'native' : 'translate'}
-				scrollMode={nativeScroll ? 'native' : 'translate'}
-			>
-				<div style={{height: `${getScaledSize(height)}px`, width: `${getScaledSize(width)}px`}}>
-					<Input
-						defaultValue="Initial value"
-						title="Input with defaultValue"
-					/>
-					<br />
-					<Picker
-						orientation="vertical"
-						width="medium"
-					>
-						{airports}
-					</Picker>
-					<br />
-					<DatePicker
-						title="DatePicker"
-					/>
-					<br />
-					<RadioItem> FirstLongTextWithSpace FirstLongTextWithSpace FirstLongTextWithSpace FirstLongTextWithSpace </RadioItem>
-					<RadioItem disabled> Default disabled Looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong Text </RadioItem>
-					<Group childComponent={Item}>
-						{itemData}
-					</Group>
-					<TimePicker
-						title="TimePicker"
-					/>
-				</div>
-			</Scroller>
-		</Panel>
+		<Panels.Panel>
+			<Panels.Header title="Scroll Issue" />
+			<FixedPopupPanels open index={index} onBack={handleBack}>
+				<Panel>
+					<Header title="Tab 1" slotBefore={<Button icon="ai" />} subtitle="ABC" />
+					<Scroller className={css.scroller}>
+						{Array.from({length: 15}, (_, i) => (
+							<Item key={`first_${i}`} onClick={handleClick}>Item {i + 1}</Item>
+						))}
+					</Scroller>
+				</Panel>
+				<Panel>
+					<Header title="Tab 2" />
+					<Scroller className={css.scroller}>
+						{Array.from({length: 12}, (_, i) => (
+							<Item key={`second_${i}`} onClick={handleClick2}>Item {i + 1}</Item>
+						))}
+					</Scroller>
+				</Panel>
+			</FixedPopupPanels>
+		</Panels.Panel>
 	);
-
 };
 
-export default MainView;
+export default ScrollIssue;
