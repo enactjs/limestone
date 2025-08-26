@@ -99,33 +99,27 @@ const adjustDirection = function (tooltipDirection, overflow, rtl) {
  *
  * @method
  * @memberof limestone/TooltipDecorator
- * @param   {Node} clientNode         	The value for client node
+ * @param   {Node} clientRef         	The value for client node
  * @param   {String} tooltipDirection   Direction of tooltip
+ * @param   {Object} clientNode         The DOMRect for client node
  * @param   {Object} tooltipPosition    The `getBoundingClientRect` values for tooltip node
  * @returns {Object}                    Tooltip's calculated new position accounting for transform
  * @private
  */
-const adjustTransform = function (clientNode, tooltipDirection, tooltipPosition) {
-	const componentNodes = clientNode?.childNodes.length ? [clientNode, ...clientNode.childNodes] : [clientNode];
-	const nodePositions = clientNode.getBoundingClientRect();
+const adjustTransform = function (clientRef, tooltipDirection, clientNode, tooltipPosition) {
+	const componentNodes = clientRef?.childNodes.length ? [clientRef, ...clientRef.childNodes] : [clientRef];
 	let hasTransform = false;
-	let transformMatrix = [];
 
 	componentNodes.forEach(node => {
-		if (window.getComputedStyle(node).transitionProperty === 'transform') {
+		if (window.getComputedStyle(node).transitionProperty === 'transform' && getTransitionDurationInMs(window.getComputedStyle(node).transitionDuration) > 0 ) {
 			hasTransform = true;
-			const matrix = window.getComputedStyle(node).transform.split('(')[1].split(')')[0].split(',');
-			transformMatrix = [
-				parseFloat(matrix[0]) - 1,
-				parseFloat(matrix[3]) - 1
-			];
 		}
 	});
 
 	if (!hasTransform) return tooltipPosition;
 
-	const horizontal = ((nodePositions.right - nodePositions.left) * transformMatrix[0]) / 2,
-		vertical = ((nodePositions.bottom - nodePositions.top) * transformMatrix[1]) / 2;
+	const horizontal = ((clientNode.right - clientNode.left) * 0.1) / 2,
+		vertical = ((clientNode.bottom - clientNode.top) * 0.1) / 2;
 
 	switch (tooltipDirection) {
 		case 'above':
@@ -146,6 +140,16 @@ const adjustTransform = function (clientNode, tooltipDirection, tooltipPosition)
 
 	return tooltipPosition;
 };
+
+/* Converts computedStyle for transitionDuration to number value */
+const getTransitionDurationInMs = function(duration) {
+    if (duration.endsWith("ms")) {
+        return parseFloat(duration);
+    } else if (duration.endsWith("s")) {
+        return parseFloat(duration) * 1000;
+    }
+    return 0;
+}
 
 /**
  * Calculates the overflow of `Tooltip` — if `Tooltip` is at the edge of the viewport.
