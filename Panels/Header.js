@@ -131,6 +131,14 @@ const HeaderBase = kind({
 		css: PropTypes.object,
 
 		/**
+         * Informs Header that it is part of a Popup.
+         *
+         * @type {Boolean}
+         * @private
+         */
+		isPopupHeader: PropTypes.bool,
+
+		/**
 		 * Determines what triggers the header content to start its animation.
 		 *
 		 * @type {('focus'|'hover'|'render')}
@@ -348,9 +356,10 @@ const HeaderBase = kind({
 	},
 
 	computed: {
-		className: ({backButtonAvailable, centered, children, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}) => styler.append(
+		className: ({backButtonAvailable, centered, children, isPopupHeader, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}) => styler.append(
 			{
 				centered,
+				isPopupHeader,
 				noSubtitle,
 				shadowed,
 				slotAfter: slotAfter || !noCloseButton,
@@ -518,12 +527,14 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 		const {type: panelsType} = use(PanelsStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
+		const isPopupHeader = panelsType?.toLowerCase().includes('popup');
 
 		return provideContextAsDefaults(
 			<Wrapped
 				{...contextProps}
 				{...props}
 				backButtonAvailable={backButtonAvailable}
+				isPopupHeader={isPopupHeader}
 			/>
 		);
 	}

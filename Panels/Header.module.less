@@ -59,7 +59,7 @@
 		display: inline-block;
 	}
 
-	&.centered {
+	&.centered:not(.isPopupHeader) {
 		.title {
 			margin-top: @lime-header-standard-title-margin-top;
 		}
@@ -151,7 +151,6 @@
 		}
 
 		.title {
-			margin-top: @lime-header-compact-title-margin;
 			padding: @lime-header-compact-title-padding;
 		}
 
