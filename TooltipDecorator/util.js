@@ -94,6 +94,16 @@ const adjustDirection = function (tooltipDirection, overflow, rtl) {
 	return tooltipDirection;
 };
 
+/* Converts computedStyle for transitionDuration to number value */
+const getTransitionDurationInMs = function (duration) {
+	if (duration.endsWith("ms")) {
+		return parseFloat(duration);
+	} else if (duration.endsWith("s")) {
+		return parseFloat(duration) * 1000;
+	}
+	return 0;
+};
+
 /**
  * Calculates the top and left position for `Tooltip` accounting for transform.
  *
@@ -140,16 +150,6 @@ const adjustTransform = function (clientRef, tooltipDirection, clientNode, toolt
 
 	return tooltipPosition;
 };
-
-/* Converts computedStyle for transitionDuration to number value */
-const getTransitionDurationInMs = function(duration) {
-    if (duration.endsWith("ms")) {
-        return parseFloat(duration);
-    } else if (duration.endsWith("s")) {
-        return parseFloat(duration) * 1000;
-    }
-    return 0;
-}
 
 /**
  * Calculates the overflow of `Tooltip` — if `Tooltip` is at the edge of the viewport.
