@@ -197,7 +197,7 @@ const useTooltip = (props) => {
 
 		newLayout.tooltipDirection = adjustDirection(newLayout.tooltipDirection, overflow, rtl);
 		newLayout.arrowAnchor = adjustAnchor(newLayout.arrowAnchor, newLayout.tooltipDirection, overflow, rtl);
-		newLayout.position = adjustTransform(clientRef.current, newLayout.tooltipDirection, getPosition(clientNode, newLayout.tooltipDirection));
+		newLayout.position = adjustTransform(clientRef.current, newLayout.tooltipDirection, clientNode, getPosition(clientNode, newLayout.tooltipDirection));
 		newLayout.labelOffset = newLayout.arrowAnchor === 'center' ? getLabelOffset(tooltipNode, newLayout.tooltipDirection, newLayout.position, overflow) : null;
 
 		if (
