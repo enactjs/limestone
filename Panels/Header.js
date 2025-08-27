@@ -454,6 +454,7 @@ const HeaderBase = kind({
 		...rest
 	}) => {
 		delete rest.arranger;
+		delete rest.isPopupHeader;
 		delete rest.marqueeOn;
 		delete rest.noSubtitle;
 		delete rest.subtitle;
