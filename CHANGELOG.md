@@ -10,6 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Button` icon color to support style override
 - `limestone/Card` `background` and `border` for `focusRing` mode
 - `limestone/KeyGuide` to show the outline appropriately in high-contrast mode
+- `limestone/Scroller` with `editable` prop to work properly when changed from pointer to 5-way
 - `limestone/PopupTabLayout` to show the background color appropriately in high-contrast mode
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
