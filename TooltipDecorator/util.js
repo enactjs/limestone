@@ -295,5 +295,6 @@ export {
 	adjustTransform,
 	calcOverflow,
 	getLabelOffset,
-	getPosition
+	getPosition,
+	getTransitionDurationInMs
 };
