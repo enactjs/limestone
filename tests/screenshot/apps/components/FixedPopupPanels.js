@@ -27,22 +27,22 @@ function FixPopupPanels (props) {
 }
 
 function FixPopupPanelsWithCenteredHeader (props) {
-    return (
-        <FixedPopupPanels open {...props}>
-            {props.children ? props.children : [
-                <Panel key="panelIndex0">
-                    <Header centered title="Panel 1 - With Scroller" />
-                    <Item>Single Item</Item>
-                </Panel>,
-                <Panel key="panelIndex1">
-                    <Header centered title="Panel 2 - With Big Scroller" />
-                    <Scroller>
-                        {stamp(20, (i, idx) => <Item key={`item${idx}`}>Item {idx + 1}</Item>)}
-                    </Scroller>
-                </Panel>
-            ]}
-        </FixedPopupPanels>
-    );
+	return (
+		<FixedPopupPanels open {...props}>
+			{props.children ? props.children : [
+				<Panel key="panelIndex0">
+					<Header centered title="Panel 1 - With Scroller" />
+					<Item>Single Item</Item>
+				</Panel>,
+				<Panel key="panelIndex1">
+					<Header centered title="Panel 2 - With Big Scroller" />
+					<Scroller>
+						{stamp(20, (i, idx) => <Item key={`item${idx}`}>Item {idx + 1}</Item>)}
+					</Scroller>
+				</Panel>
+			]}
+		</FixedPopupPanels>
+	);
 }
 
 const EachPanel = withConfig(
@@ -81,10 +81,10 @@ const EachPanel = withConfig(
 			title: 'with half width positioned left',
 			component: <FixPopupPanels width="half" position="left" />
 		},
-        {
-            title: 'with centered header',
-            component: <FixPopupPanelsWithCenteredHeader />
-        }
+		{
+			title: 'with centered header',
+			component: <FixPopupPanelsWithCenteredHeader />
+		}
 	]
 );
 
