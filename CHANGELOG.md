@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## unreleased
+
+### Fixed
+
+- `limestone/Card` audio guidance to translate
+
 ## [1.3.1] - 2025-08-14
 
 ### Changed
