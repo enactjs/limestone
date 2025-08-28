@@ -26,6 +26,7 @@ import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
 import Image from '../Image';
+import $L from '../internal/$L';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
@@ -248,7 +249,7 @@ const CardBase = kind({
 
 	computed: {
 		'aria-label': ({children, label, secondaryLabel, selected}) => {
-			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' selected' : ''}`;
+			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
 		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
