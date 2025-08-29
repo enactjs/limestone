@@ -468,7 +468,7 @@ export const WithExtraItems = (args) => {
 
 		// Cleanup
 		return () => window.removeEventListener('resize', handleResize);
-	}, []);
+	}, [args]);
 
 	return (
 		<Column>
