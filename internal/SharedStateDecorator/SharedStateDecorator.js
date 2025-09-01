@@ -144,3 +144,7 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 });
 
 export default SharedStateDecorator;
+export {
+	SharedState,
+	SharedStateDecorator
+};
