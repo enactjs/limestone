@@ -44,7 +44,7 @@ const useEventFocus = (props, instances) => {
 			} else {
 				const
 					scrollHorizontally = bounds.maxLeft > 0 && Math.abs(left - scrollContainerHandle.current.scrollLeft) > epsilon,
-					scrollVertically = bounds.maxTop > scrollContainerHandle.current.scrollTop && Math.abs(top - scrollContainerHandle.current.scrollTop) > epsilon;
+					scrollVertically = bounds.maxTop > 0 && Math.abs(top - scrollContainerHandle.current.scrollTop) > epsilon;
 
 				if (scrollHorizontally || scrollVertically) {
 					scrollContainerHandle.current.start({
@@ -166,10 +166,10 @@ const useEventKey = (props, instances, context) => {
 
 		spottable.current.animateOnFocus = true;
 
-		if (!repeat && hasFocus()) {
+		if (!repeat) {
 			let direction = null;
 
-			if (isPageUp(keyCode) || isPageDown(keyCode)) {
+			if (hasFocus() && (isPageUp(keyCode) || isPageDown(keyCode))) {
 				if (props.direction === 'vertical' || props.direction === 'both') {
 					direction = isPageUp(keyCode) ? 'up' : 'down';
 
@@ -181,14 +181,17 @@ const useEventKey = (props, instances, context) => {
 						checkAndApplyOverscrollEffectByDirection(direction);
 					}
 				}
-			} else if (getDirection(keyCode) && (scrollMode === 'translate' || scrollMode === 'native' && !Spotlight.getPointerMode())) {
-				const element = Spotlight.getCurrent();
-
+			} else if (getDirection(keyCode)) {
 				scrollContainerHandle.current.lastInputType = 'arrowKey';
-				direction = getDirection(keyCode);
 
-				if (props.overscrollEffectOn.arrowKey && !(element ? getTargetByDirectionFromElement(direction, element) : null)) {
-					checkAndApplyOverscrollEffectByDirection(direction);
+				if (scrollMode === 'translate' || scrollMode === 'native' && !Spotlight.getPointerMode()) {
+					const element = Spotlight.getCurrent();
+
+					direction = getDirection(keyCode);
+
+					if (props.overscrollEffectOn.arrowKey && !(element ? getTargetByDirectionFromElement(direction, element) : null)) {
+						checkAndApplyOverscrollEffectByDirection(direction);
+					}
 				}
 			}
 		}
