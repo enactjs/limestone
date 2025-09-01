@@ -6,6 +6,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+
+## [unreleased]
+
+### Fixed
+
 - `limestone/Alert` to show the outline appropriately in high-contrast mode
 - `limestone/Button` icon color to support style override
 - `limestone/Card` audio guidance to translate
