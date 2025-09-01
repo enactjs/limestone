@@ -166,10 +166,10 @@ const useEventKey = (props, instances, context) => {
 
 		spottable.current.animateOnFocus = true;
 
-		if (!repeat) {
+		if (!repeat && hasFocus()) {
 			let direction = null;
 
-			if (hasFocus() && (isPageUp(keyCode) || isPageDown(keyCode))) {
+			if (isPageUp(keyCode) || isPageDown(keyCode)) {
 				if (props.direction === 'vertical' || props.direction === 'both') {
 					direction = isPageUp(keyCode) ? 'up' : 'down';
 
@@ -181,17 +181,14 @@ const useEventKey = (props, instances, context) => {
 						checkAndApplyOverscrollEffectByDirection(direction);
 					}
 				}
-			} else if (getDirection(keyCode)) {
+			} else if (getDirection(keyCode) && (scrollMode === 'translate' || scrollMode === 'native' && !Spotlight.getPointerMode())) {
+				const element = Spotlight.getCurrent();
+
 				scrollContainerHandle.current.lastInputType = 'arrowKey';
+				direction = getDirection(keyCode);
 
-				if (scrollMode === 'translate' || scrollMode === 'native' && !Spotlight.getPointerMode()) {
-					const element = Spotlight.getCurrent();
-
-					direction = getDirection(keyCode);
-
-					if (props.overscrollEffectOn.arrowKey && !(element ? getTargetByDirectionFromElement(direction, element) : null)) {
-						checkAndApplyOverscrollEffectByDirection(direction);
-					}
+				if (props.overscrollEffectOn.arrowKey && !(element ? getTargetByDirectionFromElement(direction, element) : null)) {
+					checkAndApplyOverscrollEffectByDirection(direction);
 				}
 			}
 		}
