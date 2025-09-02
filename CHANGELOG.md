@@ -2,13 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [1.3.2] - 2025-09-02
+## [unreleased]
 
 ### Fixed
 
 - `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
 
-## [unreleased]
+## [1.3.2] - 2025-09-02
 
 ### Fixed
 
