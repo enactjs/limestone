@@ -1,6 +1,6 @@
 {
   "name": "@enact/limestone",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Large-screen/TV support library for Enact, containing a variety of UI components.",
   "repository": {
     "type": "git",
@@ -39,11 +39,11 @@
     "screenTypes": "ThemeDecorator/screenTypes.json"
   },
   "dependencies": {
-    "@enact/core": "^5.2.0",
-    "@enact/i18n": "^5.2.0",
-    "@enact/spotlight": "^5.2.0",
-    "@enact/ui": "^5.2.0",
-    "@enact/webos": "^5.2.0",
+    "@enact/core": "^5.2.1",
+    "@enact/i18n": "^5.2.1",
+    "@enact/spotlight": "^5.2.1",
+    "@enact/ui": "^5.2.1",
+    "@enact/webos": "^5.2.1",
     "@enovaui/core-tokens": "^0.8.0",
     "@enovaui/webos-tokens": "^0.8.0",
     "classnames": "^2.5.1",
