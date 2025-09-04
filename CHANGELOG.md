@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/VideoPlayer` to read out the timestamp properly
+
 ## [1.3.2] - 2025-09-02
 
 ### Fixed
