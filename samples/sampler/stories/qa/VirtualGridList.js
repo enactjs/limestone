@@ -387,6 +387,7 @@ const VirtualGridListInScroller = ({args, onNext, ...rest}) => {
 				key={id}
 				noScrollByWheel={args['noScrollByWheel']}
 				spotlightId={id}
+				continue5WayHold
 			/>
 		);
 	}
@@ -409,12 +410,6 @@ class VirtualGridListInScrollerSamples extends Component {
 		this.state = {
 			index: 0
 		};
-	}
-
-	componentDidMount () {
-		for (let i = 0; i < numOfListsInScroller; i++) {
-			Spotlight.set(idOfListsInScroller(i), {continue5WayHold: true});
-		}
 	}
 
 	onBack = () => {

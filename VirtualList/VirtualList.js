@@ -8,6 +8,7 @@
 
 import {setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {ResizeContext} from '@enact/ui/Resizable';
 import {gridListItemSizeShape, itemSizesShape, VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
@@ -29,6 +30,7 @@ const nop = () => {};
 const virtualListDefaultProps = {
 	'data-spotlight-container-disabled': false,
 	cbScrollTo: nop,
+	continue5WayHold: false,
 	direction: 'vertical',
 	horizontalScrollbar: 'auto',
 	noAffordance: false,
@@ -71,7 +73,9 @@ let VirtualList = (props) => {
 			wheel: false
 		};
 	}
-	const {itemSize, hoverToScroll, ...rest} = virtualListProps;
+	const {continue5WayHold, itemSize, hoverToScroll, ...rest} = virtualListProps;
+
+	Spotlight.set(props.id, {continue5WayHold});
 
 	const itemSizeProps = itemSize && itemSize.minSize ?
 		{
@@ -178,6 +182,15 @@ VirtualList.propTypes = /** @lends limestone/VirtualList.VirtualList.prototype *
 	 * @public
 	 */
 	cbScrollTo: PropTypes.func,
+
+	/**
+	 * When this value is `true`, scrolling in a VirtualList with holding 5Way key continues to out of the VirtualList.
+	 * You can keep scrolling between several VirtualLists.
+	 * 
+	 * @type {Boolean}
+	 * @public
+	 */
+	continue5WayHold: PropTypes.bool,
 
 	/**
 	 * This is set to `true` by SpotlightContainerDecorator
@@ -534,6 +547,7 @@ VirtualList.defaultPropValues = virtualListDefaultProps;
 const virtualGridListDefaultProps = {
 	'data-spotlight-container-disabled': false,
 	cbScrollTo: nop,
+	continue5WayHold: false,
 	direction: 'vertical',
 	horizontalScrollbar: 'auto',
 	noAffordance: false,
@@ -576,7 +590,9 @@ let VirtualGridList = (props) => {
 			wheel: false
 		};
 	}
-	const {hoverToScroll, ...rest} = virtualGridListProps;
+	const {continue5WayHold, hoverToScroll, ...rest} = virtualGridListProps;
+
+	Spotlight.set(props.id, {continue5WayHold});
 
 	const {
 		// Variables
@@ -668,6 +684,15 @@ VirtualGridList.propTypes = /** @lends limestone/VirtualList.VirtualGridList.pro
 	 * @public
 	 */
 	cbScrollTo: PropTypes.func,
+
+	/**
+	 * When this value is `true`, scrolling in a VirtualGridList with holding 5Way key continues to out of the VirtualGridList.
+	 * You can keep scrolling between several VirtualGridLists.
+	 * 
+	 * @type {Boolean}
+	 * @public
+	 */
+	continue5WayHold: PropTypes.bool,
 
 	/**
 	 * This is set to `true` by SpotlightContainerDecorator

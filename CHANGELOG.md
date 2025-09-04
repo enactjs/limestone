@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/VirtualList` prop `continue5WayHold` to scroll continuously between VirtualLists
+
 ### Fixed
 
 - `limestone/Alert` to show the outline appropriately in high-contrast mode
