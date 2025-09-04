@@ -381,12 +381,12 @@ const VirtualGridListInScroller = ({args, onNext, ...rest}) => {
 		virtualGridLists.push(
 			<VirtualGridList
 				{...virtualGridListProps}
+				continue5WayHold={args['continue5WayHold']}
 				hoverToScroll={args['hoverToScroll']}
 				id={id}
 				key={id}
 				noScrollByWheel={args['noScrollByWheel']}
 				spotlightId={id}
-				continue5WayHold
 			/>
 		);
 	}
@@ -443,6 +443,7 @@ VirtualGridListInScrollerSamples.propTypes = {
 
 export const RestoreFocusInScroller = (args) => <VirtualGridListInScrollerSamples args={args} />;
 
+boolean('continue5WayHold', RestoreFocusInScroller, Config);
 number('dataSize', RestoreFocusInScroller, Config, defaultDataSize);
 boolean('hoverToScroll', RestoreFocusInScroller, Config);
 number('minWidth', RestoreFocusInScroller, Config, 688);
