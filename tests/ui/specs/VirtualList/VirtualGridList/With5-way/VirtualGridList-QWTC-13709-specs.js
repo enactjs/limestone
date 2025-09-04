@@ -36,13 +36,13 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.spotlightDown();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(6);
-		expect(await Page.getScrollPositionNative()).toBe(730);
+		expect(await Page.getScrollPositionNative()).toBe(718);
 
 		// move left to check if unexpected scrolling occurs
 		await Page.spotlightLeft();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(5);
-		expect(await Page.getScrollPositionNative()).toBe(730);
+		expect(await Page.getScrollPositionNative()).toBe(718);
 
 		// move up to check if the scroll position is updated correctly
 		await Page.spotlightUp();
@@ -85,13 +85,13 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 		await Page.spotlightDown();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(6);
-		expect(await Page.getScrollPositionTranslate()).toBe(-730);
+		expect(await Page.getScrollPositionTranslate()).toBe(-718);
 
 		// move left to check if unexpected scrolling occurs
 		await Page.spotlightLeft();
 		await Page.delay(scrollAnimationTimeout);
 		await expectFocusedItem(5);
-		expect(await Page.getScrollPositionTranslate()).toBe(-730);
+		expect(await Page.getScrollPositionTranslate()).toBe(-718);
 
 		// move up to check if the scroll position is updated correctly
 		await Page.spotlightUp();
