@@ -186,7 +186,7 @@ VirtualList.propTypes = /** @lends limestone/VirtualList.VirtualList.prototype *
 	/**
 	 * When this value is `true`, scrolling in a VirtualList with holding 5Way key continues to out of the VirtualList.
 	 * You can keep scrolling between several VirtualLists.
-	 * 
+	 *
 	 * @type {Boolean}
 	 * @public
 	 */
@@ -688,7 +688,7 @@ VirtualGridList.propTypes = /** @lends limestone/VirtualList.VirtualGridList.pro
 	/**
 	 * When this value is `true`, scrolling in a VirtualGridList with holding 5Way key continues to out of the VirtualGridList.
 	 * You can keep scrolling between several VirtualGridLists.
-	 * 
+	 *
 	 * @type {Boolean}
 	 * @public
 	 */
