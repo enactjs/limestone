@@ -1,6 +1,7 @@
 // Button.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
@@ -507,14 +508,17 @@
 					&:active {
 						.bg {
 							.lime-bg-colors({
-								transform: @lime-button-focusexpand-pressed-bg-transform;
+								.lime-press-motion();
+								transform: scale(1.05);
 							});
 						}
 
 						&.small {
 							.bg {
 								.lime-bg-colors({
-									transform: @lime-button-small-focusexpand-pressed-bg-transform;
+									//transform: @lime-button-small-focusexpand-pressed-bg-transform;
+									.lime-press-motion();
+									transform: scale(1.05);
 								});
 							}
 						}

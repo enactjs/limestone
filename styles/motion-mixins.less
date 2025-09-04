@@ -7,6 +7,8 @@ Motion Variables
 ------------------------------------------ */
 @lime-bounce-motion: var(--lime-bounce-motion);
 @lime-check-motion: var(--lime-check-motion);
+@lime-press-motion: var(--lime-press-motion);
+@lime-release-motion: var(--lime-release-motion);
 
 /* ---------------------------------------
 Motion Mixins
@@ -24,4 +26,12 @@ Motion Mixins
 		background-color: inherit;
 		animation: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
 	}
+}
+
+.lime-press-motion() {
+	animation: @lime-press-motion;
+}
+
+.lime-release-motion() {
+	animation: @lime-release-motion;
 }

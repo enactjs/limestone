@@ -8,6 +8,8 @@ Animations
 	------------------------------------------ */
 	--lime-bounce-motion: var(--lime-bounce-animation-name) var(--lime-bounce-motion-duration) var(--lime-bounce-motion-easing-function);
 	--lime-check-motion: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
+	--lime-press-motion: var(--lime-press-animation-name) var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
+	--lime-release-motion: var(--lime-release-animation-name) var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
 /* ---------------------------------------
@@ -18,20 +20,30 @@ Animations properties
 	Durations
 	------------------------------------------ */
 	--lime-motion-default-duration: 200ms;
+	--lime-motion-medium1-duration: 250ms;
+	--lime-motion-medium2-duration: 300ms;
 	--lime-bounce-motion-duration: var(--lime-motion-default-duration);
 	--lime-check-motion-duration: 400ms;
+	--lime-press-motion-duration: var(--lime-motion-medium1-duration);
+	--lime-release-motion-duration: var(--lime-motion-medium2-duration);
 
 	/* ---------------------------------------
 	Easing functions
 	------------------------------------------ */
 	--lime-default-motion-easing-function: linear;
+	--lime-EIO-motion-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
+	--lime-EO-motion-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
 	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
+	--lime-press-motion-easing-function: var(--lime-EIO-motion-easing-function);
+	--lime-release-motion-easing-function: var(--lime-EO-motion-easing-function);
 
 	/* ---------------------------------------
 	Keyframes names
 	------------------------------------------ */
 	--lime-bounce-animation-name: bounce-motion;
 	--lime-check-animation-name: check-motion;
+	--lime-press-animation-name: press-motion;
+	--lime-release-animation-name: release-motion;
 
 	/* ---------------------------------------
 	Keyframes values
@@ -57,4 +69,16 @@ Keyframes
 @keyframes check-motion {
 	0% {transform: translateX(0)}
 	100% {transform: translateX(100%)}
+}
+
+/* Press
+	------------------------------------------ */
+@keyframes press-motion {
+	0% {transform: scale(1.15)}
+	100% {transform: scale(1.05)}
+}
+
+@keyframes release-motion {
+	0% {transform: scale(1.05)}
+	100% {transform: scale(1.15)}
 }
