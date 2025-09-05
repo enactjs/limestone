@@ -13,6 +13,7 @@ import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
+import {Children, cloneElement} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -181,7 +182,7 @@ const AlertBase = kind({
 		buttons: ({buttons, css}) => {
 			return mapAndFilterChildren(buttons, (button, index) => (
 				<Cell className={css.buttonCell} key={`button${index}`} shrink>
-					{button}
+					{cloneElement(button, { css: css })}
 				</Cell>
 			)) || null;
 		},

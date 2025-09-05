@@ -12,7 +12,7 @@ import Layout, {Cell} from '@enact/ui/Layout';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Fragment} from 'react';
+import {cloneElement, Fragment} from 'react';
 
 import $L from '../internal/$L';
 import Button from '../Button';
@@ -351,7 +351,7 @@ const InputPopupBase = kind({
 		buttons: ({buttons}) => {
 			return mapAndFilterChildren(buttons, (button, index) => (
 				<Cell key={`button${index}`} shrink>
-					{button}
+					{cloneElement(button, { css: componentCss, dani: "test" })}
 				</Cell>
 			)) || null;
 		},
