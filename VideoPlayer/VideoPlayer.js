@@ -2139,6 +2139,7 @@ const VideoPlayerBase = class extends Component {
 										null
 									}
 									<MediaSlider
+										aria-valuetext=" "
 										backgroundProgress={this.state.proportionLoaded}
 										disabled={disabled || this.state.sourceUnavailable}
 										forcePressed={this.state.slider5WayPressed}
