@@ -516,9 +516,61 @@
 						&.small {
 							.bg {
 								.lime-bg-colors({
-									//transform: @lime-button-small-focusexpand-pressed-bg-transform;
 									.lime-press-motion();
 									transform: scale(1.05);
+								});
+							}
+						}
+					}
+
+					&:not(.pressed) {
+						.bg {
+							.lime-bg-colors({
+								.lime-release-motion()
+							});
+						}
+
+						&.small {
+							.bg {
+								.lime-bg-colors({
+									.lime-release-motion()
+								});
+							}
+						}
+					}
+				}
+
+				&:not(.focusExpand) {
+					&.pressed,
+					&:active {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-press-motion();
+								transform: scale(0.9);
+							});
+						}
+
+						&.small {
+							.bg {
+								.lime-bg-colors({
+									.lime-no-expand-press-motion();
+									transform: scale(0.9);
+								});
+							}
+						}
+					}
+
+					&:not(.pressed) {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-release-motion()
+							});
+						}
+
+						&.small {
+							.bg {
+								.lime-bg-colors({
+									.lime-no-expand-release-motion()
 								});
 							}
 						}

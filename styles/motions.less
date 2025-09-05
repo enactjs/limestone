@@ -10,6 +10,8 @@ Animations
 	--lime-check-motion: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
 	--lime-press-motion: var(--lime-press-animation-name) var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
 	--lime-release-motion: var(--lime-release-animation-name) var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
+	--lime-no-expand-press-motion: var(--lime-no-expand-press-animation-name) var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
+	--lime-no-expand-release-motion: var(--lime-no-expand-release-animation-name) var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
 /* ---------------------------------------
@@ -44,6 +46,8 @@ Animations properties
 	--lime-check-animation-name: check-motion;
 	--lime-press-animation-name: press-motion;
 	--lime-release-animation-name: release-motion;
+	--lime-no-expand-press-animation-name: no-expand-press-motion;
+	--lime-no-expand-release-animation-name: no-expand-release-motion;
 
 	/* ---------------------------------------
 	Keyframes values
@@ -79,6 +83,14 @@ Keyframes
 }
 
 @keyframes release-motion {
-	0% {transform: scale(1.05)}
 	100% {transform: scale(1.15)}
+}
+
+@keyframes no-expand-press-motion {
+	0% {transform: scale(1.0)}
+	100% {transform: scale(0.9)}
+}
+
+@keyframes no-expand-release-motion {
+	100% {transform: scale(1.0)}
 }

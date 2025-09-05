@@ -9,6 +9,8 @@ Motion Variables
 @lime-check-motion: var(--lime-check-motion);
 @lime-press-motion: var(--lime-press-motion);
 @lime-release-motion: var(--lime-release-motion);
+@lime-no-expand-press-motion: var(--lime-no-expand-press-motion);
+@lime-no-expand-release-motion: var(--lime-no-expand-release-motion);
 
 /* ---------------------------------------
 Motion Mixins
@@ -34,4 +36,12 @@ Motion Mixins
 
 .lime-release-motion() {
 	animation: @lime-release-motion;
+}
+
+.lime-no-expand-press-motion() {
+	animation: @lime-no-expand-press-motion;
+}
+
+.lime-no-expand-release-motion() {
+	animation: @lime-no-expand-release-motion;
 }
