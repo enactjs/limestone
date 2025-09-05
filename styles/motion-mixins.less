@@ -25,3 +25,13 @@ Motion Mixins
 		animation: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
 	}
 }
+
+.lime-focus-in-motion() {
+	transform: scale(1.15);
+	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
+}
+
+.lime-focus-out-motion() {
+	transform: scale(1);
+	transition: transform var(--lime-focus-out-motion-duration) var(--lime-focus-out-motion-easing-function);
+}
