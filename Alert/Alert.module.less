@@ -53,12 +53,6 @@
 		.buttonContainer {
 			box-sizing: border-box;
 			margin-top: @lime-alert-overlay-buttons-margin-top;
-
-			.button {
-				.bg{
-					background-color: #8D909E;
-				}
-			}
 		}
 
 		.content {
@@ -109,6 +103,12 @@
 
 			:has(:global(.highContrast)) & {
 				outline-style: @lime-overlay-outline-style;
+			}
+
+			.button {
+				.bg{
+					background-color: @lime-alert-overlay-button-bg-color;
+				}
 			}
 		}
 	});

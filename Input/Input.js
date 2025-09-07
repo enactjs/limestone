@@ -351,7 +351,7 @@ const InputPopupBase = kind({
 		buttons: ({buttons}) => {
 			return mapAndFilterChildren(buttons, (button, index) => (
 				<Cell key={`button${index}`} shrink>
-					{cloneElement(button, { css: componentCss, dani: "test" })}
+					{cloneElement(button, {css: componentCss})}
 				</Cell>
 			)) || null;
 		},

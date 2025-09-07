@@ -1,6 +1,5 @@
 import Button from '@enact/limestone/Button';
 import ri from '@enact/ui/resolution';
-import {Fragment} from 'react';
 
 import icons from '../../helper/icons';
 

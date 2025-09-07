@@ -281,16 +281,11 @@
 		}
 
 		.buttonArea {
+			align-items: center;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			margin: @lime-input-overlay-buttonarea-margin;
-
-			.button {
-				.bg{
-					background-color: #8D909E;
-				}
-			}
 		}
 
 		.tooltip {
@@ -396,6 +391,12 @@
 
 				.icon {
 					color: @lime-input-button-popup-transparent-icon-color;
+				}
+			}
+
+			.button {
+				.bg{
+					background-color: @lime-input-overlay-button-bg-color;
 				}
 			}
 		}
