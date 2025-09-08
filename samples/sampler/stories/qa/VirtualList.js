@@ -13,7 +13,7 @@ import {Column, Cell} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
 import {VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 import PropTypes from 'prop-types';
-import {Component, useCallback, useState} from 'react';
+import {Component, useCallback, useEffect, useState} from 'react';
 
 import css from './VirtualList.module.less';
 
@@ -457,6 +457,19 @@ OverscrollEffectOnWherePageKeyIsTrue.parameters = {
 };
 
 export const WithExtraItems = (args) => {
+	let [itemSize, setItemSize] = useState(ri.scale(args['itemSize']));
+
+	useEffect(() => {
+		const handleResize = () => {
+			setItemSize(ri.scale(args['itemSize']));
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		// Cleanup
+		return () => window.removeEventListener('resize', handleResize);
+	}, [args]);
+
 	return (
 		<Column>
 			<Cell
@@ -464,8 +477,8 @@ export const WithExtraItems = (args) => {
 				dataSize={updateDataSize(args['dataSize'])}
 				direction="vertical"
 				horizontalScrollbar={args['horizontalScrollbar']}
-				itemRenderer={renderItem(Item, ri.scale(args['size']), true)}
-				itemSize={ri.scale(args['itemSize'])}
+				itemRenderer={renderItem(Item, itemSize, true)}
+				itemSize={itemSize}
 				key={args['scrollMode']}
 				noScrollByWheel={args['noScrollByWheel']}
 				onKeyDown={action('onKeyDown')}
@@ -492,7 +505,6 @@ export const WithExtraItems = (args) => {
 
 number('dataSize', WithExtraItems, Config, 10);
 select('horizontalScrollbar', WithExtraItems, prop.scrollbarOption, Config);
-number('size', WithExtraItems, Config, 156);
 number('itemSize', WithExtraItems, Config, 156);
 select('scrollMode', WithExtraItems, prop.scrollModeOption, Config);
 boolean('noScrollByWheel', WithExtraItems, Config);
