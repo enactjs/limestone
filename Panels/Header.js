@@ -16,7 +16,7 @@ import $L from '../internal/$L';
 import Button from '../Button';
 import Heading from '../Heading';
 import Skinnable from '../Skinnable';
-import {PopupTabLayoutStateContext} from '../PopupTabLayout'
+import {PopupTabLayoutStateContext} from '../PopupTabLayout';
 
 import {PanelsStateContext} from '../internal/Panels';
 import {useContextAsDefaults} from '../internal/Panels/util';
