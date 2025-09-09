@@ -257,7 +257,7 @@ const PopupTabLayoutBase = kind({
 		dimensions: {
 			tabs: {
 				collapsed: 216,
-				normal: 660
+				normal: 888
 			},
 			content: {
 				expanded: 1320,
