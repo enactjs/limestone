@@ -241,9 +241,9 @@ const CardBase = kind({
 			not(forProp('disabled', true)),
 			forward('onClick')
 		),
-		onKeyUp: handle(
+		onKeyDown: handle(
 			not(forProp('disabled', true)),
-			forward('onKeyUp')
+			forward('onKeyDown')
 		)
 	},
 

@@ -10,6 +10,13 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/VideoPlayer` to read out the timestamp properly
+
+## [1.3.2] - 2025-09-02
+
+### Fixed
+
 - `limestone/Alert` to show the outline appropriately in high-contrast mode
 - `limestone/Button` icon color to support style override
 - `limestone/Card` audio guidance to translate
@@ -17,7 +24,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/KeyGuide` to show the outline appropriately in high-contrast mode
 - `limestone/Scroller` with `editable` prop to remain focused on the selected item when completing edit by down or enter key in pointer mode
 - `limestone/PopupTabLayout` to show the background color appropriately in high-contrast mode
-- `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
 ## [1.3.1] - 2025-08-14
 
