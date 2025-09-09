@@ -17,11 +17,11 @@ const Block = ({style, ...rest}) => {
 	);
 };
 
-const SimpleTab = ({title, icon, style}) => (
+const SimpleTab = ({title, icon, style, centeredHeader}) => (
 	<Tab title={title} icon={icon}>
 		<TabPanels>
 			<TabPanel>
-				<Header title={title} type="compact" />
+				<Header title={title} type="compact" centered={centeredHeader} />
 				<BodyText>{`View ${title}`}</BodyText>
 				{style ? <Block style={style} /> : null}
 			</TabPanel>
@@ -70,6 +70,8 @@ const tabWithSizedBlockLarge = SimpleTab({title: 'Large', icon: 'stop', style: {
 const tabWithSizedBlockSkinny = SimpleTab({title: 'Skinny', icon: 'stop', style: {height: 900}});
 const tabWithSizedBlockFat = SimpleTab({title: 'Fat', icon: 'stop', style: {width: 1500}});
 const tabWithSizedBlockTall = SimpleTab({title: 'Tall', icon: 'stop', style: {height: 9600, width: 500}});
+
+const tabWithCenteredHeader = SimpleTab({title: 'One', centeredHeader: true});
 
 const PopupTabLayoutTests = [
 	// QWTC-2423 start
@@ -137,6 +139,10 @@ const PopupTabLayoutTests = [
 	},
 	{
 		component: <PopupTabLayout open>{tabWithSizedBlockTall}</PopupTabLayout>,
+		wrapper: {full: true}
+	},
+	{
+		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
 		wrapper: {full: true}
 	}
 ];

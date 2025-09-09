@@ -6,8 +6,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Alert` buttons styles for overlay `type`.
 - `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
 - `limestone/DatePicker` to match the latest GUI
+- `limestone/Input` buttons styles for number `popupType`.
 - `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
