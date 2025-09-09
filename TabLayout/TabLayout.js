@@ -338,7 +338,7 @@ const TabLayoutBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'tabLayout',
-		publicClassNames: ['bg', 'button', 'client', 'collapsed', 'content', 'selected', 'tab', 'tabGroup', 'tabLayout', 'tabs', 'tabsExpanded', 'vertical']
+		publicClassNames: ['bg', 'button', 'client', 'collapsed', 'content', 'icon', 'selected', 'tab', 'tabGroup', 'tabLayout', 'tabs', 'tabsExpanded', 'vertical']
 	},
 
 	handlers: {
