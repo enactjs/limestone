@@ -270,9 +270,9 @@ const InputFieldBase = kind({
 		},
 		className: ({iconAfter, iconBefore, invalid, size, styler}) => styler.append(
 			{
-				invalid,
+				hasIconAfter: iconAfter,
 				hasIconBefore: iconBefore,
-				hasIconAfter: iconAfter
+				invalid
 			},
 			size
 		),
