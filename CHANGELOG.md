@@ -4,12 +4,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/VirtualList` prop `continue5WayHold` to scroll continuously from in a VirtualList to the outer scroller.
+
 ### Fixed
 
 - `limestone/Alert` buttons styles for overlay `type`.
 - `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
 - `limestone/DatePicker` to match the latest GUI
 - `limestone/Input` buttons styles for number `popupType`.
+- `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
 - `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
