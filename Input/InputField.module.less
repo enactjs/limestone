@@ -55,7 +55,6 @@
 	vertical-align: middle;
 	align-items: center;
 	height: @lime-inputfield-height;
-	width: @lime-inputfield-width;
 
 	.iconBefore {
 		.margin-start-end(0, @lime-inputfield-icon-margin);
@@ -106,6 +105,19 @@
 
 	&.large {
 		padding: @lime-inputfield-padding-large;
+		width: @lime-inputfield-width;
+
+		&.hasIconBefore, &.hasIconAfter {
+			.input {
+				max-width: @lime-inputfield-withoneicon-width;
+			}
+		}
+
+		&.hasIconBefore&.hasIconAfter {
+			.input {
+				max-width: @lime-inputfield-withtwoicons-width;
+			}
+		}
 	}
 
 	&.small {
@@ -121,6 +133,18 @@
 		.inputHighlight {
 			line-height: @lime-inputfield-small-height;
 			height: @lime-inputfield-small-height;
+		}
+
+		&.hasIconBefore, &.hasIconAfter {
+			.input {
+				max-width: @lime-inputfield-small-withoneicon-width;
+			}
+		}
+
+		&.hasIconBefore&.hasIconAfter {
+			.input {
+				max-width: @lime-inputfield-small-withtwoicons-width;
+			}
 		}
 	}
 
