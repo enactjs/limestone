@@ -17,6 +17,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Input` buttons styles for number `popupType`.
 - `limestone/InputField` to not clip icons in webOS system.
 - `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
+- `limestone/Panels.Header`  to match the latest GUI
 - `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
