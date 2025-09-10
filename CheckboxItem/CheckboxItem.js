@@ -210,7 +210,7 @@ const CheckboxItemGroup = (props) => {
 		itemProps: PropTypes.object
 	};
 
-	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` compoenents using `ui/Group`
+	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` components using `ui/Group`
 		return (
 			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
 				<Group
