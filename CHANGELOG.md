@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
 - `limestone/Input` buttons styles for number `popupType`.
 - `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
+- `limestone/Panels.Header`  to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
 ## [1.3.2] - 2025-09-02
