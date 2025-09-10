@@ -20,8 +20,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` buttons styles for overlay `type`.
 - `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
 - `limestone/Dropdown` by removing unnecessary aria props
 - `limestone/Input` buttons styles for number `popupType`.
+- `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
 - `limestone/VideoPlayer` to read out the timestamp properly
 
 ## [1.3.2] - 2025-09-02
