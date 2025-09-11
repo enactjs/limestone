@@ -3,6 +3,7 @@
 // Local theme font variables (not to be used externally)
 //
 @font-family-base-name: "Limestone";
+@font-family-base-name-sandstone: "Sandstone";
 
 // ----- SYSTEM FONT NAMES ------
 @font-system-src-limestone-condensed-300:  local("LG Smart UI Condensed Light"), local("LGSmartUICondensed-Light"), local("Miso"), url("../../fonts/Miso/Miso-Light.ttf") format("truetype");
@@ -35,6 +36,7 @@
 @font-system-src-non-latin-700:  local("LG Smart UI AR HE TH SemiBold"), local("LGSmartUIARHETH-SemiBold"), @font-web-src-th-locale;
 
 @font-system-src-limestone-icons:  local("Limestone Icons"), local("LimestoneIcons"), url("../../fonts/Limestone_Icons.ttf") format("truetype");
+@font-system-src-sandstone-icons:  local("Sandstone Icons"), local("SandstoneIcons"), url("../../fonts/Sandstone_Icons.ttf") format("truetype");
 @font-system-src-lg-icons:         @font-system-src-limestone-400, local("LG Smart UI Dingbat"), local("LGSmartUIDingbat");
 
 // Localized fonts
@@ -144,6 +146,7 @@
 
 /* ----- Limestone Icons ("Dingbat" Icons) ------ */
 .buildFontFace("@{font-family-base-name} Icons"; @font-system-src-limestone-icons);
+.buildFontFace("@{font-family-base-name-sandstone} Icons"; @font-system-src-sandstone-icons);
 
 /* ----- LG Icons ("Dingbat" Icons) ------ */
 .buildFontFace("LG Icons"; @font-system-src-lg-icons);

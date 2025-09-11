@@ -1,5 +1,5 @@
 import Heading from '@enact/limestone/Heading';
-import Icon, {IconBase} from '@enact/limestone/Icon';
+import Icon, {IconBase} from '@enact/limestone/IconSandstone';
 import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {range, select, text} from '@enact/storybook-utils/addons/controls';
@@ -10,9 +10,9 @@ import docs from '../../images/icon-enact-docs.png';
 import factory from '../../images/icon-enact-factory.svg';
 import logo from '../../images/icon-enact-logo.svg';
 
-import iconNames from '../helper/icons';
+import iconNames from '../helper/iconsSandstone';
 
-Icon.displayName = 'IconLimestone';
+Icon.displayName = 'IconSandstone';
 const Config = mergeComponentMetadata('Icon', UiIcon, IconBase, Icon);
 
 export default {
@@ -20,7 +20,7 @@ export default {
 	component: 'Icon'
 };
 
-export const _Icon = (args) => {
+export const _IconSandstone = (args) => {
 	const flip = args['flip'];
 
 	let size = args['size'];
@@ -57,16 +57,16 @@ export const _Icon = (args) => {
 	);
 };
 
-select('flip', _Icon, ['', 'auto', 'both', 'horizontal', 'vertical'], Config, '');
-select('size', _Icon, ['tiny', 'small', 'medium', 'large', 'custom number'], Config);
-range('size (number)', _Icon, Config, {min: 24, max: 480, step: 6}, 60);
-select('icon type', _Icon, ['glyph', 'url src', 'custom'], Config, 'glyph');
-select('icon', _Icon, ['', ...iconNames], Config, 'record');
-select('src', _Icon, [docs, factory, logo], Config, logo);
-text('custom icon', _Icon, Config);
+select('flip', _IconSandstone, ['', 'auto', 'both', 'horizontal', 'vertical'], Config, '');
+select('size', _IconSandstone, ['tiny', 'small', 'medium', 'large', 'custom number'], Config);
+range('size (number)', _IconSandstone, Config, {min: 24, max: 480, step: 6}, 60);
+select('icon type', _IconSandstone, ['glyph', 'url src', 'custom'], Config, 'glyph');
+select('icon', _IconSandstone, ['', ...iconNames], Config, 'record');
+select('src', _IconSandstone, [docs, factory, logo], Config, logo);
+text('custom icon', _IconSandstone, Config);
 
-_Icon.storyName = 'IconLimestone';
-_Icon.parameters = {
+_IconSandstone.storyName = 'IconSandstone';
+_IconSandstone.parameters = {
 	info: {
 		text: 'Basic usage of Icon'
 	}

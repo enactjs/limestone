@@ -3,6 +3,7 @@ import Icon from '@enact/limestone/Icon';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import UiItem, {ItemBase as UiItemBase} from '@enact/ui/Item';
+import {_DatePicker} from "./DatePicker";
 
 const Config = mergeComponentMetadata('Item', UiItemBase, UiItem, ItemBase, Item);
 Item.displayName = 'Item';
@@ -42,7 +43,9 @@ text('label', _Item, Config);
 select('labelPosition', _Item, ['above', 'below', 'before', 'after'], Config);
 select('size', _Item, ['small', 'large'], Config);
 select('slotBefore', _Item, {'': '', '<Icon />': 'icon'}, Config);
+text('slotBeforeAria', _Item, Config);
 select('slotAfter', _Item, {'': '', '<Icon />': 'icon'}, Config);
+text('slotAfterAria', _Item, Config);
 text('children', _Item, Config, 'Hello Item');
 
 _Item.storyName = 'Item';
