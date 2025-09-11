@@ -93,8 +93,14 @@
 			outline-offset: -@lime-overlay-outline-width;
 		}
 
-		:has(:global(.highContrast)) & .tabGroup {
+		.tabGroup {
 			background-color: @lime-popuptablayout-content-background-color;
+			
+			.tab {
+				.icon {
+					--icon-size: @lime-popuptablayout-tab-icon-size;
+				}
+			}
 		}
 
 		:global(.noAnimation) & {
@@ -131,19 +137,19 @@
 	> .viewport {
 		position: static;
 		.position(auto);
-	}
-}
 
-// Overrides for Panel
-.panel {
-	padding: 0;
-	max-height: @popupTabLayout-max-height;
+		// Overrides for Panel
+		.panel {
+			padding: 0;
+			max-height: @popupTabLayout-max-height;
 
-	> .body {
-		display: flex;
-		flex-direction: column;
-		flex: 0 1 auto;  // Allow this node to vertically shrink to fit the content but not extend larger than the container.
-		padding: @lime-popuptablayout-panel-body-padding;
+			> .body {
+				display: flex;
+				flex-direction: column;
+				flex: 0 1 auto;  // Allow this node to vertically shrink to fit the content but not extend larger than the container.
+				padding: @lime-popuptablayout-panel-body-padding;
+			}
+		}
 	}
 }
 

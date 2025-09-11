@@ -2,6 +2,34 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/CheckboxItem` `CheckboxItemGroup` to wrap multiple checkbox items as a list
+- `limestone/Item` props `slotAfterAria` and `slotBeforeAria` for audio guidance of slotAfter and slotBefore
+- `limstone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
+- `limestone/VirtualList` prop `continue5WayHold` to scroll continuously from in a VirtualList to the outer scroller.
+
+### Changed
+
+- `limestone/Chips` audio guidance for chip button and delete button
+- `limestone/ImageItem` audio guidance for selected
+
+### Fixed
+
+- `limestone/Alert` buttons styles for overlay `type`.
+- `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
+- `limestone/DatePicker` to match the latest GUI
+- `limestone/Dropdown` by removing unnecessary aria props
+- `limestone/Input` buttons styles for number `popupType`.
+- `limestone/InputField` to not clip icons in webOS system.
+- `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
+- `limestone/Panels.Header`  to match the latest GUI
+- `limestone/TimePicker` to match the latest GUI
+- `limestone/VideoPlayer` to read out the timestamp properly
+
 ## [1.3.2] - 2025-09-02
 
 ### Fixed

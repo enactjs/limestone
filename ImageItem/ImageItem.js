@@ -23,6 +23,7 @@ import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
+import $L from '../internal/$L';
 import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
@@ -239,6 +240,9 @@ const ImageItemBase = kind({
 	},
 
 	computed: {
+		'aria-label': ({children, label, selected, showSelection}) => {
+			return `${children || ''}${label ? ` ${label}` : ''}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
+		},
 		children: ({centered, children, css, 'data-index': index, imageIconComponent, imageIconSrc, label, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 
@@ -299,11 +303,6 @@ const ImageItemBase = kind({
 		delete rest.imageIconSrc;
 		delete rest.label;
 		delete rest.wideImage;
-
-		if (showSelection) {
-			rest['role'] = 'checkbox';
-			rest['aria-checked'] = rest.selected;
-		}
 
 		return (
 			<UiImageItem
