@@ -1,3 +1,5 @@
+@import "../styles/variables.less";
+
 // Motion Tokens
 
 /* ---------------------------------------
@@ -78,19 +80,19 @@ Keyframes
 /* Press
 	------------------------------------------ */
 @keyframes press-motion {
-	0% {transform: scale(1.15)}
-	100% {transform: scale(1.05)}
+	0% {transform: @lime-button-focusexpand-focus-bg-transform}
+	100% {transform: @lime-button-focusexpand-pressed-bg-transform}
 }
 
 @keyframes release-motion {
-	100% {transform: scale(1.15)}
+	100% {transform: @lime-button-focusexpand-focus-bg-transform}
 }
 
 @keyframes no-expand-press-motion {
-	0% {transform: scale(1.0)}
-	100% {transform: scale(0.9)}
+	0% {transform: @lime-button-noanimation-focusexpand-focus-bg-transform}
+	100% {transform: @lime-button-noanimation-focusexpand-pressed-bg-transform}
 }
 
 @keyframes no-expand-release-motion {
-	100% {transform: scale(1.0)}
+	100% {transform: @lime-button-noanimation-focusexpand-focus-bg-transform}
 }
