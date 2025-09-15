@@ -17,7 +17,6 @@ import Heading from '../Heading';
 import $L from '../internal/$L';
 import {PanelsStateContext} from '../internal/Panels';
 import {useContextAsDefaults} from '../internal/Panels/util';
-import {PopupTabLayoutStateContext} from '../PopupTabLayout';
 import Skinnable from '../Skinnable';
 
 
@@ -527,10 +526,9 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 	function ContextAsDefaultsHeader (props) {
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
-		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
-		const isPopupHeader = (panelsType || tabLayoutType)?.toLowerCase().includes('popup');
+		const isPopupHeader = panelsType?.toLowerCase().includes('popup');
 
 		return provideContextAsDefaults(
 			<Wrapped
