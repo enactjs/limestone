@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.4.0] - 2025-09-15
 
 ### Added
 
@@ -13,7 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
-- `limestone/Chips` audio guidance for chip button and delete button
+- `limestone/Chip` audio guidance for chip button and delete button
 - `limestone/ImageItem` audio guidance for selected
 
 ### Fixed
