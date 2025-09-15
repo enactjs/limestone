@@ -10,7 +10,6 @@ import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, select} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
-import Spotlight from '@enact/spotlight';
 import {VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList/VirtualListBasic';
 import PropTypes from 'prop-types';
 import {Component} from 'react';
@@ -382,6 +381,7 @@ const VirtualGridListInScroller = ({args, onNext, ...rest}) => {
 		virtualGridLists.push(
 			<VirtualGridList
 				{...virtualGridListProps}
+				continue5WayHold={args['continue5WayHold']}
 				hoverToScroll={args['hoverToScroll']}
 				id={id}
 				key={id}
@@ -409,12 +409,6 @@ class VirtualGridListInScrollerSamples extends Component {
 		this.state = {
 			index: 0
 		};
-	}
-
-	componentDidMount () {
-		for (let i = 0; i < numOfListsInScroller; i++) {
-			Spotlight.set(idOfListsInScroller(i), {continue5WayHold: true});
-		}
 	}
 
 	onBack = () => {
@@ -449,6 +443,7 @@ VirtualGridListInScrollerSamples.propTypes = {
 
 export const RestoreFocusInScroller = (args) => <VirtualGridListInScrollerSamples args={args} />;
 
+boolean('continue5WayHold', RestoreFocusInScroller, Config);
 number('dataSize', RestoreFocusInScroller, Config, defaultDataSize);
 boolean('hoverToScroll', RestoreFocusInScroller, Config);
 number('minWidth', RestoreFocusInScroller, Config, 688);

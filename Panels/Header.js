@@ -12,13 +12,13 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children, use, useState} from 'react';
 
-import $L from '../internal/$L';
 import Button from '../Button';
 import Heading from '../Heading';
-import Skinnable from '../Skinnable';
-
+import $L from '../internal/$L';
 import {PanelsStateContext} from '../internal/Panels';
 import {useContextAsDefaults} from '../internal/Panels/util';
+import Skinnable from '../Skinnable';
+
 
 import componentCss from './Header.module.less';
 
