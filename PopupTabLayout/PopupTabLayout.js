@@ -22,7 +22,7 @@ import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/conta
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {Component, createContext, use, useEffect} from 'react';
+import {Component, use, useEffect} from 'react';
 import compose from 'ramda/src/compose';
 
 import Skinnable from '../Skinnable';
@@ -31,8 +31,6 @@ import TabLayout, {TabLayoutContext, Tab} from '../TabLayout';
 import Popup from '../Popup';
 
 import componentCss from './PopupTabLayout.module.less';
-
-const PopupTabLayoutStateContext = createContext({});
 
 // List all the props from PopupTabLayout that we want to move from this component's root onto PopupTabLayout.
 const popupPropList = ['noAutoDismiss', 'onHide', 'onKeyDown', 'onShow', 'open',
@@ -306,19 +304,17 @@ const PopupTabLayoutBase = kind({
 		}
 
 		return (
-			<PopupTabLayoutStateContext value={{type: 'popupTabLayout'}}>
-				<PopupComponent {...popupProps}>
-					<TabLayout
-						{...rest}
-						css={css}
-						align="start"
-						anchorTo="left"
-						type="popup"
-					>
-						{children}
-					</TabLayout>
-				</PopupComponent>
-			</PopupTabLayoutStateContext>
+			<PopupComponent {...popupProps}>
+				<TabLayout
+					{...rest}
+					css={css}
+					align="start"
+					anchorTo="left"
+					type="popup"
+				>
+					{children}
+				</TabLayout>
+			</PopupComponent>
 		);
 	}
 });
@@ -584,7 +580,6 @@ export {
 	PopupTabLayout,
 	PopupTabLayoutBase,
 	PopupTabLayoutDecorator,
-	PopupTabLayoutStateContext,
 	Tab,
 	TabPanels,
 	TabPanelsBase,
