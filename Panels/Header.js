@@ -531,7 +531,7 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
 		const isPopupHeader = (panelsType || tabLayoutType)?.toLowerCase().includes('popup');
-console.log(panelsType, tabLayoutType);
+
 		return provideContextAsDefaults(
 			<Wrapped
 				{...contextProps}
