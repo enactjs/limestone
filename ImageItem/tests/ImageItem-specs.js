@@ -156,20 +156,12 @@ describe('ImageItem', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should have `checkbox` role when `showSelection` is true', () => {
-		render(<ImageItemBase showSelection />);
-
-		const actual = screen.getByRole('checkbox');
-
-		expect(actual).toBeInTheDocument();
-	});
-
-	test('should be `checked` when `showSelection` and `selected` props are true', () => {
+	test('should have "Selected" in `aria-label` when `showSelection` and `selected` is true', () => {
 		render(<ImageItemBase selected showSelection />);
 
-		const actual = screen.getByRole('checkbox');
+		const actual = screen.getByLabelText('Selected');
 
-		expect(actual).toBeChecked();
+		expect(actual).toBeInTheDocument();
 	});
 
 	test('should support `wideImage` prop', () => {

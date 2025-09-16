@@ -1,6 +1,5 @@
 import Button from '@enact/limestone/Button';
 import ri from '@enact/ui/resolution';
-import {Fragment} from 'react';
 
 import icons from '../../helper/icons';
 
@@ -11,12 +10,12 @@ export const divMargin = {margin: ri.scaleToRem(24)};
 // Work around a storybook control rendering issue.
 export const buttons = {
 	'no buttons': null,
-	'one button': (<Button>Single Button</Button>),
+	'one button': (<buttons><Button>Single Button</Button></buttons>),
 	'two buttons': (
-		<Fragment>
+		<buttons>
 			<Button>Button One of Two</Button>
 			<Button>Button Two of Two</Button>
-		</Fragment>
+		</buttons>
 	)
 };
 
