@@ -8,7 +8,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Panels.Header` to match the latest GUI
 
-
 ## [1.4.0] - 2025-09-15
 
 ### Added
