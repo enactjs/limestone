@@ -160,7 +160,7 @@ const useEventKey = (props, instances, context) => {
 		if (getDirection(keyCode)) {
 			scrollContainerHandle.current.lastInputType = 'arrowKey';
 		}
-	};
+	}
 
 	utilEvent('keydown').addEventListener(document, applyLastInputType);
 
