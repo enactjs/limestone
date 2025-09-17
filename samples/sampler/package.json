@@ -1,6 +1,6 @@
 {
   "name": "limestone-sampler",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Component and QA samples for Limestone",
   "private": true,
   "main": "index.js",

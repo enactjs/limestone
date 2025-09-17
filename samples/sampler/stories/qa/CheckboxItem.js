@@ -1,4 +1,4 @@
-import CheckboxItem from '@enact/limestone/CheckboxItem';
+import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import Item, {ItemBase} from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
@@ -86,9 +86,7 @@ text('children', WithRightToLeftText, Config, prop.rtlText);
 WithRightToLeftText.storyName = 'with right to left text';
 
 export const Grouped = (args) => (
-	<Group
-		childComponent={CheckboxItem}
-		childSelect="onToggle"
+	<CheckboxItemGroup
 		itemProps={{
 			inline: args['itemProps-inline'],
 			disabled: args['itemProps-disabled']
@@ -99,7 +97,7 @@ export const Grouped = (args) => (
 		onSelect={action('onSelect')}
 	>
 		{['Checkbox Item 1', 'Checkbox Item 2', 'Checkbox Item 3']}
-	</Group>
+	</CheckboxItemGroup>
 );
 
 boolean('itemProps-disabled', Grouped, Config, false);

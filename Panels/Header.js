@@ -12,13 +12,14 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children, use, useState} from 'react';
 
-import $L from '../internal/$L';
 import Button from '../Button';
 import Heading from '../Heading';
-import Skinnable from '../Skinnable';
-
+import $L from '../internal/$L';
 import {PanelsStateContext} from '../internal/Panels';
 import {useContextAsDefaults} from '../internal/Panels/util';
+import {PopupTabLayoutStateContext} from '../PopupTabLayout/PopupTabLayoutStateContext';
+import Skinnable from '../Skinnable';
+
 
 import componentCss from './Header.module.less';
 
@@ -526,9 +527,10 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 	function ContextAsDefaultsHeader (props) {
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
+		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
-		const isPopupHeader = panelsType?.toLowerCase().includes('popup');
+		const isPopupHeader = (panelsType || tabLayoutType)?.toLowerCase().includes('popup');
 
 		return provideContextAsDefaults(
 			<Wrapped
