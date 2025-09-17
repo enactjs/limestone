@@ -30,6 +30,8 @@ import Panels, {Panel} from '../Panels';
 import TabLayout, {TabLayoutContext, Tab} from '../TabLayout';
 import Popup from '../Popup';
 
+import {PopupTabLayoutStateContext} from './PopupTabLayoutStateContext';
+
 import componentCss from './PopupTabLayout.module.less';
 
 // List all the props from PopupTabLayout that we want to move from this component's root onto PopupTabLayout.
@@ -304,17 +306,19 @@ const PopupTabLayoutBase = kind({
 		}
 
 		return (
-			<PopupComponent {...popupProps}>
-				<TabLayout
-					{...rest}
-					css={css}
-					align="start"
-					anchorTo="left"
-					type="popup"
-				>
-					{children}
-				</TabLayout>
-			</PopupComponent>
+			<PopupTabLayoutStateContext value={{type: 'popupTabLayout'}}>
+				<PopupComponent {...popupProps}>
+					<TabLayout
+						{...rest}
+						css={css}
+						align="start"
+						anchorTo="left"
+						type="popup"
+					>
+						{children}
+					</TabLayout>
+				</PopupComponent>
+			</PopupTabLayoutStateContext>
 		);
 	}
 });
