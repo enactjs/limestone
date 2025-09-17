@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Panels.Header` to match the latest GUI
+- `limestone/VideoPlayer` position of feedback content
 
 ## [1.4.0] - 2025-09-15
 
