@@ -102,6 +102,14 @@ const CardBase = kind({
 		centered: PropTypes.bool,
 
 		/**
+		 * Centers the image when `imageIconSrc` is provided.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		centeredImage: PropTypes.bool,
+
+		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
 		 *
