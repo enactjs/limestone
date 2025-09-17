@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
+
 ## [1.4.0] - 2025-09-15
 
 ### Added
