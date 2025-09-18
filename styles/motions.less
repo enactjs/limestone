@@ -20,12 +20,18 @@ Animations properties
 	--lime-motion-default-duration: 200ms;
 	--lime-bounce-motion-duration: var(--lime-motion-default-duration);
 	--lime-check-motion-duration: 400ms;
+	--lime-focus-in-motion-duration: 300ms;
+	--lime-focus-out-motion-duration: 500ms;
 
 	/* ---------------------------------------
 	Easing functions
 	------------------------------------------ */
+	--lime-EIO-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
+	--lime-EO-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
 	--lime-default-motion-easing-function: linear;
 	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
+	--lime-focus-in-motion-easing-function: var(--lime-EIO-easing-function);
+	--lime-focus-out-motion-easing-function: var(--lime-EO-easing-function);
 
 	/* ---------------------------------------
 	Keyframes names
