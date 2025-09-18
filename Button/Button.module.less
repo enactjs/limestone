@@ -312,6 +312,7 @@
 
 		.bg {
 			.lime-button-resting-bg-colors();
+			.lime-focus-out-motion();
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
 			border-color: @lime-button-outline-border-color;
@@ -478,7 +479,7 @@
 			&.focusExpand {
 				.bg {
 					.lime-bg-colors({
-						transform: @lime-button-focusexpand-focus-bg-transform;
+						.lime-focus-in-motion();
 					});
 				}
 			}
