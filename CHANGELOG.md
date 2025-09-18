@@ -4,6 +4,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 [unreleased]
 
+### Changed
+
+- `limestone/Panels` to match the latest GUI
+- `limestone/PopupTabLayout` to match the latest GUI
+
 ### Fixed
 
 - `limestone/FlexiblePopupPanels` to match the latest GUI

@@ -257,3 +257,25 @@
 		}
 	});
 }
+
+.applySkins({
+	.header {
+		&.compact {
+			&.isPopupHeader {
+				&.slotAfter {
+					.enact-locale-rtl({
+						padding: @lime-header-compact-padding;
+						padding-left: (
+							.extract(@lime-header-compact-padding, left)[]
+							- @lime-header-popup-compact-slotafter-padding-offset
+						)
+					});
+					padding-right: (
+						.extract(@lime-header-compact-padding, right)[]
+						- @lime-header-popup-compact-slotafter-padding-offset
+					)
+				}
+			}
+		}
+	}
+});
