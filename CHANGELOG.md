@@ -2,10 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+[unreleased]
 
 ### Fixed
 
+- `limestone/FlexiblePopupPanels` to match the latest GUI
+- `limestone/Panels.Header` to match the latest GUI
+- `limestone/VideoPlayer` position of feedback content
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
 ## [1.4.0] - 2025-09-15
@@ -32,7 +35,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Input` buttons styles for number `popupType`.
 - `limestone/InputField` to not clip icons in webOS system.
 - `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
-- `limestone/Panels.Header`  to match the latest GUI
+- `limestone/Panels.Header` to match the latest GUI
 - `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
