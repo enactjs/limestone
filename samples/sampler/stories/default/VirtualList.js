@@ -71,7 +71,6 @@ number('dataSize', _VirtualList, VirtualListConfig, defaultDataSize);
 select('horizontalScrollbar', _VirtualList, prop.scrollbarOption, VirtualListConfig);
 boolean('hoverToScroll', _VirtualList, VirtualListConfig);
 number('itemSize', _VirtualList, VirtualListConfig, 156);
-number('itemSize', _VirtualList, VirtualListConfig, 156);
 boolean('noScrollByWheel', _VirtualList, VirtualListConfig);
 select('scrollMode', _VirtualList, prop.scrollModeOption, VirtualListConfig);
 number('spacing', _VirtualList, VirtualListConfig);

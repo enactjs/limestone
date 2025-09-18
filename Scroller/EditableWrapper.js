@@ -604,9 +604,9 @@ const EditableWrapper = (props) => {
 		if (selectItemBy === 'press') {
 			if (getPointerMode()) {
 				Spotlight.setPointerMode(false);
-				Spotlight.focus(focusTarget);
 			}
 
+			Spotlight.focus(focusTarget);
 			focusItem(focusTarget);
 		}
 		setTimeout(() => {
@@ -988,6 +988,16 @@ const EditableWrapper = (props) => {
 				} else {
 					iconItemWrapper.children[1].ariaLabel += ` ${$L('Press the OK button to move or press the up button to select other options.')}`;
 				}
+			}
+		});
+	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	// We set 'data-is-hiding' for all hidden items at component mount
+	useEffect(() => {
+		children.map((child, index) => {
+			if (index >= mutableRef.current.hideIndex) {
+				const hiddenElement = document.querySelector('[aria-label="' + child.props['aria-label'] + '"]');
+				hiddenElement.setAttribute('data-is-hiding', true);
 			}
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps

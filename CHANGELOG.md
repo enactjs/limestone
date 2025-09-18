@@ -2,6 +2,31 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/VideoPlayer` to read out the timestamp properly
+
+## [1.3.2] - 2025-09-02
+
+### Fixed
+
+- `limestone/Alert` to show the outline appropriately in high-contrast mode
+- `limestone/Button` icon color to support style override
+- `limestone/Card` audio guidance to translate
+- `limestone/Card` `background` and `border` for `focusRing` mode
+- `limestone/KeyGuide` to show the outline appropriately in high-contrast mode
+- `limestone/Scroller` with `editable` prop to remain focused on the selected item when completing edit by down or enter key in pointer mode
+- `limestone/PopupTabLayout` to show the background color appropriately in high-contrast mode
+
+## [1.3.1] - 2025-08-14
+
+### Changed
+
+- Global variable from `ILIB_SANDSTONE_PATH` to `ILIB_LIMESTONE_PATH`
+
 ## [1.3.0] - 2025-08-08
 
 ### Added
