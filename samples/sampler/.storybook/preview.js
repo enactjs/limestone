@@ -42,7 +42,8 @@ const backgrounds = {
 
 const skins = {
 	'Neutral': 'neutral',
-	'Light': 'light'
+	'Light': 'light',
+	'Christmas': 'christmas'
 };
 
 configureActions();

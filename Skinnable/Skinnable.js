@@ -13,6 +13,7 @@ const defaultConfig = {
 	skins: {
 		neutral: 'neutral',
 		light: 'light',
+		christmas: 'christmas',
 		game: 'game'
 	},
 	allowedVariants: ['focusRing', 'highContrast', 'largeText', 'grayscale'],
