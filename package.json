@@ -46,7 +46,7 @@
     "@enact/webos": "^5.2.1",
     "@enovaui/core-tokens": "^0.8.0",
     "@enovaui/webos-tokens": "^0.8.0",
-    "@enovaui/design-tokens": "git+ssh://git@github.com:enovaui/design-tokens.git#feature/swp-demo",
+    "@enovaui/design-tokens": "git+ssh://git@github.com:enovaui/design-tokens.git#temp/swp-demo",
     "classnames": "^2.5.1",
     "ilib": "^14.21.0 || ^14.21.0-webos1",
     "invariant": "^2.2.4",
