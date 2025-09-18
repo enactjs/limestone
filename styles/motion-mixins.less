@@ -7,10 +7,6 @@ Motion Variables
 ------------------------------------------ */
 @lime-bounce-motion: var(--lime-bounce-motion);
 @lime-check-motion: var(--lime-check-motion);
-@lime-press-motion: var(--lime-press-motion);
-@lime-release-motion: var(--lime-release-motion);
-@lime-no-expand-press-motion: var(--lime-no-expand-press-motion);
-@lime-no-expand-release-motion: var(--lime-no-expand-release-motion);
 
 /* ---------------------------------------
 Motion Mixins
@@ -31,7 +27,7 @@ Motion Mixins
 }
 
 .lime-focus-in-motion() {
-	transform: scale(1.15);
+	transform: @lime-button-focusexpand-focus-bg-transform;
 	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
 }
 
@@ -40,17 +36,21 @@ Motion Mixins
 }
 
 .lime-press-motion() {
-	animation: @lime-press-motion;
+	transform: @lime-button-focusexpand-pressed-bg-transform;
+	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
 }
 
 .lime-release-motion() {
-	animation: @lime-release-motion;
+	transform: @lime-button-focusexpand-focus-bg-transform;
+	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
 .lime-no-expand-press-motion() {
-	animation: @lime-no-expand-press-motion;
+	transform: @lime-button-noanimation-focusexpand-pressed-bg-transform;
+	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
 }
 
 .lime-no-expand-release-motion() {
-	animation: @lime-no-expand-release-motion;
+	transform: @lime-button-noanimation-focusexpand-focus-bg-transform;
+	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }

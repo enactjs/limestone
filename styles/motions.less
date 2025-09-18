@@ -10,10 +10,6 @@ Animations
 	------------------------------------------ */
 	--lime-bounce-motion: var(--lime-bounce-animation-name) var(--lime-bounce-motion-duration) var(--lime-bounce-motion-easing-function);
 	--lime-check-motion: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
-	--lime-press-motion: var(--lime-press-animation-name) var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
-	--lime-release-motion: var(--lime-release-animation-name) var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
-	--lime-no-expand-press-motion: var(--lime-no-expand-press-animation-name) var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
-	--lime-no-expand-release-motion: var(--lime-no-expand-release-animation-name) var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
 /* ---------------------------------------
@@ -26,24 +22,24 @@ Animations properties
 	--lime-motion-default-duration: 200ms;
 	--lime-motion-medium1-duration: 250ms;
 	--lime-motion-medium2-duration: 300ms;
+	--lime-motion-medium4-duration: 400ms;
+	--lime-motion-long2-duration: 500ms;
 	--lime-bounce-motion-duration: var(--lime-motion-default-duration);
-	--lime-check-motion-duration: 400ms;
-	--lime-focus-in-motion-duration: 300ms;
-	--lime-focus-out-motion-duration: 500ms;
+	--lime-check-motion-duration: var(--lime-motion-medium4-duration);
+	--lime-focus-in-motion-duration: var(--lime-motion-medium2-duration);
+	--lime-focus-out-motion-duration: var(--lime-motion-long2-duration);
 	--lime-press-motion-duration: var(--lime-motion-medium1-duration);
 	--lime-release-motion-duration: var(--lime-motion-medium2-duration);
 
 	/* ---------------------------------------
 	Easing functions
 	------------------------------------------ */
-	--lime-EIO-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
-	--lime-EO-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
 	--lime-default-motion-easing-function: linear;
 	--lime-EIO-motion-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
 	--lime-EO-motion-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
 	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
-	--lime-focus-in-motion-easing-function: var(--lime-EIO-easing-function);
-	--lime-focus-out-motion-easing-function: var(--lime-EO-easing-function);
+	--lime-focus-in-motion-easing-function: var(--lime-EIO-motion-easing-function);
+	--lime-focus-out-motion-easing-function: var(--lime-EO-motion-easing-function);
 	--lime-press-motion-easing-function: var(--lime-EIO-motion-easing-function);
 	--lime-release-motion-easing-function: var(--lime-EO-motion-easing-function);
 
@@ -52,10 +48,6 @@ Animations properties
 	------------------------------------------ */
 	--lime-bounce-animation-name: bounce-motion;
 	--lime-check-animation-name: check-motion;
-	--lime-press-animation-name: press-motion;
-	--lime-release-animation-name: release-motion;
-	--lime-no-expand-press-animation-name: no-expand-press-motion;
-	--lime-no-expand-release-animation-name: no-expand-release-motion;
 
 	/* ---------------------------------------
 	Keyframes values
@@ -81,24 +73,4 @@ Keyframes
 @keyframes check-motion {
 	0% {transform: translateX(0)}
 	100% {transform: translateX(100%)}
-}
-
-/* Press
-	------------------------------------------ */
-@keyframes press-motion {
-	0% {transform: @lime-button-focusexpand-focus-bg-transform}
-	100% {transform: @lime-button-focusexpand-pressed-bg-transform}
-}
-
-@keyframes release-motion {
-	100% {transform: @lime-button-focusexpand-focus-bg-transform}
-}
-
-@keyframes no-expand-press-motion {
-	0% {transform: @lime-button-noanimation-focusexpand-focus-bg-transform}
-	100% {transform: @lime-button-noanimation-focusexpand-pressed-bg-transform}
-}
-
-@keyframes no-expand-release-motion {
-	100% {transform: @lime-button-noanimation-focusexpand-focus-bg-transform}
 }
