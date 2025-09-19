@@ -6,7 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Card` `centeredimage` prop to allow developers to center the image
+- `limestone/Card` `fitImage` prop to allow developers to center the image
 
 ### Fixed
 

@@ -102,14 +102,6 @@ const CardBase = kind({
 		centered: PropTypes.bool,
 
 		/**
-		 * Centers the image
-		 *
-		 * @type {Boolean}
-		 * @public
-		 */
-		centeredImage: PropTypes.bool,
-
-		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
 		 *
@@ -133,6 +125,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Centers the image
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		fitImage: PropTypes.bool,
 
 		/**
 		 * Set to `true` to display a container with background color.
