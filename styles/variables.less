@@ -523,7 +523,7 @@
 @lime-flexiblepopuppanels-padding: 0 60px (36px + (18px * 1.75));  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
 @lime-flexiblepopuppanels-panel-border-radius: var(--semantic-radius-overlay);
 @lime-flexiblepopuppanels-panel-margin: 0 60px;
-@lime-flexiblepopuppanels-panel-padding: 60px (60px - @lime-component-spacing);
+@lime-flexiblepopuppanels-panel-padding: 60px;
 @lime-flexiblepopuppanels-body-padding: 0 108px;
 @lime-flexiblepopuppanels-navbutton-margin: 0;
 @lime-flexiblepopuppanels-small-width: 600px;
@@ -535,6 +535,7 @@
 
 // Header
 // ---------------------------------------
+@lime-header-popup-titleRow-height: 204px;
 @lime-header-slotabove-margin: 0 -@lime-component-spacing var(--primitive-spacing-24) -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
@@ -791,9 +792,13 @@
 @lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
 @lime-inputfield-height: 168px;
 @lime-inputfield-width: 1560px;
+@lime-inputfield-withoneicon-width: 1386px;
+@lime-inputfield-withtwoicons-width: 1272px;
 @lime-inputfield-small-height: 132px;
 @lime-inputfield-highlight-height: 100%;
 @lime-inputfield-small-width: 1200px;
+@lime-inputfield-small-withoneicon-width: 990px;
+@lime-inputfield-small-withtwoicons-width: 876px;
 
 // Item
 // ---------------------------------------

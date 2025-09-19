@@ -7,6 +7,7 @@ import compose from 'ramda/src/compose';
 import {use, useCallback, useEffect, useRef} from 'react';
 
 import Button from '../Button';
+import $L from '../internal/$L';
 import Skinnable from '../Skinnable';
 
 import {ChipsContext} from './Chips';
@@ -161,6 +162,7 @@ const ChipBase = (props) => {
 			ref={containerRef}
 		>
 			<Button
+				aria-label={children + ' ' + $L("Chip")}
 				css={css}
 				className={chipClassName}
 				data-chip-index={id}
@@ -171,6 +173,7 @@ const ChipBase = (props) => {
 				onFocus={handleFocus}
 				onClick={onClick}
 				ref={chipRef}
+				role="button"
 				roundBorder
 			>
 				{children}
@@ -178,12 +181,14 @@ const ChipBase = (props) => {
 			{deleteButton &&
 				<div className={buttonClassName} ref={deleteButtonRef}>
 					<Button
+						aria-label={children + ' ' + $L("Delete")}
 						css={css}
 						backgroundOpacity="transparent"
 						disabled={disabled}
 						icon={deleteButton?.icon || 'closex'}
 						size="small"
 						onClick={handleDelete}
+						role="button"
 						roundBorder
 					/>
 				</div>
