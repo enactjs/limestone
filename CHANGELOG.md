@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 [unreleased]
 
+### Added
+
+- `limestone/Card` `centeredimage` prop to allow developers to center the image
+
 ### Fixed
 
 - `limestone/FlexiblePopupPanels` to match the latest GUI
