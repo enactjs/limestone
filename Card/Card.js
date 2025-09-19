@@ -127,7 +127,7 @@ const CardBase = kind({
 		disabled: PropTypes.bool,
 
 		/**
-		 * Centers the image
+		 * Fits the image to its height and width and positions it on the center of the Card
 		 *
 		 * @type {Boolean}
 		 * @public
