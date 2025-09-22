@@ -2,7 +2,11 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-[unreleased]
+## [unreleased]
+
+### Added
+
+- `limestone/Card` `fitImage` prop to allow image to fit the container by height and be centered
 
 ### Fixed
 
