@@ -561,7 +561,6 @@ const HeaderMeasurementDecorator = (Wrapped) => {
 		const lastSlotSizeRef = useRef(null);
 		const [{slotSize, prevSlotBeforeWidth, prevSlotAfterWidth}, setSlotSize] = useState({});
 
-		// measure synchronously before paint
 		useEffect(() => {
 			const slotBeforeElement = slotBeforeRef.current;
 			const slotAfterElement = slotAfterRef.current;
