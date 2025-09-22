@@ -12,6 +12,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/FlexiblePopupPanels` to match the latest GUI
 - `limestone/Panels.Header` to match the latest GUI
+- `limestone/Panels.Header` to stop layout shifting
 - `limestone/VideoPlayer` position of feedback content
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
