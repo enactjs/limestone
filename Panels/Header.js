@@ -9,7 +9,7 @@ import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, use, useLayoutEffect, useRef, useState} from 'react';
+import {Children, use, useEffect, useRef, useState} from 'react';
 
 import Button from '../Button';
 import Heading from '../Heading';
@@ -562,7 +562,7 @@ const HeaderMeasurementDecorator = (Wrapped) => {
 		const [{slotSize, prevSlotBeforeWidth, prevSlotAfterWidth}, setSlotSize] = useState({});
 
 		// measure synchronously before paint
-		useLayoutEffect(() => {
+		useEffect(() => {
 			const slotBeforeElement = slotBeforeRef.current;
 			const slotAfterElement = slotAfterRef.current;
 
