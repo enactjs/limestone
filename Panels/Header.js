@@ -558,43 +558,35 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 
 const HeaderMeasurementDecorator = (Wrapped) => {
 	return function HeaderMeasurementDecorator (props) { // eslint-disable-line no-shadow
-		const {slotBefore, slotAfter, ...rest} = props;
 		const slotBeforeRef = useRef(null);
 		const slotAfterRef = useRef(null);
-
-		// keep the last known numeric slotSize
 		const lastSlotSizeRef = useRef(null);
-
-		const [{slotSize, prevSlotBefore, prevSlotAfter}, setSlotSize] = useState({
-			slotSize: lastSlotSizeRef.current,
-			prevSlotBefore: null,
-			prevSlotAfter: null
-		});
+		const [{slotSize, prevSlotBeforeWidth, prevSlotAfterWidth}, setSlotSize] = useState({});
 
 		// measure synchronously before paint
 		useLayoutEffect(() => {
 			const slotBeforeElement = slotBeforeRef.current;
 			const slotAfterElement = slotAfterRef.current;
 
-			const slotBeforePx = (slotBeforeElement && slotBeforeElement.getBoundingClientRect) ? slotBeforeElement.getBoundingClientRect().width : 0;
-			const slotAfterPx  = (slotAfterElement  && slotAfterElement.getBoundingClientRect)  ? slotAfterElement.getBoundingClientRect().width  : 0;
+			const slotBeforeWidth = (slotBeforeElement && slotBeforeElement.getBoundingClientRect) ? slotBeforeElement.getBoundingClientRect().width : 0;
+			const slotAfterWidth  = (slotAfterElement  && slotAfterElement.getBoundingClientRect)  ? slotAfterElement.getBoundingClientRect().width  : 0;
 
-			// update only when measurements changed
-			if (slotBeforePx !== prevSlotBefore || slotAfterPx !== prevSlotAfter) {
-				const largest = Math.max(slotBeforePx, slotAfterPx);
-				// if largest changed, update slotSize; otherwise just update prev widths
-				if (largest !== slotSize) {
-					lastSlotSizeRef.current = largest;
+			// If the slot width has changed, re-run this.
+			if (slotBeforeWidth !== prevSlotBeforeWidth || slotAfterWidth !== prevSlotAfterWidth) {
+				const largestSlotSize = Math.max(slotBeforeWidth, slotAfterWidth);
+				// And only do this the largest slot is a different value this time around.
+				if (slotSize !== largestSlotSize) {
+					lastSlotSizeRef.current = largestSlotSize;
 					setSlotSize({
-						slotSize: largest,
-						prevSlotBefore: slotBeforePx,
-						prevSlotAfter: slotAfterPx
+						slotSize: largestSlotSize,
+						prevSlotBeforeWidth: slotBeforeWidth,
+						prevSlotAfterWidth: slotAfterWidth
 					});
 				} else {
-					setSlotSize(s => ({...s, prevSlotBefore: slotBeforePx, prevSlotAfter: slotAfterPx}));
+					setSlotSize(s => ({...s, prevSlotBeforeWidth: slotBeforeWidth, prevSlotAfterWidth: slotAfterWidth}));
 				}
 			}
-		}, [slotBefore, slotAfter, prevSlotBefore, prevSlotAfter, slotSize]);
+		}, [props.slotBefore, props.slotAfter, prevSlotBeforeWidth, prevSlotAfterWidth, slotSize]);
 
 		const measurableProps = {
 			slotBeforeRef,
@@ -602,7 +594,7 @@ const HeaderMeasurementDecorator = (Wrapped) => {
 			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : null
 		};
 
-		return <Wrapped {...rest} {...measurableProps} slotBefore={slotBefore} slotAfter={slotAfter} />;
+		return <Wrapped {...props} {...measurableProps} />;
 	};
 };
 
