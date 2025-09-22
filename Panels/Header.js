@@ -355,8 +355,6 @@ const HeaderBase = kind({
 		publicClassNames: ['header']
 	},
 
-	functional: true,
-
 	computed: {
 		className: ({backButtonAvailable, centered, children, isPopupHeader, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}) => styler.append(
 			{
