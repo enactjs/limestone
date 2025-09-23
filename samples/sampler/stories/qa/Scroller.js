@@ -1226,7 +1226,6 @@ export const WithLongContents = (args) => {
 			onKeyDown={action('onKeyDown')}
 			onScrollStart={action('onScrollStart')}
 			onScrollStop={action('onScrollStop')}
-			scrollMode={args['scrollMode']}
 		>
 			<BodyText style={{whiteSpace: 'pre-line'}}>
 				{longContents}
