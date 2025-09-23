@@ -157,7 +157,7 @@ const DropdownListBase = kind({
 
 		return (
 			<div role="region" aria-labelledby={`${id}_dropdownlist`}>
-				<div id={`${id}_dropdownlist`} aria-label={new IString($L('Dropdown list opened {total} items in total')).format({total: dataSize})} />
+				<div id={`${id}_dropdownlist`} aria-label={`${$L('Dropdown list opened')} ${new IString($L('{total} items in total')).format({total: dataSize})}`} />
 				<VirtualList
 					{...rest}
 					cbScrollTo={scrollTo}
