@@ -162,8 +162,6 @@ const useEventKey = (props, instances, context) => {
 		}
 	}
 
-	utilEvent('keydown').addEventListener(document, applyLastInputType);
-
 	function handleKeyDown (ev) {
 		const {keyCode, repeat, target} = ev;
 
@@ -292,6 +290,7 @@ const useEventKey = (props, instances, context) => {
 	// Return
 
 	return {
+		applyLastInputType,
 		handleKeyDown,
 		lastPointer,
 		scrollByPageOnPointerMode
