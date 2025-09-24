@@ -92,7 +92,7 @@ const useThemeScroll = (props, instances) => {
 
 	const {calculateAndScrollTo, handleFocus, hasFocus} = useEventFocus(props, {...instances, spottable: mutableRef});
 
-	const {handleKeyDown, lastPointer, scrollByPageOnPointerMode} = useEventKey(props, {...instances, spottable: mutableRef}, {checkAndApplyOverscrollEffectByDirection, hasFocus, isContent});
+	const {applyLastInputType, handleKeyDown, lastPointer, scrollByPageOnPointerMode} = useEventKey(props, {...instances, spottable: mutableRef}, {checkAndApplyOverscrollEffectByDirection, hasFocus, isContent});
 
 	useEventMonitor({}, instances, {lastPointer, scrollByPageOnPointerMode});
 
@@ -255,6 +255,7 @@ const useThemeScroll = (props, instances) => {
 	// FIXME setting event handlers directly to work on the V8 snapshot.
 	function addEventListeners (ref) { // `ref` is always `scrollContentRef`.
 		utilEvent('focusin').addEventListener(ref, handleFocus);
+		utilEvent('keydown').addEventListener(document, applyLastInputType);
 
 		if (ref.current) {
 			addVoiceEventListener(ref);

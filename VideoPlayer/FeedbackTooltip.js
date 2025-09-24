@@ -207,7 +207,9 @@ const FeedbackTooltipBase = kind({
 						playbackRate={playbackRate}
 						playbackState={playbackState}
 					>
-						{children}
+						<span className={css.children}>
+							{children}
+						</span>
 					</FeedbackContent>
 					<div className={arrowContainerClassName}>
 						<div className={css.arrow} />

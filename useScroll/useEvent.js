@@ -155,6 +155,13 @@ const useEventKey = (props, instances, context) => {
 
 	// Functions
 
+	function applyLastInputType (ev) {
+		const {keyCode} = ev;
+		if (getDirection(keyCode)) {
+			scrollContainerHandle.current.lastInputType = 'arrowKey';
+		}
+	}
+
 	function handleKeyDown (ev) {
 		const {keyCode, repeat, target} = ev;
 
@@ -184,7 +191,6 @@ const useEventKey = (props, instances, context) => {
 			} else if (getDirection(keyCode) && (scrollMode === 'translate' || scrollMode === 'native' && !Spotlight.getPointerMode())) {
 				const element = Spotlight.getCurrent();
 
-				scrollContainerHandle.current.lastInputType = 'arrowKey';
 				direction = getDirection(keyCode);
 
 				if (props.overscrollEffectOn.arrowKey && !(element ? getTargetByDirectionFromElement(direction, element) : null)) {
@@ -284,6 +290,7 @@ const useEventKey = (props, instances, context) => {
 	// Return
 
 	return {
+		applyLastInputType,
 		handleKeyDown,
 		lastPointer,
 		scrollByPageOnPointerMode
