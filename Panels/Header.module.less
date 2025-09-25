@@ -182,6 +182,12 @@
 		&.slotAfter:not(.centered) .slotAfter {
 			.margin-start-end(@lime-header-compact-slotafter-margin-start, 0);
 		}
+
+		&.isPopupHeader {
+			&.slotAfter {
+				.padding-start-end(.extract(@lime-header-compact-padding, left)[], .extract(@lime-header-compact-padding, right)[] - @lime-header-popup-compact-slotafter-padding-offset);
+			}
+		}
 	}
 
 	// Wizard Header
@@ -257,25 +263,3 @@
 		}
 	});
 }
-
-.applySkins({
-	.header {
-		&.compact {
-			&.isPopupHeader {
-				&.slotAfter {
-					.enact-locale-rtl({
-						padding: @lime-header-compact-padding;
-						padding-left: (
-							.extract(@lime-header-compact-padding, left)[]
-							- @lime-header-popup-compact-slotafter-padding-offset
-						)
-					});
-					padding-right: (
-						.extract(@lime-header-compact-padding, right)[]
-						- @lime-header-popup-compact-slotafter-padding-offset
-					)
-				}
-			}
-		}
-	}
-});
