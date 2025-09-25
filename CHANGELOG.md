@@ -2,7 +2,11 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-[unreleased]
+## [1.5.0] - 2025-09-24
+
+### Added
+
+- `limestone/Card` `fitImage` prop to allow image to fit the container by height and be centered
 
 ### Changed
 
@@ -13,6 +17,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/FlexiblePopupPanels` to match the latest GUI
 - `limestone/Panels.Header` to match the latest GUI
+- `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
 - `limestone/VideoPlayer` position of feedback content
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
