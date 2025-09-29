@@ -260,10 +260,10 @@ describe('Dropdown', function () {
 			await Page.openDropdown(dropdown);
 			// The 'Default' Dropdown opens.
 			// Spotlight is on the first item of dropdown list
-			waitForFocusedText(dropdown, 'one', 500, undefined, 100);
+			expect(await dropdown.item(0).isFocused()).toBe(true);
 			await Page.spotlightDown();
 			// Spotlight is on the first item of dropdown list
-			waitForFocusedText(dropdown, 'two', 500, undefined, 100);
+			expect(await dropdown.item(1).isFocused()).toBe(true);
 		});
 	});
 });
