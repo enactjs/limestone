@@ -672,7 +672,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				});
 				this.spotPopupContent();
 			});
-
 		};
 
 		handleClose = () => {
