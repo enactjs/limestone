@@ -10,12 +10,12 @@ spotlight.setPointerMode(false);
 
 const app = (props) => (
 	<Panels.Panel {...props}>
-		<Panels.Header title="ABC" />
+		<Panels.Header title="External Header" />
 		<FixedPopupPanels open fullHeight>
-			<Panel aria-label="this is panel 0">
-				<Header title="title" />
-				<Dropdown>
-					{['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbb', 'ccccccccccccccccccccccccccc', 'ddd', 'eee', '111', '222', '333', '444', '555', '666', '777']}
+			<Panel aria-label="Testing Dropdown inside FixedPopupPanel">
+				<Header title="FixedPopupPanel Header" />
+				<Dropdown id="dropdownDefault">
+					{['one', 'two', 'three', 'four', 'five']}
 				</Dropdown>
 			</Panel>
 		</FixedPopupPanels>

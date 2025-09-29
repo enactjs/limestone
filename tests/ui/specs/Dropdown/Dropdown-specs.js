@@ -50,6 +50,29 @@ describe('Dropdown', function () {
 			await Page.open();
 		});
 
+		it('should spot selected item in Dropdown list when Dropdown opens', async function () {
+			const dropdown = Page.components.dropdownSelected;
+
+			await Page.openDropdown(dropdown);
+
+			await browser.pause(200);
+			expect(await dropdown.item(6).isFocused()).toBe(true);
+		});
+
+		it('should marquee only the selected element on dropdown open', async function () {
+			const dropdown = Page.components.dropdownWithLongContent;
+
+			await Page.openDropdown(dropdown);
+
+			waitForFocusedText(dropdown, '22222222222222222222', 500, undefined, 100);
+
+			expect(await dropdown.item(1).isFocused()).toBe(true);
+			await browser.pause(1000);
+			expect(await dropdown.isMarqueeAnimated(0)).toBe(false);
+			expect(await dropdown.isMarqueeAnimated(1)).toBe(true);
+			expect(await dropdown.isMarqueeAnimated(2)).toBe(false);
+		});
+
 		it('should lock Spotlight inside the Dropdown - [QWTC-2186]', async function () {
 			const dropdown = Page.components.dropdownDefault;
 
@@ -230,8 +253,17 @@ describe('Dropdown', function () {
 			await Page.open('InPopup');
 		});
 
-		it('should open dropdown via 5-way select ', async function () {
-			// TODO
+		it('should open dropdown inside Popup via 5-way select ', async function () {
+			const dropdown = Page.components.dropdownDefault;
+
+			// 5-way Select the 'Default' Dropdown.
+			await Page.openDropdown(dropdown);
+			// The 'Default' Dropdown opens.
+			// Spotlight is on the first item of dropdown list
+			waitForFocusedText(dropdown, 'one', 500, undefined, 100);
+			await Page.spotlightDown();
+			// Spotlight is on the first item of dropdown list
+			waitForFocusedText(dropdown, 'two', 500, undefined, 100);
 		});
 	});
 });
