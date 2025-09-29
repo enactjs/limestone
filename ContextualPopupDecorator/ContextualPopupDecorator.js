@@ -665,12 +665,14 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.positionContextualPopup();
 			const current = Spotlight.getCurrent();
 			this.updateLeaveFor(current);
-			this.setState({
-				activator: current
-			});
+
 			setTimeout(() => {
+				this.setState({
+					activator: current
+				});
 				this.spotPopupContent();
 			});
+
 		};
 
 		handleClose = () => {

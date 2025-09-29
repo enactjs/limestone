@@ -8,7 +8,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Panels` to match the latest GUI
 - `limestone/PopupTabLayout` to match the latest GUI
-- 
+
+### Fixed
+
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
+
 ## [1.5.0] - 2025-09-24
 
 ### Added

@@ -224,4 +224,14 @@ describe('Dropdown', function () {
 			expect(await actual).toBe(expected);
 		});
 	});
+
+	describe('in Popup', function () {
+		beforeEach(async function () {
+			await Page.open('InPopup');
+		});
+
+		it('should open dropdown via 5-way select ', async function () {
+			// TODO
+		});
+	});
 });
