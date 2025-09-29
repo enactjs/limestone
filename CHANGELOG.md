@@ -2,6 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/Panels` to match the latest GUI
+- `limestone/PopupTabLayout` to match the latest GUI
+- 
 ## [1.5.0] - 2025-09-24
 
 ### Added
