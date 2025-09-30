@@ -9,6 +9,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Panels` to match the latest GUI
 - `limestone/PopupTabLayout` to match the latest GUI
 
+### Fixed
+
+- `limestone/Scroller` with `editable` prop to have proper `aria-label` when item is selected
+
 ## [1.5.0] - 2025-09-24
 
 ### Added
@@ -20,7 +24,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/FlexiblePopupPanels` to match the latest GUI
 - `limestone/Panels.Header` to match the latest GUI
 - `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
-- `limestone/Scroller` with `editable` prop to have proper `aria-label` when item is selected
 - `limestone/VideoPlayer` position of feedback content
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
