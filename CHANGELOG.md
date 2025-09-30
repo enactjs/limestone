@@ -17,6 +17,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Dropdown` audio guidance for DropdownList
 - `limestone/FlexiblePopupPanels` to match the latest GUI
 - `limestone/Panels.Header` to match the latest GUI
 - `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
