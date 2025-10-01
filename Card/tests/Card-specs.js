@@ -57,4 +57,14 @@ describe('Card', () => {
 
 		expect(actual).toBe(expected);
 	});
+
+	test('should apply prop `fitImage`', () => {
+		const imageIconSrc = 'imageIconSrc';
+		render(<CardBase data-testid="card" fitImage imageIconSrc={imageIconSrc} />);
+
+		const expected = 'fitImage';
+		const actual = screen.getByTestId('card');
+
+		expect(actual).toHaveClass(expected);
+	});
 });

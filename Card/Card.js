@@ -127,6 +127,14 @@ const CardBase = kind({
 		disabled: PropTypes.bool,
 
 		/**
+		 * Fits the image to its height and width and positions it on the center of the Card.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		fitImage: PropTypes.bool,
+
+		/**
 		 * Set to `true` to display a container with background color.
 		 * When `orientation` is `'horizontal'`, this prop is always `true` and provided value will be ignored.
 		 *

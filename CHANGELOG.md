@@ -4,6 +4,28 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Changed
+
+- `limestone/Panels` to match the latest GUI
+- `limestone/PopupTabLayout` to match the latest GUI
+- 
+## [1.5.0] - 2025-09-24
+
+### Added
+
+- `limestone/Card` `fitImage` prop to allow image to fit the container by height and be centered
+
+### Fixed
+
+- `limestone/Dropdown` audio guidance for DropdownList
+- `limestone/FlexiblePopupPanels` to match the latest GUI
+- `limestone/Panels.Header` to match the latest GUI
+- `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
+- `limestone/VideoPlayer` position of feedback content
+- `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
+
+## [1.4.0] - 2025-09-15
+
 ### Added
 
 - `limestone/CheckboxItem` `CheckboxItemGroup` to wrap multiple checkbox items as a list
@@ -13,7 +35,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
-- `limestone/Chips` audio guidance for chip button and delete button
+- `limestone/Chip` audio guidance for chip button and delete button
 - `limestone/ImageItem` audio guidance for selected
 
 ### Fixed
@@ -26,7 +48,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Input` buttons styles for number `popupType`.
 - `limestone/InputField` to not clip icons in webOS system.
 - `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
-- `limestone/Panels.Header`  to match the latest GUI
+- `limestone/Panels.Header` to match the latest GUI
 - `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
