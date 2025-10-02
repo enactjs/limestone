@@ -122,7 +122,7 @@ const HoverToScrollBase = (props) => {
 					hoverToScrollMultiplier[direction]; // a scrolling speed factor
 
 				mutableRef.current.hoveredPosition = position;
-				mutableRef.current.stopScrollByHover = false;
+				mutableRef.current.stopScrollByHover = scrollContainer.scrolling; // stop scrollByHover when it is in scrolling
 
 				const scrollByHover = () => {
 					if (!mutableRef.current.stopScrollByHover) {
