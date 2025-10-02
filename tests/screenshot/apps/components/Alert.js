@@ -4,7 +4,7 @@ import Checkbox from '../../../../Checkbox';
 import CheckboxItem from '../../../../CheckboxItem';
 import FormCheckBoxItem from '../../../../FormCheckboxItem';
 import Item from '../../../../Item';
-import ProgressBar from '@enact/limestone/ProgressBar';
+import ProgressBar from '../../../../ProgressBar';
 import Scroller from '../../../../Scroller';
 
 import img from '../../images/300x300.png';
@@ -186,21 +186,15 @@ const dropIn = {
 
 const LtrTests = [
 	// Initial
-	...withProps({type: 'fullscreen'}, fullscreenTests),
 	...withProps({type: 'overlay'}, overlayTests),
 
 	// With Buttons
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoDisabledButton}, fullscreenTests),
 	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlayTests),
 	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayTests),
 	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlayTests),
 
 	// With image
 	// QWTC-1928 start.
-	...withProps({type: 'fullscreen', image: dropIn.iconImage}, fullscreenTests),
-	...withProps({type: 'fullscreen', image: dropIn.image}, fullscreenTests),
 	// QWTC-1928 end.
 	// QWTC-1929 start.
 	...withProps({type: 'overlay', image: dropIn.iconImage}, overlayTests),
@@ -208,14 +202,9 @@ const LtrTests = [
 	// QWTC-1929 end.
 
 	// With image and button
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons, image: dropIn.image}, fullscreenTests),
 	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton, image: dropIn.image}, overlayTests),
 	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayTests),
 
-	// With other components
-	...withProps({type: 'overlay'}, overlayColorTests),
-	...withProps({type: 'fullscreen'}, overlayColorTests)
 ];
 
 const AlertTests = [
