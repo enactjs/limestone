@@ -22,6 +22,10 @@ class DropdownInterface {
 		);
 	}
 
+	isMarqueeAnimated (index) {
+		return $(`.Item_Item_item[data-index="${index}"] .enact_ui_Marquee_Marquee_animate`).isExisting();
+	}
+
 	get list () {
 		return getComponent({component: 'Dropdown', child: 'dropdownList'}, browser);
 	}
