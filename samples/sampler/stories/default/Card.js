@@ -32,6 +32,7 @@ export const _Card = (args) => (
 		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
 		disabled={args['disabled']}
+		fitImage={args['fitImage']}
 		imageIconSrc={args['imageIconSrc']}
 		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
@@ -55,6 +56,7 @@ boolean('captionOverlay', _Card, Config);
 boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
+boolean('fitImage', _Card, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
 object('imageSize', _Card, Config);
 boolean('hasContainer', _Card, Config);
