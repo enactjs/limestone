@@ -88,7 +88,7 @@ const RefocusDecorator = Wrapped => {
 
 				screenOrientationRef.current = screenOrientation;
 			}
-		}, [blockCollapseOnPortrait, onCollapse, onExpand, screenOrientation, spotlightId]);
+		}, [blockCollapseOnPortrait, blockExpandOnLandscape, onCollapse, onExpand, screenOrientation, spotlightId]);
 
 		const handleTabAnimationEnd = useCallback((ev) => {
 			if (onTabAnimationEnd) {
