@@ -60,6 +60,7 @@ export const _TabLayout = (args) => {
 			<Header title="Limestone TabLayout" subtitle="Basic TabLayout" />
 			<TabLayout
 				blockCollapseOnPortrait={args['blockCollapseOnPortrait']}
+				blockExpandOnLandscape={args['blockExpandOnLandscape']}
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
@@ -97,6 +98,7 @@ export const _TabLayout = (args) => {
 };
 
 boolean('blockCollapseOnPortrait', _TabLayout, Config);
+boolean('blockExpandOnLandscape', _TabLayout, Config);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
