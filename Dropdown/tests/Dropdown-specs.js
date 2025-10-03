@@ -235,19 +235,21 @@ describe('Dropdown', () => {
 		expect(actual).toHaveAttribute('aria-checked', expected);
 	});
 
-	test('should have "group" role and an item which has "checkbox" role', () => {
+	test('should set the `aria-posinset` and `aria-setsize` state of the item in the list', () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open title={title}>
-					{['item']}
+					{children}
 				</DropdownBase>
 			</FloatingLayerController>
 		);
 
-		const expected = screen.getByRole('checkbox');
+		const posinsetExpected = '1';
+		const setsizeExpected = '3';
 		const actual = screen.getByRole('group').children[0].children[0];
 
-		expect(actual).toBe(expected);
+		expect(actual).toHaveAttribute('aria-posinset', posinsetExpected);
+		expect(actual).toHaveAttribute('aria-setsize', setsizeExpected);
 	});
 
 	test('should pass through members of child objects to props for each item', () => {

@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Dropdown` aria props for audio guidance
+
 ### Changed
 
 - `limestone/Panels` to match the latest GUI
