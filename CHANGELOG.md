@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Panels` to match the latest GUI
 - `limestone/PopupTabLayout` to match the latest GUI
+- `limestone/TabLayout` vertical to be expanded in landscape mode
 
 ### Fixed
 
