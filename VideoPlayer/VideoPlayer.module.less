@@ -52,10 +52,11 @@
 			top: @lime-video-feedback-mini-top;
 			bottom: auto;
 			pointer-events: none;
-			.position-start-end(@lime-video-feedback-mini-position-start, initial);
+			.position-start-end(@lime-video-feedback-mini-left, initial);
 		}
 
 		.back {
+			margin: 0;
 			position: absolute;
 			z-index: 100; // Value assigned as part of the VideoPlayer API so layers may be inserted in-between
 			top: @lime-video-back-button-top;

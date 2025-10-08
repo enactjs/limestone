@@ -6,26 +6,18 @@
 
 .feedback {
 	display: inline-block;
-	margin-inline-end: @lime-video-slider-tooltip-gutter-width;
 
 	&.hidden {
 		display: none;
 	}
 
-	> * {
+	* {
 		display: inline-block;
-		margin: @lime-video-feedback-margin;
 		margin-inline-end: @lime-video-slider-tooltip-gutter-width;
 		vertical-align: middle;
-
-		&:last-child {
-			margin-inline-end: 0;
-		}
 	}
 
 	.message {
-		margin: 0;
-
 		.lime-font({
 			font-weight: @lime-video-feedback-message-font-weight;
 		});
@@ -35,6 +27,7 @@
 	.icon {
 		font-size: @lime-video-feedback-icon-font-size;
 		margin: 0;
+		margin-inline-end: @lime-video-slider-tooltip-gutter-width;
 		height: inherit;  // Use the height and line-height from the parent element to always middle align the icon, regardless of the container's size
 		line-height: inherit;
 

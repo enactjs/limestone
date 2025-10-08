@@ -2093,6 +2093,7 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
+									size="small"
 								/> :
 								null
 						}
@@ -2102,7 +2103,7 @@ const VideoPlayerBase = class extends Component {
 							playbackState={this.pulsedPlaybackState || this.prevCommand}
 							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
 						>
-							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
+							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: false})}
 						</FeedbackContent>
 						<ControlsContainer
 							className={css.bottom + (this.state.mediaControlsVisible ? '' : ' ' + css.hidden) + (this.state.infoVisible ? ' ' + css.lift : '')}
