@@ -19,6 +19,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
 - `limestone/Dropdown` audio guidance for DropdownList
 - `limestone/Scroller` with `editable` prop to have proper `aria-label` when item is selected
+- `limestone/TabLayout` to correctly scroll on tab change, when it is wrapped in `ContentContainerDecorator`
 
 ## [1.5.0] - 2025-09-24
 
