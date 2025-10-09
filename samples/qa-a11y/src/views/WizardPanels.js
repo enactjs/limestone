@@ -1,6 +1,6 @@
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
-import CheckboxItem from '@enact/limestone/CheckboxItem';
+import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import Icon from '@enact/limestone/Icon';
 import Item from '@enact/limestone/Item';
 import WizardPanels from '@enact/limestone/WizardPanels';
@@ -28,24 +28,26 @@ const WizardPanelsView = () => {
 					<Button>Text 0</Button>
 					<Button>Text 1</Button>
 				</div>
-				<CheckboxItem
-					onClick={handleToggleNoAnimation}
-					selected={noAnimation}
-				>
-					noAnimation
-				</CheckboxItem>
-				<CheckboxItem
-					onClick={handleToggleNoAriaLabel}
-					selected={noAriaLabel}
-				>
-					noAriaLabel
-				</CheckboxItem>
-				<CheckboxItem
-					onClick={handleToggleNoSteps}
-					selected={noSteps}
-				>
-					noSteps
-				</CheckboxItem>
+				<CheckboxItemGroup>
+					<CheckboxItem
+						onClick={handleToggleNoAnimation}
+						selected={noAnimation}
+					>
+						noAnimation
+					</CheckboxItem>
+					<CheckboxItem
+						onClick={handleToggleNoAriaLabel}
+						selected={noAriaLabel}
+					>
+						noAriaLabel
+					</CheckboxItem>
+					<CheckboxItem
+						onClick={handleToggleNoSteps}
+						selected={noSteps}
+					>
+						noSteps
+					</CheckboxItem>
+				</CheckboxItemGroup>
 			</WizardPanels.Panel>
 			<WizardPanels.Panel
 				subtitle="A subtitle for View 1 that is really, really way too long for its own good.  In fact, it's so long that it probably goes to multiple lines, unless your screen is so large that it somehow fits.  That seems unlikely, though, unless you're in the year 2030 or something."

@@ -172,9 +172,9 @@ const RadioItemGroup = (props) => {
 					id={groupId || "radioItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
 				>
-					{children.map((child) => {
+					{children.map((child, index) => {
 						const {children: itemValue, ...childRest} = child.props;
-						return <RadioItem {...childRest} {...itemProps}>{itemValue}</RadioItem>;
+						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
 					})}
 				</div>
 			</div>

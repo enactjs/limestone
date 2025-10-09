@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
-import CheckboxItem from '@enact/limestone/CheckboxItem';
+import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import Item from '@enact/limestone/Item';
 import {VirtualList} from '@enact/limestone/VirtualList';
 import Layout, {Cell} from '@enact/ui/Layout';
@@ -40,18 +40,20 @@ const VirtualListView = () => {
 	return (
 		<Layout orientation="vertical">
 			<Cell shrink>
-				<CheckboxItem
-					onClick={handleToggleScrollMode}
-					selected={native}
-				>
-					Native
-				</CheckboxItem>
-				<CheckboxItem
-					onClick={handleToggleRole}
-					selected={role}
-				>
-					Read X of Y
-				</CheckboxItem>
+				<CheckboxItemGroup>
+					<CheckboxItem
+						onClick={handleToggleScrollMode}
+						selected={native}
+					>
+						Native
+					</CheckboxItem>
+					<CheckboxItem
+						onClick={handleToggleRole}
+						selected={role}
+					>
+						Read X of Y
+					</CheckboxItem>
+				</CheckboxItemGroup>
 			</Cell>
 			<VirtualList
 				dataSize={items.length}

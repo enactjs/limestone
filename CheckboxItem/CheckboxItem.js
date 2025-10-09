@@ -234,9 +234,9 @@ const CheckboxItemGroup = (props) => {
 					id={groupId || "checkboxItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
 				>
-					{children.map((child) => {
+					{children.map((child, index) => {
 						const {children: itemValue, ...childRest} = child.props;
-						return <CheckboxItem {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
+						return <CheckboxItem key={index} {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
 					})}
 				</div>
 			</div>
