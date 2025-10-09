@@ -245,7 +245,6 @@ const TabGroupBase = kind({
 			noScrollByWheel: collapsed,
 			onScrollStop,
 			scrollbarTrackCss: componentCss,
-			scrollToContentContainerOnFocus: false,
 			spotlightDisabled,
 			spotlightId,
 			verticalScrollbar: collapsed ? 'hidden' : 'auto'
