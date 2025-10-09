@@ -60,6 +60,7 @@ const scrollerDefaultProps = {
 		track: false,
 		wheel: true
 	},
+	scrollToContentContainerOnFocus: true,
 	scrollMode: 'native',
 	verticalScrollbar: 'auto'
 };
@@ -108,7 +109,7 @@ let Scroller = (props) => {
 		horizontalScrollbarProps,
 		verticalScrollbarProps,
 		hoverToScrollProps
-	} = useScroll({...rest, scrollToContentContainerOnFocus: true});
+	} = useScroll({...rest});
 
 	const {
 		className,
@@ -446,6 +447,14 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	 * @public
 	 */
 	scrollbarTrackCss: PropTypes.object,
+
+	/**
+	 * Scrolls to the container created by {@link limestone/Scroller.ContentContainerDecorator} when descendants get focused.
+	 * @type {Boolean}
+	 * @default true
+	 * @public
+	 */
+	scrollToContentContainerOnFocus: PropTypes.bool,
 
 	/**
 	 * Specifies how to scroll.
