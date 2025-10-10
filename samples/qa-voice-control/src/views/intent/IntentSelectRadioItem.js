@@ -1,6 +1,5 @@
 import Heading from '@enact/limestone/Heading';
-import RadioItem from '@enact/limestone/RadioItem';
-import Group from '@enact/ui/Group';
+import RadioItem, {RadioItemGroup} from '@enact/limestone/RadioItem';
 import {useCallback, useState} from 'react';
 
 import CommonView from '../../components/CommonView';
@@ -15,8 +14,7 @@ const IntentSelectRadioItem = () => {
 			<Heading>RadioItem</Heading>
 			<RadioItem data-testid="apple">사과</RadioItem>
 			<Heading>RadioItem Group - radio selection</Heading>
-			<Group
-				childComponent={RadioItem}
+			<RadioItemGroup
 				select="radio"
 				selectedProp="selected"
 				selected={selected}
@@ -27,7 +25,7 @@ const IntentSelectRadioItem = () => {
 					'바나나',
 					'음악'
 				]}
-			</Group>
+			</RadioItemGroup>
 		</CommonView>
 	);
 };

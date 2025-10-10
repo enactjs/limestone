@@ -2093,9 +2093,18 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
+									size="small"
 								/> :
 								null
 						}
+						<FeedbackContent
+							className={css.miniFeedback}
+							playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
+							playbackState={this.pulsedPlaybackState || this.prevCommand}
+							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
+						>
+							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: false})}
+						</FeedbackContent>
 						<ControlsContainer
 							className={css.bottom + (this.state.mediaControlsVisible ? '' : ' ' + css.hidden) + (this.state.infoVisible ? ' ' + css.lift : '')}
 							spotlightDisabled={spotlightDisabled || !this.state.mediaControlsVisible}
@@ -2105,14 +2114,6 @@ const VideoPlayerBase = class extends Component {
 								Only render when `this.state.mediaControlsVisible` is true in order for `Marquee`
 								to make calculations correctly in `MediaTitle`.
 							*/}
-							<FeedbackContent
-								className={css.miniFeedback}
-								playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
-								playbackState={this.pulsedPlaybackState || this.prevCommand}
-								visible={this.state.miniFeedbackVisible && !noMiniFeedback}
-							>
-								{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
-							</FeedbackContent>
 							{this.state.mediaSliderVisible ?
 								<div className={css.infoFrame}>
 									<MediaTitle

@@ -26,22 +26,18 @@ export default {
 };
 
 export const WithLongTextAndSpaces = (args) => (
-	<div>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.longTextWithSpace[0]}
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.longTextWithSpace[1]}
-		</RadioItem>
-	</div>
+	<RadioItemGroup
+		itemProps={{
+			disabled: args['disabled'],
+			inline: args['inline'],
+			onToggle: action('onToggle')
+		}}
+	>
+		<RadioItem>{radioData.longTextWithSpace[0]}</RadioItem>
+		<RadioItem>{radioData.longTextWithSpace[1]}</RadioItem>
+		<RadioItem>{radioData.longTextWithSpace[0]}</RadioItem>
+		<RadioItem>{radioData.longTextWithSpace[1]}</RadioItem>
+	</RadioItemGroup>
 );
 
 boolean('disabled', WithLongTextAndSpaces, Config);
@@ -50,22 +46,16 @@ boolean('inline', WithLongTextAndSpaces, Config);
 WithLongTextAndSpaces.storyName = 'with long text and spaces';
 
 export const WithLongTextAndNoSpaces = (args) => (
-	<div>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.longTextWithoutSpace[0]}
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.longTextWithoutSpace[1]}
-		</RadioItem>
-	</div>
+	<RadioItemGroup
+		itemProps={{
+			disabled: args['disabled'],
+			inline: args['inline'],
+			onToggle: action('onToggle')
+		}}
+	>
+		<RadioItem>{radioData.longTextWithoutSpace[0]}</RadioItem>
+		<RadioItem>{radioData.longTextWithoutSpace[1]}</RadioItem>
+	</RadioItemGroup>
 );
 
 boolean('disabled', WithLongTextAndNoSpaces, Config);
@@ -74,29 +64,17 @@ boolean('inline', WithLongTextAndNoSpaces, Config);
 WithLongTextAndNoSpaces.storyName = 'with long text and no spaces';
 
 export const WithTallCharacters = (args) => (
-	<div>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.tallText[0]}
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.tallText[1]}
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.tallText[2]}
-		</RadioItem>
-	</div>
+	<RadioItemGroup
+		itemProps={{
+			disabled: args['disabled'],
+			inline: args['inline'],
+			onToggle: action('onToggle')
+		}}
+	>
+		<RadioItem>{radioData.tallText[0]}</RadioItem>
+		<RadioItem>{radioData.tallText[1]}</RadioItem>
+		<RadioItem>{radioData.tallText[2]}</RadioItem>
+	</RadioItemGroup>
 );
 
 boolean('disabled', WithTallCharacters, Config);
@@ -105,22 +83,16 @@ boolean('inline', WithTallCharacters, Config);
 WithTallCharacters.storyName = 'with tall characters';
 
 export const WithRightToLeftText = (args) => (
-	<div>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.rightToLeft[0]}
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-		>
-			{radioData.rightToLeft[1]}
-		</RadioItem>
-	</div>
+	<RadioItemGroup
+		itemProps={{
+			disabled: args['disabled'],
+			inline: args['inline'],
+			onToggle: action('onToggle')
+		}}
+	>
+		<RadioItem>{radioData.rightToLeft[0]}</RadioItem>
+		<RadioItem>{radioData.rightToLeft[1]}</RadioItem>
+	</RadioItemGroup>
 );
 
 boolean('disabled', WithRightToLeftText, Config);
@@ -129,23 +101,16 @@ boolean('inline', WithRightToLeftText, Config);
 WithRightToLeftText.storyName = 'with right to left text';
 
 export const SelectedByDefault = (args) => (
-	<RadioItemGroup>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-			defaultSelected
-		>
-			RadioItem1
-		</RadioItem>
-		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
-			onToggle={action('onToggle')}
-			defaultSelected
-		>
-			RadioItem2
-		</RadioItem>
+	<RadioItemGroup
+		itemProps={{
+			disabled: args['disabled'],
+			inline: args['inline'],
+			onToggle: action('onToggle'),
+			defaultSelected: true
+		}}
+	>
+		<RadioItem>RadioItem1</RadioItem>
+		<RadioItem>RadioItem2</RadioItem>
 	</RadioItemGroup>
 );
 
