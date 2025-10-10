@@ -19,6 +19,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
 - `limestone/Dropdown` audio guidance for DropdownList
+- `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
 - `limestone/Scroller` with `editable` prop to have proper `aria-label` when item is selected
 - `limestone/TabLayout` to correctly scroll on tab change, when it is wrapped in `ContentContainerDecorator`
 
@@ -32,7 +33,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/FlexiblePopupPanels` to match the latest GUI
 - `limestone/Panels.Header` to match the latest GUI
-- `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
 - `limestone/VideoPlayer` position of feedback content
 - `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
 
