@@ -2,11 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.6.0] - 2025-10-14
 
 ### Added
 
 - `limestone/Dropdown` aria props for audio guidance
+- `limestone/Scroller` `scrollToContentContainerOnFocus` prop to scrolls to the content container when descendants get focused
+- `limestone/TabLayout` `blockExpandOnLandscape` prop to prevent the tab list from automatically expand when the screen orientation changes to landscape mode
 
 ### Changed
 
