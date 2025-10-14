@@ -15,6 +15,11 @@ const setPortraitOrientation = () => {
 	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1920});
 };
 
+const setLandscapeOrientation = () => {
+	Object.defineProperty(window, 'innerWidth', {configurable: true, value: 1920});
+	Object.defineProperty(window, 'innerHeight', {configurable: true, value: 1080});
+};
+
 const spySpotlight = () => {
 	jest.spyOn(Spotlight, 'setPointerMode');
 	jest.spyOn(Spotlight, 'move');
@@ -460,6 +465,33 @@ describe('TabLayout specs', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
+	test('should update orientation on window resize, collapse and expand tabs', () => {
+		render(
+			<TabLayout
+				data-testid="tabLayout"
+				orientation="vertical"
+			>
+				<Tab title="Home">
+					<div>Home</div>
+				</Tab>
+			</TabLayout>
+		);
+
+		const actual = screen.getByTestId('tabLayout');
+
+		setPortraitOrientation();
+		fireEvent(window, new Event('resize'));
+		const expectedCollapsed = 'collapsed';
+
+		expect(actual).toHaveClass(expectedCollapsed);
+
+		setLandscapeOrientation();
+		fireEvent(window, new Event('resize'));
+		const expectedExpanded = 'expanded';
+
+		expect(actual).not.toHaveClass(expectedExpanded);
+	});
+
 	test('should update orientation on window resize and not collapse tabs when \'blockCollapseOnPortrait\' is set', () => {
 		render(
 			<TabLayout
@@ -480,6 +512,33 @@ describe('TabLayout specs', () => {
 		const actual = screen.getByTestId('tabLayout');
 
 		expect(actual).not.toHaveClass(expected);
+	});
+
+	test('should update orientation on window resize and not expand tabs when \'blockExpandOnLandscape\' is set', () => {
+		render(
+			<TabLayout
+				blockExpandOnLandscape
+				data-testid="tabLayout"
+				orientation="vertical"
+			>
+				<Tab title="Home">
+					<div>Home</div>
+				</Tab>
+			</TabLayout>
+		);
+
+		const actual = screen.getByTestId('tabLayout');
+		const expected = 'collapsed';
+
+		setPortraitOrientation();
+		fireEvent(window, new Event('resize'));
+
+		expect(actual).toHaveClass(expected);
+
+		setLandscapeOrientation();
+		fireEvent(window, new Event('resize'));
+
+		expect(actual).toHaveClass(expected);
 	});
 
 	test('should set the tab size for all tabs in horizontal orientation', () => {

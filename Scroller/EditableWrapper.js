@@ -223,9 +223,6 @@ const EditableWrapper = (props) => {
 			updateArrowIcon(mutableRef.current.fromIndex);
 
 			setTimeout(() => {
-				if (item?.children[1]) {
-					item.children[1].ariaLabel = '';
-				}
 				if (!mutableRef.current.initialSelected) {
 					announceRef.current.announce(
 						mutableRef.current.selectedItemLabel + $L('Press the left/right button to move or press the up button to select other options.')

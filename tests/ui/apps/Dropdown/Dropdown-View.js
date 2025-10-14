@@ -32,8 +32,11 @@ const app = (props) => <div {...props}>
 		<Dropdown id="dropdownMoreChildren" title="More Children">
 			{['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']}
 		</Dropdown>
-		<Dropdown id="dropdownSelected" defaultSelected={1} title="Selected">
-			{['one', 'two', 'three', 'four', 'five']}
+		<Dropdown id="dropdownSelected" defaultSelected={6} title="Selected">
+			{['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']}
+		</Dropdown>
+		<Dropdown id="dropdownWithLongContent" defaultSelected={1} title="With Long Content">
+			{['111111111111111111111111111', '22222222222222222222', '33333333333333333333', '4444444444444444444', '5555555555555555555']}
 		</Dropdown>
 		<DropdownChange id="dropdownChangeSelected" changeProp="selected" changePropValue={null} selected={3} title="Change Selected">
 			{['one', 'two', 'three', 'four', 'five']}
