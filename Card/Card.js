@@ -144,7 +144,10 @@ const CardBase = kind({
 		hasContainer: PropTypes.bool,
 
 		/**
+		 * Icon used when `selected` is `true`
+		 *
 		 * @type {String}
+		 * @default 'check'
 		 * @public
 		 */
 		icon: PropTypes.string,
