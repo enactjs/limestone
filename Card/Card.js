@@ -144,6 +144,12 @@ const CardBase = kind({
 		hasContainer: PropTypes.bool,
 
 		/**
+		 * @type {String}
+		 * @public
+		 */
+		icon: PropTypes.string,
+
+		/**
 		 * Source for the image icon.
 		 *
 		 * String value or Object of values used to determine which image will appear on
@@ -236,6 +242,7 @@ const CardBase = kind({
 		selected: PropTypes.bool
 	},
 	defaultProps: {
+		icon: 'check',
 		orientation: 'vertical'
 	},
 
@@ -301,15 +308,16 @@ const CardBase = kind({
 					captions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			roundedImage,
-			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
+			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
+			isCheck: icon === 'check'
 		})
 	},
 
-	render: ({css, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
@@ -333,7 +341,7 @@ const CardBase = kind({
 							<Image className={css.secondaryBadge} src={secondaryBadgeSrc} />
 						) : null}
 						<div className={css.selectionContainer}>
-							<Icon className={css.selectionIcon}>check</Icon>
+							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>
 					</Image>
 				}
