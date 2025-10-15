@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import Checkbox, {CheckboxBase} from '../Checkbox';
 
-describe('CheckboxItem Specs', () => {
+describe('Checkbox Specs', () => {
 
 	test('should not include the selected class when not selected', () => {
 		render(<CheckboxBase />);

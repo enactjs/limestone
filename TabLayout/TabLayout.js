@@ -122,6 +122,16 @@ const TabLayoutBase = kind({
 		blockCollapseOnPortrait: PropTypes.bool,
 
 		/**
+		 * Prevents the tab list from automatically expand when the screen orientation changes to landscape mode.
+		 *
+		 * Only applies to `orientation="vertical".
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		blockExpandOnLandscape: PropTypes.bool,
+
+		/**
 		 * Collection of {@link limestone/TabLayout.Tab|Tabs} to render.
 		 *
 		 * @type {Node}
@@ -503,6 +513,7 @@ const TabLayoutBase = kind({
 	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollPosition, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.blockCollapseOnPortrait;
+		delete rest.blockExpandOnLandscape;
 		delete rest.onExpand;
 		delete rest.offset;
 		delete rest.onTabAnimationEnd;
