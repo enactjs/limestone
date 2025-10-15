@@ -11,7 +11,7 @@
 // Limestone Rules
 @import "~@enovaui/core-tokens/css/spacing-primitive.css";
 @import "~@enovaui/core-tokens/css/typography-primitive.css";
-@import "~@enovaui/webos-tokens/css/color-semantic-dark.css";
+@import "~@enovaui/design-tokens/packages/webos-tokens/css/color-semantic-dark.css";
 @import "~@enovaui/webos-tokens/css/radius-semantic.css";
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
@@ -62,12 +62,12 @@
 
 	/* Light Skin */
 	&:global(.light) {
-		@import-json "~@enovaui/webos-tokens/json/color-semantic-light.json";
+		@import-json "~@enovaui/design-tokens/packages/webos-tokens/json/color-semantic-light.json";
 	}
 
 	/* High Contrast */
 	&:global(.enact-a11y-high-contrast):global(.highContrast) {
-		@import-json "~@enovaui/webos-tokens/json/color-semantic-high-contrast.json";
+		@import-json "~@enovaui/design-tokens/packages/webos-tokens/json/color-semantic-high-contrast.json";
 	}
 
 	&:global(.christmas) {

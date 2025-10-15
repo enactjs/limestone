@@ -68,6 +68,9 @@
 		&.button {
 			&.selected {
 				background-color: @lime-tablayout-tab-container-selected-color;
+				:has(:global(.light)):not(:has(:global(.highContrast))) & {
+					background-color: white;
+				}
 
 				.bg {
 					opacity: 0;
@@ -123,6 +126,9 @@
 .applySkins({
 	.tabGroup {
 		background-color: @lime-tablayout-tab-group-container-color;
+		:has(:global(.light)):not(:has(:global(.highContrast))) & {
+			background-color: rgba(251, 251, 251, 0.60);
+		}
 		border-radius: @lime-tablayout-border-radius;
 
 		// Apply transparent background to the child component so if the Scroller is used, then it will not have doubled background color
