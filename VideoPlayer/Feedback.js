@@ -2,6 +2,7 @@ import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 
 import {onlyUpdateForProps} from '../internal/util';
+import $L from '../internal/$L';
 
 import FeedbackIcon from './FeedbackIcon';
 import states from './FeedbackIcons.js';
@@ -67,6 +68,9 @@ const FeedbackBase = kind({
 				// Working with a known state, treat `children` as playbackRate
 				if (states[s].message && children !== 1) {	// `1` represents a playback rate of 1:1
 					return children.toString().replace(/^-/, '') + states[s].message;
+				} else if (s === 'pause') {
+					return $L('Pause');
+
 				}
 			} else {
 				// Custom Message

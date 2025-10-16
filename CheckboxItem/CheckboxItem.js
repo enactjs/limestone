@@ -13,13 +13,15 @@
  */
 
 import kind from '@enact/core/kind';
-import PropTypes from 'prop-types';
-import compose from 'ramda/src/compose';
-
+import Group from '@enact/ui/Group';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
+import IString from 'ilib/lib/IString';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
 
+import $L from '../internal/$L';
 import {CheckboxBase} from '../Checkbox';
 import {ItemBase, ItemDecorator} from '../Item';
 import Skinnable from '../Skinnable';
@@ -200,9 +202,52 @@ const CheckboxItem = Pure(
 	)
 );
 
+const CheckboxItemGroup = (props) => {
+	const {children, groupId, itemProps, ...rest} = props;
+
+	CheckboxItemGroup.propTypes = {
+		groupId: PropTypes.string,
+		itemProps: PropTypes.object
+	};
+
+	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` components using `ui/Group`
+		return (
+			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
+				<Group
+					{...rest}
+					id={groupId || "checkboxItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+					childComponent={CheckboxItem}
+					childSelect="onToggle"
+					itemProps={{...itemProps}}
+				>
+					{children}
+				</Group>
+			</div>
+		);
+	} else {  // The case of multiple checkbox items are represented by `CheckboxItem` components
+		return (
+			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
+				<div
+					{...rest}
+					role="group"
+					id={groupId || "checkboxItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+				>
+					{children.map((child, index) => {
+						const {children: itemValue, ...childRest} = child.props;
+						return <CheckboxItem key={index} {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
+					})}
+				</div>
+			</div>
+		);
+	}
+};
+
 export default CheckboxItem;
 export {
 	CheckboxItem,
 	CheckboxItemBase,
-	CheckboxItemDecorator
+	CheckboxItemDecorator,
+	CheckboxItemGroup
 };

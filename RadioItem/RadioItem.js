@@ -10,13 +10,16 @@
  */
 
 import kind from '@enact/core/kind';
+import Group from '@enact/ui/Group';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
+import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
+import $L from '../internal/$L';
 import {ItemBase, ItemDecorator} from '../Item';
 
 import componentCss from './RadioItem.module.less';
@@ -137,9 +140,52 @@ const RadioItem = Pure(
 	)
 );
 
+const RadioItemGroup = (props) => {
+	const {children, groupId, itemProps, ...rest} = props;
+
+	RadioItemGroup.propTypes = {
+		groupId: PropTypes.string,
+		itemProps: PropTypes.object
+	};
+
+	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` compoenents using `ui/Group`
+		return (
+			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
+				<Group
+					{...rest}
+					id={groupId || "radioItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+					childComponent={RadioItem}
+					childSelect="onToggle"
+					itemProps={{...itemProps}}
+				>
+					{children}
+				</Group>
+			</div>
+		);
+	} else {  // The case of multiple radio items are represented by `RadioItem` components
+		return (
+			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
+				<div
+					{...rest}
+					role="group"
+					id={groupId || "radioItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+				>
+					{children.map((child, index) => {
+						const {children: itemValue, ...childRest} = child.props;
+						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
+					})}
+				</div>
+			</div>
+		);
+	}
+};
+
 export default RadioItem;
 export {
 	RadioItem,
 	RadioItemBase,
-	RadioItemDecorator
+	RadioItemDecorator,
+	RadioItemGroup
 };

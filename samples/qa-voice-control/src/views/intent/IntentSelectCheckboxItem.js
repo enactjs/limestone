@@ -1,7 +1,6 @@
-import CheckboxItem from '@enact/limestone/CheckboxItem';
+import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import FormCheckboxItem from '@enact/limestone/FormCheckboxItem';
 import Heading from '@enact/limestone/Heading';
-import Group from '@enact/ui/Group';
 import {useCallback, useState} from 'react';
 
 import CommonView from '../../components/CommonView';
@@ -16,8 +15,7 @@ const IntentSelectCheckboxItem = () => {
 			<Heading>CheckboxItem</Heading>
 			<CheckboxItem data-testid="orange">오렌지</CheckboxItem>
 			<Heading>CheckboxItem Group - multiple selection</Heading>
-			<Group
-				childComponent={CheckboxItem}
+			<CheckboxItemGroup
 				onSelect={handleSelect}
 				select="multiple"
 				selected={selected}
@@ -28,7 +26,7 @@ const IntentSelectCheckboxItem = () => {
 					'바나나',
 					'호두'
 				]}
-			</Group>
+			</CheckboxItemGroup>
 			<Heading>FormCheckboxItem</Heading>
 			<FormCheckboxItem data-testid="rabbit">토끼</FormCheckboxItem>
 		</CommonView>

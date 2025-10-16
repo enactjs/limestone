@@ -93,8 +93,14 @@
 			outline-offset: -@lime-overlay-outline-width;
 		}
 
-		:has(:global(.highContrast)) & .tabGroup {
+		.tabGroup {
 			background-color: @lime-popuptablayout-content-background-color;
+			
+			.tab {
+				.icon {
+					--icon-size: @lime-popuptablayout-tab-icon-size;
+				}
+			}
 		}
 
 		:global(.noAnimation) & {
@@ -138,6 +144,7 @@
 .panel {
 	padding: 0;
 	max-height: @popupTabLayout-max-height;
+	min-height: @lime-popuptablayout-panel-min-height;
 
 	> .body {
 		display: flex;

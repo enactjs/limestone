@@ -2,11 +2,68 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.6.0] - 2025-10-14
+
+### Added
+
+- `limestone/Dropdown` aria props for audio guidance
+- `limestone/Scroller` `scrollToContentContainerOnFocus` prop to scrolls to the content container when descendants get focused
+- `limestone/TabLayout` `blockExpandOnLandscape` prop to prevent the tab list from automatically expand when the screen orientation changes to landscape mode
+
+### Changed
+
+- `limestone/Panels` to match the latest GUI
+- `limestone/PopupTabLayout` to match the latest GUI
+- `limestone/TabLayout` vertical to be expanded in landscape mode
+- `limestone/VideoPlayer` to match the latest GUI
 
 ### Fixed
 
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
+- `limestone/Dropdown` audio guidance for DropdownList
+- `limestone/Panels.Header` to stop layout shifting when `slotAfter` or `slotBefore` are modified
+- `limestone/Scroller` with `editable` prop to have proper `aria-label` when item is selected
+- `limestone/TabLayout` to correctly scroll on tab change, when it is wrapped in `ContentContainerDecorator`
+
+## [1.5.0] - 2025-09-24
+
+### Added
+
+- `limestone/Card` `fitImage` prop to allow image to fit the container by height and be centered
+
+### Fixed
+
+- `limestone/FlexiblePopupPanels` to match the latest GUI
+- `limestone/Panels.Header` to match the latest GUI
+- `limestone/VideoPlayer` position of feedback content
+- `limestone/VirtualList.VirtualGridList` not to show overscroll effect when press down key
+
+## [1.4.0] - 2025-09-15
+
+### Added
+
+- `limestone/CheckboxItem` `CheckboxItemGroup` to wrap multiple checkbox items as a list
+- `limestone/Item` props `slotAfterAria` and `slotBeforeAria` for audio guidance of slotAfter and slotBefore
+- `limstone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
+- `limestone/VirtualList` prop `continue5WayHold` to scroll continuously from in a VirtualList to the outer scroller.
+
+### Changed
+
+- `limestone/Chip` audio guidance for chip button and delete button
+- `limestone/ImageItem` audio guidance for selected
+
+### Fixed
+
+- `limestone/Alert` buttons styles for overlay `type`.
 - `limestone/Card` to block select on `keyDown` instead of `keyUp` when `disabled`
+- `limestone/ContextualPopupDecorator` to focus content with timeout when popup opens
+- `limestone/DatePicker` to match the latest GUI
+- `limestone/Dropdown` by removing unnecessary aria props
+- `limestone/Input` buttons styles for number `popupType`.
+- `limestone/InputField` to not clip icons in webOS system.
+- `limestone/MediaPlayer.MediaControls` enforced direction of buttons as `ltr` to prevent them from swapping in RTL locales
+- `limestone/Panels.Header` to match the latest GUI
+- `limestone/TimePicker` to match the latest GUI
 - `limestone/VideoPlayer` to read out the timestamp properly
 
 ## [1.3.2] - 2025-09-02

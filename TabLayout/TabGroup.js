@@ -46,7 +46,7 @@ const TabBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'tab',
-		publicClassNames: ['bg', 'button', 'client', 'selected', 'tab', 'vertical']
+		publicClassNames: ['bg', 'button', 'client', 'icon', 'selected', 'tab', 'vertical']
 	},
 
 	handlers: {
@@ -181,7 +181,7 @@ const TabGroupBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'tabGroup',
-		publicClassNames: ['bg', 'button', 'client', 'selected', 'tab', 'tabGroup', 'vertical']
+		publicClassNames: ['bg', 'button', 'client', 'icon', 'selected', 'tab', 'tabGroup', 'vertical']
 	},
 
 	computed: {
@@ -245,6 +245,7 @@ const TabGroupBase = kind({
 			noScrollByWheel: collapsed,
 			onScrollStop,
 			scrollbarTrackCss: componentCss,
+			scrollToContentContainerOnFocus: false,
 			spotlightDisabled,
 			spotlightId,
 			verticalScrollbar: collapsed ? 'hidden' : 'auto'

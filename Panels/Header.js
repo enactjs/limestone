@@ -4,21 +4,21 @@ import kind from '@enact/core/kind';
 import {isRtlText} from '@enact/i18n/util';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Row, Cell} from '@enact/ui/Layout';
-import {useMeasurable} from '@enact/ui/Measurable';
 import {unit} from '@enact/ui/resolution';
 import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, use, useState} from 'react';
+import {Children, use, useEffect, useRef, useState} from 'react';
 
-import $L from '../internal/$L';
 import Button from '../Button';
 import Heading from '../Heading';
-import Skinnable from '../Skinnable';
-
+import $L from '../internal/$L';
 import {PanelsStateContext} from '../internal/Panels';
 import {useContextAsDefaults} from '../internal/Panels/util';
+import {PopupTabLayoutStateContext} from '../PopupTabLayout/PopupTabLayoutStateContext';
+import Skinnable from '../Skinnable';
+
 
 import componentCss from './Header.module.less';
 
@@ -526,9 +526,10 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 	function ContextAsDefaultsHeader (props) {
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
+		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
-		const isPopupHeader = panelsType?.toLowerCase().includes('popup');
+		const isPopupHeader = (panelsType || tabLayoutType)?.toLowerCase().includes('popup');
 
 		return provideContextAsDefaults(
 			<Wrapped
@@ -555,28 +556,39 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 
 const HeaderMeasurementDecorator = (Wrapped) => {
 	return function HeaderMeasurementDecorator (props) { // eslint-disable-line no-shadow
-		const {ref: slotBeforeRef, measurement: {width: slotBeforeWidth = 0} = {}} = useMeasurable() || {};
-		const {ref: slotAfterRef, measurement: {width: slotAfterWidth = 0} = {}} = useMeasurable() || {};
+		const slotBeforeRef = useRef(null);
+		const slotAfterRef = useRef(null);
+		const lastSlotSizeRef = useRef(null);
 		const [{slotSize, prevSlotBeforeWidth, prevSlotAfterWidth}, setSlotSize] = useState({});
 
-		// If the slot width has changed, re-run this.
-		if (slotBeforeWidth !== prevSlotBeforeWidth || slotAfterWidth !== prevSlotAfterWidth) {
-			const largestSlotSize = Math.max(slotBeforeWidth, slotAfterWidth);
+		useEffect(() => {
+			const slotBeforeElement = slotBeforeRef.current;
+			const slotAfterElement = slotAfterRef.current;
 
-			// And only do this the largest slot is a different value this time around.
-			if (slotSize !== largestSlotSize) {
-				setSlotSize({
-					slotSize: largestSlotSize,
-					prevSlotBeforeWidth: slotBeforeWidth,
-					prevSlotAfterWidth: slotAfterWidth
-				});
+			const slotBeforeWidth = (slotBeforeElement && slotBeforeElement.getBoundingClientRect) ? slotBeforeElement.getBoundingClientRect().width : 0;
+			const slotAfterWidth  = (slotAfterElement  && slotAfterElement.getBoundingClientRect)  ? slotAfterElement.getBoundingClientRect().width  : 0;
+
+			// If the slot width has changed, re-run this.
+			if (slotBeforeWidth !== prevSlotBeforeWidth || slotAfterWidth !== prevSlotAfterWidth) {
+				const largestSlotSize = Math.max(slotBeforeWidth, slotAfterWidth);
+				// And only do this the largest slot is a different value this time around.
+				if (slotSize !== largestSlotSize) {
+					lastSlotSizeRef.current = largestSlotSize;
+					setSlotSize({
+						slotSize: largestSlotSize,
+						prevSlotBeforeWidth: slotBeforeWidth,
+						prevSlotAfterWidth: slotAfterWidth
+					});
+				} else {
+					setSlotSize(s => ({...s, prevSlotBeforeWidth: slotBeforeWidth, prevSlotAfterWidth: slotAfterWidth}));
+				}
 			}
-		}
+		}, [props.slotBefore, props.slotAfter, prevSlotBeforeWidth, prevSlotAfterWidth, slotSize]);
 
 		const measurableProps = {
 			slotBeforeRef,
 			slotAfterRef,
-			slotSize: unit(slotSize, 'rem')
+			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : null
 		};
 
 		return <Wrapped {...props} {...measurableProps} />;

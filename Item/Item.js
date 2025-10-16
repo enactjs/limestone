@@ -210,6 +210,8 @@ const ItemBase = kind({
 		 */
 		slotAfter: PropTypes.node,
 
+		slotAfterAria: PropTypes.string,
+
 		/**
 		 * Nodes to be inserted before `children` and `label`.
 		 *
@@ -220,7 +222,9 @@ const ItemBase = kind({
 		 * @type {Node}
 		 * @public
 		 */
-		slotBefore: PropTypes.node
+		slotBefore: PropTypes.node,
+
+		slotBeforeAria: PropTypes.string
 	},
 
 	defaultProps: {
@@ -238,7 +242,7 @@ const ItemBase = kind({
 		label: ({label}) => (typeof label === 'number' ? label.toString() : label)
 	},
 
-	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, slotAfter, slotBefore, ...rest}) => {
+	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
 		delete rest.size;
 
 		const keys = Object.keys(rest);
@@ -257,7 +261,7 @@ const ItemBase = kind({
 			>
 				<div className={css.bg} />
 				{slotBefore ? (
-					<Cell className={css.slotBefore} shrink>
+					<Cell className={css.slotBefore} aria-label={slotBeforeAria} shrink>
 						{slotBefore}
 					</Cell>
 				) : null}
@@ -272,7 +276,7 @@ const ItemBase = kind({
 					shrink={inline}
 				/>
 				{slotAfter ? (
-					<Cell className={css.slotAfter} shrink>
+					<Cell className={css.slotAfter} aria-label={slotAfterAria} shrink>
 						{slotAfter}
 					</Cell>
 				) : null}

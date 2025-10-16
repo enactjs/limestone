@@ -473,6 +473,7 @@
 
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 24px;
+@lime-datetime-fontsize: var(--primitive-font-size-66);
 @lime-datetime-heading-margin: 0 0 var(--primitive-spacing-132);
 @lime-timepicker-colon-margin: 0 var(--primitive-spacing-6);
 
@@ -522,7 +523,7 @@
 @lime-flexiblepopuppanels-padding: 0 60px (36px + (18px * 1.75));  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
 @lime-flexiblepopuppanels-panel-border-radius: var(--semantic-radius-overlay);
 @lime-flexiblepopuppanels-panel-margin: 0 60px;
-@lime-flexiblepopuppanels-panel-padding: 60px (60px - @lime-component-spacing);
+@lime-flexiblepopuppanels-panel-padding: 60px;
 @lime-flexiblepopuppanels-body-padding: 0 108px;
 @lime-flexiblepopuppanels-navbutton-margin: 0;
 @lime-flexiblepopuppanels-small-width: 600px;
@@ -534,6 +535,8 @@
 
 // Header
 // ---------------------------------------
+@lime-header-popup-titleRow-height: 204px;
+@lime-header-popup-compact-slotafter-padding-offset: 24px;
 @lime-header-slotabove-margin: 0 -@lime-component-spacing var(--primitive-spacing-24) -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
@@ -790,9 +793,13 @@
 @lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
 @lime-inputfield-height: 168px;
 @lime-inputfield-width: 1560px;
+@lime-inputfield-withoneicon-width: 1386px;
+@lime-inputfield-withtwoicons-width: 1272px;
 @lime-inputfield-small-height: 132px;
 @lime-inputfield-highlight-height: 100%;
 @lime-inputfield-small-width: 1200px;
+@lime-inputfield-small-withoneicon-width: 990px;
+@lime-inputfield-small-withtwoicons-width: 876px;
 
 // Item
 // ---------------------------------------
@@ -944,11 +951,13 @@
 // PopupTabLayout
 // ---------------------------------------
 @lime-popuptablayout-margin: 60px auto 132px 60px;
+@lime-popuptablayout-tab-icon-size: 96px;
 @lime-popuptablayout-tabs-border-radius: var(--semantic-radius-container);
 @lime-popuptablayout-tabs-content-spacing: var(--primitive-spacing-36);
 @lime-popuptablayout-content-border-radius: var(--semantic-radius-popup);
 @lime-popuptablayout-content-margin: 0;
 @lime-popuptablayout-panel-body-padding: var(--primitive-spacing-60);
+@lime-popuptablayout-panel-min-height: 996px;
 
 // ProgressBar
 // ---------------------------------------
@@ -1135,24 +1144,26 @@
 @lime-video-back-button-top:                       102px;
 @lime-video-slider-tooltip-arrow-border-left-right: 18px;
 @lime-video-slider-tooltip-arrow-border-top:       24px;
+@lime-video-slider-tooltip-content-padding:        0 36px;
 @lime-video-slider-tooltip-position-bottom:        42px;
 @lime-video-slider-tooltip-shift-position-bottom:  @lime-video-slider-tooltip-position-bottom + @lime-video-slider-tooltip-arrow-border-top;
 @lime-video-slider-tooltip-margin-bottom:          6px;
 @lime-video-slider-tooltip-font-size:              48px;
 @lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
 @lime-video-slider-tooltip-line-height:            72px;
-@lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-12);
+@lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-42);
 @lime-video-slider-tooltip-thumbnail-border-width: 6px;
 @lime-video-slider-tooltip-thumbnail-width:  426px;
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;
 @lime-video-feedback-icon-font-size:               1.25em;
-@lime-video-feedback-margin:                       24px;
-@lime-video-feedback-mini-font-size:               var(--primitive-font-size-60);
+@lime-video-feedback-mini-font-size:               var(--primitive-font-size-66);
 @lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
-@lime-video-feedback-mini-height:                  168px;
-@lime-video-feedback-mini-line-height:             @lime-common-line-height;
+@lime-video-feedback-mini-height:                  120px;
+@lime-video-feedback-mini-width:                   576px;
 @lime-video-feedback-mini-margin-bottom:           72px;
+@lime-video-feedback-mini-left:					   276px;
+@lime-video-feedback-mini-top:					   @lime-video-back-button-top;
 @lime-video-feedback-message-font-weight:          var(--primitive-font-weight-semibold);
 @lime-video-player-badge-text-size:                var(--primitive-font-size-48);
 @lime-video-player-info-font-size:                 var(--primitive-font-size-54);
