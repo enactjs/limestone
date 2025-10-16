@@ -297,7 +297,7 @@ const CardBase = kind({
 						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
 						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
 						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
-						{showProgressBar !== false ? <ProgressBar progress={progress} /> : null}
+						{showProgressBar === true ? <ProgressBar progress={progress} /> : null}
 					</Cell>
 				</Row>
 			);
