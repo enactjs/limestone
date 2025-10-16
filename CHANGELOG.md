@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Card` audio guidance for disabled
+
 ## [1.6.0] - 2025-10-14
 
 ### Added
