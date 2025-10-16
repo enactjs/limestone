@@ -208,7 +208,6 @@ const CardBase = kind({
 		 * The progress displayed inside the ProgressBar
 		 *
 		 * @type {Number}
-		 * default '0'
 		 * @public
 		 */
 		progress: PropTypes.number,
@@ -254,8 +253,7 @@ const CardBase = kind({
 		showProgressBar: PropTypes.bool
 	},
 	defaultProps: {
-		orientation: 'vertical',
-		progress: 0
+		orientation: 'vertical'
 	},
 
 	styles: {
