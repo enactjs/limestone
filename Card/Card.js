@@ -316,7 +316,7 @@ const CardBase = kind({
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
-			isCheck: icon === 'check'
+			isCheckIcon: icon === 'check'
 		})
 	},
 
