@@ -205,9 +205,9 @@ const CardBase = kind({
 		primaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
-		 * The primary badge image source.
+		 * The progress displayed inside the ProgressBar
 		 *
-		 * @type {String|Object}
+		 * @type {Number}
 		 * default '0'
 		 * @public
 		 */
