@@ -160,6 +160,9 @@
 					.focus({
 						.bg {
 							/* Override TabLayout */
+							:has(:global(.light)):not(:has(:global(.highContrast))) & {
+								box-shadow: none;
+							}
 						}
 					});
 				}
