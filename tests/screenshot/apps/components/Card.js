@@ -53,6 +53,9 @@ const CardTests = [
 	// Centered
 	...withProps({centered: true}, defaultCardTests),
 
+	// Show ProgressBar
+	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
+
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
