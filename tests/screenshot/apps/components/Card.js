@@ -56,6 +56,9 @@ const CardTests = [
 	// Icon
 	...withProps({icon: 'trash'}, defaultCardTests),
 
+	// Show ProgressBar
+	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
+
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 

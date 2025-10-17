@@ -2,7 +2,7 @@ import {Card, CardBase} from '@enact/limestone/Card';
 import icons from '@enact/limestone/Icon/IconList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
 
 import {svgGenerator} from '../helper/svg';
@@ -45,11 +45,13 @@ export const _Card = (args) => (
 		onClick={action('onClick')}
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
+		progress={args['progress']}
 		roundedImage={args['roundedImage']}
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		// eslint-disable-next-line no-undefined
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
+		showProgressBar={args['showProgressBar']}
 		src={args['src']}
 	>
 		{args['children']}
@@ -68,10 +70,12 @@ boolean('hasContainer', _Card, Config);
 text('label', _Card, Config, 'Card label');
 select('orientation', _Card, prop.orientation, Config);
 object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
+number('progress', _Card, Config, 0.5);
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
 boolean('selected', _Card, Config);
+boolean('showProgressBar', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
 text('children', _Card, Config, 'Card Caption');
 
