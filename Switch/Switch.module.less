@@ -1,5 +1,6 @@
 // Switch.module.less
 //
+@import "../styles/motion-mixins.less";
 @import "../styles/mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
@@ -44,6 +45,10 @@
 
 		.icon {
 			transition: left 200ms, background-color 200ms;
+		}
+
+		&.selected .icon {
+			.lime-toggle-motion(@lime-switch-icon-top);
 		}
 	}
 
