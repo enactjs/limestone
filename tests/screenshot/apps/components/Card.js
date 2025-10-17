@@ -53,6 +53,9 @@ const CardTests = [
 	// Centered
 	...withProps({centered: true}, defaultCardTests),
 
+	// Icon
+	...withProps({icon: 'trash'}, defaultCardTests),
+
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
