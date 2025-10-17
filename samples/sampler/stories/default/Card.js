@@ -1,4 +1,5 @@
 import {Card, CardBase} from '@enact/limestone/Card';
+import icons from '@enact/limestone/Icon/IconList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
@@ -17,6 +18,8 @@ const generateImageSrc = (color) => {
 	};
 };
 
+const iconsList = Object.keys(icons).sort();
+
 const prop = {
 	orientation: ['horizontal', 'vertical']
 };
@@ -33,6 +36,7 @@ export const _Card = (args) => (
 		centered={args['centered']}
 		disabled={args['disabled']}
 		fitImage={args['fitImage']}
+		icon={args['icon']}
 		imageIconSrc={args['imageIconSrc']}
 		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
@@ -59,6 +63,7 @@ boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('disabled', _Card, Config);
 boolean('fitImage', _Card, Config);
+select('icon', _Card, iconsList, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
 object('imageSize', _Card, Config);
 boolean('hasContainer', _Card, Config);
