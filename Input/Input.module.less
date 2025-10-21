@@ -122,6 +122,11 @@
 
 		.titles {
 			height: @lime-input-fullscreen-title-height;
+
+			:global(.enact-orientation-portrait) & {
+				margin-inline: @lime-input-fullscreen-back-button-start;
+				width: initial;
+			}
 		}
 
 		.title {
@@ -234,6 +239,10 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+
+			&:has(.number, .passwordnumber) {
+				margin-bottom: 0;
+			}
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;
