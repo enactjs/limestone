@@ -74,7 +74,7 @@ describe('TabLayout', function () {
 		});
 
 		it('should focus the first tab content when collapsed', async function () {
-			await Page.open('', '?defaultCollapsed');
+			await Page.open('', '?defaultCollapsed&blockExpandOnLandscape');
 
 			const expected = 'Button One';
 			const actual = await browser.execute(getFocusedText);
@@ -92,7 +92,7 @@ describe('TabLayout', function () {
 		});
 
 		it('should focus the content for the selected index when collapsed', async function () {
-			await Page.open('', '?defaultIndex=1&defaultCollapsed');
+			await Page.open('', '?defaultIndex=1&defaultCollapsed&blockExpandOnLandscape');
 
 			const expected = 'Button Two';
 			const actual = await browser.execute(getFocusedText);
