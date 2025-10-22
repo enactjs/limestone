@@ -240,8 +240,9 @@ const ImageItemBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({children, label, selected, showSelection}) => {
-			return `${children || ''}${label ? ` ${label}` : ''}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
+		'aria-label': ({'aria-label': customAriaLabel, children, label, selected, showSelection}) => {
+			const defaultAriaLabel = `${children || ''}${label ? ` ${label}` : ''}`;
+			return `${customAriaLabel || defaultAriaLabel}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
 		},
 		children: ({centered, children, css, 'data-index': index, imageIconComponent, imageIconSrc, label, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
