@@ -4,6 +4,9 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+- `limestone/Icon` supported icon list, updating existing icons
+
 ### Fixed
 
 - `limestone/ImageItem` to get custom `aria-label`
