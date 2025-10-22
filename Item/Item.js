@@ -210,6 +210,12 @@ const ItemBase = kind({
 		 */
 		slotAfter: PropTypes.node,
 
+		/**
+		 * Aria-label for slotAfter icon.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		slotAfterAria: PropTypes.string,
 
 		/**
@@ -224,6 +230,12 @@ const ItemBase = kind({
 		 */
 		slotBefore: PropTypes.node,
 
+		/**
+		 * Aria-label for slotBefore icon.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		slotBeforeAria: PropTypes.string
 	},
 
