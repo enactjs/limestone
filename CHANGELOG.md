@@ -5,11 +5,15 @@ The following is a curated list of changes in the Enact limestone module, newest
 ## [unreleased]
 
 ### Added
+
+- `limestone/Card` audio guidance for disabled
 - `limestone/Icon` supported icon list, updating existing icons
 
 ### Fixed
 
 - `limestone/ImageItem` to get custom `aria-label`
+- `limestone/Input` `fullscreen` to prevent the title in portrait mode from rendering over the close button
+- `limestone/Input` `overlay` to prevent the invalid tooltip from overflowing
 
 ## [1.6.0] - 2025-10-14
 
