@@ -1,13 +1,16 @@
-// import Chip from '@enact/limestone/Chip';
-import Chip from '@enact/limestone/Chips/Chip';
+import {Chip, Chips} from '@enact/limestone/Chips';
 
 import Section from '../components/Section';
 
 const ChipView = () => (
 	<>
 		<Section title="Default">
-			<Chip alt="Normal" deleteButton={{icon: 'closex', position: 'right'}}>Text 0</Chip>
-			<Chip alt="Disabled" deleteButton={{icon: 'closex', position: 'right'}} disabled>Text 1</Chip>
+			<Chips alt="Normal">
+				<Chip deleteButton={{icon: 'closex', position: 'right'}}>Text 0</Chip>
+			</Chips>
+			<Chips alt="Disabled">
+				<Chip deleteButton={{icon: 'closex', position: 'right'}} disabled>Text 1</Chip>
+			</Chips>
 		</Section>
 	</>
 );
