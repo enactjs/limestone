@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Card` audio guidance for disabled
+
 ### Fixed
 
 - `limestone/ImageItem` to get custom `aria-label`
