@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Card` audio guidance for disabled
+- `limestone/Icon` supported icon list, updating existing icons
 
 ### Fixed
 
