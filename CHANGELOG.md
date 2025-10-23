@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` to get custom `aria-label`
 - `limestone/Input` `fullscreen` to prevent the title in portrait mode from rendering over the close button
 - `limestone/Input` `overlay` to prevent the invalid tooltip from overflowing
+- `limestone/VideoPlayer` feedback style
 
 ## [1.6.0] - 2025-10-14
 
