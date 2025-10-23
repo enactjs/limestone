@@ -72,7 +72,7 @@ const RefocusDecorator = Wrapped => {
 		}, [collapsed, orientation, spotlightId]);
 
 		useEffect(() => {
-			if (screenOrientationRef.current !== screenOrientation) {
+			if (screenOrientationRef.current && screenOrientationRef.current !== screenOrientation) {
 				const currentFocusedElement = document.querySelector(':focus'),
 					tabsSpotlightId = getTabsSpotlightId(spotlightId, false),
 					tabsContainer = getContainerNode(tabsSpotlightId);
@@ -85,9 +85,9 @@ const RefocusDecorator = Wrapped => {
 						onExpand();
 					}
 				}
-
-				screenOrientationRef.current = screenOrientation;
 			}
+
+			screenOrientationRef.current = screenOrientation;
 		}, [blockCollapseOnPortrait, blockExpandOnLandscape, onCollapse, onExpand, screenOrientation, spotlightId]);
 
 		const handleTabAnimationEnd = useCallback((ev) => {
