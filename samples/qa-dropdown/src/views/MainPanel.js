@@ -1,46 +1,34 @@
-import BodyText from '@enact/limestone/BodyText';
+import * as React from 'react';
 import Button from '@enact/limestone/Button';
-import Dropdown from '@enact/limestone/Dropdown';
-import {Panel, WizardPanels} from '@enact/limestone/WizardPanels';
-import ri from '@enact/ui/resolution';
-import {useCallback, useState} from 'react';
+import {Panel, Header} from '@enact/limestone/Panels';
 
-const MainPanel = () => {
-	const [open1, setOpen1] = useState(false);
-	const [open2, setOpen2] = useState(false);
-	const [removed, setRemove] = useState(false);
-
-	const handleOpen1 = useCallback(() => setOpen1(true), []);
-	const handleClose1 = useCallback(() => setOpen1(false), []);
-
-	const handleOpen2 = useCallback(() => {
-		setOpen2(true);
-
-		setTimeout(() => {
-			setRemove(true);
-		}, 2000);
+const MainPanel = props => {
+	const [slot, toggleSlot] = React.useState(false);
+	const [centered, toggleCentered] = React.useState(false);
+	const [noCloseButton, toggleNoCloseButton] = React.useState(false);
+	const handleClick1 = React.useCallback(() => {
+		toggleSlot(state => !state);
 	}, []);
-	const handleClose2 = useCallback(() => setOpen2(false), []);
+	const handleClick2 = React.useCallback(() => {
+		toggleCentered(state => !state);
+	}, []);
+	const handleClick3 = React.useCallback(() => {
+		toggleNoCloseButton(state => !state);
+	}, []);
 
 	return (
-		<WizardPanels>
-			<Panel title="QA Sample - Dropdown">
-				<Dropdown onClose={handleClose1} onOpen={handleOpen1} open={open1} size="large" title="language">
-					{['English', 'Korean', 'Spanish', 'Amharic', 'Thai', 'Arabic', 'Urdu', 'Simplified Chinese', 'Traditional Chinese', 'Vietnamese']}
-				</Dropdown>
-				<Button size="large">
-					Enter
-				</Button>
-			</Panel>
-			<Panel>
-				{!removed && (
-					<div style={{margin: ri.scaleToRem(20)}}>
-						<BodyText>This line will be removed after opening the dropdown.</BodyText>
-					</div>
+		<Panel {...props}>
+			<Header title="Hello world" centered={centered} noCloseButton={noCloseButton}>
+				{slot && (
+					<slotAfter>
+						<Button icon="arrowcurveright" />
+					</slotAfter>
 				)}
-				<Dropdown onClose={handleClose2} onOpen={handleOpen2} open={open2}>{['a', 'b', 'c']}</Dropdown>
-			</Panel>
-		</WizardPanels>
+			</Header>
+			<Button onClick={handleClick1}>{slot ? 'Hide slot' : 'Show slot'} Slot After</Button>
+			<Button onClick={handleClick2}>{centered ? 'Make not centered' : 'Make centered'} Slot After</Button>
+			<Button onClick={handleClick3}>{noCloseButton ? 'Hide  Close Button' : 'Show  Close Button'} Slot After</Button>
+		</Panel>
 	);
 };
 
