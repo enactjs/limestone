@@ -17,6 +17,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Panels.Header` to stop layout shifting on render
 - `limestone/Panels.Header` to stop layout shifting when `noCloseButton` is active
 - `limestone/TabLayout` automatic expand/collapse behavior on screen orientation changes
+- `limestone/VideoPlayer` feedback style
 
 ## [1.6.0] - 2025-10-14
 
