@@ -535,7 +535,7 @@
 
 // Header
 // ---------------------------------------
-@lime-header-titleRow-height: 228px;
+@lime-header-titleRow-height: 222px;
 @lime-header-centered-titleRow-height: 282px;
 @lime-header-popup-titleRow-height: 204px;
 @lime-header-popup-compact-slotafter-padding-offset: 24px;
@@ -569,21 +569,7 @@
 	.extract(#guide.header[standard-padding], left)[];
 @lime-header-standard-title-padding: 0;
 @lime-header-standard-title-margin-top: var(--primitive-spacing-60);
-@lime-header-standard-subtitle-margin:
-	(
-		.extract(#guide.header[standard-titles-gap], top)[]
-		- #guide.get-edge-size-difference(
-			#guide.header[standard-title-line-height],
-			@lime-heading-title-font-size,
-			@lime-heading-title-line-height
-		)[@result]
-		- #guide.get-edge-size-difference(
-			#guide.header[standard-subtitle-line-height],
-			@lime-heading-subtitle-font-size,
-			@lime-heading-subtitle-line-height
-		)[@result]
-	)
-	0 0 0;
+@lime-header-standard-subtitle-margin: 0;
 @lime-header-standard-slotbefore-margin-end: var(--primitive-spacing-36);
 @lime-header-standard-slotafter-margin-start: var(--primitive-spacing-36);
 @lime-header-compact-margin: 0;
