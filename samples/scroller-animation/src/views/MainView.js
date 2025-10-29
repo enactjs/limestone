@@ -18,9 +18,10 @@ const cardElements = (numberOfElements, imageSrc) => {
 					Card Title: {i + 1}
 				</Card>
 			</Cell>
-		)}
+		);
+	}
 	);
-}
+};
 
 export const svgGenerator = (width, height, bgColor, textColor, customText) => (
 	`data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${width} ${height}' width='${width}' height='${height}'%3E` +
@@ -53,29 +54,29 @@ const MainView = () => {
 					<InputField css={css} size="small" onChange={handleElements} type="number" value={numberOfElements} style={{width: '4em'}} />
 				</Cell>
 				<Cell>
-					<ScrollerSwitch defaultSelected={hoverToScroll} onToggle={handleHoverToScroll} title='Hover To Scroll' />
+					<ScrollerSwitch defaultSelected={hoverToScroll} onToggle={handleHoverToScroll} title="Hover To Scroll" />
 				</Cell>
 			</Row>
 			<Scroller
-				direction='vertical'
-				key='translate'
-				scrollMode='translate'
+				direction="vertical"
+				key="translate"
+				scrollMode="translate"
 			>
 				<Scroller
-					direction='horizontal'
-					key='translate-1'
+					direction="horizontal"
+					key="translate-1"
 					hoverToScroll={hoverToScroll}
-					scrollMode='translate'
+					scrollMode="translate"
 				>
 					<Row>
 						{elements}
 					</Row>
 				</Scroller>
 				<Scroller
-					direction='horizontal'
-					key='translate-2'
+					direction="horizontal"
+					key="translate-2"
 					hoverToScroll={hoverToScroll}
-					scrollMode='translate'
+					scrollMode="translate"
 				>
 					<Row>
 						{elements}
