@@ -46,7 +46,7 @@ const RefocusDecorator = Wrapped => {
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
 
 		const screenOrientation = useScreenOrientation();
-		const screenOrientationRef = useRef(null);
+		const screenOrientationRef = useRef('landscape');
 
 		// generate an id for the component (and a derived id for the tabs) so we can refocus them
 		// generating a different ID by orientation so swapping orientations doesn't clear container
