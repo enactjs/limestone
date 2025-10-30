@@ -73,7 +73,7 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	const {active, className, css, disabled, focused, keyFrequency, showAnchor, ...rest} = sliderProps;
+	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -136,6 +136,7 @@ const SliderBase = (props) => {
 		componentCss.slider,
 		className,
 		{
+			[mergedCss.hasMinMax]: showMinMax,
 			[mergedCss.active]: active,
 			[mergedCss.showAnchor]: showAnchor
 		},
@@ -176,6 +177,8 @@ const SliderBase = (props) => {
 			className={componentClassName}
 			css={mergedCss}
 			disabled={disabled}
+			max={max}
+			min={min}
 			progressBarComponent={
 				<ProgressBar css={mergedCss} />
 			}
@@ -187,6 +190,12 @@ const SliderBase = (props) => {
 					css={mergedCss}
 					visible={focused}
 				/>
+			}
+			minMaxComponent={showMinMax ?
+				<div className={mergedCss.minMax}>
+					<div>{min}</div>
+					<div>{max}</div>
+				</div> : null
 			}
 		/>
 	);
@@ -345,6 +354,14 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * @public
 	 */
 	showAnchor: PropTypes.bool,
+
+	/**
+	 * Displays the min and max values at the edges of the slider.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	showMinMax: PropTypes.bool,
 
 	/**
 	 * The amount to increment or decrement the value.
