@@ -588,7 +588,7 @@ const HeaderMeasurementDecorator = (Wrapped) => {
 		const measurableProps = {
 			slotBeforeRef,
 			slotAfterRef,
-			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : null
+			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : '0rem'
 		};
 
 		return <Wrapped {...props} {...measurableProps} />;
