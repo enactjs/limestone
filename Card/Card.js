@@ -338,7 +338,7 @@ const CardBase = kind({
 		})
 	},
 
-	render: ({css, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
@@ -354,7 +354,9 @@ const CardBase = kind({
 		return (
 			<UiCard
 				{...rest}
+				aria-disabled={disabled}
 				css={css}
+				disabled={disabled}
 				imageComponent={
 					<Image>
 						{primaryBadgeSrc ? (
