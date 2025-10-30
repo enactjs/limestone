@@ -1,7 +1,7 @@
 {
-  "name": "qa-scroller",
+  "name": "qa-scroller-animation",
   "version": "0.1.0",
-  "description": "QA Scroller",
+  "description": "QA Scroller Animation",
   "author": "",
   "main": "src/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "private": true,
   "repository": "",
   "enact": {
-    "title": "QA Scroller",
+    "title": "QA Scroller Animation",
     "theme": "limestone"
   },
   "dependencies": {

@@ -1,8 +1,8 @@
-## QA sample for testing Scroller
+## QA sample for testing Scroller Animation
 
 Run `npm install` then `npm run serve` to have the app running on [http://localhost:8080](http://localhost:8080), where you can view it in your browser.
 
-To test functionality and usability of Scroller, you may use this sample.
+To test the Scroller Animation, you may use this sample.
 
 ---
 
