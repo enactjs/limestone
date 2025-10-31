@@ -140,6 +140,17 @@ const RadioItem = Pure(
 	)
 );
 
+/**
+ * A container that surrounds multiple RadioItems.
+ *
+ * A list of multiple RadioItems wrapped with a RadioItemGroup component gets
+ * required audio guidance.
+ *
+ * @class RadioItemGroup
+ * @memberof limestone/RadioItem
+ * @ui
+ * @public
+ */
 const RadioItemGroup = (props) => {
 	const {children, groupId, itemProps, ...rest} = props;
 
