@@ -371,8 +371,8 @@
 @lime-button-max-width: 1200px;
 @lime-button-min-width: 300px;
 @lime-button-min-width-default: 840px;
-@lime-button-focusexpand-focus-bg-transform: scale(1.1);
-@lime-button-focusexpand-pressed-bg-transform: scale(1.02);
+@lime-button-focusexpand-focus-bg-transform: scale(1.15);
+@lime-button-focusexpand-pressed-bg-transform: scale(1.05);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
 @lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
@@ -382,8 +382,8 @@
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
 @lime-button-small-min-width-default: 720px;
-@lime-button-small-focusexpand-focus-bg-transform: scale(1.1);
-@lime-button-small-focusexpand-pressed-bg-transform: scale(1.04);
+@lime-button-noanimation-focusexpand-focus-bg-transform: scale(1);
+@lime-button-noanimation-focusexpand-pressed-bg-transform: scale(0.9);
 @lime-button-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
@@ -404,13 +404,15 @@
 // Card
 // ---------------------------------------
 @lime-card-margin: @lime-item-margin;
-@lime-card-border-radius: 36px;
+@lime-card-border-radius: var(--semantic-radius-container);
 @lime-card-image-border-width: 6px;
 @lime-card-resting-border-width: 3px;
-@lime-card-selection-icon-size: 90px;
+@lime-card-selection-check-icon-size: 90px;
+@lime-card-selection-icon-size: 120px;
 @lime-card-selection-icon-border-radius: 50%;
 @lime-card-selection-icon-margin: 0;
-@lime-card-selection-icon-line-height: 90px;
+@lime-card-selection-check-icon-line-height: 90px;
+@lime-card-selection-icon-line-height: 144px;
 @lime-card-badge-size: 108px;
 @lime-card-badge-margin: 0;
 @lime-card-badge-top: 24px;
@@ -420,15 +422,15 @@
 @lime-card-caption-height: 84px;
 @lime-card-label-line-height: 60px;
 @lime-card-label-height: 60px;
-@lime-card-vertical-captions-padding: 36px 0;
-@lime-card-vertical-captions-gap: 48px;
+@lime-card-vertical-captions-padding: var(--primitive-spacing-36) 0;
+@lime-card-vertical-captions-gap: var(--primitive-spacing-48);
 @lime-card-vertical-image-icon-size: 180px;
 @lime-card-vertical-image-icon-margin: 0;
-@lime-card-vertical-caption-overlay-captions-padding: 48px;
-@lime-card-vertical-has-container-captions-padding: 36px 48px;
+@lime-card-vertical-caption-overlay-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-card-vertical-has-container-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-card-horizontal-width: 1320px;
 @lime-card-horizontal-height: 336px;
-@lime-card-horizontal-captions-padding: 48px;
+@lime-card-horizontal-captions-padding: var(--primitive-spacing-48);
 
 // Checkbox
 // ---------------------------------------

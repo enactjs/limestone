@@ -29,6 +29,7 @@ import Image from '../Image';
 import $L from '../internal/$L';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
 import {Marquee, MarqueeController} from '../Marquee';
+import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
@@ -144,6 +145,15 @@ const CardBase = kind({
 		hasContainer: PropTypes.bool,
 
 		/**
+		 * Icon used when `selected` is `true`
+		 *
+		 * @type {String}
+		 * @default 'check'
+		 * @public
+		 */
+		icon: PropTypes.string,
+
+		/**
 		 * Source for the image icon.
 		 *
 		 * String value or Object of values used to determine which image will appear on
@@ -204,6 +214,14 @@ const CardBase = kind({
 		primaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
+		 * The progress displayed inside the ProgressBar
+		 *
+		 * @type {Number}
+		 * @public
+		 */
+		progress: PropTypes.number,
+
+		/**
 		 * Set to `true` to display the image with rounded corners.
 		 *
 		 * @type {Boolean}
@@ -233,9 +251,18 @@ const CardBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		selected: PropTypes.bool
+		selected: PropTypes.bool,
+
+		/**
+		 * Activates the 'ProgressBar'.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		showProgressBar: PropTypes.bool
 	},
 	defaultProps: {
+		icon: 'check',
 		orientation: 'vertical'
 	},
 
@@ -260,7 +287,7 @@ const CardBase = kind({
 			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, secondaryLabel}) => {
+		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
 
@@ -278,6 +305,7 @@ const CardBase = kind({
 						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
 						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
 						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
+						{showProgressBar ? <ProgressBar progress={progress} /> : null}
 					</Cell>
 				</Row>
 			);
@@ -301,19 +329,22 @@ const CardBase = kind({
 					captions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			roundedImage,
-			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay)
+			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
+			isCheckIcon: icon === 'check'
 		})
 	},
 
-	render: ({css, disabled, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
+		delete rest.progress;
 		delete rest.secondaryLabel;
+		delete rest.showProgressBar;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
@@ -335,7 +366,7 @@ const CardBase = kind({
 							<Image className={css.secondaryBadge} src={secondaryBadgeSrc} />
 						) : null}
 						<div className={css.selectionContainer}>
-							<Icon className={css.selectionIcon}>check</Icon>
+							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>
 					</Image>
 				}

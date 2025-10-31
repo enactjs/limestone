@@ -48,13 +48,20 @@
 		border-style: solid;
 
 		.selectionIcon {
-			width: @lime-card-selection-icon-size;
-			height: @lime-card-selection-icon-size;
+			width: @lime-card-selection-check-icon-size;
+			height: @lime-card-selection-check-icon-size;
 			border-radius: @lime-card-selection-icon-border-radius;
 			margin: @lime-card-selection-icon-margin;
-			line-height: @lime-card-selection-icon-line-height;
+			line-height: @lime-card-selection-check-icon-line-height;
 			z-index: 3;
 		}
+	}
+
+	&:not(.isCheckIcon) .selectionContainer .selectionIcon {
+		--icon-size: @lime-card-selection-icon-size;
+		width: @lime-card-selection-icon-line-height;
+		height: @lime-card-selection-icon-line-height;
+		line-height: @lime-card-selection-icon-line-height;
 	}
 
 	.primaryBadge, .secondaryBadge {
@@ -227,8 +234,11 @@
 			}
 		}
 
-		&.selected .selectionIcon {
+		&.isCheckIcon.selected .selectionIcon {
 			background-color: @lime-card-selection-container-selected-color;
+		}
+
+		&.selected .selectionIcon {
 			color: @lime-card-selection-icon-selected-color;
 		}
 
