@@ -268,7 +268,7 @@ const CardBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		splitCaption: PropTypes.bool,
+		splitCaption: PropTypes.bool
 	},
 
 	defaultProps: {
@@ -300,7 +300,6 @@ const CardBase = kind({
 		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar, splitCaption}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
-			const choseCaptions = (captionOverlay || captionOverlayOnFocus) && splitCaption && orientation === 'vertical';
 
 			const captions = (
 				<Row className={css.captions}>
@@ -320,7 +319,6 @@ const CardBase = kind({
 					</Cell>
 				</Row>
 			);
-			console.log(showProgressBar)
 
 			const splitCaptions = (
 				<>
@@ -333,6 +331,8 @@ const CardBase = kind({
 					</Cell>
 				</>
 			);
+
+			const choseCaptions = (captionOverlay || captionOverlayOnFocus) && splitCaption && orientation === 'vertical' ? splitCaptions : captions;
 
 			return (
 				typeof index !== 'undefined' ?
@@ -348,9 +348,9 @@ const CardBase = kind({
 						}
 						index={index}
 					>
-						{choseCaptions ? splitCaptions : captions}
+						{choseCaptions}
 					</AsyncRenderChildren> :
-					choseCaptions ? splitCaptions : captions
+					choseCaptions
 			);
 		},
 		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
