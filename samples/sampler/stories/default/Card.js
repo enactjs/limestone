@@ -52,6 +52,7 @@ export const _Card = (args) => (
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
 		showProgressBar={args['showProgressBar']}
+		splitCaption={args['splitCaption']}
 		src={args['src']}
 	>
 		{args['children']}
@@ -76,6 +77,7 @@ object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
 boolean('selected', _Card, Config);
 boolean('showProgressBar', _Card, Config);
+boolean('splitCaption', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
 text('children', _Card, Config, 'Card Caption');
 

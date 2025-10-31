@@ -168,6 +168,17 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlay {
+			&.splitCaption {
+				.label {
+					font-size: @lime-card-split-caption-label-font-size;
+					line-height: @lime-card-split-caption-label-line-height;
+					font-weight: @lime-card-split-caption-label-font-weight;
+					padding: @lime-card-split-caption-label-padding;
+				}
+			}
+		}
+
 		&.captionOverlayOnFocus .captions {
 			visibility: hidden;
 		}
@@ -281,6 +292,12 @@
 
 				&:not(.selected) {
 					.resting-border(5);
+				}
+
+				&.splitCaption {
+					.label {
+						color: @lime-card-label-main-color;
+					}
 				}
 			}
 

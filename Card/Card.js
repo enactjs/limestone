@@ -259,8 +259,18 @@ const CardBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		showProgressBar: PropTypes.bool
+		showProgressBar: PropTypes.bool,
+
+		/**
+		 * Splits the captions in two sections. This prop is only used when
+		 * `captionOverlayOnFocus` or `captionOverlay` is `true` and `orientation` is `'vertical'`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		splitCaption: PropTypes.bool,
 	},
+
 	defaultProps: {
 		icon: 'check',
 		orientation: 'vertical'
@@ -287,9 +297,10 @@ const CardBase = kind({
 			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar}) => {
+		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar, splitCaption}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
+			const choseCaptions = (captionOverlay || captionOverlayOnFocus) && splitCaption && orientation === 'vertical';
 
 			const captions = (
 				<Row className={css.captions}>
@@ -309,6 +320,19 @@ const CardBase = kind({
 					</Cell>
 				</Row>
 			);
+			console.log(showProgressBar)
+
+			const splitCaptions = (
+				<>
+					<Cell className={css.captions}>
+						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
+					</Cell>
+					<Cell >
+						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
+						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
+					</Cell>
+				</>
+			);
 
 			return (
 				typeof index !== 'undefined' ?
@@ -324,9 +348,9 @@ const CardBase = kind({
 						}
 						index={index}
 					>
-						{captions}
+						{choseCaptions ? splitCaptions : captions}
 					</AsyncRenderChildren> :
-					captions
+					choseCaptions ? splitCaptions : captions
 			);
 		},
 		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
@@ -335,7 +359,8 @@ const CardBase = kind({
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
 			isCheckIcon: icon === 'check'
-		})
+		}),
+		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
 	render: ({css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
