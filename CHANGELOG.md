@@ -7,6 +7,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Card` audio guidance for disabled
+- `limestone/Card` `icon` prop to allow user to change the icon
+- `limestone/Card` added option for progressBar
 - `limestone/Icon` supported icon list, updating existing icons
 
 ### Fixed
