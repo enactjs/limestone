@@ -214,7 +214,7 @@ const CheckboxItem = Pure(
  * @public
  */
 const CheckboxItemGroup = (props) => {
-	const {children, groupId, itemProps, ...rest} = props;
+	const {children, itemProps, ...rest} = props;
 
 	CheckboxItemGroup.propTypes = {
 		groupId: PropTypes.string,

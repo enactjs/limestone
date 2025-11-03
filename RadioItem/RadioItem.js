@@ -152,7 +152,7 @@ const RadioItem = Pure(
  * @public
  */
 const RadioItemGroup = (props) => {
-	const {children, groupId, itemProps, ...rest} = props;
+	const {children, itemProps, ...rest} = props;
 
 	RadioItemGroup.propTypes = {
 		groupId: PropTypes.string,
