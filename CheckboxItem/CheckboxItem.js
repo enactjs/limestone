@@ -223,33 +223,27 @@ const CheckboxItemGroup = (props) => {
 
 	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` components using `ui/Group`
 		return (
-			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
-				<Group
-					{...rest}
-					id={groupId || "checkboxItemGroup"}
-					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-					childComponent={CheckboxItem}
-					childSelect="onToggle"
-					itemProps={{...itemProps}}
-				>
-					{children}
-				</Group>
-			</div>
+			<Group
+				{...rest}
+				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+				childComponent={CheckboxItem}
+				childSelect="onToggle"
+				itemProps={{...itemProps}}
+			>
+				{children}
+			</Group>
 		);
 	} else {  // The case of multiple checkbox items are represented by `CheckboxItem` components
 		return (
-			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
-				<div
-					{...rest}
-					role="group"
-					id={groupId || "checkboxItemGroup"}
-					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-				>
-					{children.map((child, index) => {
-						const {children: itemValue, ...childRest} = child.props;
-						return <CheckboxItem key={index} {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
-					})}
-				</div>
+			<div
+				{...rest}
+				role="group"
+				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+			>
+				{children.map((child, index) => {
+					const {children: itemValue, ...childRest} = child.props;
+					return <CheckboxItem key={index} {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
+				})}
 			</div>
 		);
 	}

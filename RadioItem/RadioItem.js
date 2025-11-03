@@ -161,33 +161,27 @@ const RadioItemGroup = (props) => {
 
 	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` compoenents using `ui/Group`
 		return (
-			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
-				<Group
-					{...rest}
-					id={groupId || "radioItemGroup"}
-					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-					childComponent={RadioItem}
-					childSelect="onToggle"
-					itemProps={{...itemProps}}
-				>
-					{children}
-				</Group>
-			</div>
+			<Group
+				{...rest}
+				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+				childComponent={RadioItem}
+				childSelect="onToggle"
+				itemProps={{...itemProps}}
+			>
+				{children}
+			</Group>
 		);
 	} else {  // The case of multiple radio items are represented by `RadioItem` components
 		return (
-			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
-				<div
-					{...rest}
-					role="group"
-					id={groupId || "radioItemGroup"}
-					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-				>
-					{children.map((child, index) => {
-						const {children: itemValue, ...childRest} = child.props;
-						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
-					})}
-				</div>
+			<div
+				{...rest}
+				role="group"
+				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+			>
+				{children.map((child, index) => {
+					const {children: itemValue, ...childRest} = child.props;
+					return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
+				})}
 			</div>
 		);
 	}
