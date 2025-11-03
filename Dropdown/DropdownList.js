@@ -145,10 +145,11 @@ const DropdownListBase = kind({
 		dataSize: ({children}) => children ? children.length : 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
 		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 156 : 156)
-		itemSize: () => 156
+		itemSize: () => 156,
+		maxItems: ({children}) => children?.length > 5
 	},
 
-	render: ({dataSize, id, itemSize, scrollTo, width, ...rest}) => {
+	render: ({dataSize, id, itemSize, maxItems, scrollTo, width, ...rest}) => {
 		delete rest.children;
 		delete rest.onSelect;
 		delete rest.selected;
@@ -167,7 +168,7 @@ const DropdownListBase = kind({
 					scrollbarTrackCss={css}
 					style={{
 						backgroundColor: 'transparent',
-						height: (dataSize <= 5) && ri.scaleToRem((itemSize * dataSize) + 36),
+						height: !maxItems ? ri.scaleToRem((itemSize * dataSize) + 36) : null,
 						width: typeof width === 'number' ? ri.scaleToRem(width) : null,
 					}}
 				/>
