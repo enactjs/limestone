@@ -169,7 +169,7 @@ const DropdownListBase = kind({
 					style={{
 						backgroundColor: 'transparent',
 						height: !maxItems ? ri.scaleToRem((itemSize * dataSize) + 36) : null,
-						width: typeof width === 'number' ? ri.scaleToRem(width) : null,
+						width: typeof width === 'number' ? ri.scaleToRem(width) : null
 					}}
 				/>
 			</div>
