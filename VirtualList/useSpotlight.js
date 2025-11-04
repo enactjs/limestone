@@ -33,7 +33,7 @@ const useSpotlightConfig = (props, instances) => {
 		}
 
 		function configureSpotlight () {
-			const {spacing, spotlightId} = props;
+			const {cbScrollTo, spacing, spotlightId} = props;
 
 			Spotlight.set(spotlightId, {
 				enterTo: 'last-focused',
@@ -54,9 +54,70 @@ const useSpotlightConfig = (props, instances) => {
 				 */
 				obliqueMultiplier: spacing > 0 ? spacing : 1
 			});
+
+			// Add restoration callback for items scrolled out of view
+			const containerNode = document.querySelector(`[data-spotlight-id="${spotlightId}"]`);
+			if (containerNode && cbScrollTo) {
+				/**
+				 * Called by Spotlight when trying to restore focus to an element
+				 * that's not currently in the DOM (scrolled out of view)
+				 *
+				 * @param {String} spotlightId - The spotlight ID of the element to restore
+				 * @returns {Boolean} - true if restoration was initiated
+				 */
+				containerNode.restoreSpotlightChild = (elementSpotlightId) => {
+					// NEW: Only restore if focus is coming from outside the container
+					const currentFocus = Spotlight.getCurrent();
+					if (currentFocus && scrollContainerRef.current?.contains(currentFocus)) {
+						// Focus is already inside VirtualList, don't restore
+						return false;
+					}
+
+					const match = elementSpotlightId.match(/-(\d+)$/);
+					if (!match) {
+						return false;
+					}
+
+					const index = parseInt(match[1], 10);
+					const {dataSize} = props;
+
+					if (index < 0 || index >= dataSize) {
+						return false;
+					}
+
+					// Check if item is already in DOM
+					const existingElement = document.querySelector(`[data-spotlight-id="${elementSpotlightId}"]`);
+					if (existingElement) {
+						return true;
+					}
+
+					const {spottable} = instances;
+
+					if (spottable && spottable.current) {
+						spottable.current.lastFocusedIndex = index;
+					}
+
+					cbScrollTo({
+						index,
+						animate: false,
+						focus: false,
+						stickTo: 'center'
+					});
+
+					return true;
+				};
+			}
 		}
 
 		configureSpotlight();
+
+		return () => {
+			const {spotlightId} = props;
+			const containerNode = document.querySelector(`[data-spotlight-id="${spotlightId}"]`);
+			if (containerNode && containerNode.restoreSpotlightChild) {
+				delete containerNode.restoreSpotlightChild;
+			}
+		};
 	}, [props, instances]);
 };
 
