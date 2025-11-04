@@ -541,11 +541,15 @@
 
 // Header
 // ---------------------------------------
+@lime-header-titleRow-height: 222px;
+@lime-header-centered-titleRow-height: 282px;
 @lime-header-popup-titleRow-height: 204px;
 @lime-header-popup-compact-slotafter-padding-offset: 24px;
 @lime-header-slotabove-margin: 0 -@lime-component-spacing var(--primitive-spacing-24) -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-slotbelow-margin: 18px -@lime-component-spacing 0 -@lime-component-spacing; // Negative margins accommodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
+@lime-header-titleRow-no-subtitle-height: (@lime-header-titleRow-height - @lime-header-subtitle-height);
+@lime-header-centered-titleRow-no-subtitle-height: (@lime-header-centered-titleRow-height - @lime-header-subtitle-height);
 @lime-header-subtitle-margin-start: var(--primitive-spacing-6);
 // STOP! READ THE FOLLOWING BEFORE EDITING.
 //
@@ -571,21 +575,7 @@
 	.extract(#guide.header[standard-padding], left)[];
 @lime-header-standard-title-padding: 0;
 @lime-header-standard-title-margin-top: var(--primitive-spacing-60);
-@lime-header-standard-subtitle-margin:
-	(
-		.extract(#guide.header[standard-titles-gap], top)[]
-		- #guide.get-edge-size-difference(
-			#guide.header[standard-title-line-height],
-			@lime-heading-title-font-size,
-			@lime-heading-title-line-height
-		)[@result]
-		- #guide.get-edge-size-difference(
-			#guide.header[standard-subtitle-line-height],
-			@lime-heading-subtitle-font-size,
-			@lime-heading-subtitle-line-height
-		)[@result]
-	)
-	0 0 0;
+@lime-header-standard-subtitle-margin: 0;
 @lime-header-standard-slotbefore-margin-end: var(--primitive-spacing-36);
 @lime-header-standard-slotafter-margin-start: var(--primitive-spacing-36);
 @lime-header-compact-margin: 0;
@@ -1048,6 +1038,7 @@
 // ---------------------------------------
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
 @lime-slider-bar-vertical-min-height: 240px;
+@lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
 @lime-slider-bar-padding: 24px;
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: @lime-slider-knob-width;
@@ -1055,6 +1046,11 @@
 @lime-slider-knob-height-large: @lime-slider-knob-height;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-knob-resting-state-scale: 0.75;
+@lime-slider-min-max-margin-top: var(--primitive-spacing-24);
+@lime-slider-min-max-font-size: var(--primitive-font-size-48);
+@lime-slider-min-max-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-min-max-line-height: 60px;
+@lime-slider-vertical-min-max-margin-left: var(--primitive-spacing-24);
 @lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
@@ -1165,8 +1161,8 @@
 @lime-video-feedback-icon-font-size:               1.25em;
 @lime-video-feedback-mini-font-size:               var(--primitive-font-size-66);
 @lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
-@lime-video-feedback-mini-height:                  120px;
-@lime-video-feedback-mini-width:                   576px;
+@lime-video-feedback-mini-padding:                 var(--primitive-spacing-18) var(--primitive-spacing-60);
+@lime-video-feedback-mini-height:                  84px;
 @lime-video-feedback-mini-margin-bottom:           72px;
 @lime-video-feedback-mini-left:					   276px;
 @lime-video-feedback-mini-top:					   @lime-video-back-button-top;

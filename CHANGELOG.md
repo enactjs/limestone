@@ -6,10 +6,15 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Card` audio guidance for disabled
 - `limestone/Card` `icon` prop to allow user to change the icon
-- `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
 - `limestone/Card` added option for progressBar
+- `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+
+## [1.6.1] - 2025-10-29
+
+### Added
+
+- `limestone/Card` audio guidance for disabled
 - `limestone/Icon` supported icon list, updating existing icons
 
 ### Fixed
@@ -18,6 +23,9 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Input` `fullscreen` to prevent the title in portrait mode from rendering over the close button
 - `limestone/Input` `overlay` to prevent the invalid tooltip from overflowing
 - `limestone/Panels.Header` to stop layout shifting on render
+- `limestone/Panels.Header` to stop layout shifting when `noCloseButton` is active
+- `limestone/TabLayout` automatic expand/collapse behavior on screen orientation changes
+- `limestone/VideoPlayer` feedback style
 
 ## [1.6.0] - 2025-10-14
 
