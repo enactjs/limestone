@@ -86,6 +86,9 @@ const MediaControlsBase = kind({
 		/**
 		 * The `aria-label` for the action guide.
 		 *
+		 * When the media has been loaded first, this aria-label is read after media title.
+		 * You can use this aria-label to guide the user to find the action guide button for more controls.
+		 *
 		 * @type {String}
 		 * @public
 		 */
@@ -93,6 +96,8 @@ const MediaControlsBase = kind({
 
 		/**
 		 * The `aria-label` for the action guide button.
+		 *
+		 * This aria-label is read when the action guide button is focused.
 		 *
 		 * @type {String}
 		 * @public

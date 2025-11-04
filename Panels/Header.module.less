@@ -43,6 +43,18 @@
 		}
 	}
 
+	&:not(.centered) {
+		.titlesRow {
+			height: @lime-header-titleRow-no-subtitle-height;
+		}
+
+		&.withSubtitle:not(.noSubtitle) {
+			.titlesRow {
+				height: @lime-header-titleRow-height;
+			}
+		}
+	}
+
 	&.isPopupHeader {
 		.titlesRow {
 			height: @lime-header-popup-titleRow-height;
@@ -66,6 +78,16 @@
 	}
 
 	&.centered:not(.isPopupHeader):not(.wizard) {
+		.titlesRow {
+			height: @lime-header-centered-titleRow-no-subtitle-height;
+		}
+
+		&.withSubtitle:not(.noSubtitle) {
+			.titlesRow {
+				height: @lime-header-centered-titleRow-height;
+			}
+		}
+
 		.title {
 			margin-top: @lime-header-standard-title-margin-top;
 		}

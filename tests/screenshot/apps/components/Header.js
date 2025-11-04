@@ -102,6 +102,14 @@ const LtrTests = [
 	// Mini Type Slots
 	...withProps({type: 'mini'}, headerWithChildrenTests),
 
+	// noBackButton
+	...withProps({type: 'standard', noCloseButton: true}, baseTests),
+	...withProps({type: 'standard', centered: true, noCloseButton: true}, baseTests),
+	...withProps({type: 'compact', noCloseButton: true}, baseTests),
+	...withProps({type: 'compact', centered: true, noCloseButton: true}, baseTests),
+	...withProps({type: 'mini', noCloseButton: true}, baseTests),
+	...withProps({type: 'mini', centered: true, noCloseButton: true}, baseTests),
+
 	// noSubtitle
 	...withProps({type: 'standard', noSubtitle: true}, baseTests),
 	...withProps({type: 'compact', noSubtitle: true}, baseTests),
