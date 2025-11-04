@@ -2,6 +2,7 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getLastPointerPosition} from '@enact/spotlight/src/pointer';
+import {perfNow} from '@enact/core/util';
 import {constants} from '@enact/ui/useScroll';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -27,9 +28,10 @@ const getBoundsPropertyNames = (direction) => {
 	};
 };
 const hoverToScrollMultiplier = {
-	horizontal: 0.015,
-	vertical: 0.04
+	horizontal: 0.008,
+	vertical: 0.02
 };
+const hoverToScrollDelay = 0.7;
 const directionToFocus = {
 	horizontal: {
 		before: 'right',
@@ -120,18 +122,22 @@ const HoverToScrollBase = (props) => {
 					(position === 'before' ? -1 : 1) * // scroll direction
 					bounds[clientSize] * // scroll page size
 					hoverToScrollMultiplier[direction]; // a scrolling speed factor
+				const startTime = perfNow();
 
 				mutableRef.current.hoveredPosition = position;
 				mutableRef.current.stopScrollByHover = false;
 
-				const scrollByHover = () => {
+				const scrollByHover = (currentTime) => {
 					if (!mutableRef.current.stopScrollByHover) {
+						const elapsed = (currentTime - startTime) / 1000;
+						const distanceMultiplier = elapsed < hoverToScrollDelay ? 0 : Math.min(elapsed - hoverToScrollDelay / 1.5, 1);
+
 						scrollContainer.scrollTo({
 							position: {
 								[axis]: clamp(
 									0,
 									bounds[maxPosition],
-									scrollContainer[scrollPosition] + distance
+									scrollContainer[scrollPosition] + distance * distanceMultiplier
 								)
 							},
 							animate: false

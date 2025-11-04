@@ -9,6 +9,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
 
+### Changed
+
+- `limestone/useScroll.HoverToScroll` scroll animation speed
+
 ## [1.6.1] - 2025-10-29
 
 ### Added
