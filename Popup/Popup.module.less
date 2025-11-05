@@ -4,6 +4,12 @@
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
+// Module level variables, for use only in this file
+@popup-position-right-margin-top: .extract(@lime-popup-position-right-margin, top)[];
+@popup-position-right-margin-bottom: .extract(@lime-popup-position-right-margin, bottom)[];
+@popup-position-left-margin-top: .extract(@lime-popup-position-left-margin, top)[];
+@popup-position-left-margin-bottom: .extract(@lime-popup-position-left-margin, bottom)[];
+
 .popup {
 	height: 100%;
 	max-height: 100%;
@@ -42,7 +48,7 @@
 
 	&.right {
 		margin: @lime-popup-position-right-margin;
-		max-height: ~"calc(100% -" (.extract(@lime-popup-position-right-margin, top)[] + .extract(@lime-popup-position-right-margin, bottom)[]) ~")";
+		max-height: ~"calc(100% - (@{popup-position-right-margin-top} - @{popup-position-right-margin-bottom}))";
 	}
 
 	&.bottom {
@@ -55,7 +61,7 @@
 
 	&.left {
 		margin: @lime-popup-position-left-margin;
-		max-height: ~"calc(100% -" (.extract(@lime-popup-position-left-margin, top)[] + .extract(@lime-popup-position-left-margin, bottom)[]) ~")";
+		max-height: ~"calc(100% - (@{popup-position-left-margin-top} + @{popup-position-left-margin-bottom}))";
 	}
 
 	&.center {

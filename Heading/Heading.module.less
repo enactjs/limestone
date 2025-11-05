@@ -78,12 +78,12 @@
 		min-height: (@lime-heading-spacing-large - @lime-heading-border-width);
 	}
 	&.mediumSpacing {
-		margin-bottom: (@lime-heading-spacing-medium - @lime-heading-border-width);
-		min-height: (@lime-heading-spacing-medium - @lime-heading-border-width);
+		margin-bottom: ~"calc(@{lime-heading-spacing-medium} - @{lime-heading-border-width})";
+		min-height: ~"calc(@{lime-heading-spacing-medium} - @{lime-heading-border-width})";
 	}
 	&.smallSpacing {
 		margin-bottom: @lime-heading-spacing-small-margin-bottom;
-		min-height: (@lime-heading-spacing-small - @lime-heading-border-width);
+		min-height: ~"calc(@{lime-heading-spacing-small} - @{lime-heading-border-width})";
 	}
 	&.noneSpacing {
 		margin-bottom: 0;
