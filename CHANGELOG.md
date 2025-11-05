@@ -8,6 +8,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
 
+## [1.6.2] - 2025-11-05
+
+### Fixed
+
+- `limestone/Panels.Header` to use same Header height with/without subtitle.
+
 ## [1.6.1] - 2025-10-29
 
 ### Added
