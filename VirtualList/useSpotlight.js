@@ -3,8 +3,6 @@ import utilDOM from '@enact/ui/useScroll/utilDOM';
 import {useEffect, useRef} from 'react';
 
 const useSpotlightConfig = (props, instances) => {
-	// Hooks
-
 	useEffect(() => {
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
@@ -57,8 +55,9 @@ const useSpotlightConfig = (props, instances) => {
 
 			// Add restoration callback for items scrolled out of view
 			const containerNode = document.querySelector(`[data-spotlight-id="${spotlightId}"]`);
+			const {scrollContainerRef} = props;
 			if (containerNode && cbScrollTo) {
-				/**
+				/*
 				 * Called by Spotlight when trying to restore focus to an element
 				 * that's not currently in the DOM (scrolled out of view)
 				 *
@@ -78,7 +77,7 @@ const useSpotlightConfig = (props, instances) => {
 						return false;
 					}
 
-					const index = parseInt(match[1], 10);
+					const index = parseInt(match[1]);
 					const {dataSize} = props;
 
 					if (index < 0 || index >= dataSize) {
