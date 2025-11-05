@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
+
 ## [1.6.1] - 2025-10-29
 
 ### Added
