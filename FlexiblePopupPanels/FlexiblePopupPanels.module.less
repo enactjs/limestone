@@ -2,6 +2,11 @@
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
+// Module level variables, for use only in this file
+@flexiblepopuppanels-margin-top: extract(@lime-flexiblepopuppanels-margin, 1);
+@flexiblepopuppanels-padding-top: extract(@lime-flexiblepopuppanels-padding, 1);
+@flexiblepopuppanels-height: ~"calc(100vh - (@{flexiblepopuppanels-margin-top} * 2) + @{flexiblepopuppanels-padding-top} + @{flexiblepopuppanels-padding-top}))";
+
 .flexiblePopupPanels {
 	// Override for Popup
 	&.popup {
@@ -22,7 +27,7 @@
 			// The next line is very long, but it calculates the maximum height by adding up all
 			// of the paddings between this node and the edge of the screen, top and bottom.
 			// If the margin or padding configuration changes, this will likely need to be updated.
-			height: ~"calc(100vh -" ((extract(@lime-flexiblepopuppanels-margin, 1) * 2) + extract(@lime-flexiblepopuppanels-padding, 1) + extract(@lime-flexiblepopuppanels-padding, 1)) ~")";
+			height: @flexiblepopuppanels-height;
 		}
 
 		&.noNavButton {
