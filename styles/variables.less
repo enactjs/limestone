@@ -434,7 +434,7 @@
 // ---------------------------------------
 @lime-checkbox-border-radius: var(--semantic-radius-full);
 @lime-checkbox-border-width: 4px;
-@lime-checkbox-container-position: ~"calc((@{lime-icon-tiny-size} - var(--primitive-spacing-132)) / 2)";  // Container's total dimensions should be `132px` defined in the GUI spec
+@lime-checkbox-container-position: ((@lime-icon-tiny-size - 132px) / 2);  // Container's total dimensions should be `132px` defined in the GUI spec
 @lime-checkbox-container-border-radius: var(--semantic-radius-button);
 
 // CheckboxItem
@@ -532,8 +532,7 @@
 
 // FormCheckboxItem
 // ---------------------------------------
-@lime-formcheckboxitem-checkbox-position-top: .extract(@lime-checkbox-container-position, right)[];
-@lime-formcheckboxitem-checkbox-margin-end: ~"abs(@{lime-formcheckboxitem-checkbox-position-top})"; // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
+@lime-formcheckboxitem-checkbox-margin-end: abs(.extract(@lime-checkbox-container-position, right)[]); // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
 
 // Header
 // ---------------------------------------
