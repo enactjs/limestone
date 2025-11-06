@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react';
 
 const useSpotlightConfig = (props, instances) => {
 	// Hooks
-console.log(props);
+
 	useEffect(() => {
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
