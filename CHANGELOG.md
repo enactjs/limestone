@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/VirtualList` to handle restoring focus to an element that got scrolled out of the view
+
 ## [1.6.2] - 2025-11-05
 
 ### Fixed

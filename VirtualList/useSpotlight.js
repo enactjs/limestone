@@ -3,6 +3,8 @@ import utilDOM from '@enact/ui/useScroll/utilDOM';
 import {useEffect, useRef} from 'react';
 
 const useSpotlightConfig = (props, instances) => {
+	// Hooks
+
 	useEffect(() => {
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
@@ -65,7 +67,7 @@ const useSpotlightConfig = (props, instances) => {
 				 * @returns {Boolean} - true if restoration was initiated
 				 */
 				containerNode.restoreSpotlightChild = (elementSpotlightId) => {
-					// NEW: Only restore if focus is coming from outside the container
+					// restore if focus is coming from outside the container
 					const currentFocus = Spotlight.getCurrent();
 					if (currentFocus && scrollContainerRef.current?.contains(currentFocus)) {
 						// Focus is already inside VirtualList, don't restore
