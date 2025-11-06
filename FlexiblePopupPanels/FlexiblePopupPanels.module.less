@@ -4,7 +4,7 @@
 
 // Module level variables, for use only in this file
 @flexiblepopuppanels-margin-top: .extract(@lime-flexiblepopuppanels-margin, top)[];
-@flexiblepopuppanels-padding-top: .extract(@lime-flexiblepopuppanels-padding, top)[];
+@flexiblepopuppanels-padding-top: .extract(@lime-flexiblepopuppanels-padding, top)[] * 1px; // multiplied with 1px to have valid value for calc()
 @flexiblepopuppanels-padding-left: .extract(@lime-flexiblepopuppanels-padding, left)[];
 @flexiblepopuppanels-padding-right: .extract(@lime-flexiblepopuppanels-padding, right)[];
 @flexiblepopuppanels-panel-margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[];
@@ -32,7 +32,7 @@
 			// The next line is very long, but it calculates the maximum height by adding up all
 			// of the paddings between this node and the edge of the screen, top and bottom.
 			// If the margin or padding configuration changes, this will likely need to be updated.
-			height: ~"calc(100vh - ((@{flexiblepopuppanels-margin-top} * 2) + @{flexiblepopuppanels-padding-top} + @{flexiblepopuppanels-padding-top}))";
+			height: ~"calc(100vh - (@{flexiblepopuppanels-margin-top} * 2 + @{flexiblepopuppanels-padding-top} * 2))";
 		}
 
 		&.noNavButton {
