@@ -521,7 +521,7 @@
 // ---------------------------------------
 @lime-flexiblepopuppanels-min-width: 1140px;
 @lime-flexiblepopuppanels-margin: var(--primitive-spacing-60) 0;
-@lime-flexiblepopuppanels-padding: 0 var(--primitive-spacing-60) ~"calc(var(--primitive-spacing-32) + (var(--primitive-spacing-18) * 1.75))";  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
+@lime-flexiblepopuppanels-padding: 0 var(--primitive-spacing-60) ~"calc(var(--primitive-spacing-36) + (var(--primitive-spacing-18) * 1.75))";  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
 @lime-flexiblepopuppanels-panel-border-radius: var(--semantic-radius-overlay);
 @lime-flexiblepopuppanels-panel-margin: 0 var(--primitive-spacing-60);
 @lime-flexiblepopuppanels-panel-padding: var(--primitive-spacing-60);
@@ -725,11 +725,11 @@
 @lime-input-fullscreen-padding-top: .extract(@lime-popup-padding, top)[];
 @lime-input-fullscreen-padding-right: .extract(@lime-popup-padding, right)[];
 @lime-input-fullscreen-padding-left: .extract(@lime-popup-padding, left)[];
-@lime-input-fullscreen-padding: ~"calc(156px - @{lime-input-fullscreen-padding-top})" ~"calc(324px - @{lime-input-fullscreen-padding-right})" 0 ~"calc(324px - @{lime-input-fullscreen-padding-left})";
+@lime-input-fullscreen-padding: ~"calc(var(--primitive-spacing-156) - @{lime-input-fullscreen-padding-top})" ~"calc(324px - @{lime-input-fullscreen-padding-right})" 0 ~"calc(324px - @{lime-input-fullscreen-padding-left})";
 @lime-portrait-input-fullscreen-padding-top: .extract(@lime-popup-padding, top)[];
 @lime-portrait-input-fullscreen-padding-right: .extract(@lime-popup-padding, right)[];
 @lime-portrait-input-fullscreen-padding-left: .extract(@lime-popup-padding, left)[];
-@lime-portrait-input-fullscreen-padding: ~"calc(96px - @{lime-portrait-input-fullscreen-padding-top})" ~"calc(132px - @{lime-portrait-input-fullscreen-padding-right})" 0 ~"calc(132px - @{lime-portrait-input-fullscreen-padding-left})";
+@lime-portrait-input-fullscreen-padding: ~"calc(var(--primitive-spacing-96) - @{lime-portrait-input-fullscreen-padding-top})" ~"calc(var(--primitive-spacing-132) - @{lime-portrait-input-fullscreen-padding-right})" 0 ~"calc(var(--primitive-spacing-132) - @{lime-portrait-input-fullscreen-padding-left})";
 @lime-input-fullscreen-title-height: 228px;
 @lime-input-fullscreen-vkb-height: 876px;
 @lime-input-fullscreen-footer-height: 240px;
@@ -1139,14 +1139,14 @@
 // Video
 // ---------------------------------------
 @lime-video-back-button-left:                      var(--primitive-spacing-132);
-@lime-video-back-button-top:                       var(--primitive-spacing-108);
+@lime-video-back-button-top:                       var(--primitive-spacing-102);
 @lime-video-slider-tooltip-arrow-border-left-right: 18px;
 @lime-video-slider-tooltip-arrow-border-top:       24px;
 @lime-video-slider-tooltip-content-padding:        0 var(--primitive-spacing-36);
 @lime-video-slider-tooltip-position-bottom:        var(--primitive-spacing-42);
 @lime-video-slider-tooltip-shift-position-bottom:  ~"calc(@{lime-video-slider-tooltip-position-bottom} + @{lime-video-slider-tooltip-arrow-border-top})";
 @lime-video-slider-tooltip-margin-bottom:          var(--primitive-spacing-6);
-@lime-video-slider-tooltip-font-size:              48px;
+@lime-video-slider-tooltip-font-size:              var(--primitive-font-size-48);
 @lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
 @lime-video-slider-tooltip-line-height:            72px;
 @lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-42);
