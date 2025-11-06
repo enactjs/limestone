@@ -4,7 +4,7 @@ import {useEffect, useRef} from 'react';
 
 const useSpotlightConfig = (props, instances) => {
 	// Hooks
-
+console.log(props);
 	useEffect(() => {
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
@@ -100,8 +100,8 @@ const useSpotlightConfig = (props, instances) => {
 
 					cbScrollTo({
 						index,
-						animate: false,
-						focus: false,
+						animate: props.wrap !== 'noAnimation',
+						focus: true,
 						stickTo: 'center'
 					});
 
