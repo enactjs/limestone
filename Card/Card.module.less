@@ -172,9 +172,12 @@
 			&.splitCaption {
 				.label {
 					font-size: @lime-card-split-caption-label-font-size;
-					line-height: @lime-card-split-caption-label-line-height;
 					font-weight: @lime-card-split-caption-label-font-weight;
 					padding: @lime-card-split-caption-label-padding;
+
+					&:first-child {
+						padding-top: @lime-card-split-caption-lower-label-padding;
+					}
 				}
 			}
 		}

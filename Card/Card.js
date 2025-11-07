@@ -332,7 +332,7 @@ const CardBase = kind({
 				</>
 			);
 
-			const choseCaptions = (captionOverlay || captionOverlayOnFocus) && splitCaption && orientation === 'vertical' ? splitCaptions : captions;
+			const selectedCaptions = (captionOverlay || captionOverlayOnFocus) && splitCaption && orientation === 'vertical' ? splitCaptions : captions;
 
 			return (
 				typeof index !== 'undefined' ?
@@ -348,9 +348,9 @@ const CardBase = kind({
 						}
 						index={index}
 					>
-						{choseCaptions}
+						{selectedCaptions}
 					</AsyncRenderChildren> :
-					choseCaptions
+					selectedCaptions
 			);
 		},
 		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
