@@ -2,6 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/CheckboxItem` `CheckboxItemGroup` audio guidance
+- `limestone/RadioItem` `RadioItemGroup` audio guidance
+
 ## [1.6.2] - 2025-11-05
 
 ### Fixed
@@ -17,13 +24,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/CheckboxItem` `CheckboxItemGroup` audio guidance
 - `limestone/ImageItem` to get custom `aria-label`
 - `limestone/Input` `fullscreen` to prevent the title in portrait mode from rendering over the close button
 - `limestone/Input` `overlay` to prevent the invalid tooltip from overflowing
 - `limestone/Panels.Header` to stop layout shifting on render
 - `limestone/Panels.Header` to stop layout shifting when `noCloseButton` is active
-- `limestone/RadioItem` `RadioItemGroup` audio guidance
 - `limestone/TabLayout` automatic expand/collapse behavior on screen orientation changes
 - `limestone/VideoPlayer` feedback style
 
