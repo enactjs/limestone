@@ -1,8 +1,10 @@
 import handle, {forwardCustomWithPrevent} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {is} from '@enact/core/keymap';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import Spotlight from "@enact/spotlight";
 import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
 import {Row, Column, Cell} from '@enact/ui/Layout';
@@ -11,6 +13,7 @@ import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {useEffect} from 'react';
 
 import Button from '../Button';
 import $L from '../internal/$L';
@@ -21,6 +24,11 @@ import Steps from '../Steps';
 import {PageViewsRouter} from './PageViewsRouter';
 
 import componentCss from './PageViews.module.less';
+
+const isLeft = is('left');
+const isRight = is('right');
+
+const SpottableCell = SpotlightContainerDecorator(Cell);
 
 /**
  * A PageViews that has page indicator with corresponding pages.
@@ -39,6 +47,8 @@ import componentCss from './PageViews.module.less';
  */
 const PageViewsBase = kind({
 	name: 'PageViews',
+
+	functional: true,
 
 	propTypes: /** @lends limestone/PageViews.PageViewsBase.prototype */ {
 		/**
@@ -219,7 +229,7 @@ const PageViewsBase = kind({
 
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+					{isNextButtonVisible ? <Button spotlightDisabled aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 				</Cell>
 			);
 		},
@@ -227,25 +237,27 @@ const PageViewsBase = kind({
 			const isPrevButtonVisible = index !== 0;
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+					{isPrevButtonVisible ? <Button spotlightDisabled aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 				</Cell>
 			);
 		},
 		renderViewManager: ({arranger, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
 			return (
-				<Cell
+				<SpottableCell
 					arranger={arranger}
 					className={css.viewManager}
 					component={ViewManager}
 					duration={400}
 					index={index}
+					spotlightRestrict="self-only"
+					spotlightId='pageViews'
 					noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation}
 					onTransition={onTransition}
 					onWillTransition={onWillTransition}
 					reverseTransition={reverseTransition}
 				>
 					{children}
-				</Cell>
+				</SpottableCell>
 			);
 		},
 		stepHintAriaLabel: ({children, index, totalIndex}) => {
@@ -270,11 +282,11 @@ const PageViewsBase = kind({
 						</Row> :
 						<Row className={css.stepsRow}>
 							<Cell className={css.navButtonCell} shrink>
-								{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+								{isPrevButtonVisible ? <Button tabIndex={-1} spotlightDisabled aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 							</Cell>
 							<Cell className={css.pageNumber} shrink>{index + 1}<Cell className={css.separator} shrink>/</Cell>{totalIndex}</Cell>
 							<Cell className={css.navButtonCell} shrink>
-								{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+								{isNextButtonVisible ? <Button tabIndex={-1} spotlightDisabled aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 							</Cell>
 						</Row>}
 				</>
@@ -287,6 +299,8 @@ const PageViewsBase = kind({
 		componentRef,
 		fullContents,
 		index,
+		onNextClick,
+		onPrevClick,
 		pageIndicatorPosition,
 		pageIndicatorType,
 		renderNextButton,
@@ -300,11 +314,36 @@ const PageViewsBase = kind({
 		delete rest.children;
 		delete rest.noAnimation;
 		delete rest.onTransition;
-		delete rest.onNextClick;
-		delete rest.onPrevClick;
 		delete rest.onWillTransition;
 		delete rest.reverseTransition;
 		delete rest.totalIndex;
+
+		const handleKeyDown = ev => {
+			if (isLeft(ev.keyCode)) {
+				ev.preventDefault();
+				onPrevClick();
+			}
+
+			if (isRight(ev.keyCode)) {
+				ev.preventDefault();
+				onNextClick();
+			}
+
+			const spottables = Spotlight.getSpottableDescendants('pageViews').length;
+
+			// explicitly restrict navigation in order to manage focus state when attempting to leave the popup
+
+			if (!spottables) Spotlight.pause(); else Spotlight.resume();
+		}
+
+
+		useEffect(() => {
+			document.addEventListener('keydown', handleKeyDown, {capture: true});
+
+			return () => {
+				document.removeEventListener('keydown', handleKeyDown);
+			}
+		}, []);
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
