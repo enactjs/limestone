@@ -4,7 +4,7 @@ import kind from '@enact/core/kind';
 import {is} from '@enact/core/keymap';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import Spotlight from "@enact/spotlight";
+import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
 import {Row, Column, Cell} from '@enact/ui/Layout';
@@ -69,6 +69,14 @@ const PageViewsBase = kind({
 		 * @public
 		 */
 		bannerMode: PropTypes.bool,
+
+		/**
+		 * {@link limestone/PageViews.Page|Page} to be rendered.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		children: PropTypes.node,
 
 		/**
 		 * Obtains a reference to the root node.
@@ -282,11 +290,11 @@ const PageViewsBase = kind({
 						</Row> :
 						<Row className={css.stepsRow}>
 							<Cell className={css.navButtonCell} shrink>
-								{isPrevButtonVisible ? <Button tabIndex={-1} spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+								{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 							</Cell>
 							<Cell className={css.pageNumber} shrink>{index + 1}<Cell className={css.separator} shrink>/</Cell>{totalIndex}</Cell>
 							<Cell className={css.navButtonCell} shrink>
-								{isNextButtonVisible ? <Button tabIndex={-1} spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+								{isNextButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 							</Cell>
 						</Row>}
 				</>
