@@ -63,12 +63,12 @@ const PageViewsBase = kind({
 		arranger: shape,
 
 		/**
-		 * {@link limestone/PageViews.Page|Page} to be rendered.
+		 * When `true`, disables Spotlight outside the container and enables 5-way navigation between panels.
 		 *
-		 * @type {Node}
+		 * @type {Boolean}
 		 * @public
 		 */
-		children: PropTypes.node,
+		bannerMode: PropTypes.bool,
 
 		/**
 		 * Obtains a reference to the root node.
@@ -224,24 +224,24 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		renderNextButton: ({css, onNextClick, index, totalIndex}) => {
+		renderNextButton: ({bannerMode, css, onNextClick, index, totalIndex}) => {
 			const isNextButtonVisible = index < totalIndex - 1;
 
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isNextButtonVisible ? <Button spotlightDisabled aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+					{isNextButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 				</Cell>
 			);
 		},
-		renderPrevButton: ({css, index, onPrevClick}) => {
+		renderPrevButton: ({bannerMode, css, index, onPrevClick}) => {
 			const isPrevButtonVisible = index !== 0;
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isPrevButtonVisible ? <Button spotlightDisabled aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+					{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 				</Cell>
 			);
 		},
-		renderViewManager: ({arranger, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
+		renderViewManager: ({arranger, bannerMode, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
 			return (
 				<SpottableCell
 					arranger={arranger}
@@ -249,8 +249,8 @@ const PageViewsBase = kind({
 					component={ViewManager}
 					duration={400}
 					index={index}
-					spotlightRestrict="self-only"
-					spotlightId='pageViews'
+					spotlightRestrict={bannerMode === true && "self-only"}
+					spotlightId="pageViews"
 					noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation}
 					onTransition={onTransition}
 					onWillTransition={onWillTransition}
@@ -264,7 +264,7 @@ const PageViewsBase = kind({
 			const pageHint = new IString($L('Page {current} out of {total}')).format({current: index + 1, total: totalIndex});
 			return `${pageHint} ${children?.[index]?.props['aria-label'] || ''}`;
 		},
-		steps: ({css, index, onNextClick, onPrevClick, pageIndicatorType, totalIndex}) => {
+		steps: ({bannerMode, css, index, onNextClick, onPrevClick, pageIndicatorType, totalIndex}) => {
 			const isPrevButtonVisible = index !== 0;
 			const isNextButtonVisible = index < totalIndex - 1;
 			const isStepVisible = totalIndex !== 1;
@@ -282,11 +282,11 @@ const PageViewsBase = kind({
 						</Row> :
 						<Row className={css.stepsRow}>
 							<Cell className={css.navButtonCell} shrink>
-								{isPrevButtonVisible ? <Button tabIndex={-1} spotlightDisabled aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+								{isPrevButtonVisible ? <Button tabIndex={-1} spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 							</Cell>
 							<Cell className={css.pageNumber} shrink>{index + 1}<Cell className={css.separator} shrink>/</Cell>{totalIndex}</Cell>
 							<Cell className={css.navButtonCell} shrink>
-								{isNextButtonVisible ? <Button tabIndex={-1} spotlightDisabled aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+								{isNextButtonVisible ? <Button tabIndex={-1} spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 							</Cell>
 						</Row>}
 				</>
@@ -295,6 +295,7 @@ const PageViewsBase = kind({
 	},
 
 	render: ({
+		bannerMode,
 		css,
 		componentRef,
 		fullContents,
@@ -318,32 +319,38 @@ const PageViewsBase = kind({
 		delete rest.reverseTransition;
 		delete rest.totalIndex;
 
-		const handleKeyDown = ev => {
-			if (isLeft(ev.keyCode)) {
-				ev.preventDefault();
-				onPrevClick();
-			}
-
-			if (isRight(ev.keyCode)) {
-				ev.preventDefault();
-				onNextClick();
-			}
-
-			const spottables = Spotlight.getSpottableDescendants('pageViews').length;
-
-			// explicitly restrict navigation in order to manage focus state when attempting to leave the popup
-
-			if (!spottables) Spotlight.pause(); else Spotlight.resume();
-		}
-
-
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		useEffect(() => {
-			document.addEventListener('keydown', handleKeyDown, {capture: true});
+			const handleKeyDown = (ev) => {
+				if (isLeft(ev.keyCode)) {
+					ev.preventDefault();
+					onPrevClick();
+				}
+
+				if (isRight(ev.keyCode)) {
+					ev.preventDefault();
+					onNextClick();
+				}
+
+				const spottables = Spotlight.getSpottableDescendants('pageViews').length;
+
+				if (!spottables) {
+					Spotlight.pause();
+				} else {
+					Spotlight.resume();
+				}
+			};
+
+			if (bannerMode === true) {
+				document.addEventListener('keydown', handleKeyDown, {capture: true});
+			} else {
+				Spotlight.resume();
+			}
 
 			return () => {
-				document.removeEventListener('keydown', handleKeyDown);
-			}
-		}, []);
+				document.removeEventListener('keydown', handleKeyDown, {capture: true});
+			};
+		}, [bannerMode, onNextClick, onPrevClick]);
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
