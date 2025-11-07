@@ -168,6 +168,20 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlay {
+			&.splitCaption {
+				.label {
+					font-size: @lime-card-split-caption-label-font-size;
+					font-weight: @lime-card-split-caption-label-font-weight;
+					padding: @lime-card-split-caption-label-padding;
+
+					&:first-child {
+						padding-top: @lime-card-split-caption-lower-label-padding;
+					}
+				}
+			}
+		}
+
 		&.captionOverlayOnFocus .captions {
 			visibility: hidden;
 		}
@@ -281,6 +295,12 @@
 
 				&:not(.selected) {
 					.resting-border(5);
+				}
+
+				&.splitCaption {
+					.label {
+						color: @lime-card-label-main-color;
+					}
 				}
 			}
 
