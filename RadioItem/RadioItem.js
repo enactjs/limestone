@@ -152,7 +152,7 @@ const RadioItem = Pure(
  * @public
  */
 const RadioItemGroup = (props) => {
-	const {children, itemProps, ...rest} = props;
+	const {children, groupId, itemProps, ...rest} = props;
 
 	RadioItemGroup.propTypes = {
 		groupId: PropTypes.string,
@@ -161,27 +161,33 @@ const RadioItemGroup = (props) => {
 
 	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` compoenents using `ui/Group`
 		return (
-			<Group
-				{...rest}
-				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-				childComponent={RadioItem}
-				childSelect="onToggle"
-				itemProps={{...itemProps}}
-			>
-				{children}
-			</Group>
+			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
+				<Group
+					{...rest}
+					id={groupId || "radioItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+					childComponent={RadioItem}
+					childSelect="onToggle"
+					itemProps={{...itemProps}}
+				>
+					{children}
+				</Group>
+			</div>
 		);
 	} else {  // The case of multiple radio items are represented by `RadioItem` components
 		return (
-			<div
-				{...rest}
-				role="group"
-				aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
-			>
-				{children.map((child, index) => {
-					const {children: itemValue, ...childRest} = child.props;
-					return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
-				})}
+			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
+				<div
+					{...rest}
+					role="group"
+					id={groupId || "radioItemGroup"}
+					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
+				>
+					{children.map((child, index) => {
+						const {children: itemValue, ...childRest} = child.props;
+						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
+					})}
+				</div>
 			</div>
 		);
 	}

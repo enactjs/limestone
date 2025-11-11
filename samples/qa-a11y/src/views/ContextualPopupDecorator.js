@@ -61,7 +61,7 @@ const ContextualPopupDecoratorView = () => {
 		<Section title="Button wrapped with ContextualPopupDecorator">
 			<ContextualButton alt="With Texts" popupComponent={renderPopup1}>Text 0</ContextualButton>
 			<ContextualButton alt="With Buttons" popupComponent={renderPopup2}>Text 1</ContextualButton>
-			<ContextualButton alt="With RadioItems in Group" direction="below" popupComponent={renderPopup3}>Text 2</ContextualButton>
+			<ContextualButton alt="With RadioItems in Group" direction="below" popupComponent={renderPopup3} popupProps={{'aria-label': "Item 0 Item 1 Item 2"}}>Text 2</ContextualButton>
 			<ContextualButton alt="With Disabled RadioItems in Group" direction="below" popupComponent={renderPopup4}>Text 3</ContextualButton>
 			<ContextualButton alt="Disabled" disabled popupComponent={renderPopup1}>Text 4</ContextualButton>
 		</Section>
