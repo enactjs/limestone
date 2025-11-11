@@ -4,6 +4,10 @@
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
+// Module level variables, for use only in this file
+@header-compact-padding-left: .extract(@lime-header-compact-padding, left)[];
+@header-compact-padding-right: .extract(@lime-header-compact-padding, right)[];
+
 .header {
 	position: relative;
 	max-width: 100%;
@@ -195,7 +199,7 @@
 
 		&.isPopupHeader {
 			&.slotAfter {
-				.padding-start-end(.extract(@lime-header-compact-padding, left)[], .extract(@lime-header-compact-padding, right)[] - @lime-header-popup-compact-slotafter-padding-offset);
+				.padding-start-end(@header-compact-padding-left, ~"calc(@{header-compact-padding-right} - @{lime-header-popup-compact-slotafter-padding-offset})");
 			}
 		}
 	}
