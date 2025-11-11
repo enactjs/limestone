@@ -59,6 +59,9 @@ const CardTests = [
 	// Show ProgressBar
 	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
 
+	// Split Caption
+	...withProps({splitCaption: true}, defaultCardTests),
+
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 

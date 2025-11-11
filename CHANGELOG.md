@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
+- `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
 - `limestone/PageView` `bannerMode` prop to allow 5-way navigation between pages
 
 ### Changed
