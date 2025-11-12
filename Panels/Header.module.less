@@ -72,11 +72,26 @@
 	}
 
 	.slotSizer {
-		display: flex;
-		gap: 36px;
+		display: inline-block;
 
 		> * {
 			margin: 0;
+		}
+	}
+
+	.slotAfter {
+		.slotSizer {
+			> *:not(:first-child) {
+				margin-left: 36px;
+			}
+		}
+	}
+
+	.slotBefore {
+		.slotSizer {
+			> *:not([style*="display: none"]):has(~ *:not([style*="display: none"])) {
+				margin-right: 36px;
+			}
 		}
 	}
 
