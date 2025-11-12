@@ -81,16 +81,16 @@
 
 	.slotAfter {
 		.slotSizer {
-			> * {
-				.margin-start-end(36px, 0);
+			> *:not(:first-child) {
+				margin-inline-start: 36px;
 			}
 		}
 	}
 
 	.slotBefore {
 		.slotSizer {
-			> * {
-				.margin-start-end(0, 36px);
+			> *:not([style*="display: none"]):has(~ *:not([style*="display: none"])) {
+				margin-inline-end: 36px;
 			}
 		}
 	}
