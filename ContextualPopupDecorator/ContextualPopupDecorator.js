@@ -279,12 +279,10 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.adjustedDirection = this.props.direction;
 			this.id = this.generateId();
 			this.clientSiblingRef = createRef(null);
+			this.prevContainerWidthRef = createRef(null);
 			this.findClientSiblingRef = createRef(null);
 
-			this.MARGIN = ri.scale(noArrow ? 0 : 12);
-			this.ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width. used for arrow positioning
-			this.ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
-			this.KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
+			this.setContainerDistances();
 
 			if (props.setApiProvider) {
 				props.setApiProvider(this);
@@ -340,6 +338,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				snapshot.containerWidth !== this.getContainerNodeWidth() ||
 				(prevProps.open && this.props.open)) {
 				this.adjustedDirection = this.props.direction;
+				this.setContainerDistances();
 				// NOTE: `setState` is called and will cause re-render
 				this.positionContextualPopup();
 			}
@@ -432,6 +431,13 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return this.adjustRTL(position);
+		}
+
+		setContainerDistances () {
+			this.MARGIN = ri.scale(noArrow ? 0 : 12);
+			this.ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width. used for arrow positioning
+			this.ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
+			this.KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
 		}
 
 		centerContainerPosition (containerNode, clientNode) {
@@ -533,12 +539,15 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		calcOverflow (container, client) {
-			let containerHeight, containerWidth;
+			let containerHeight, containerWidth = 0;
 			const {anchor, direction} = this.getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
 				containerHeight = container.height;
-				containerWidth = (container.width - client.width) / 2;
+				if (containerWidth < 0 && this.prevContainerWidthRef.current !== 0) {
+					containerWidth = (container.width - client.width) / 2;
+				}
+				this.prevContainerWidthRef.current = containerWidth;
 			} else {
 				containerHeight = (container.height - client.height) / 2;
 				containerWidth = container.width;
