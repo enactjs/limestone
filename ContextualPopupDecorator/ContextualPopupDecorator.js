@@ -544,8 +544,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			if (direction === 'above' || direction === 'below') {
 				containerHeight = container.height;
-				if (containerWidth < 0 && this.prevContainerWidthRef.current !== 0) {
-					containerWidth = (container.width - client.width) / 2;
+				containerWidth = (container.width - client.width) / 2;
+				if (containerWidth < 0 && this.prevContainerWidthRef.current === 0 && !anchor) {
+					containerWidth = 0;
 				}
 				this.prevContainerWidthRef.current = containerWidth;
 			} else {
@@ -567,6 +568,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					client.right + this.KEEPOUT > window.innerWidth :
 					client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerWidth
 			};
+
+			console.log(this.overflow)
 		}
 
 		adjustDirection () {
