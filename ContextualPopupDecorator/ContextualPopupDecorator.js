@@ -568,8 +568,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					client.right + this.KEEPOUT > window.innerWidth :
 					client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerWidth
 			};
-
-			console.log(this.overflow)
 		}
 
 		adjustDirection () {
