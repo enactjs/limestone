@@ -564,7 +564,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					(isOverRightValue = client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT) > window.innerWidth
 			};
 
-			this.adjustInlineOverflow(isOverLeftValue, isOverRightValue);
+			this.adjustInlineOverflow(direction, isOverLeftValue, isOverRightValue);
 		}
 
 		adjustDirection () {
@@ -581,11 +581,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		}
 
-		adjustInlineOverflow (isOverLeftValue, isOverRightValue) {
+		adjustInlineOverflow (direction, isOverLeftValue, isOverRightValue) {
 			const isOverLeft = Math.abs(isOverLeftValue);
 			const isOverRight = Math.abs(isOverRightValue - window.innerWidth);
 
-			if (this.overflow.isOverRight && this.overflow.isOverLeft) {
+			if (this.overflow.isOverRight && this.overflow.isOverLeft && (direction === 'above' || direction === 'below')) {
 				this.overflow.isOverLeft = isOverLeft > isOverRight;
 				this.overflow.isOverRight = isOverLeft < isOverRight;
 			}
