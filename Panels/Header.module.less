@@ -82,7 +82,7 @@
 	.slotAfter {
 		.slotSizer {
 			> *:not(:first-child) {
-				margin-inline-start: 36px;
+				margin-inline-start: @lime-header-standard-slotafter-margin-start;
 			}
 		}
 	}
@@ -91,7 +91,7 @@
 		.slotSizer {
 			/* Select the children that have visible siblings right after them */
 			> *:not([style*="display: none"]):has(~ *:not([style*="display: none"])) {
-				margin-inline-end: 36px;
+				margin-inline-end: @lime-header-standard-slotbefore-margin-end;
 			}
 		}
 	}
