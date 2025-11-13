@@ -3,7 +3,9 @@
 @import "../styles/variables.less";
 
 // Module level variables, for use only in this file
-@fixedpopuppanels-max-height: ~"calc(100vh -" (.extract(@lime-fixedpopuppanels-margin, top)[] + .extract(@lime-fixedpopuppanels-margin, bottom)[])~")";
+@fixedpopuppanels-margin-top: .extract(@lime-fixedpopuppanels-margin, top)[];
+@fixedpopuppanels-margin-bottom: .extract(@lime-fixedpopuppanels-margin, bottom)[];
+@fixedpopuppanels-max-height: ~"calc(100vh - (@{fixedpopuppanels-margin-top} + @{fixedpopuppanels-margin-bottom}))";
 
 .fixedPopupPanels {
 	// Overrides for Panels - the & just refers to this element. Using a block here to visually compartmentalize the overrides apart from the general styles.

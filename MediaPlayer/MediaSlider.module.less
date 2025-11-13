@@ -24,7 +24,7 @@
 		&::before {
 			content: "";
 			position: absolute;
-			.position(0, -(@lime-video-player-padding-side));
+			.position(0, ~"calc(@{lime-video-player-padding-side} * -1)");
 		}
 
 		// Grow the knob when the Slider gets spotted
