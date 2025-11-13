@@ -42,8 +42,8 @@ describe('Chips', () => {
 
 	it('should render correctly with default props', () => {
 		const {container} = render(<ChipsBase {...defaultProps} />);
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
 	});
 
 	it('should focus the correct chip on navigation', () => {
@@ -86,8 +86,8 @@ describe('Chips', () => {
 			orientation: 'horizontal'
 		};
 		const {container} = render(<ChipsBase {...horizontalProps} />);
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('horizontal');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('horizontal');
 	});
 
 	it('should handle navigation in horizontal orientation', () => {
@@ -250,8 +250,8 @@ describe('Chips', () => {
 		};
 		const {container} = render(<ChipsBase {...emptyProps} />);
 
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
 		const buttons = screen.queryAllByRole('button');
 		expect(buttons).toHaveLength(0);
 	});
@@ -263,9 +263,9 @@ describe('Chips', () => {
 		};
 		const {container} = render(<ChipsBase {...customProps} />);
 
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
-		expect(container.firstChild).toHaveClass('custom-chips-class');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
+		expect(container.firstChild.firstChild).toHaveClass('custom-chips-class');
 	});
 
 	it('should handle keyboard navigation with mixed orientations', () => {
