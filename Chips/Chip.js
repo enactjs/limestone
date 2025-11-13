@@ -152,13 +152,13 @@ const ChipBase = (props) => {
 		}
 	}, [deleteButton, handleChipDelete, id]);
 
-	const iconComponent = ({children: icon, ...props}) => {
+	const iconComponent = useCallback(({children: childComponent, ...iconProps}) => {
 		return <>
-			{checked && <Icon {...props} children={'check'} />}
-			{isImage && <Image {...props} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} src={icon} />}
-			{!isImage && <Icon {...props}>{icon}</Icon>}
-		</>
-	}
+			{checked && <Icon {...iconProps}>check</Icon>}
+			{isImage && <Image {...iconProps} src={childComponent} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} />}
+			{!isImage && <Icon {...iconProps}>{childComponent}</Icon>}
+		</>;
+	}, [checked, imageSize, isImage]);
 
 	return (
 		<div
@@ -212,14 +212,6 @@ ChipBase.displayName = 'Chip';
 
 ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	/**
-	 * Sets the chip as `checked` if `true`
-	 *
-	 * @type {Boolean}
-	 * @public
-	 */
-	checked: PropTypes.bool,
-
-	/**
 	 * A label displayed in the chip content.
 	 *
 	 * @type {String}
@@ -236,6 +228,14 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @public
 	 */
 	id: PropTypes.string.isRequired,
+
+	/**
+	 * Sets the chip as `checked` if `true`
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	checked: PropTypes.bool,
 
 	/**
 	 * Define the icon, delete handler, and position for the delete button.

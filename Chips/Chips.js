@@ -45,8 +45,8 @@ const ChipsBase = (props) => {
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
-	const ariaLabel = new IString($L('{total} items in total')).format({total: children.length});
-	const id = Math.random().toString(36).substring(2, 10);
+	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
+	const ariaId = Math.random().toString(36).substring(2, 10);
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
@@ -124,13 +124,14 @@ const ChipsBase = (props) => {
 	}, [children]);
 
 	return (
-		<div  role="region" aria-labelledby={`${id}_chips`}>
-			<div id={`${id}_chips`}
-				 role='group'
-				 aria-label={ariaLabel}
-				 className={chipsClassName}
-				 ref={containerRef}
-				 {...rest}
+		<div role="region" aria-labelledby={`${ariaId}_chips`}>
+			<div
+				id={`${ariaId}_chips`}
+				role="group"
+				aria-label={ariaLabel}
+				className={chipsClassName}
+				ref={containerRef}
+				{...rest}
 			>
 				<ChipsContext
 					value={{
