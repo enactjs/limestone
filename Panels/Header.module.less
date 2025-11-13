@@ -69,13 +69,14 @@
 	.slotAfter,
 	.slotSizer {
 		white-space: nowrap;
+		align-self: normal;
 	}
 
 	.slotSizer {
 		display: inline-block;
 
 		> * {
-			margin-inline: 0;
+			margin: 0;
 		}
 	}
 
@@ -89,7 +90,7 @@
 
 	.slotBefore {
 		.slotSizer {
-			/* Select the children that have visible siblings after it */
+			/* Select the children that have visible siblings right after them */
 			> *:not([style*="display: none"]):has(~ *:not([style*="display: none"])) {
 				margin-inline-end: 36px;
 			}
@@ -147,6 +148,18 @@
 	/// Begin "types" rules configuration
 	///
 
+	&.standard,
+	&.mini,
+	&.wizard {
+		&.slotBefore:not(.centered) .slotBefore {
+			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
+		}
+
+		&.slotAfter:not(.centered) .slotAfter {
+			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
+		}
+	}
+
 	// Standard Header
 	&.standard {
 		margin: @lime-header-standard-margin;
@@ -159,14 +172,6 @@
 
 		.subtitle {
 			margin: @lime-header-standard-subtitle-margin;
-		}
-
-		&.slotBefore:not(.centered) .slotBefore {
-			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
-		}
-
-		&.slotAfter:not(.centered) .slotAfter {
-			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
 		}
 	}
 
@@ -267,14 +272,6 @@
 			.titlesRow {
 				padding-bottom: @lime-header-subtitle-height;
 			}
-		}
-
-		&.slotBefore:not(.centered) .slotBefore {
-			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
-		}
-
-		&.slotAfter:not(.centered) .slotAfter {
-			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
 		}
 	}
 
