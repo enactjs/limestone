@@ -279,7 +279,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			this.adjustedDirection = this.props.direction;
 			this.id = this.generateId();
 			this.clientSiblingRef = createRef(null);
-			this.prevContainerWidthRef = createRef(null);
 			this.findClientSiblingRef = createRef(null);
 
 			this.setContainerDistances();
@@ -539,16 +538,12 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		calcOverflow (container, client) {
-			let containerHeight, containerWidth = 0;
+			let containerHeight, containerWidth, isOverLeftValue, isOverRightValue;
 			const {anchor, direction} = this.getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
 				containerHeight = container.height;
-				containerWidth = (container.width - client.width) / 2;
-				if (containerWidth < 0 && this.prevContainerWidthRef.current === 0 && !anchor) {
-					containerWidth = 0;
-				}
-				this.prevContainerWidthRef.current = containerWidth;
+				containerWidth = anchor ? (container.width - client.width) / 2 : 0;
 			} else {
 				containerHeight = (container.height - client.height) / 2;
 				containerWidth = container.width;
@@ -563,11 +558,13 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					client.bottom + containerHeight + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerHeight,
 				isOverLeft: anchor === 'left' && (direction === 'above' || direction === 'below') ?
 					!(client.left > this.KEEPOUT) :
-					client.left - containerWidth - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT < 0,
+					(isOverLeftValue = client.left - containerWidth - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT) < 0,
 				isOverRight: anchor === 'right' && (direction === 'above' || direction === 'below') ?
 					client.right + this.KEEPOUT > window.innerWidth :
-					client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerWidth
+					(isOverRightValue = client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT) > window.innerWidth
 			};
+
+			this.adjustInlineOverflow(isOverLeftValue, isOverRightValue);
 		}
 
 		adjustDirection () {
@@ -581,6 +578,16 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				this.adjustedDirection = anchor ? `right ${anchor}` : 'right';
 			} else if (this.overflow.isOverRight && !this.overflow.isOverLeft && direction === 'right' && !this.props.rtl) {
 				this.adjustedDirection = anchor ? `left ${anchor}` : 'left';
+			}
+		}
+
+		adjustInlineOverflow (isOverLeftValue, isOverRightValue) {
+			const isOverLeft = Math.abs(isOverLeftValue);
+			const isOverRight = Math.abs(isOverRightValue - window.innerWidth);
+
+			if (this.overflow.isOverRight && this.overflow.isOverLeft) {
+				this.overflow.isOverLeft = isOverLeft > isOverRight;
+				this.overflow.isOverRight = isOverLeft < isOverRight;
 			}
 		}
 
