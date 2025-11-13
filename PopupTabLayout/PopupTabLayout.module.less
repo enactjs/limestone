@@ -5,7 +5,9 @@
 @import "../styles/skin.less";
 
 // Module level variables, for use only in this file
-@popupTabLayout-max-height: ~"calc(100vh -" (.extract(@lime-popuptablayout-margin, top)[] + .extract(@lime-popuptablayout-margin, bottom)[])~")";
+@popuptablayout-margin-top: .extract(@lime-popuptablayout-margin, top)[];
+@popuptablayout-margin-bottom: .extract(@lime-popuptablayout-margin, bottom)[];
+@popupTabLayout-max-height: ~"calc(100vh - (@{popuptablayout-margin-top} + @{popuptablayout-margin-bottom}))";
 
 .popupTabLayout {
 	// Override Popup (more precedence)

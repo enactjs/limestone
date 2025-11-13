@@ -9,10 +9,17 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
 - `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+- `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
 
 ### Changed
 
 - `limestone/useScroll.HoverToScroll` scroll animation speed
+- 
+## [1.6.2] - 2025-11-05
+
+### Fixed
+
+- `limestone/Panels.Header` to use same Header height with/without subtitle.
 
 ## [1.6.1] - 2025-10-29
 
