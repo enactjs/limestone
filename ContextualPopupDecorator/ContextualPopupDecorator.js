@@ -538,7 +538,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		calcOverflow (container, client) {
-			let containerHeight, containerWidth, isOverLeftValue, isOverRightValue;
+			let containerHeight, containerWidth;
 			const {anchor, direction} = this.getContainerAdjustedPosition();
 
 			if (direction === 'above' || direction === 'below') {
@@ -549,7 +549,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				containerWidth = container.width;
 			}
 
-			this.overflow = {
+			const currentOverflow = {
 				isOverTop: anchor === 'top' && (direction === 'left' || direction === 'right') ?
 					!(client.top > this.KEEPOUT) :
 					client.top - containerHeight - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT < 0,
@@ -558,13 +558,13 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					client.bottom + containerHeight + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerHeight,
 				isOverLeft: anchor === 'left' && (direction === 'above' || direction === 'below') ?
 					!(client.left > this.KEEPOUT) :
-					(isOverLeftValue = client.left - containerWidth - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT) < 0,
+					client.left - containerWidth - this.ARROW_OFFSET - this.MARGIN - this.KEEPOUT < 0,
 				isOverRight: anchor === 'right' && (direction === 'above' || direction === 'below') ?
 					client.right + this.KEEPOUT > window.innerWidth :
-					(isOverRightValue = client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT) > window.innerWidth
+					client.right + containerWidth + this.ARROW_OFFSET + this.MARGIN + this.KEEPOUT > window.innerWidth
 			};
 
-			this.adjustInlineOverflow(direction, isOverLeftValue, isOverRightValue);
+			this.adjustInlineOverflow(direction, this.overflow, currentOverflow);
 		}
 
 		adjustDirection () {
@@ -581,13 +581,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		}
 
-		adjustInlineOverflow (direction, isOverLeftValue, isOverRightValue) {
-			const isOverLeft = Math.abs(isOverLeftValue);
-			const isOverRight = Math.abs(isOverRightValue - window.innerWidth);
-
-			if (this.overflow.isOverRight && this.overflow.isOverLeft && (direction === 'above' || direction === 'below')) {
-				this.overflow.isOverLeft = isOverLeft > isOverRight;
-				this.overflow.isOverRight = isOverLeft < isOverRight;
+		adjustInlineOverflow (direction, previousOverflow, currentOverflow) {
+			if (currentOverflow.isOverRight && currentOverflow.isOverLeft && (direction === 'above' || direction === 'below')) {
+				this.overflow = previousOverflow;
+			} else {
+				this.overflow = currentOverflow;
 			}
 		}
 
