@@ -83,7 +83,6 @@
 		position: relative;
 		pointer-events: none;
 		padding: 0;
-		opacity: @lime-flexiblepopuppanels-body-opacity;
 
 		.enact-locale-rtl({
 			padding: 0;
@@ -117,19 +116,9 @@
 			}
 		}
 
-		&.scrimTranslucent {
-			.header,
-			.content {
-				background-color: @lime-flexiblepopuppanels-panel-bg-color;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTransparent {
-			.header,
-			.content {
-				background-color: @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color;
-			}
+		.header,
+		.content {
+			background-color: @lime-flexiblepopuppanels-panel-bg-color;
 		}
 	});
 }
@@ -137,10 +126,6 @@
 // Overrides for Panel
 .panel {
 	pointer-events: none;
-
-	> .body {
-		opacity: @lime-flexiblepopuppanels-body-opacity;
-	}
 
 	.bodyLayout {
 		// This `-webkit-fill-available` value is a bit funny. It only updates

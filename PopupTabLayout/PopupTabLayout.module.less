@@ -96,8 +96,6 @@
 		}
 
 		.tabGroup {
-			background-color: @lime-popuptablayout-content-background-color;
-			
 			.tab {
 				.icon {
 					--icon-size: @lime-popuptablayout-tab-icon-size;
@@ -123,7 +121,6 @@
 	> .body {
 		position: relative;
 		padding: 0;
-		opacity: @lime-popuptablayout-panel-body-opacity;
 
 		// Overrides padding for Popup in RTL
 		.enact-locale-rtl({
@@ -155,7 +152,6 @@
 		flex-direction: column;
 		flex: 0 1 auto;  // Allow this node to vertically shrink to fit the content but not extend larger than the container.
 		padding: @lime-popuptablayout-panel-body-padding;
-		opacity: @lime-popuptablayout-panel-body-opacity;
 	}
 }
 
