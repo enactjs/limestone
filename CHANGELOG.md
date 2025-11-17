@@ -10,7 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
+- `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
 
 ## [1.6.2] - 2025-11-05
 
