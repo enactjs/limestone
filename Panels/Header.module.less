@@ -50,6 +50,10 @@
 	&:not(.centered) {
 		.titlesRow {
 			height: @lime-header-titleRow-height;
+
+			.enact-locale-tallglyph({
+				height: @lime-header-tallglyph-titleRow-height;
+			});
 		}
 	}
 
@@ -100,6 +104,10 @@
 	&.centered:not(.isPopupHeader):not(.wizard) {
 		.titlesRow {
 			height: @lime-header-centered-titleRow-height;
+
+			.enact-locale-tallglyph({
+				height: @lime-header-tallglyph-centered-titleRow-height;
+			});
 		}
 
 		.title {
