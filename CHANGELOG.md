@@ -11,6 +11,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
+- `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
 
 ## [1.6.2] - 2025-11-05
 
@@ -77,7 +78,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/CheckboxItem` `CheckboxItemGroup` to wrap multiple checkbox items as a list
 - `limestone/Item` props `slotAfterAria` and `slotBeforeAria` for audio guidance of slotAfter and slotBefore
-- `limstone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
+- `limestone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
 - `limestone/VirtualList` prop `continue5WayHold` to scroll continuously from in a VirtualList to the outer scroller.
 
 ### Changed
