@@ -10,6 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
 - `limestone/FixedPopupPanels` to have transparent top layer
 - `limestone/FlexiblePopupPanels` to have transparent top layer
 - `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
