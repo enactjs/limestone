@@ -6,11 +6,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Card` `checked` prop to allow user to mark `Chip` component as `checked`
-- `limestone/Card` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
 - `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+- `limestone/Chip` `checked` prop to allow user to mark `Chip` component as `checked`
+- `limestone/Chip` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
 
 ### Changed

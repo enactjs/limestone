@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {createContext, useCallback, useRef} from 'react';
+
 import $L from '../internal/$L';
 
 import css from './Chips.module.less';
@@ -126,11 +127,11 @@ const ChipsBase = (props) => {
 	return (
 		<div role="region" aria-labelledby={`${ariaId}_chips`}>
 			<div
-				id={`${ariaId}_chips`}
-				role="group"
 				aria-label={ariaLabel}
 				className={chipsClassName}
+				id={`${ariaId}_chips`}
 				ref={containerRef}
+				role="group"
 				{...rest}
 			>
 				<ChipsContext
