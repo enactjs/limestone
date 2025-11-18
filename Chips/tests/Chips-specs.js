@@ -48,8 +48,8 @@ describe('Chips', () => {
 
 	it('should focus the correct chip on navigation', () => {
 		render(<ChipsBase {...defaultProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -69,7 +69,7 @@ describe('Chips', () => {
 	it('should call handleDelete when delete button is clicked', () => {
 		render(<ChipsBase {...defaultProps} />);
 
-		const chipButtons = screen.getAllByRole('button', {name: /Chip [12]/i});
+		const chipButtons = screen.getAllByRole('checkbox', {name: /Chip [12]/i});
 		fireEvent.focus(chipButtons[0]);
 
 		const deleteButtons = getAllDeleteButtons();
@@ -96,8 +96,8 @@ describe('Chips', () => {
 			orientation: 'horizontal'
 		};
 		render(<ChipsBase {...horizontalProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -174,7 +174,7 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...clickableProps} />);
 
-		const chipButton = screen.getByText('Chip 1').closest('[role="button"]');
+		const chipButton = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		fireEvent.click(chipButton);
 
 		expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -217,7 +217,7 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...disabledProps} />);
 
-		const disabledChips = screen.getAllByRole('button');
+		const disabledChips = screen.getAllByRole('checkbox');
 		disabledChips.forEach(chip => {
 			expect(chip).toHaveAttribute('aria-disabled', 'true');
 		});
@@ -252,7 +252,7 @@ describe('Chips', () => {
 
 		expect(container.firstChild.firstChild).toHaveClass('chips');
 		expect(container.firstChild.firstChild).toHaveClass('vertical');
-		const buttons = screen.queryAllByRole('button');
+		const buttons = screen.queryAllByRole('checkbox');
 		expect(buttons).toHaveLength(0);
 	});
 
@@ -275,8 +275,8 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...verticalProps} />);
 
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');

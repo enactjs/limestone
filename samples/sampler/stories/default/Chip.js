@@ -7,6 +7,8 @@ import ri from '@enact/ui/resolution';
 import iconNames from '../helper/icons';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
+const icons = ['', ...iconNames].filter(iconName => iconName !== 'check' && iconName);
+
 const Config = mergeComponentMetadata('Chip', ChipBase, Chip);
 Chip.displayName = 'Chip';
 
@@ -42,7 +44,7 @@ const deleteButtonProps = {
 };
 
 boolean('checked', _Chip, Config, false);
-select('icon', _Chip, ['', ...iconNames], Config, 'check');
+select('icon', _Chip, icons, Config, 'home');
 text('children', _Chip, Config, 'chip');
 object('deleteButton', _Chip, Config, deleteButtonProps);
 boolean('disabled', _Chip, Config, false);

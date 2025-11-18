@@ -88,7 +88,7 @@ describe('Chip', () => {
 	test('should handle disabled state', () => {
 		render(<ChipBase data-testid="chip" disabled>Disabled Chip</ChipBase>);
 
-		const chipButton = screen.getByRole('button');
+		const chipButton = screen.getByRole('checkbox');
 		expect(chipButton).toHaveAttribute('aria-disabled', 'true');
 	});
 
@@ -103,10 +103,11 @@ describe('Chip', () => {
 			</ChipBase>
 		);
 
-		const allButtons = screen.getAllByRole('button');
-		allButtons.forEach(button => {
-			expect(button).toHaveAttribute('aria-disabled', 'true');
-		});
+		const chip = screen.getByRole('checkbox');
+		const deleteButton = screen.getByRole('button');
+
+		expect(chip).toHaveAttribute('aria-disabled', 'true');
+		expect(deleteButton).toHaveAttribute('aria-disabled', 'true');
 	});
 
 	test('should use default delete button icon when not specified', () => {
@@ -138,7 +139,7 @@ describe('Chip', () => {
 		const chipId = 'test-chip-id';
 		render(<ChipBase id={chipId}>Test Chip</ChipBase>);
 
-		const chipButton = screen.getByRole('button');
+		const chipButton = screen.getByRole('checkbox');
 		expect(chipButton).toHaveAttribute('data-chip-index', chipId);
 	});
 
@@ -146,7 +147,7 @@ describe('Chip', () => {
 		const mockOnClick = jest.fn();
 		render(<ChipBase onClick={mockOnClick}>Clickable Chip</ChipBase>);
 
-		const chipButton = screen.getByRole('button');
+		const chipButton = screen.getByRole('checkbox');
 		fireEvent.click(chipButton);
 
 		expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -169,7 +170,7 @@ describe('Chip', () => {
 		const customClass = 'custom-chip-class';
 		render(<ChipBase className={customClass} data-testid="chip">Test Chip</ChipBase>);
 
-		const chipButton = screen.getByRole('button');
+		const chipButton = screen.getByRole('checkbox');
 		expect(chipButton).toHaveClass(customClass);
 	});
 
@@ -179,7 +180,7 @@ describe('Chip', () => {
 		const chipText = screen.getByText('Minimal Chip');
 		expect(chipText).toBeInTheDocument();
 
-		const chipButton = screen.getByRole('button');
+		const chipButton = screen.getByRole('checkbox');
 		expect(chipButton).toHaveAttribute('data-chip-index', 'minimal-chip');
 	});
 });
