@@ -4,6 +4,9 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
+@card-caption-padding-left: .extract(@lime-card-vertical-caption-overlay-captions-padding, left)[];
+@card-caption-padding-right: .extract(@lime-card-vertical-caption-overlay-captions-padding, right)[];
+
 .resting-border(@z-index: 1) {
 	&::before {
 		content: '';
@@ -170,6 +173,10 @@
 
 		&.captionOverlay {
 			&.splitCaption {
+				.caption {
+					width: ~"calc(var(--card-image-width) - (@{card-caption-padding-left} + @{card-caption-padding-right}))";
+				}
+
 				.label {
 					font-size: @lime-card-split-caption-label-font-size;
 					font-weight: @lime-card-split-caption-label-font-weight;
