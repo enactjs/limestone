@@ -174,7 +174,7 @@
 		&.captionOverlay {
 			&.splitCaption {
 				.caption {
-					width: calc(var(--card-image-width) - (@card-caption-padding-left + @card-caption-padding-right));
+					width: ~"calc(var(--card-image-width) - (@{card-caption-padding-left} + @{card-caption-padding-right}))";
 				}
 
 				.label {
