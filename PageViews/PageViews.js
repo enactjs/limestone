@@ -13,7 +13,6 @@ import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useEffect} from 'react';
 
 import Button from '../Button';
 import $L from '../internal/$L';
@@ -27,6 +26,28 @@ import componentCss from './PageViews.module.less';
 
 const isLeft = is('left');
 const isRight = is('right');
+
+const handleKeyDown = (ev) => {
+	// if (isLeft(ev.keyCode)) {
+	// 	ev.preventDefault();
+	// 	onPrevClick();
+	// }
+	//
+	// if (isRight(ev.keyCode)) {
+	// 	ev.preventDefault();
+	// 	onNextClick();
+	// }
+	console.log(ev);
+
+	// const spottables = Spotlight.getSpottableDescendants('pageViews').length;
+	//
+	// if (!spottables) {
+	Spotlight.pause();
+	// } else {
+	// 	Spotlight.resume();
+	// }
+};
+
 
 const SpottableCell = SpotlightContainerDecorator(Cell);
 
@@ -47,8 +68,6 @@ const SpottableCell = SpotlightContainerDecorator(Cell);
  */
 const PageViewsBase = kind({
 	name: 'PageViews',
-
-	functional: true,
 
 	propTypes: /** @lends limestone/PageViews.PageViewsBase.prototype */ {
 		/**
@@ -232,6 +251,7 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
+		handleKeyDownEv: ({onNextClick, onPrevClick}) => handleKeyDown({onNextClick, onPrevClick}),
 		renderNextButton: ({bannerMode, css, onNextClick, index, totalIndex}) => {
 			const isNextButtonVisible = index < totalIndex - 1;
 
@@ -256,6 +276,7 @@ const PageViewsBase = kind({
 					className={css.viewManager}
 					component={ViewManager}
 					duration={400}
+					id="pageViews"
 					index={index}
 					spotlightRestrict={bannerMode === true && "self-only"}
 					spotlightId="pageViews"
@@ -307,6 +328,7 @@ const PageViewsBase = kind({
 		css,
 		componentRef,
 		fullContents,
+		handleKeyDownEv,
 		index,
 		onNextClick,
 		onPrevClick,
@@ -328,37 +350,19 @@ const PageViewsBase = kind({
 		delete rest.totalIndex;
 
 		// eslint-disable-next-line react-hooks/rules-of-hooks
-		useEffect(() => {
-			const handleKeyDown = (ev) => {
-				if (isLeft(ev.keyCode)) {
-					ev.preventDefault();
-					onPrevClick();
-				}
+		// useEffect(() => {
 
-				if (isRight(ev.keyCode)) {
-					ev.preventDefault();
-					onNextClick();
-				}
+		document.removeEventListener('keydown', handleKeyDown, {capture: true});
 
-				const spottables = Spotlight.getSpottableDescendants('pageViews').length;
-
-				if (!spottables) {
-					Spotlight.pause();
-				} else {
-					Spotlight.resume();
-				}
-			};
-
-			if (bannerMode === true) {
-				document.addEventListener('keydown', handleKeyDown, {capture: true});
-			} else {
-				Spotlight.resume();
-			}
-
-			return () => {
-				document.removeEventListener('keydown', handleKeyDown, {capture: true});
-			};
-		}, [bannerMode, onNextClick, onPrevClick]);
+		if (bannerMode === true) {
+			document.addEventListener('keydown', handleKeyDown, {capture: true});
+		} else {
+			Spotlight.resume();
+		}
+		//
+		// 	return () => {
+		// 	};
+		// }, [bannerMode, onNextClick, onPrevClick]);
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
