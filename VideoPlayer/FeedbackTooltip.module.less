@@ -56,17 +56,22 @@
 
 	.content {
 		.lime-font({
-			font-size: @lime-video-slider-tooltip-font-size;
+			font-size: @lime-video-slider-tooltip-thumbnail-font-size;
 			font-weight: @lime-video-slider-tooltip-font-weight;
 		});
 		.lime-font-number();
-		font-size: @lime-video-slider-tooltip-font-size;
+		font-size: @lime-video-slider-tooltip-thumbnail-font-size;
 		font-weight: @lime-video-slider-tooltip-font-weight;
 		line-height: @lime-video-slider-tooltip-line-height;
 		white-space: nowrap;
 		text-align: center;
-		margin-bottom: @lime-video-slider-tooltip-margin-bottom;
+		margin-bottom: @lime-video-slider-tooltip-thumbnail-margin-bottom;
 		padding: @lime-video-slider-tooltip-content-padding;
+	}
+
+	&:not(.shift) .content {
+		font-size: @lime-video-slider-tooltip-font-size;
+		margin-bottom: @lime-video-slider-tooltip-margin-bottom;
 	}
 
 	.alignmentContainer {
@@ -111,6 +116,10 @@
 		.content {
 			color: @lime-video-slider-tooltip-color;
 			text-shadow: @lime-mediaplayer-slider-tooltip-text-shadow;
+		}
+
+		&:not(.shift) .content {
+			background-color: @lime-video-tooltip-background-color;
 		}
 	});
 }
