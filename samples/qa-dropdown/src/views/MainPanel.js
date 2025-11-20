@@ -114,46 +114,27 @@ const MainPanel = props => {
 
 	const handleClick = React.useCallback(() => {
 		clickCount.current += 1;
-		console.log(`%c[🔴 BUTTON CLICKED #${clickCount.current}]`, 'background: red; color: white; font-weight: bold; font-size: 14px', {
-			oldSize: dataSize,
-			timestamp: Date.now()
-		});
 
 		const newSize = Math.floor(Math.random() * dataSize) + 15;
 
-		console.log(`%c[SETTING NEW DATASIZE]`, 'background: orange; color: white', {newSize});
 		setDataSize(newSize);
 
-		// SOLUTION 2: Scroll immediately after button click
 		setTimeout(() => {
-			console.log(`%c[📜 SCROLL CALLED FROM HANDLECLICK]`, 'background: blue; color: white; font-weight: bold; font-size: 14px', {
-				index: newSize - 5,
-				clickNumber: clickCount.current,
-				stack: new Error().stack
-			});
 			scrollTo.current({index: newSize - 5, animate: true});
 		}, 0);
 	}, [dataSize]);
 
 	const handleCbScrollTo = React.useCallback(fn => {
-		console.log(`%c[CBSCROLLTO REGISTERED]`, 'background: purple; color: white');
-
 		// Wrap the scroll function to log ALL scroll calls
 		scrollTo.current = (params) => {
-			console.log(`%c[🎯 VIRTUALLIST SCROLL EXECUTED]`, 'background: green; color: white; font-weight: bold; font-size: 16px', {
-				params,
-				timestamp: Date.now(),
-				stack: new Error().stack.split('\n').slice(0, 5).join('\n')
-			});
 			fn(params);
 		};
 	}, []);
 
 	// Initial scroll on mount only
 	React.useEffect(() => {
-		console.log(`%c[INITIAL MOUNT EFFECT]`, 'background: cyan; color: black; font-weight: bold');
 		scrollTo.current({index: dataSize - 5, animate: true});
-	}, []); // Empty dependency array = runs once on mount
+	}, []);
 
 	return (
 		<Panel {...props}>
