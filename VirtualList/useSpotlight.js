@@ -8,6 +8,7 @@ const useSpotlightConfig = (props, instances) => {
 	useEffect(() => {
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
+			const {scrollContentHandle} = instances;
 
 			if (lastFocusedIndex != null) {
 				return {
@@ -16,20 +17,63 @@ const useSpotlightConfig = (props, instances) => {
 					key: lastFocusedIndex
 				};
 			}
+
+			// CRITICAL FIX: When no last focused element exists, return first visible index
+			// This ensures lastFocusedRestore is called with key: 0 instead of undefined
+			// Prevents the container from being focused
+			if (scrollContentHandle.current && scrollContentHandle.current.state) {
+				const {firstVisibleIndex} = scrollContentHandle.current.state;
+				if (firstVisibleIndex != null && firstVisibleIndex >= 0) {
+					return {
+						container: false,
+						element: true,
+						key: firstVisibleIndex
+					};
+				}
+			}
+
+			// Fallback to index 0 if we can't determine first visible
+			return {
+				container: false,
+				element: true,
+				key: 0
+			};
 		}
 
 		function lastFocusedRestore ({key}, all) {
 			const placeholder = all.find(el => 'vlPlaceholder' in el.dataset);
-
+console.log("last focus restore");
 			if (placeholder) {
 				placeholder.dataset.index = key;
 
 				return placeholder;
 			}
 
-			return all.reduce((focused, node) => {
+			// Try to find the element with the matching key
+			const foundByKey = all.reduce((focused, node) => {
 				return focused || Number(node.dataset.index) === key && node;
 			}, null);
+
+			if (foundByKey) {
+				return foundByKey;
+			}
+
+			// FALLBACK: If the specified index isn't found in the DOM
+			// Return the first visible spottable child to prevent focusing the container
+			if (!foundByKey && all.length > 0) {
+				// Find the first element with a valid data-index attribute
+				const firstVisibleItem = all.find(node =>
+					node.dataset &&
+					node.dataset.index != null &&
+					!node.dataset.vlPlaceholder
+				);
+
+				if (firstVisibleItem) {
+					return firstVisibleItem;
+				}
+			}
+
+			return null;
 		}
 
 		function configureSpotlight () {
@@ -201,8 +245,34 @@ const useSpotlightRestore = (props, instances, context) => {
 	}
 
 	function handleRestoreLastFocus ({firstIndex, lastIndex}) {
-		if (mutableRef.current.restoreLastFocused && mutableRef.current.preservedIndex >= firstIndex && mutableRef.current.preservedIndex <= lastIndex) {
+		// CRITICAL FIX: Only restore focus when appropriate
+		// Prevents VirtualList from "stealing" focus when user is navigating between buttons
+		const current = Spotlight.getCurrent();
+
+		// Check if focus is already inside the VirtualList container
+		const isFocusInContainer = current && scrollContentRef.current &&
+			utilDOM.containsDangerously(scrollContentRef.current, current);
+console.log("handle restore", isFocusInContainer);
+		// Check if user is entering via the placeholder element (intentional navigation)
+		const isEnteringViaPlaceholder = current && current.dataset && 'vlPlaceholder' in current.dataset;
+
+		// Only restore focus if:
+		// 1. Focus is already inside the VirtualList container, OR
+		// 2. User is explicitly entering via placeholder (intentional)
+		if ((isFocusInContainer || isEnteringViaPlaceholder) &&
+			mutableRef.current.restoreLastFocused &&
+			mutableRef.current.preservedIndex >= firstIndex &&
+			mutableRef.current.preservedIndex <= lastIndex) {
+			console.log("is restoring focus", current, scrollContentRef.current)
 			restoreFocus();
+		} else if (mutableRef.current.restoreLastFocused &&
+			!isFocusInContainer &&
+			!isEnteringViaPlaceholder) {
+			console.log("else")
+			// CRITICAL: Clear the flag UNCONDITIONALLY when focus is outside
+			// Don't check if preservedIndex is in range - just clear it
+			// This prevents stale flags from causing restoration later
+			mutableRef.current.restoreLastFocused = false;
 		}
 	}
 

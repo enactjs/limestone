@@ -120,12 +120,12 @@ const MainPanel = props => {
 	return (
 		<Panel {...props}>
 			<Header title="Card Size" />
-			<Button onClick={handleClick}>Scroll1</Button>
-			<Button onClick={handleClick}>Scroll2</Button>
-			<Button onClick={handleClick}>Scroll3</Button>
-			<Button onClick={handleClick}>Scroll4</Button>
-			<Button onClick={handleClick}>Scroll5</Button>
-			<Button onClick={handleClick}>Scroll6</Button>
+			<Button size="small" onClick={handleClick}>Scroll1</Button>
+			<Button size="small" onClick={handleClick}>Scroll2</Button>
+			<Button size="small" onClick={handleClick}>Scroll3</Button>
+			<Button size="small" onClick={handleClick}>Scroll4</Button>
+			<Button size="small" onClick={handleClick}>Scroll5</Button>
+			<Button size="small" onClick={handleClick}>Scroll6</Button>
 			<Shelf
 				handleCbScrollTo={handleCbScrollTo}
 				heading="Card Size 1 (600x600)"
@@ -135,7 +135,5 @@ const MainPanel = props => {
 
 	);
 };
-
-export default Panel1;
 
 export default MainPanel;
