@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/FlexiblePopupPanels` to have transparent top layer
 - `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
 - `limestone/PopupTabLayout` to have top transparent layer
+- `limestone/VirtualList` to properly restore focus when data size changed previously focused item is not in the DOM anymore
 
 ## [1.6.2] - 2025-11-05
 
