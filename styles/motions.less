@@ -24,7 +24,7 @@ Animations properties
 	--lime-motion-medium2-duration: 300ms;
 	--lime-motion-medium4-duration: 400ms;
 	--lime-motion-long2-duration: 500ms;
-	--lime-bounce-motion-duration: var(--lime-motion-default-duration);
+	--lime-bounce-motion-duration: var(--lime-motion-medium2-duration);
 	--lime-check-motion-duration: var(--lime-motion-medium4-duration);
 	--lime-focus-in-motion-duration: var(--lime-motion-medium2-duration);
 	--lime-focus-out-motion-duration: var(--lime-motion-long2-duration);
@@ -34,7 +34,7 @@ Animations properties
 	/* ---------------------------------------
 	Easing functions
 	------------------------------------------ */
-	--lime-default-motion-easing-function: linear;
+	--lime-default-motion-easing-function: ease-out;
 	--lime-EIO-motion-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
 	--lime-EO-motion-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
 	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
@@ -52,7 +52,7 @@ Animations properties
 	/* ---------------------------------------
 	Keyframes values
 	------------------------------------------ */
-	--lime-bounce-motion-offset-value: 12px;
+	--lime-bounce-motion-offset-default-value: 6px;
 }
 
 /* ---------------------------------------
@@ -62,9 +62,11 @@ Keyframes
 /* Bounce
 	------------------------------------------ */
 @keyframes bounce-motion {
+	@offset-value: var(--lime-bounce-motion-offset-value, --lime-bounce-motion-offset-default-value);
+
 	0% {transform: translateX(0)}
-	50% {transform: translateX(var(--lime-bounce-motion-offset-value))}
-	80% {transform: translateX(~'calc(var(--lime-bounce-motion-offset-value) / -2)')}
+	50% {transform: translateX(@offset-value)}
+	80% {transform: translateX(~"calc(@{offset-value} / -2)")}
 	100% {transform: translateX(0)}
 }
 

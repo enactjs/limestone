@@ -11,7 +11,7 @@ Motion Variables
 /* ---------------------------------------
 Motion Mixins
 ------------------------------------------ */
-.lime-toggle-motion(@offset: var(--lime-bounce-motion-offset-value), @duration: var(--lime-bounce-motion-duration)) {
+.lime-toggle-motion(@offset: var(--lime-bounce-motion-offset-default-value), @duration: var(--lime-bounce-motion-duration)) {
 	animation: var(--lime-bounce-animation-name) @duration var(--lime-bounce-motion-easing-function);
 	--lime-bounce-motion-offset-value: @offset;
 }
