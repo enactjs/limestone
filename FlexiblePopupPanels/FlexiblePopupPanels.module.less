@@ -83,6 +83,7 @@
 		position: relative;
 		pointer-events: none;
 		padding: 0;
+
 		.enact-locale-rtl({
 			padding: 0;
 		});
@@ -115,19 +116,9 @@
 			}
 		}
 
-		&.scrimTranslucent {
-			.header,
-			.content {
-				background-color: @lime-flexiblepopuppanels-panel-bg-color;
-			}
-		}
-
-		&.scrimNone,
-		&.scrimTransparent {
-			.header,
-			.content {
-				background-color: @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color;
-			}
+		.header,
+		.content {
+			background-color: @lime-flexiblepopuppanels-panel-bg-color;
 		}
 	});
 }
