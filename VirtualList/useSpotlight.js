@@ -10,7 +10,7 @@ const useSpotlightConfig = (props, instances) => {
 
 	useEffect(() => {
 		// Clear lastFocusedIndex if it becomes out of range
-		// This prevents Spotlight from trying to restore invalid indices
+		// This prevents Spotlight from trying to restore an invalid index
 		const {dataSize} = props;
 		const {spottable} = instances;
 
@@ -37,7 +37,6 @@ const useSpotlightConfig = (props, instances) => {
 			}
 
 			// When no last focused element exists, return first visible index
-			// This ensures lastFocusedRestore is called with a valid key instead of undefined
 			if (scrollContentHandle.current && scrollContentHandle.current.state) {
 				const {firstVisibleIndex} = scrollContentHandle.current.state;
 				if (firstVisibleIndex != null && firstVisibleIndex >= 0) {
@@ -75,8 +74,7 @@ const useSpotlightConfig = (props, instances) => {
 				return foundByKey;
 			}
 
-			// FALLBACK: If the specified index isn't found in the DOM
-			// Return the first visible spottable child to prevent focusing the container
+			// If the specified index isn't found in the DOM, return the first visible spottable child to prevent focusing the VirtualList container
 			if (!foundByKey && all.length > 0) {
 				// Find the first element with a valid data-index attribute
 				const firstVisibleItem = all.find(node =>
@@ -130,13 +128,20 @@ const useSpotlightConfig = (props, instances) => {
 				containerNode.restoreSpotlightChild = (elementSpotlightId) => {
 					const currentFocus = Spotlight.getCurrent();
 
-					// GUARD 1: If focus is already inside VirtualList, don't restore
+					// If focus is already inside VirtualList, don't restore
 					if (currentFocus && scrollContainerRef.current?.contains(currentFocus)) {
-						console.log('[RESTORE CHILD - Already inside VirtualList, skipping]');
 						return false;
 					}
 
-					// Parse the index from spotlight ID
+					// Only restore if focus is on the VL placeholder. It indicates intentional navigation into the VirtualList
+					const isOnPlaceholder = currentFocus && currentFocus.dataset && currentFocus.dataset.vlPlaceholder;
+
+					if (!isOnPlaceholder) {
+						// User is NOT trying to enter VirtualList, do not scroll
+						return false;
+					}
+
+					// At this point, user is on placeholder and trying to enter. Parse the index from spotlight ID
 					const match = elementSpotlightId.match(/-(\d+)$/);
 					if (!match) {
 						return false;
@@ -166,9 +171,6 @@ const useSpotlightConfig = (props, instances) => {
 					if (spottable && spottable.current) {
 						spottable.current.lastFocusedIndex = index;
 					}
-
-					// Update last scroll time BEFORE scrolling
-					lastScrollTimeRef.current = now;
 
 					cbScrollTo({
 						index,
