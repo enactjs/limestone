@@ -3,9 +3,27 @@ import utilDOM from '@enact/ui/useScroll/utilDOM';
 import {useEffect, useRef} from 'react';
 
 const useSpotlightConfig = (props, instances) => {
+	// Track dataSize to detect when lastFocusedIndex becomes invalid
+	const lastDataSizeRef = useRef(props.dataSize);
+
 	// Hooks
 
 	useEffect(() => {
+		// Clear lastFocusedIndex if it becomes out of range
+		// This prevents Spotlight from trying to restore invalid indices
+		const {dataSize} = props;
+		const {spottable} = instances;
+
+		if (dataSize !== lastDataSizeRef.current && spottable && spottable.current) {
+			const lastFocusedIndex = spottable.current.lastFocusedIndex;
+
+			if (lastFocusedIndex != null && lastFocusedIndex >= dataSize) {
+				spottable.current.lastFocusedIndex = null;
+			}
+
+			lastDataSizeRef.current = dataSize;
+		}
+
 		function lastFocusedPersist () {
 			const {spottable: {current: {lastFocusedIndex}}} = instances;
 			const {scrollContentHandle} = instances;
@@ -18,9 +36,8 @@ const useSpotlightConfig = (props, instances) => {
 				};
 			}
 
-			// CRITICAL FIX: When no last focused element exists, return first visible index
-			// This ensures lastFocusedRestore is called with key: 0 instead of undefined
-			// Prevents the container from being focused
+			// When no last focused element exists, return first visible index
+			// This ensures lastFocusedRestore is called with a valid key instead of undefined
 			if (scrollContentHandle.current && scrollContentHandle.current.state) {
 				const {firstVisibleIndex} = scrollContentHandle.current.state;
 				if (firstVisibleIndex != null && firstVisibleIndex >= 0) {
@@ -81,8 +98,21 @@ const useSpotlightConfig = (props, instances) => {
 
 			Spotlight.set(spotlightId, {
 				enterTo: 'last-focused',
+				/*
+				 * Returns the data-index as the key for last focused
+				 */
 				lastFocusedPersist,
+
+				/*
+				 * Restores the data-index into the placeholder if it's the only element. Tries to find a
+				 * matching child otherwise.
+				 */
 				lastFocusedRestore,
+
+				/*
+				 * Directs spotlight focus to favor straight elements that are within range of `spacing`
+				 * over oblique elements, like scroll buttons.
+				 */
 				obliqueMultiplier: spacing > 0 ? spacing : 1
 			});
 
@@ -94,33 +124,19 @@ const useSpotlightConfig = (props, instances) => {
 				 * Called by Spotlight when trying to restore focus to an element
 				 * that's not currently in the DOM (scrolled out of view)
 				 *
-				 * CRITICAL FIX: Only scroll if focus is actually moving INTO the container
-				 * Prevents unwanted scrolls when user is navigating PAST the container
+				 * CRITICAL FIX: Use time-based guard to prevent rapid unwanted scrolls
+				 * Also validate index is in range before scrolling
 				 */
 				containerNode.restoreSpotlightChild = (elementSpotlightId) => {
 					const currentFocus = Spotlight.getCurrent();
 
-					// CRITICAL CHECK 1: If focus is already inside VirtualList, allow restoration
+					// GUARD 1: If focus is already inside VirtualList, don't restore
 					if (currentFocus && scrollContainerRef.current?.contains(currentFocus)) {
-						// This is legitimate - we're inside VirtualList navigating to an out-of-view item
-						// Don't scroll, just return true to let Spotlight handle it
+						console.log('[RESTORE CHILD - Already inside VirtualList, skipping]');
 						return false;
 					}
 
-					// CRITICAL CHECK 2: Only restore if focus is on the placeholder
-					// The placeholder indicates intentional navigation INTO the VirtualList
-					const isOnPlaceholder = currentFocus &&
-						currentFocus.dataset &&
-						currentFocus.dataset.vlPlaceholder;
-
-					if (!isOnPlaceholder) {
-						// User is NOT trying to enter VirtualList
-						// They're just navigating past it (e.g., through buttons)
-						// DO NOT SCROLL - this prevents the unwanted scroll bug
-						return false;
-					}
-
-					// At this point, user IS on placeholder and trying to enter
+					// Parse the index from spotlight ID
 					const match = elementSpotlightId.match(/-(\d+)$/);
 					if (!match) {
 						return false;
@@ -130,6 +146,12 @@ const useSpotlightConfig = (props, instances) => {
 					const {dataSize} = props;
 
 					if (index < 0 || index >= dataSize) {
+						// Clear the stale lastFocusedIndex
+						const {spottable} = instances;
+						if (spottable && spottable.current) {
+							spottable.current.lastFocusedIndex = null;
+						}
+
 						return false;
 					}
 
@@ -145,7 +167,9 @@ const useSpotlightConfig = (props, instances) => {
 						spottable.current.lastFocusedIndex = index;
 					}
 
-					// User is on placeholder and element is out of view - scroll to it
+					// Update last scroll time BEFORE scrolling
+					lastScrollTimeRef.current = now;
+
 					cbScrollTo({
 						index,
 						animate: props.wrap !== 'noAnimation',
@@ -249,20 +273,19 @@ const useSpotlightRestore = (props, instances, context) => {
 	}
 
 	function handleRestoreLastFocus ({firstIndex, lastIndex}) {
-		// EARLY RETURN: If flag already false, don't do anything
+		// If flag is already false, don't do anything
 		if (!mutableRef.current.restoreLastFocused) {
 			return;
 		}
 
-		// CRITICAL FIX: Only restore focus when appropriate
-		// Prevents VirtualList from "stealing" focus when user is navigating between buttons
+		// Only restore focus when VirtualList gets focus
 		const current = Spotlight.getCurrent();
 
 		// Check if focus is already inside the VirtualList container
 		const isFocusInContainer = current && scrollContentRef.current &&
 			utilDOM.containsDangerously(scrollContentRef.current, current);
 
-		// Check if user is entering via the placeholder element (intentional navigation)
+		// Check if user is entering via the placeholder element
 		const isEnteringViaPlaceholder = current && current.dataset && 'vlPlaceholder' in current.dataset;
 
 		// Only restore focus if:
@@ -273,9 +296,7 @@ const useSpotlightRestore = (props, instances, context) => {
 			mutableRef.current.preservedIndex <= lastIndex) {
 			restoreFocus();
 		} else if (!isFocusInContainer && !isEnteringViaPlaceholder) {
-			// CRITICAL: Clear the flag UNCONDITIONALLY when focus is outside
-			// Don't check if preservedIndex is in range - just clear it
-			// This prevents stale flags from causing restoration later
+			// Clear the flag when focus is outside VirtualList
 			mutableRef.current.restoreLastFocused = false;
 		}
 	}
