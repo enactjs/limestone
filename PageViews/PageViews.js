@@ -27,25 +27,19 @@ import componentCss from './PageViews.module.less';
 const isLeft = is('left');
 const isRight = is('right');
 
-const handleKeyDown = (ev) => {
-	// if (isLeft(ev.keyCode)) {
-	// 	ev.preventDefault();
-	// 	onPrevClick();
-	// }
-	//
-	// if (isRight(ev.keyCode)) {
-	// 	ev.preventDefault();
-	// 	onNextClick();
-	// }
+const handleKeyDown = ({onNextClick, onPrevClick}) => (ev) => {
+	if (isLeft(ev.keyCode)) {
+		ev.preventDefault();
+		onPrevClick();
+	}
+
+	if (isRight(ev.keyCode)) {
+		ev.preventDefault();
+		onNextClick();
+	}
 	console.log(ev);
 
-	// const spottables = Spotlight.getSpottableDescendants('pageViews').length;
-	//
-	// if (!spottables) {
 	Spotlight.pause();
-	// } else {
-	// 	Spotlight.resume();
-	// }
 };
 
 
@@ -328,7 +322,6 @@ const PageViewsBase = kind({
 		css,
 		componentRef,
 		fullContents,
-		handleKeyDownEv,
 		index,
 		onNextClick,
 		onPrevClick,
@@ -349,20 +342,13 @@ const PageViewsBase = kind({
 		delete rest.reverseTransition;
 		delete rest.totalIndex;
 
-		// eslint-disable-next-line react-hooks/rules-of-hooks
-		// useEffect(() => {
-
-		document.removeEventListener('keydown', handleKeyDown, {capture: true});
+		document.removeEventListener('keydown', handleKeyDownEv, {capture: true});
 
 		if (bannerMode === true) {
-			document.addEventListener('keydown', handleKeyDown, {capture: true});
+			document.addEventListener('keydown', handleKeyDownEv, {capture: true});
 		} else {
 			Spotlight.resume();
 		}
-		//
-		// 	return () => {
-		// 	};
-		// }, [bannerMode, onNextClick, onPrevClick]);
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
