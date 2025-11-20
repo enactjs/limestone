@@ -42,7 +42,7 @@ const useSpotlightConfig = (props, instances) => {
 
 		function lastFocusedRestore ({key}, all) {
 			const placeholder = all.find(el => 'vlPlaceholder' in el.dataset);
-console.log("last focus restore");
+
 			if (placeholder) {
 				placeholder.dataset.index = key;
 
@@ -81,21 +81,8 @@ console.log("last focus restore");
 
 			Spotlight.set(spotlightId, {
 				enterTo: 'last-focused',
-				/*
-				 * Returns the data-index as the key for last focused
-				 */
 				lastFocusedPersist,
-
-				/*
-				 * Restores the data-index into the placeholder if it's the only element. Tries to find a
-				 * matching child otherwise.
-				 */
 				lastFocusedRestore,
-
-				/*
-				 * Directs spotlight focus to favor straight elements that are within range of `spacing`
-				 * over oblique elements, like scroll buttons.
-				 */
 				obliqueMultiplier: spacing > 0 ? spacing : 1
 			});
 
@@ -107,17 +94,33 @@ console.log("last focus restore");
 				 * Called by Spotlight when trying to restore focus to an element
 				 * that's not currently in the DOM (scrolled out of view)
 				 *
-				 * @param {String} spotlightId - The spotlight ID of the element to restore
-				 * @returns {Boolean} - true if restoration was initiated
+				 * CRITICAL FIX: Only scroll if focus is actually moving INTO the container
+				 * Prevents unwanted scrolls when user is navigating PAST the container
 				 */
 				containerNode.restoreSpotlightChild = (elementSpotlightId) => {
-					// restore if focus is coming from outside the container
 					const currentFocus = Spotlight.getCurrent();
+
+					// CRITICAL CHECK 1: If focus is already inside VirtualList, allow restoration
 					if (currentFocus && scrollContainerRef.current?.contains(currentFocus)) {
-						// Focus is already inside VirtualList, don't restore
+						// This is legitimate - we're inside VirtualList navigating to an out-of-view item
+						// Don't scroll, just return true to let Spotlight handle it
 						return false;
 					}
 
+					// CRITICAL CHECK 2: Only restore if focus is on the placeholder
+					// The placeholder indicates intentional navigation INTO the VirtualList
+					const isOnPlaceholder = currentFocus &&
+						currentFocus.dataset &&
+						currentFocus.dataset.vlPlaceholder;
+
+					if (!isOnPlaceholder) {
+						// User is NOT trying to enter VirtualList
+						// They're just navigating past it (e.g., through buttons)
+						// DO NOT SCROLL - this prevents the unwanted scroll bug
+						return false;
+					}
+
+					// At this point, user IS on placeholder and trying to enter
 					const match = elementSpotlightId.match(/-(\d+)$/);
 					if (!match) {
 						return false;
@@ -142,6 +145,7 @@ console.log("last focus restore");
 						spottable.current.lastFocusedIndex = index;
 					}
 
+					// User is on placeholder and element is out of view - scroll to it
 					cbScrollTo({
 						index,
 						animate: props.wrap !== 'noAnimation',
@@ -245,6 +249,11 @@ const useSpotlightRestore = (props, instances, context) => {
 	}
 
 	function handleRestoreLastFocus ({firstIndex, lastIndex}) {
+		// EARLY RETURN: If flag already false, don't do anything
+		if (!mutableRef.current.restoreLastFocused) {
+			return;
+		}
+
 		// CRITICAL FIX: Only restore focus when appropriate
 		// Prevents VirtualList from "stealing" focus when user is navigating between buttons
 		const current = Spotlight.getCurrent();
@@ -252,7 +261,7 @@ const useSpotlightRestore = (props, instances, context) => {
 		// Check if focus is already inside the VirtualList container
 		const isFocusInContainer = current && scrollContentRef.current &&
 			utilDOM.containsDangerously(scrollContentRef.current, current);
-console.log("handle restore", isFocusInContainer);
+
 		// Check if user is entering via the placeholder element (intentional navigation)
 		const isEnteringViaPlaceholder = current && current.dataset && 'vlPlaceholder' in current.dataset;
 
@@ -260,15 +269,10 @@ console.log("handle restore", isFocusInContainer);
 		// 1. Focus is already inside the VirtualList container, OR
 		// 2. User is explicitly entering via placeholder (intentional)
 		if ((isFocusInContainer || isEnteringViaPlaceholder) &&
-			mutableRef.current.restoreLastFocused &&
 			mutableRef.current.preservedIndex >= firstIndex &&
 			mutableRef.current.preservedIndex <= lastIndex) {
-			console.log("is restoring focus", current, scrollContentRef.current)
 			restoreFocus();
-		} else if (mutableRef.current.restoreLastFocused &&
-			!isFocusInContainer &&
-			!isEnteringViaPlaceholder) {
-			console.log("else")
+		} else if (!isFocusInContainer && !isEnteringViaPlaceholder) {
 			// CRITICAL: Clear the flag UNCONDITIONALLY when focus is outside
 			// Don't check if preservedIndex is in range - just clear it
 			// This prevents stale flags from causing restoration later
