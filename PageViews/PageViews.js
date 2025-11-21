@@ -211,6 +211,22 @@ const PageViewsBase = kind({
 				}
 			}
 		),
+		onStepsClick: handle(
+			forwardCustomWithPrevent('onStepsClick'),
+			(ev, {bannerMode, onChange}) => {
+				if (!bannerMode) return;
+				let index = -1;
+				let node = ev.target;
+
+				if (node.children.length) return;
+
+				while (node) {
+					node = node.previousElementSibling;
+					index++;
+				}
+				onChange({type: 'onChange', index: index});
+			}
+		),
 		onTransition: (ev, {index, onTransition}) => {
 			if (onTransition) {
 				onTransition({type: 'onTransition', index});
@@ -266,7 +282,7 @@ const PageViewsBase = kind({
 			const pageHint = new IString($L('Page {current} out of {total}')).format({current: index + 1, total: totalIndex});
 			return `${pageHint} ${children?.[index]?.props['aria-label'] || ''}`;
 		},
-		steps: ({bannerMode, css, index, onNextClick, onPrevClick, pageIndicatorType, totalIndex}) => {
+		steps: ({bannerMode, css, index, onNextClick, onPrevClick, onStepsClick, pageIndicatorType, totalIndex}) => {
 			const isPrevButtonVisible = index !== 0;
 			const isNextButtonVisible = index < totalIndex - 1;
 			const isStepVisible = totalIndex !== 1;
@@ -279,6 +295,7 @@ const PageViewsBase = kind({
 								css={css}
 								current={index + 1}
 								highlightCurrentOnly
+								onClick={onStepsClick}
 								total={totalIndex}
 							/>
 						</Row> :
@@ -315,6 +332,7 @@ const PageViewsBase = kind({
 		delete rest.children;
 		delete rest.noAnimation;
 		delete rest.onNextClick;
+		delete rest.onStepsClick;
 		delete rest.onPrevClick;
 		delete rest.onTransition;
 		delete rest.onWillTransition;
