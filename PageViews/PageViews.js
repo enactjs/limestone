@@ -1,10 +1,8 @@
 import handle, {forwardCustomWithPrevent} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
-import {is} from '@enact/core/keymap';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
 import {Row, Column, Cell} from '@enact/ui/Layout';
@@ -23,24 +21,6 @@ import Steps from '../Steps';
 import {PageViewsRouter} from './PageViewsRouter';
 
 import componentCss from './PageViews.module.less';
-
-const isLeft = is('left');
-const isRight = is('right');
-
-const handleKeyDown = ({onNextClick, onPrevClick}) => (ev) => {
-	if (isLeft(ev.keyCode)) {
-		ev.preventDefault();
-		onPrevClick();
-	}
-
-	if (isRight(ev.keyCode)) {
-		ev.preventDefault();
-		onNextClick();
-	}
-	console.log(ev);
-
-	Spotlight.pause();
-};
 
 
 const SpottableCell = SpotlightContainerDecorator(Cell);
@@ -245,7 +225,6 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		handleKeyDownEv: ({onNextClick, onPrevClick}) => handleKeyDown({onNextClick, onPrevClick}),
 		renderNextButton: ({bannerMode, css, onNextClick, index, totalIndex}) => {
 			const isNextButtonVisible = index < totalIndex - 1;
 
@@ -318,13 +297,10 @@ const PageViewsBase = kind({
 	},
 
 	render: ({
-		bannerMode,
 		css,
 		componentRef,
 		fullContents,
 		index,
-		onNextClick,
-		onPrevClick,
 		pageIndicatorPosition,
 		pageIndicatorType,
 		renderNextButton,
@@ -335,20 +311,15 @@ const PageViewsBase = kind({
 		...rest
 	}) => {
 		delete rest.arranger;
+		delete rest.bannerMode;
 		delete rest.children;
 		delete rest.noAnimation;
+		delete rest.onNextClick;
+		delete rest.onPrevClick;
 		delete rest.onTransition;
 		delete rest.onWillTransition;
 		delete rest.reverseTransition;
 		delete rest.totalIndex;
-
-		document.removeEventListener('keydown', handleKeyDownEv, {capture: true});
-
-		if (bannerMode === true) {
-			document.addEventListener('keydown', handleKeyDownEv, {capture: true});
-		} else {
-			Spotlight.resume();
-		}
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
