@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 
 import Item from '../../Item';
 import VirtualList from '../VirtualList';
@@ -169,8 +169,8 @@ describe('VirtualList useSpotlight', () => {
 					/>
 				);
 
-				const items = list.querySelectorAll('[data-index]');
-				items.forEach(item => {
+				const listItems = list.querySelectorAll('[data-index]');
+				listItems.forEach(item => {
 					const index = parseInt(item.getAttribute('data-index'));
 					expect(index).toBeLessThan(newSize);
 					expect(index).toBeGreaterThanOrEqual(0);
@@ -228,9 +228,9 @@ describe('VirtualList useSpotlight', () => {
 			);
 
 			const list = screen.getByRole('list');
-			const items = list.querySelectorAll('[data-index]');
+			const listItems = list.querySelectorAll('[data-index]');
 
-			items.forEach(item => {
+			listItems.forEach(item => {
 				// Items should be spottable (have required attributes)
 				expect(item).toHaveAttribute('tabindex');
 				expect(item.className).toContain('spottable');
@@ -260,8 +260,8 @@ describe('VirtualList useSpotlight', () => {
 			);
 
 			// Indices should still be correct
-			const items = list.querySelectorAll('[data-index]');
-			const indices = Array.from(items).map(item =>
+			const listItems = list.querySelectorAll('[data-index]');
+			const indices = Array.from(listItems).map(item =>
 				parseInt(item.getAttribute('data-index'))
 			);
 
@@ -295,8 +295,8 @@ describe('VirtualList useSpotlight', () => {
 				/>
 			);
 
-			let items = list.querySelectorAll('[data-index]');
-			items.forEach(item => {
+			let listItems = list.querySelectorAll('[data-index]');
+			listItems.forEach(item => {
 				expect(parseInt(item.getAttribute('data-index'))).toBeLessThan(40);
 			});
 
@@ -310,8 +310,8 @@ describe('VirtualList useSpotlight', () => {
 				/>
 			);
 
-			items = list.querySelectorAll('[data-index]');
-			items.forEach(item => {
+			listItems = list.querySelectorAll('[data-index]');
+			listItems.forEach(item => {
 				expect(parseInt(item.getAttribute('data-index'))).toBeLessThan(15);
 			});
 		});
@@ -339,8 +339,8 @@ describe('VirtualList useSpotlight', () => {
 					/>
 				);
 
-				const items = list.querySelectorAll('[data-index]');
-				items.forEach(item => {
+				const listItems = list.querySelectorAll('[data-index]');
+				listItems.forEach(item => {
 					const index = parseInt(item.getAttribute('data-index'));
 					expect(index).toBeGreaterThanOrEqual(0);
 					expect(index).toBeLessThan(size);
