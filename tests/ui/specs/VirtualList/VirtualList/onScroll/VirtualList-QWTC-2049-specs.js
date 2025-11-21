@@ -1,7 +1,7 @@
 const Page = require('../VirtualListPage');
 const {expectFocusedItem} = require('../../VirtualList-utils');
 
-describe('onScrollStart/Stop Events behavior ', function () {
+describe('onScrollStart/Stop Events behavior', function () {
 	beforeEach(async function () {
 		await Page.open();
 	});

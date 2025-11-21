@@ -17,7 +17,7 @@ export default {
 let chipIdCounter = 0;
 
 const generateSingleChip = (index) => {
-	const icons = ['check', 'heart', 'channel', 'ai', 'star', 'home', 'music', 'search'];
+	const icons = ['download', 'heart', 'channel', 'ai', 'star', 'home', 'music', 'search'];
 	const chipLabels = [
 		'chip1',
 		'chip2',
