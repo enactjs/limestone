@@ -8,12 +8,16 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
 
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
 - `limestone/FixedPopupPanels` to have transparent top layer
 - `limestone/FlexiblePopupPanels` to have transparent top layer
-- `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
+- `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
 - `limestone/PopupTabLayout` to have top transparent layer
 - `limestone/VirtualList` to properly restore focus when data size changed previously focused item is not in the DOM anymore
 
