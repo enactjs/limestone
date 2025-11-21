@@ -92,7 +92,7 @@ const useSpotlightConfig = (props, instances) => {
 		}
 
 		function configureSpotlight () {
-			const {cbScrollTo, spacing, spotlightId} = props;
+			const {spacing, spotlightId} = props;
 
 			Spotlight.set(spotlightId, {
 				enterTo: 'last-focused',
