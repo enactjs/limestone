@@ -116,14 +116,6 @@ const useSpotlightConfig = (props, instances) => {
 		}
 
 		configureSpotlight();
-
-		return () => {
-			const {spotlightId} = props;
-			const containerNode = document.querySelector(`[data-spotlight-id="${spotlightId}"]`);
-			if (containerNode && containerNode.restoreSpotlightChild) {
-				delete containerNode.restoreSpotlightChild;
-			}
-		};
 	}, [props, instances]);
 };
 
