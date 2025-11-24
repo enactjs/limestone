@@ -1,9 +1,11 @@
-import handle, {forwardCustomWithPrevent} from '@enact/core/handle';
+import handle, {forProp, forwardCustomWithPrevent} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
+import Spottable from '@enact/spotlight/Spottable';
 import Changeable from '@enact/ui/Changeable';
 import {Row, Column, Cell} from '@enact/ui/Layout';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
@@ -21,6 +23,26 @@ import Steps from '../Steps';
 import {PageViewsRouter} from './PageViewsRouter';
 
 import componentCss from './PageViews.module.less';
+
+const SpottableCell = Spottable(Cell);
+const SpottableColumn = SpotlightContainerDecorator({
+	defaultElement: [`.${componentCss.viewManager} *`],
+	enterTo: 'default-element',
+	navigableFilter: (node) => node.classList.contains(componentCss.viewManager),
+	preserveId: true
+}, Column);
+
+const handlePageChange = (index, onChange, totalIndex) => {
+	if (onChange && index !== totalIndex && totalIndex) {
+		const nextIndex = index < (totalIndex - 1) ? (index + 1) : index;
+
+		onChange({type: 'onChange', index: nextIndex});
+	} else if (onChange && index !== 0) {
+		const prevIndex = index > 0 ? (index - 1) : index;
+
+		onChange({type: 'onChange', index: prevIndex});
+	}
+};
 
 /**
  * A PageViews that has page indicator with corresponding pages.
@@ -51,6 +73,14 @@ const PageViewsBase = kind({
 		 * @private
 		 */
 		arranger: shape,
+
+		/**
+		 * When `true`, disables Spotlight outside the container and enables 5-way navigation between panels.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		bannerMode: PropTypes.bool,
 
 		/**
 		 * {@link limestone/PageViews.Page|Page} to be rendered.
@@ -180,24 +210,33 @@ const PageViewsBase = kind({
 	},
 
 	handlers: {
+		onKeyDown: handle(
+			forProp('bannerMode', true),
+			(ev, {index, onChange, totalIndex}) => {
+				if (ev.code === 'ArrowRight') {
+					Spotlight.pause();
+					Spotlight.focus('banner-view-manager');
+					handlePageChange(index, onChange, totalIndex);
+					Spotlight.resume();
+				} else if (ev.code === 'ArrowLeft') {
+					Spotlight.pause();
+					Spotlight.focus('banner-view-manager');
+					handlePageChange(index, onChange);
+					Spotlight.resume();
+				}
+			}
+		),
+
 		onNextClick: handle(
 			forwardCustomWithPrevent('onNextClick'),
 			(ev, {index, onChange, totalIndex}) => {
-				if (onChange && index !== totalIndex) {
-					const nextIndex = index < (totalIndex - 1) ? (index + 1) : index;
-
-					onChange({type: 'onChange', index: nextIndex});
-				}
+				handlePageChange(index, onChange, totalIndex);
 			}
 		),
 		onPrevClick: handle(
 			forwardCustomWithPrevent('onPrevClick'),
 			(ev, {index, onChange}) => {
-				if (onChange && index !== 0) {
-					const prevIndex = index > 0 ? (index - 1) : index;
-
-					onChange({type: 'onChange', index: prevIndex});
-				}
+				handlePageChange(index, onChange);
 			}
 		),
 		onTransition: (ev, {index, onTransition}) => {
@@ -233,10 +272,11 @@ const PageViewsBase = kind({
 		},
 		renderViewManager: ({arranger, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
 			return (
-				<Cell
+				<SpottableCell
 					arranger={arranger}
 					className={css.viewManager}
 					component={ViewManager}
+					data-spotlight-id="banner-view-manager"
 					duration={400}
 					index={index}
 					noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation}
@@ -245,7 +285,7 @@ const PageViewsBase = kind({
 					reverseTransition={reverseTransition}
 				>
 					{children}
-				</Cell>
+				</SpottableCell>
 			);
 		},
 		stepHintAriaLabel: ({children, index, totalIndex}) => {
@@ -297,6 +337,7 @@ const PageViewsBase = kind({
 		...rest
 	}) => {
 		delete rest.arranger;
+		delete rest.bannerMode;
 		delete rest.children;
 		delete rest.noAnimation;
 		delete rest.onTransition;
@@ -309,7 +350,7 @@ const PageViewsBase = kind({
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
 				{!fullContents && pageIndicatorPosition === 'top' ? steps : null}
-				<Column aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} >
+				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} >
 					{fullContents ?
 						<>
 							<Row className={css.horizontalLayout}>{renderViewManager}</Row>
@@ -322,7 +363,7 @@ const PageViewsBase = kind({
 							{pageIndicatorType === 'dot' ? renderNextButton : null}
 						</Row>
 					}
-				</Column>
+				</SpottableColumn>
 				{!fullContents && pageIndicatorPosition === 'bottom' ? steps : null}
 			</div>
 		);
