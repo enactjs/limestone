@@ -157,7 +157,7 @@ const ChipBase = (props) => {
 		return <>
 			{checked && <Icon {...iconProps}>check</Icon>}
 			{isImage && <Image {...iconProps} src={childComponent} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} />}
-			{!isImage && <Icon {...iconProps}>{childComponent}</Icon>}
+			{!isImage && childComponent && (childComponent !== 'check') && <Icon {...iconProps}>{childComponent}</Icon>}
 		</>;
 	}, [checked, imageSize, isImage]);
 
@@ -180,7 +180,7 @@ const ChipBase = (props) => {
 				data-chip-index={id}
 				disabled={disabled}
 				focusEffect="static"
-				icon={icon ? icon : null}
+				icon={icon ? icon : ''}
 				iconComponent={iconComponent}
 				size="small"
 				onFocus={handleFocus}

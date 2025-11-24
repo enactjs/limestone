@@ -44,7 +44,7 @@ const deleteButtonProps = {
 };
 
 boolean('checked', _Chip, Config, false);
-select('icon', _Chip, icons, Config, 'home');
+select('icon', _Chip, ['', ...icons], Config, 'home');
 text('children', _Chip, Config, 'chip');
 object('deleteButton', _Chip, Config, deleteButtonProps);
 boolean('disabled', _Chip, Config, false);
