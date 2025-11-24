@@ -18,9 +18,19 @@ const ChipsTests = [
 		<Chip deleteButton>Chip 3</Chip>
 	</Chips>,
 	<Chips>
-		<Chip icon="check">Chip 1</Chip>
-		<Chip icon="check">Chip 2</Chip>
-		<Chip icon="check">Chip 3</Chip>
+		<Chip icon="home">Chip 1</Chip>
+		<Chip icon="home">Chip 2</Chip>
+		<Chip icon="home">Chip 3</Chip>
+	</Chips>,
+	<Chips>
+		<Chip isImage>Chip 1</Chip>
+		<Chip isImage>Chip 2</Chip>
+		<Chip isImage>Chip 3</Chip>
+	</Chips>,
+	<Chips>
+		<Chip checked>Chip 1</Chip>
+		<Chip checked>Chip 2</Chip>
+		<Chip checked>Chip 3</Chip>
 	</Chips>,
 	<Chips orientation="horizontal">
 		<Chip disabled>Chip 1</Chip>
