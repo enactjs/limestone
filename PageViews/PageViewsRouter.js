@@ -1,9 +1,7 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {useRef, useCallback, useEffect, useState, Children} from 'react';
-import {is} from '@enact/core/keymap';
-import Spotlight from '@enact/spotlight';
+import {useRef, useCallback, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -19,9 +17,6 @@ function useReverseTransition (index, rtl) {
 	return  {reverseTransition: reverse};
 }
 
-const isLeft = is('left');
-const isRight = is('right');
-
 /**
  * PageViewsRouter passes children, index and transition handlers
  *
@@ -32,7 +27,6 @@ const isRight = is('right');
 function PageViewsRouter (Wrapped) {
 	const PageViewsProvider = ({
 		autoFocus,
-		bannerMode,
 		children,
 		componentRef,
 		'data-spotlight-id': spotlightId,
@@ -42,7 +36,6 @@ function PageViewsRouter (Wrapped) {
 		rtl,
 		...rest
 	}) => {
-		const [indexValue, setIndexValue] = useState(index);
 		const totalIndex = Children.count(children);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
 		const autoFocusRef = useAutoFocus({autoFocus});
@@ -58,53 +51,17 @@ function PageViewsRouter (Wrapped) {
 			a11yOnWillTransition(ev);
 		}, [a11yOnWillTransition, focusOnWillTransition]);
 
-		useEffect(() => {
-			setIndexValue(index);
-
-			const handleKeyDown = (ev) => {
-				if ((!rtl && isLeft(ev.keyCode)) || (rtl && isRight(ev.keyCode))) {
-					ev.preventDefault();
-					setIndexValue(value => {
-						if (value === 0) return value;
-						return value - 1;
-					});
-					Spotlight.pause();
-
-				}
-
-				if ((!rtl && isRight(ev.keyCode)) || (rtl && isLeft(ev.keyCode))) {
-					ev.preventDefault();
-					setIndexValue(value => {
-						if (value + 1 < totalIndex) return value + 1;
-						return value;
-					});
-					Spotlight.pause();
-				}
-
-			};
-
-			if (bannerMode === true) {
-				document.addEventListener('keydown', handleKeyDown, {capture: true});
-			} else {
-				Spotlight.resume();
-			}
-
-			return () => {
-				document.removeEventListener('keydown', handleKeyDown, {capture: true});
-			};
-		}, [bannerMode, index, rtl, totalIndex]);
-
 		return (
 			<Wrapped
 				{...rest}
 				{...transition}
-				bannerMode={bannerMode}
 				componentRef={ref}
 				data-spotlight-id={spotlightId}
-				index={indexValue}
+				index={index}
 				totalIndex={totalIndex}
 				onWillTransition={handleWillTransition}
 				reverseTransition={reverseTransition}
+				rtl={rtl}
 			>
 				{children}
 			</Wrapped>
