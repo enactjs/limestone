@@ -25,12 +25,7 @@ import {PageViewsRouter} from './PageViewsRouter';
 import componentCss from './PageViews.module.less';
 
 const SpottableCell = Spottable(Cell);
-const SpottableColumn = SpotlightContainerDecorator({
-	defaultElement: [`.${componentCss.viewManager} *`],
-	enterTo: 'default-element',
-	navigableFilter: (node) => node.classList.contains(componentCss.viewManager),
-	preserveId: true
-}, Column);
+const SpottableColumn = SpotlightContainerDecorator(Column);
 
 const handlePageChange = (index, onChange, totalIndex) => {
 	if (onChange && index !== totalIndex && totalIndex) {
@@ -213,18 +208,26 @@ const PageViewsBase = kind({
 		onKeyDown: handle(
 			forProp('bannerMode', true),
 			(ev, {index, onChange, totalIndex}) => {
+				Spotlight.set('banner-container', {
+					navigableFilter: (node) => node.classList.contains(componentCss.viewManager)
+				});
+
 				if (ev.code === 'ArrowRight') {
-					Spotlight.pause();
-					Spotlight.focus('banner-view-manager');
 					handlePageChange(index, onChange, totalIndex);
-					Spotlight.resume();
 				} else if (ev.code === 'ArrowLeft') {
-					Spotlight.pause();
-					Spotlight.focus('banner-view-manager');
 					handlePageChange(index, onChange);
-					Spotlight.resume();
 				}
 			}
+		),
+
+		onPointerOver: handle(
+			forProp('bannerMode', true),
+			() => Spotlight.set('banner-container', {navigableFilter: null})
+		),
+
+		onMouseOver: handle(
+			forProp('bannerMode', true),
+			() => Spotlight.set('banner-container', {navigableFilter: null})
 		),
 
 		onNextClick: handle(
@@ -240,11 +243,14 @@ const PageViewsBase = kind({
 			}
 		),
 		onTransition: (ev, {index, onTransition}) => {
+			Spotlight.focus('banner-view-manager');
+			Spotlight.resume();
 			if (onTransition) {
 				onTransition({type: 'onTransition', index});
 			}
 		},
 		onWillTransition: (ev, {index, onWillTransition}) => {
+			Spotlight.pause();
 			if (onWillTransition) {
 				onWillTransition({type: 'onWillTransition', index});
 			}
@@ -276,7 +282,7 @@ const PageViewsBase = kind({
 					arranger={arranger}
 					className={css.viewManager}
 					component={ViewManager}
-					data-spotlight-id="banner-view-manager"
+					spotlightId="banner-view-manager"
 					duration={400}
 					index={index}
 					noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation}
@@ -350,7 +356,7 @@ const PageViewsBase = kind({
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
 				{!fullContents && pageIndicatorPosition === 'top' ? steps : null}
-				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} >
+				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} spotlightId="banner-container">
 					{fullContents ?
 						<>
 							<Row className={css.horizontalLayout}>{renderViewManager}</Row>
