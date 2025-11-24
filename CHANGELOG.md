@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Checkbox` to match the latest GUI
 - `limestone/useScroll.HoverToScroll` scroll animation speed
 
 ### Fixed
