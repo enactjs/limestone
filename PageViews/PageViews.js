@@ -239,15 +239,11 @@ const PageViewsBase = kind({
 			forwardCustomWithPrevent('onStepsClick'),
 			(ev, {bannerMode, onChange}) => {
 				if (!bannerMode) return;
-				let index = -1;
-				let node = ev.target;
+				const node = ev.target;
+				const index = parseInt(node.getAttribute('data-index'));
 
 				if (node.children.length) return;
 
-				while (node) {
-					node = node.previousElementSibling;
-					index++;
-				}
 				onChange({type: 'onChange', index: index});
 			}
 		),
