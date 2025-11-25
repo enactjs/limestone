@@ -47,12 +47,12 @@
     "@enovaui/core-tokens": "^0.8.2",
     "@enovaui/webos-tokens": "^0.8.2",
     "classnames": "^2.5.1",
-    "ilib": "^14.21.1",
+    "ilib": "^14.21.2",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.31.3",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "warning": "^4.0.3"
   },
   "peerDependencies": {
