@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {PageViews, Page} from '../';
@@ -201,4 +201,48 @@ describe('PageViews Specs', () => {
 		}
 	);
 
+	test ('should render accept `fullContents` prop', () => {
+		render(
+			<PageViews fullContents pageIndicatorType="number" index={1}>
+				<Page>I got contents</Page>
+				<Page>I got contents</Page>
+			</PageViews>
+		);
+
+		const panel = screen.getByRole('region');
+		const expected = 'fullContents';
+
+		expect(panel).toHaveClass(expected);
+	});
+
+	test (
+		'should navigate on Page Indicator click when `bannerMode` is true',
+		async () => {
+			const handleChange = jest.fn();
+			const handleStepsClick = jest.fn();
+			const user = userEvent.setup();
+
+			render(
+				<PageViews bannerMode index={2} onChange={handleChange} onStepsClick={handleStepsClick}>
+					<Page />
+					<Page />
+					<Page />
+				</PageViews>
+			);
+
+			const indicatorDot = screen.getByRole('list').children[1];
+			const expected = {type: 'onStepsClick'};
+
+			await user.click(indicatorDot);
+
+			await waitFor(() => {
+				expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
+			});
+			await waitFor(() => {
+				const actual = handleStepsClick.mock.calls.length && handleStepsClick.mock.calls[0][0];
+
+				expect(actual).toMatchObject(expected);
+			});
+		}
+	);
 });
