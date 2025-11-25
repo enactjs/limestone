@@ -249,7 +249,6 @@ describe('PageViews Specs', () => {
 		'should navigate via 5-way left key when `bannerMode` is true',
 		async () => {
 			const handleChange = jest.fn();
-			const user = userEvent.setup();
 
 			render(
 				<PageViews bannerMode index={1} onChange={handleChange}>
@@ -271,7 +270,6 @@ describe('PageViews Specs', () => {
 		'should navigate via 5-way right key when `bannerMode` is true',
 		async () => {
 			const handleChange = jest.fn();
-			const user = userEvent.setup();
 
 			render(
 				<PageViews bannerMode index={1} onChange={handleChange}>
