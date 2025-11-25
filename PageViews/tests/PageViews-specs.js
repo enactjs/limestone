@@ -245,4 +245,48 @@ describe('PageViews Specs', () => {
 			});
 		}
 	);
+	test (
+		'should navigate via 5-way left key when `bannerMode` is true',
+		async () => {
+			const handleChange = jest.fn();
+			const user = userEvent.setup();
+
+			render(
+				<PageViews bannerMode index={1} onChange={handleChange}>
+					<Page />
+					<Page />
+					<Page />
+				</PageViews>
+			);
+			const pageViews = screen.getByRole('region').children[0];
+
+			await fireEvent.keyDown(pageViews, {which: 37, keyCode: 37, code: 37});
+
+			await waitFor(() => {
+				expect(handleChange).toHaveBeenCalledWith({index: 0, type: 'onChange'});
+			});
+		}
+	);
+	test (
+		'should navigate via 5-way right key when `bannerMode` is true',
+		async () => {
+			const handleChange = jest.fn();
+			const user = userEvent.setup();
+
+			render(
+				<PageViews bannerMode index={1} onChange={handleChange}>
+					<Page />
+					<Page />
+					<Page />
+				</PageViews>
+			);
+			const pageViews = screen.getByRole('region').children[0];
+
+			await fireEvent.keyDown(pageViews, {which: 39, keyCode: 39, code: 39});
+
+			await waitFor(() => {
+				expect(handleChange).toHaveBeenCalledWith({index: 2, type: 'onChange'});
+			});
+		}
+	);
 });
