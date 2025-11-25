@@ -272,20 +272,20 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		renderNextButton: ({bannerMode, css, onNextClick, index, totalIndex}) => {
+		renderNextButton: ({css, onNextClick, index, totalIndex}) => {
 			const isNextButtonVisible = index < totalIndex - 1;
 
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isNextButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+					{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 				</Cell>
 			);
 		},
-		renderPrevButton: ({bannerMode, css, index, onPrevClick}) => {
+		renderPrevButton: ({css, index, onPrevClick}) => {
 			const isPrevButtonVisible = index !== 0;
 			return (
 				<Cell className={css.navButtonCell} shrink>
-					{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+					{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 				</Cell>
 			);
 		},
