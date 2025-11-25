@@ -209,18 +209,6 @@ const PageViewsBase = kind({
 	},
 
 	handlers: {
-		onNextClick: handle(
-			forwardCustomWithPrevent('onNextClick'),
-			(ev, {index, onChange, totalIndex}) => {
-				handlePageChange(index, onChange, totalIndex);
-			}
-		),
-		onPrevClick: handle(
-			forwardCustomWithPrevent('onPrevClick'),
-			(ev, {index, onChange}) => {
-				handlePageChange(index, onChange);
-			}
-		),
 		onKeyDown: handle(
 			forProp('bannerMode', true),
 			(ev, {index, onChange, rtl, totalIndex}) => {
@@ -235,6 +223,26 @@ const PageViewsBase = kind({
 				}
 			}
 		),
+		onMouseOver: handle(
+			forProp('bannerMode', true),
+			() => Spotlight.set('banner-container', {navigableFilter: null})
+		),
+		onNextClick: handle(
+			forwardCustomWithPrevent('onNextClick'),
+			(ev, {index, onChange, totalIndex}) => {
+				handlePageChange(index, onChange, totalIndex);
+			}
+		),
+		onPrevClick: handle(
+			forwardCustomWithPrevent('onPrevClick'),
+			(ev, {index, onChange}) => {
+				handlePageChange(index, onChange);
+			}
+		),
+		onPointerOver: handle(
+			forProp('bannerMode', true),
+			() => Spotlight.set('banner-container', {navigableFilter: null})
+		),
 		onStepsClick: handle(
 			forwardCustomWithPrevent('onStepsClick'),
 			(ev, {bannerMode, onChange}) => {
@@ -246,14 +254,6 @@ const PageViewsBase = kind({
 
 				onChange({type: 'onChange', index: index});
 			}
-		),
-		onPointerOver: handle(
-			forProp('bannerMode', true),
-			() => Spotlight.set('banner-container', {navigableFilter: null})
-		),
-		onMouseOver: handle(
-			forProp('bannerMode', true),
-			() => Spotlight.set('banner-container', {navigableFilter: null})
 		),
 		onTransition: (ev, {index, onTransition}) => {
 			Spotlight.focus('banner-view-manager');
