@@ -16,15 +16,15 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Card` to match the latest GUI
+- `limestone/Checkbox` to match the latest GUI
+- `limestone/ImageItem` to match the latest GUI
 - `limestone/useScroll.HoverToScroll` scroll animation speed
 
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
-- `limestone/FixedPopupPanels` to have transparent top layer
-- `limestone/FlexiblePopupPanels` to have transparent top layer
-- `limestone/Panels.Header` to use correct margins for elements inside slotBefore and slotAfter
-- `limestone/PopupTabLayout` to have top transparent layer
+- `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
 
 ## [1.6.2] - 2025-11-05
 
