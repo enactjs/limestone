@@ -3,6 +3,7 @@ import Item from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
 import {Cell, Row, Column} from '@enact/ui/Layout';
+import {action} from "@enact/storybook-utils/addons/actions";
 
 PageViews.displayName = 'PageViews';
 
@@ -26,6 +27,11 @@ export const _PageViews = (args) => (
 	<PageViews
 		bannerMode={args['bannerMode']}
 		fullContents={args['fullContents']}
+		onChange={action('onChange')}
+		onNextClick={action('onNextClick')}
+		onPrevClick={action('onPrevClick')}
+		onTransition={action('onTransition')}
+		onWillTransition={action('onWillTransition')}
 		pageIndicatorPosition={args['pageIndicatorPosition']}
 		pageIndicatorType={args['pageIndicatorType']}
 	>
