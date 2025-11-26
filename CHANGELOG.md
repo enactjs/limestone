@@ -12,6 +12,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Chip` `checked` prop to allow user to mark `Chip` component as `checked`
 - `limestone/Chip` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
+- `limestone/VideoPlayer.FeedbackTooltip` to use correct font family
 
 ### Changed
 
