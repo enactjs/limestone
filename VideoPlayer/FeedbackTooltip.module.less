@@ -14,8 +14,6 @@
 		.content {
 			position: absolute;
 			.position(auto, 0, 0, 0);
-			font-size: @lime-video-slider-tooltip-thumbnail-content-font-size;
-			margin-bottom: @lime-video-slider-tooltip-thumbnail-content-margin-bottom;
 		}
 	}
 
@@ -32,7 +30,7 @@
 	.thumbnail {
 		border-width: @lime-video-slider-tooltip-thumbnail-border-width;
 		border-style: solid;
-		border-radius: @lime-video-slider-tooltip-thumbnail-border-radius;
+		border-radius: 0;
 		overflow: hidden;
 		transition: opacity 250ms;
 
@@ -41,13 +39,6 @@
 			width: @lime-video-slider-tooltip-thumbnail-width;
 			height: @lime-video-slider-tooltip-thumbnail-height;
 		}
-	}
-
-	.thumbnail::after {
-		content: "";
-		position: absolute;
-		.position(auto, 0, 0);
-		height: 65%;
 	}
 
 	&.thumbnailDeactivated {
@@ -105,17 +96,10 @@
 			border-left-color: transparent;
 		}
 
-		.thumbnail::after {
-			background: @lime-video-tooltip-gradient-color;
-		}
-
 		.content {
+			background-color: @lime-video-tooltip-background-color;
 			color: @lime-video-slider-tooltip-color;
 			text-shadow: @lime-mediaplayer-slider-tooltip-text-shadow;
-		}
-
-		&:not(.shift) .content {
-			background-color: @lime-video-tooltip-background-color;
 		}
 	});
 }
