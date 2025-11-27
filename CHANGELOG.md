@@ -20,6 +20,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` to match the latest GUI
 - `limestone/RadioItem` to match the latest GUI
 - `limestone/useScroll.HoverToScroll` scroll animation speed
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
 ### Fixed
 
