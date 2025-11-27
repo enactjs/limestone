@@ -39,7 +39,7 @@ const fonts = {
 		regular: 'LG Smart UI Devanagari'
 	},
 	'ja': {
-		regular: 'LG Smart UI JP'
+		regular: ['LG Smart UI JP', 'LG Display_JP']
 	},
 	'kn': {
 		regular: 'LG Smart UI Kannada'
