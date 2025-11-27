@@ -303,6 +303,6 @@ export default {
 	soundbarline      : 0x0F01EC, // soundbar_line
 	jumpforward2      : 0x0F01ED, // jumpforward
 	jumpbackward2     : 0x0F01EE, // jumpbackward
-	Link              : 0x0F01EF, // Link
+	link2             : 0x0F01EF, // Link
 	btspeakermute     : 0x0F01F0  // bt_speaker_mute
 };
