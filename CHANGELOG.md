@@ -18,6 +18,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` to match the latest GUI
 - `limestone/Checkbox` to match the latest GUI
 - `limestone/ImageItem` to match the latest GUI
+- `limestone/RadioItem` to match the latest GUI
 - `limestone/useScroll.HoverToScroll` scroll animation speed
 
 ### Fixed
