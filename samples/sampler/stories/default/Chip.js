@@ -7,7 +7,7 @@ import ri from '@enact/ui/resolution';
 import iconNames from '../helper/icons';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
-const icons = ['', ...iconNames].filter(iconName => iconName !== 'check' && iconName);
+const icons = ['', ...iconNames].filter(iconName => iconName !== 'check' && iconName !== 'checkmark' && iconName);
 
 const Config = mergeComponentMetadata('Chip', ChipBase, Chip);
 Chip.displayName = 'Chip';
