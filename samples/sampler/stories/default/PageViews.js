@@ -1,9 +1,9 @@
 import {PageViews} from '@enact/limestone/PageViews';
 import Item from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
+import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select} from '@enact/storybook-utils/addons/controls';
 import {Cell, Row, Column} from '@enact/ui/Layout';
-import {action} from "@enact/storybook-utils/addons/actions";
 
 PageViews.displayName = 'PageViews';
 
