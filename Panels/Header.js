@@ -501,7 +501,7 @@ const HeaderBase = kind({
 		return (
 			<header {...rest}>
 				{slotAbove ? <nav className={css.slotAbove}>{slotAbove}</nav> : null}
-				<Row className={css.titlesRow} align="center">
+				<Row className={css.titlesRow}>
 					<Cell className={css.slotBefore} shrink={!syncCellSize} size={syncCellSize} style={hideSlots}>
 						<span ref={slotBeforeRef} className={css.slotSizer}>
 							{backButton}{slotBefore}

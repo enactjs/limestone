@@ -116,9 +116,19 @@
 			}
 		}
 
-		.header,
-		.content {
-			background-color: @lime-flexiblepopuppanels-panel-bg-color;
+		&.scrimTranslucent {
+			.header,
+			.content {
+				background-color: @lime-flexiblepopuppanels-panel-bg-color;
+			}
+		}
+
+		&.scrimNone,
+		&.scrimTransparent {
+			.header,
+			.content {
+				background-color: @lime-flexiblepopuppanels-panel-scrimtransparent-bg-color;
+			}
 		}
 	});
 }
