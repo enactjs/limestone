@@ -38,16 +38,6 @@ describe('Card', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should support `withoutMarquee` prop', () => {
-		const children = 'very very very very very very very very long children';
-		render(<CardBase data-testid="card" withoutMarquee src={src}>{children}</CardBase>);
-
-		const expected = 'withoutMarquee';
-		const actual = screen.getByTestId('card');
-
-		expect(actual).toHaveClass(expected);
-	});
-
 	test('should support `imageIconSrc` prop when `orientation="vertical"`', () => {
 		const imageIconSrc = 'imageIconSrc';
 		render(<CardBase imageIconSrc={imageIconSrc} orientation="vertical" />);
@@ -76,5 +66,15 @@ describe('Card', () => {
 		const actual = screen.getByTestId('card');
 
 		expect(actual).toHaveClass(expected);
+	});
+
+	test('should not have styles for marquee when `withoutMarquee` is true', () => {
+		const children = 'children';
+		render(<CardBase data-testid="card" withoutMarquee src={src}>{children}</CardBase>);
+
+		const expected = 'style';
+		const actual = screen.getByText('children');
+
+		expect(actual).not.toHaveAttribute(expected);
 	});
 });
