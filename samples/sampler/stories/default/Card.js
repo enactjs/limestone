@@ -31,6 +31,7 @@ export default {
 
 export const _Card = (args) => (
 	<Card
+		aria-label={args['aria-label']}
 		captionOverlay={args['captionOverlay']}
 		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
@@ -54,14 +55,17 @@ export const _Card = (args) => (
 		showProgressBar={args['showProgressBar']}
 		splitCaption={args['splitCaption']}
 		src={args['src']}
+		withoutMarquee={args['withoutMarquee']}
 	>
 		{args['children']}
 	</Card>
 );
 
+text('aria-label', _Card, Config);
 boolean('captionOverlay', _Card, Config);
 boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
+text('children', _Card, Config, 'Card Caption');
 boolean('disabled', _Card, Config);
 boolean('fitImage', _Card, Config);
 select('icon', _Card, iconsList, Config);
@@ -79,7 +83,7 @@ boolean('selected', _Card, Config);
 boolean('showProgressBar', _Card, Config);
 boolean('splitCaption', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
-text('children', _Card, Config, 'Card Caption');
+boolean('withoutMarquee', _Card, Config);
 
 _Card.storyName = 'Card';
 _Card.parameters = {

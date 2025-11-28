@@ -77,6 +77,14 @@ const CardBase = kind({
 		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 
 		/**
+		 * The "aria-label" for the Card.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		'aria-label': PropTypes.string,
+
+		/**
 		 * Determines whether the caption will be placed over the image or not.
 		 * It only applies when `orientation` is `'vertical'`.
 		 *
@@ -268,12 +276,20 @@ const CardBase = kind({
 		 * @type {Boolean}
 		 * @public
 		 */
-		splitCaption: PropTypes.bool
+		splitCaption: PropTypes.bool,
+
+		/**
+		 * Remove the marquee effect of caption and label text.
+		 * @type {Boolean}
+		 * @public
+		 */
+		withoutMarquee: PropTypes.bool
 	},
 
 	defaultProps: {
 		icon: 'check',
-		orientation: 'vertical'
+		orientation: 'vertical',
+		withoutMarquee: false
 	},
 
 	styles: {
@@ -293,11 +309,11 @@ const CardBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({children, label, secondaryLabel, selected}) => {
-			return `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
+		'aria-label': ({'aria-label': ariaLabel, children, label, secondaryLabel, selected}) => {
+			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar, splitCaption}) => {
+		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar, splitCaption, withoutMarquee}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
 
@@ -311,12 +327,21 @@ const CardBase = kind({
 							src={imageIconSrc}
 						/>
 					) : null}
-					<Cell>
-						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
-						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
-						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
-						{showProgressBar ? <ProgressBar progress={progress} /> : null}
-					</Cell>
+					{withoutMarquee ? (
+						<Cell>
+							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
+							{typeof label !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div> : null}
+							{typeof secondaryLabel !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div> : null}
+						</Cell>
+						
+					) : (
+						<Cell>
+							<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
+							{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
+							{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
+							{showProgressBar ? <ProgressBar progress={progress} /> : null}
+						</Cell>
+					)}
 				</Row>
 			);
 
@@ -370,9 +395,11 @@ const CardBase = kind({
 		delete rest.progress;
 		delete rest.secondaryLabel;
 		delete rest.showProgressBar;
+		delete rest.splitCaption;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
+		delete rest.withoutMarquee;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
 
