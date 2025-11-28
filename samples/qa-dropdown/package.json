@@ -27,9 +27,9 @@
     "@enact/limestone": "../../",
     "@enact/spotlight": "^5.3.2",
     "@enact/ui": "^5.3.2",
-    "ilib": "^14.21.1",
+    "ilib": "^14.21.2",
     "prop-types": "^15.8.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }
