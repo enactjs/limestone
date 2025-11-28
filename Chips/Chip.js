@@ -155,9 +155,9 @@ const ChipBase = (props) => {
 
 	const iconComponent = useCallback(({children: childComponent, ...iconProps}) => {
 		return <>
-			{checked && <Icon {...iconProps}>check</Icon>}
+			{checked && <Icon {...iconProps}>checkmark</Icon>}
 			{isImage && <Image {...iconProps} src={childComponent} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} />}
-			{!isImage && childComponent && (childComponent !== 'check') && <Icon {...iconProps}>{childComponent}</Icon>}
+			{!isImage && childComponent && (childComponent !== 'check') && (childComponent !== 'checkmark') && <Icon {...iconProps}>{childComponent}</Icon>}
 		</>;
 	}, [checked, imageSize, isImage]);
 

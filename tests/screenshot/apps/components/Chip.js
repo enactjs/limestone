@@ -7,6 +7,7 @@ const ChipTests = [
 
 	<Chip icon="home">Chip with Icon</Chip>,
 	<Chip icon="check">Chip with check Icon</Chip>, // Default Chip without any Icon
+	<Chip icon="checkmark">Chip with checkmark Icon</Chip>, // Default Chip without any Icon
 	<Chip isImage icon={gameHomeIcon}>Chip with Image</Chip>,
 
 	<Chip deleteButton>Chip with Delete Button</Chip>,
