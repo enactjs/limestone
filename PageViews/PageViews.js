@@ -244,9 +244,9 @@ const PageViewsBase = kind({
 			() => Spotlight.set('banner-container', {navigableFilter: null})
 		),
 		onStepsClick: handle(
+			forProp('bannerMode', true),
 			forwardCustomWithPrevent('onStepsClick'),
-			(ev, {bannerMode, onChange}) => {
-				if (!bannerMode) return;
+			(ev, {onChange}) => {
 				const node = ev.target;
 				const index = parseInt(node.getAttribute('data-index'));
 
