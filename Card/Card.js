@@ -333,7 +333,6 @@ const CardBase = kind({
 							{typeof label !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div> : null}
 							{typeof secondaryLabel !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div> : null}
 						</Cell>
-						
 					) : (
 						<Cell>
 							<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
