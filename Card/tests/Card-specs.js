@@ -38,6 +38,16 @@ describe('Card', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
+	test('should support `withoutMarquee` prop', () => {
+		const children = 'very very very very very very very very long children';
+		render(<CardBase data-testid="card" withoutMarquee src={src}>{children}</CardBase>);
+
+		const expected = 'withoutMarquee';
+		const actual = screen.getByTestId('card');
+
+		expect(actual).toHaveClass(expected);
+	});
+
 	test('should support `imageIconSrc` prop when `orientation="vertical"`', () => {
 		const imageIconSrc = 'imageIconSrc';
 		render(<CardBase imageIconSrc={imageIconSrc} orientation="vertical" />);
