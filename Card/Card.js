@@ -332,6 +332,7 @@ const CardBase = kind({
 							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
 							{typeof label !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div> : null}
 							{typeof secondaryLabel !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div> : null}
+							{showProgressBar ? <ProgressBar progress={progress} /> : null}
 						</Cell>
 					) : (
 						<Cell>
@@ -394,7 +395,6 @@ const CardBase = kind({
 		delete rest.progress;
 		delete rest.secondaryLabel;
 		delete rest.showProgressBar;
-		delete rest.splitCaption;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.roundedImage;
