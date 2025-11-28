@@ -6,9 +6,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Card` `aria-label` prop to allow user to custom the aria-label
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
 - `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+- `limestone/Card` `withoutMarquee` prop to allow user to remove the text marquee effect
 - `limestone/Chip` `checked` prop to allow user to mark `Chip` component as `checked`
 - `limestone/Chip` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
