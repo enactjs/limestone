@@ -334,11 +334,11 @@ const PageViewsBase = kind({
 						</Row> :
 						<Row className={css.stepsRow}>
 							<Cell className={css.navButtonCell} shrink>
-								{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+								{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 							</Cell>
 							<Cell className={css.pageNumber} shrink>{index + 1}<Cell className={css.separator} shrink>/</Cell>{totalIndex}</Cell>
 							<Cell className={css.navButtonCell} shrink>
-								{isNextButtonVisible ? <Button spotlightDisabled={bannerMode === true} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+								{isNextButtonVisible ? <Button spotlightDisabled={bannerMode} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 							</Cell>
 						</Row>}
 				</>
