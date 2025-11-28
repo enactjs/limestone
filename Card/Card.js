@@ -279,7 +279,7 @@ const CardBase = kind({
 		splitCaption: PropTypes.bool,
 
 		/**
-		 * Remove the marquee effect of caption and label text.
+		 * Removes the marquee effect of caption and label text.
 		 * @type {Boolean}
 		 * @public
 		 */
