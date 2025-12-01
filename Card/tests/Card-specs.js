@@ -67,4 +67,11 @@ describe('Card', () => {
 
 		expect(actual).toHaveClass(expected);
 	});
+
+	test('should have "Select" voice intent', () => {
+		render(<CardBase data-testid="card" />);
+		const card = screen.getByTestId('card');
+
+		expect(card).toHaveAttribute('data-webos-voice-intent', 'Select');
+	});
 });
