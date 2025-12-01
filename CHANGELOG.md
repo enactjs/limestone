@@ -24,6 +24,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limetone/Card` voice control to select the Card
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
 - `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
 - `limestone/VideoPlayer.FeedbackTooltip` to use correct font family
