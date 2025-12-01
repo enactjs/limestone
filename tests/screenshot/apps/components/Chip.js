@@ -27,9 +27,9 @@ const ChipTests = [
 	<Chip disabled isImage icon={gameHomeIcon}>Disabled Chip with Image</Chip>,
 	<Chip disabled deleteButton={{icon: 'closex', position: 'right'}}>Disabled Chip with Delete Button (Right)</Chip>,
 
-	<Chip icon="home" deleteButton={{icon: 'trash', position: 'right'}}>Chip with Icon and Delete Button (Right)</Chip>,
-	<Chip icon="home" deleteButton={{icon: 'trash', position: 'top'}}>Chip with Icon and Delete Button (Top)</Chip>,
-	<Chip icon="home" deleteButton={{icon: 'trash', position: 'bottom'}} disabled>Disabled Chip with Icon and Delete Button (Bottom)</Chip>,
+	<Chip icon="home" deleteButton={{icon: 'closex', position: 'right'}}>Chip with Icon and Delete Button (Right)</Chip>,
+	<Chip icon="home" deleteButton={{icon: 'closex', position: 'top'}}>Chip with Icon and Delete Button (Top)</Chip>,
+	<Chip icon="home" deleteButton={{icon: 'closex', position: 'bottom'}} disabled>Disabled Chip with Icon and Delete Button (Bottom)</Chip>,
 
 	// Focused
 	...withConfig({focus: true}, [
@@ -40,8 +40,8 @@ const ChipTests = [
 		<Chip checked icon="home">Checked and Focused Chip with Icon</Chip>,
 		<Chip checked isImage icon={gameHomeIcon}>Checked and Focused Chip with Image</Chip>,
 		<Chip deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Delete Button (Right)</Chip>,
-		<Chip icon="home" deleteButton={{icon: 'trash', position: 'right'}}>Focused Chip with Icon and Delete Button (Right)</Chip>,
-		<Chip isImage icon={gameHomeIcon} deleteButton={{icon: 'trash', position: 'right'}}>Focused Chip with Image and Delete Button (Right)</Chip>
+		<Chip icon="home" deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Icon and Delete Button (Right)</Chip>,
+		<Chip isImage icon={gameHomeIcon} deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Image and Delete Button (Right)</Chip>
 	])
 ];
 
