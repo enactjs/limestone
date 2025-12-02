@@ -67,4 +67,14 @@ describe('Card', () => {
 
 		expect(actual).toHaveClass(expected);
 	});
+
+	test('should not have styles for marquee when `withoutMarquee` is true', () => {
+		const children = 'children';
+		render(<CardBase data-testid="card" withoutMarquee src={src}>{children}</CardBase>);
+
+		const expected = 'style';
+		const actual = screen.getByText('children');
+
+		expect(actual).not.toHaveAttribute(expected);
+	});
 });

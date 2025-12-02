@@ -26,9 +26,13 @@ import Skinnable from '../Skinnable';
 
 import componentCss from './Steps.module.less';
 
-const PageIndicator = ({className, css}) => {
+const PageIndicator = ({className, css, ...rest}) => {
+	delete rest.children;
+	delete rest.size;
+
 	const mergedClasses = classNames(css.pageIndicator, className);
-	return (<div className={mergedClasses} />);
+
+	return (<div className={mergedClasses} {...rest} />);
 };
 
 /**
