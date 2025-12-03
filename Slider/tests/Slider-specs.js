@@ -67,7 +67,7 @@ describe('Slider', () => {
 	});
 
 	test('should set "aria-valuetext" to value when value is changed', () => {
-		render(<Slider defaultValue={10} />);
+		render(<Slider defaultValue={10} showMinMax />);
 		const slider = screen.getByRole('slider');
 
 		focus(slider);

@@ -16,7 +16,7 @@ import Button from '../views/Button';
 import Card from '../views/Card';
 import Checkbox from '../views/Checkbox';
 import CheckboxItem from '../views/CheckboxItem';
-import Chip from '../views/Chip';
+import Chips from '../views/Chips';
 import ContextualMenuDecorator from '../views/ContextualMenuDecorator';
 import ContextualPopupDecorator from '../views/ContextualPopupDecorator';
 import DatePicker from '../views/DatePicker';
@@ -72,7 +72,7 @@ const views = [
 	{title: 'Card', view: Card},
 	{title: 'Checkbox', view: Checkbox},
 	{title: 'CheckboxItem', view: CheckboxItem},
-	{title: 'Chip', view: Chip},
+	{title: 'Chip/Chips', view: Chips},
 	{title: 'ContextualMenuDecorator', view: ContextualMenuDecorator},
 	{title: 'ContextualPopupDecorator', view: ContextualPopupDecorator},
 	{title: 'DatePicker', view: DatePicker},

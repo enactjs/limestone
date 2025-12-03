@@ -1,6 +1,7 @@
 // Button.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
@@ -311,6 +312,7 @@
 
 		.bg {
 			.lime-button-resting-bg-colors();
+			.lime-focus-out-motion();
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
 			border-color: @lime-button-outline-border-color;
@@ -477,13 +479,7 @@
 			&.focusExpand {
 				.bg {
 					.lime-bg-colors({
-						transform: @lime-button-focusexpand-focus-bg-transform;
-					});
-				}
-
-				&.small .bg {
-					.lime-bg-colors({
-						transform: @lime-button-small-focusexpand-focus-bg-transform;
+						.lime-focus-in-motion();
 					});
 				}
 			}
@@ -499,16 +495,35 @@
 					&:active {
 						.bg {
 							.lime-bg-colors({
-								transform: @lime-button-focusexpand-pressed-bg-transform;
+								.lime-press-motion();
 							});
 						}
+					}
 
-						&.small {
-							.bg {
-								.lime-bg-colors({
-									transform: @lime-button-small-focusexpand-pressed-bg-transform;
-								});
-							}
+					&:not(.pressed) {
+						.bg {
+							.lime-bg-colors({
+								.lime-release-motion()
+							});
+						}
+					}
+				}
+
+				&:not(.focusExpand) {
+					&.pressed,
+					&:active {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-press-motion();
+							});
+						}
+					}
+
+					&:not(.pressed) {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-release-motion()
+							});
 						}
 					}
 				}
@@ -540,26 +555,12 @@
 						});
 					}
 
-					&.small .bg {
-						.lime-bg-colors({
-							transform: none;
-						});
-					}
-
 					&.pressed,
 					&:active {
 						.bg {
 							.lime-bg-colors({
 								transform: none;
 							});
-						}
-
-						&.small {
-							.bg {
-								.lime-bg-colors({
-									transform: none;
-								});
-							}
 						}
 					}
 				}

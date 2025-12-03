@@ -7,12 +7,31 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icons `link2` and `btspeakermute`
+- `limestone/Card` `aria-label` prop to allow user to custom the aria-label
+- `limestone/Card` `icon` prop to allow user to change the icon
+- `limestone/Card` added option for progressBar
+- `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+- `limestone/Card` `withoutMarquee` prop to allow user to remove the text marquee effect
+- `limestone/Chip` `checked` prop to allow user to mark `Chip` component as `checked`
+- `limestone/Chip` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
+- `limestone/PageViews` `bannerMode` prop to allow 5-way navigation between pages
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
+
+### Changed
+
+- `limestone/Card` to match the latest GUI
+- `limestone/Checkbox` to match the latest GUI
+- `limestone/ImageItem` to match the latest GUI
+- `limestone/RadioItem` to match the latest GUI
+- `limestone/useScroll.HoverToScroll` scroll animation speed
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
 ### Fixed
 
+- `limetone/Card` voice control to select the Card
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
 - `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
+- `limestone/VideoPlayer.FeedbackTooltip` to use correct font family
 
 ## [1.6.2] - 2025-11-05
 
