@@ -312,7 +312,6 @@ const Popup = (props) => {
 	const [prevOpen, setPrevOpen] = useState(open);
 
 	const containerIdRef = useRef(Spotlight.add());
-	const handleKeyDownRef = useRef(null);
 	const pausedRef = useRef(new Pause('Popup'));
 	const prevPropsRef = useRef({});
 
@@ -341,7 +340,7 @@ const Popup = (props) => {
 		return null;
 	}, [activator, floatLayerOpen, noAnimation, open, popupOpen, prevOpen]);
 
-	const handleKeyDown = (ev) => {
+	const handleKeyDown = useCallback((ev) => {
 		if (no5WayClose) return;
 
 		const keyCode = ev.keyCode;
@@ -382,8 +381,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}
-	// }, [allComponentProps, no5WayClose, onClose, position, spotlightRestrict]);
+	}, [allComponentProps, no5WayClose, onClose, position, spotlightRestrict]);
 
 	const spotActivator = useCallback((currentActivator) => {
 		pausedRef.current.resume();
@@ -413,7 +411,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [open]);
+	}, [handleKeyDown, open]);
 
 	const spotPopupContent = useCallback(() => {
 		pausedRef.current.resume();
@@ -434,7 +432,7 @@ const Popup = (props) => {
 			}
 			Spotlight.setActiveContainer(containerIdRef.current);
 		}
-	}, [open]);
+	}, [handleKeyDown, open]);
 
 	const handleFloatingLayerOpen = useCallback(() => {
 		if (!noAnimation && popupOpen !== OpenState.OPEN) {
@@ -472,38 +470,6 @@ const Popup = (props) => {
 		getDerivedStateFromProps();
 	}, [getDerivedStateFromProps]);
 
-	// useEffect(() => {
-	// 	if (handleKeyDownRef.current !== handleKeyDown) {
-	// 		off('keydown', handleKeyDown);
-	// 		handleKeyDownRef.current = handleKeyDown;
-	// 		on('keydown', handleKeyDown);
-	// 	}
-	// }, [handleKeyDown]);
-
-	useEffect(() => {
-		checkScrimNone(allComponentProps);
-
-		// Spot the content after it's mounted.
-		if (open) {
-			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
-			// while the popup is rendering.
-			pausedRef.current.pause();
-			if (getContainerNode(containerIdRef.current)) {
-				spotPopupContent();
-
-			}
-		}
-
-		return () => {
-			if (open) {
-				off('keydown', handleKeyDown);
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			Spotlight.remove(containerIdRef.current);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	useEffect(() => {
 		if (open !== prevPropsRef.current.open) {
 			if (!noAnimation) {
@@ -528,6 +494,35 @@ const Popup = (props) => {
 
 		checkScrimNone(allComponentProps);
 	}, [activator, allComponentProps, noAnimation, open, popupOpen, spotActivator, spotPopupContent]);
+
+	useEffect(() => {
+		checkScrimNone(allComponentProps);
+
+		// Spot the content after it's mounted.
+		if (open) {
+			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
+			// while the popup is rendering.
+			pausedRef.current.pause();
+			if (getContainerNode(containerIdRef.current)) {
+				spotPopupContent();
+
+			}
+		}
+
+		return () => {
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+			Spotlight.remove(containerIdRef.current);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			if (open) {
+				off('keydown', handleKeyDown);
+			}
+		};
+	}, [handleKeyDown, open]);
 
 	return (
 		<FloatingLayer
