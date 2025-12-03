@@ -73,7 +73,7 @@ describe('Card', () => {
 		const card = screen.getByTestId('card');
 
 		expect(card).toHaveAttribute('data-webos-voice-intent', 'Select');
-  });
+	});
 
 	test('should not have styles for marquee when `withoutMarquee` is true', () => {
 		const children = 'children';
