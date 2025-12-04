@@ -524,12 +524,12 @@ const Popup = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (handleKeyDownRef.current !== handleKeyDown) {
+		if (open && handleKeyDownRef.current !== handleKeyDown) {
 			off('keydown', handleKeyDownRef.current);
 			handleKeyDownRef.current = handleKeyDown;
 			on('keydown', handleKeyDownRef.current);
 		}
-	}, [handleKeyDown]);
+	}, [handleKeyDown, open]);
 
 	return (
 		<FloatingLayer
