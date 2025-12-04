@@ -313,7 +313,7 @@ const Popup = (props) => {
 
 	const containerIdRef = useRef(Spotlight.add());
 	const pausedRef = useRef(new Pause('Popup'));
-	const prevPropsRef = useRef({});
+	const prevPropsRef = useRef(props);
 
 	const getDerivedStateFromProps = useCallback(() => {
 		if (open !== prevOpen) {
@@ -473,9 +473,9 @@ const Popup = (props) => {
 	useEffect(() => {
 		if (open !== prevPropsRef.current.open) {
 			if (!noAnimation) {
-				if (!open && popupOpen === OpenState.CLOSED) {
-					// If the popup is supposed to be closed (!this.props.open) and is actually
-					// fully closed (OpenState.CLOSED), we must resume spotlight navigation. This
+				if (!open && popupOpen === OpenState.OPENING || !open && popupOpen === OpenState.OPEN) {
+					// If the popup is supposed to be closed (!open) and is actually not fully
+					// closed (OpenState.OPENING or OpenState.OPEN), we must resume spotlight navigation. This
 					// can occur when quickly toggling a Popup open and closed.
 					pausedRef.current.resume();
 				} else {
@@ -489,10 +489,10 @@ const Popup = (props) => {
 				forwardHide(null, allComponentProps);
 				spotActivator();
 			}
+			prevPropsRef.current = allComponentProps;
 		}
 
 		checkScrimNone(allComponentProps);
-		prevPropsRef.current = allComponentProps;
 	}, [allComponentProps, noAnimation, open, popupOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
