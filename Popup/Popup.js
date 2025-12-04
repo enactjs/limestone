@@ -510,6 +510,9 @@ const Popup = (props) => {
 		}
 
 		return () => {
+			if (open) {
+				off('keydown', handleKeyDown);
+			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			Spotlight.remove(containerIdRef.current);
 		};
