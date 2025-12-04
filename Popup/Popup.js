@@ -473,7 +473,7 @@ const Popup = (props) => {
 	useEffect(() => {
 		if (open !== prevPropsRef.current.open) {
 			if (!noAnimation) {
-				if (!open && popupOpen === OpenState.OPENING || !open && popupOpen === OpenState.OPEN) {
+				if (!open && (popupOpen === OpenState.OPENING || popupOpen === OpenState.OPEN)) {
 					// If the popup is supposed to be closed (!open) and is actually not fully
 					// closed (OpenState.OPENING or OpenState.OPEN), we must resume spotlight navigation. This
 					// can occur when quickly toggling a Popup open and closed.
