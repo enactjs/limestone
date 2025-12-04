@@ -383,7 +383,7 @@ const Popup = (props) => {
 		}
 	}, [allComponentProps, no5WayClose, onClose, position, spotlightRestrict]);
 
-	const spotActivator = useCallback((currentActivator) => {
+	const spotActivator = useCallback(() => {
 		pausedRef.current.resume();
 
 		// only spot the activator if the popup is closed
@@ -399,9 +399,9 @@ const Popup = (props) => {
 		// know it's safe to change focus
 		if (!current || (containerNode && containerNode.contains(current))) {
 			// attempt to set focus to the activator, if available
-			if (!Spotlight.isPaused()) {
-				if (currentActivator) {
-					if (!Spotlight.focus(currentActivator)) {
+			if (!Spotlight.isPaused() || !pausedRef.current.isPaused()) {
+				if (activator) {
+					if (!Spotlight.focus(activator)) {
 						Spotlight.focus();
 					}
 				} else {
@@ -411,7 +411,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [handleKeyDown, open]);
+	}, [activator, handleKeyDown, open]);
 
 	const spotPopupContent = useCallback(() => {
 		pausedRef.current.resume();
@@ -451,10 +451,10 @@ const Popup = (props) => {
 
 		setFloatLayerOpen(false);
 		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
-			spotActivator(activator);
+			spotActivator();
 		}
 		setActivator(null);
-	}, [activator, allComponentProps, spotActivator]);
+	}, [allComponentProps, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
 		forwardShow(ev, allComponentProps);
@@ -487,13 +487,13 @@ const Popup = (props) => {
 				spotPopupContent();
 			} else if (prevPropsRef.current.open) {
 				forwardHide(null, allComponentProps);
-				spotActivator(activator);
+				spotActivator();
 			}
-			prevPropsRef.current = allComponentProps;
 		}
 
 		checkScrimNone(allComponentProps);
-	}, [activator, allComponentProps, noAnimation, open, popupOpen, spotActivator, spotPopupContent]);
+		prevPropsRef.current = allComponentProps;
+	}, [allComponentProps, noAnimation, open, popupOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
 		checkScrimNone(allComponentProps);
@@ -510,9 +510,6 @@ const Popup = (props) => {
 		}
 
 		return () => {
-			if (open) {
-				off('keydown', handleKeyDown);
-			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			Spotlight.remove(containerIdRef.current);
 		};
