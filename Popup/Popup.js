@@ -449,11 +449,14 @@ const Popup = (props) => {
 	const handlePopupHide = useCallback((ev) => {
 		forwardHide(ev, allComponentProps);
 
-		setFloatLayerOpen(false);
-		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
-			spotActivator();
-		}
-		setActivator(null);
+		setFloatLayerOpen(() => {
+			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
+				spotActivator();
+			}
+			setActivator(null);
+
+			return false;
+		});
 	}, [allComponentProps, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
