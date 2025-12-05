@@ -312,7 +312,6 @@ const Popup = (props) => {
 	const [prevOpen, setPrevOpen] = useState(open);
 
 	const containerIdRef = useRef(Spotlight.add());
-	const handleKeyDownRef = useRef(null);
 	const pausedRef = useRef(new Pause('Popup'));
 	const prevPropsRef = useRef(props);
 
@@ -394,7 +393,7 @@ const Popup = (props) => {
 		const containerNode = getContainerNode(containerIdRef.current);
 		const lastContainerId = getLastContainer();
 
-		off('keydown', handleKeyDownRef.current);
+		off('keydown', handleKeyDown);
 
 		// if there is no currently-spotted control, or it is wrapped by the popup's container, we
 		// know it's safe to change focus
@@ -412,7 +411,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [activator, open]);
+	}, [activator, handleKeyDown, open]);
 
 	const spotPopupContent = useCallback(() => {
 		pausedRef.current.resume();
@@ -420,7 +419,7 @@ const Popup = (props) => {
 		// only spot the activator if the popup is open
 		if (!open) return;
 
-		on('keydown', handleKeyDownRef.current);
+		on('keydown', handleKeyDown);
 
 		if (!Spotlight.isPaused() && !Spotlight.focus(containerIdRef.current)) {
 			const current = Spotlight.getCurrent();
@@ -433,7 +432,7 @@ const Popup = (props) => {
 			}
 			Spotlight.setActiveContainer(containerIdRef.current);
 		}
-	}, [open]);
+	}, [handleKeyDown, open]);
 
 	const handleFloatingLayerOpen = useCallback(() => {
 		if (!noAnimation && popupOpen !== OpenState.OPEN) {
@@ -514,9 +513,6 @@ const Popup = (props) => {
 		}
 
 		return () => {
-			if (open) {
-				off('keydown', handleKeyDownRef.current);
-			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			Spotlight.remove(containerIdRef.current);
 		};
@@ -524,11 +520,11 @@ const Popup = (props) => {
 	}, []);
 
 	useEffect(() => {
-		if (open && handleKeyDownRef.current !== handleKeyDown) {
-			off('keydown', handleKeyDownRef.current);
-			handleKeyDownRef.current = handleKeyDown;
-			on('keydown', handleKeyDownRef.current);
-		}
+		return () => {
+			if (open) {
+				off('keydown', handleKeyDown);
+			}
+		};
 	}, [handleKeyDown, open]);
 
 	return (
