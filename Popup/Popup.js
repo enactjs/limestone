@@ -307,6 +307,7 @@ const Popup = (props) => {
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
 
 	const [activator, setActivator] = useState(null);
+	const [addKeyDownListener, setAddKeyDownListener] = useState(false);
 	const [floatLayerOpen, setFloatLayerOpen] = useState(open);
 	const [popupOpen, setPopupOpen] = useState(open ? OpenState.OPEN : OpenState.CLOSED);
 	const [prevOpen, setPrevOpen] = useState(open);
@@ -393,7 +394,7 @@ const Popup = (props) => {
 		const containerNode = getContainerNode(containerIdRef.current);
 		const lastContainerId = getLastContainer();
 
-		off('keydown', handleKeyDown);
+		setAddKeyDownListener(false);
 
 		// if there is no currently-spotted control, or it is wrapped by the popup's container, we
 		// know it's safe to change focus
@@ -411,7 +412,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [activator, handleKeyDown, open]);
+	}, [activator, open]);
 
 	const spotPopupContent = useCallback(() => {
 		pausedRef.current.resume();
@@ -419,7 +420,7 @@ const Popup = (props) => {
 		// only spot the activator if the popup is open
 		if (!open) return;
 
-		on('keydown', handleKeyDown);
+		setAddKeyDownListener(true);
 
 		if (!Spotlight.isPaused() && !Spotlight.focus(containerIdRef.current)) {
 			const current = Spotlight.getCurrent();
@@ -432,7 +433,7 @@ const Popup = (props) => {
 			}
 			Spotlight.setActiveContainer(containerIdRef.current);
 		}
-	}, [handleKeyDown, open]);
+	}, [open]);
 
 	const handleFloatingLayerOpen = useCallback(() => {
 		if (!noAnimation && popupOpen !== OpenState.OPEN) {
@@ -513,6 +514,9 @@ const Popup = (props) => {
 		}
 
 		return () => {
+			if (open) {
+				off('keydown', handleKeyDown);
+			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 			Spotlight.remove(containerIdRef.current);
 		};
@@ -520,12 +524,16 @@ const Popup = (props) => {
 	}, []);
 
 	useEffect(() => {
+		if (addKeyDownListener) {
+			on('keydown', handleKeyDown);
+		} else {
+			off('keydown', handleKeyDown);
+		}
+
 		return () => {
-			if (open) {
-				off('keydown', handleKeyDown);
-			}
+			off('keydown', handleKeyDown);
 		};
-	}, [handleKeyDown, open]);
+	}, [addKeyDownListener, handleKeyDown]);
 
 	return (
 		<FloatingLayer
