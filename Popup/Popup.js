@@ -314,7 +314,6 @@ const Popup = (props) => {
 
 	const containerIdRef = useRef(Spotlight.add());
 	const pausedRef = useRef(new Pause('Popup'));
-	const prevPropsRef = useRef(props);
 
 	const getDerivedStateFromProps = useCallback(() => {
 		if (open !== prevOpen) {
@@ -475,7 +474,7 @@ const Popup = (props) => {
 	}, [getDerivedStateFromProps]);
 
 	useEffect(() => {
-		if (open !== prevPropsRef.current.open) {
+		if (open !== prevOpen) {
 			if (!noAnimation) {
 				if (!open && (popupOpen === OpenState.OPENING || popupOpen === OpenState.OPEN)) {
 					// If the popup is supposed to be closed (!open) and is actually not fully
@@ -489,15 +488,14 @@ const Popup = (props) => {
 			} else if (open) {
 				forwardShow(null, allComponentProps);
 				spotPopupContent();
-			} else if (prevPropsRef.current.open) {
+			} else if (prevOpen) {
 				forwardHide(null, allComponentProps);
 				spotActivator();
 			}
-			prevPropsRef.current = allComponentProps;
 		}
 
 		checkScrimNone(allComponentProps);
-	}, [allComponentProps, noAnimation, open, popupOpen, spotActivator, spotPopupContent]);
+	}, [allComponentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
 		checkScrimNone(allComponentProps);
