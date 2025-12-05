@@ -301,7 +301,7 @@ const popupDefaultProps = {
  */
 const Popup = (props) => {
 	const allComponentProps = setDefaultProps(props, popupDefaultProps);
-	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = props;
+	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = allComponentProps;
 
 	// Assign the needed props to the rest object for the child component
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
