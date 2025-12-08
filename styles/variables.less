@@ -126,6 +126,7 @@
 @lime-button-small-font-size:       var(--primitive-font-size-54);
 @lime-card-caption-font-size:       var(--primitive-font-size-60);
 @lime-card-label-font-size:         var(--primitive-font-size-48);
+@lime-card-split-caption-label-font-size:	var(--primitive-font-size-60);
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
@@ -237,6 +238,7 @@
 // Card
 @lime-card-caption-font-weight: var(--primitive-font-weight-semibold);
 @lime-card-label-font-weight: var(--primitive-font-weight-regular);
+@lime-card-split-caption-label-font-weight: var(--primitive-font-weight-semibold);
 
 // Heading
 @lime-heading-line-height: 1.25em;
@@ -371,8 +373,8 @@
 @lime-button-max-width: 1200px;
 @lime-button-min-width: 300px;
 @lime-button-min-width-default: 840px;
-@lime-button-focusexpand-focus-bg-transform: scale(1.1);
-@lime-button-focusexpand-pressed-bg-transform: scale(1.02);
+@lime-button-focusexpand-focus-bg-transform: scale(1.15);
+@lime-button-focusexpand-pressed-bg-transform: scale(1.05);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
 @lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
@@ -382,8 +384,8 @@
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
 @lime-button-small-min-width-default: 720px;
-@lime-button-small-focusexpand-focus-bg-transform: scale(1.1);
-@lime-button-small-focusexpand-pressed-bg-transform: scale(1.04);
+@lime-button-noanimation-focusexpand-focus-bg-transform: scale(1);
+@lime-button-noanimation-focusexpand-pressed-bg-transform: scale(0.9);
 @lime-button-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
@@ -407,24 +409,27 @@
 @lime-card-border-radius: var(--semantic-radius-container);
 @lime-card-image-border-width: 6px;
 @lime-card-resting-border-width: 3px;
-@lime-card-selection-icon-size: 90px;
+@lime-card-selection-check-icon-size: 90px;
+@lime-card-selection-icon-size: 120px;
 @lime-card-selection-icon-border-radius: 50%;
 @lime-card-selection-icon-margin: 0;
-@lime-card-selection-icon-line-height: 90px;
+@lime-card-selection-check-icon-line-height: 90px;
+@lime-card-selection-icon-line-height: 144px;
 @lime-card-badge-size: 108px;
 @lime-card-badge-margin: 0;
 @lime-card-badge-top: var(--primitive-spacing-24);
 @lime-card-badge-left: var(--primitive-spacing-24);
 @lime-card-badge-right: var(--primitive-spacing-24);
 @lime-card-caption-line-height: 84px;
-@lime-card-caption-height: 84px;
 @lime-card-label-line-height: 60px;
-@lime-card-label-height: 60px;
+@lime-card-split-caption-label-line-height: 84px;
+@lime-card-split-caption-label-padding: 0 var(--primitive-spacing-48);
+@lime-card-split-caption-lower-label-padding: var(--primitive-spacing-18);
 @lime-card-vertical-captions-padding: var(--primitive-spacing-36) 0;
 @lime-card-vertical-captions-gap: var(--primitive-spacing-48);
 @lime-card-vertical-image-icon-size: 180px;
 @lime-card-vertical-image-icon-margin: 0;
-@lime-card-vertical-caption-overlay-captions-padding: var(--primitive-spacing-48);
+@lime-card-vertical-caption-overlay-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-card-vertical-has-container-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-card-horizontal-width: 1320px;
 @lime-card-horizontal-height: 336px;
@@ -1042,6 +1047,7 @@
 // ---------------------------------------
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
 @lime-slider-bar-vertical-min-height: 240px;
+@lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
 @lime-slider-bar-padding: var(--primitive-spacing-24);
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: @lime-slider-knob-width;
@@ -1049,6 +1055,11 @@
 @lime-slider-knob-height-large: @lime-slider-knob-height;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-knob-resting-state-scale: 0.75;
+@lime-slider-min-max-margin-top: var(--primitive-spacing-24);
+@lime-slider-min-max-font-size: var(--primitive-font-size-48);
+@lime-slider-min-max-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-min-max-line-height: 60px;
+@lime-slider-vertical-min-max-margin-left: var(--primitive-spacing-24);
 @lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
@@ -1152,7 +1163,10 @@
 @lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
 @lime-video-slider-tooltip-line-height:            72px;
 @lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-42);
-@lime-video-slider-tooltip-thumbnail-border-width: 6px;
+@lime-video-slider-tooltip-thumbnail-content-font-size:     var(--primitive-font-size-54);
+@lime-video-slider-tooltip-thumbnail-content-margin-bottom: var(--primitive-spacing-30);
+@lime-video-slider-tooltip-thumbnail-border-radius: var(--primitive-radius-12);
+@lime-video-slider-tooltip-thumbnail-border-width:  12px;
 @lime-video-slider-tooltip-thumbnail-width:  426px;
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;

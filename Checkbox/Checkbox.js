@@ -145,7 +145,7 @@ const CheckboxBase = kind({
 	},
 
 	computed: {
-		className: ({indeterminate, selected, standalone, styler}) => styler.append({selected, standalone, indeterminate}),
+		className: ({children, indeterminate, selected, standalone, styler}) => styler.append({checkmark: children === 'checkmark', selected, standalone, indeterminate}),
 		children: ({indeterminate, indeterminateIcon, children}) => (indeterminate ? indeterminateIcon : children) // This controls which icon to use, and not that icon's visual presence.
 	},
 

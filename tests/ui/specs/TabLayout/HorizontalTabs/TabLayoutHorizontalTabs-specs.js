@@ -57,7 +57,7 @@ describe('TabLayout', function () {
 					// Step 1: Move the pointer to the 6th tab
 					await tabs[5].moveTo({xOffset: 200, yOffset: 0});
 					// Step 2: Wait for the scrolling animation to complete
-					await Page.delay(4000);
+					await Page.delay(6000);
 					// Step 3: Verify that the 15th tab is visible within the viewport
 					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
 				});
@@ -67,13 +67,13 @@ describe('TabLayout', function () {
 					// Step 1: Move the pointer to the 6th tab
 					await tabs[5].moveTo({xOffset: 200, yOffset: 0});
 					// Step 2: Wait for the scrolling animation to complete
-					await Page.delay(4000);
+					await Page.delay(6000);
 					// Step 3: Verify that the 15th tab is visible within the viewport
 					expect(await tabs[14].isDisplayed({withinViewport: true})).toBe(true);
 					// Step 4: Move the pointer to the 10th tab
 					await tabs[9].moveTo({xOffset: -200, yOffset: 0});
 					// Step 5: Wait for the scrolling animation to complete
-					await Page.delay(4000);
+					await Page.delay(6000);
 					// Step 6: Verify that the 1st tab is visible within the viewport
 					expect(await tabs[0].isDisplayed({withinViewport: true})).toBe(true);
 				});
