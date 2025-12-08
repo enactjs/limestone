@@ -27,7 +27,7 @@
     },
     "../..": {
       "name": "@enact/limestone",
-      "version": "1.6.2",
+      "version": "1.7.0",
       "license": "Apache-2.0",
       "dependencies": {
         "@enact/core": "^5.4.0",
