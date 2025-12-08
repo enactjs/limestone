@@ -78,7 +78,7 @@
 		}
 
 		.before({
-			left: -@lime-progressbar-tooltip-radial-offset;
+			left: ~"calc(@{lime-progressbar-tooltip-radial-offset} * -1)";
 
 			&.above {
 				bottom: ~"calc(100% + " @lime-progressbar-tooltip-radial-offset ~")";

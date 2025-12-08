@@ -4,6 +4,10 @@
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
+// Module level variables, for use only in this file
+@header-compact-padding-left: .extract(@lime-header-compact-padding, left)[];
+@header-compact-padding-right: .extract(@lime-header-compact-padding, right)[];
+
 .header {
 	position: relative;
 	max-width: 100%;
@@ -46,11 +50,16 @@
 	&:not(.centered) {
 		.titlesRow {
 			height: @lime-header-titleRow-height;
+
+			.enact-locale-tallglyph({
+				height: @lime-header-tallglyph-titleRow-height;
+			});
 		}
 	}
 
 	&.isPopupHeader {
 		.titlesRow {
+			align-items: center;
 			height: @lime-header-popup-titleRow-height;
 		}
 	}
@@ -69,11 +78,36 @@
 
 	.slotSizer {
 		display: inline-block;
+
+		> * {
+			margin: 0;
+		}
+	}
+
+	.slotAfter {
+		.slotSizer {
+			> *:not(:first-child) {
+				margin-inline-start: @lime-header-standard-slotafter-margin-start;
+			}
+		}
+	}
+
+	.slotBefore {
+		.slotSizer {
+			/* Select the children that have visible siblings right after them */
+			> *:not([style*="display: none"]):has(~ *:not([style*="display: none"])) {
+				margin-inline-end: @lime-header-standard-slotbefore-margin-end;
+			}
+		}
 	}
 
 	&.centered:not(.isPopupHeader):not(.wizard) {
 		.titlesRow {
 			height: @lime-header-centered-titleRow-height;
+
+			.enact-locale-tallglyph({
+				height: @lime-header-tallglyph-centered-titleRow-height;
+			});
 		}
 
 		.title {
@@ -122,16 +156,15 @@
 	/// Begin "types" rules configuration
 	///
 
-	// Most types intend for the first and last buttons on the left and right
-	// butt right up against the edge, for alignment with the content.
-	.standard,
-	.compact,
-	.mini {
-		.slotBefore > *:first-child {
-			margin-inline-start: 0;
+	&.standard,
+	&.mini,
+	&.wizard {
+		&.slotBefore:not(.centered) .slotBefore {
+			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
 		}
-		.slotAfter > *:last-child {
-			margin-inline-end: 0;
+
+		&.slotAfter:not(.centered) .slotAfter {
+			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
 		}
 	}
 
@@ -147,14 +180,6 @@
 
 		.subtitle {
 			margin: @lime-header-standard-subtitle-margin;
-		}
-
-		&.slotBefore:not(.centered) .slotBefore {
-			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
-		}
-
-		&.slotAfter:not(.centered) .slotAfter {
-			.margin-start-end(@lime-header-standard-slotafter-margin-start, 0);
 		}
 	}
 
@@ -195,7 +220,7 @@
 
 		&.isPopupHeader {
 			&.slotAfter {
-				.padding-start-end(.extract(@lime-header-compact-padding, left)[], .extract(@lime-header-compact-padding, right)[] - @lime-header-popup-compact-slotafter-padding-offset);
+				.padding-start-end(@header-compact-padding-left, ~"calc(@{header-compact-padding-right} - @{lime-header-popup-compact-slotafter-padding-offset})");
 			}
 		}
 	}

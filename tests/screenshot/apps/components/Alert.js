@@ -4,7 +4,7 @@ import Checkbox from '../../../../Checkbox';
 import CheckboxItem from '../../../../CheckboxItem';
 import FormCheckBoxItem from '../../../../FormCheckboxItem';
 import Item from '../../../../Item';
-import ProgressBar from '@enact/limestone/ProgressBar';
+import ProgressBar from '../../../../ProgressBar';
 import Scroller from '../../../../Scroller';
 
 import img from '../../images/300x300.png';

@@ -7,6 +7,8 @@ import compose from 'ramda/src/compose';
 import {use, useCallback, useEffect, useRef} from 'react';
 
 import Button from '../Button';
+import Icon from '../Icon';
+import Image from '../Image';
 import $L from '../internal/$L';
 import Skinnable from '../Skinnable';
 
@@ -31,7 +33,8 @@ const chipDeleteButtonShape = PropTypes.shape({
 });
 
 const ChipDefaultProps = {
-	disabled: false
+	disabled: false,
+	imageSize: 24
 };
 
 /**
@@ -58,11 +61,11 @@ const ChipDefaultProps = {
 const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	const {children, className, deleteButton, disabled, icon, id, onClick, ref, ...rest} = chipProps;
+	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;
 
-	const chipClassName = classnames(className, deleteButton?.position);
+	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-
+	const chipClassName = classnames(className, deleteButton?.position);
 	const containerRef = useRef(null);
 	const clientRef = useRef(null);
 	const deleteButtonRef = useRef(null);
@@ -150,6 +153,14 @@ const ChipBase = (props) => {
 		}
 	}, [deleteButton, handleChipDelete, id]);
 
+	const iconComponent = useCallback(({children: childComponent, ...iconProps}) => {
+		return <>
+			{checked && <Icon {...iconProps}>checkmark</Icon>}
+			{isImage && <Image {...iconProps} src={childComponent} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} />}
+			{!isImage && childComponent && (childComponent !== 'check') && (childComponent !== 'checkmark') && <Icon {...iconProps}>{childComponent}</Icon>}
+		</>;
+	}, [checked, imageSize, isImage]);
+
 	return (
 		<div
 			{...rest}
@@ -162,18 +173,20 @@ const ChipBase = (props) => {
 			ref={containerRef}
 		>
 			<Button
-				aria-label={children + ' ' + $L("Chip")}
+				aria-label={ariaLabel}
+				aria-checked={checked}
 				css={css}
 				className={chipClassName}
 				data-chip-index={id}
 				disabled={disabled}
 				focusEffect="static"
-				icon={icon ? icon : null}
+				icon={icon ? icon : ''}
+				iconComponent={iconComponent}
 				size="small"
 				onFocus={handleFocus}
 				onClick={onClick}
 				ref={chipRef}
-				role="button"
+				role="checkbox"
 				roundBorder
 			>
 				{children}
@@ -219,6 +232,14 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	id: PropTypes.string.isRequired,
 
 	/**
+	 * Sets the chip as `checked` if `true`
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	checked: PropTypes.bool,
+
+	/**
 	 * Define the icon, delete handler, and position for the delete button.
 	 *
 	 * @type {limestone/Chips.chipDeleteButtonShape|Boolean}
@@ -245,7 +266,23 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @type {String|Object}
 	 * @public
 	 */
-	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+	/**
+	 * Sets the size of the image passed to the component.
+	 *
+	 * @type {Number}
+	 * @public
+	 */
+	imageSize: PropTypes.number,
+
+	/**
+	 * If `true` tells the component to use `Image` instead of `Icon` element inside `Chip`.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	isImage: PropTypes.bool
 };
 
 /**

@@ -61,6 +61,7 @@ function PageViewsRouter (Wrapped) {
 				totalIndex={totalIndex}
 				onWillTransition={handleWillTransition}
 				reverseTransition={reverseTransition}
+				rtl={rtl}
 			>
 				{children}
 			</Wrapped>

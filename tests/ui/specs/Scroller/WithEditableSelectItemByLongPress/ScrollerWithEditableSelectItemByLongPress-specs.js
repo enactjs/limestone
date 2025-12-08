@@ -55,16 +55,11 @@ describe('Scroller With Editable Select Item By Long Press', function () {
 	});
 
 	it('should change item position with editableCentered', async function () {
-		await ScrollerPage.inputFieldNumItems.moveTo();
-		await ScrollerPage.spotlightSelect();
-		await ScrollerPage.backSpace();
-		await ScrollerPage.backSpace();
-		await ScrollerPage.numPad(3);
-		await ScrollerPage.backKey();
-
 		await ScrollerPage.spotlightDown();
+		await ScrollerPage.delay(200);
 		const leftmostItemRect = Math.floor((await ScrollerPage.getActiveElementRect()).left / 100) * 100;
 		await enableEditModeLongPress();
+		await ScrollerPage.delay(200);
 		await expectFocusedItem(0);
 		await expect(await ScrollerPage.checkEditableItem()).toBe(true);
 
