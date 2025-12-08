@@ -1,0 +1,56 @@
+// Motion Variables
+@import "./motions.less";
+@import "./mixins.less";
+
+/* ---------------------------------------
+Motion Variables
+------------------------------------------ */
+@lime-bounce-motion: var(--lime-bounce-motion);
+@lime-check-motion: var(--lime-check-motion);
+
+/* ---------------------------------------
+Motion Mixins
+------------------------------------------ */
+.lime-toggle-motion(@offset: var(--lime-bounce-motion-offset-default-value), @duration: var(--lime-bounce-motion-duration)) {
+	animation: var(--lime-bounce-animation-name) @duration var(--lime-bounce-motion-easing-function);
+	--lime-bounce-motion-offset-value: @offset;
+}
+
+.lime-check-motion() {
+	&::after {
+		content: '';
+		position: absolute;
+		.position(0);
+		background-color: inherit;
+		animation: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
+	}
+}
+
+.lime-focus-in-motion() {
+	transform: @lime-button-focusexpand-focus-bg-transform;
+	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
+}
+
+.lime-focus-out-motion() {
+	transition: transform var(--lime-focus-out-motion-duration) var(--lime-focus-out-motion-easing-function);
+}
+
+.lime-press-motion() {
+	transform: @lime-button-focusexpand-pressed-bg-transform;
+	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
+}
+
+.lime-release-motion() {
+	transform: @lime-button-focusexpand-focus-bg-transform;
+	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
+}
+
+.lime-no-expand-press-motion() {
+	transform: @lime-button-noanimation-focusexpand-pressed-bg-transform;
+	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
+}
+
+.lime-no-expand-release-motion() {
+	transform: @lime-button-noanimation-focusexpand-focus-bg-transform;
+	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
+}

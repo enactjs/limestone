@@ -593,6 +593,8 @@ describe('VirtualGridList with translate \'scrollMode\'', () => {
 				expect(onScrollStartCount).toBe(1);
 				expect(resultScrollTop).toBe(0);
 
+				act(() => jest.advanceTimersByTime(200));
+
 				const listRoot = screen.getByRole('list').parentElement;
 				expect(listRoot).toHaveStyle({'--scroll-overscroll-translate-vertical': 'translateY(0px)'});
 			});
