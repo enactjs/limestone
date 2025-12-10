@@ -688,7 +688,6 @@ Popup.propTypes = /** @lends limestone/Popup.Popup.prototype */ {
 	 */
 	spotlightRestrict: PropTypes.oneOf(['self-first', 'self-only'])
 };
-Popup.defaultProps = popupDefaultProps;
 
 export default Popup;
 export {Popup, PopupBase};
