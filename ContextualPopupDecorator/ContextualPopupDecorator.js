@@ -128,15 +128,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			componentProps.setApiProvider();
 		}
 
-		// const setContainerDistances = () => {
-		// 	MARGIN = ri.scale(noArrow ? 0 : 12);
-		// 	ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width. used for arrow positioning
-		// 	ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
-		// 	KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
-		// };
-		// setContainerDistances();
-
-
 		const generateId = useCallback(() => {
 			return Math.random().toString(36).substring(2, 10);
 		}, []);
