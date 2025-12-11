@@ -119,14 +119,23 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const keyDownRef = useRef(null);
 		const keyUpRef = useRef(null);
 
-		const MARGIN = ri.scale(noArrow ? 0 : 12);
-		const ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width.
-		const ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
-		const KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
-
 		if (componentProps.setApiProvider) {
 			componentProps.setApiProvider();
 		}
+
+		const distances = useCallback(() => {
+			const MARGIN = ri.scale(noArrow ? 0 : 12);
+			const ARROW_WIDTH = noArrow ? 0 : ri.scale(60); // svg arrow width.
+			const ARROW_OFFSET = noArrow ? 0 : ri.scale(36); // actual distance of the svg arrow displayed to offset overlaps with the container. Offset is when `noArrow` is false.
+			const KEEPOUT = ri.scale(24); // keep out distance on the edge of the screen
+
+			return {
+				ARROW_OFFSET,
+				ARROW_WIDTH,
+				KEEPOUT,
+				MARGIN
+			}
+		}, [noArrow]);
 
 		const generateId = useCallback(() => {
 			return Math.random().toString(36).substring(2, 10);
@@ -161,6 +170,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const centerContainerPosition = useCallback((localContainerNode, clientNode) => {
 			const pos = {};
+			const {KEEPOUT} = distances();
 			const {anchor, localDirection} = getContainerAdjustedPosition();
 
 			if (localDirection === 'above' || localDirection === 'below') {
@@ -207,7 +217,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return pos;
-		}, [KEEPOUT, getContainerAdjustedPosition]);
+		}, [distances, getContainerAdjustedPosition]);
 
 		const getContainerNodeWidth = useCallback(() => {
 			return containerNode.current && containerNode.current.getBoundingClientRect().width || 0;
@@ -225,6 +235,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);
 
 		const getContainerPosition = useCallback((localContainerNode, clientNode) => {
+			const {ARROW_OFFSET, MARGIN} = distances();
 			const position = centerContainerPosition(localContainerNode, clientNode);
 			const {localDirection} = getContainerAdjustedPosition();
 
@@ -244,9 +255,10 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return adjustRTL(position);
-		}, [ARROW_OFFSET, MARGIN, adjustRTL, centerContainerPosition, componentProps, getContainerAdjustedPosition]);
+		}, [adjustRTL, centerContainerPosition, componentProps, distances, getContainerAdjustedPosition]);
 
 		const getArrowPosition = useCallback((localContainerNode, clientNode) => {
+			const {ARROW_WIDTH, KEEPOUT, MARGIN} = distances();
 			const position = {};
 			const {anchor, localDirection} = getContainerAdjustedPosition();
 
@@ -292,7 +304,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return adjustRTL(position);
-		}, [ARROW_WIDTH, KEEPOUT, MARGIN, adjustRTL, componentProps, getContainerAdjustedPosition]);
+		}, [adjustRTL, componentProps, distances, getContainerAdjustedPosition]);
 
 		const adjustInlineOverflow = useCallback((localDirection, previousOverflow, currentOverflow) => {
 			if (currentOverflow.isOverRight && currentOverflow.isOverLeft && (localDirection === 'above' || localDirection === 'below')) {
@@ -304,6 +316,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const calcOverflow = useCallback((container, client) => {
 			let containerHeight, containerWidth;
+			const {ARROW_OFFSET, KEEPOUT, MARGIN} = distances();
 			const {anchor, localDirection} = getContainerAdjustedPosition();
 
 			if (localDirection === 'above' || localDirection === 'below') {
@@ -330,7 +343,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			};
 
 			adjustInlineOverflow(localDirection, overflow.current, currentOverflow);
-		}, [ARROW_OFFSET, KEEPOUT, MARGIN, adjustInlineOverflow, getContainerAdjustedPosition]);
+		}, [adjustInlineOverflow, distances, getContainerAdjustedPosition]);
 
 		const adjustDirection = useCallback(() => {
 			const {anchor, localDirection} = getContainerAdjustedPosition();
@@ -563,7 +576,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					positionContextualPopup();
 				});
 			}
-		}, [componentProps, positionContextualPopup]);
+		}, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 		useEffect(() => {
 			snapshot.current = getSnapshotBeforeUpdate();
