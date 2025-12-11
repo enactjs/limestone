@@ -9,19 +9,19 @@
  * @exports PopupBase
  */
 
-import {is} from '@enact/core/keymap';
 import {on, off} from '@enact/core/dispatcher';
-import FloatingLayer from '@enact/ui/FloatingLayer';
+import {forward, forwardCustom} from '@enact/core/handle';
+import {is} from '@enact/core/keymap';
 import kind from '@enact/core/kind';
 import {setDefaultProps} from '@enact/core/util';
-import {useCallback, useEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {getLastContainer} from '@enact/spotlight/src/container';
+import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
-import {forward, forwardCustom} from '@enact/core/handle';
+import PropTypes from 'prop-types';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import warning from 'warning';
 
 import Skinnable from '../Skinnable';
@@ -300,8 +300,8 @@ const popupDefaultProps = {
  * @public
  */
 const Popup = (props) => {
-	const allComponentProps = setDefaultProps(props, popupDefaultProps);
-	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = allComponentProps;
+	const componentProps = setDefaultProps(props, popupDefaultProps);
+	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
 
 	// Assign the needed props to the rest object for the child component
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
@@ -377,11 +377,11 @@ const Popup = (props) => {
 					ev.stopPropagation();
 					// set the pointer mode to false on keydown
 					Spotlight.setPointerMode(false);
-					forwardCustom('onClose')(null, allComponentProps);
+					forwardCustom('onClose')(null, componentProps);
 				}
 			}
 		}
-	}, [allComponentProps, no5WayClose, onClose, position, spotlightRestrict]);
+	}, [componentProps, no5WayClose, onClose, position, spotlightRestrict]);
 
 	const spotActivator = useCallback(() => {
 		pausedRef.current.resume();
@@ -443,11 +443,11 @@ const Popup = (props) => {
 	}, [noAnimation, open, popupOpen, spotPopupContent]);
 
 	const handleDismiss = useCallback((ev) => {
-		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, allComponentProps);
-	}, [allComponentProps]);
+		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, componentProps);
+	}, [componentProps]);
 
 	const handlePopupHide = useCallback((ev) => {
-		forwardHide(ev, allComponentProps);
+		forwardHide(ev, componentProps);
 
 		setFloatLayerOpen(() => {
 			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
@@ -457,17 +457,17 @@ const Popup = (props) => {
 
 			return false;
 		});
-	}, [allComponentProps, spotActivator]);
+	}, [componentProps, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
-		forwardShow(ev, allComponentProps);
+		forwardShow(ev, componentProps);
 
 		setPopupOpen(OpenState.OPEN);
 
 		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
 			spotPopupContent();
 		}
-	}, [allComponentProps, spotPopupContent]);
+	}, [componentProps, spotPopupContent]);
 
 	useEffect(() => {
 		getDerivedStateFromProps();
@@ -486,19 +486,19 @@ const Popup = (props) => {
 					pausedRef.current.pause();
 				}
 			} else if (open) {
-				forwardShow(null, allComponentProps);
+				forwardShow(null, componentProps);
 				spotPopupContent();
 			} else if (prevOpen) {
-				forwardHide(null, allComponentProps);
+				forwardHide(null, componentProps);
 				spotActivator();
 			}
 		}
 
-		checkScrimNone(allComponentProps);
-	}, [allComponentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
+		checkScrimNone(componentProps);
+	}, [componentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
-		checkScrimNone(allComponentProps);
+		checkScrimNone(componentProps);
 
 		// Spot the content after it's mounted.
 		if (open) {
