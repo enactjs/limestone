@@ -42,14 +42,14 @@ describe('Chips', () => {
 
 	it('should render correctly with default props', () => {
 		const {container} = render(<ChipsBase {...defaultProps} />);
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
 	});
 
 	it('should focus the correct chip on navigation', () => {
 		render(<ChipsBase {...defaultProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -69,7 +69,7 @@ describe('Chips', () => {
 	it('should call handleDelete when delete button is clicked', () => {
 		render(<ChipsBase {...defaultProps} />);
 
-		const chipButtons = screen.getAllByRole('button', {name: /Chip [12]/i});
+		const chipButtons = screen.getAllByRole('checkbox', {name: /Chip [12]/i});
 		fireEvent.focus(chipButtons[0]);
 
 		const deleteButtons = getAllDeleteButtons();
@@ -86,8 +86,8 @@ describe('Chips', () => {
 			orientation: 'horizontal'
 		};
 		const {container} = render(<ChipsBase {...horizontalProps} />);
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('horizontal');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('horizontal');
 	});
 
 	it('should handle navigation in horizontal orientation', () => {
@@ -96,8 +96,8 @@ describe('Chips', () => {
 			orientation: 'horizontal'
 		};
 		render(<ChipsBase {...horizontalProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -174,7 +174,7 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...clickableProps} />);
 
-		const chipButton = screen.getByText('Chip 1').closest('[role="button"]');
+		const chipButton = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		fireEvent.click(chipButton);
 
 		expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -217,7 +217,7 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...disabledProps} />);
 
-		const disabledChips = screen.getAllByRole('button');
+		const disabledChips = screen.getAllByRole('checkbox');
 		disabledChips.forEach(chip => {
 			expect(chip).toHaveAttribute('aria-disabled', 'true');
 		});
@@ -250,9 +250,9 @@ describe('Chips', () => {
 		};
 		const {container} = render(<ChipsBase {...emptyProps} />);
 
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
-		const buttons = screen.queryAllByRole('button');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
+		const buttons = screen.queryAllByRole('checkbox');
 		expect(buttons).toHaveLength(0);
 	});
 
@@ -263,9 +263,9 @@ describe('Chips', () => {
 		};
 		const {container} = render(<ChipsBase {...customProps} />);
 
-		expect(container.firstChild).toHaveClass('chips');
-		expect(container.firstChild).toHaveClass('vertical');
-		expect(container.firstChild).toHaveClass('custom-chips-class');
+		expect(container.firstChild.firstChild).toHaveClass('chips');
+		expect(container.firstChild.firstChild).toHaveClass('vertical');
+		expect(container.firstChild.firstChild).toHaveClass('custom-chips-class');
 	});
 
 	it('should handle keyboard navigation with mixed orientations', () => {
@@ -275,8 +275,8 @@ describe('Chips', () => {
 		};
 		render(<ChipsBase {...verticalProps} />);
 
-		const chip1 = screen.getByText('Chip 1').closest('[role="button"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="button"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
