@@ -134,8 +134,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 				ARROW_WIDTH,
 				KEEPOUT,
 				MARGIN
-			}
-		}, [noArrow]);
+			};
+		}, []);
 
 		const generateId = useCallback(() => {
 			return Math.random().toString(36).substring(2, 10);
