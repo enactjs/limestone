@@ -38,7 +38,9 @@ export default {
 	pausejumpforward  : 0x0EFFE3, // pausejumpforward
 	pausejumpbackward : 0x0EFFE4, // pausejumpbackward
 	jumpforward       : 0x0EFFE7, // indicator_end
+	next              : 0x0EFFE7, // indicator_end
 	jumpbackward      : 0x0EFFE8, // indicator_begin
+	previous          : 0x0EFFE8, // indicator_begin
 	skip              : 0x0EFFE9, // skip
 	list              : 0x0EFFEB, // list_simple
 	arrowlargedown    : 0x0EFFED, // caret_down_large
