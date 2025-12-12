@@ -143,7 +143,6 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			setDownTarget(ev);
 
 			if (focused.current === 'input') {
-
 				const isDown = is('down', keyCode);
 				const isLeft = is('left', keyCode);
 				const isRight = is('right', keyCode);
@@ -302,10 +301,10 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			<Component
 				{...componentProps}
 				onBlur={onBlur}
-				onMouseDown={onMouseDown}
 				onFocus={onFocus}
 				onKeyDown={onKeyDown}
 				onKeyUp={onKeyUp}
+				onMouseDown={onMouseDown}
 			/>
 		);
 	};
