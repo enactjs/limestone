@@ -120,6 +120,7 @@ export const speakerIcons = [
 
 export const deviceIcons = [
 	'btspeaker',
+	'btspeakermute',
 	'controller',
 	'headset',
 	'keyboard',

@@ -2,10 +2,11 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.7.0] - 2025-12-08
 
 ### Added
 
+- `limestone/Icon` supported icon list, adding new icons `link2` and `btspeakermute`
 - `limestone/Card` `aria-label` prop to allow user to custom the aria-label
 - `limestone/Card` `icon` prop to allow user to change the icon
 - `limestone/Card` added option for progressBar
@@ -27,6 +28,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limetone/Card` voice control to select the Card
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
 - `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
 - `limestone/VideoPlayer.FeedbackTooltip` to use correct font family

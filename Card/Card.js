@@ -407,6 +407,7 @@ const CardBase = kind({
 				{...rest}
 				aria-disabled={disabled}
 				css={css}
+				data-webos-voice-intent="Select"
 				disabled={disabled}
 				imageComponent={
 					<Image>
