@@ -560,6 +560,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, [componentProps, handleKeyDown, handleKeyUp]);
 
 		useEffect(() => {
+			const localId = containerId.current;
+
 			if (componentProps.open) {
 				on('keydown', keyDownRef.current);
 				on('keyup', keyUpRef.current);
@@ -576,6 +578,24 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					positionContextualPopup();
 				});
 			}
+
+			return () => {
+				if (componentProps.open) {
+					off('keydown', keyDownRef.current);
+					off('keyup', keyUpRef.current);
+				}
+				Spotlight.remove(localId);
+
+				if (resizeObserver.current) {
+					resizeObserver.current.disconnect();
+					resizeObserver.current = null;
+				}
+
+				if (mutationObserver.current) {
+					mutationObserver.current.disconnect();
+					mutationObserver.current = null;
+				}
+			};
 		}, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 		useEffect(() => {
@@ -606,28 +626,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			prevProps.current = componentProps;
 		}, [activator, componentProps, getContainerNodeWidth, getClientSiblingNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
-
-		useEffect(() => {
-			const localId = containerId.current;
-			return () => {
-				if (componentProps.open) {
-					off('keydown', keyDownRef.current);
-					off('keyup', keyUpRef.current);
-				}
-				Spotlight.remove(localId);
-
-				if (resizeObserver.current) {
-					resizeObserver.current.disconnect();
-					resizeObserver.current = null;
-				}
-
-				if (mutationObserver.current) {
-					mutationObserver.current.disconnect();
-					mutationObserver.current = null;
-				}
-			};
-		}, []); // eslint-disable-line react-hooks/exhaustive-deps
-
 
 		const {
 			'data-webos-voice-exclusive': voiceExclusive,
