@@ -87,7 +87,7 @@ let VirtualList = (props) => {
 		};
 
 	warning(
-		itemSizeProps.itemSizes && rest.cbScrollTo,
+		itemSizeProps.itemSizes && rest.cbScrollTo !== nop,
 		'VirtualList with `minSize` in `itemSize` prop does not support `cbScrollTo` prop'
 	);
 
