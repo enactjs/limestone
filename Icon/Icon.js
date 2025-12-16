@@ -11,6 +11,7 @@
  * @exports icons
  */
 
+import deprecate from '@enact/core/internal/deprecate';
 import kind from '@enact/core/kind';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import {IconBase as UiIconBase} from '@enact/ui/Icon';
@@ -24,6 +25,11 @@ import Skinnable from '../Skinnable';
 import iconList from './IconList.js';
 
 import componentCss from './Icon.module.less';
+
+let warnedJumpBackward = false;
+let warnedJumpBackward2 = false;
+let warnedJumpForward = false;
+let warnedJumpForward2 = false;
 
 /**
  * Renders a limestone-styled icon without any behavior.
@@ -43,6 +49,7 @@ const IconBase = kind({
 		 *
 		 * @see {@link ui/Icon.IconBase.children}
 		 * @type {String|Object}
+		 * @deprecated `jumpbackward`, `jumpforward`, `jumpbackward2`, and `jumpforward2` icons will be renamed to `previous`, `next`, `jumpbackward`, and `jumpforward` in 2.0.0.
 		 * @public
 		 */
 		children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
@@ -139,6 +146,23 @@ const IconBase = kind({
 	render: ({css, size, ...rest}) => {
 		delete rest.locale;
 		delete rest.rtl;
+
+		if (!warnedJumpBackward && rest.children === 'jumpbackward') {
+			deprecate({name: 'Icon `jumpbackward`', message: 'Wiil be renamed to `previous` in 2.0.0'});
+			warnedJumpBackward = true;
+		}
+		if (!warnedJumpBackward2 && rest.children === 'jumpbackward2') {
+			deprecate({name: 'Icon `jumpbackward2`', message: 'Wiil be renamed to `jumpbackward` in 2.0.0'});
+			warnedJumpBackward2 = true;
+		}
+		if (!warnedJumpForward && rest.children === 'jumpforward') {
+			deprecate({name: 'Icon `jumpforward`', message: 'Wiil be renamed to `next` in 2.0.0'});
+			warnedJumpForward = true;
+		}
+		if (!warnedJumpForward2 && rest.children === 'jumpforward2') {
+			deprecate({name: 'Icon `jumpforward2`', message: 'Wiil be renamed to `jumpforward` in 2.0.0'});
+			warnedJumpForward2 = true;
+		}
 
 		return UiIconBase.inline({
 			...rest,
@@ -454,8 +478,8 @@ const IconBase = kind({
  * like
  * likeline
  * soundbarline
- * jumpforward
- * jumpbackward
+ * jumpforward2
+ * jumpbackward2
  * ```
  *
  * @name iconList

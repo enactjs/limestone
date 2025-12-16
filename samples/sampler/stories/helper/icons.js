@@ -8,6 +8,7 @@ import {icons} from '@enact/limestone/Icon';
 export const decrementIcons = [
 	'backward',
 	'jumpbackward',
+	'previous',
 	'minus',
 	'triangledown',
 	'triangleleft',
@@ -17,6 +18,7 @@ export const decrementIcons = [
 export const incrementIcons = [
 	'forward',
 	'jumpforward',
+	'next',
 	'plus',
 	'triangleright',
 	'triangleup',
