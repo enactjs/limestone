@@ -138,6 +138,15 @@
 						color: @lime-tablayout-tab-button-selected-color;
 					}
 				}
+
+				.focus({
+					&.pressed,
+					&:active {
+						.bg {
+							transform: none;
+						}
+					}
+				});
 			}
 
 			&.vertical {
