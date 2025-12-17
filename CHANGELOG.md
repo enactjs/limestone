@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/VirtualList` warning condition so the message will be shown only when `itemSizes.minSize` and `cbScrollTo` are set
 
+### Fixed
+
+- `limestone/TabLayout` `Tabs` press animation 
+
 ## [1.7.0] - 2025-12-08
 
 ### Added
