@@ -9,6 +9,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Icon` supported icon list, adding new icons `link2` and `btspeakermute`
 - `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
 
+### Changed
+
+- `limestone/TabLayout` styling to match the latest GUI
+
 ### Fixed
 
 - `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
