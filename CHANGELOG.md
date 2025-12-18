@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/TabLayout` styling to match the latest GUI
 - `limestone/VirtualList` warning condition so the message will be shown only when `itemSizes.minSize` and `cbScrollTo` are set
 
 ## [1.7.0] - 2025-12-08
@@ -29,7 +30,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Checkbox` to match the latest GUI
 - `limestone/ImageItem` to match the latest GUI
 - `limestone/RadioItem` to match the latest GUI
-- `limestone/TabLayout` styling to match the latest GUI
 - `limestone/useScroll.HoverToScroll` scroll animation speed
 - `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
