@@ -29,6 +29,7 @@ export const _Slider = (args) => (
 		orientation={args['orientation']}
 		progressAnchor={args['progressAnchor']}
 		showAnchor={args['showAnchor']}
+		showMinMax={args['showMinMax']}
 		step={args['step']}
 		wheelInterval={args['wheelInterval']}
 	>
@@ -86,6 +87,7 @@ range(
 	0
 );
 boolean('showAnchor', _Slider, SliderConfig);
+boolean('showMinMax', _Slider, SliderConfig);
 number('step', _Slider, SliderConfig, 1);
 number('wheelInterval', _Slider, SliderConfig);
 

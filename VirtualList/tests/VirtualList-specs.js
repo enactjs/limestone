@@ -225,6 +225,43 @@ describe('VirtualList', () => {
 			expect(consoleSpy).toHaveBeenCalled();
 			expect(consoleSpy.mock.calls[0][0]).toBe(expectedErrorMsg);
 		});
+
+		test('should not warn if \'minSize\' in \'itemSize\' prop is given without \'cbScrollTo\' prop', () => {
+			const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+			const variableItemSize = {
+				minSize: itemSize,
+				size: [100, 200, 300, 400, 100, 200, 300, 400, 100, 200]
+			};
+
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					dataSize={10}
+					itemRenderer={renderItem}
+					itemSize={variableItemSize}
+					scrollMode="translate"
+				/>
+			);
+
+			expect(consoleSpy).not.toHaveBeenCalled();
+		});
+
+		test('should not warn if \'cbScrollTo\' prop is given without \'minSize\' in \'itemSize\' prop', () => {
+			const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+			render(
+				<VirtualList
+					cbScrollTo={() => {}}
+					clientSize={clientSize}
+					dataSize={10}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					scrollMode="translate"
+				/>
+			);
+
+			expect(consoleSpy).not.toHaveBeenCalled();
+		});
 	});
 
 	describe('Adding an item', () => {

@@ -4,6 +4,7 @@ import css from './Slider.module.less';
 
 const SliderTests = [
 	<Slider />,
+	<Slider showMinMax />,
 	<Slider disabled />,
 	<Slider min={0} max={20} progressAnchor={0.4} />,
 	<Slider value={50} />,
@@ -30,6 +31,7 @@ const SliderTests = [
 		focus: true
 	},
 	<Slider orientation="vertical" />,
+	<Slider orientation="vertical" showMinMax />,
 	<Slider orientation="vertical" value={50} />,
 	<Slider orientation="vertical" value={50} showAnchor />,
 	<Slider orientation="vertical" value={100} />,
@@ -227,6 +229,10 @@ const SliderTests = [
 	{
 		locale: 'ar-SA',
 		component: <Slider />
+	},
+	{
+		locale: 'ar-SA',
+		component: <Slider showMinMax />
 	},
 	{
 		locale: 'ar-SA',

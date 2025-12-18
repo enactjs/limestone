@@ -1,0 +1,78 @@
+@import "../styles/variables.less";
+
+// Motion Tokens
+
+/* ---------------------------------------
+Animations
+------------------------------------------ */
+:root {
+	/* Bounce
+	------------------------------------------ */
+	--lime-bounce-motion: var(--lime-bounce-animation-name) var(--lime-bounce-motion-duration) var(--lime-bounce-motion-easing-function);
+	--lime-check-motion: var(--lime-check-animation-name) var(--lime-check-motion-duration) forwards;
+}
+
+/* ---------------------------------------
+Animations properties
+------------------------------------------ */
+:root {
+	/* ---------------------------------------
+	Durations
+	------------------------------------------ */
+	--lime-motion-default-duration: 200ms;
+	--lime-motion-medium1-duration: 250ms;
+	--lime-motion-medium2-duration: 300ms;
+	--lime-motion-medium4-duration: 400ms;
+	--lime-motion-long2-duration: 500ms;
+	--lime-bounce-motion-duration: var(--lime-motion-medium2-duration);
+	--lime-check-motion-duration: var(--lime-motion-medium4-duration);
+	--lime-focus-in-motion-duration: var(--lime-motion-medium2-duration);
+	--lime-focus-out-motion-duration: var(--lime-motion-long2-duration);
+	--lime-press-motion-duration: var(--lime-motion-medium1-duration);
+	--lime-release-motion-duration: var(--lime-motion-medium2-duration);
+
+	/* ---------------------------------------
+	Easing functions
+	------------------------------------------ */
+	--lime-default-motion-easing-function: ease-out;
+	--lime-EIO-motion-easing-function: cubic-bezier(0.2, 0.0, 0.05, 1.0);
+	--lime-EO-motion-easing-function: cubic-bezier(0.1, 0.6, 0.15, 1.0);
+	--lime-bounce-motion-easing-function: var(--lime-default-motion-easing-function);
+	--lime-focus-in-motion-easing-function: var(--lime-EIO-motion-easing-function);
+	--lime-focus-out-motion-easing-function: var(--lime-EO-motion-easing-function);
+	--lime-press-motion-easing-function: var(--lime-EIO-motion-easing-function);
+	--lime-release-motion-easing-function: var(--lime-EO-motion-easing-function);
+
+	/* ---------------------------------------
+	Keyframes names
+	------------------------------------------ */
+	--lime-bounce-animation-name: bounce-motion;
+	--lime-check-animation-name: check-motion;
+
+	/* ---------------------------------------
+	Keyframes values
+	------------------------------------------ */
+	--lime-bounce-motion-offset-default-value: 6px;
+}
+
+/* ---------------------------------------
+Keyframes
+------------------------------------------ */
+
+/* Bounce
+	------------------------------------------ */
+@keyframes bounce-motion {
+	@offset-value: var(--lime-bounce-motion-offset-value, --lime-bounce-motion-offset-default-value);
+
+	0% {transform: translateX(0)}
+	50% {transform: translateX(@offset-value)}
+	80% {transform: translateX(~"calc(@{offset-value} / -2)")}
+	100% {transform: translateX(0)}
+}
+
+/* Check
+	------------------------------------------ */
+@keyframes check-motion {
+	0% {transform: translateX(0)}
+	100% {transform: translateX(100%)}
+}
