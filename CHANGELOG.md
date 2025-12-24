@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
+
 ## [1.6.2] - 2025-11-05
 
 ### Fixed
