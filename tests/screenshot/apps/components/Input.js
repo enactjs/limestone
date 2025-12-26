@@ -4,12 +4,15 @@ import Item from '../../../../Item';
 
 import {withConfig, withProps} from './utils';
 
+const LoremString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis.";
+
 const BaseTests = [
 	<Input />,
 	<Input open title="Input Test" subtitle="Additional text" />,
 	<Input open title="Input Test" subtitle="Additional text" noBackButton />,
 	<Input open title="Input Test" subtitle="Additional text" placeholder="placeholder" />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" />,
+	<Input open title={LoremString} subtitle={LoremString} value={LoremString} />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" type="password" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="passwordnumber" />,
@@ -33,6 +36,8 @@ const BaseTests = [
 
 const InputTests = [
 	...BaseTests,
+
+	...withProps({popupType: 'overlay'}, BaseTests),
 
 	// Large input
 	...withProps({size: 'large'}, BaseTests),
