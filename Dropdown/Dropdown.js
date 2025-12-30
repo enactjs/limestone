@@ -302,13 +302,13 @@ const DropdownBase = kind({
 		className: ({styler, title, width}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
 		direction: ({direction}) => `${direction} center`,
 		handleSpotlightPause: () => (pauseSpotlight),
-		placeholder: ({children, placeholder = $L('No Selection'), selected}) => {
+		placeholder: ({children, placeholder, selected}) => {
 			if (isSelectedValid({children, selected})) {
 				const child = children[selected];
 				return typeof child === 'object' ? child.children : child;
 			}
 
-			return placeholder;
+			return placeholder ?? $L('No Selection');
 		},
 		title: ({id, title, width}) => (title &&
 			<Heading
