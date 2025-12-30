@@ -2,6 +2,34 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.8.0] - 2025-12-30
+
+### Added
+
+- `limestone/MediaPlayer.MediaControls` `nextAriaLabel` prop to custom the aria-label of the next button
+- `limestone/MediaPlayer.MediaControls` `nextButtonDisabled` prop to disable the next button
+- `limestone/MediaPlayer.MediaControls` `nextIcon` prop to select the next button icon
+- `limestone/MediaPlayer.MediaControls` `noNextButton` prop to remove the next button
+- `limestone/MediaPlayer.MediaControls` `noPreviousButton` prop to remove the previous button
+- `limestone/MediaPlayer.MediaControls` `onNextButtonClick` prop to custom the next button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `onPreviousButtonClick` prop to custom the previous button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `previousAriaLabel` prop to custom the aria-label of the previous button
+- `limestone/MediaPlayer.MediaControls` `previousButtonDisabled` prop to disable the previous button
+- `limestone/MediaPlayer.MediaControls` `previousIcon` prop to select the previous button icon
+- `limestone/VideoPlayer` `onNext` prop to custom the next button behavior when it is clicked
+- `limestone/VideoPlayer` `onPrevious` prop to custom the previous button behavior when it is clicked
+- `limestone/VideoPlayer` `onWillNext` prop to custom the next button behavior before playing the next video when it is clicked
+- `limestone/VideoPlayer` `onWillPrevious` prop to custom the previous button behavior before playing the previous video when it is clicked
+
+### Changed
+
+- `limestone/TabLayout` styling to match the latest GUI
+- `limestone/VirtualList` warning condition so the message will be shown only when `itemSizes.minSize` and `cbScrollTo` are set
+
+### Fixed
+
+- `limestone/InputField` to not overflow the parent container.
+
 ## [1.7.0] - 2025-12-08
 
 ### Added
