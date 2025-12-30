@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [1.8.0] - 2025-12-31
+## [1.8.0] - 2025-12-30
 
 ### Added
 
