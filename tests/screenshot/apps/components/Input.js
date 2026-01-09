@@ -34,6 +34,12 @@ const BaseTests = [
 	</Input>
 ];
 
+const OverlayTestsNoTitleNoSubtitle = [
+	<Input open />,
+	<Input open title="Input Test" />,
+	<Input open subtitle="Additional text" />
+];
+
 const InputTests = [
 	...BaseTests,
 
@@ -45,6 +51,7 @@ const InputTests = [
 	// Disabled tests
 	...withProps({disabled: true, popupType: 'fullscreen'}, BaseTests),
 	...withProps({disabled: true, popupType: 'overlay'}, BaseTests),
+	...withProps({disabled: true, popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle),
 
 	// RTL large input
 	...withConfig({locale: 'ar-SA'}, [
@@ -53,13 +60,15 @@ const InputTests = [
 
 	// RTL overlay number input tests
 	...withConfig({locale: 'ar-SA'}, [
-		...withProps({popupType: 'overlay'}, BaseTests.slice(5))
+		...withProps({popupType: 'overlay'}, BaseTests.slice(5)),
+		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
 	]),
 
 	// Large text mode
 	...withConfig({textSize: 'large'}, [
 		...withProps({popupType: 'fullscreen'}, BaseTests),
-		...withProps({popupType: 'overlay'}, BaseTests)
+		...withProps({popupType: 'overlay'}, BaseTests),
+		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
 	])
 ];
 
