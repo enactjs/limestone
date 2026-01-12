@@ -202,17 +202,15 @@ const TouchableDiv = Touchable('div');
 export const WithEditableScroller = (args) => {
 	const dataSize = args['editableDataSize'];
 	const [iconItems, setIconItems] = useState(itemsArr);
+	const [initialSelected, setInitialSelected] = useState({});
 	const [panelIndex, setPanelIndex] = useState(0);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
 	const focusItem = useRef();
 	const divRef = useRef();
-	const mutableRef = useRef({
-		hideIndex: null,
-		initialSelected: {},
-		timer: null
-	});
+	const mutableRef = useRef({timer: null});
 
 	useLayoutEffect(() => {
 		itemsArr = [];
@@ -220,7 +218,7 @@ export const WithEditableScroller = (args) => {
 			itemsArr.push(populateItems({index: i}));
 		}
 		setIconItems(itemsArr);
-		mutableRef.current.hideIndex = dataSize;
+		setScrollerHideIndex(dataSize);
 	}, [dataSize]);
 
 	const findItemNode = useCallback((node) => {
@@ -266,10 +264,10 @@ export const WithEditableScroller = (args) => {
 		if (!ev.target.className.includes('Button')) {
 			const targetItemNode = findItemNode(ev.target);
 			if (targetItemNode && targetItemNode.style.order) {
-				mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+				setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 			}
 		}
-	}, [findItemNode]);
+	}, [findItemNode, initialSelected]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, repeat, target} = ev;
@@ -277,7 +275,7 @@ export const WithEditableScroller = (args) => {
 			if (repeat && !mutableRef.current.timer) {
 				const targetItemNode = findItemNode(ev.target);
 				if (targetItemNode && targetItemNode.style.order) {
-					mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+					setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 				}
 				mutableRef.current.timer = setTimeout(() => {
 					setPanelIndex(panelIndex + 1);
@@ -285,7 +283,7 @@ export const WithEditableScroller = (args) => {
 
 			}
 		}
-	}, [findItemNode, panelIndex]);
+	}, [findItemNode, initialSelected, panelIndex]);
 
 	const handleKeyUp = useCallback((ev) => {
 		if (ev.target.getAttribute('role') === 'button') {
@@ -298,12 +296,12 @@ export const WithEditableScroller = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		mutableRef.current.initialSelected.scrollLeft = ev.scrollLeft;
-	}, []);
+		setInitialSelected({...initialSelected, scrollLeft: ev.scrollLeft});
+	}, [initialSelected]);
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
-		mutableRef.current.hideIndex = hideIndex;
+		setScrollerHideIndex(hideIndex);
 
 		// change data from the new orders
 		const newItems = [];
@@ -321,15 +319,13 @@ export const WithEditableScroller = (args) => {
 
 	const forward = useCallback(() => {
 		setPanelIndex(panelIndex + 1);
-		mutableRef.current.initialSelected.scrollLeft = 0;
-		mutableRef.current.initialSelected.itemIndex = null;
+		setInitialSelected({scrollLeft: 0, itemIndex: null});
 		mutableRef.current.timer = null;
 	}, [panelIndex]);
 
 	const backward = useCallback(() => {
 		setPanelIndex(panelIndex - 1);
-		mutableRef.current.initialSelected.scrollLeft = 0;
-		mutableRef.current.initialSelected.itemIndex = null;
+		setInitialSelected({scrollLeft: 0, itemIndex: null});
 		mutableRef.current.timer = null;
 	}, [panelIndex]);
 
@@ -385,13 +381,13 @@ export const WithEditableScroller = (args) => {
 						editable={{
 							centered: args['editableCentered'],
 							css,
-							hideIndex: mutableRef.current.hideIndex,
+							hideIndex: scrollerHideIndex,
 							onComplete: handleComplete,
 							removeItemFuncRef: removeItem,
 							hideItemFuncRef: hideItem,
 							showItemFuncRef: showItem,
 							focusItemFuncRef: focusItem,
-							initialSelected: mutableRef.current.initialSelected,
+							initialSelected: initialSelected,
 							selectItemBy: 'press'
 						}}
 					>

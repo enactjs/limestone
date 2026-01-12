@@ -1,12 +1,12 @@
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
-import {useRef, useState} from 'react';
+import {useMemo, useState} from 'react';
 
 import CommonView from '../../components/CommonView';
 
 const DataWebosVoiceLabel = () => {
 	const [result, setResult] = useState('');
-	const voiceLabels = useRef(JSON.stringify(['호랑이', '고양이']));
+	const voiceLabels = useMemo(() => JSON.stringify(['호랑이', '고양이']), []);
 
 	const updateResult = (msg) => () => setResult(msg);
 
@@ -27,7 +27,7 @@ const DataWebosVoiceLabel = () => {
 			</Button>
 			<Heading>{'Override(labels) | 원숭이 -> 호랑이, 고양이'}</Heading>
 			<Button
-				data-webos-voice-labels={voiceLabels.current}
+				data-webos-voice-labels={voiceLabels}
 				onClick={updateResult('Selected > 원숭이 -> 호랑이, 고양이')}
 			>
 				원숭이

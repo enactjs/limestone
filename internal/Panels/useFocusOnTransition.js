@@ -1,7 +1,7 @@
 import handle, {forwardWithPrevent} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
 import Spotlight from '@enact/spotlight';
-import {useRef} from 'react';
+import {useMemo} from 'react';
 
 const transitionHandlers = {
 	onTransition: handle(
@@ -29,7 +29,7 @@ const transitionHandlers = {
 };
 
 function useFocusOnTransition (config) {
-	const {current} = useRef({timerId: null});
+	const current = useMemo(() => ({timerId: null}), []);
 	const handlers = useHandlers(transitionHandlers, config, {current});
 
 	return handlers;

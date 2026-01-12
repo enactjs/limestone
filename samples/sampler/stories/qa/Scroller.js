@@ -229,17 +229,15 @@ const ContainerDivWithLeaveForConfig = SpotlightContainerDecorator({leaveFor: {l
 
 export const EditableList = (args) => {
 	const dataSize = args['editableDataSize'];
-	const [items, setItems] = useState(itemsArr);
 	const [editMode, setEditMode] = useState(false);
+	const [items, setItems] = useState(itemsArr);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
 	const focusItem = useRef();
 	const blurItem = useRef();
 	const divRef = useRef();
-	const mutableRef = useRef({
-		hideIndex: null
-	});
 
 	useLayoutEffect(() => {
 		itemsArr = [];
@@ -247,7 +245,7 @@ export const EditableList = (args) => {
 			itemsArr.push(populateItems({index: i}));
 		}
 		setItems(itemsArr);
-		mutableRef.current.hideIndex = dataSize;
+		setScrollerHideIndex(dataSize);
 	}, [dataSize]);
 
 	const onClickModeButton = useCallback(() => {
@@ -289,7 +287,7 @@ export const EditableList = (args) => {
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
-		mutableRef.current.hideIndex = hideIndex;
+		setScrollerHideIndex(hideIndex);
 
 		// change data from the new orders
 		const newItems = [];
@@ -326,7 +324,7 @@ export const EditableList = (args) => {
 						editable={{
 							centered: args['editableCentered'],
 							css,
-							hideIndex: mutableRef.current.hideIndex,
+							hideIndex: scrollerHideIndex,
 							onComplete: handleComplete,
 							removeItemFuncRef: removeItem,
 							hideItemFuncRef: hideItem,

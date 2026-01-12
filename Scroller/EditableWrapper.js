@@ -84,14 +84,10 @@ const holdConfig = {
  */
 const EditableWrapper = (props) => {
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
+	const {blurItemFuncRef, focusItemFuncRef, hideItemFuncRef, removeItemFuncRef, showItemFuncRef} = editable;
 	const centered = editable?.centered != null ? editable.centered : true;
 	const selectItemBy = editable?.selectItemBy || 'longPress';
 	const customCss = editable?.css || {};
-	const removeItemFuncRef = editable?.removeItemFuncRef;
-	const hideItemFuncRef = editable?.hideItemFuncRef;
-	const showItemFuncRef = editable?.showItemFuncRef;
-	const focusItemFuncRef = editable?.focusItemFuncRef;
-	const blurItemFuncRef = editable?.blurItemFuncRef;
 	const mergedCss = usePublicClassNames({componentCss, customCss, publicClassNames: true});
 
 	const dataSize = children?.length;
@@ -142,8 +138,6 @@ const EditableWrapper = (props) => {
 		initialSelected: editable?.initialSelected
 	});
 	const announceRef = useRef({});
-
-	mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
 
 	// Functions
 
@@ -998,6 +992,10 @@ const EditableWrapper = (props) => {
 			}
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	useEffect(() => {
+		mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
+	}, [dataSize, editable?.hideIndex]);
 
 	return (
 		<TouchableDiv

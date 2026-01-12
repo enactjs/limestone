@@ -74,9 +74,9 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		if (tooltip) {
 			if (tooltipDestinationProp === 'children') {
-				restProps.children = [props.children, tooltip];
+				Object.assign(restProps, {children: [props.children, tooltip]});
 			} else {
-				restProps[tooltipDestinationProp] = tooltip;
+				Object.assign(restProps, {[tooltipDestinationProp]: tooltip});
 			}
 		}
 

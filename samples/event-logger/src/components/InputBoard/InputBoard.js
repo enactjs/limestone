@@ -46,13 +46,13 @@ function findLastIndexOfMatchingEvent (array, eventName, isDOMElement, isCapturi
 }
 
 function usePrevious (value) {
-	const ref = useRef();
+	const [previousValue, setPreviousValue] = useState();
 
 	useEffect(() => {
-		ref.current = value;
-	});
+		setPreviousValue(value);
+	}, [value]);
 
-	return ref.current;
+	return previousValue;
 }
 
 const InputBoard = ({className}) => {
@@ -73,11 +73,12 @@ const InputBoard = ({className}) => {
 	const {syntheticEventOn} = syntheticEventOnReducer;
 	const {timerIndex} = timerIndexReducer;
 
+	const [reactHandlers, setReactHandlers] = useState();
+
 	const divRef = useRef();
 	const eventCapturingOnRef = useRef();
 	const eventLogsRef = useRef();
 	const listenersRef = useRef({bubble: {}, capture: {}});
-	const reactHandlers = useRef();
 	const syntheticEventOnRef = useRef();
 	const timerIndexRef = useRef();
 	const beforeTimeoutId = useRef();
@@ -234,9 +235,9 @@ const InputBoard = ({className}) => {
 					}
 				}
 			}
-			reactHandlers.current = handlers;
+			setReactHandlers(handlers);
 		}
-	});
+	}, [eventCapturingOn, syntheticEventOn, timerIndex, eventLogs, prevActiveEvents, activeEvents, registerEventHandlerForReact, isCapturingEvent, registerEventHandlerForDOM, unRegisterEventHandlerForDOM]);
 
 	useEffect( () => {
 		return () => {
@@ -263,7 +264,7 @@ const InputBoard = ({className}) => {
 				className={className}
 				ref={divRef}
 				tabIndex="0"
-				{...reactHandlers.current}
+				{...reactHandlers}
 			>
 				{'You can trigger variable events here. For detecting keyboard event, mouse click is needed on it.'}
 			</div>

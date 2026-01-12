@@ -6,7 +6,7 @@ import {getRect} from '@enact/spotlight/src/utils';
 import ri from '@enact/ui/resolution';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import classNames from 'classnames';
-import {useCallback, useEffect, useLayoutEffect} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
 
 import {affordanceSize} from '../useScroll';
 
@@ -132,13 +132,13 @@ const useSpottable = (props, instances) => {
 
 	const {addGlobalKeyDownEventListener, removeGlobalKeyDownEventListener} = useEventKey();
 
-	const setContainerDisabled = useCallback((bool) => {
+	const setContainerDisabled = useCallback(function self (bool) {
 		if (scrollContainerRef.current) {
 			scrollContainerRef.current.dataset.spotlightContainerDisabled = bool;
 
 			if (bool) {
 				addGlobalKeyDownEventListener(() => {
-					setContainerDisabled(false);
+					self(false);
 				});
 			} else {
 				removeGlobalKeyDownEventListener();
@@ -370,16 +370,22 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	delete rest.spotlightId;
 
 	// Hooks
+	const [bodyProps, setBodyProps] = useState(null);
 	const isScrollbarVisible = isHorizontalScrollbarVisible || isVerticalScrollbarVisible;
 	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled} = useSpottable(scrollContentProps, {scrollContainerRef, scrollContentHandle, scrollContentRef});
-	const {setNavigableFilter, ...focusableBodyProps} = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
+	const {setNavigableFilter, ...focusableBodyProps} = bodyProps;
+
+	useEffect(() => {
+		const containerFocusableBodyProps = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
+		setBodyProps(containerFocusableBodyProps);
+	}, [contentId, isScrollbarVisible, props.focusableScrollbar, scrollContainerRef]);
 
 	useLayoutEffect(() => {
 		// Initial filter setting
 		if (setNavigableFilter) {
 			setNavigableFilter({filterTarget: 'body'});
 		}
-	}, [props.focusableScrollbar, scrollContainerRef.current]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [props.focusableScrollbar, scrollContainerRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	scrollContentProps.setThemeScrollContentHandle({
 		calculatePositionOnFocus,

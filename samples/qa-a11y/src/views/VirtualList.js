@@ -40,7 +40,7 @@ const VirtualListView = () => {
 	return (
 		<Layout orientation="vertical">
 			<Cell shrink>
-				<CheckboxItemGroup>
+				<CheckboxItemGroup groupId={1}>
 					<CheckboxItem
 						onClick={handleToggleScrollMode}
 						selected={native}

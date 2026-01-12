@@ -15,7 +15,7 @@ import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import Icon from '../Icon';
@@ -154,12 +154,14 @@ const RadioItem = Pure(
 const RadioItemGroup = (props) => {
 	const {children, groupId, itemProps, ...rest} = props;
 
-	RadioItemGroup.propTypes = {
+	const propTypes = {
 		groupId: PropTypes.string,
 		itemProps: PropTypes.object
 	};
 
-	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` compoenents using `ui/Group`
+	checkPropTypes(propTypes, props, 'prop', 'RadioItemGroup');
+
+	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` components using `ui/Group`
 		return (
 			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
 				<Group
