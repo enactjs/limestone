@@ -370,7 +370,7 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	delete rest.spotlightId;
 
 	// Hooks
-	const [bodyProps, setBodyProps] = useState(null);
+	const [bodyProps, setBodyProps] = useState({});
 	const isScrollbarVisible = isHorizontalScrollbarVisible || isVerticalScrollbarVisible;
 	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled} = useSpottable(scrollContentProps, {scrollContainerRef, scrollContentHandle, scrollContentRef});
 	const {setNavigableFilter, ...focusableBodyProps} = bodyProps;
@@ -378,14 +378,14 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	useEffect(() => {
 		const containerFocusableBodyProps = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
 		setBodyProps(containerFocusableBodyProps);
-	}, [contentId, isScrollbarVisible, props.focusableScrollbar, scrollContainerRef]);
+	}, [props.focusableScrollbar]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useLayoutEffect(() => {
 		// Initial filter setting
 		if (setNavigableFilter) {
 			setNavigableFilter({filterTarget: 'body'});
 		}
-	}, [props.focusableScrollbar, scrollContainerRef]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [props.focusableScrollbar]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	scrollContentProps.setThemeScrollContentHandle({
 		calculatePositionOnFocus,
