@@ -22,11 +22,11 @@ function useNavButtonFocus ({index}) {
 			// set autoFocus to point to the selector for the appropriate button
 			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
 		}
-
-		useEffect(() => {
-			setPreviousIndex(index);
-		}, [index]);
 	}
+
+	useEffect(() => {
+		setPreviousIndex(index);
+	}, [index]);
 
 	return {
 		autoFocus
