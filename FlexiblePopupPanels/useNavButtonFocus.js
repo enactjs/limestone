@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
@@ -22,7 +22,10 @@ function useNavButtonFocus ({index}) {
 			// set autoFocus to point to the selector for the appropriate button
 			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
 		}
-		setPreviousIndex(index);
+
+		useEffect(() => {
+			setPreviousIndex(index);
+		}, [index]);
 	}
 
 	return {

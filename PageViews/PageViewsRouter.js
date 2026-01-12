@@ -1,7 +1,7 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {Children, useCallback, useState} from 'react';
+import {Children, useCallback, useEffect, useState} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -12,8 +12,11 @@ function useReverseTransition (index, rtl) {
 	let reverse = false;
 	if (previousIndex !== index) {
 		reverse = rtl ? (index > previousIndex) : (index < previousIndex);
-		setPreviousIndex(index);
 	}
+
+	useEffect(() => {
+		setPreviousIndex(index);
+	}, [index]);
 
 	return  {reverseTransition: reverse};
 }
