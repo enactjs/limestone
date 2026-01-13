@@ -8,25 +8,23 @@ const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
 function useNavButtonFocus ({index}) {
-	let autoFocus;
-
-	const [previousIndex, setPreviousIndex] = useState(index);
-
-	// on index change
-	if (index !== previousIndex) {
-		const current = Spotlight.getCurrent();
-		// if the currently focused component is a nav button
-		if (current && current.classList.contains(css.navButton)) {
-			const prevButtonFocused = current.matches(prevButtonSelector);
-
-			// set autoFocus to point to the selector for the appropriate button
-			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
-		}
-	}
+	const [autoFocus, setAutoFocus] = useState('');
+	const [prevIndex, setPrevIndex] = useState(index);
 
 	useEffect(() => {
-		setPreviousIndex(index);
-	}, [index]);
+		// on index change
+		if (index !== prevIndex) {
+			const current = Spotlight.getCurrent();
+			// if the currently focused component is a nav button
+			if (current && current.classList.contains(css.navButton)) {
+				const prevButtonFocused = current.matches(prevButtonSelector);
+
+				// set autoFocus to point to the selector for the appropriate button
+				setAutoFocus(prevButtonFocused ? prevButtonSelector : nextButtonSelector);
+			}
+			setPrevIndex(index);
+		}
+	}, [index, prevIndex]);
 
 	return {
 		autoFocus

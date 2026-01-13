@@ -8,15 +8,15 @@ import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Pan
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index, rtl) {
-	const [previousIndex, setPreviousIndex] = useState(index);
-	let reverse = false;
-	if (previousIndex !== index) {
-		reverse = rtl ? (index > previousIndex) : (index < previousIndex);
-	}
+	const [prevIndex, setPrevIndex] = useState(index);
+	const [reverse, setReverse] = useState(false);
 
 	useEffect(() => {
-		setPreviousIndex(index);
-	}, [index]);
+		if (prevIndex !== index) {
+			setReverse(rtl ? (index > prevIndex) : (index < prevIndex));
+		}
+		setPrevIndex(index);
+	}, []);
 
 	return  {reverseTransition: reverse};
 }
