@@ -9,7 +9,7 @@ const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 function useNavButtonFocus ({index}) {
 	let autoFocus;
 
-	const prevIndex = {value: null};
+	const prevIndex = {value: index};
 
 	// on index change
 	if (index !== prevIndex.value) {

@@ -10,7 +10,7 @@ import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Pan
 function useReverseTransition (index, rtl) {
 	let reverse = false;
 
-	const prevIndex = {value: null};
+	const prevIndex = {value: index};
 
 	if (prevIndex.value !== index) {
 		reverse = rtl ? (index > prevIndex.value) : (index < prevIndex.value);
