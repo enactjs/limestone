@@ -14,14 +14,14 @@ const PanelsContext = createContext(null);
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const [prevIndex, setPrevIndex] = useState(index);
-	const [reverse, setReverse] = useState(rtl);
+	const prevIndex = {value: null};
+	const reverse = {value: null};
 	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
-	const prev = {reverseTransition: reverse, prevIndex: prevIndex};
+	const prev = {reverseTransition: reverse.value, prevIndex: prevIndex.value};
 
-	if (prevIndex !== index) {
-		setReverse(rtl ? (index > prevIndex) : (index < prevIndex));
-		setPrevIndex(index);
+	if (prevIndex.value !== index) {
+		reverse.value = rtl ? (index > prevIndex.value) : (index < prevIndex.value);
+		prevIndex.value = index;
 	}
 
 	return prev;

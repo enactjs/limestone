@@ -1,12 +1,12 @@
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
-import {useMemo, useState} from 'react';
+import {useState} from 'react';
 
 import CommonView from '../../components/CommonView';
 
 const DataWebosVoiceGroupLabel = () => {
 	const [result, setResult] = useState('');
-	const voiceGroupLabels = useMemo(() => JSON.stringify(['우리집', '외국']), []);
+	const voiceGroupLabels = JSON.stringify(['우리집', '외국']);
 
 	const updateResult = (msg) => () => setResult(msg);
 

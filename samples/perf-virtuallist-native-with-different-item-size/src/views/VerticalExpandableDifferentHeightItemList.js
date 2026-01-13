@@ -107,12 +107,12 @@ ExpandableDifferentHeightItem.propTypes = {
 };
 
 const ResizableItem = ({updateItemSize, ...rest}) => {
-	const [itemIndex, setItemIndex] = useState(0);
+	const indexRef = useRef(0);
 	const domRef = useRef({});
 
 	const calculateMetrics = () => {
 		if (domRef.current) {
-			const index = itemIndex;
+			const index = indexRef.current;
 			const offsetHeight = domRef.current.offsetHeight;
 
 			updateItemSize(index, offsetHeight);
@@ -120,7 +120,7 @@ const ResizableItem = ({updateItemSize, ...rest}) => {
 	};
 
 	useEffect(() => {
-		setItemIndex(rest.index);
+		indexRef.current = rest.index;
 	}, [rest.index]);
 
 	useEffect(() => {

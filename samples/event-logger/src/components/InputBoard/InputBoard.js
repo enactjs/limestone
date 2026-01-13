@@ -48,9 +48,9 @@ function findLastIndexOfMatchingEvent (array, eventName, isDOMElement, isCapturi
 function usePrevious (value) {
 	const [previousValue, setPreviousValue] = useState();
 
-	useEffect(() => {
+	if (previousValue !== value) {
 		setPreviousValue(value);
-	}, [value]);
+	}
 
 	return previousValue;
 }
@@ -79,6 +79,7 @@ const InputBoard = ({className}) => {
 	const eventCapturingOnRef = useRef();
 	const eventLogsRef = useRef();
 	const listenersRef = useRef({bubble: {}, capture: {}});
+	const reactHandlersRef = useRef();
 	const syntheticEventOnRef = useRef();
 	const timerIndexRef = useRef();
 	const beforeTimeoutId = useRef();
@@ -235,7 +236,8 @@ const InputBoard = ({className}) => {
 					}
 				}
 			}
-			setReactHandlers(handlers);
+			reactHandlersRef.current = handlers;
+			setReactHandlers(reactHandlersRef.current);
 		}
 	}, [eventCapturingOn, syntheticEventOn, timerIndex, eventLogs, prevActiveEvents, activeEvents, registerEventHandlerForReact, isCapturingEvent, registerEventHandlerForDOM, unRegisterEventHandlerForDOM]);
 
