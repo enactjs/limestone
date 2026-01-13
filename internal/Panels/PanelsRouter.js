@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState, Children, useEffect} from 'react';
+import {useCallback, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
@@ -14,17 +14,15 @@ const PanelsContext = createContext(null);
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const prevIndex = useRef(index);
-	const reverse = useRef(rtl);
+	const [prevIndex, setPrevIndex] = useState(index);
+	const [reverse, setReverse] = useState(rtl);
 	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
 	const prev = {reverseTransition: reverse, prevIndex: prevIndex};
 
-	useEffect(() => {
-		if (prevIndex.current !== index) {
-			reverse.current = rtl ? (index > prevIndex.current) : (index < prevIndex.current);
-			prevIndex.current = index;
-		}
-	}, [index, rtl]);
+	if (prevIndex !== index) {
+		setReverse(rtl ? (index > prevIndex) : (index < prevIndex));
+		setPrevIndex(index);
+	}
 
 	return prev;
 }

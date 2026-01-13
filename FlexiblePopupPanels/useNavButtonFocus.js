@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
@@ -8,23 +8,21 @@ const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
 function useNavButtonFocus ({index}) {
-	const [autoFocus, setAutoFocus] = useState('');
+	let autoFocus;
+
 	const [prevIndex, setPrevIndex] = useState(index);
 
-	useEffect(() => {
-		// on index change
-		if (index !== prevIndex) {
-			const current = Spotlight.getCurrent();
-			// if the currently focused component is a nav button
-			if (current && current.classList.contains(css.navButton)) {
-				const prevButtonFocused = current.matches(prevButtonSelector);
-
-				// set autoFocus to point to the selector for the appropriate button
-				setAutoFocus(prevButtonFocused ? prevButtonSelector : nextButtonSelector);
-			}
-			setPrevIndex(index);
+	// on index change
+	if (index !== prevIndex) {
+		const current = Spotlight.getCurrent();
+		// if the currently focused component is a nav button
+		if (current && current.classList.contains(css.navButton)) {
+			const prevButtonFocused = current.matches(prevButtonSelector);
+			// set autoFocus to point to the selector for the appropriate button
+			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
 		}
-	}, [index, prevIndex]);
+		setPrevIndex(index);
+	}
 
 	return {
 		autoFocus
