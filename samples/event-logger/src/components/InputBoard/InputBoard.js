@@ -46,10 +46,12 @@ function findLastIndexOfMatchingEvent (array, eventName, isDOMElement, isCapturi
 }
 
 function usePrevious (value) {
-	const [previousValue, setPreviousValue] = useState();
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
+	const [previousValue, setPreviousValue] = useState(value);
 
-	if (previousValue !== value) {
-		setPreviousValue(value);
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
 	}
 
 	return previousValue;

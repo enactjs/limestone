@@ -1,18 +1,31 @@
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
+import {useState} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
 const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
+function usePrevious (value) {
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
+	const [previousValue, setPreviousValue] = useState(value);
+
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
+	}
+
+	return previousValue;
+}
+
 function useNavButtonFocus ({index}) {
 	let autoFocus;
 
-	const prevIndex = {value: index};
+	const prevIndex = usePrevious(index);
 
 	// on index change
-	if (index !== prevIndex.value) {
+	if (index !== prevIndex) {
 		const current = Spotlight.getCurrent();
 		// if the currently focused component is a nav button
 		if (current && current.classList.contains(css.navButton)) {
@@ -21,7 +34,6 @@ function useNavButtonFocus ({index}) {
 			// set autoFocus to point to the selector for the appropriate button
 			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
 		}
-		prevIndex.value = index;
 	}
 
 	return {

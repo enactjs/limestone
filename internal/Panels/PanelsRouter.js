@@ -11,20 +11,30 @@ import useToggleRole from './useToggleRole';
 
 const PanelsContext = createContext(null);
 
+function usePrevious (value) {
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
+	const [previousValue, setPreviousValue] = useState(value);
+
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
+	}
+
+	return previousValue;
+}
+
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const prevIndex = {value: index};
-	const reverse = {value: rtl};
-	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
-	const prev = {reverseTransition: reverse.value, prevIndex: prevIndex.value};
+	const prevIndex = usePrevious(index);
 
-	if (prevIndex.value !== index) {
-		reverse.value = rtl ? (index > prevIndex.value) : (index < prevIndex.value);
-		prevIndex.value = index;
+	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
+	if (prevIndex !== index) {
+		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
+		return {reverseTransition: reverse, prevIndex: index};
 	}
 
-	return prev;
+	return {reverseTransition: rtl, prevIndex: index};
 }
 
 const defaultConfig = {

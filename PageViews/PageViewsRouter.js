@@ -1,24 +1,34 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {Children, useCallback} from 'react';
+import {Children, useCallback, useState} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
+
+function usePrevious (value) {
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
+	const [previousValue, setPreviousValue] = useState(value);
+
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
+	}
+
+	return previousValue;
+}
 
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index, rtl) {
 	let reverse = false;
 
-	const prevIndex = {value: index};
+	const prevIndex = usePrevious(index);
 
-	if (prevIndex.value !== index) {
-		reverse = rtl ? (index > prevIndex.value) : (index < prevIndex.value);
+	if (prevIndex !== index) {
+		reverse = rtl ? (index > prevIndex) : (index < prevIndex);
 	}
 
-	prevIndex.value = index;
-
-	return  {reverseTransition: reverse};
+	return {reverseTransition: reverse};
 }
 
 /**
