@@ -193,7 +193,15 @@ const PageViewsBase = kind({
 		 * @type {Number}
 		 * @private
 		 */
-		totalIndex: PropTypes.number
+		totalIndex: PropTypes.number,
+
+		/**
+		 * A unique identifier for each PageViews component.
+		 *
+		 * @type {String}
+		 * @private
+		 */
+		uniqueId: PropTypes.string
 	},
 
 	defaultProps: {
