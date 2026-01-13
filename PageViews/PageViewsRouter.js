@@ -16,7 +16,7 @@ function useReverseTransition (index, rtl) {
 			setReverse(rtl ? (index > prevIndex) : (index < prevIndex));
 		}
 		setPrevIndex(index);
-	}, []);
+	}, [index, prevIndex, rtl]);
 
 	return  {reverseTransition: reverse};
 }
