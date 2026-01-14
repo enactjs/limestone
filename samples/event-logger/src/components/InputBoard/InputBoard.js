@@ -45,18 +45,6 @@ function findLastIndexOfMatchingEvent (array, eventName, isDOMElement, isCapturi
 	return nomatch;
 }
 
-function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
-	const [previousValue, setPreviousValue] = useState(value);
-
-	if (value !== previousTrackedValue) {
-		setPreviousTrackedValue(value);
-		setPreviousValue(previousTrackedValue);
-	}
-
-	return previousValue;
-}
-
 const InputBoard = ({className}) => {
 	const isCapturingEvent = true;
 
@@ -76,11 +64,13 @@ const InputBoard = ({className}) => {
 	const {timerIndex} = timerIndexReducer;
 
 	const [reactHandlers, setReactHandlers] = useState();
+	const [showFilter, setShowFilter] = useState(true);
 
 	const divRef = useRef();
 	const eventCapturingOnRef = useRef();
 	const eventLogsRef = useRef();
 	const listenersRef = useRef({bubble: {}, capture: {}});
+	const prevActiveEvents = useRef({});
 	const reactHandlersRef = useRef();
 	const syntheticEventOnRef = useRef();
 	const timerIndexRef = useRef();
@@ -101,10 +91,6 @@ const InputBoard = ({className}) => {
 			(eventObject, prevTimeoutId, postTimeoutId) =>
 				dispatch(updateEventLogAction(eventObject, prevTimeoutId, postTimeoutId)), [dispatch]
 		);
-
-	const prevActiveEvents = usePrevious(activeEvents);
-
-	const [showFilter, setShowFilter] = useState(true);
 
 	const sendEventLog = useCallback((ev, isDOMElement, eventObject, isCapturing) => {
 		const timerGroup = [3000, 5000, 10000];
@@ -214,9 +200,9 @@ const InputBoard = ({className}) => {
 		timerIndexRef.current = timerIndex;
 		eventLogsRef.current = eventLogs;
 		// add/remove event
-		if (prevActiveEvents && prevActiveEvents !== activeEvents) {
+		if (prevActiveEvents.current && prevActiveEvents.current !== activeEvents) {
 			const
-				prev = prevActiveEvents,
+				prev = prevActiveEvents.current,
 				curr = activeEvents,
 				handlers = {};
 
@@ -239,9 +225,15 @@ const InputBoard = ({className}) => {
 				}
 			}
 			reactHandlersRef.current = handlers;
+			prevActiveEvents.current = activeEvents;
+		}
+	});
+
+	useEffect(() => {
+		if (reactHandlersRef.current !== reactHandlers) {
 			setReactHandlers(reactHandlersRef.current);
 		}
-	}, [eventCapturingOn, syntheticEventOn, timerIndex, eventLogs, prevActiveEvents, activeEvents, registerEventHandlerForReact, isCapturingEvent, registerEventHandlerForDOM, unRegisterEventHandlerForDOM]);
+	}, [reactHandlers]);
 
 	useEffect( () => {
 		return () => {
