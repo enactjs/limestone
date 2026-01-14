@@ -61,16 +61,6 @@ const WizardPanelsBase = kind({
 		'aria-label': PropTypes.string,
 
 		/**
-		 * Sets the strategy used to automatically focus an element within the WizardPanels upon render.
-		 * When set to 'none', focus is not set only on the first render.
-		 *
-		 * @type {('default-element'|'last-focused'|'none'|String)}
-		 * @default 'default-element'
-		 * @private
-		 */
-		autoFocus: PropTypes.string,
-
-		/**
 		 * Obtains a reference to the root node.
 		 *
 		 * @type {Function|Object}

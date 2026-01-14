@@ -53,16 +53,6 @@ const QuickGuidePanelsBase = kind({
 		'aria-label': PropTypes.string,
 
 		/**
-		 * Sets the strategy used to automatically focus an element within the QuickGuidePanels upon render.
-		 * When set to 'none', focus is not set only on the first render.
-		 *
-		 * @type {('default-element'|'last-focused'|'none'|String)}
-		 * @default 'default-element'
-		 * @private
-		 */
-		autoFocus: PropTypes.string,
-
-		/**
 		 * Hint string read when focusing the close button.
 		 *
 		 * @type {String}
