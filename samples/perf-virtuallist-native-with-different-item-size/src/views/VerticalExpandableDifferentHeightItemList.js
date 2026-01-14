@@ -120,7 +120,9 @@ const ResizableItem = ({updateItemSize, ...rest}) => {
 	};
 
 	useEffect(() => {
-		indexRef.current = rest.index;
+		if (indexRef.current !== rest.index) {
+			indexRef.current = rest.index;
+		}
 	}, [rest.index]);
 
 	useEffect(() => {
