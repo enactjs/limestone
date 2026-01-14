@@ -109,7 +109,7 @@ const EditableWrapper = (props) => {
 		// Indices
 		fromIndex: null,
 		prevToIndex: null,
-		hideIndex: null,
+		hideIndex: editable?.hideIndex ?? dataSize,
 
 		// Position for restoring focus after removing item
 		nextSpotlightRect: null,
@@ -985,6 +985,8 @@ const EditableWrapper = (props) => {
 
 	// We set 'data-is-hiding' for all hidden items at component mount
 	useEffect(() => {
+		mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
+
 		children.map((child, index) => {
 			if (index >= mutableRef.current.hideIndex) {
 				const hiddenElement = document.querySelector('[aria-label="' + child.props['aria-label'] + '"]');
@@ -993,9 +995,6 @@ const EditableWrapper = (props) => {
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {
-		mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
-	}, [dataSize, editable?.hideIndex]);
 
 	return (
 		<TouchableDiv

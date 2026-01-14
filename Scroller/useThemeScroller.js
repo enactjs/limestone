@@ -6,7 +6,7 @@ import {getRect} from '@enact/spotlight/src/utils';
 import ri from '@enact/ui/resolution';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import classNames from 'classnames';
-import {useCallback, useEffect, useLayoutEffect, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect} from 'react';
 
 import {affordanceSize} from '../useScroll';
 
@@ -370,15 +370,9 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	delete rest.spotlightId;
 
 	// Hooks
-	const [bodyProps, setBodyProps] = useState({});
 	const isScrollbarVisible = isHorizontalScrollbarVisible || isVerticalScrollbarVisible;
 	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled} = useSpottable(scrollContentProps, {scrollContainerRef, scrollContentHandle, scrollContentRef});
-	const {setNavigableFilter, ...focusableBodyProps} = bodyProps || {};
-
-	useEffect(() => {
-		const containerFocusableBodyProps = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
-		setBodyProps(containerFocusableBodyProps);
-	}, [props.focusableScrollbar]); // eslint-disable-line react-hooks/exhaustive-deps
+	const {setNavigableFilter, ...focusableBodyProps} = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
 
 	useLayoutEffect(() => {
 		// Initial filter setting
