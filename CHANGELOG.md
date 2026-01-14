@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/PageViews` to properly navigate between multiple `PageViews`
+
 ## [1.8.0] - 2025-12-30
 
 ### Added

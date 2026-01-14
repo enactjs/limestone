@@ -193,7 +193,15 @@ const PageViewsBase = kind({
 		 * @type {Number}
 		 * @private
 		 */
-		totalIndex: PropTypes.number
+		totalIndex: PropTypes.number,
+
+		/**
+		 * A unique identifier for each PageViews component.
+		 *
+		 * @type {String}
+		 * @private
+		 */
+		uniqueId: PropTypes.string
 	},
 
 	defaultProps: {
@@ -211,8 +219,8 @@ const PageViewsBase = kind({
 	handlers: {
 		onKeyDown: handle(
 			forProp('bannerMode', true),
-			(ev, {index, onChange, rtl, totalIndex}) => {
-				Spotlight.set('banner-container', {
+			(ev, {index, onChange, rtl, totalIndex, uniqueId}) => {
+				Spotlight.set('banner-container' + uniqueId, {
 					navigableFilter: (node) => node.classList.contains(componentCss.viewManager)
 				});
 
@@ -225,7 +233,7 @@ const PageViewsBase = kind({
 		),
 		onMouseOver: handle(
 			forProp('bannerMode', true),
-			() => Spotlight.set('banner-container', {navigableFilter: null})
+			(ev, {uniqueId}) => Spotlight.set('banner-container' + uniqueId, {navigableFilter: null})
 		),
 		onNextClick: handle(
 			forwardCustomWithPrevent('onNextClick'),
@@ -241,7 +249,7 @@ const PageViewsBase = kind({
 		),
 		onPointerOver: handle(
 			forProp('bannerMode', true),
-			() => Spotlight.set('banner-container', {navigableFilter: null})
+			(ev, {uniqueId}) => Spotlight.set('banner-container' + uniqueId, {navigableFilter: null})
 		),
 		onStepsClick: handle(
 			forProp('bannerMode', true),
@@ -255,8 +263,8 @@ const PageViewsBase = kind({
 				onChange({type: 'onChange', index: index});
 			}
 		),
-		onTransition: (ev, {index, onTransition}) => {
-			Spotlight.focus('banner-view-manager');
+		onTransition: (ev, {index, onTransition, uniqueId}) => {
+			Spotlight.focus('banner-view-manager' + uniqueId);
 			Spotlight.resume();
 			if (onTransition) {
 				onTransition({type: 'onTransition', index});
@@ -289,10 +297,10 @@ const PageViewsBase = kind({
 				</Cell>
 			);
 		},
-		renderViewManager: ({arranger, bannerMode, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
+		renderViewManager: ({arranger, bannerMode, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, uniqueId, children}) => {
 			const CellComponent = bannerMode ? SpottableCell : Cell;
 			const props = {};
-			if (bannerMode) props.spotlightId = "banner-view-manager";
+			if (bannerMode) props.spotlightId = "banner-view-manager" + uniqueId;
 
 			return (
 				<CellComponent
@@ -358,6 +366,7 @@ const PageViewsBase = kind({
 		renderViewManager,
 		stepHintAriaLabel,
 		steps,
+		uniqueId,
 		...rest
 	}) => {
 		delete rest.arranger;
@@ -376,7 +385,7 @@ const PageViewsBase = kind({
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
 				{!fullContents && pageIndicatorPosition === 'top' ? steps : null}
-				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} spotlightId="banner-container">
+				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} spotlightId={"banner-container" + uniqueId}>
 					{fullContents ?
 						<>
 							<Row className={css.horizontalLayout}>{renderViewManager}</Row>
