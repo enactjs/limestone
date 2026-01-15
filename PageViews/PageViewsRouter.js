@@ -1,7 +1,7 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {useRef, useCallback, Children} from 'react';
+import {useId, useRef, useCallback, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -36,6 +36,7 @@ function PageViewsRouter (Wrapped) {
 		rtl,
 		...rest
 	}) => {
+		const uniqueId = useId();
 		const totalIndex = Children.count(children);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
 		const autoFocusRef = useAutoFocus({autoFocus});
@@ -62,6 +63,7 @@ function PageViewsRouter (Wrapped) {
 				onWillTransition={handleWillTransition}
 				reverseTransition={reverseTransition}
 				rtl={rtl}
+				uniqueId={uniqueId}
 			>
 				{children}
 			</Wrapped>

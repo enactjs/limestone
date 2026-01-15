@@ -2,6 +2,16 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
+
+### Fixed
+
+- `limestone/PageViews` to properly navigate between multiple `PageViews`
+
 ## [1.8.0] - 2025-12-30
 
 ### Added
