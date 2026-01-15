@@ -45,6 +45,7 @@ const defaultConfig = {
  */
 const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 	const PanelsProvider = ({
+		autoFocus = 'default-element',
 		children,
 		componentRef,
 		'data-spotlight-id': spotlightId,
@@ -58,8 +59,8 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 	}) => {
 		const [panel, setPanel] = useState(null);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
-		const autoFocus = useAutoFocus({autoFocus: 'default-element', hideChildren: panel == null});
-		const ref = useChainRefs(autoFocus, a11yRef, componentRef);
+		const autoFocusRef = useAutoFocus({autoFocus, hideChildren: panel == null});
+		const ref = useChainRefs(autoFocusRef, a11yRef, componentRef);
 		const {reverseTransition, prevIndex} = useReverseTransition(index, rtl);
 		const {
 			onWillTransition: focusOnWillTransition,
@@ -120,6 +121,16 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 	};
 
 	PanelsProvider.propTypes =  /** @lends limestone/internal/Panels.PanelsRouter.prototype */  {
+		/**
+		 * Sets the strategy used to automatically focus an element within the Panels upon render.
+		 * When set to 'none', focus is not set only on the first render.
+		 *
+		 * @type {('default-element'|'last-focused'|'none'|String)}
+		 * @default 'default-element'
+		 * @private
+		 */
+		autoFocus: PropTypes.string,
+
 		/**
 		 * Obtains a reference to the root node.
 		 *
