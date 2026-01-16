@@ -10,6 +10,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Card` to not overflow text when `withoutMarquee` is set
+- `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
 - `limestone/PageViews` to properly navigate between multiple `PageViews`
 
 ## [1.8.0] - 2025-12-30
@@ -38,7 +40,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
 - `limestone/InputField` to not overflow the parent container.
 
 ## [1.7.0] - 2025-12-08
