@@ -22,9 +22,9 @@ function usePrevious (value) {
 }
 
 function useNavButtonFocus ({index}) {
-	let autoFocus;
-
 	const prevIndex = usePrevious(index);
+
+	let autoFocus;
 
 	// on index change
 	if (index !== prevIndex) {
