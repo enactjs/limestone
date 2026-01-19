@@ -15,12 +15,13 @@ describe('useTooltip', () => {
 		...rest
 	}) => {
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...rest});
+		const tooltipRestProps = Object.assign({}, restProps);
 
 		if (tooltip) {
-			Object.assign(restProps, {children: [children, tooltip]});
+			Object.assign(tooltipRestProps, {children: [children, tooltip]});
 		}
 
-		return <Button {...restProps} {...handlers} />;
+		return <Button {...tooltipRestProps} {...handlers} />;
 	};
 
 	describe('Tooltip', () => {

@@ -4,9 +4,10 @@ import {useState} from 'react';
 
 import CommonView from '../../components/CommonView';
 
+const voiceLabels = JSON.stringify(['호랑이', '고양이']);
+
 const DataWebosVoiceLabel = () => {
 	const [result, setResult] = useState('');
-	const voiceLabels = JSON.stringify(['호랑이', '고양이']);
 
 	const updateResult = (msg) => () => setResult(msg);
 

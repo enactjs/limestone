@@ -1,4 +1,4 @@
-import {useCallback, useState, Children} from 'react';
+import {useCallback, useState, Children, useEffect} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
@@ -15,10 +15,12 @@ function usePrevious (value) {
 	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	if (value !== previousTrackedValue) {
-		setPreviousTrackedValue(value);
-		setPreviousValue(previousTrackedValue);
-	}
+	useEffect(() => {
+		if (value !== previousTrackedValue) {
+			setPreviousTrackedValue(value);
+			setPreviousValue(previousTrackedValue);
+		}
+	}, [previousTrackedValue, value]);
 
 	return previousValue;
 }

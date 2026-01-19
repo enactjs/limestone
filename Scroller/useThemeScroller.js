@@ -379,7 +379,7 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 		if (setNavigableFilter) {
 			setNavigableFilter({filterTarget: 'body'});
 		}
-	}, [props.focusableScrollbar]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [props.focusableScrollbar, scrollContainerRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	scrollContentProps.setThemeScrollContentHandle({
 		calculatePositionOnFocus,

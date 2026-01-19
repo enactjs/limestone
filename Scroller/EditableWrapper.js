@@ -84,7 +84,11 @@ const holdConfig = {
  */
 const EditableWrapper = (props) => {
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
-	const {blurItemFuncRef, focusItemFuncRef, hideItemFuncRef, removeItemFuncRef, showItemFuncRef} = editable || {};
+	const removeItemFuncRef = editable?.removeItemFuncRef;
+	const hideItemFuncRef = editable?.hideItemFuncRef;
+	const showItemFuncRef = editable?.showItemFuncRef;
+	const focusItemFuncRef = editable?.focusItemFuncRef;
+	const blurItemFuncRef = editable?.blurItemFuncRef;
 	const centered = editable?.centered != null ? editable.centered : true;
 	const selectItemBy = editable?.selectItemBy || 'longPress';
 	const customCss = editable?.css || {};
@@ -890,31 +894,31 @@ const EditableWrapper = (props) => {
 
 	useLayoutEffect(() => {
 		if (removeItemFuncRef) {
-			removeItemFuncRef.current = removeItem;
+			removeItemFuncRef.current = removeItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [removeItem, removeItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (hideItemFuncRef) {
-			hideItemFuncRef.current = hideItem;
+			hideItemFuncRef.current = hideItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [hideItem, hideItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (showItemFuncRef) {
-			showItemFuncRef.current = showItem;
+			showItemFuncRef.current = showItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [showItem, showItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (focusItemFuncRef) {
-			focusItemFuncRef.current = focusItem;
+			focusItemFuncRef.current = focusItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [focusItem, focusItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (blurItemFuncRef) {
-			blurItemFuncRef.current = blurItem;
+			blurItemFuncRef.current = blurItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [blurItem, blurItemFuncRef]);
 
