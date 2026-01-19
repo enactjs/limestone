@@ -1,7 +1,7 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {Children, useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useId, useState, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -22,9 +22,9 @@ function usePrevious (value) {
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index, rtl) {
-	let reverse = false;
-
 	const prevIndex = usePrevious(index);
+
+	let reverse = false;
 
 	if (prevIndex !== index) {
 		reverse = rtl ? (index > prevIndex) : (index < prevIndex);
@@ -52,6 +52,7 @@ function PageViewsRouter (Wrapped) {
 		rtl,
 		...rest
 	}) => {
+		const uniqueId = useId();
 		const totalIndex = Children.count(children);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
 		const autoFocusRef = useAutoFocus({autoFocus});
@@ -78,6 +79,7 @@ function PageViewsRouter (Wrapped) {
 				onWillTransition={handleWillTransition}
 				reverseTransition={reverseTransition}
 				rtl={rtl}
+				uniqueId={uniqueId}
 			>
 				{children}
 			</Wrapped>
