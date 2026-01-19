@@ -999,7 +999,6 @@ const EditableWrapper = (props) => {
 		});
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-
 	return (
 		<TouchableDiv
 			holdConfig={holdConfig}
