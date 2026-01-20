@@ -45,6 +45,26 @@ Motion Mixins
 	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
+.lime-slider-focus-in-motion() {
+	transform: @lime-translate-center @lime-focusexpand-focus-transform;
+	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
+}
+
+.lime-slider-focus-out-motion() {
+	transform: @lime-translate-center;
+	transition: transform var(--lime-focus-out-motion-duration) var(--lime-focus-out-motion-easing-function);
+}
+
+.lime-slider-press-motion() {
+	transform: @lime-translate-center @lime-focusexpand-pressed-transform;
+	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
+}
+
+.lime-slider-release-motion() {
+	transform: @lime-translate-center @lime-focusexpand-focus-transform;
+	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
+}
+
 .lime-no-expand-press-motion() {
 	transform: @lime-button-noanimation-focusexpand-pressed-bg-transform;
 	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
