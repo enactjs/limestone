@@ -8,10 +8,12 @@ const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
 function usePrevious (value) {
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	if (value !== previousValue) {
-		setPreviousValue(value);
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
 	}
 
 	return previousValue;

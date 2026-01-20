@@ -12,10 +12,12 @@ import useToggleRole from './useToggleRole';
 const PanelsContext = createContext(null);
 
 function usePrevious (value) {
+	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	if (value !== previousValue) {
-		setPreviousValue(value);
+	if (value !== previousTrackedValue) {
+		setPreviousTrackedValue(value);
+		setPreviousValue(previousTrackedValue);
 	}
 
 	return previousValue;
