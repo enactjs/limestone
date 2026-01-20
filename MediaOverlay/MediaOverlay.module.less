@@ -1,6 +1,7 @@
 // MediaOverlay.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
@@ -28,6 +29,7 @@
 		width: 100%;
 		height: 100%;
 		margin: 0;
+		.lime-focus-out-motion();
 	}
 
 	.image,
@@ -96,10 +98,20 @@
 		.image,
 		.media,
 		.progressBar {
-			transform: @lime-mediaoverlay-focus-media-transform;
-			transition: transform 200ms ease-in-out;
+			.lime-focus-in-motion();
 		}
 	});
+
+	&:not([disabled]) {
+		.focus({
+			&:active {
+				.lime-press-motion();
+			}
+			&:not(:active) {
+				.lime-release-motion();
+			}
+		});
+	}
 
 	.applySkins({
 		.bg {
