@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
@@ -8,15 +8,11 @@ const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
 function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	useEffect(() => {
-		if (value !== previousTrackedValue) {
-			setPreviousTrackedValue(value);
-			setPreviousValue(previousTrackedValue);
-		}
-	}, [previousTrackedValue, value]);
+	if (value !== previousValue) {
+		setPreviousValue(value);
+	}
 
 	return previousValue;
 }

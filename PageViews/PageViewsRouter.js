@@ -1,20 +1,16 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useId, useState, Children} from 'react';
+import {useCallback, useId, useState, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
 function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	useEffect(() => {
-		if (value !== previousTrackedValue) {
-			setPreviousTrackedValue(value);
-			setPreviousValue(previousTrackedValue);
-		}
-	}, [previousTrackedValue, value]);
+	if (value !== previousValue) {
+		setPreviousValue(value);
+	}
 
 	return previousValue;
 }

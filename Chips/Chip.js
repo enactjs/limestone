@@ -66,12 +66,17 @@ const ChipBase = (props) => {
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
 	const chipClassName = classnames(className, deleteButton?.position);
+	const chipRef = useRef(null);
 	const containerRef = useRef(null);
-	const clientRef = useRef(null);
 	const deleteButtonRef = useRef(null);
-	const chipRef = clientRef || ref;
 
 	const isHovering = useRef(false);
+
+	useEffect(() => {
+		if (!chipRef.current) {
+			chipRef.current = ref.current;
+		}
+	}, [ref]);
 
 	useEffect(() => {
 		if (chipRef.current && registerChild) {

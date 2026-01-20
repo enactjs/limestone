@@ -1,4 +1,4 @@
-import {useCallback, useState, Children, useEffect} from 'react';
+import {useCallback, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
@@ -12,15 +12,11 @@ import useToggleRole from './useToggleRole';
 const PanelsContext = createContext(null);
 
 function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
 	const [previousValue, setPreviousValue] = useState(value);
 
-	useEffect(() => {
-		if (value !== previousTrackedValue) {
-			setPreviousTrackedValue(value);
-			setPreviousValue(previousTrackedValue);
-		}
-	}, [previousTrackedValue, value]);
+	if (value !== previousValue) {
+		setPreviousValue(value);
+	}
 
 	return previousValue;
 }

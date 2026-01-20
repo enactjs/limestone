@@ -257,9 +257,9 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 		useEffect(() => {
 			if (state.ready === ReadyState.INIT) {
-				scrollIntoView();
+				scrollIntoView(); // eslint-disable-line react-hooks/set-state-in-effect
 			} else if (state.ready === ReadyState.SCROLLED) {
-				focusSelected();
+				focusSelected(); // eslint-disable-line react-hooks/set-state-in-effect
 			} else {
 				const key = getKey(props);
 				const keysDiffer = key && state.prevSelectedKey && key !== state.prevSelectedKey;
@@ -268,7 +268,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 					((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
 					!compareChildren(state.prevChildren, props.children)
 				) {
-					resetFocus(keysDiffer);
+					resetFocus(keysDiffer); // eslint-disable-line react-hooks/set-state-in-effect
 				}
 			}
 		}, [props, resetFocus, scrollIntoView, state]);

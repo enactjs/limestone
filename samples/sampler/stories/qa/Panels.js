@@ -16,7 +16,7 @@ import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useState, useRef, useLayoutEffect} from 'react';
+import {useCallback, useState, useRef, useMemo} from 'react';
 
 import galleryIcon from '../../images/icon_app_gallery.png';
 import gameHomeIcon from '../../images/icon_app_game.png';
@@ -204,7 +204,7 @@ export const WithEditableScroller = (args) => {
 	const [iconItems, setIconItems] = useState(itemsArr);
 	const [initialSelected, setInitialSelected] = useState({});
 	const [panelIndex, setPanelIndex] = useState(0);
-	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(dataSize);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
@@ -212,14 +212,17 @@ export const WithEditableScroller = (args) => {
 	const divRef = useRef();
 	const mutableRef = useRef({timer: null});
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			newItems.push(populateItems({index: i}));
 		}
-		setIconItems(itemsArr);
-		setScrollerHideIndex(dataSize);
+		return newItems;
 	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setIconItems(newItemsArr);
+	}
 
 	const findItemNode = useCallback((node) => {
 		for (let current = node; current !== divRef.current && current !== document; current = current.parentNode) {

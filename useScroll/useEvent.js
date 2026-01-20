@@ -345,9 +345,11 @@ const useEventMonitor = (props, instances, context) => {
 
 	const mutableRef = useRef({pageKeyHandlerObj: {scrollByPageOnPointerMode}});
 
-	lastPointer = lastPointerProp;
-
 	// Hooks
+
+	useEffect(() => {
+		lastPointer = lastPointerProp;
+	}, [lastPointerProp]);
 
 	useEffect(() => {
 		const setMonitorEventTarget = (target) => {

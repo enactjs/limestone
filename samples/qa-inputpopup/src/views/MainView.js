@@ -21,14 +21,6 @@ const MainView = () => {
 		setOpenInputPopupBase(prev => !prev);
 	}, []);
 
-	const InputPopupWithDefaultValue = useCallback(() => {
-		return <InputPopup defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopup} />;
-	}, [defaultValue, handleOnClickInputPopup, openInputPopup]);
-
-	const InputPopupBaseWithDefaultValue = useCallback(() => {
-		return <InputPopupBase defaultValue={defaultValue} onClose={handleOnClickInputPopupBase} open={openInputPopupBase} />;
-	}, [defaultValue, handleOnClickInputPopupBase, openInputPopupBase]);
-
 	return (
 		<Panel>
 			<Header title="InputPopup QA-Sampler" />
@@ -36,8 +28,8 @@ const MainView = () => {
 			<InputField defaultValue={defaultValue} onChange={handleOnChangeDefaultValue} placeholder="Enter default value" />
 			<Button onClick={handleOnClickInputPopup}>Open InputPopup</Button>
 			<Button onClick={handleOnClickInputPopupBase}>Open InputPopupBase</Button>
-			<InputPopupWithDefaultValue />
-			<InputPopupBaseWithDefaultValue />
+			<InputPopup defaultValue={defaultValue} onClose={handleOnClickInputPopup} open={openInputPopup} />
+			<InputPopupBase defaultValue={defaultValue} onClose={handleOnClickInputPopupBase} open={openInputPopupBase} />
 		</Panel>
 	);
 };

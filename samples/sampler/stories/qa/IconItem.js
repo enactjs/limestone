@@ -12,7 +12,7 @@ import ri from '@enact/ui/resolution';
 import {ScrollerBasic as UiScrollerBasic} from '@enact/ui/Scroller';
 import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import galleryIcon from '../../images/icon_app_gallery.png';
 import gameHomeIcon from '../../images/icon_app_game.png';
@@ -95,12 +95,19 @@ export const EditableIcon = (args) => {
 	const divRef = useRef();
 	const mutableRef = useRef({timer: null});
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			newItems.push(populateItems({index: i}));
 		}
-		setItems(itemsArr);
+		return newItems;
+	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setItems(newItemsArr);
+	}
+
+	useLayoutEffect(() => {
 		mutableRef.current.hideIndex = dataSize;
 	}, [dataSize]);
 
@@ -347,13 +354,17 @@ export const EditableIconWithLongPress = (args) => {
 	const [items, setItems] = useState(itemsArr);
 	const removeItem = useRef();
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			newItems.push(populateItems({index: i}));
 		}
-		setItems(itemsArr);
+		return newItems;
 	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setItems(newItemsArr);
+	}
 
 	const onClickRemoveButton = useCallback((ev) => {
 		if (removeItem.current) {

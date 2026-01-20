@@ -47,7 +47,7 @@ const ChipsBase = (props) => {
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
-	const ariaId = Math.random().toString(36).substring(2, 10);
+	const ariaId = useCallback(() => Math.random().toString(36).substring(2, 10), [])();
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
