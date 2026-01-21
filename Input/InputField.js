@@ -13,6 +13,7 @@ import compose from 'ramda/src/compose';
 import {Fragment} from 'react';
 
 import $L from '../internal/$L';
+import {MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
 import Tooltip from '../TooltipDecorator/Tooltip';
 import {extractVoiceProps} from '../internal/util';
@@ -22,6 +23,9 @@ import InputFieldSpotlightDecorator from './InputFieldSpotlightDecorator';
 import {calcAriaLabel, extractInputProps} from './util';
 
 import componentCss from './InputField.module.less';
+
+// Create a Marquee-enabled div for the text display
+const MarqueeText = MarqueeDecorator('div');
 
 /**
  * A Limestone styled input component.
@@ -38,6 +42,14 @@ const InputFieldBase = kind({
 	name: 'InputField',
 
 	propTypes: /** @lends limestone/Input.InputFieldBase.prototype */ {
+		/**
+		 * Indicates the input is currently active/focused for editing
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		active: PropTypes.bool,
+
 		/**
 		 * Passed by AnnounceDecorator for accessibility.
 		 *
@@ -233,6 +245,7 @@ const InputFieldBase = kind({
 	},
 
 	defaultProps: {
+		active: false,
 		disabled: false,
 		dismissOnEnter: false,
 		invalid: false,
@@ -244,7 +257,7 @@ const InputFieldBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'inputField',
-		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'tooltip', 'tooltipLabel']
+		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'marqueeText', 'tooltip', 'tooltipLabel']
 	},
 
 	handlers: {
@@ -268,8 +281,9 @@ const InputFieldBase = kind({
 			const title = (value == null || value === '') ? placeholder : '';
 			return calcAriaLabel(title, type, value);
 		},
-		className: ({iconAfter, iconBefore, invalid, size, styler}) => styler.append(
+		className: ({active, iconAfter, iconBefore, invalid, size, styler}) => styler.append(
 			{
+				active,
 				hasIconAfter: iconAfter,
 				hasIconBefore: iconBefore,
 				invalid
@@ -290,7 +304,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
+	render: ({active, css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPasswordtel = type === 'passwordtel';
@@ -315,6 +329,17 @@ const InputFieldBase = kind({
 			>
 				<div className={css.bg} />
 				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
+
+				{/* Marquee text - visible when NOT active */}
+				{!active && (
+					<MarqueeText
+						className={css.marqueeText}
+						marqueeOn="render"
+						marqueeSpeed={60}
+					>
+						{value ? value : placeholder}
+					</MarqueeText>
+				)}
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
@@ -384,88 +409,6 @@ const InputFieldDecorator = compose(
  * @public
  */
 const InputField = InputFieldDecorator(InputFieldBase);
-
-/**
- * Focuses the internal input when the component gains 5-way focus.
- *
- * By default, the internal input is not editable when the component is focused via 5-way and must
- * be selected to become interactive. In pointer mode, the input will be editable when clicked.
- *
- * @name autoFocus
- * @memberof limestone/Input.InputField.prototype
- * @type {Boolean}
- * @default false
- * @public
- */
-
-/**
- * Applies a disabled style and prevents interacting with the component.
- *
- * @name disabled
- * @memberof limestone/Input.InputField.prototype
- * @type {Boolean}
- * @default false
- * @public
- */
-
-/**
- * Sets the initial value.
- *
- * @name defaultValue
- * @memberof limestone/Input.InputField.prototype
- * @type {String}
- * @public
- */
-
-/**
- * Blurs the input when the "enter" key is pressed.
- *
- * @name dismissOnEnter
- * @memberof limestone/Input.InputField.prototype
- * @type {Boolean}
- * @default false
- * @public
- */
-
-/**
- * Called when the internal input is focused.
- *
- * @name onActivate
- * @memberof limestone/Input.InputField.prototype
- * @type {Function}
- * @param {Object} event
- * @public
- */
-
-/**
- * Called when the internal input loses focus.
- *
- * @name onDeactivate
- * @memberof limestone/Input.InputField.prototype
- * @type {Function}
- * @param {Object} event
- * @public
- */
-
-/**
- * Called when the component is removed when it had focus.
- *
- * @name onSpotlightDisappear
- * @memberof limestone/Input.InputField.prototype
- * @type {Function}
- * @param {Object} event
- * @public
- */
-
-/**
- * Disables spotlight navigation into the component.
- *
- * @name spotlightDisabled
- * @memberof limestone/Input.InputField.prototype
- * @type {Boolean}
- * @default false
- * @public
- */
 
 export default InputField;
 export {

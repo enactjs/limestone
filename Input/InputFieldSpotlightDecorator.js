@@ -5,7 +5,7 @@ import {getDirection, Spotlight} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import Spottable from '@enact/spotlight/Spottable';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {lockPointer, releasePointer} from './pointer';
 
@@ -68,6 +68,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			node: null
 		});
 		const paused = useMemo(() => new Pause('InputSpotlightDecorator'), []);
+		const [active, setActive] = useState(false);
 
 		const setDownTarget = useCallback((ev) => {
 			const {repeat, target} = ev;
@@ -94,12 +95,14 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			const focusChanged = focused.current !== prevStatus.current.focused;
 			if (focusChanged) {
 				if (focused.current === 'input') {
+					setActive(true);
 					forwardCustom('onActivate')(null, props);
 					if (!noLockPointer) {
 						lockPointer(node.current);
 					}
 					paused.pause();
 				} else if (prevStatus.current.focused === 'input') {
+					setActive(false);
 					forwardCustom('onDeactivate')(null, props);
 					if (!noLockPointer) {
 						releasePointer(prevStatus.current.node);
@@ -300,6 +303,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		return (
 			<Component
 				{...componentProps}
+				active={active}
 				onBlur={onBlur}
 				onFocus={onFocus}
 				onKeyDown={onKeyDown}
