@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
 
+### Changed
+
+- `limestone/Spinner` to match the latest GUI
+
 ### Fixed
 
 - `limestone/Card` to not overflow text when `withoutMarquee` is set
