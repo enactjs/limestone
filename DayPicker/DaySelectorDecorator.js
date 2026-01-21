@@ -5,7 +5,7 @@ import ilib from '@enact/i18n';
 import DateFmt from 'ilib/lib/DateFmt';
 import LocaleInfo from 'ilib/lib/LocaleInfo';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 
 import $L from '../internal/$L';
 
@@ -209,28 +209,22 @@ const daySelectorDecoratorDefaultProps = {
  */
 const DaySelectorDecorator = hoc((config, Wrapped) => {
 	const DaySelector = (props) => {
-		const daySelectorDecoratorProps = setDefaultProps(props, daySelectorDecoratorDefaultProps);
+		const daySelectorDecoratorProps = useMemo(() => setDefaultProps(props, daySelectorDecoratorDefaultProps), [props]);
 		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;
 
-		const [currentSelectedDay, setCurrentSelectedDay] = useState(null);
-
-		const state = getLocaleState(dayNameLength, locale);
+		const state = useMemo(() => getLocaleState(dayNameLength, locale), [dayNameLength, locale]);
 		const localSelected = localizeSelected(selected, state);
 		const abbreviatedDayNames = orderDays(state.abbreviatedDayNames, state);
 		const fullDayNames = orderDays(state.fullDayNames, state);
 
 		const handleSelect = useCallback(({selected: selectedDay}) => {
-			setCurrentSelectedDay(selectedDay);
-		}, []);
-
-		useEffect(() => {
 			// adjust the selected value beforehand so getSelectedDayString always operates on the
 			// standard, "Sunday as index 0" format
-			const generalSelected = generalizeSelected(currentSelectedDay, state);
+			const generalSelected = generalizeSelected(selectedDay, state);
 			const content = getSelectedDayString(generalSelected, '', dayNameLength);
 
 			forwardCustom('onSelect', () => ({selected: generalSelected, content}))(null, daySelectorDecoratorProps);
-		}, [currentSelectedDay, dayNameLength, daySelectorDecoratorProps, state]);
+		}, [dayNameLength, daySelectorDecoratorProps, state]);
 
 		return (
 			<Wrapped
