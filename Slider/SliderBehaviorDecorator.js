@@ -4,7 +4,7 @@ import {setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useEffectEvent, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import $L from '../internal/$L';
 
