@@ -21,6 +21,26 @@
 
 	.mediaContainer {
 		position: relative;
+		.lime-focus-out-motion();
+	}
+
+	.focus({
+		.mediaContainer {
+			.lime-focus-in-motion();
+		}
+	});
+
+	&:not([disabled]) {
+		.focus({
+			.mediaContainer {
+				&:active {
+					.lime-press-motion();
+				}
+				&:not(:active) {
+					.lime-release-motion();
+				}
+			}
+		});
 	}
 
 	.media {
@@ -29,7 +49,6 @@
 		width: 100%;
 		height: 100%;
 		margin: 0;
-		.lime-focus-out-motion();
 	}
 
 	.image,
@@ -92,25 +111,6 @@
 		});
 		font-size: @lime-mediaoverlay-subtitle-font-size;
 		line-height: @lime-mediaoverlay-line-height;
-	}
-
-	.focus({
-		.image,
-		.media,
-		.progressBar {
-			.lime-focus-in-motion();
-		}
-	});
-
-	&:not([disabled]) {
-		.focus({
-			&:active {
-				.lime-press-motion();
-			}
-			&:not(:active) {
-				.lime-release-motion();
-			}
-		});
 	}
 
 	.applySkins({
