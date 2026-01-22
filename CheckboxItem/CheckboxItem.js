@@ -202,6 +202,17 @@ const CheckboxItem = Pure(
 	)
 );
 
+/**
+ * A container that surrounds multiple CheckboxItems.
+ *
+ * A list of multiple CheckboxItems wrapped with a CheckboxItemGroup component gets
+ * required audio guidance.
+ *
+ * @class CheckboxItemGroup
+ * @memberof limestone/CheckboxItem
+ * @ui
+ * @public
+ */
 const CheckboxItemGroup = (props) => {
 	const {children, groupId, itemProps, ...rest} = props;
 

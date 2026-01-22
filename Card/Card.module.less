@@ -4,6 +4,9 @@
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
+@card-caption-padding-left: .extract(@lime-card-vertical-caption-overlay-captions-padding, left)[];
+@card-caption-padding-right: .extract(@lime-card-vertical-caption-overlay-captions-padding, right)[];
+
 .resting-border(@z-index: 1) {
 	&::before {
 		content: '';
@@ -48,13 +51,20 @@
 		border-style: solid;
 
 		.selectionIcon {
-			width: @lime-card-selection-icon-size;
-			height: @lime-card-selection-icon-size;
+			width: @lime-card-selection-check-icon-size;
+			height: @lime-card-selection-check-icon-size;
 			border-radius: @lime-card-selection-icon-border-radius;
 			margin: @lime-card-selection-icon-margin;
-			line-height: @lime-card-selection-icon-line-height;
+			line-height: @lime-card-selection-check-icon-line-height;
 			z-index: 3;
 		}
+	}
+
+	&:not(.isCheckIcon) .selectionContainer .selectionIcon {
+		--icon-size: @lime-card-selection-icon-size;
+		width: @lime-card-selection-icon-line-height;
+		height: @lime-card-selection-icon-line-height;
+		line-height: @lime-card-selection-icon-line-height;
 	}
 
 	.primaryBadge, .secondaryBadge {
@@ -71,15 +81,17 @@
 		right: @lime-card-badge-right;
 	}
 
+	.caption, .label {
+		overflow-wrap: break-word;
+	}
+
 	.caption {
-		height: @lime-card-caption-height;
 		font-size: @lime-card-caption-font-size;
 		line-height: @lime-card-caption-line-height;
 		font-weight: @lime-card-caption-font-weight;
 	}
 
 	.label {
-		height: @lime-card-label-height;
 		font-size: @lime-card-label-font-size;
 		line-height: @lime-card-label-line-height;
 		font-weight: @lime-card-label-font-weight;
@@ -161,6 +173,24 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlay {
+			&.splitCaption {
+				.caption {
+					width: ~"calc(var(--card-image-width) - (@{card-caption-padding-left} + @{card-caption-padding-right}))";
+				}
+
+				.label {
+					font-size: @lime-card-split-caption-label-font-size;
+					font-weight: @lime-card-split-caption-label-font-weight;
+					padding: @lime-card-split-caption-label-padding;
+
+					&:first-child {
+						padding-top: @lime-card-split-caption-lower-label-padding;
+					}
+				}
+			}
+		}
+
 		&.captionOverlayOnFocus .captions {
 			visibility: hidden;
 		}
@@ -227,8 +257,11 @@
 			}
 		}
 
-		&.selected .selectionIcon {
+		&.isCheckIcon.selected .selectionIcon {
 			background-color: @lime-card-selection-container-selected-color;
+		}
+
+		&.selected .selectionIcon {
 			color: @lime-card-selection-icon-selected-color;
 		}
 
@@ -271,6 +304,12 @@
 
 				&:not(.selected) {
 					.resting-border(5);
+				}
+
+				&.splitCaption {
+					.label {
+						color: @lime-card-label-main-color;
+					}
 				}
 			}
 

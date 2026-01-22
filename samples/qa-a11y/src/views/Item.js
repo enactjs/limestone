@@ -1,3 +1,4 @@
+import Icon from '@enact/limestone/Icon';
 import Item from '@enact/limestone/Item';
 
 import Section from '../components/Section';
@@ -16,6 +17,20 @@ const ItemView = () => (
 			<Item alt="With Label" label="Label">Item 0</Item>
 			<Item alt="Disabled with Label" disabled label="Label">Item 1</Item>
 			<Item alt="With Label and labelPosition" label="Label" labelPosition="above">Item 2</Item>
+		</Section>
+
+		<Section className={appCss.marginTop} title="With Icon and Icon aria-label">
+			<Item alt="With slotBefore Icon" slotBefore={<Icon size="small">arrowlargeleft</Icon>} slotBeforeAria="slot before icon">Item 0</Item>
+			<Item alt="With slotAfter Icon" slotAfter={<Icon size="small">arrowlargeright</Icon>} slotAfterAria="slot after icon">Item 1</Item>
+			<Item
+				alt="With slotBefore and slotAfter Icon"
+				slotAfter={<Icon size="small">arrowlargeright</Icon>}
+				slotAfterAria="slot after icon"
+				slotBefore={<Icon size="small">arrowlargeleft</Icon>}
+				slotBeforeAria="slot before icon"
+			>
+				Item 2
+			</Item>
 		</Section>
 
 		<Section className={appCss.marginTop} title="Aria-labelled">

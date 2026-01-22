@@ -1,9 +1,12 @@
-import handle, {forwardCustomWithPrevent} from '@enact/core/handle';
+import handle, {forProp, forwardCustomWithPrevent} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
+import {is} from '@enact/core/keymap';
 import kind from '@enact/core/kind';
 import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
+import Spottable from '@enact/spotlight/Spottable';
 import Changeable from '@enact/ui/Changeable';
 import {Row, Column, Cell} from '@enact/ui/Layout';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
@@ -21,6 +24,24 @@ import Steps from '../Steps';
 import {PageViewsRouter} from './PageViewsRouter';
 
 import componentCss from './PageViews.module.less';
+
+const isLeft = is('left');
+const isRight = is('right');
+
+const handlePageChange = (index, onChange, totalIndex) => {
+	if (onChange && index !== totalIndex && totalIndex) {
+		const nextIndex = index < (totalIndex - 1) ? (index + 1) : index;
+
+		onChange({type: 'onChange', index: nextIndex});
+	} else if (onChange && index !== 0) {
+		const prevIndex = index > 0 ? (index - 1) : index;
+
+		onChange({type: 'onChange', index: prevIndex});
+	}
+};
+
+const SpottableCell = Spottable(Cell);
+const SpottableColumn = SpotlightContainerDecorator(Column);
 
 /**
  * A PageViews that has page indicator with corresponding pages.
@@ -51,6 +72,14 @@ const PageViewsBase = kind({
 		 * @private
 		 */
 		arranger: shape,
+
+		/**
+		 * When `true`, disables Spotlight outside the container and enables 5-way navigation between panels.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		bannerMode: PropTypes.bool,
 
 		/**
 		 * {@link limestone/PageViews.Page|Page} to be rendered.
@@ -164,7 +193,15 @@ const PageViewsBase = kind({
 		 * @type {Number}
 		 * @private
 		 */
-		totalIndex: PropTypes.number
+		totalIndex: PropTypes.number,
+
+		/**
+		 * A unique identifier for each PageViews component.
+		 *
+		 * @type {String}
+		 * @private
+		 */
+		uniqueId: PropTypes.string
 	},
 
 	defaultProps: {
@@ -180,32 +217,61 @@ const PageViewsBase = kind({
 	},
 
 	handlers: {
+		onKeyDown: handle(
+			forProp('bannerMode', true),
+			(ev, {index, onChange, rtl, totalIndex, uniqueId}) => {
+				Spotlight.set('banner-container' + uniqueId, {
+					navigableFilter: (node) => node.classList.contains(componentCss.viewManager)
+				});
+
+				if ((!rtl && isRight(ev.keyCode)) || (rtl && isLeft(ev.keyCode))) {
+					handlePageChange(index, onChange, totalIndex);
+				} else if ((!rtl && isLeft(ev.keyCode)) || (rtl && isRight(ev.keyCode))) {
+					handlePageChange(index, onChange);
+				}
+			}
+		),
+		onMouseOver: handle(
+			forProp('bannerMode', true),
+			(ev, {uniqueId}) => Spotlight.set('banner-container' + uniqueId, {navigableFilter: null})
+		),
 		onNextClick: handle(
 			forwardCustomWithPrevent('onNextClick'),
 			(ev, {index, onChange, totalIndex}) => {
-				if (onChange && index !== totalIndex) {
-					const nextIndex = index < (totalIndex - 1) ? (index + 1) : index;
-
-					onChange({type: 'onChange', index: nextIndex});
-				}
+				handlePageChange(index, onChange, totalIndex);
 			}
 		),
 		onPrevClick: handle(
 			forwardCustomWithPrevent('onPrevClick'),
 			(ev, {index, onChange}) => {
-				if (onChange && index !== 0) {
-					const prevIndex = index > 0 ? (index - 1) : index;
-
-					onChange({type: 'onChange', index: prevIndex});
-				}
+				handlePageChange(index, onChange);
 			}
 		),
-		onTransition: (ev, {index, onTransition}) => {
+		onPointerOver: handle(
+			forProp('bannerMode', true),
+			(ev, {uniqueId}) => Spotlight.set('banner-container' + uniqueId, {navigableFilter: null})
+		),
+		onStepsClick: handle(
+			forProp('bannerMode', true),
+			forwardCustomWithPrevent('onStepsClick'),
+			(ev, {onChange}) => {
+				const node = ev.target;
+				const index = parseInt(node.getAttribute('data-index'));
+
+				if (node.children.length) return;
+
+				onChange({type: 'onChange', index: index});
+			}
+		),
+		onTransition: (ev, {index, onTransition, uniqueId}) => {
+			Spotlight.focus('banner-view-manager' + uniqueId);
+			Spotlight.resume();
 			if (onTransition) {
 				onTransition({type: 'onTransition', index});
 			}
 		},
 		onWillTransition: (ev, {index, onWillTransition}) => {
+			Spotlight.pause();
 			if (onWillTransition) {
 				onWillTransition({type: 'onWillTransition', index});
 			}
@@ -231,9 +297,13 @@ const PageViewsBase = kind({
 				</Cell>
 			);
 		},
-		renderViewManager: ({arranger, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, children}) => {
+		renderViewManager: ({arranger, bannerMode, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, uniqueId, children}) => {
+			const CellComponent = bannerMode ? SpottableCell : Cell;
+			const props = {};
+			if (bannerMode) props.spotlightId = "banner-view-manager" + uniqueId;
+
 			return (
-				<Cell
+				<CellComponent
 					arranger={arranger}
 					className={css.viewManager}
 					component={ViewManager}
@@ -243,16 +313,17 @@ const PageViewsBase = kind({
 					onTransition={onTransition}
 					onWillTransition={onWillTransition}
 					reverseTransition={reverseTransition}
+					{...props}
 				>
 					{children}
-				</Cell>
+				</CellComponent>
 			);
 		},
 		stepHintAriaLabel: ({children, index, totalIndex}) => {
 			const pageHint = new IString($L('Page {current} out of {total}')).format({current: index + 1, total: totalIndex});
 			return `${pageHint} ${children?.[index]?.props['aria-label'] || ''}`;
 		},
-		steps: ({css, index, onNextClick, onPrevClick, pageIndicatorType, totalIndex}) => {
+		steps: ({bannerMode, css, index, onNextClick, onPrevClick, onStepsClick, pageIndicatorType, totalIndex}) => {
 			const isPrevButtonVisible = index !== 0;
 			const isNextButtonVisible = index < totalIndex - 1;
 			const isStepVisible = totalIndex !== 1;
@@ -265,16 +336,17 @@ const PageViewsBase = kind({
 								css={css}
 								current={index + 1}
 								highlightCurrentOnly
+								onClick={onStepsClick}
 								total={totalIndex}
 							/>
 						</Row> :
 						<Row className={css.stepsRow}>
 							<Cell className={css.navButtonCell} shrink>
-								{isPrevButtonVisible ? <Button aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
+								{isPrevButtonVisible ? <Button spotlightDisabled={bannerMode} aria-label={$L('Previous')} className={css.navButton} icon="arrowlargeleft" iconFlip="auto" id="PrevNavButton" onClick={onPrevClick} /> : null}
 							</Cell>
 							<Cell className={css.pageNumber} shrink>{index + 1}<Cell className={css.separator} shrink>/</Cell>{totalIndex}</Cell>
 							<Cell className={css.navButtonCell} shrink>
-								{isNextButtonVisible ? <Button aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
+								{isNextButtonVisible ? <Button spotlightDisabled={bannerMode} aria-label={$L('Next')} className={css.navButton} icon="arrowlargeright" iconFlip="auto" id="NextNavButton" onClick={onNextClick} /> : null}
 							</Cell>
 						</Row>}
 				</>
@@ -294,22 +366,26 @@ const PageViewsBase = kind({
 		renderViewManager,
 		stepHintAriaLabel,
 		steps,
+		uniqueId,
 		...rest
 	}) => {
 		delete rest.arranger;
+		delete rest.bannerMode;
 		delete rest.children;
 		delete rest.noAnimation;
-		delete rest.onTransition;
 		delete rest.onNextClick;
+		delete rest.onStepsClick;
 		delete rest.onPrevClick;
+		delete rest.onTransition;
 		delete rest.onWillTransition;
 		delete rest.reverseTransition;
+		delete rest.rtl;
 		delete rest.totalIndex;
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>
 				{!fullContents && pageIndicatorPosition === 'top' ? steps : null}
-				<Column aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} >
+				<SpottableColumn aria-label={stepHintAriaLabel} className={css.contentsArea} id={`pageViews_index_${index}`} spotlightId={"banner-container" + uniqueId}>
 					{fullContents ?
 						<>
 							<Row className={css.horizontalLayout}>{renderViewManager}</Row>
@@ -322,7 +398,7 @@ const PageViewsBase = kind({
 							{pageIndicatorType === 'dot' ? renderNextButton : null}
 						</Row>
 					}
-				</Column>
+				</SpottableColumn>
 				{!fullContents && pageIndicatorPosition === 'bottom' ? steps : null}
 			</div>
 		);

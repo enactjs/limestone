@@ -2,6 +2,104 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
+
+### Changed
+
+- `limestone/Spinner` to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` to not overflow text when `withoutMarquee` is set
+- `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
+- `limestone/PageViews` to properly navigate between multiple `PageViews`
+
+## [1.8.0] - 2025-12-30
+
+### Added
+
+- `limestone/MediaPlayer.MediaControls` `nextAriaLabel` prop to custom the aria-label of the next button
+- `limestone/MediaPlayer.MediaControls` `nextButtonDisabled` prop to disable the next button
+- `limestone/MediaPlayer.MediaControls` `nextIcon` prop to select the next button icon
+- `limestone/MediaPlayer.MediaControls` `noNextButton` prop to remove the next button
+- `limestone/MediaPlayer.MediaControls` `noPreviousButton` prop to remove the previous button
+- `limestone/MediaPlayer.MediaControls` `onNextButtonClick` prop to custom the next button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `onPreviousButtonClick` prop to custom the previous button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `previousAriaLabel` prop to custom the aria-label of the previous button
+- `limestone/MediaPlayer.MediaControls` `previousButtonDisabled` prop to disable the previous button
+- `limestone/MediaPlayer.MediaControls` `previousIcon` prop to select the previous button icon
+- `limestone/VideoPlayer` `onNext` prop to custom the next button behavior when it is clicked
+- `limestone/VideoPlayer` `onPrevious` prop to custom the previous button behavior when it is clicked
+- `limestone/VideoPlayer` `onWillNext` prop to custom the next button behavior before playing the next video when it is clicked
+- `limestone/VideoPlayer` `onWillPrevious` prop to custom the previous button behavior before playing the previous video when it is clicked
+
+### Changed
+
+- `limestone/TabLayout` styling to match the latest GUI
+- `limestone/VirtualList` warning condition so the message will be shown only when `itemSizes.minSize` and `cbScrollTo` are set
+
+### Fixed
+
+- `limestone/InputField` to not overflow the parent container.
+
+## [1.7.0] - 2025-12-08
+
+### Added
+
+- `limestone/Icon` supported icon list, adding new icons `link2` and `btspeakermute`
+- `limestone/Card` `aria-label` prop to allow user to custom the aria-label
+- `limestone/Card` `icon` prop to allow user to change the icon
+- `limestone/Card` added option for progressBar
+- `limestone/Card` `splitCaption` prop to allow user to split the content for the captions
+- `limestone/Card` `withoutMarquee` prop to allow user to remove the text marquee effect
+- `limestone/Chip` `checked` prop to allow user to mark `Chip` component as `checked`
+- `limestone/Chip` `isImage` and `imageSize` props to allow user to use `Image` instead of `Icon`
+- `limestone/PageViews` `bannerMode` prop to allow 5-way navigation between pages
+- `limestone/ThemeDecorator/screenTypes` value `wuhd` to support WUHD displays
+
+### Changed
+
+- `limestone/Card` to match the latest GUI
+- `limestone/Checkbox` to match the latest GUI
+- `limestone/ImageItem` to match the latest GUI
+- `limestone/RadioItem` to match the latest GUI
+- `limestone/useScroll.HoverToScroll` scroll animation speed
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
+
+### Fixed
+
+- `limetone/Card` voice control to select the Card
+- `limestone/ContextualPopupDecorator` to be positioned appropriately on dynamic resolution changes
+- `limestone/Panels.Header` to use correct positions for elements inside slotBefore and slotAfter
+- `limestone/VideoPlayer.FeedbackTooltip` to use correct font family
+
+## [1.6.2] - 2025-11-05
+
+### Fixed
+
+- `limestone/Panels.Header` to use same Header height with/without subtitle.
+
+## [1.6.1] - 2025-10-29
+
+### Added
+
+- `limestone/Card` audio guidance for disabled
+- `limestone/Icon` supported icon list, updating existing icons
+
+### Fixed
+
+- `limestone/ImageItem` to get custom `aria-label`
+- `limestone/Input` `fullscreen` to prevent the title in portrait mode from rendering over the close button
+- `limestone/Input` `overlay` to prevent the invalid tooltip from overflowing
+- `limestone/Panels.Header` to stop layout shifting on render
+- `limestone/Panels.Header` to stop layout shifting when `noCloseButton` is active
+- `limestone/TabLayout` automatic expand/collapse behavior on screen orientation changes
+- `limestone/VideoPlayer` feedback style
+
 ## [1.6.0] - 2025-10-14
 
 ### Added
@@ -44,7 +142,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/CheckboxItem` `CheckboxItemGroup` to wrap multiple checkbox items as a list
 - `limestone/Item` props `slotAfterAria` and `slotBeforeAria` for audio guidance of slotAfter and slotBefore
-- `limstone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
+- `limestone/RadioItem` `RadioItemGroup` to wrap multiple radio items as a list
 - `limestone/VirtualList` prop `continue5WayHold` to scroll continuously from in a VirtualList to the outer scroller.
 
 ### Changed
