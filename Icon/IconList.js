@@ -308,10 +308,10 @@ export default {
 	link2             : 0x0F01EF, // Link
 	btspeakermute     : 0x0F01F0, // bt_speaker_mute
 	system            : 0x0F01F1, // system
-	remote_control_setting : 0x0F01F2, // remote_control_setting
+	remotecontrolsetting : 0x0F01F2, // remote_control_setting
 	warning           : 0x0F01F3, // warning
-	file_pdf          : 0x0F01F4, // file_pdf
-	file_doc          : 0x0F01F5, // file_doc
-	file_xls          : 0x0F01F6, // file_xls
+	filepdf           : 0x0F01F4, // file_pdf
+	filedoc           : 0x0F01F5, // file_doc
+	filexls           : 0x0F01F6, // file_xls
 	response          : 0x10017F  // response
 };
