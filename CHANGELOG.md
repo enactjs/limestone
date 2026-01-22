@@ -14,6 +14,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/IconItem` styling to match the latest GUI
 - `limestone/MediaOverlay` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` to match the latest GUI
 
 ### Fixed
 
