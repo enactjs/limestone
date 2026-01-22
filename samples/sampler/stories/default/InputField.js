@@ -23,6 +23,7 @@ export default {
 export const _InputField = (args) => (
 	<InputField
 		autoFocus={args['autoFocus']}
+		caretToEndOnFocus={args['caretToEndOnFocus']}
 		disabled={args['disabled']}
 		dismissOnEnter={args['dismissOnEnter']}
 		iconAfter={args['iconAfter']}
@@ -38,6 +39,7 @@ export const _InputField = (args) => (
 );
 
 boolean('autoFocus', _InputField, Config);
+boolean('caretToEndOnFocus', _InputField, Config);
 boolean('disabled', _InputField, Config);
 boolean('dismissOnEnter', _InputField, Config);
 select('iconAfter', _InputField, iconNames, Config);

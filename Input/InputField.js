@@ -59,6 +59,15 @@ const InputFieldBase = kind({
 		announce: PropTypes.func,
 
 		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		caretToEndOnFocus: PropTypes.bool,
+
+		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
 		 * corresponding internal elements and states of this component.
 		 *
@@ -246,6 +255,7 @@ const InputFieldBase = kind({
 
 	defaultProps: {
 		active: false,
+		caretToEndOnFocus: false,
 		disabled: false,
 		dismissOnEnter: false,
 		invalid: false,
@@ -314,6 +324,7 @@ const InputFieldBase = kind({
 		}
 
 		delete rest.announce;
+		delete rest.caretToEndOnFocus;
 		delete rest.dismissOnEnter;
 		delete rest.invalid;
 		delete rest.invalidMessage;

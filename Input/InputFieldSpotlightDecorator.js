@@ -35,7 +35,7 @@ const defaultConfig = {
 	 * @type {Boolean}
 	 * @default false
 	 * @memberof limestone/Input/InputSpotlightDecorator.InputSpotlightDecorator.defaultConfig
-	*/
+	 */
 	noLockPointer: false
 };
 
@@ -58,7 +58,8 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const forwardKeyUp = forward('onKeyUp');
 
 	// eslint-disable-next-line no-shadow
-	const InputSpotlightDecorator = ({...props}) => {
+	const InputSpotlightDecorator = (props) => {
+		const {caretToEndOnFocus = false} = props;
 		const downTarget = useRef(null);
 		const focused = useRef(null);
 		const node = useRef(null);
@@ -90,6 +91,12 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				} else {
 					node.current.focus();
 				}
+
+				// Move caret to end if caretToEndOnFocus is enabled and we're focusing an input
+				if (caretToEndOnFocus && focused.current === 'input' && SELECTABLE_TYPES.test(node.current.type)) {
+					const length = node.current.value.length;
+					node.current.setSelectionRange(length, length);
+				}
 			}
 
 			const focusChanged = focused.current !== prevStatus.current.focused;
@@ -115,7 +122,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				focused: focused.current,
 				node: node.current
 			};
-		}, [paused, props]);
+		}, [caretToEndOnFocus, paused, props]);
 
 		const blur = useCallback(() => {
 			if (focused.current || node.current) {
@@ -297,6 +304,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const componentProps = Object.assign({}, props);
 		delete componentProps.autoFocus;
+		delete componentProps.caretToEndOnFocus;
 		delete componentProps.onActivate;
 		delete componentProps.onDeactivate;
 
@@ -323,6 +331,15 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @public
 		 */
 		autoFocus: PropTypes.bool,
+
+		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		caretToEndOnFocus: PropTypes.bool,
 
 		/**
 		 * Applies a disabled style and the control becomes non-interactive.
