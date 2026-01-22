@@ -79,6 +79,16 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		}, []);
 
+		const moveCaretToEnd = useCallback((inputNode) => {
+			if (caretToEndOnFocus && inputNode && SELECTABLE_TYPES.test(inputNode.type)) {
+				const length = inputNode.value.length;
+				inputNode.setSelectionRange(length, length);
+
+				// TODO check for RTL locale
+				inputNode.scrollLeft = inputNode.scrollWidth;
+			}
+		}, [caretToEndOnFocus]);
+
 		const updateFocus = useCallback(() => {
 			// focus node if `InputSpotlightDecorator` is pausing Spotlight or if Spotlight is paused
 			if (
@@ -93,9 +103,14 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				}
 
 				// Move caret to end if caretToEndOnFocus is enabled and we're focusing an input
-				if (caretToEndOnFocus && focused.current === 'input' && SELECTABLE_TYPES.test(node.current.type)) {
-					const length = node.current.value.length;
-					node.current.setSelectionRange(length, length);
+				if (focused.current === 'input') {
+					if (fromMouse.current) {
+						setTimeout(() => {
+							moveCaretToEnd(node.current);
+						}, 0);
+					} else {
+						moveCaretToEnd(node.current);
+					}
 				}
 			}
 
@@ -122,7 +137,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				focused: focused.current,
 				node: node.current
 			};
-		}, [caretToEndOnFocus, paused, props]);
+		}, [moveCaretToEnd, paused, props]);
 
 		const blur = useCallback(() => {
 			if (focused.current || node.current) {
