@@ -225,45 +225,35 @@
 		}
 	}
 
-	.focus({
-		&.hasContainer {
-			.lime-focus-in-motion();
-
-			&.roundedImage::before {
-				border-radius: @lime-card-border-radius;
-			}
-		}
-
-		&.vertical {
-			&:not(.captionOverlay):not(.hasContainer) .image,
-			&.captionOverlay {
-				.lime-focus-in-motion();
-			}
-
-			&.captionOverlayOnFocus .captions {
-				visibility: visible;
-			}
-
-			&:not(.hasContainer) .selectionContainer {
-				z-index: 5;
-			}
-		}
-	});
-
-	&:not([disabled]) {
+	&:not([focusRing]){
 		.focus({
 			&.hasContainer {
-				&:active {
-					.lime-press-motion();
-				}
-				&:not(:active) {
-					.lime-release-motion();
+				.lime-focus-in-motion();
+
+				&.roundedImage::before {
+					border-radius: @lime-card-border-radius;
 				}
 			}
 
 			&.vertical {
 				&:not(.captionOverlay):not(.hasContainer) .image,
 				&.captionOverlay {
+					.lime-focus-in-motion();
+				}
+
+				&.captionOverlayOnFocus .captions {
+					visibility: visible;
+				}
+
+				&:not(.hasContainer) .selectionContainer {
+					z-index: 5;
+				}
+			}
+		});
+
+		&:not([disabled]) {
+			.focus({
+				&.hasContainer {
 					&:active {
 						.lime-press-motion();
 					}
@@ -271,8 +261,20 @@
 						.lime-release-motion();
 					}
 				}
-			}
-		});
+
+				&.vertical {
+					&:not(.captionOverlay):not(.hasContainer) .image,
+					&.captionOverlay {
+						&:active {
+							.lime-press-motion();
+						}
+						&:not(:active) {
+							.lime-release-motion();
+						}
+					}
+				}
+			});
+		}
 	}
 
 	// Skin colors
