@@ -2,7 +2,7 @@ import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import ri from '@enact/ui/resolution';
 import {VirtualList} from '@enact/limestone/VirtualList';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 
 const
 	languages = [
@@ -63,7 +63,7 @@ DifferentHeightItem.propTypes = {
 };
 
 const VerticalDifferentHeightItemList = (props) => {
-	const {arrayItems: items, arrayItemSize: itemSize} = getArrayItems();
+	const [{arrayItems: items, arrayItemSize: itemSize}] = useState(() => getArrayItems());
 
 	const renderItem = useCallback((renderProps) => {
 		return <DifferentHeightItem {...renderProps} />;

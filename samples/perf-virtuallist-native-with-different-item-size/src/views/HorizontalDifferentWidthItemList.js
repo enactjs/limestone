@@ -1,6 +1,6 @@
 import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import ri from '@enact/ui/resolution';
 import {VirtualList} from '@enact/limestone/VirtualList';
 
@@ -73,7 +73,7 @@ DifferenctWidthItem.propTypes = {
 };
 
 const HorizontalDifferenctWidthItemList = (props) => {
-	const {arrayItems: items, arrayItemSize: itemSize} = getArrayItems();
+	const [{arrayItems: items, arrayItemSize: itemSize}] = useState(() => getArrayItems());
 
 	const renderItem = useCallback((renderProps) => {
 		return <DifferenctWidthItem {...renderProps} />;

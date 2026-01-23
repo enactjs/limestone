@@ -161,7 +161,7 @@ ResizableItem.propTypes = {
 };
 
 const VerticalExpandableDifferentHeightItemList = (props) => {
-	const arrayItems = getArrayItems();
+	const [arrayItems] = useState(() => getArrayItems());
 	const [items, setItems] = useState(arrayItems);
 	const [itemSize, setItemSize] = useState([]);
 
