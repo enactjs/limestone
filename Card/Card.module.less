@@ -225,7 +225,7 @@
 		}
 	}
 
-	&:not([focusRing]){
+	&:not(:global(.focusRing)){
 		.focus({
 			&.hasContainer {
 				.lime-focus-in-motion();
