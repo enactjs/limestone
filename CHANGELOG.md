@@ -20,6 +20,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` to not overflow text when `withoutMarquee` is set
 - `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
 - `limestone/PageViews` to properly navigate between multiple `PageViews`
+- `limestone/PageViews` to resume spotlight on unmount
 
 ## [1.8.0] - 2025-12-30
 
