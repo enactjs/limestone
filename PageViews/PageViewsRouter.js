@@ -1,7 +1,8 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useCallback, useId, useState, Children} from 'react';
+import {useCallback, useEffect, useId, useState, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -65,6 +66,12 @@ function PageViewsRouter (Wrapped) {
 			focusOnWillTransition(ev);
 			a11yOnWillTransition(ev);
 		}, [a11yOnWillTransition, focusOnWillTransition]);
+
+		useEffect(() => {
+			return () => {
+				Spotlight.resume();
+			};
+		}, []);
 
 		return (
 			<Wrapped

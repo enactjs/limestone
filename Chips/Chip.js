@@ -184,7 +184,6 @@ const ChipBase = (props) => {
 				className={chipClassName}
 				data-chip-index={id}
 				disabled={disabled}
-				focusEffect="static"
 				icon={icon ? icon : ''}
 				iconComponent={iconComponent}
 				size="small"
