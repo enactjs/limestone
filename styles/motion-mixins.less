@@ -64,13 +64,3 @@ Motion Mixins
 	transform: @lime-translate-center scale(1);
 	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
-
-.lime-no-expand-press-motion() {
-	transform: @lime-button-noanimation-focusexpand-pressed-bg-transform;
-	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
-}
-
-.lime-no-expand-release-motion() {
-	transform: @lime-button-noanimation-focusexpand-focus-bg-transform;
-	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
-}
