@@ -480,6 +480,17 @@ const IconBase = kind({
  * soundbarline
  * jumpforward2
  * jumpbackward2
+ * link2
+ * btspeakermute
+ * system
+ * remotecontrolsetting
+ * warning
+ * filepdf
+ * filedoc
+ * filexls
+ * subtitleru
+ * mypageru
+};
  * ```
  *
  * @name iconList
