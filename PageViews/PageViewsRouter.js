@@ -1,12 +1,12 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 
 import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useId, useRef, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
-import {setDefaultProps} from "@enact/core/util";
 
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
