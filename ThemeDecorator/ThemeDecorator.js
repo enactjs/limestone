@@ -16,7 +16,7 @@ import {configure} from '@enact/ui/Touchable';
 import {requestLastInputType} from '@enact/webos/lastInputType';
 import platform from '@enact/webos/platform';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useEffect} from 'react';
 
 import Skinnable from '../Skinnable';
@@ -245,6 +245,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	setDefaultTargetById(rootId);
 
 	const Decorator = (props) => {
+		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName);
 		const {skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
 		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {

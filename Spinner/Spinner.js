@@ -13,7 +13,7 @@
  */
 import kind from '@enact/core/kind';
 import hoc from '@enact/core/hoc';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import Pure from '@enact/ui/internal/Pure';
 import compose from 'ramda/src/compose';
 import {useEffect, useMemo} from 'react';
@@ -170,6 +170,8 @@ const SpinnerBase = kind({
  */
 const SpinnerSpotlightDecorator = hoc((config, Wrapped) => {
 	const SpinnerSpotlight = (props) => {
+		checkPropTypes(SpinnerSpotlight.propTypes, props, 'prop', SpinnerSpotlight.displayName);
+
 		const paused = useMemo(() => new Pause('Spinner'), []);
 		const {blockClickOn} = props;
 		const current = Spotlight.getCurrent();

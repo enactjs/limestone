@@ -5,7 +5,7 @@ import {getLastPointerPosition} from '@enact/spotlight/src/pointer';
 import {perfNow} from '@enact/core/util';
 import {constants} from '@enact/ui/useScroll';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 import css from './HoverToScroll.module.less';
@@ -52,6 +52,8 @@ const directionToFocus = {
  * @private
  */
 const HoverToScrollBase = (props) => {
+	checkPropTypes(HoverToScrollBase.propTypes, props, 'prop', HoverToScrollBase.displayName);
+
 	const {
 		direction,
 		scrollContainerHandle: {current: scrollContainer},
@@ -237,7 +239,11 @@ HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.Hover
  * @ui
  * @private
  */
-const HoverToScroll = ({scrollContainerHandle, ...rest}) => {
+const HoverToScroll = (props) => {
+	checkPropTypes(HoverToScroll.propTypes, props, 'prop', HoverToScroll.displayName);
+
+	const {scrollContainerHandle, ...rest} = props;
+
 	return scrollContainerHandle ? (
 		<>
 			<HoverToScrollBase scrollContainerHandle={scrollContainerHandle} {...rest} direction="horizontal" />

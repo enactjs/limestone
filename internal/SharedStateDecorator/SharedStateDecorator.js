@@ -1,5 +1,5 @@
 import hoc from '@enact/core/hoc';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {createContext, useCallback, useContext, useEffect, useRef, useState} from 'react';
 
 const SharedState = createContext(null);
@@ -42,6 +42,8 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const SharedStateDecorator = (props) => {
+		checkPropTypes(SharedStateDecorator.propTypes, props, 'prop', SharedStateDecorator.displayName);
+
 		const context = useContext(SharedState);
 		const data = useRef({});
 		const [, setUpdateOnMountState] = useState(false);

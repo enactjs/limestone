@@ -30,7 +30,7 @@ import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
 import $L from '../internal/$L';
@@ -51,6 +51,7 @@ import FeedbackTooltip from './FeedbackTooltip';
 import Video from './Video';
 
 import css from './VideoPlayer.module.less';
+import {props} from "ramda";
 
 const isEnter = is('enter');
 const isLeft = is('left');
@@ -73,7 +74,11 @@ const calcNumberValueOfPlaybackRate = (rate) => {
 	return (pbArray.length > 1) ? parseInt(pbArray[0]) / parseInt(pbArray[1]) : parseFloat(rate);
 };
 
-const RootComponent = ({playerRef, ...rest}) => (<div ref={playerRef} {...rest} />);
+const RootComponent = (props) => {
+	checkPropTypes(RootComponent.propTypes, props, 'prop', 'VideoPlayerRootComponent');
+	const {playerRef, ...rest} = props;
+	return (<div ref={playerRef} {...rest} />);
+}
 
 RootComponent.propTypes = {
 	/*

@@ -1,5 +1,5 @@
 import Spotlight from '@enact/spotlight';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useRef} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
@@ -34,7 +34,10 @@ function useNavButtonFocus ({index}) {
 
 const NavButtonFocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function NavButtonFocusDecorator ({index, ...rest}) {
+	function NavButtonFocusDecorator (props) {
+		const {index, ...rest} = props
+		checkPropTypes(NavButtonFocusDecorator.propTypes, props, 'prop', 'NavButtonFocusDecorator');
+
 		const nav = useNavButtonFocus({index});
 
 		return (

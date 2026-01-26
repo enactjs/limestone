@@ -5,7 +5,7 @@ import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDe
 import {getAllContainerIds} from '@enact/spotlight/src/container';
 import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {createContext, useCallback, useRef} from 'react';
 
@@ -41,6 +41,8 @@ const ChipsDefaultProps = {
  * @public
  */
 const ChipsBase = (props) => {
+	checkPropTypes(ChipsBase.propTypes, props, 'prop', ChipsBase.displayName);
+
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);

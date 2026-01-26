@@ -17,7 +17,7 @@ import EnactPropTypes from '@enact/core/internal/prop-types';
 import ForwardRef from '@enact/ui/ForwardRef';
 import Pure from '@enact/ui/internal/Pure';
 import {selectSrc} from '@enact/ui/resolution';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useEffect, useState} from 'react';
 
@@ -93,6 +93,8 @@ const ImageBase = kind({
 const ResponsiveImageDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const ResponsiveImageDecorator = (props) => {
+		checkPropTypes(ResponsiveImageDecorator.propTypes, props, 'prop', ResponsiveImageDecorator.displayName);
+
 		const [, setSrc] = useState(selectSrc(props.src));
 
 		useEffect(() => {

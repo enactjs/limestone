@@ -13,7 +13,7 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import {ResizeContext} from '@enact/ui/Resizable';
 import {gridListItemSizeShape, itemSizesShape, VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 
 import {warning} from '../internal/validators';
 import useScroll from '../useScroll';
@@ -64,6 +64,7 @@ const virtualListDefaultProps = {
  */
 let VirtualList = (props) => {
 	const virtualListProps = setDefaultProps(props, virtualListDefaultProps);
+	checkPropTypes(VirtualList.propTypes, virtualListProps, 'prop', VirtualList.displayName);
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualListProps.overscrollEffectOn = {
 			arrowKey: false,
@@ -580,6 +581,8 @@ const virtualGridListDefaultProps = {
  */
 let VirtualGridList = (props) => {
 	const virtualGridListProps = setDefaultProps(props, virtualGridListDefaultProps);
+	checkPropTypes(VirtualGridList.propTypes, virtualGridListProps, 'prop', VirtualGridList.displayName);
+
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualGridListProps.overscrollEffectOn = {
 			arrowKey: false,

@@ -21,7 +21,7 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
@@ -98,6 +98,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
+		checkPropTypes(ContextualPopupDecorator.propTypes, props, 'prop', ContextualPopupDecorator.displayName);
+
 		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 
 		const [activator, setActivator] = useState(null);

@@ -20,7 +20,7 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import {getLastContainer} from '@enact/spotlight/src/container';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import warning from 'warning';
 
@@ -300,6 +300,8 @@ const popupDefaultProps = {
  * @public
  */
 const Popup = (props) => {
+	checkPropTypes(Popup.propTypes, props, 'prop', Popup.displayName);
+
 	const componentProps = setDefaultProps(props, popupDefaultProps);
 	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
 

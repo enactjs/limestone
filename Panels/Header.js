@@ -7,7 +7,7 @@ import {Row, Cell} from '@enact/ui/Layout';
 import {unit} from '@enact/ui/resolution';
 import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children, use, useEffect, useRef, useState} from 'react';
 
@@ -524,6 +524,8 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
+		checkPropTypes(ContextAsDefaultsHeader.propTypes, props, 'prop', 'ContextAsDefaultsHeader');
+
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
 		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);

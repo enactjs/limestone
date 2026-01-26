@@ -30,7 +30,7 @@ import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import UiSlider from '@enact/ui/Slider';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
 import compose from 'ramda/src/compose';
 import {useEffect, useLayoutEffect, useRef} from 'react';
@@ -73,6 +73,8 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
+	checkPropTypes(SliderBase.propTypes, sliderProps, 'prop', SliderBase.displayName);
+
 	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {

@@ -21,7 +21,7 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {Component, use, useEffect} from 'react';
 import compose from 'ramda/src/compose';
 
@@ -507,7 +507,10 @@ const tabPanelsHandlers = {
  * @ui
  * @public
  */
-const TabPanelsBase = ({rtl, ... rest}) => {
+const TabPanelsBase = (props) => {
+	const {rtl, ...rest} = props;
+	checkPropTypes(TabPanelsBase.propTypes, props, 'prop', 'TabPanelsBase');
+
 	const onTransition = use(TabLayoutContext);
 	const handlers = useHandlers(tabPanelsHandlers, {rtl, ...rest}, {onTransition});
 
@@ -558,7 +561,10 @@ const TabPanels = I18nContextDecorator(
  * @ui
  * @public
  */
-const TabPanel = ({spotlightId, ...rest}) => {
+const TabPanel = (props) => {
+	const {spotlightId, ...rest} = props;
+	checkPropTypes(TabPanel.propTypes, props, 'prop', 'TabPanel');
+	
 	useEffect(() => {
 		Spotlight.set(spotlightId, {partition: true});
 	}, [spotlightId]);

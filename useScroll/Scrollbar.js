@@ -1,6 +1,7 @@
 import classNames from 'classnames';
+import {setDefaultProps} from '@enact/core/util';
 import {useScrollbar as useScrollbarBase} from '@enact/ui/useScroll/Scrollbar';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {memo, useCallback} from 'react';
 
 import ScrollbarTrack from './ScrollbarTrack';
@@ -88,13 +89,23 @@ const useThemeScrollbar = (props) => {
  * @ui
  * @private
  */
-const ScrollbarBase = memo(({css = componentCss, minThumbSize = 120, vertical = true, ...rest}) => {
-	const props = {css, minThumbSize, vertical, ...rest};
+const ScrollbarBase = memo((props) => {
+	const scrollbarBaseProps = setDefaultProps(props, {
+		css: componentCss,
+		minThumbSize: 120,
+		vertical: true
+	});
+
+	checkPropTypes(ScrollbarBase.propTypes, scrollbarBaseProps, 'prop', ScrollbarBase.displayName);
+
+	const {css, minThumbSize, vertical, ...rest} = scrollbarBaseProps;
+
+	const propsForHook = {css, minThumbSize, vertical, ...rest};
 	const {
 		restProps,
 		scrollbarProps,
 		scrollbarTrackProps
-	} = useThemeScrollbar(props);
+	} = useThemeScrollbar(propsForHook);
 
 	return (
 		<div {...restProps} {...scrollbarProps}>

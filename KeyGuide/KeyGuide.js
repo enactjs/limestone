@@ -24,7 +24,7 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import Pure from '@enact/ui/internal/Pure';
 import {Cell, Row} from '@enact/ui/Layout';
 import Repeater from '@enact/ui/Repeater';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import BodyText from '../BodyText';
@@ -38,21 +38,26 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = ({children, imageSrc}) => {
-	return (
-		<Row className={componentCss.imageItem}>
-			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
-			<Cell shrink={false} className={componentCss.text}>
-				<BodyText className={componentCss.bodyText}>{children}</BodyText>
-			</Cell>
-		</Row>
-	);
+const ImageItemBase = (props) => {
+	checkPropTypes(ImageItemBase.propTypes, props, 'prop', ImageItemBase.displayName);
+	const {children, imageSrc} = props
+
+return (
+	<Row className={componentCss.imageItem}>
+		<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
+		<Cell shrink={false} className={componentCss.text}>
+			<BodyText className={componentCss.bodyText}>{children}</BodyText>
+		</Cell>
+	</Row>
+);
 };
 
 ImageItemBase.propTypes = {
 	children: PropTypes.node,
 	imageSrc: PropTypes.string
 };
+
+ImageItemBase.displayName = "ImageItemBase";
 
 /**
  * A Key Guide component.

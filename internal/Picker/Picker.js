@@ -11,7 +11,7 @@ import Layout, {Cell} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
 import {SlideLeftArranger, SlideTopArranger, ViewManager} from '@enact/ui/ViewManager';
 import Spotlight, {getDirection} from '@enact/spotlight';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import Skinnable from '../../Skinnable';
@@ -37,7 +37,12 @@ const isLeft = is('left');
 const isRight = is('right');
 const isUp = is('up');
 
-const DivComponent = ({ref, ...rest}) => (<div ref={ref} {...rest} />);
+const DivComponent = (props) => {
+	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent');
+
+	const {ref, ...rest} = props;
+	return (<div ref={ref} {...rest} />);
+}
 
 DivComponent.propTypes = {
 	/**
@@ -88,6 +93,7 @@ const allowedClassNames = ['picker', 'valueWrapper', 'joined', 'horizontal', 've
  * @private
  */
 const PickerBase = (props) => {
+	checkPropTypes(PickerBase.propTypes, props, 'prop', PickerBase.displayName);
 	// Set to `true` onFocus and `false` onBlur to prevent setting aria-valuetext (which
 	// will notify the user) when the component does not have focus
 	const [active, setActive] = useState(false);

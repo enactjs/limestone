@@ -11,7 +11,7 @@ import {Announce} from '@enact/ui/AnnounceDecorator';
 import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useLayoutEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
@@ -83,6 +83,8 @@ const holdConfig = {
  * @public
  */
 const EditableWrapper = (props) => {
+	checkPropTypes(EditableWrapper.propTypes, props, 'prop', EditableWrapper.displayName);
+
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
 	const centered = editable?.centered != null ? editable.centered : true;
 	const selectItemBy = editable?.selectItemBy || 'longPress';

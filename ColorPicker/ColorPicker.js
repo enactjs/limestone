@@ -21,7 +21,7 @@ import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useState} from 'react';
 
@@ -47,7 +47,10 @@ const SpottableButton = Spottable(ButtonBase);
  * @ui
  * @private
  */
-const PopupContent = ({color, colorHandler, css, presetColors}) => {
+const PopupContent = (props) => {
+	checkPropTypes(PopupContent.propTypes, props, 'prop', 'PopupContent');
+
+	const {color, colorHandler, css, presetColors} = props;
 	const [hue, setHue] = useState(0);
 	const [saturation, setSaturation] = useState(0);
 	const [lightness, setLightness] = useState(0);

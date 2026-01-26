@@ -7,7 +7,7 @@ import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -191,6 +191,8 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
+		checkPropTypes(DropdownListSpotlightDecorator.propTypes, props, 'prop', DropdownListSpotlightDecorator.displayName);
+
 		const clientSiblingRef = useRef(null);
 		const [state, setState] = useState({
 			prevChildren: props.children,

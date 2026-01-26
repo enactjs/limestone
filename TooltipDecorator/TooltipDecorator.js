@@ -9,7 +9,7 @@
 
 import hoc from '@enact/core/hoc';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 
 import {Tooltip, TooltipBase} from './Tooltip';
 import {defaultScreenEdgeKeepout, useTooltip} from './useTooltip';
@@ -70,6 +70,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {screenEdgeKeepout, tooltipDestinationProp} = config;
 
 	const Decorator = (props) => {
+		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName);
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...props});
 
 		if (tooltip) {

@@ -2,7 +2,7 @@ import {setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import compose from 'ramda/src/compose';
 import {use, useCallback, useEffect, useRef} from 'react';
 
@@ -59,6 +59,8 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
+	checkPropTypes(ChipBase.propTypes, props, 'prop', ChipBase.displayName);
+
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;

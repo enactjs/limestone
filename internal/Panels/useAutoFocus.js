@@ -1,8 +1,9 @@
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useRef, useCallback} from 'react';
 
 const isSelector = (autoFocus) => autoFocus && autoFocus !== 'last-focused' && autoFocus !== 'default-element' && autoFocus !== 'none';
@@ -49,7 +50,13 @@ function useAutoFocus ({autoFocus = 'last-focused', hideChildren}) {
 
 const AutoFocusDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
-	function AutoFocusDecorator ({autoFocus = 'last-focused', componentRef, hideChildren, ...rest}) {
+	function AutoFocusDecorator (props) {
+		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused',});
+
+		checkPropTypes(AutoFocusDecorator.propTypes, autoFocusDecoratorProps, 'prop', AutoFocusDecorator.displayName);
+
+		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
+
 		const hook = useAutoFocus({autoFocus, hideChildren});
 		const ref = useChainRefs(componentRef, hook);
 

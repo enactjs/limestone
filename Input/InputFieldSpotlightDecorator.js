@@ -4,7 +4,7 @@ import {is} from '@enact/core/keymap';
 import {getDirection, Spotlight} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import Spottable from '@enact/spotlight/Spottable';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef} from 'react';
 
 import {lockPointer, releasePointer} from './pointer';
@@ -59,6 +59,8 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const InputSpotlightDecorator = ({...props}) => {
+		checkPropTypes(InputSpotlightDecorator.propTypes, props, 'prop', InputSpotlightDecorator.displayName);
+
 		const downTarget = useRef(null);
 		const focused = useRef(null);
 		const node = useRef(null);
