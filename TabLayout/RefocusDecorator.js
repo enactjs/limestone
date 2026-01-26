@@ -44,7 +44,8 @@ const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function RefocusDecorator (props) {
 		checkPropTypes(RefocusDecorator.propTypes, props, 'prop', 'RefocusDecorator');
-		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, spotlightId, ...rest} = props;
+		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, ...rest} = props;
+		let {spotlightId} = props;
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
 
 		const screenOrientation = useScreenOrientation();

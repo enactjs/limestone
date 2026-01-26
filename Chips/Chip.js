@@ -59,10 +59,9 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
-	checkPropTypes(ChipBase.propTypes, props, 'prop', ChipBase.displayName);
-
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
+	checkPropTypes(ChipBase.propTypes, chipProps, 'prop', ChipBase.displayName);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
@@ -215,30 +214,21 @@ ChipBase.displayName = 'Chip';
 
 ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	/**
-	 * A label displayed in the chip content.
-	 *
-	 * @type {String}
-	 * @required
-	 * @public
-	 */
-	children: PropTypes.string.isRequired,
-
-	/**
-	 * Unique identifier for the chip.
-	 *
-	 * @type {String}
-	 * @required
-	 * @public
-	 */
-	id: PropTypes.string.isRequired,
-
-	/**
 	 * Sets the chip as `checked` if `true`
 	 *
 	 * @type {Boolean}
 	 * @public
 	 */
 	checked: PropTypes.bool,
+
+	/**
+	 * A label displayed in the chip content.
+	 *
+	 * @type {String}
+	 * @required
+	 * @public
+	 */
+	children: PropTypes.string,
 
 	/**
 	 * Define the icon, delete handler, and position for the delete button.
@@ -268,6 +258,15 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @public
 	 */
 	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+	/**
+	 * Unique identifier for the chip.
+	 *
+	 * @type {String}
+	 * @required
+	 * @public
+	 */
+	id: PropTypes.string,
 
 	/**
 	 * Sets the size of the image passed to the component.

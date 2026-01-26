@@ -41,9 +41,8 @@ const ChipsDefaultProps = {
  * @public
  */
 const ChipsBase = (props) => {
-	checkPropTypes(ChipsBase.propTypes, props, 'prop', ChipsBase.displayName);
-
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
+	checkPropTypes(ChipsBase.propTypes, chipsProps, 'prop', ChipsBase.displayName);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
