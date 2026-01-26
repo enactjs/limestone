@@ -2,7 +2,6 @@ import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import {setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
-
 import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useId, useRef, Children} from 'react';
 
