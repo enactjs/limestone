@@ -40,16 +40,16 @@ const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
 const ImageItemBase = (props) => {
 	checkPropTypes(ImageItemBase.propTypes, props, 'prop', ImageItemBase.displayName);
-	const {children, imageSrc} = props
+	const {children, imageSrc} = props;
 
-return (
-	<Row className={componentCss.imageItem}>
-		<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
-		<Cell shrink={false} className={componentCss.text}>
-			<BodyText className={componentCss.bodyText}>{children}</BodyText>
-		</Cell>
-	</Row>
-);
+	return (
+		<Row className={componentCss.imageItem}>
+			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
+			<Cell shrink={false} className={componentCss.text}>
+				<BodyText className={componentCss.bodyText}>{children}</BodyText>
+			</Cell>
+		</Row>
+	);
 };
 
 ImageItemBase.propTypes = {

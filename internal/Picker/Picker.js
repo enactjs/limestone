@@ -42,7 +42,7 @@ const DivComponent = (props) => {
 
 	const {ref, ...rest} = props;
 	return (<div ref={ref} {...rest} />);
-}
+};
 
 DivComponent.propTypes = {
 	/**

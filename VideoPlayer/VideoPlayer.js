@@ -51,7 +51,6 @@ import FeedbackTooltip from './FeedbackTooltip';
 import Video from './Video';
 
 import css from './VideoPlayer.module.less';
-import {props} from "ramda";
 
 const isEnter = is('enter');
 const isLeft = is('left');
@@ -78,7 +77,7 @@ const RootComponent = (props) => {
 	checkPropTypes(RootComponent.propTypes, props, 'prop', 'VideoPlayerRootComponent');
 	const {playerRef, ...rest} = props;
 	return (<div ref={playerRef} {...rest} />);
-}
+};
 
 RootComponent.propTypes = {
 	/*

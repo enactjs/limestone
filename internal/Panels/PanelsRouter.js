@@ -3,7 +3,7 @@ import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import {setDefaultProps} from '@enact/core/util';
 import PropTypes, {checkPropTypes} from 'prop-types';
-import {Children, createContext, useCallback, useRef, useState,} from 'react';
+import {Children, createContext, useCallback, useRef, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
 import useFocusOnTransition from './useFocusOnTransition';

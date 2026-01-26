@@ -6,6 +6,7 @@ import PropTypes, {checkPropTypes} from 'prop-types';
 import {useCallback, useEffect, useId, useRef, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
+import {setDefaultProps} from "@enact/core/util";
 
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
@@ -28,19 +29,23 @@ function useReverseTransition (index, rtl) {
  */
 function PageViewsRouter (Wrapped) {
 	const PageViewsProvider = (props) => {
-		checkPropTypes(PageViewsProvider.propTypes, props, 'prop', 'PageViewsProvider');
+		const pageViewsProviderProps = setDefaultProps(props, {
+			index: 0
+		});
+
+		checkPropTypes(PageViewsProvider.propTypes, pageViewsProviderProps, 'prop', 'PageViewsProvider');
 
 		const {
 			autoFocus,
 			children,
 			componentRef,
 			'data-spotlight-id': spotlightId,
-			index = 0,
+			index,
 			onTransition,
 			onWillTransition,
 			rtl,
 			...rest
-		} = props;
+		} = pageViewsProviderProps;
 
 		const uniqueId = useId();
 		const totalIndex = Children.count(children);

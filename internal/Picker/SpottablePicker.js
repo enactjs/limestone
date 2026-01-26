@@ -8,7 +8,7 @@ const DivComponent = (props) => {
 	const {innerRef, ...rest} = props;
 
 	return (<div {...rest} ref={innerRef} />);
-}
+};
 
 DivComponent.propTypes = {
 	innerRef: EnactPropTypes.ref

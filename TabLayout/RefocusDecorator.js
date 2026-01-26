@@ -43,8 +43,8 @@ function useScreenOrientation () {
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function RefocusDecorator (props) {
-		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, spotlightId, ...rest} = props;
 		checkPropTypes(RefocusDecorator.propTypes, props, 'prop', 'RefocusDecorator');
+		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, spotlightId, ...rest} = props;
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
 
 		const screenOrientation = useScreenOrientation();

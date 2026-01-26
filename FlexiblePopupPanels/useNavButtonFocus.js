@@ -35,9 +35,9 @@ function useNavButtonFocus ({index}) {
 const NavButtonFocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function NavButtonFocusDecorator (props) {
-		const {index, ...rest} = props
 		checkPropTypes(NavButtonFocusDecorator.propTypes, props, 'prop', 'NavButtonFocusDecorator');
 
+		const {index, ...rest} = props;
 		const nav = useNavButtonFocus({index});
 
 		return (

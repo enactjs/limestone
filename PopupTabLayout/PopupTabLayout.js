@@ -508,8 +508,8 @@ const tabPanelsHandlers = {
  * @public
  */
 const TabPanelsBase = (props) => {
-	const {rtl, ...rest} = props;
 	checkPropTypes(TabPanelsBase.propTypes, props, 'prop', 'TabPanelsBase');
+	const {rtl, ...rest} = props;
 
 	const onTransition = use(TabLayoutContext);
 	const handlers = useHandlers(tabPanelsHandlers, {rtl, ...rest}, {onTransition});
@@ -562,9 +562,9 @@ const TabPanels = I18nContextDecorator(
  * @public
  */
 const TabPanel = (props) => {
-	const {spotlightId, ...rest} = props;
 	checkPropTypes(TabPanel.propTypes, props, 'prop', 'TabPanel');
-	
+	const {spotlightId, ...rest} = props;
+
 	useEffect(() => {
 		Spotlight.set(spotlightId, {partition: true});
 	}, [spotlightId]);
