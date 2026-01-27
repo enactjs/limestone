@@ -53,7 +53,7 @@ const ChipBasePropTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @required
 	 * @public
 	 */
-	children: PropTypes.string,
+	children: PropTypes.string.isRequired,
 
 	/**
 	 * Define the icon, delete handler, and position for the delete button.
@@ -91,7 +91,7 @@ const ChipBasePropTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @required
 	 * @public
 	 */
-	id: PropTypes.string,
+	id: PropTypes.string.isRequired,
 
 	/**
 	 * Sets the size of the image passed to the component.
