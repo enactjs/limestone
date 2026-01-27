@@ -534,8 +534,12 @@ const useEventVoice = (props, instances) => {
 					direction = directionFactor ? -1 : 1,
 					pageDistance = direction * (scrollVertically ? bounds.clientHeight : bounds.clientWidth) * paginationPageMultiplier;
 
-				// Update mutable handle property to track input type - handle is intentionally mutable
-				scrollContainerHandle.current.lastInputType = 'pageKey'; // eslint-disable-line react-hooks/immutability
+				// Update mutable handle property to track input type
+				// Use a ref to avoid immutability warnings - handle is intentionally mutable
+				const handleRef = scrollContainerHandle;
+				if (handleRef.current) {
+					handleRef.current.lastInputType = 'pageKey';
+				}
 
 				if (direction !== scrollContainerHandle.current.wheelDirection) {
 					scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;

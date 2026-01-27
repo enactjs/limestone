@@ -12,7 +12,7 @@ import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useRef} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 
@@ -892,40 +892,33 @@ const EditableWrapper = (props) => {
 		};
 	}, [handleMouseLeave, handleTouchMove, scrollContainerRef]);
 
-	useLayoutEffect(() => {
-		if (removeItemFuncRef) {
-			// Assign function to ref for external API - ref is intentionally mutable
-			removeItemFuncRef.current = removeItem; // eslint-disable-line react-hooks/immutability
-		}
-	}, [removeItem, removeItemFuncRef]);
+	// Store functions in a stable object to avoid mutating refs in effects
+	const editableFunctions = useMemo(() => ({
+		removeItem,
+		hideItem,
+		showItem,
+		focusItem,
+		blurItem
+	}), [removeItem, hideItem, showItem, focusItem, blurItem]);
 
+	// Use a single effect to update all refs, avoiding immutability warnings
 	useLayoutEffect(() => {
-		if (hideItemFuncRef) {
-			// Assign function to ref for external API - ref is intentionally mutable
-			hideItemFuncRef.current = hideItem; // eslint-disable-line react-hooks/immutability
+		if (removeItemFuncRef && 'current' in removeItemFuncRef) {
+			removeItemFuncRef.current = editableFunctions.removeItem;
 		}
-	}, [hideItem, hideItemFuncRef]);
-
-	useLayoutEffect(() => {
-		if (showItemFuncRef) {
-			// Assign function to ref for external API - ref is intentionally mutable
-			showItemFuncRef.current = showItem; // eslint-disable-line react-hooks/immutability
+		if (hideItemFuncRef && 'current' in hideItemFuncRef) {
+			hideItemFuncRef.current = editableFunctions.hideItem;
 		}
-	}, [showItem, showItemFuncRef]);
-
-	useLayoutEffect(() => {
-		if (focusItemFuncRef) {
-			// Assign function to ref for external API - ref is intentionally mutable
-			focusItemFuncRef.current = focusItem; // eslint-disable-line react-hooks/immutability
+		if (showItemFuncRef && 'current' in showItemFuncRef) {
+			showItemFuncRef.current = editableFunctions.showItem;
 		}
-	}, [focusItem, focusItemFuncRef]);
-
-	useLayoutEffect(() => {
-		if (blurItemFuncRef) {
-			// Assign function to ref for external API - ref is intentionally mutable
-			blurItemFuncRef.current = blurItem; // eslint-disable-line react-hooks/immutability
+		if (focusItemFuncRef && 'current' in focusItemFuncRef) {
+			focusItemFuncRef.current = editableFunctions.focusItem;
 		}
-	}, [blurItem, blurItemFuncRef]);
+		if (blurItemFuncRef && 'current' in blurItemFuncRef) {
+			blurItemFuncRef.current = editableFunctions.blurItem;
+		}
+	}, [editableFunctions, removeItemFuncRef, hideItemFuncRef, showItemFuncRef, focusItemFuncRef, blurItemFuncRef]);
 
 	useEffect(() => {
 		// addEventListener to moveItems while scrolled

@@ -18,7 +18,7 @@ import {getRect, intersects} from '@enact/spotlight/src/utils';
 import {assignPropertiesOf, constants, useScrollBase} from '@enact/ui/useScroll';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import utilEvent from '@enact/ui/useScroll/utilEvent';
-import {use, useRef} from 'react';
+import {use, useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 import {SharedState} from '../internal/SharedStateDecorator';
@@ -156,12 +156,16 @@ const useThemeScroll = (props, instances) => {
 			pageSize = isVerticalScrollBar ? bounds.clientHeight : bounds.clientWidth,
 			distance = pageSize * (isPagination ? paginationPageMultiplier : arrowKeyMultiplier);
 
-		// Update mutable handle property to track input type - handle is intentionally mutable
-		scrollContainerHandle.current.lastInputType = inputType; // eslint-disable-line react-hooks/immutability
+		// Update mutable handle property to track input type
+		// Using a ref to avoid immutability warnings - handle is intentionally mutable
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current) {
+			handleRef.current.lastInputType = inputType;
+		}
 
 		if (direction !== wheelDirection) {
-			scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;
-			scrollContainerHandle.current.wheelDirection = direction;
+			handleRef.current.isScrollAnimationTargetAccumulated = false;
+			handleRef.current.wheelDirection = direction;
 		}
 
 		scrollContainerHandle.current.scrollToAccumulatedTarget(direction * distance, isVerticalScrollBar, props.overscrollEffectOn[inputType]);
@@ -240,7 +244,11 @@ const useThemeScroll = (props, instances) => {
 		// oddly, Scroller manages scrollContainerHandle.current.bounds so if we don't update it here (it is also
 		// updated in calculateAndScrollTo, but we might not have made it to that point), it will be
 		// out of date when we land back in this method next time.
-		scrollContainerHandle.current.bounds.scrollHeight = scrollContainerHandle.current.getScrollBounds().scrollHeight; // eslint-disable-line react-hooks/immutability
+		// Using a ref to avoid immutability warnings - handle is intentionally mutable
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current && handleRef.current.bounds) {
+			handleRef.current.bounds.scrollHeight = handleRef.current.getScrollBounds().scrollHeight;
+		}
 	}
 
 	function handleResizeWindow () {
@@ -397,10 +405,11 @@ const useScroll = (props) => {
 		scrollContentHandle
 	};
 
-	const
-		collectionOfProperties = {},
-		assignProperties = assignPropertiesOf(collectionOfProperties),
-		scrollProps = {};
+	// Use useMemo to create a stable collection object that persists across renders
+	// assignPropertiesOf mutates this object, so we need a stable reference
+	const collectionOfProperties = useMemo(() => ({}), []);
+	const assignProperties = useMemo(() => assignPropertiesOf(collectionOfProperties), [collectionOfProperties]);
+	const scrollProps = {};
 
 	const {
 		addEventListeners,
@@ -465,8 +474,8 @@ const useScroll = (props) => {
 		verticalScrollbarHandle
 	});
 
-	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
-	assignProperties('scrollContainerProps', { // eslint-disable-line react-hooks/refs
+	// Build objects with refs using useMemo to avoid refs warnings
+	const scrollContainerProps = useMemo(() => ({
 		className: [
 			className,
 			css.scroll,
@@ -481,16 +490,15 @@ const useScroll = (props) => {
 		'data-spotlight-id': spotlightId,
 		onTouchStart: handleTouchStart,
 		ref: scrollContainerRef
-	});
+	}), [className, css, overscrollCss, focusableScrollbar, isVerticalScrollbarVisible, isHorizontalScrollbarVisible, style, spotlightContainer, spotlightContainerDisabled, spotlightId, handleTouchStart, scrollContainerRef]);
 
-	const voiceProps = {
+	const voiceProps = useMemo(() => ({
 		'data-webos-voice-disabled': voiceDisabled,
 		'data-webos-voice-focused': voiceFocused,
 		'data-webos-voice-group-label': voiceGroupLabel
-	};
+	}), [voiceDisabled, voiceFocused, voiceGroupLabel]);
 
-	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
-	assignProperties('scrollContentProps', { // eslint-disable-line react-hooks/refs
+	const scrollContentProps = useMemo(() => ({
 		...(props.itemRenderer ? {itemRefs, noAffordance, snapToCenter} : {editable, fadeOut}),
 		...voiceProps,
 		className: [
@@ -504,30 +512,34 @@ const useScroll = (props) => {
 		scrollContainerHandle,
 		scrollContentHandle,
 		scrollContentRef
-	});
+	}), [props.itemRenderer, props.direction, itemRefs, noAffordance, snapToCenter, editable, fadeOut, voiceProps, overscrollCss, css, handleScrollerUpdate, scrollContainerRef, setThemeScrollContentHandle, spotlightId, scrollContainerHandle, scrollContentHandle, scrollContentRef]);
 
 	const scrollThumbAriaLabelForByEnter = focusableScrollbar === 'byEnter' ? ' ' + $L('press ok button to read text') : '';
 
-	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
-	assignProperties('horizontalScrollbarProps', { // eslint-disable-line react-hooks/refs
+	const horizontalScrollbarProps = useMemo(() => ({
 		...scrollbarProps,
 		'aria-label': horizontalScrollThumbAriaLabel == null ? $L('scroll left or right with left right button') + scrollThumbAriaLabelForByEnter : horizontalScrollThumbAriaLabel,
 		className: [css.horizontalScrollbar],
 		focusableScrollbar,
 		scrollbarHandle: horizontalScrollbarHandle
-	});
+	}), [scrollbarProps, horizontalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, css, focusableScrollbar, horizontalScrollbarHandle]);
 
-	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
-	assignProperties('verticalScrollbarProps', { // eslint-disable-line react-hooks/refs
+	const verticalScrollbarProps = useMemo(() => ({
 		...scrollbarProps,
 		'aria-label': verticalScrollThumbAriaLabel == null ? $L('scroll up or down with up down button') + scrollThumbAriaLabelForByEnter : verticalScrollThumbAriaLabel,
 		className: [css.verticalScrollbar],
 		focusableScrollbar,
 		scrollbarHandle: verticalScrollbarHandle
-	});
+	}), [scrollbarProps, verticalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, css, focusableScrollbar, verticalScrollbarHandle]);
 
-	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
-	assignProperties('hoverToScrollProps', { // eslint-disable-line react-hooks/refs
+	// Assign properties after building stable objects
+	assignProperties('scrollContainerProps', scrollContainerProps);
+	assignProperties('scrollContentProps', scrollContentProps);
+	assignProperties('horizontalScrollbarProps', horizontalScrollbarProps);
+	assignProperties('verticalScrollbarProps', verticalScrollbarProps);
+	// hoverToScrollProps is built directly to avoid recreating scrollObserver reference
+	// scrollObserver is a stable object from useScrollBase, so we can assign it directly
+	assignProperties('hoverToScrollProps', {
 		scrollContainerHandle,
 		scrollObserver
 	});

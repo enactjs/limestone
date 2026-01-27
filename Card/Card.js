@@ -388,7 +388,7 @@ const CardBase = kind({
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({css, disabled, icon, imageSize, placeholder, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
@@ -401,6 +401,9 @@ const CardBase = kind({
 		delete rest.withoutMarquee;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
+		// Image wrapper needs either src or placeholder - use placeholder if provided, otherwise use default transparent placeholder
+		// since this Image is used as a container for badges and icons, not as an actual image
+		const imagePlaceholder = placeholder || (!rest.src ? 'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0cm9rZT0iIzU1NSIgZmlsbD0iI2FhYSIgZmlsbC1vcGFjaXR5PSIwLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjgiIHN0cm9rZS13aWR0aD0iNiIgLz48L3N2Zz4NCg==' : undefined);
 
 		return (
 			<UiCard
@@ -409,8 +412,9 @@ const CardBase = kind({
 				css={css}
 				data-webos-voice-intent="Select"
 				disabled={disabled}
+				placeholder={imagePlaceholder}
 				imageComponent={
-					<Image>
+					<Image placeholder={imagePlaceholder}>
 						{primaryBadgeSrc ? (
 							<Image className={css.primaryBadge} src={primaryBadgeSrc} />
 						) : null}

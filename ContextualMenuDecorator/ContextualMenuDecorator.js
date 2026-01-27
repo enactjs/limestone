@@ -55,11 +55,20 @@ const defaultConfig = {
 	openProp: 'selected'
 };
 
-const ScrollingRepeater = ({className, ...rest}) => (
-	<Scroller className={className}>
-		<Repeater {...rest} />
-	</Scroller>
-);
+const ScrollingRepeater = ({children, childComponent, itemProps, component, className, ...rest}) => {
+	return (
+		<Scroller {...rest} className={`${className} scroller`}>
+			<Repeater
+				childComponent={childComponent}
+				component={component}
+				itemProps={itemProps}
+				role="list" 
+			>
+				{children}
+			</Repeater>
+		</Scroller>
+	);
+};
 
 const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 	// we might not need Skinnable at all here. If we want to skin the popup, and it's defined as a
@@ -214,7 +223,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 			// on the component by itself
 			popupClassName: ({menuItems, popupWidth, popupClassName, styler}) => {
 				const sizeClass = popupWidth !== 'auto' && popupWidth;
-				const verticalScrollbar = menuItems.length > MAX_VISIBLE_MENU_ITEMS;
+				const verticalScrollbar = menuItems && menuItems.length > MAX_VISIBLE_MENU_ITEMS;
 				return styler.join(
 					'popup',
 					'container',
@@ -231,7 +240,8 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 				className: css.innerContainer,
 				itemProps: {className: css.item, size: 'small'},
 				component: 'div',
-				role: null,
+				// We set role to null here to let the popup or ScrollingRepeater handle it
+				role: null, 
 				...popupProps
 			})
 		},

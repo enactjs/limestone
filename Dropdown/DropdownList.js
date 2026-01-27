@@ -9,7 +9,7 @@ import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useReducer, useRef} from 'react';
 
 import $L from '../internal/$L';
 import Icon from '../Icon';
@@ -192,15 +192,54 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
 		const clientSiblingRef = useRef(null);
-		const [state, setState] = useState({
+		const scrollToRef = useRef(() => {});
+		const lastFocusedKey = useRef(null);
+
+		// State machine reducer to avoid setState in effects
+		const stateReducer = useCallback((prevState, action) => {
+			switch (action.type) {
+				case 'RESET_FOCUS': {
+					let adjustedFocusIndex;
+
+					if (!action.keysDiffer && lastFocusedKey.current) {
+						const targetIndex = indexFromKey(props.children, lastFocusedKey.current);
+						if (targetIndex >= 0) {
+							adjustedFocusIndex = targetIndex;
+						}
+					}
+
+					return {
+						prevChildren: props.children,
+						prevFocused: adjustedFocusIndex,
+						prevSelected: props.selected,
+						prevSelectedKey: getKey(props),
+						ready: ReadyState.INIT
+					};
+				}
+				case 'SCROLL_COMPLETE':
+					return {...prevState, ready: ReadyState.SCROLLED};
+				case 'FOCUS_COMPLETE':
+					return {...prevState, ready: ReadyState.DONE};
+				case 'INIT_STATE':
+					return {
+						prevChildren: props.children,
+						prevFocused: null,
+						prevSelected: props.selected,
+						prevSelectedKey: getKey(props),
+						ready: isSelectedValid(props) ? ReadyState.INIT : ReadyState.DONE
+					};
+				default:
+					return prevState;
+			}
+		}, [props]);
+
+		const [state, dispatch] = useReducer(stateReducer, {
 			prevChildren: props.children,
 			prevFocused: null,
 			prevSelected: props.selected,
 			prevSelectedKey: getKey(props),
 			ready: isSelectedValid(props) ? ReadyState.INIT : ReadyState.DONE
 		});
-		const scrollToRef = useRef(() => {});
-		const lastFocusedKey = useRef(null);
 
 		useEffect(() => {
 			if (props.handleSpotlightPause) {
@@ -208,38 +247,14 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 			}
 		}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-		const focusSelected = () => {
-			setState(value => {
-				return {...value, ready: ReadyState.DONE};
-			});
-		};
-
-		const resetFocus = useCallback((keysDiffer) => {
-			let adjustedFocusIndex;
-
-			if (!keysDiffer && lastFocusedKey.current) {
-				const targetIndex = indexFromKey(props.children, lastFocusedKey.current);
-				if (targetIndex >= 0) {
-					adjustedFocusIndex = targetIndex;
-				}
-			}
-
-			setState({
-				prevChildren: props.children,
-				prevFocused: adjustedFocusIndex,
-				prevSelected: props.selected,
-				prevSelectedKey: getKey(props),
-				ready: ReadyState.INIT
-			});
-		}, [props]);
-
-		const scrollIntoView = useCallback(() => {
+		// Handle scroll action - separate from state update
+		const performScroll = useCallback((prevFocused) => {
 			let {selected} = props;
 
-			if (state.prevFocused == null && !isSelectedValid(props)) {
+			if (prevFocused == null && !isSelectedValid(props)) {
 				selected = 0;
-			} else if (state.prevFocused != null) {
-				selected = state.prevFocused;
+			} else if (prevFocused != null) {
+				selected = prevFocused;
 			}
 
 			scrollToRef.current({
@@ -249,32 +264,33 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				offset: ri.scale(156 * 2), // @lime-item-small-height * 2 (TODO: large text mode not supported!)
 				stickTo: 'start' // offset from the top of the dropdown
 			});
+		}, [props]);
 
-			setState(value => {
-				return {...value, ready: ReadyState.SCROLLED};
-			});
-		}, [props, state.prevFocused]);
-
-		useEffect(() => {
+		// Handle state machine transitions - useLayoutEffect ensures synchronous state updates
+		useLayoutEffect(() => {
 			if (state.ready === ReadyState.INIT) {
-				// Set state after scroll to track ready state - necessary for scroll-to-selected flow
-				scrollIntoView(); // eslint-disable-line react-hooks/set-state-in-effect
+				performScroll(state.prevFocused);
+				// Update state after scroll is initiated - this will trigger another effect run
+				dispatch({type: 'SCROLL_COMPLETE'});
 			} else if (state.ready === ReadyState.SCROLLED) {
-				// Set state after focus to track ready state - necessary for focus flow
-				focusSelected(); // eslint-disable-line react-hooks/set-state-in-effect
-			} else {
-				const key = getKey(props);
-				const keysDiffer = key && state.prevSelectedKey && key !== state.prevSelectedKey;
-
-				if (keysDiffer ||
-					((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
-					!compareChildren(state.prevChildren, props.children)
-				) {
-					// Set state to reset focus when selection changes - necessary for focus management
-					resetFocus(keysDiffer); // eslint-disable-line react-hooks/set-state-in-effect
-				}
+				// Focus is handled by scrollToRef callback, just update state to done
+				dispatch({type: 'FOCUS_COMPLETE'});
 			}
-		}, [props, resetFocus, scrollIntoView, state]);
+			// Only depend on state.ready to avoid multiple executions
+		}, [state.ready]); // eslint-disable-line react-hooks/exhaustive-deps
+
+		// Handle prop changes that require reset
+		useEffect(() => {
+			const key = getKey(props);
+			const keysDiffer = key && state.prevSelectedKey && key !== state.prevSelectedKey;
+
+			if (keysDiffer ||
+				((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
+				!compareChildren(state.prevChildren, props.children)
+			) {
+				dispatch({type: 'RESET_FOCUS', keysDiffer});
+			}
+		}, [props, state.prevChildren, state.prevSelected, state.prevSelectedKey]);
 
 		const setScrollTo = useCallback((scrollTo) => {
 			scrollToRef.current = scrollTo;
