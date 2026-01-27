@@ -240,7 +240,6 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 				className: css.innerContainer,
 				itemProps: {className: css.item, size: 'small'},
 				component: 'div',
-				// We set role to null here to let the popup or ScrollingRepeater handle it
 				role: null, 
 				...popupProps
 			})
