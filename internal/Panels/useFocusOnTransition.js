@@ -31,7 +31,8 @@ const transitionHandlers = {
 function useFocusOnTransition (config) {
 	// Use useRef for mutable container that persists across renders
 	const current = useRef({timerId: null});
-	const handlers = useHandlers(transitionHandlers, config, {current: current.current});
+	// Pass the ref object itself, not current.current, to avoid accessing ref during render
+	const handlers = useHandlers(transitionHandlers, config, {current});
 
 	return handlers;
 }

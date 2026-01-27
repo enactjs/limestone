@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import Spottable from '@enact/spotlight/Spottable';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 const SpotlightPlaceholder = Spottable('div');
 
@@ -14,12 +14,17 @@ const SpotlightPlaceholder = Spottable('div');
  */
 const ScrollbarPlaceholder = () => {
 	const [showPlaceholder, setShowPlaceholder] = useState(true);
+	const hasHiddenRef = useRef(false);
 
-	useEffect(() => {
-		if (showPlaceholder) {
+	// Intentional: hide placeholder after first layout (imperative handle pattern)
+	/* eslint-disable react-hooks/set-state-in-effect */
+	useLayoutEffect(() => {
+		if (showPlaceholder && !hasHiddenRef.current) {
+			hasHiddenRef.current = true;
 			setShowPlaceholder(false);
 		}
 	}, [showPlaceholder]);
+	/* eslint-enable react-hooks/set-state-in-effect */
 
 	const resetFocus = useCallback(() => {
 		setTimeout(() => {

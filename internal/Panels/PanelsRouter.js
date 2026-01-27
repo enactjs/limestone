@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState, Children} from 'react';
+import {useCallback, useLayoutEffect, useRef, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
@@ -27,17 +27,33 @@ function usePrevious (value) {
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
 	const prevIndex = usePrevious(index);
-	const prevReverseRef = useRef(rtl);
+	const [reverseTransition, setReverseTransition] = useState(rtl);
+	const prevIndexRef = useRef(index);
 
-	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
+	// Compute reverse value during render (pure computation, no side effects)
+	let computedReverse;
 	if (prevIndex !== index) {
-		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
-		prevReverseRef.current = reverse;
-		return {reverseTransition: reverse, prevIndex: index};
+		computedReverse = rtl ?
+			(index > prevIndex) :
+			(index < prevIndex);
+	} else {
+		computedReverse = reverseTransition;
 	}
 
-	// When index hasn't changed, return the last known reverseTransition value
-	return {reverseTransition: prevReverseRef.current, prevIndex: index};
+	// Update state and ref in layout effect to avoid ref access/update during render
+	useLayoutEffect(() => {
+		if (prevIndexRef.current !== index) {
+			const reverse = rtl ?
+				(index > prevIndexRef.current) :
+				(index < prevIndexRef.current);
+			setReverseTransition(reverse);
+			prevIndexRef.current = index;
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [index, rtl]);
+
+	// Return computed value immediately, state will be updated by effect for next render
+	return {reverseTransition: computedReverse, prevIndex: index};
 }
 
 const defaultConfig = {

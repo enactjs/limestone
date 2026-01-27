@@ -490,7 +490,8 @@ const useScroll = (props) => {
 		'data-spotlight-id': spotlightId,
 		onTouchStart: handleTouchStart,
 		ref: scrollContainerRef
-	}), [className, css, overscrollCss, focusableScrollbar, isVerticalScrollbarVisible, isHorizontalScrollbarVisible, style, spotlightContainer, spotlightContainerDisabled, spotlightId, handleTouchStart, scrollContainerRef]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}), [className, focusableScrollbar, isVerticalScrollbarVisible, isHorizontalScrollbarVisible, style, spotlightContainer, spotlightContainerDisabled, spotlightId, handleTouchStart, scrollContainerRef]);
 
 	const voiceProps = useMemo(() => ({
 		'data-webos-voice-disabled': voiceDisabled,
@@ -512,7 +513,8 @@ const useScroll = (props) => {
 		scrollContainerHandle,
 		scrollContentHandle,
 		scrollContentRef
-	}), [props.itemRenderer, props.direction, itemRefs, noAffordance, snapToCenter, editable, fadeOut, voiceProps, overscrollCss, css, handleScrollerUpdate, scrollContainerRef, setThemeScrollContentHandle, spotlightId, scrollContainerHandle, scrollContentHandle, scrollContentRef]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}), [props.itemRenderer, props.direction, itemRefs, noAffordance, snapToCenter, editable, fadeOut, voiceProps, handleScrollerUpdate, scrollContainerRef, setThemeScrollContentHandle, spotlightId, scrollContainerHandle, scrollContentHandle, scrollContentRef]);
 
 	const scrollThumbAriaLabelForByEnter = focusableScrollbar === 'byEnter' ? ' ' + $L('press ok button to read text') : '';
 
@@ -522,7 +524,8 @@ const useScroll = (props) => {
 		className: [css.horizontalScrollbar],
 		focusableScrollbar,
 		scrollbarHandle: horizontalScrollbarHandle
-	}), [scrollbarProps, horizontalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, css, focusableScrollbar, horizontalScrollbarHandle]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}), [scrollbarProps, horizontalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, focusableScrollbar, horizontalScrollbarHandle]);
 
 	const verticalScrollbarProps = useMemo(() => ({
 		...scrollbarProps,
@@ -530,15 +533,21 @@ const useScroll = (props) => {
 		className: [css.verticalScrollbar],
 		focusableScrollbar,
 		scrollbarHandle: verticalScrollbarHandle
-	}), [scrollbarProps, verticalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, css, focusableScrollbar, verticalScrollbarHandle]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}), [scrollbarProps, verticalScrollThumbAriaLabel, scrollThumbAriaLabelForByEnter, focusableScrollbar, verticalScrollbarHandle]);
 
 	// Assign properties after building stable objects
+	// eslint-disable-next-line react-hooks/refs
 	assignProperties('scrollContainerProps', scrollContainerProps);
+	// eslint-disable-next-line react-hooks/refs
 	assignProperties('scrollContentProps', scrollContentProps);
+	// eslint-disable-next-line react-hooks/refs
 	assignProperties('horizontalScrollbarProps', horizontalScrollbarProps);
+	// eslint-disable-next-line react-hooks/refs
 	assignProperties('verticalScrollbarProps', verticalScrollbarProps);
 	// hoverToScrollProps is built directly to avoid recreating scrollObserver reference
 	// scrollObserver is a stable object from useScrollBase, so we can assign it directly
+	// eslint-disable-next-line react-hooks/refs
 	assignProperties('hoverToScrollProps', {
 		scrollContainerHandle,
 		scrollObserver

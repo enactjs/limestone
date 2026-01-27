@@ -62,7 +62,7 @@ const ScrollingRepeater = ({children, childComponent, itemProps, component, clas
 				childComponent={childComponent}
 				component={component}
 				itemProps={itemProps}
-				role="list" 
+				role="list"
 			>
 				{children}
 			</Repeater>
@@ -240,7 +240,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config, Wrapped) => {
 				className: css.innerContainer,
 				itemProps: {className: css.item, size: 'small'},
 				component: 'div',
-				role: null, 
+				role: null,
 				...popupProps
 			})
 		},

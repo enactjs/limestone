@@ -233,12 +233,20 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 			}
 		}, [props]);
 
+		// Extract values from props to avoid passing refs in initial state
+		const initialChildren = props.children;
+		const initialSelected = props.selected;
+		const initialSelectedKey = getKey(props);
+		const initialReady = isSelectedValid(props) ? ReadyState.INIT : ReadyState.DONE;
+
+		// stateReducer reads lastFocusedKey ref only when dispatch is called (not during render)
+		// eslint-disable-next-line react-hooks/refs
 		const [state, dispatch] = useReducer(stateReducer, {
-			prevChildren: props.children,
+			prevChildren: initialChildren,
 			prevFocused: null,
-			prevSelected: props.selected,
-			prevSelectedKey: getKey(props),
-			ready: isSelectedValid(props) ? ReadyState.INIT : ReadyState.DONE
+			prevSelected: initialSelected,
+			prevSelectedKey: initialSelectedKey,
+			ready: initialReady
 		});
 
 		useEffect(() => {

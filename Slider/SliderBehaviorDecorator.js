@@ -4,7 +4,7 @@ import {setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 'react';
 
 import $L from '../internal/$L';
 
@@ -51,12 +51,15 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		const [useHintText, setUseHintText] = useState(true);
 		const [prevValue, setPrevValue] = useState(sliderBehaviorProps.value);
 
-		useEffect(() => {
+		// Sync hint/prev state when controlled value changes (intentional setState in effect)
+		/* eslint-disable react-hooks/set-state-in-effect */
+		useLayoutEffect(() => {
 			if (sliderBehaviorProps.value !== prevValue && sliderBehaviorProps.value != null) {
 				setUseHintText(false);
 				setPrevValue(sliderBehaviorProps.value);
 			}
 		}, [sliderBehaviorProps.value, prevValue]);
+		/* eslint-enable react-hooks/set-state-in-effect */
 
 		useEffect(() => {
 			return () => {

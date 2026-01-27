@@ -901,7 +901,8 @@ const EditableWrapper = (props) => {
 		blurItem
 	}), [removeItem, hideItem, showItem, focusItem, blurItem]);
 
-	// Use a single effect to update all refs, avoiding immutability warnings
+	// Imperative handle pattern: assign functions to ref.current for parent access.
+	/* eslint-disable react-hooks/immutability */
 	useLayoutEffect(() => {
 		if (removeItemFuncRef && 'current' in removeItemFuncRef) {
 			removeItemFuncRef.current = editableFunctions.removeItem;
@@ -919,6 +920,7 @@ const EditableWrapper = (props) => {
 			blurItemFuncRef.current = editableFunctions.blurItem;
 		}
 	}, [editableFunctions, removeItemFuncRef, hideItemFuncRef, showItemFuncRef, focusItemFuncRef, blurItemFuncRef]);
+	/* eslint-enable react-hooks/immutability */
 
 	useEffect(() => {
 		// addEventListener to moveItems while scrolled

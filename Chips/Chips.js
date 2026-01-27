@@ -7,13 +7,15 @@ import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {createContext, useCallback, useMemo, useRef} from 'react';
+import {createContext, useCallback, useRef} from 'react';
 
 import $L from '../internal/$L';
 
 import css from './Chips.module.less';
 
 export const ChipsContext = createContext({});
+
+let chipsAriaIdCounter = 0;
 
 const ChipsDefaultProps = {
 	orientation: 'vertical'
@@ -47,7 +49,12 @@ const ChipsBase = (props) => {
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
-	const ariaId = useMemo(() => Math.random().toString(36).substring(2, 10), []);
+	// Generate stable ID once per instance using module counter (avoids impure Math.random in render)
+	const ariaIdRef = useRef(null);
+	if (ariaIdRef.current === null) {
+		ariaIdRef.current = `chips-aria-${++chipsAriaIdCounter}`;
+	}
+	const ariaId = ariaIdRef.current;
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
