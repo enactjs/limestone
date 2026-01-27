@@ -170,7 +170,7 @@ const SpinnerBase = kind({
  */
 const SpinnerSpotlightDecorator = hoc((config, Wrapped) => {
 	const SpinnerSpotlight = (props) => {
-		checkPropTypes(SpinnerSpotlight.propTypes, props, 'prop', SpinnerSpotlight.displayName);
+		checkPropTypes(SpinnerSpotlight.propTypes, props, 'prop', SpinnerSpotlight.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const paused = useMemo(() => new Pause('Spinner'), []);
 		const {blockClickOn} = props;

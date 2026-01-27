@@ -28,7 +28,7 @@ const hours12 = [
  * @private
  */
 const HourPicker = (props) => {
-	checkPropTypes(HourPicker.propTypes, props, 'prop', 'HourPicker');
+	checkPropTypes(HourPicker.propTypes, props, 'prop', 'HourPicker'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {hasMeridiem, value, ...rest} = props;
 	const hours = hasMeridiem ? hours12 : hours24;
 

@@ -4,7 +4,7 @@ import PropTypes, {checkPropTypes} from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
 
 const DivComponent = (props) => {
-	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent');
+	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {innerRef, ...rest} = props;
 
 	return (<div {...rest} ref={innerRef} />);

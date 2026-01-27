@@ -209,7 +209,7 @@ const daySelectorDecoratorDefaultProps = {
  */
 const DaySelectorDecorator = hoc((config, Wrapped) => {
 	const DaySelector = (props) => {
-		checkPropTypes(DaySelector.propTypes, props, 'prop', DaySelector.displayName);
+		checkPropTypes(DaySelector.propTypes, props, 'prop', DaySelector.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const daySelectorDecoratorProps = setDefaultProps(props, daySelectorDecoratorDefaultProps);
 		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;

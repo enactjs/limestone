@@ -52,7 +52,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DateTimeDecorator = (props) => {
-		checkPropTypes(DateTimeDecorator.propTypes, props, 'prop', DateTimeDecorator.displayName);
+		checkPropTypes(DateTimeDecorator.propTypes, props, 'prop', DateTimeDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 		const newValue = toTime(props.value);
 		const [initialValue, setInitialValue] = useState(null);
 		const [value, setValue] = useState(newValue || Date.now());

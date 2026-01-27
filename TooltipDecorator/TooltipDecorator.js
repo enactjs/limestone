@@ -70,7 +70,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {screenEdgeKeepout, tooltipDestinationProp} = config;
 
 	const Decorator = (props) => {
-		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName);
+		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...props});
 
 		if (tooltip) {

@@ -191,7 +191,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
-		checkPropTypes(DropdownListSpotlightDecorator.propTypes, props, 'prop', DropdownListSpotlightDecorator.displayName);
+		checkPropTypes(DropdownListSpotlightDecorator.propTypes, props, 'prop', DropdownListSpotlightDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const clientSiblingRef = useRef(null);
 		const [state, setState] = useState({

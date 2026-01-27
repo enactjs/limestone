@@ -48,7 +48,7 @@ const SpottableButton = Spottable(ButtonBase);
  * @private
  */
 const PopupContent = (props) => {
-	checkPropTypes(PopupContent.propTypes, props, 'prop', 'PopupContent');
+	checkPropTypes(PopupContent.propTypes, props, 'prop', 'PopupContent'); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {color, colorHandler, css, presetColors} = props;
 	const [hue, setHue] = useState(0);

@@ -81,7 +81,7 @@ const scrollerDefaultProps = {
  */
 let Scroller = (props) => {
 	const scrollerProps = setDefaultProps(props, scrollerDefaultProps);
-	checkPropTypes(Scroller.propTypes, scrollerProps, 'prop', Scroller.displayName);
+	checkPropTypes(Scroller.propTypes, scrollerProps, 'prop', Scroller.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		scrollerProps.overscrollEffectOn = {

@@ -96,7 +96,7 @@ const ScrollbarBase = memo((props) => {
 		vertical: true
 	});
 
-	checkPropTypes(ScrollbarBase.propTypes, scrollbarBaseProps, 'prop', ScrollbarBase.displayName);
+	checkPropTypes(ScrollbarBase.propTypes, scrollbarBaseProps, 'prop', ScrollbarBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {css, minThumbSize, vertical, ...rest} = scrollbarBaseProps;
 

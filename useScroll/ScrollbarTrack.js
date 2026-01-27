@@ -33,7 +33,7 @@ const SpottableDiv = Spottable('div');
  * @private
  */
 const ScrollbarTrack = (props) => {
-	checkPropTypes(ScrollbarTrack.propTypes, props, 'prop', ScrollbarTrack.displayName);
+	checkPropTypes(ScrollbarTrack.propTypes, props, 'prop', ScrollbarTrack.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const
 		{'aria-label': ariaLabel, cbAlertScrollbarTrack, focusableScrollbar, onInteractionForScroll, ref, rtl, scrollbarTrackCss, vertical, ...rest} = props,

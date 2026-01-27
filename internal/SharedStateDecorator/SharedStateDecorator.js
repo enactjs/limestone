@@ -42,7 +42,7 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const SharedStateDecorator = (props) => {
-		checkPropTypes(SharedStateDecorator.propTypes, props, 'prop', SharedStateDecorator.displayName);
+		checkPropTypes(SharedStateDecorator.propTypes, props, 'prop', SharedStateDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const context = useContext(SharedState);
 		const data = useRef({});

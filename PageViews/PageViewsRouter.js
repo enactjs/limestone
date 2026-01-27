@@ -32,7 +32,7 @@ function PageViewsRouter (Wrapped) {
 			index: 0
 		});
 
-		checkPropTypes(PageViewsProvider.propTypes, pageViewsProviderProps, 'prop', 'PageViewsProvider');
+		checkPropTypes(PageViewsProvider.propTypes, pageViewsProviderProps, 'prop', 'PageViewsProvider'); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const {
 			autoFocus,

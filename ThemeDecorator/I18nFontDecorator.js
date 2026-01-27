@@ -7,7 +7,7 @@ import {fontOverrideGenerator} from './fontGenerator';
 
 const I18nFontDecorator = hoc((config, Wrapped) => {
 	const I18nDecorator = (props) => {
-		checkPropTypes(I18nDecorator.propTypes, props, 'prop', I18nDecorator.displayName);
+		checkPropTypes(I18nDecorator.propTypes, props, 'prop', I18nDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 		const ilibLocale = ilib.getLocale();
 
 		useEffect(() => {

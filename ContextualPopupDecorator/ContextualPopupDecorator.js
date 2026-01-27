@@ -98,7 +98,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
-		checkPropTypes(ContextualPopupDecorator.propTypes, props, 'prop', ContextualPopupDecorator.displayName);
+		checkPropTypes(ContextualPopupDecorator.propTypes, props, 'prop', ContextualPopupDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 

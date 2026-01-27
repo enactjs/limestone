@@ -59,7 +59,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const InputSpotlightDecorator = ({...props}) => {
-		checkPropTypes(InputSpotlightDecorator.propTypes, props, 'prop', InputSpotlightDecorator.displayName);
+		checkPropTypes(InputSpotlightDecorator.propTypes, props, 'prop', InputSpotlightDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const downTarget = useRef(null);
 		const focused = useRef(null);

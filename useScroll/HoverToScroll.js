@@ -52,7 +52,7 @@ const directionToFocus = {
  * @private
  */
 const HoverToScrollBase = (props) => {
-	checkPropTypes(HoverToScrollBase.propTypes, props, 'prop', HoverToScrollBase.displayName);
+	checkPropTypes(HoverToScrollBase.propTypes, props, 'prop', HoverToScrollBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {
 		direction,
@@ -240,7 +240,7 @@ HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.Hover
  * @private
  */
 const HoverToScroll = (props) => {
-	checkPropTypes(HoverToScroll.propTypes, props, 'prop', HoverToScroll.displayName);
+	checkPropTypes(HoverToScroll.propTypes, props, 'prop', HoverToScroll.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {scrollContainerHandle, ...rest} = props;
 

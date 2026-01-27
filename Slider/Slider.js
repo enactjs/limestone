@@ -73,7 +73,7 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	checkPropTypes(SliderBase.propTypes, sliderProps, 'prop', SliderBase.displayName);
+	checkPropTypes(SliderBase.propTypes, sliderProps, 'prop', SliderBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
 

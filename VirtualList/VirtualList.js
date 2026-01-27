@@ -64,7 +64,7 @@ const virtualListDefaultProps = {
  */
 let VirtualList = (props) => {
 	const virtualListProps = setDefaultProps(props, virtualListDefaultProps);
-	checkPropTypes(VirtualList.propTypes, virtualListProps, 'prop', VirtualList.displayName);
+	checkPropTypes(VirtualList.propTypes, virtualListProps, 'prop', VirtualList.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualListProps.overscrollEffectOn = {
 			arrowKey: false,
@@ -581,7 +581,7 @@ const virtualGridListDefaultProps = {
  */
 let VirtualGridList = (props) => {
 	const virtualGridListProps = setDefaultProps(props, virtualGridListDefaultProps);
-	checkPropTypes(VirtualGridList.propTypes, virtualGridListProps, 'prop', VirtualGridList.displayName);
+	checkPropTypes(VirtualGridList.propTypes, virtualGridListProps, 'prop', VirtualGridList.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualGridListProps.overscrollEffectOn = {

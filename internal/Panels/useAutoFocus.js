@@ -53,7 +53,7 @@ const AutoFocusDecorator = hoc((config, Wrapped) => {
 	function AutoFocusDecorator (props) {
 		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused'});
 
-		checkPropTypes(AutoFocusDecorator.propTypes, autoFocusDecoratorProps, 'prop', AutoFocusDecorator.displayName);
+		checkPropTypes(AutoFocusDecorator.propTypes, autoFocusDecoratorProps, 'prop', AutoFocusDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
 

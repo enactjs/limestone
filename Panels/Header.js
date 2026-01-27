@@ -524,7 +524,7 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
-		checkPropTypes(ContextAsDefaultsHeader.propTypes, props, 'prop', 'ContextAsDefaultsHeader');
+		checkPropTypes(ContextAsDefaultsHeader.propTypes, props, 'prop', 'ContextAsDefaultsHeader'); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);

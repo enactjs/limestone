@@ -245,7 +245,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	setDefaultTargetById(rootId);
 
 	const Decorator = (props) => {
-		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName);
+		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 		const {skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
 		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {

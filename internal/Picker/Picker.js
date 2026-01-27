@@ -38,7 +38,7 @@ const isRight = is('right');
 const isUp = is('up');
 
 const DivComponent = (props) => {
-	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent');
+	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent'); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {ref, ...rest} = props;
 	return (<div ref={ref} {...rest} />);
@@ -93,7 +93,7 @@ const allowedClassNames = ['picker', 'valueWrapper', 'joined', 'horizontal', 've
  * @private
  */
 const PickerBase = (props) => {
-	checkPropTypes(PickerBase.propTypes, props, 'prop', PickerBase.displayName);
+	checkPropTypes(PickerBase.propTypes, props, 'prop', PickerBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 	// Set to `true` onFocus and `false` onBlur to prevent setting aria-valuetext (which
 	// will notify the user) when the component does not have focus
 	const [active, setActive] = useState(false);

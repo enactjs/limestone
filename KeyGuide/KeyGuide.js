@@ -39,7 +39,7 @@ import componentCss from './KeyGuide.module.less';
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
 const ImageItemBase = (props) => {
-	checkPropTypes(ImageItemBase.propTypes, props, 'prop', ImageItemBase.displayName);
+	checkPropTypes(ImageItemBase.propTypes, props, 'prop', ImageItemBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 	const {children, imageSrc} = props;
 
 	return (

@@ -83,7 +83,7 @@ const holdConfig = {
  * @public
  */
 const EditableWrapper = (props) => {
-	checkPropTypes(EditableWrapper.propTypes, props, 'prop', EditableWrapper.displayName);
+	checkPropTypes(EditableWrapper.propTypes, props, 'prop', EditableWrapper.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
 	const centered = editable?.centered != null ? editable.centered : true;

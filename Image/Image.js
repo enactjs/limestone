@@ -93,7 +93,7 @@ const ImageBase = kind({
 const ResponsiveImageDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const ResponsiveImageDecorator = (props) => {
-		checkPropTypes(ResponsiveImageDecorator.propTypes, props, 'prop', ResponsiveImageDecorator.displayName);
+		checkPropTypes(ResponsiveImageDecorator.propTypes, props, 'prop', ResponsiveImageDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const [, setSrc] = useState(selectSrc(props.src));
 

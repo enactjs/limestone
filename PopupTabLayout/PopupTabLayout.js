@@ -508,7 +508,7 @@ const tabPanelsHandlers = {
  * @public
  */
 const TabPanelsBase = (props) => {
-	checkPropTypes(TabPanelsBase.propTypes, props, 'prop', 'TabPanelsBase');
+	checkPropTypes(TabPanelsBase.propTypes, props, 'prop', 'TabPanelsBase'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {rtl, ...rest} = props;
 
 	const onTransition = use(TabLayoutContext);
@@ -562,7 +562,7 @@ const TabPanels = I18nContextDecorator(
  * @public
  */
 const TabPanel = (props) => {
-	checkPropTypes(TabPanel.propTypes, props, 'prop', 'TabPanel');
+	checkPropTypes(TabPanel.propTypes, props, 'prop', 'TabPanel'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {spotlightId, ...rest} = props;
 
 	useEffect(() => {

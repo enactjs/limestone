@@ -52,7 +52,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 			title: ''
 		});
 
-		checkPropTypes(PanelsProvider.propTypes, panelsProviderProps, 'prop', 'PanelsProvider');
+		checkPropTypes(PanelsProvider.propTypes, panelsProviderProps, 'prop', 'PanelsProvider'); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const {
 			autoFocus,

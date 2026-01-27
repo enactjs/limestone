@@ -17,7 +17,7 @@ const delayToRenderChildren = 600;
  */
 function AsyncRenderChildren (props) {
 	const asyncRenderChildrenProps = setDefaultProps(props, {fallback: ''});
-	checkPropTypes(AsyncRenderChildren.propTypes, asyncRenderChildrenProps, 'prop', 'AsyncRenderChildren');
+	checkPropTypes(AsyncRenderChildren.propTypes, asyncRenderChildrenProps, 'prop', 'AsyncRenderChildren'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {children, fallback, index} = asyncRenderChildrenProps;
 	const [prevIndex, setPrevIndex] = useState(index);
 	const timerRef = useRef(null);

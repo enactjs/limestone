@@ -43,7 +43,7 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const SliderBehaviorDecorator = (props) => {
 		const sliderBehaviorProps = setDefaultProps(props, sliderBehaviorDefaultProps);
-		checkPropTypes(SliderBehaviorDecorator.propTypes, sliderBehaviorProps, 'prop', SliderBehaviorDecorator.displayName);
+		checkPropTypes(SliderBehaviorDecorator.propTypes, sliderBehaviorProps, 'prop', SliderBehaviorDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 		const paused = useMemo(() => new Pause(), []);
 		const [active, setActive] = useState(false);

@@ -74,7 +74,7 @@ const calcNumberValueOfPlaybackRate = (rate) => {
 };
 
 const RootComponent = (props) => {
-	checkPropTypes(RootComponent.propTypes, props, 'prop', 'VideoPlayerRootComponent');
+	checkPropTypes(RootComponent.propTypes, props, 'prop', 'VideoPlayerRootComponent'); // eslint-disable-line react/forbid-foreign-prop-types
 	const {playerRef, ...rest} = props;
 	return (<div ref={playerRef} {...rest} />);
 };

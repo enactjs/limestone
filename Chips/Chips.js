@@ -19,6 +19,25 @@ const ChipsDefaultProps = {
 	orientation: 'vertical'
 };
 
+const ChipsBasePropTypes = /** @lends limestone/Chips.Chips.prototype */ {
+	/**
+	 * {@link limestone/Chips.Chip|Chip} to be rendered
+	 *
+	 * @type {Node}
+	 * @public
+	 */
+	children: PropTypes.node,
+
+	/**
+	 * The layout orientation of the component.
+	 *
+	 * @type {('horizontal'|'vertical')}
+	 * @default 'vertical'
+	 * @public
+	 */
+	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
+};
+
 /**
  * A container that surrounds the chips.
  *
@@ -42,7 +61,7 @@ const ChipsDefaultProps = {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
-	checkPropTypes(ChipsBase.propTypes, chipsProps, 'prop', ChipsBase.displayName);
+	checkPropTypes(ChipsBasePropTypes, chipsProps, 'prop', ChipsBase.displayName);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
@@ -150,25 +169,6 @@ const ChipsBase = (props) => {
 };
 
 ChipsBase.displayName = 'Chips';
-
-ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
-	/**
-	 * {@link limestone/Chips.Chip|Chip} to be rendered
-	 *
-	 * @type {Node}
-	 * @public
-	 */
-	children: PropTypes.node,
-
-	/**
-	 * The layout orientation of the component.
-	 *
-	 * @type {('horizontal'|'vertical')}
-	 * @default 'vertical'
-	 * @public
-	 */
-	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
-};
 
 /**
  * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.

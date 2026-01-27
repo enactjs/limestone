@@ -300,7 +300,7 @@ const popupDefaultProps = {
  * @public
  */
 const Popup = (props) => {
-	checkPropTypes(Popup.propTypes, props, 'prop', Popup.displayName);
+	checkPropTypes(Popup.propTypes, props, 'prop', Popup.displayName); // eslint-disable-line react/forbid-foreign-prop-types
 
 	const componentProps = setDefaultProps(props, popupDefaultProps);
 	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
