@@ -9,7 +9,7 @@ import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useReducer, useRef} from 'react';
 
 import $L from '../internal/$L';
 import Icon from '../Icon';
@@ -19,6 +19,15 @@ import VirtualList from '../VirtualList';
 
 import css from './Dropdown.module.less';
 import {compareChildren} from '../internal/util';
+
+const ReadyState = {
+	// Initial state. Scrolling and focusing pending
+	INIT: 0,
+	// Scroll requested
+	SCROLLED: 1,
+	// Focus completed or not required
+	DONE: 2
+};
 
 const isSelectedValid = ({children, selected}) => Array.isArray(children) && children[selected] != null;
 
@@ -35,6 +44,25 @@ const indexFromKey = (children, key) => {
 	}
 
 	return index;
+};
+
+const stateReducer = (prevState, {adjustedFocusIndex, props, type}) => {
+	switch (type) {
+		case ReadyState.INIT:
+			return {
+				prevChildren: props.children,
+				prevFocused: adjustedFocusIndex,
+				prevSelected: props.selected,
+				prevSelectedKey: getKey(props),
+				ready: ReadyState.INIT
+			};
+		case ReadyState.SCROLLED:
+			return {...prevState, ready: ReadyState.SCROLLED};
+		case ReadyState.DONE:
+			return {...prevState, ready: ReadyState.DONE};
+		default:
+			return prevState;
+	}
 };
 
 const DropdownListBase = kind({
@@ -177,22 +205,13 @@ const DropdownListBase = kind({
 	}
 });
 
-const ReadyState = {
-	// Initial state. Scrolling and focusing pending
-	INIT: 0,
-	// Scroll requested
-	SCROLLED: 1,
-	// Focus completed or not required
-	DONE: 2
-};
-
 const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 	const WrappedWithRef = WithRef(Wrapped);
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
 		const clientSiblingRef = useRef(null);
-		const [state, setState] = useState({
+		const [state, dispatch] = useReducer(stateReducer, {
 			prevChildren: props.children,
 			prevFocused: null,
 			prevSelected: props.selected,
@@ -209,9 +228,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 		}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 		const focusSelected = () => {
-			setState(value => {
-				return {...value, ready: ReadyState.DONE};
-			});
+			dispatch({type: ReadyState.DONE});
 		};
 
 		const resetFocus = useCallback((keysDiffer) => {
@@ -224,13 +241,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				}
 			}
 
-			setState({
-				prevChildren: props.children,
-				prevFocused: adjustedFocusIndex,
-				prevSelected: props.selected,
-				prevSelectedKey: getKey(props),
-				ready: ReadyState.INIT
-			});
+			dispatch({adjustedFocusIndex: adjustedFocusIndex, props: props, type: ReadyState.INIT});
 		}, [props]);
 
 		const scrollIntoView = useCallback(() => {
@@ -250,16 +261,14 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 				stickTo: 'start' // offset from the top of the dropdown
 			});
 
-			setState(value => {
-				return {...value, ready: ReadyState.SCROLLED};
-			});
+			dispatch({type: ReadyState.SCROLLED});
 		}, [props, state.prevFocused]);
 
 		useEffect(() => {
 			if (state.ready === ReadyState.INIT) {
-				scrollIntoView(); // eslint-disable-line react-hooks/set-state-in-effect
+				scrollIntoView();
 			} else if (state.ready === ReadyState.SCROLLED) {
-				focusSelected(); // eslint-disable-line react-hooks/set-state-in-effect
+				focusSelected();
 			} else {
 				const key = getKey(props);
 				const keysDiffer = key && state.prevSelectedKey && key !== state.prevSelectedKey;
@@ -268,7 +277,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 					((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
 					!compareChildren(state.prevChildren, props.children)
 				) {
-					resetFocus(keysDiffer); // eslint-disable-line react-hooks/set-state-in-effect
+					resetFocus(keysDiffer);
 				}
 			}
 		}, [props, resetFocus, scrollIntoView, state]);
