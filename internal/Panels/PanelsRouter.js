@@ -1,4 +1,4 @@
-import {useCallback, useState, Children} from 'react';
+import {useCallback, useRef, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
@@ -27,14 +27,17 @@ function usePrevious (value) {
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
 	const prevIndex = usePrevious(index);
+	const prevReverseRef = useRef(rtl);
 
 	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
 	if (prevIndex !== index) {
 		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
+		prevReverseRef.current = reverse;
 		return {reverseTransition: reverse, prevIndex: index};
 	}
 
-	return {reverseTransition: rtl, prevIndex: index};
+	// When index hasn't changed, return the last known reverseTransition value
+	return {reverseTransition: prevReverseRef.current, prevIndex: index};
 }
 
 const defaultConfig = {

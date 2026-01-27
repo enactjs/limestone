@@ -72,8 +72,9 @@ const ChipBase = (props) => {
 
 	const isHovering = useRef(false);
 
+	// Sync chipRef with external ref prop
 	useEffect(() => {
-		if (!chipRef.current) {
+		if (ref && typeof ref === 'object' && 'current' in ref) {
 			chipRef.current = ref.current;
 		}
 	}, [ref]);

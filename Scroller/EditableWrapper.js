@@ -894,30 +894,35 @@ const EditableWrapper = (props) => {
 
 	useLayoutEffect(() => {
 		if (removeItemFuncRef) {
+			// Assign function to ref for external API - ref is intentionally mutable
 			removeItemFuncRef.current = removeItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [removeItem, removeItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (hideItemFuncRef) {
+			// Assign function to ref for external API - ref is intentionally mutable
 			hideItemFuncRef.current = hideItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [hideItem, hideItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (showItemFuncRef) {
+			// Assign function to ref for external API - ref is intentionally mutable
 			showItemFuncRef.current = showItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [showItem, showItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (focusItemFuncRef) {
+			// Assign function to ref for external API - ref is intentionally mutable
 			focusItemFuncRef.current = focusItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [focusItem, focusItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (blurItemFuncRef) {
+			// Assign function to ref for external API - ref is intentionally mutable
 			blurItemFuncRef.current = blurItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [blurItem, blurItemFuncRef]);

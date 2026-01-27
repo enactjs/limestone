@@ -156,6 +156,7 @@ const useThemeScroll = (props, instances) => {
 			pageSize = isVerticalScrollBar ? bounds.clientHeight : bounds.clientWidth,
 			distance = pageSize * (isPagination ? paginationPageMultiplier : arrowKeyMultiplier);
 
+		// Update mutable handle property to track input type - handle is intentionally mutable
 		scrollContainerHandle.current.lastInputType = inputType; // eslint-disable-line react-hooks/immutability
 
 		if (direction !== wheelDirection) {
@@ -464,6 +465,7 @@ const useScroll = (props) => {
 		verticalScrollbarHandle
 	});
 
+	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
 	assignProperties('scrollContainerProps', { // eslint-disable-line react-hooks/refs
 		className: [
 			className,
@@ -487,6 +489,7 @@ const useScroll = (props) => {
 		'data-webos-voice-group-label': voiceGroupLabel
 	};
 
+	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
 	assignProperties('scrollContentProps', { // eslint-disable-line react-hooks/refs
 		...(props.itemRenderer ? {itemRefs, noAffordance, snapToCenter} : {editable, fadeOut}),
 		...voiceProps,
@@ -505,6 +508,7 @@ const useScroll = (props) => {
 
 	const scrollThumbAriaLabelForByEnter = focusableScrollbar === 'byEnter' ? ' ' + $L('press ok button to read text') : '';
 
+	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
 	assignProperties('horizontalScrollbarProps', { // eslint-disable-line react-hooks/refs
 		...scrollbarProps,
 		'aria-label': horizontalScrollThumbAriaLabel == null ? $L('scroll left or right with left right button') + scrollThumbAriaLabelForByEnter : horizontalScrollThumbAriaLabel,
@@ -513,6 +517,7 @@ const useScroll = (props) => {
 		scrollbarHandle: horizontalScrollbarHandle
 	});
 
+	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
 	assignProperties('verticalScrollbarProps', { // eslint-disable-line react-hooks/refs
 		...scrollbarProps,
 		'aria-label': verticalScrollThumbAriaLabel == null ? $L('scroll up or down with up down button') + scrollThumbAriaLabelForByEnter : verticalScrollThumbAriaLabel,
@@ -521,6 +526,7 @@ const useScroll = (props) => {
 		scrollbarHandle: verticalScrollbarHandle
 	});
 
+	// assignProperties mutates collectionOfProperties with refs - refs are intentionally passed for external API
 	assignProperties('hoverToScrollProps', { // eslint-disable-line react-hooks/refs
 		scrollContainerHandle,
 		scrollObserver

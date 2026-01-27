@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import Spottable from '@enact/spotlight/Spottable';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const SpotlightPlaceholder = Spottable('div');
 
@@ -15,9 +15,11 @@ const SpotlightPlaceholder = Spottable('div');
 const ScrollbarPlaceholder = () => {
 	const [showPlaceholder, setShowPlaceholder] = useState(true);
 
-	if (showPlaceholder) {
-		setShowPlaceholder(false);
-	}
+	useEffect(() => {
+		if (showPlaceholder) {
+			setShowPlaceholder(false);
+		}
+	}, [showPlaceholder]);
 
 	const resetFocus = useCallback(() => {
 		setTimeout(() => {

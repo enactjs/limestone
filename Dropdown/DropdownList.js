@@ -257,8 +257,10 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 		useEffect(() => {
 			if (state.ready === ReadyState.INIT) {
+				// Set state after scroll to track ready state - necessary for scroll-to-selected flow
 				scrollIntoView(); // eslint-disable-line react-hooks/set-state-in-effect
 			} else if (state.ready === ReadyState.SCROLLED) {
+				// Set state after focus to track ready state - necessary for focus flow
 				focusSelected(); // eslint-disable-line react-hooks/set-state-in-effect
 			} else {
 				const key = getKey(props);
@@ -268,6 +270,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 					((!key || !state.prevSelectedKey) && state.prevSelected !== props.selected) ||
 					!compareChildren(state.prevChildren, props.children)
 				) {
+					// Set state to reset focus when selection changes - necessary for focus management
 					resetFocus(keysDiffer); // eslint-disable-line react-hooks/set-state-in-effect
 				}
 			}

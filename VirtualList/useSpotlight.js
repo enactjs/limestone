@@ -124,8 +124,10 @@ const useSpotlightRestore = (props, instances, context) => {
 				mutableRef.current.restoreLastFocused = false;
 
 				// try to focus the last focused item
+				// Set temporary flag on mutable ref to indicate jump scroll behavior
 				spottable.current.isScrolledByJump = true; // eslint-disable-line react-hooks/immutability
 				const foundLastFocused = focusByIndex(mutableRef.current.preservedIndex, mutableRef.current.lastSpotlightDirection);
+				// Reset flag after focus attempt - ref is intentionally mutable
 				spottable.current.isScrolledByJump = false; // eslint-disable-line react-hooks/immutability
 
 				// but if that fails (because it isn't found or is disabled), focus the container so

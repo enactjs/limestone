@@ -7,7 +7,7 @@ import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {createContext, useCallback, useRef} from 'react';
+import {createContext, useCallback, useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 
@@ -47,7 +47,7 @@ const ChipsBase = (props) => {
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
-	const ariaId = useCallback(() => Math.random().toString(36).substring(2, 10), [])();
+	const ariaId = useMemo(() => Math.random().toString(36).substring(2, 10), []);
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
