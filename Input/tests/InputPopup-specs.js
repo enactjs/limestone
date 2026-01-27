@@ -52,13 +52,6 @@ describe('InputPopup Specs', () => {
 		const strDefaultValue = 'This is the default value';
 		const strValue = 'This is the value';
 
-		// Suppress warning about using both value and defaultValue - this test intentionally
-		// verifies that value takes precedence over defaultValue
-		const originalWarn = console.warn;
-		const originalError = console.error;
-		console.warn = jest.fn();
-		console.error = jest.fn();
-
 		render(
 			<FloatingLayerController>
 				<InputPopup defaultValue={strDefaultValue} open value={strValue} />
@@ -68,9 +61,5 @@ describe('InputPopup Specs', () => {
 		const actual = screen.getByDisplayValue(strValue);
 
 		expect(actual).toBeTruthy();
-
-		// Restore console
-		console.warn = originalWarn;
-		console.error = originalError;
 	});
 });
