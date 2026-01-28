@@ -54,6 +54,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/InputField` to not overflow the parent container.
 
+## [1.6.3] - 2025-12-26
+
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
+
 ## [1.7.0] - 2025-12-08
 
 ### Added
