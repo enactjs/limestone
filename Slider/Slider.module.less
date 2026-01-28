@@ -1,13 +1,11 @@
 // Slider.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
 .slider {
-	@knob-transform-resting: @lime-translate-center scale(@lime-slider-knob-resting-state-scale);
-	@knob-transform-active: @lime-translate-center scale(1);
-
 	position: relative;
 	margin: 0 @lime-spotlight-outset;
 	// Set both the V and H sizes here, so they can be easily overridden, both internally below and by component consumers.
@@ -39,12 +37,11 @@
 			position: absolute;
 			height: @lime-slider-knob-height;
 			width: @lime-slider-knob-width;
-			transform: @knob-transform-resting;
 			border-radius: (@lime-slider-knob-height / 2);
 			border: @lime-button-border-width solid transparent;
 			box-sizing: border-box;
 			will-change: transform;
-			transition: transform ease-out 100ms;
+			.lime-slider-focus-out-motion();
 		}
 	}
 
@@ -199,7 +196,7 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-handle-focused-shadow;
-				transform: @knob-transform-active;
+				.lime-slider-focus-in-motion();
 			}
 
 			&.active,
@@ -207,15 +204,22 @@
 				.fill {
 					background-color: @lime-slider-track-active-focused-color;
 				}
+			}
 
+			&:active {
 				.knob::before {
-					transform: @knob-transform-active;
+					.lime-slider-press-motion();
+				}
+			}
+			&:not(:active) {
+				.knob::before {
+					.lime-slider-release-motion();
 				}
 			}
 
 			.disabled({
 				.knob::before {
-					transform: @knob-transform-resting;
+					.lime-slider-focus-out-motion();
 				}
 			});
 		});
@@ -229,7 +233,7 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow:  @lime-slider-handle-focused-shadow;
-				transform: @knob-transform-active;
+				.lime-slider-focus-in-motion();
 			}
 		}
 
@@ -242,7 +246,7 @@
 				&.active,
 				&.pressed {
 					.knob::before {
-						transform: @knob-transform-resting;
+						transform: @lime-translate-center;
 					}
 				}
 			});
@@ -250,7 +254,7 @@
 			:global(.spotlight-input-touch) &.pressed {
 				.knob::before {
 					box-shadow: none;
-					transform: @knob-transform-resting;
+					transform: @lime-translate-center;
 				}
 			}
 		}
