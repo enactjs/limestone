@@ -1,4 +1,5 @@
 import {add, is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import BodyText from '@enact/limestone/BodyText';
 import {FixedPopupPanels, Panel} from '@enact/limestone/FixedPopupPanels';
@@ -53,6 +54,15 @@ class ScrollerResizableItem extends Component {
 		more: PropTypes.bool,
 		toggleMore: PropTypes.func
 	};
+
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
+	}
 
 	render () {
 		const {max = 3000, min = 504, more, toggleMore} = this.props;
@@ -747,10 +757,6 @@ select('verticalScrollbar', WithShortContents, prop.scrollbarOption, Config);
 
 WithShortContents.storyName = 'With short contents';
 
-ScrollerWithResizable.propTypes = {
-	args: PropTypes.object
-};
-
 export const WithResizable = (args) => <ScrollerWithResizable args={args} />;
 
 select('scrollMode', WithResizable, prop.scrollModeOption, Config);
@@ -783,10 +789,6 @@ export const WithTwoUiScroller = (args) => (
 select('scrollMode', WithTwoUiScroller, prop.scrollModeOption, Config);
 
 WithTwoUiScroller.storyName = 'With Two ui:Scroller';
-
-ScrollerWithLargeContainer.propTypes = {
-	args: PropTypes.object
-};
 
 export const WithLargeContainer = (args) => <ScrollerWithLargeContainer args={args} />;
 

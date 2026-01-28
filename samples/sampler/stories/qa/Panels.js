@@ -1,4 +1,5 @@
 import {is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import IconItem from '@enact/limestone/IconItem';
 import ImageItem from '@enact/limestone/ImageItem';
@@ -40,7 +41,9 @@ for (let i = 0; i < 20; i++) {
 	items.push({text, subText, source});
 }
 
-const renderItem = ({index, ...rest}) => {
+const renderItem = (props) => {
+	const {index, ...rest} = props;
+	checkPropTypes(renderItem, props);
 	const {text, subText, source} = items[index];
 
 	return (
@@ -54,7 +57,10 @@ renderItem.propTypes = {
 	index: PropTypes.number
 };
 
-const VirtualGridListInScroller = ({onClick, ...rest}) => {
+const VirtualGridListInScroller = (props) => {
+	const {onClick, ...rest} = props;
+	checkPropTypes(VirtualGridListInScroller, props);
+
 	const virtualGridListProps = {
 		...rest,
 		childProps: {onClick: onClick},

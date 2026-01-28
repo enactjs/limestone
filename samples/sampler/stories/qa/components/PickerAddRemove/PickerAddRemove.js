@@ -1,9 +1,9 @@
-import {Component} from 'react';
-import PropTypes from 'prop-types';
-
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Input from '@enact/limestone/Input';
 import Picker from '@enact/limestone/Picker';
+import {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class PickerAddRemove extends Component {
 	static displayName = 'PickerAddRemove';
@@ -28,6 +28,7 @@ class PickerAddRemove extends Component {
 
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			children: {
@@ -37,6 +38,10 @@ class PickerAddRemove extends Component {
 			inputValue: '',
 			value: 0
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	handleAddReplace = () => {

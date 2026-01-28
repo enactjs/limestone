@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 
 import {add, is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
@@ -83,7 +84,9 @@ export default {
 	component: 'FixedPopupPanels'
 };
 
-const WithVirtualListSamplesBase = ({args, rtl}) => {
+const WithVirtualListSamplesBase = (props) => {
+	const {args, rtl} = props;
+	checkPropTypes(WithVirtualListSamplesBase, props);
 	const defaultOpen = true;
 	const [open, setOpenState] = useState(defaultOpen);
 	const toggleOpen = () => setOpenState(!open);
@@ -423,7 +426,9 @@ WithScroller.parameters = {
 	}
 };
 
-const WithVariousItemsSamplesBase = ({args, rtl}) => {
+const WithVariousItemsSamplesBase = (props) => {
+	const {args, rtl} = props;
+	checkPropTypes(WithVariousItemsSamplesBase, props);
 	const defaultOpen = true;
 	const [open, setOpenState] = useState(defaultOpen);
 	const [popupOpen, setPopupOpenState] = useState(false);
