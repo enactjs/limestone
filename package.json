@@ -39,11 +39,11 @@
     "screenTypes": "ThemeDecorator/screenTypes.json"
   },
   "dependencies": {
-    "@enact/core": "^5.4.0",
-    "@enact/i18n": "^5.4.0",
-    "@enact/spotlight": "^5.4.0",
-    "@enact/ui": "^5.4.0",
-    "@enact/webos": "^5.4.0",
+    "@enact/core": "^5.4.2",
+    "@enact/i18n": "^5.4.2",
+    "@enact/spotlight": "^5.4.2",
+    "@enact/ui": "^5.4.2",
+    "@enact/webos": "^5.4.2",
     "@enovaui/core-tokens": "^0.14.0",
     "@enovaui/webos-tokens": "^0.14.0",
     "classnames": "^2.5.1",
