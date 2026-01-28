@@ -4,14 +4,14 @@ import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import platform from '@enact/core/platform';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
-import {cap, clamp, Job} from '@enact/core/util';
+import {cap, checkPropTypes, clamp, Job} from '@enact/core/util';
 import ForwardRef from '@enact/ui/ForwardRef';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
 import {SlideLeftArranger, SlideTopArranger, ViewManager} from '@enact/ui/ViewManager';
 import Spotlight, {getDirection} from '@enact/spotlight';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import Skinnable from '../../Skinnable';
@@ -38,7 +38,7 @@ const isRight = is('right');
 const isUp = is('up');
 
 const DivComponent = (props) => {
-	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(DivComponent, props);
 
 	const {ref, ...rest} = props;
 	return (<div ref={ref} {...rest} />);
@@ -93,7 +93,7 @@ const allowedClassNames = ['picker', 'valueWrapper', 'joined', 'horizontal', 've
  * @private
  */
 const PickerBase = (props) => {
-	checkPropTypes(PickerBase.propTypes, props, 'prop', PickerBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(PickerBase, props);
 	// Set to `true` onFocus and `false` onBlur to prevent setting aria-valuetext (which
 	// will notify the user) when the component does not have focus
 	const [active, setActive] = useState(false);

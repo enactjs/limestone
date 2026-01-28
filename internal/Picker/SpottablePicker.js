@@ -1,10 +1,11 @@
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
 
 const DivComponent = (props) => {
-	checkPropTypes(DivComponent.propTypes, props, 'prop', 'DivComponent'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(DivComponent, props);
 	const {innerRef, ...rest} = props;
 
 	return (<div {...rest} ref={innerRef} />);

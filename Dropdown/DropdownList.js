@@ -3,11 +3,12 @@ import {forward} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -191,7 +192,7 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
-		checkPropTypes(DropdownListSpotlightDecorator.propTypes, props, 'prop', DropdownListSpotlightDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(DropdownListSpotlightDecorator, props);
 
 		const clientSiblingRef = useRef(null);
 		const [state, setState] = useState({

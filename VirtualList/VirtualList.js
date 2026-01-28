@@ -6,14 +6,14 @@
  * @exports VirtualList
  */
 
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {ResizeContext} from '@enact/ui/Resizable';
 import {gridListItemSizeShape, itemSizesShape, VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 import classnames from 'classnames';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {warning} from '../internal/validators';
 import useScroll from '../useScroll';
@@ -64,7 +64,7 @@ const virtualListDefaultProps = {
  */
 let VirtualList = (props) => {
 	const virtualListProps = setDefaultProps(props, virtualListDefaultProps);
-	checkPropTypes(VirtualList.propTypes, virtualListProps, 'prop', VirtualList.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(VirtualList, virtualListProps);
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualListProps.overscrollEffectOn = {
 			arrowKey: false,
@@ -581,7 +581,7 @@ const virtualGridListDefaultProps = {
  */
 let VirtualGridList = (props) => {
 	const virtualGridListProps = setDefaultProps(props, virtualGridListDefaultProps);
-	checkPropTypes(VirtualGridList.propTypes, virtualGridListProps, 'prop', VirtualGridList.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(VirtualGridList, virtualGridListProps);
 
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualGridListProps.overscrollEffectOn = {

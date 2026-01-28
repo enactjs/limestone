@@ -8,8 +8,9 @@
  */
 
 import hoc from '@enact/core/hoc';
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {Tooltip, TooltipBase} from './Tooltip';
 import {defaultScreenEdgeKeepout, useTooltip} from './useTooltip';
@@ -70,7 +71,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {screenEdgeKeepout, tooltipDestinationProp} = config;
 
 	const Decorator = (props) => {
-		checkPropTypes(Decorator.propTypes, props, 'prop', Decorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(Decorator, props);
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...props});
 
 		if (tooltip) {

@@ -13,13 +13,14 @@
  */
 import kind from '@enact/core/kind';
 import hoc from '@enact/core/hoc';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import {checkPropTypes} from '@enact/core/util';
+import Spotlight from '@enact/spotlight';
+import Pause from '@enact/spotlight/Pause';
 import Pure from '@enact/ui/internal/Pure';
+import UiSpinnerBase from '@enact/ui/Spinner';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useEffect, useMemo} from 'react';
-import Pause from '@enact/spotlight/Pause';
-import UiSpinnerBase from '@enact/ui/Spinner';
-import Spotlight from '@enact/spotlight';
 
 import $L from '../internal/$L';
 import Marquee from '../Marquee';
@@ -170,7 +171,7 @@ const SpinnerBase = kind({
  */
 const SpinnerSpotlightDecorator = hoc((config, Wrapped) => {
 	const SpinnerSpotlight = (props) => {
-		checkPropTypes(SpinnerSpotlight.propTypes, props, 'prop', SpinnerSpotlight.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(SpinnerSpotlight, props);
 
 		const paused = useMemo(() => new Pause('Spinner'), []);
 		const {blockClickOn} = props;

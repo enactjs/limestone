@@ -8,12 +8,12 @@
 import {forKey, forProp, forward, forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import {is} from '@enact/core/keymap';
-import {memoize} from '@enact/core/util';
+import {checkPropTypes, memoize} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Changeable from '@enact/ui/Changeable';
 import DateFactory from 'ilib/lib/DateFactory';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useState} from 'react';
 
 /*
@@ -52,7 +52,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DateTimeDecorator = (props) => {
-		checkPropTypes(DateTimeDecorator.propTypes, props, 'prop', DateTimeDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(DateTimeDecorator, props);
 		const newValue = toTime(props.value);
 		const [initialValue, setInitialValue] = useState(null);
 		const [value, setValue] = useState(newValue || Date.now());

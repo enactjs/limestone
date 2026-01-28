@@ -2,10 +2,10 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getLastPointerPosition} from '@enact/spotlight/src/pointer';
-import {perfNow} from '@enact/core/util';
+import {checkPropTypes, perfNow} from '@enact/core/util';
 import {constants} from '@enact/ui/useScroll';
 import classNames from 'classnames';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 import css from './HoverToScroll.module.less';
@@ -52,7 +52,7 @@ const directionToFocus = {
  * @private
  */
 const HoverToScrollBase = (props) => {
-	checkPropTypes(HoverToScrollBase.propTypes, props, 'prop', HoverToScrollBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(HoverToScrollBase, props);
 
 	const {
 		direction,
@@ -240,7 +240,7 @@ HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.Hover
  * @private
  */
 const HoverToScroll = (props) => {
-	checkPropTypes(HoverToScroll.propTypes, props, 'prop', HoverToScroll.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(HoverToScroll, props);
 
 	const {scrollContainerHandle, ...rest} = props;
 

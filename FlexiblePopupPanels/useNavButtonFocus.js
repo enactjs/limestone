@@ -1,5 +1,6 @@
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useRef} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
@@ -35,7 +36,7 @@ function useNavButtonFocus ({index}) {
 const NavButtonFocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function NavButtonFocusDecorator (props) {
-		checkPropTypes(NavButtonFocusDecorator.propTypes, props, 'prop', 'NavButtonFocusDecorator'); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(NavButtonFocusDecorator, props);
 
 		const {index, ...rest} = props;
 		const nav = useNavButtonFocus({index});

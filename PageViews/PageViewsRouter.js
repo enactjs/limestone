@@ -1,8 +1,8 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useId, useRef, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
@@ -32,7 +32,7 @@ function PageViewsRouter (Wrapped) {
 			index: 0
 		});
 
-		checkPropTypes(PageViewsProvider.propTypes, pageViewsProviderProps, 'prop', 'PageViewsProvider'); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(PageViewsProvider, pageViewsProviderProps);
 
 		const {
 			autoFocus,

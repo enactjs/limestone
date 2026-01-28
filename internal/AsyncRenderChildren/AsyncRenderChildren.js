@@ -1,5 +1,5 @@
-import {setDefaultProps} from '@enact/core/util';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import PropTypes from 'prop-types';
 import {useState, useRef, useEffect} from 'react';
 
 // A delay that prevents children from being rendered to some extent
@@ -17,7 +17,7 @@ const delayToRenderChildren = 600;
  */
 function AsyncRenderChildren (props) {
 	const asyncRenderChildrenProps = setDefaultProps(props, {fallback: ''});
-	checkPropTypes(AsyncRenderChildren.propTypes, asyncRenderChildrenProps, 'prop', 'AsyncRenderChildren'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(AsyncRenderChildren, asyncRenderChildrenProps);
 	const {children, fallback, index} = asyncRenderChildrenProps;
 	const [prevIndex, setPrevIndex] = useState(index);
 	const timerRef = useRef(null);

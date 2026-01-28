@@ -1,6 +1,7 @@
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import {Fragment, useState} from 'react';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 
 import $L from '../internal/$L';
 import {DateComponentPicker, DateComponentRangePicker} from '../internal/DateComponentPicker';
@@ -28,7 +29,7 @@ const hours12 = [
  * @private
  */
 const HourPicker = (props) => {
-	checkPropTypes(HourPicker.propTypes, props, 'prop', 'HourPicker'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(HourPicker, props);
 	const {hasMeridiem, value, ...rest} = props;
 	const hours = hasMeridiem ? hours12 : hours24;
 

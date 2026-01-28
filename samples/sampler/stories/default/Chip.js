@@ -27,6 +27,7 @@ export const _Chip = (args) => {
 				deleteButton={args['deleteButton']}
 				disabled={args['disabled']}
 				icon={icon}
+				id="chip"
 				imageSize={args['imageSize']}
 				isImage={isImage}
 				onClick={action('onClick')}

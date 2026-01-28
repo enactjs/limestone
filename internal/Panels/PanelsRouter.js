@@ -1,8 +1,9 @@
 import hoc from '@enact/core/hoc';
+import {checkPropTypes} from '@enact/core/util';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
 import {setDefaultProps} from '@enact/core/util';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {Children, createContext, useCallback, useRef, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
@@ -52,7 +53,7 @@ const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
 			title: ''
 		});
 
-		checkPropTypes(PanelsProvider.propTypes, panelsProviderProps, 'prop', 'PanelsProvider'); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(PanelsProvider, panelsProviderProps);
 
 		const {
 			autoFocus,

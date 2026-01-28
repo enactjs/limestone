@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {useScrollbar as useScrollbarBase} from '@enact/ui/useScroll/Scrollbar';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {memo, useCallback} from 'react';
 
 import ScrollbarTrack from './ScrollbarTrack';
@@ -96,7 +96,7 @@ const ScrollbarBase = memo((props) => {
 		vertical: true
 	});
 
-	checkPropTypes(ScrollbarBase.propTypes, scrollbarBaseProps, 'prop', ScrollbarBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(ScrollbarBase, scrollbarBaseProps);
 
 	const {css, minThumbSize, vertical, ...rest} = scrollbarBaseProps;
 

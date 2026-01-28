@@ -13,7 +13,7 @@ import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} f
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import useHandlers from '@enact/core/useHandlers';
-import {cap} from '@enact/core/util';
+import {cap, checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -21,7 +21,7 @@ import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDeco
 import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {Component, use, useEffect} from 'react';
 import compose from 'ramda/src/compose';
 
@@ -508,7 +508,7 @@ const tabPanelsHandlers = {
  * @public
  */
 const TabPanelsBase = (props) => {
-	checkPropTypes(TabPanelsBase.propTypes, props, 'prop', 'TabPanelsBase'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(TabPanelsBase, props);
 	const {rtl, ...rest} = props;
 
 	const onTransition = use(TabLayoutContext);
@@ -562,7 +562,7 @@ const TabPanels = I18nContextDecorator(
  * @public
  */
 const TabPanel = (props) => {
-	checkPropTypes(TabPanel.propTypes, props, 'prop', 'TabPanel'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(TabPanel, props);
 	const {spotlightId, ...rest} = props;
 
 	useEffect(() => {

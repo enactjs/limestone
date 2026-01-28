@@ -2,6 +2,7 @@ import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getContainersForNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement, getTargetByDirectionFromPosition} from '@enact/spotlight/src/target';
@@ -11,7 +12,7 @@ import {Announce} from '@enact/ui/AnnounceDecorator';
 import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useLayoutEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
@@ -83,7 +84,7 @@ const holdConfig = {
  * @public
  */
 const EditableWrapper = (props) => {
-	checkPropTypes(EditableWrapper.propTypes, props, 'prop', EditableWrapper.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(EditableWrapper, props);
 
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
 	const centered = editable?.centered != null ? editable.centered : true;

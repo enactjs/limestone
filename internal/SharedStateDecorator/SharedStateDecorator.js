@@ -1,5 +1,6 @@
 import hoc from '@enact/core/hoc';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import {checkPropTypes} from '@enact/core/util';
+import PropTypes from 'prop-types';
 import {createContext, useCallback, useContext, useEffect, useRef, useState} from 'react';
 
 const SharedState = createContext(null);
@@ -42,7 +43,7 @@ const SharedStateDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const SharedStateDecorator = (props) => {
-		checkPropTypes(SharedStateDecorator.propTypes, props, 'prop', SharedStateDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(SharedStateDecorator, props);
 
 		const context = useContext(SharedState);
 		const data = useRef({});

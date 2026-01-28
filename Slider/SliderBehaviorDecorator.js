@@ -1,9 +1,9 @@
 import {forward, forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import IString from 'ilib/lib/IString';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import $L from '../internal/$L';
@@ -43,7 +43,7 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const SliderBehaviorDecorator = (props) => {
 		const sliderBehaviorProps = setDefaultProps(props, sliderBehaviorDefaultProps);
-		checkPropTypes(SliderBehaviorDecorator.propTypes, sliderBehaviorProps, 'prop', SliderBehaviorDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(SliderBehaviorDecorator, sliderBehaviorProps);
 
 		const paused = useMemo(() => new Pause(), []);
 		const [active, setActive] = useState(false);

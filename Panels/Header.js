@@ -1,13 +1,14 @@
 import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import {isRtlText} from '@enact/i18n/util';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Row, Cell} from '@enact/ui/Layout';
 import {unit} from '@enact/ui/resolution';
 import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children, use, useEffect, useRef, useState} from 'react';
 
@@ -524,7 +525,7 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
-		checkPropTypes(ContextAsDefaultsHeader.propTypes, props, 'prop', 'ContextAsDefaultsHeader'); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(ContextAsDefaultsHeader, props);
 
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);

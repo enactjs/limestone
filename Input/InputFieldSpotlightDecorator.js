@@ -1,10 +1,11 @@
 import {forward, forwardCustom, forwardWithPrevent, stopImmediate} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import {is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import Spottable from '@enact/spotlight/Spottable';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef} from 'react';
 
 import {lockPointer, releasePointer} from './pointer';
@@ -59,7 +60,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const InputSpotlightDecorator = ({...props}) => {
-		checkPropTypes(InputSpotlightDecorator.propTypes, props, 'prop', InputSpotlightDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(InputSpotlightDecorator, props);
 
 		const downTarget = useRef(null);
 		const focused = useRef(null);

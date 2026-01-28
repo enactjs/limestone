@@ -16,7 +16,7 @@ import {adaptEvent, call, forKey, forward, forwardCustom, forwardWithPrevent, ha
 import {is} from '@enact/core/keymap';
 import {platform} from '@enact/core/platform';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {perfNow, Job, shallowEqual} from '@enact/core/util';
+import {checkPropTypes, perfNow, Job, shallowEqual} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import {toUpperCase} from '@enact/i18n/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
@@ -30,7 +30,7 @@ import Media from '@enact/ui/Media';
 import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
 
 import $L from '../internal/$L';
@@ -74,7 +74,7 @@ const calcNumberValueOfPlaybackRate = (rate) => {
 };
 
 const RootComponent = (props) => {
-	checkPropTypes(RootComponent.propTypes, props, 'prop', 'VideoPlayerRootComponent'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(RootComponent, props);
 	const {playerRef, ...rest} = props;
 	return (<div ref={playerRef} {...rest} />);
 };

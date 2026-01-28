@@ -17,14 +17,14 @@
  * @exports ScrollerBase
  */
 
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Spottable from '@enact/spotlight/Spottable';
 import {ResizeContext} from '@enact/ui/Resizable';
 import {ScrollerBasic as UiScrollerBasic} from '@enact/ui/Scroller';
 import classnames from 'classnames';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {Fragment} from 'react';
 
 import useScroll from '../useScroll';
@@ -81,7 +81,7 @@ const scrollerDefaultProps = {
  */
 let Scroller = (props) => {
 	const scrollerProps = setDefaultProps(props, scrollerDefaultProps);
-	checkPropTypes(Scroller.propTypes, scrollerProps, 'prop', Scroller.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(Scroller, scrollerProps);
 
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		scrollerProps.overscrollEffectOn = {

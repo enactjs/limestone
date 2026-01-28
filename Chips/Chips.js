@@ -1,11 +1,11 @@
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import IString from 'ilib/lib/IString';
 import Spotlight from '@enact/spotlight';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import {getAllContainerIds} from '@enact/spotlight/src/container';
 import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {createContext, useCallback, useRef} from 'react';
 
@@ -17,25 +17,6 @@ export const ChipsContext = createContext({});
 
 const ChipsDefaultProps = {
 	orientation: 'vertical'
-};
-
-const ChipsBasePropTypes = /** @lends limestone/Chips.Chips.prototype */ {
-	/**
-	 * {@link limestone/Chips.Chip|Chip} to be rendered
-	 *
-	 * @type {Node}
-	 * @public
-	 */
-	children: PropTypes.node,
-
-	/**
-	 * The layout orientation of the component.
-	 *
-	 * @type {('horizontal'|'vertical')}
-	 * @default 'vertical'
-	 * @public
-	 */
-	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
 /**
@@ -61,7 +42,7 @@ const ChipsBasePropTypes = /** @lends limestone/Chips.Chips.prototype */ {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
-	checkPropTypes(ChipsBasePropTypes, chipsProps, 'prop', ChipsBase.displayName);
+	checkPropTypes(ChipsBase, chipsProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
@@ -166,6 +147,25 @@ const ChipsBase = (props) => {
 			</div>
 		</div>
 	);
+};
+
+ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
+	/**
+	 * {@link limestone/Chips.Chip|Chip} to be rendered
+	 *
+	 * @type {Node}
+	 * @public
+	 */
+	children: PropTypes.node,
+
+	/**
+	 * The layout orientation of the component.
+	 *
+	 * @type {('horizontal'|'vertical')}
+	 * @default 'vertical'
+	 * @public
+	 */
+	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
 
 ChipsBase.displayName = 'Chips';

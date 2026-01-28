@@ -1,10 +1,10 @@
 import {forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
-import {coerceArray, memoize, setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, coerceArray, memoize, setDefaultProps} from '@enact/core/util';
 import ilib from '@enact/i18n';
 import DateFmt from 'ilib/lib/DateFmt';
 import LocaleInfo from 'ilib/lib/LocaleInfo';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback} from 'react';
 
 import $L from '../internal/$L';
@@ -209,7 +209,7 @@ const daySelectorDecoratorDefaultProps = {
  */
 const DaySelectorDecorator = hoc((config, Wrapped) => {
 	const DaySelector = (props) => {
-		checkPropTypes(DaySelector.propTypes, props, 'prop', DaySelector.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(DaySelector, props);
 
 		const daySelectorDecoratorProps = setDefaultProps(props, daySelectorDecoratorDefaultProps);
 		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;

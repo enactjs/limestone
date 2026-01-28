@@ -14,14 +14,14 @@ import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
-import {extractAriaProps, setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
@@ -98,7 +98,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
-		checkPropTypes(ContextualPopupDecorator.propTypes, props, 'prop', ContextualPopupDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(ContextualPopupDecorator, props);
 
 		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 

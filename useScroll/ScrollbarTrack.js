@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import {is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
 import {Announce} from '@enact/ui/AnnounceDecorator';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useCallback, useEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
@@ -33,7 +34,7 @@ const SpottableDiv = Spottable('div');
  * @private
  */
 const ScrollbarTrack = (props) => {
-	checkPropTypes(ScrollbarTrack.propTypes, props, 'prop', ScrollbarTrack.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(ScrollbarTrack, props);
 
 	const
 		{'aria-label': ariaLabel, cbAlertScrollbarTrack, focusableScrollbar, onInteractionForScroll, ref, rtl, scrollbarTrackCss, vertical, ...rest} = props,

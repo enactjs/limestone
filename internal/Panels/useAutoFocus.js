@@ -1,9 +1,9 @@
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import {useRef, useCallback} from 'react';
 
 const isSelector = (autoFocus) => autoFocus && autoFocus !== 'last-focused' && autoFocus !== 'default-element' && autoFocus !== 'none';
@@ -53,7 +53,7 @@ const AutoFocusDecorator = hoc((config, Wrapped) => {
 	function AutoFocusDecorator (props) {
 		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused'});
 
-		checkPropTypes(AutoFocusDecorator.propTypes, autoFocusDecoratorProps, 'prop', AutoFocusDecorator.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+		checkPropTypes(AutoFocusDecorator, autoFocusDecoratorProps);
 
 		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
 

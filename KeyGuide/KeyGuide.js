@@ -20,11 +20,12 @@
 
 import kind from '@enact/core/kind';
 import EnactPropTypes from '@enact/core/internal/prop-types';
+import {checkPropTypes} from '@enact/core/util';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Pure from '@enact/ui/internal/Pure';
 import {Cell, Row} from '@enact/ui/Layout';
 import Repeater from '@enact/ui/Repeater';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import BodyText from '../BodyText';
@@ -39,7 +40,7 @@ import componentCss from './KeyGuide.module.less';
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
 const ImageItemBase = (props) => {
-	checkPropTypes(ImageItemBase.propTypes, props, 'prop', ImageItemBase.displayName); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(ImageItemBase, props);
 	const {children, imageSrc} = props;
 
 	return (

@@ -18,10 +18,11 @@
  */
 
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import Spottable from '@enact/spotlight/Spottable';
 import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useState} from 'react';
 
@@ -48,7 +49,7 @@ const SpottableButton = Spottable(ButtonBase);
  * @private
  */
 const PopupContent = (props) => {
-	checkPropTypes(PopupContent.propTypes, props, 'prop', 'PopupContent'); // eslint-disable-line react/forbid-foreign-prop-types
+	checkPropTypes(PopupContent, props);
 
 	const {color, colorHandler, css, presetColors} = props;
 	const [hue, setHue] = useState(0);
