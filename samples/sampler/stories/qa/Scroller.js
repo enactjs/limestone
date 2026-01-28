@@ -119,9 +119,15 @@ class ScrollerWithLongItem extends Component {
 class ScrollerWithResizable extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
+
 		this.state = {
 			more: false
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	handleClick = () => {
@@ -150,10 +156,19 @@ class ScrollerWithResizable extends Component {
 const Container = SpotlightContainerDecorator('div');
 
 class ScrollerWithLargeContainer extends Component {
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidMount () {
 		setTimeout(() => {
 			Spotlight.focus('scroller');
 		}, 50);
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	render () {
@@ -757,6 +772,10 @@ select('verticalScrollbar', WithShortContents, prop.scrollbarOption, Config);
 
 WithShortContents.storyName = 'With short contents';
 
+ScrollerWithResizable.propTypes = {
+	args: PropTypes.object
+};
+
 export const WithResizable = (args) => <ScrollerWithResizable args={args} />;
 
 select('scrollMode', WithResizable, prop.scrollModeOption, Config);
@@ -789,6 +808,10 @@ export const WithTwoUiScroller = (args) => (
 select('scrollMode', WithTwoUiScroller, prop.scrollModeOption, Config);
 
 WithTwoUiScroller.storyName = 'With Two ui:Scroller';
+
+ScrollerWithLargeContainer.propTypes = {
+	args: PropTypes.object
+};
 
 export const WithLargeContainer = (args) => <ScrollerWithLargeContainer args={args} />;
 

@@ -2,8 +2,8 @@ import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Input from '@enact/limestone/Input';
 import Picker from '@enact/limestone/Picker';
-import {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Component} from 'react';
 
 class PickerAddRemove extends Component {
 	static displayName = 'PickerAddRemove';
