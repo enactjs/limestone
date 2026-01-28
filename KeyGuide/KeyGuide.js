@@ -58,8 +58,6 @@ ImageItemBase.propTypes = {
 	imageSrc: PropTypes.string
 };
 
-ImageItemBase.displayName = "ImageItemBase";
-
 /**
  * A Key Guide component.
  *

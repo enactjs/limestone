@@ -1,8 +1,7 @@
 import hoc from '@enact/core/hoc';
-import {checkPropTypes} from '@enact/core/util';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import PropTypes from 'prop-types';
 import {Children, createContext, useCallback, useRef, useState} from 'react';
 

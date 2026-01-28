@@ -52,9 +52,7 @@ const AutoFocusDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function AutoFocusDecorator (props) {
 		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused'});
-
 		checkPropTypes(AutoFocusDecorator, autoFocusDecoratorProps);
-
 		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
 
 		const hook = useAutoFocus({autoFocus, hideChildren});

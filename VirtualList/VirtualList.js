@@ -65,6 +65,7 @@ const virtualListDefaultProps = {
 let VirtualList = (props) => {
 	const virtualListProps = setDefaultProps(props, virtualListDefaultProps);
 	checkPropTypes(VirtualList, virtualListProps);
+
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualListProps.overscrollEffectOn = {
 			arrowKey: false,
