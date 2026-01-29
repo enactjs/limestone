@@ -2,17 +2,21 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.9.0] - 2026-01-28
 
 ### Added
 
 - `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
-- `limestone/Icon` supported icon list, adding new icons
+- `limestone/Icon` supported icon list, adding new icons `btspeakermute`, `system`, `remotecontrolsetting`, `warning`, `filepdf`, `filedoc`, `filexls`, `subtitleru`, and `mypageru`
 
 ### Changed
 
 - `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
 - `limestone/Chip` styling to match the latest GUI
+- `limestone/IconItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
 - `limestone/Spinner` to match the latest GUI
 
 ### Fixed
@@ -49,6 +53,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/InputField` to not overflow the parent container.
+
+## [1.6.3] - 2025-12-26
+
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
 ## [1.7.0] - 2025-12-08
 
