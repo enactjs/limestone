@@ -534,7 +534,10 @@ const useEventVoice = (props, instances) => {
 					direction = directionFactor ? -1 : 1,
 					pageDistance = direction * (scrollVertically ? bounds.clientHeight : bounds.clientWidth) * paginationPageMultiplier;
 
-				scrollContainerHandle.current.lastInputType = 'pageKey'; // eslint-disable-line react-hooks/immutability
+				const handleRef = scrollContainerHandle;
+				if (handleRef.current) {
+					handleRef.current.lastInputType = 'pageKey';
+				}
 
 				if (direction !== scrollContainerHandle.current.wheelDirection) {
 					scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;

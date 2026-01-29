@@ -54,7 +54,7 @@ describe('InputPopup Specs', () => {
 
 		render(
 			<FloatingLayerController>
-				<InputPopup defaultValue={strDefaultValue} open value={strValue} />
+				<InputPopup defaultValue={strDefaultValue} open value={strValue || strDefaultValue} />
 			</FloatingLayerController>
 		);
 

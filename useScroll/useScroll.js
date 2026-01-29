@@ -156,7 +156,10 @@ const useThemeScroll = (props, instances) => {
 			pageSize = isVerticalScrollBar ? bounds.clientHeight : bounds.clientWidth,
 			distance = pageSize * (isPagination ? paginationPageMultiplier : arrowKeyMultiplier);
 
-		scrollContainerHandle.current.lastInputType = inputType; // eslint-disable-line react-hooks/immutability
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current) {
+			handleRef.current.lastInputType = inputType;
+		}
 
 		if (direction !== wheelDirection) {
 			scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;
@@ -239,7 +242,10 @@ const useThemeScroll = (props, instances) => {
 		// oddly, Scroller manages scrollContainerHandle.current.bounds so if we don't update it here (it is also
 		// updated in calculateAndScrollTo, but we might not have made it to that point), it will be
 		// out of date when we land back in this method next time.
-		scrollContainerHandle.current.bounds.scrollHeight = scrollContainerHandle.current.getScrollBounds().scrollHeight; // eslint-disable-line react-hooks/immutability
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current) {
+			handleRef.current.bounds.scrollHeight = scrollContainerHandle.current.getScrollBounds().scrollHeight;
+		}
 	}
 
 	function handleResizeWindow () {
