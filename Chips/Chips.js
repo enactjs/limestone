@@ -27,7 +27,7 @@ const ChipsDefaultProps = {
  * <Chips>
  * 	{chips.map(({id, icon, children}) => {
  * 		return (
- * 			<Chip key={id} icon={icon} onClick={onClick}>
+ * 			<Chip key={id} id={id} icon={icon} onClick={onClick}>
  * 				{children}
  * 			</Chip>
  * 		);

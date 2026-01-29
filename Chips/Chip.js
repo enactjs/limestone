@@ -48,6 +48,7 @@ const ChipDefaultProps = {
  * 		position: 'right'
  * 	}}
  * 	icon="check"
+ * 	id="chip"
  * >
  *  Label
  * </Chip>
