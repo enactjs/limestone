@@ -1,23 +1,11 @@
+import {usePrevious} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useState} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
 const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
-
-function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
-	const [previousValue, setPreviousValue] = useState(value);
-
-	if (value !== previousTrackedValue) {
-		setPreviousTrackedValue(value);
-		setPreviousValue(previousTrackedValue);
-	}
-
-	return previousValue;
-}
 
 function useNavButtonFocus ({index}) {
 	const prevIndex = usePrevious(index);

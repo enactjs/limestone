@@ -2,6 +2,7 @@ import {useCallback, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {usePrevious} from '@enact/core/util';
 import PropTypes from 'prop-types';
 import {createContext} from 'react';
 
@@ -10,18 +11,6 @@ import useFocusOnTransition from './useFocusOnTransition';
 import useToggleRole from './useToggleRole';
 
 const PanelsContext = createContext(null);
-
-function usePrevious (value) {
-	const [previousTrackedValue, setPreviousTrackedValue] = useState(value);
-	const [previousValue, setPreviousValue] = useState(value);
-
-	if (value !== previousTrackedValue) {
-		setPreviousTrackedValue(value);
-		setPreviousValue(previousTrackedValue);
-	}
-
-	return previousValue;
-}
 
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
