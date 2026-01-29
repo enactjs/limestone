@@ -3,7 +3,7 @@ import useChainRefs from '@enact/core/useChainRefs';
 import {usePrevious} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useId, useState, Children} from 'react';
+import {useCallback, useEffect, useId, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
