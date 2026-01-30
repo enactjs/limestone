@@ -89,6 +89,8 @@
 // ---------------------------------------
 @lime-component-spacing: var(--primitive-spacing-36);
 @lime-component-spacing-bottom: var(--primitive-spacing-30);
+@lime-focusexpand-focus-transform: scale(1.1);
+@lime-focusexpand-pressed-transform: scale(1.05);
 @lime-overlay-outline-width: 0.063rem; // 3px
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
@@ -373,8 +375,6 @@
 @lime-button-max-width: 1200px;
 @lime-button-min-width: 300px;
 @lime-button-min-width-default: 840px;
-@lime-button-focusexpand-focus-bg-transform: scale(1.15);
-@lime-button-focusexpand-pressed-bg-transform: scale(1.05);
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
 @lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
@@ -384,8 +384,6 @@
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
 @lime-button-small-min-width-default: 720px;
-@lime-button-noanimation-focusexpand-focus-bg-transform: scale(1);
-@lime-button-noanimation-focusexpand-pressed-bg-transform: scale(0.9);
 @lime-button-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
@@ -681,7 +679,6 @@
 @lime-iconitem-border-radius: var(--semantic-radius-container);
 @lime-iconitem-border-style: solid;
 @lime-iconitem-border-width: 4px;
-@lime-iconitem-focus-transform: scale(1.1);
 @lime-iconitem-icon-margin: 0;
 @lime-iconitem-icon-height: 120px;
 @lime-iconitem-icon-width: @lime-iconitem-icon-height;
@@ -859,7 +856,6 @@
 @lime-mediaoverlay-text-margin-bottom: var(--primitive-spacing-36);
 @lime-mediaoverlay-textlayout-margin: var(--primitive-spacing-24) var(--primitive-spacing-60);
 @lime-mediaoverlay-width: 768px;
-@lime-mediaoverlay-focus-media-transform: scale(1.1);
 @lime-mediaoverlay-focus-media-outline-width: 6px;
 
 // MediaPlayer
@@ -881,8 +877,7 @@
 @lime-mediaplayer-controls-moreComponents-margin-top: var(--primitive-spacing-60);
 @lime-mediaplayer-controls-moreComponents-time: 0.3s;		// Length of the animation
 @lime-mediaplayer-slider-height: 12px;
-@lime-mediaplayer-slider-knob-resting-state-scale: @lime-slider-knob-resting-state-scale;
-@lime-mediaplayer-slider-knob-size: 48px;
+@lime-mediaplayer-slider-knob-size: 36px;
 @lime-mediaplayer-slider-tap-area: 60px;
 @lime-mediaplayer-times-line-height: 60px;
 @lime-mediaplayer-times-min-width: 192px;

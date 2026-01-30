@@ -1,6 +1,7 @@
 // Card.module.less
 //
 @import '../styles/mixins.less';
+@import "../styles/motion-mixins.less";
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
@@ -36,6 +37,7 @@
 
 	.image {
 		position: relative;
+		.lime-focus-out-motion();
 	}
 
 	.selectionContainer {
@@ -150,6 +152,7 @@
 	&.vertical {
 		width: var(--card-image-width);
 		height: auto;
+		.lime-focus-out-motion();
 
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
@@ -211,6 +214,7 @@
 	&.horizontal {
 		width: @lime-card-horizontal-width;
 		height: @lime-card-horizontal-height;
+		.lime-focus-out-motion();
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
@@ -221,32 +225,57 @@
 		}
 	}
 
-	.focus({
-		&.hasContainer {
-			transform: scale(1.1);
-			transition: transform 200ms ease-in-out;
+	&:not(:global(.focusRing)){
+		.focus({
+			&.hasContainer {
+				.lime-focus-in-motion();
 
-			&.roundedImage::before {
-				border-radius: @lime-card-border-radius;
+				&.roundedImage::before {
+					border-radius: @lime-card-border-radius;
+				}
 			}
+
+			&.vertical {
+				&:not(.captionOverlay):not(.hasContainer) .image,
+				&.captionOverlay {
+					.lime-focus-in-motion();
+				}
+
+				&.captionOverlayOnFocus .captions {
+					visibility: visible;
+				}
+
+				&:not(.hasContainer) .selectionContainer {
+					z-index: 5;
+				}
+			}
+		});
+
+		&:not([disabled]) {
+			.focus({
+				&.hasContainer {
+					&:active {
+						.lime-press-motion();
+					}
+					&:not(:active) {
+						.lime-release-motion();
+					}
+				}
+
+				&.vertical {
+					&:not(.captionOverlay):not(.hasContainer) .image,
+					&.captionOverlay {
+						&:active {
+							.lime-press-motion();
+						}
+						&:not(:active) {
+							.lime-release-motion();
+						}
+					}
+				}
+			});
 		}
-
-		&.vertical {
-			&:not(.captionOverlay):not(.hasContainer) .image,
-			&.captionOverlay {
-				transform: scale(1.1);
-				transition: transform 200ms ease-in-out;
-			}
-
-			&.captionOverlayOnFocus .captions {
-				visibility: visible;
-			}
-
-			&:not(.hasContainer) .selectionContainer {
-				z-index: 5;
-			}
-		}
-	});
+	}
 
 	// Skin colors
 	.applySkins({
