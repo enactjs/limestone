@@ -16,7 +16,7 @@ import {adaptEvent, call, forKey, forward, forwardCustom, forwardWithPrevent, ha
 import {is} from '@enact/core/keymap';
 import {platform} from '@enact/core/platform';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {perfNow, Job, shallowEqual} from '@enact/core/util';
+import {checkPropTypes, perfNow, Job, shallowEqual} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import {toUpperCase} from '@enact/i18n/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
@@ -73,7 +73,11 @@ const calcNumberValueOfPlaybackRate = (rate) => {
 	return (pbArray.length > 1) ? parseInt(pbArray[0]) / parseInt(pbArray[1]) : parseFloat(rate);
 };
 
-const RootComponent = ({playerRef, ...rest}) => (<div ref={playerRef} {...rest} />);
+const RootComponent = (props) => {
+	checkPropTypes(RootComponent, props);
+	const {playerRef, ...rest} = props;
+	return (<div ref={playerRef} {...rest} />);
+};
 
 RootComponent.propTypes = {
 	/*

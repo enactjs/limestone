@@ -8,7 +8,7 @@
 import {forKey, forProp, forward, forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import {is} from '@enact/core/keymap';
-import {memoize} from '@enact/core/util';
+import {checkPropTypes, memoize} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Changeable from '@enact/ui/Changeable';
@@ -52,6 +52,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DateTimeDecorator = (props) => {
+		checkPropTypes(DateTimeDecorator, props);
 		const newValue = toTime(props.value);
 		const [initialValue, setInitialValue] = useState(null);
 		const [value, setValue] = useState(newValue || Date.now());

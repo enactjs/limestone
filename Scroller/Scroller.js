@@ -17,7 +17,7 @@
  * @exports ScrollerBase
  */
 
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -81,6 +81,8 @@ const scrollerDefaultProps = {
  */
 let Scroller = (props) => {
 	const scrollerProps = setDefaultProps(props, scrollerDefaultProps);
+	checkPropTypes(Scroller, scrollerProps);
+
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		scrollerProps.overscrollEffectOn = {
 			arrowKey: false,

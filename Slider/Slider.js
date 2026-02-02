@@ -19,7 +19,7 @@
 
 import {forKey, forProp, forward, forwardWithPrevent, handle, not} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -73,6 +73,8 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
+	checkPropTypes(SliderBase, sliderProps);
+
 	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {

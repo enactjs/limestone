@@ -1,6 +1,7 @@
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
 import {useRef, useCallback} from 'react';
@@ -49,7 +50,11 @@ function useAutoFocus ({autoFocus = 'last-focused', hideChildren}) {
 
 const AutoFocusDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
-	function AutoFocusDecorator ({autoFocus = 'last-focused', componentRef, hideChildren, ...rest}) {
+	function AutoFocusDecorator (props) {
+		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused'});
+		checkPropTypes(AutoFocusDecorator, autoFocusDecoratorProps);
+		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
+
 		const hook = useAutoFocus({autoFocus, hideChildren});
 		const ref = useChainRefs(componentRef, hook);
 

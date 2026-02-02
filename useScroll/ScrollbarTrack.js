@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import {is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
 import {Announce} from '@enact/ui/AnnounceDecorator';
@@ -33,6 +34,8 @@ const SpottableDiv = Spottable('div');
  * @private
  */
 const ScrollbarTrack = (props) => {
+	checkPropTypes(ScrollbarTrack, props);
+
 	const
 		{'aria-label': ariaLabel, cbAlertScrollbarTrack, focusableScrollbar, onInteractionForScroll, ref, rtl, scrollbarTrackCss, vertical, ...rest} = props,
 		className = classNames(css.scrollbarTrack, {[css.vertical]: vertical, [css.focusableScrollbar]: focusableScrollbar}),

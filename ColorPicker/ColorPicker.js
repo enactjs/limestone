@@ -18,6 +18,7 @@
  */
 
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import Spottable from '@enact/spotlight/Spottable';
 import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
@@ -47,7 +48,10 @@ const SpottableButton = Spottable(ButtonBase);
  * @ui
  * @private
  */
-const PopupContent = ({color, colorHandler, css, presetColors}) => {
+const PopupContent = (props) => {
+	checkPropTypes(PopupContent, props);
+
+	const {color, colorHandler, css, presetColors} = props;
 	const [hue, setHue] = useState(0);
 	const [saturation, setSaturation] = useState(0);
 	const [lightness, setLightness] = useState(0);

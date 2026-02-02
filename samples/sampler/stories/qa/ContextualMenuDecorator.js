@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import ContextualMenuDecorator from '@enact/limestone/ContextualMenuDecorator';
 import ImageItem from '@enact/limestone/ImageItem';
@@ -175,6 +176,7 @@ select('popupWidth', Overflows, prop.popupWidth, Config);
 Overflows.storyName = 'Overflows';
 
 const MenuItem = (props) => {
+	checkPropTypes(MenuItem, props);
 	const {type, ...rest} = props;
 
 	const style = useMemo(() => {

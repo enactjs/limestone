@@ -1,6 +1,7 @@
 import {forward, forwardCustom, forwardWithPrevent, stopImmediate} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import {is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import Spottable from '@enact/spotlight/Spottable';
@@ -59,6 +60,8 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const InputSpotlightDecorator = ({...props}) => {
+		checkPropTypes(InputSpotlightDecorator, props);
+
 		const downTarget = useRef(null);
 		const focused = useRef(null);
 		const node = useRef(null);

@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Item from '@enact/limestone/Item';
 import {Header, Panel, Panels} from '@enact/limestone/Panels';
@@ -82,6 +83,7 @@ class StatefulSwitchItem extends Component {
 
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			prevIndex: props.index,
@@ -98,6 +100,10 @@ class StatefulSwitchItem extends Component {
 		}
 
 		return null;
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	onToggle = () => {
@@ -184,7 +190,13 @@ class VirtualListWithCBScrollTo extends Component {
 		dataSize: PropTypes.number
 	};
 
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 		if (this.props.dataSize !== prevProps.dataSize) {
 			this.scrollTo({animate: false, focus: false, index: 0});
 		}
