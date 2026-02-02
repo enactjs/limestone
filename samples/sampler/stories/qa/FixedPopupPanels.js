@@ -427,8 +427,8 @@ WithScroller.parameters = {
 };
 
 const WithVariousItemsSamplesBase = (props) => {
-	const {args, rtl} = props;
 	checkPropTypes(WithVariousItemsSamplesBase, props);
+	const {args, rtl} = props;
 	const defaultOpen = true;
 	const [open, setOpenState] = useState(defaultOpen);
 	const [popupOpen, setPopupOpenState] = useState(false);
