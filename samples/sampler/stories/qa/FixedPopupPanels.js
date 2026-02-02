@@ -85,8 +85,8 @@ export default {
 };
 
 const WithVirtualListSamplesBase = (props) => {
-	const {args, rtl} = props;
 	checkPropTypes(WithVirtualListSamplesBase, props);
+	const {args, rtl} = props;
 	const defaultOpen = true;
 	const [open, setOpenState] = useState(defaultOpen);
 	const toggleOpen = () => setOpenState(!open);

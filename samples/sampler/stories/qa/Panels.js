@@ -42,8 +42,8 @@ for (let i = 0; i < 20; i++) {
 }
 
 const renderItem = (props) => {
-	const {index, ...rest} = props;
 	checkPropTypes(renderItem, props);
+	const {index, ...rest} = props;
 	const {text, subText, source} = items[index];
 
 	return (
@@ -58,8 +58,8 @@ renderItem.propTypes = {
 };
 
 const VirtualGridListInScroller = (props) => {
-	const {onClick, ...rest} = props;
 	checkPropTypes(VirtualGridListInScroller, props);
+	const {onClick, ...rest} = props;
 
 	const virtualGridListProps = {
 		...rest,

@@ -45,8 +45,8 @@ export default {
 };
 
 const PopupTabLayoutSamplesBase = (props) => {
-	const {args, rtl} = props;
 	checkPropTypes(PopupTabLayoutSamplesBase, props);
+	const {args, rtl} = props;
 	const includeIcons = args['include icons'];
 
 	const [open, setOpenState] = useState(false);
