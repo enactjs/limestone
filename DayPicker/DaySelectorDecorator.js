@@ -209,9 +209,9 @@ const daySelectorDecoratorDefaultProps = {
  */
 const DaySelectorDecorator = hoc((config, Wrapped) => {
 	const DaySelector = (props) => {
-		checkPropTypes(DaySelector, props);
-
 		const daySelectorDecoratorProps = setDefaultProps(props, daySelectorDecoratorDefaultProps);
+		checkPropTypes(DaySelector, daySelectorDecoratorProps);
+
 		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;
 
 		const state = getLocaleState(dayNameLength, locale);
