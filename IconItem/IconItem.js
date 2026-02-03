@@ -31,6 +31,7 @@ import {MarqueeController, MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './IconItem.module.less';
+import Touchable from '@enact/ui/Touchable';
 
 /**
  * The shape for image of {@link limestone/IconItem|IconItem}.
@@ -194,6 +195,15 @@ const IconItemBase = kind({
 		order: PropTypes.number,
 
 		/**
+		 * Indicates the component is depressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		pressed: PropTypes.bool,
+
+		/**
 		 * Title text showing below the icon.
 		 *
 		 * @type {String}
@@ -215,6 +225,7 @@ const IconItemBase = kind({
 		'data-webos-voice-intent': 'Select',
 		labelColor: 'light',
 		labelOn: 'render',
+		pressed: false,
 		titleOn: 'render'
 	},
 
@@ -225,8 +236,9 @@ const IconItemBase = kind({
 	},
 
 	computed: {
-		className: ({bordered, label, labelColor, labelOn, styler, title, titleOn}) => styler.append({
+		className: ({bordered, label, labelColor, labelOn, pressed, styler, title, titleOn}) => styler.append({
 			bordered,
+			pressed,
 			hasLabel: !!label,
 			hasTitle: !!title,
 			labelOnFocus: labelOn === 'focus',
@@ -290,6 +302,7 @@ const IconItemBase = kind({
 		delete rest.label;
 		delete rest.labelColor;
 		delete rest.labelOn;
+		delete rest.pressed;
 		delete rest.title;
 		delete rest.titleOn;
 
@@ -317,6 +330,7 @@ const IconItemBase = kind({
  * @public
  */
 const IconItemDecorator = compose(
+	Touchable({activeProp: 'pressed'}),
 	MarqueeController({marqueeOnFocus: true}),
 	Spottable,
 	Skinnable
