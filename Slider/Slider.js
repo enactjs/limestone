@@ -143,7 +143,7 @@ const SliderBase = (props) => {
 			[mergedCss.active]: active,
 			[mergedCss.hasMinMax]: showMinMax,
 			[mergedCss.pressed]: pressed,
-			[mergedCss.showAnchor]: showAnchor,
+			[mergedCss.showAnchor]: showAnchor
 		},
 		css && css.slider
 	);
