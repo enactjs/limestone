@@ -20,6 +20,7 @@ import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Row} from '@enact/ui/Layout';
+import Touchable from '@enact/ui/Touchable';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -33,6 +34,13 @@ import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
+
+const PressableDecorator = compose(
+	Touchable({activeProp: 'pressed'}),
+	Spottable
+);
+
+const PressableCard = PressableDecorator(UiCard);
 
 const getDefaultImageSize = (orientation) => {
 	const sizes = {
@@ -403,7 +411,7 @@ const CardBase = kind({
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
 
 		return (
-			<UiCard
+			<PressableCard
 				{...rest}
 				aria-disabled={disabled}
 				css={css}
@@ -445,7 +453,6 @@ const CardBase = kind({
  */
 const CardDecorator = compose(
 	MarqueeController({marqueeOnFocus: true}),
-	Spottable,
 	Skinnable
 );
 
