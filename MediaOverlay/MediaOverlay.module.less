@@ -38,8 +38,10 @@
 					.lime-press-motion();
 				}				
 			}
-			&:not(.pressed) .mediaContainer {
-				.lime-release-motion();
+			&:not(.pressed) {
+				.mediaContainer {
+					.lime-release-motion();
+				}
 			}
 		});
 	}

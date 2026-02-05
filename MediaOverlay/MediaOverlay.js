@@ -289,9 +289,9 @@ const MediaOverlayBase = kind({
  * @public
  */
 const MediaOverlayDecorator = compose(
-	Touchable({activeProp: 'pressed'}),
 	MarqueeController({marqueeOnFocus: true}),
 	Pure,
+	Touchable({activeProp: 'pressed'}),
 	Spottable,
 	Slottable({slots: ['source']}),
 	Skinnable

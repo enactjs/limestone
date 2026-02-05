@@ -457,8 +457,8 @@ const CardBase = kind({
  * @public
  */
 const CardDecorator = compose(
-	Touchable({activeProp: 'pressed'}),
 	MarqueeController({marqueeOnFocus: true}),
+	Touchable({activeProp: 'pressed'}),
 	Spottable,
 	Skinnable
 );

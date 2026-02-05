@@ -330,8 +330,8 @@ const IconItemBase = kind({
  * @public
  */
 const IconItemDecorator = compose(
-	Touchable({activeProp: 'pressed'}),
 	MarqueeController({marqueeOnFocus: true}),
+	Touchable({activeProp: 'pressed'}),
 	Spottable,
 	Skinnable
 );
