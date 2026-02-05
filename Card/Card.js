@@ -35,13 +35,6 @@ import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
 
-const PressableDecorator = compose(
-	Touchable({activeProp: 'pressed'}),
-	Spottable
-);
-
-const PressableCard = PressableDecorator(UiCard);
-
 const getDefaultImageSize = (orientation) => {
 	const sizes = {
 		vertical: {width: 768, height: 432},
@@ -222,6 +215,15 @@ const CardBase = kind({
 		placeholder: PropTypes.string,
 
 		/**
+		 * Indicates the component is depressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		pressed: PropTypes.bool,
+
+		/**
 		 * The primary badge image source.
 		 *
 		 * @type {String|Object}
@@ -297,6 +299,7 @@ const CardBase = kind({
 	defaultProps: {
 		icon: 'check',
 		orientation: 'vertical',
+		pressed: false,
 		withoutMarquee: false
 	},
 
@@ -386,9 +389,10 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, icon, pressed, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
+			pressed,
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
 			isCheckIcon: icon === 'check'
@@ -405,13 +409,14 @@ const CardBase = kind({
 		delete rest.showProgressBar;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
+		delete rest.pressed;
 		delete rest.roundedImage;
 		delete rest.withoutMarquee;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
 
 		return (
-			<PressableCard
+			<UiCard
 				{...rest}
 				aria-disabled={disabled}
 				css={css}
@@ -452,7 +457,9 @@ const CardBase = kind({
  * @public
  */
 const CardDecorator = compose(
+	Touchable({activeProp: 'pressed'}),
 	MarqueeController({marqueeOnFocus: true}),
+	Spottable,
 	Skinnable
 );
 
