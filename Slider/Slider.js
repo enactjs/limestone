@@ -461,8 +461,8 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
  * @public
  */
 const SliderDecorator = compose(
-	Touchable({activeProp: 'pressed'}),
 	Pure,
+	Touchable({activeProp: 'pressed'}),
 	Changeable,
 	SliderBehaviorDecorator,
 	Spottable,
