@@ -195,7 +195,7 @@ const IconItemBase = kind({
 		order: PropTypes.number,
 
 		/**
-		 * Indicates the component is depressed.
+		 * Indicates if the component is pressed.
 		 *
 		 * @type {Boolean}
 		 * @default false

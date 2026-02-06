@@ -215,7 +215,7 @@ const CardBase = kind({
 		placeholder: PropTypes.string,
 
 		/**
-		 * Indicates the component is depressed.
+		 * Indicates if the component is pressed.
 		 *
 		 * @type {Boolean}
 		 * @default false

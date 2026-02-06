@@ -353,7 +353,7 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	onKeyUp: PropTypes.func,
 
 	/**
-	 * Indicates the component is depressed.
+	 * Indicates if the component is pressed.
 	 *
 	 * @type {Boolean}
 	 * @default false
