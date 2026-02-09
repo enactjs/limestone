@@ -98,14 +98,17 @@ const KeyGuideBase = kind({
 		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>|Object.<{children: (String|Component), imageSrc: (String|Object)}>}
 		 * @public
 		 */
-		children: PropTypes.arrayOf(PropTypes.shape({
-			children: EnactPropTypes.renderable.isRequired,
-			key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-		})) || PropTypes.shape({
-			children: EnactPropTypes.renderable.isRequired,
-			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
-		}),
+		children: PropTypes.oneOfType([
+			PropTypes.arrayOf(PropTypes.shape({
+				children: EnactPropTypes.renderable.isRequired,
+				key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+				icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+			})),
+			PropTypes.shape({
+				children: EnactPropTypes.renderable.isRequired,
+				imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+			})
+		]),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
