@@ -96,6 +96,7 @@ const TabBase = kind({
 		switch (orientation) {
 			// Horizontal Cell sizing can auto-size width or be set to a finite value, stretching the Button.
 			case 'horizontal': {
+				console.log(buttonSize);
 				return (
 					<Button
 						minWidth={false}

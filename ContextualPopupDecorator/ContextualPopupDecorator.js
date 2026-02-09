@@ -105,7 +105,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const [activator, setActivator] = useState(null);
 		const [arrowPosition, setArrowPosition] = useState({top: 0, left: 0});
 		const [containerPosition, setContainerPosition] = useState({top: 0, left: 0, right: 0});
-		const [direction, setDirection] = useState('');
+		const [direction, setDirection] = useState(componentProps.direction);
 
 		const adjustedDirection = useRef(componentProps.direction);
 		const containerId = useRef(Spotlight.add(componentProps.popupSpotlightId));
