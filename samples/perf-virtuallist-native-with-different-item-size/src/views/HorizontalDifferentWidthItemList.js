@@ -55,8 +55,8 @@ const getArrayItems = () => {
 };
 
 const DifferentWidthItem = (props) => {
-    checkPropTypes(DifferentWidthItem, props);
-    const {index, items, style: itemStyleFromList, ...rest} = props;
+	checkPropTypes(DifferentWidthItem, props);
+	const {index, items, style: itemStyleFromList, ...rest} = props;
 	const
 		{title: children, width} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList, width: width + 'px'};

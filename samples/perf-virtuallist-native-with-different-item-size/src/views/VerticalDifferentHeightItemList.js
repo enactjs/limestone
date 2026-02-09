@@ -48,8 +48,8 @@ const getArrayItems = () => {
 };
 
 const DifferentHeightItem = (props) => {
-    checkPropTypes(DifferentHeightItem, props);
-    const {index, items, style: itemStyleFromList, ...rest} = props;
+	checkPropTypes(DifferentHeightItem, props);
+	const {index, items, style: itemStyleFromList, ...rest} = props;
 	const {title: children, height} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList, height};
 

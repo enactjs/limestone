@@ -73,8 +73,8 @@ const getArrayItems = () => {
 };
 
 const ExpandableDifferentHeightItem = (props) => {
-    checkPropTypes(ExpandableDifferentHeightItem, props);
-    const {index, 'data-index': dataIndex, items, ref, style: itemStyleFromList, updateItemStatus, ...rest} = props;
+	checkPropTypes(ExpandableDifferentHeightItem, props);
+	const {index, 'data-index': dataIndex, items, ref, style: itemStyleFromList, updateItemStatus, ...rest} = props;
 	const {title: children, numOfLines, open} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList};
 
