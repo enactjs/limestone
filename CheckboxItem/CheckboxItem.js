@@ -13,12 +13,13 @@
  */
 
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import Group from '@enact/ui/Group';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import $L from '../internal/$L';
@@ -214,14 +215,8 @@ const CheckboxItem = Pure(
  * @public
  */
 const CheckboxItemGroup = (props) => {
+	checkPropTypes(CheckboxItemGroup, props);
 	const {children, groupId, itemProps, ...rest} = props;
-
-	const propTypes = {
-		groupId: PropTypes.string,
-		itemProps: PropTypes.object
-	};
-
-	checkPropTypes(propTypes, props, 'prop', 'CheckboxItemGroup');
 
 	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` components using `ui/Group`
 		return (
@@ -255,6 +250,11 @@ const CheckboxItemGroup = (props) => {
 			</div>
 		);
 	}
+};
+
+CheckboxItemGroup.propTypes = {
+	groupId: PropTypes.string,
+	itemProps: PropTypes.object
 };
 
 export default CheckboxItem;
