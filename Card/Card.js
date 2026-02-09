@@ -106,7 +106,6 @@ const CardBase = kind({
 		 * The primary caption displayed with the image.
 		 *
 		 * @type {String}
-		 * @required
 		 * @public
 		 */
 		children: PropTypes.string,
