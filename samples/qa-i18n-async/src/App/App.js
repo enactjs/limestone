@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Text, {TextDecorator} from '@enact/i18n/Text';
 import $L from '@enact/i18n/$L';
@@ -11,7 +12,9 @@ const TextButton = TextDecorator(Button);
 
 const locales = ['en-US', 'ko-KR'];
 
-const Decorator = ({locale, updateLocale, ...rest}) => {
+const Decorator = (props) => {
+	checkPropTypes(Decorator, props);
+	const {locale, updateLocale, ...rest} = props;
 	const onSelect = useCallback(({data: selLocale}) => updateLocale(selLocale), [updateLocale]);
 	return (
 		<div {...rest}>

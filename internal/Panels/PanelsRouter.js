@@ -1,10 +1,9 @@
-import {useCallback, useState, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {usePrevious} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {createContext} from 'react';
+import {Children, createContext, useCallback, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
 import useFocusOnTransition from './useFocusOnTransition';
@@ -43,19 +42,30 @@ const defaultConfig = {
  * @private
  */
 const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
-	const PanelsProvider = ({
-		autoFocus = 'default-element',
-		children,
-		componentRef,
-		'data-spotlight-id': spotlightId,
-		index = 0,
-		onTransition,
-		onWillTransition,
-		rtl,
-		subtitle = '',
-		title = '',
-		...rest
-	}) => {
+	const PanelsProvider = (props) => {
+		const panelsProviderProps = setDefaultProps(props, {
+			autoFocus: 'default-element',
+			index: 0,
+			subtitle: '',
+			title: ''
+		});
+
+		checkPropTypes(PanelsProvider, panelsProviderProps);
+
+		const {
+			autoFocus,
+			children,
+			componentRef,
+			'data-spotlight-id': spotlightId,
+			index,
+			onTransition,
+			onWillTransition,
+			rtl,
+			subtitle,
+			title,
+			...rest
+		} = panelsProviderProps;
+
 		const [panel, setPanel] = useState(null);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
 		const autoFocusRef = useAutoFocus({autoFocus, hideChildren: panel == null});

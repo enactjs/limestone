@@ -1,4 +1,4 @@
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import IString from 'ilib/lib/IString';
 import Spotlight from '@enact/spotlight';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
@@ -31,7 +31,7 @@ const generateAriaId = () => {
  * <Chips>
  * 	{chips.map(({id, icon, children}) => {
  * 		return (
- * 			<Chip key={id} icon={icon} onClick={onClick}>
+ * 			<Chip key={id} id={id} icon={icon} onClick={onClick}>
  * 				{children}
  * 			</Chip>
  * 		);
@@ -46,6 +46,7 @@ const generateAriaId = () => {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
+	checkPropTypes(ChipsBase, chipsProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
@@ -152,8 +153,6 @@ const ChipsBase = (props) => {
 	);
 };
 
-ChipsBase.displayName = 'Chips';
-
 ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	/**
 	 * {@link limestone/Chips.Chip|Chip} to be rendered
@@ -172,6 +171,8 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 */
 	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
+
+ChipsBase.displayName = 'Chips';
 
 /**
  * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.

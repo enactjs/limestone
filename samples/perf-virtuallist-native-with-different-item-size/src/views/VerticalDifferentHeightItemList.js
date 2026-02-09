@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import ri from '@enact/ui/resolution';
@@ -46,7 +47,9 @@ const getArrayItems = () => {
 	return {arrayItemSize, arrayItems};
 };
 
-const DifferentHeightItem = ({index, items, style: itemStyleFromList, ...rest}) => {
+const DifferentHeightItem = (props) => {
+    checkPropTypes(DifferentHeightItem, props);
+    const {index, items, style: itemStyleFromList, ...rest} = props;
 	const {title: children, height} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList, height};
 

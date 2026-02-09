@@ -20,7 +20,7 @@ const prop = {
 	// eslint-disable-next-line enact/display-name
 	renderItem = (size) => ({index, ...rest}) => {
 		return (
-			<Item {...rest} style={{height: ri.unit(size, 'rem')}}>
+			<Item {...rest} style={{height: ri.unit(ri.scale(size), 'rem')}}>
 				{items[index]}
 			</Item>
 		);
@@ -53,7 +53,7 @@ export const _VirtualList = (args) => (
 		dataSize={updateDataSize(args['dataSize'])}
 		horizontalScrollbar={args['horizontalScrollbar']}
 		hoverToScroll={args['hoverToScroll']}
-		itemRenderer={renderItem(ri.scale(args['itemSize']))}
+		itemRenderer={renderItem(args['itemSize'])}
 		itemSize={ri.scale(args['itemSize'])}
 		key={args['scrollMode']}
 		noScrollByWheel={args['noScrollByWheel']}

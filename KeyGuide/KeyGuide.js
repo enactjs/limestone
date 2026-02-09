@@ -20,6 +20,7 @@
 
 import kind from '@enact/core/kind';
 import EnactPropTypes from '@enact/core/internal/prop-types';
+import {checkPropTypes} from '@enact/core/util';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Pure from '@enact/ui/internal/Pure';
 import {Cell, Row} from '@enact/ui/Layout';
@@ -38,7 +39,10 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = ({children, imageSrc}) => {
+const ImageItemBase = (props) => {
+	checkPropTypes(ImageItemBase, props);
+	const {children, imageSrc} = props;
+
 	return (
 		<Row className={componentCss.imageItem}>
 			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />

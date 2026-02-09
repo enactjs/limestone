@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import {use} from 'react';
@@ -5,6 +6,7 @@ import {use} from 'react';
 import {ListContext} from '../../context/ListContext';
 
 const ListItem = (props) => {
+	checkPropTypes(ListItem, props);
 	const {children, index, ...rest} = props;
 	const {disabled} = use(ListContext).listItems[index];
 

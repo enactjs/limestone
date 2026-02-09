@@ -2,6 +2,7 @@ import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getContainersForNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement, getTargetByDirectionFromPosition} from '@enact/spotlight/src/target';
@@ -83,6 +84,8 @@ const holdConfig = {
  * @public
  */
 const EditableWrapper = (props) => {
+	checkPropTypes(EditableWrapper, props);
+
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
 	const removeItemFuncRef = editable?.removeItemFuncRef;
 	const hideItemFuncRef = editable?.hideItemFuncRef;

@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Icon from '@enact/limestone/Icon';
 import PropTypes from 'prop-types';
@@ -71,7 +72,9 @@ const getArrayItems = () => {
 	return arrayItems;
 };
 
-const ExpandableDifferentHeightItem = ({index, 'data-index': dataIndex, items, ref, style: itemStyleFromList, updateItemStatus, ...rest}) => {
+const ExpandableDifferentHeightItem = (props) => {
+    checkPropTypes(ExpandableDifferentHeightItem, props);
+    const {index, 'data-index': dataIndex, items, ref, style: itemStyleFromList, updateItemStatus, ...rest} = props;
 	const {title: children, numOfLines, open} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList};
 
@@ -124,7 +127,9 @@ ExpandableDifferentHeightItem.propTypes = {
 	updateItemStatus: PropTypes.func
 };
 
-const ResizableItem = ({updateItemSize, ...rest}) => {
+const ResizableItem = (props) => {
+	checkPropTypes(ResizableItem, props);
+	const {updateItemSize, ...rest} = props;
 	const indexRef = useRef(0);
 	const domRef = useRef({});
 

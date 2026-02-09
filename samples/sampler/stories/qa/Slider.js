@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Item from '@enact/limestone/Item';
 import Slider from '@enact/limestone/Slider';
 import VirtualList from '@enact/limestone/VirtualList';
@@ -15,6 +16,7 @@ class SliderList extends Component {
 
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 		this.state = {
 			selectedItems: [],
 			value: 50
@@ -35,6 +37,10 @@ class SliderList extends Component {
 
 	componentDidMount () {
 		this.fillItems(this.state.value);
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	fillItems = (value) => {

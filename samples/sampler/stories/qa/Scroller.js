@@ -1,4 +1,5 @@
 import {add, is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import BodyText from '@enact/limestone/BodyText';
 import {FixedPopupPanels, Panel} from '@enact/limestone/FixedPopupPanels';
@@ -53,6 +54,15 @@ class ScrollerResizableItem extends Component {
 		more: PropTypes.bool,
 		toggleMore: PropTypes.func
 	};
+
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
+	}
 
 	render () {
 		const {max = 3000, min = 504, more, toggleMore} = this.props;
@@ -109,9 +119,15 @@ class ScrollerWithLongItem extends Component {
 class ScrollerWithResizable extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
+
 		this.state = {
 			more: false
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	handleClick = () => {
@@ -140,10 +156,19 @@ class ScrollerWithResizable extends Component {
 const Container = SpotlightContainerDecorator('div');
 
 class ScrollerWithLargeContainer extends Component {
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidMount () {
 		setTimeout(() => {
 			Spotlight.focus('scroller');
 		}, 50);
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	render () {

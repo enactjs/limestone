@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Item from '@enact/limestone/Item';
 import PropTypes from 'prop-types';
 import {useCallback, useState} from 'react';
@@ -53,7 +54,9 @@ const getArrayItems = () => {
 	return {arrayItemSize, arrayItems};
 };
 
-const DifferenctWidthItem = ({index, items, style: itemStyleFromList, ...rest}) => {
+const DifferentWidthItem = (props) => {
+    checkPropTypes(DifferentWidthItem, props);
+    const {index, items, style: itemStyleFromList, ...rest} = props;
 	const
 		{title: children, width} = items[index],
 		itemStyle = {...itemStyleDefault, ...itemStyleFromList, width: width + 'px'};
@@ -67,16 +70,16 @@ const DifferenctWidthItem = ({index, items, style: itemStyleFromList, ...rest}) 
 	);
 };
 
-DifferenctWidthItem.propTypes = {
+DifferentWidthItem.propTypes = {
 	index: PropTypes.number,
 	items: PropTypes.array
 };
 
-const HorizontalDifferenctWidthItemList = (props) => {
+const HorizontalDifferentWidthItemList = (props) => {
 	const [{arrayItems: items, arrayItemSize: itemSize}] = useState(() => getArrayItems());
 
 	const renderItem = useCallback((renderProps) => {
-		return <DifferenctWidthItem {...renderProps} />;
+		return <DifferentWidthItem {...renderProps} />;
 	}, []);
 
 	return (
@@ -99,4 +102,4 @@ const HorizontalDifferenctWidthItemList = (props) => {
 
 };
 
-export default HorizontalDifferenctWidthItemList;
+export default HorizontalDifferentWidthItemList;

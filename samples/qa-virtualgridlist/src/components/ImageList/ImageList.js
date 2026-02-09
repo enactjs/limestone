@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {VirtualGridList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
 import {useCallback, use} from 'react';
@@ -9,6 +10,7 @@ import {RecordContext} from '../../context/RecordContext';
 import css from './ImageList.module.less';
 
 const ImageList = (props) => {
+	checkPropTypes(ImageList, props);
 	const {dataOrder, minHeight, minWidth, spacing} = use(RecordContext);
 
 	const calculateOfSize = (size) => ri.scale(parseInt(size) || 0);
