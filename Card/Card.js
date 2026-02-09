@@ -20,6 +20,7 @@ import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Row} from '@enact/ui/Layout';
+import Touchable from '@enact/ui/Touchable';
 import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
@@ -56,15 +57,6 @@ const CardBase = kind({
 	name: 'Card',
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
-		/**
-		 * The primary caption displayed with the image.
-		 *
-		 * @type {String}
-		 * @required
-		 * @public
-		 */
-		children: PropTypes.string.isRequired,
-
 		/**
 		 * Source for the image.
 		 * String value or Object of values used to determine which image will appear on
@@ -109,6 +101,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		centered: PropTypes.bool,
+
+		/**
+		 * The primary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		children: PropTypes.string,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -214,6 +214,15 @@ const CardBase = kind({
 		placeholder: PropTypes.string,
 
 		/**
+		 * Indicates if the component is pressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		pressed: PropTypes.bool,
+
+		/**
 		 * The primary badge image source.
 		 *
 		 * @type {String|Object}
@@ -289,6 +298,7 @@ const CardBase = kind({
 	defaultProps: {
 		icon: 'check',
 		orientation: 'vertical',
+		pressed: false,
 		withoutMarquee: false
 	},
 
@@ -378,9 +388,10 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, icon, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, icon, pressed, roundedImage, hasContainer, orientation, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
+			pressed,
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
 			isCheckIcon: icon === 'check'
@@ -397,6 +408,7 @@ const CardBase = kind({
 		delete rest.showProgressBar;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
+		delete rest.pressed;
 		delete rest.roundedImage;
 		delete rest.withoutMarquee;
 
@@ -445,6 +457,7 @@ const CardBase = kind({
  */
 const CardDecorator = compose(
 	MarqueeController({marqueeOnFocus: true}),
+	Touchable({activeProp: 'pressed'}),
 	Spottable,
 	Skinnable
 );

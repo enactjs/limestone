@@ -32,11 +32,14 @@
 
 	&:not([disabled]) {
 		.focus({
-			.mediaContainer {
-				&:active {
+			&.pressed,
+			&:active {
+				.mediaContainer {
 					.lime-press-motion();
-				}
-				&:not(:active) {
+				}				
+			}
+			&:not(.pressed) {
+				.mediaContainer {
 					.lime-release-motion();
 				}
 			}
