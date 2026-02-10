@@ -290,6 +290,14 @@ const TabLayoutBase = kind({
 		scrollPosition: PropTypes.object,
 
 		/**
+		 * Indicates if tabs are to be selected via focus on pointer mode
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		selectOnFocus: PropTypes.bool,
+
+		/**
 		 * The size of the horizontal tab.
 		 *
 		 * @type {('small'|'large')}
@@ -340,6 +348,7 @@ const TabLayoutBase = kind({
 		primaryIndex: null,
 		offset: 36,
 		orientation: 'vertical',
+		selectOnFocus: false,
 		scrollPosition: {x: 0, y: 0},
 		size: 'large',
 		type: 'normal'
@@ -510,7 +519,7 @@ const TabLayoutBase = kind({
 		}
 	},
 
-	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollPosition, size, tabOrientation, tabs, type, ...rest}) => {
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, selectOnFocus, scrollable, scrollPosition, size, tabOrientation, tabs, type, ...rest}) => {
 		delete rest.anchorTo;
 		delete rest.blockCollapseOnPortrait;
 		delete rest.blockExpandOnLandscape;
@@ -535,6 +544,7 @@ const TabLayoutBase = kind({
 			onSelect,
 			orientation,
 			selectedIndex: index,
+			selectOnFocus,
 			tabs
 		};
 

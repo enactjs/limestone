@@ -64,6 +64,7 @@ export const _TabLayout = (args) => {
 				onSelect={action('onSelect')}
 				onTabAnimationEnd={action('onTabAnimationEnd')}
 				orientation={args['orientation']}
+				selectOnFocus={args['selectOnFocus']}
 				size={args['size']}
 				tabSize={args['tabSize'] || null}
 			>
@@ -100,6 +101,7 @@ export const _TabLayout = (args) => {
 boolean('blockCollapseOnPortrait', _TabLayout, Config);
 boolean('blockExpandOnLandscape', _TabLayout, Config);
 select('tabs', _TabLayout, ['with icons', 'without icons'], Config, 'with icons');
+boolean('selectOnFocus', _TabLayout, Config);
 select('size', _TabLayout, ['small', 'large'], Config, 'large');
 select('orientation', _TabLayout, ['vertical', 'horizontal'], Config);
 boolean('custom tabSize', _TabLayout, Config, false);

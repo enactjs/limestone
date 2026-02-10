@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/TabLayout` `selectOnFocus` prop to enable selection when a tab is focused via pointer mode.
+
 ### Fixed
 
 - `limestone/Card` press motion to work with key press
