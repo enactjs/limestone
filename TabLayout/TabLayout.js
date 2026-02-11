@@ -294,6 +294,7 @@ const TabLayoutBase = kind({
 		 *
 		 * @type {Boolean}
 		 * @public
+		 * @default false
 		 */
 		selectOnFocus: PropTypes.bool,
 
