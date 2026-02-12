@@ -9,19 +9,18 @@
  * @exports PopupBase
  */
 
-import {on, off} from '@enact/core/dispatcher';
-import {forward, forwardCustom} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
+import {on, off} from '@enact/core/dispatcher';
+import FloatingLayer from '@enact/ui/FloatingLayer';
 import kind from '@enact/core/kind';
-import {setDefaultProps} from '@enact/core/util';
+import {Component} from 'react';
+import PropTypes from 'prop-types';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {getLastContainer} from '@enact/spotlight/src/container';
-import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
-import PropTypes from 'prop-types';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {forward, forwardCustom} from '@enact/core/handle';
 import warning from 'warning';
 
 import Skinnable from '../Skinnable';
@@ -280,77 +279,271 @@ const OpenState = {
 	OPEN: 2
 };
 
-const popupDefaultProps = {
-	noAnimation: false,
-	noAutoDismiss: false,
-	open: false,
-	position: 'bottom',
-	scrimType: 'translucent',
-	spotlightRestrict: 'self-only'
-};
-
 /**
  * A stateful component that renders a popup in a
  * {@link ui/FloatingLayer.FloatingLayer|FloatingLayer}.
  *
- * @function Popup
+ * @class Popup
  * @memberof limestone/Popup
  * @extends limestone/Popup.PopupBase
  * @ui
  * @public
  */
-const Popup = (props) => {
-	const componentProps = setDefaultProps(props, popupDefaultProps);
-	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
+class Popup extends Component {
 
-	// Assign the needed props to the rest object for the child component
-	Object.assign(rest, {noAnimation, position, spotlightRestrict});
+	static propTypes = /** @lends limestone/Popup.Popup.prototype */ {
+		/**
+		 * Prevents closing the popup via 5-way navigation out of the content.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		no5WayClose: PropTypes.bool,
 
-	const [activator, setActivator] = useState(null);
-	const [addKeyDownListener, setAddKeyDownListener] = useState(false);
-	const [floatLayerOpen, setFloatLayerOpen] = useState(open);
-	const [popupOpen, setPopupOpen] = useState(open ? OpenState.OPEN : OpenState.CLOSED);
-	const [prevOpen, setPrevOpen] = useState(open);
+		/**
+		 * Disables transition animation.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		noAnimation: PropTypes.bool,
 
-	const containerIdRef = useRef(Spotlight.add());
-	const pausedRef = useRef(new Pause('Popup'));
+		/**
+		 * Indicates that the popup will not trigger `onClose` when the user presses the cancel/back (e.g. `ESC`) key or
+		 * taps outside the popup.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		noAutoDismiss: PropTypes.bool,
 
-	const getDerivedStateFromProps = useCallback(() => {
-		if (open !== prevOpen) {
-			if (open) {
-				setPopupOpen(noAnimation || floatLayerOpen ? OpenState.OPEN : OpenState.CLOSED);
-				setFloatLayerOpen(true);
-				setActivator(Spotlight.getCurrent());
-				setPrevOpen(open);
+		/**
+		 * Called on:
+		 *
+		 * * pressing `ESC` key,
+		 * * clicking on outside the boundary of the popup, or
+		 * * moving spotlight focus outside the boundary of the popup when `spotlightRestrict` is
+		 *   `'self-first'`.
+		 *
+		 * Event payload:
+		 *
+		 * * pressing `ESC` key, carries `detail` property containing `inputType` value of `'key'`.
+		 * * clicking outside the boundary of the popup, carries `detail` property containing
+		 *   `inputType` value of `'click'`.
+		 *
+		 * It is the responsibility of the callback to set the `open` property to `false`.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onClose: PropTypes.func,
+
+		/**
+		 * Called after hide transition has completed, and immediately with no transition.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onHide: PropTypes.func,
+
+		/**
+		 * Called when a key is pressed.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onKeyDown: PropTypes.func,
+
+		/**
+		 * Called after show transition has completed, and immediately with no transition.
+		 *
+		 * Note: The function does not run if Popup is initially opened and
+		 * {@link limestone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onShow: PropTypes.func,
+
+		/**
+		 * Controls the visibility of the Popup.
+		 *
+		 * By default, the Popup and its contents are not rendered until `open`.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		open: PropTypes.bool,
+
+		/**
+		 * Position of the Popup on the screen.
+		 *
+		 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
+		 * @default 'bottom'
+		 * @public
+		 */
+		position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
+
+		/**
+		 * Scrim type.
+		 *
+		 * * Values: `'transparent'`, `'translucent'`, or `'none'`.
+		 *
+		 * `'none'` is not compatible with `spotlightRestrict` of `'self-only'`, use a transparent scrim
+		 * to prevent mouse focus when using popup.
+		 *
+		 * @type {('transparent'|'translucent'|'none')}
+		 * @default 'translucent'
+		 * @public
+		 */
+		scrimType: PropTypes.oneOf(['transparent', 'translucent', 'none']),
+
+		/**
+		 * Restricts or prioritizes navigation when focus attempts to leave the popup.
+		 *
+		 * * Values: `'self-first'`, or `'self-only'`.
+		 *
+		 * When using `self-first`, attempts to leave the popup via 5-way will fire `onClose` based
+		 * on the following values of `position`:
+		 *
+		 * * `'bottom'` - When leaving via 5-way up
+		 * * `'top'` - When leaving via 5-way down
+		 * * `'left'` - When leaving via 5-way right
+		 * * `'right'` - When leaving via 5-way left
+		 * * `'center'` - When leaving via any 5-way direction
+		 *
+		 * Note: If `onClose` is not set, then this has no effect on 5-way navigation. If the popup
+		 * has no spottable children, 5-way navigation will cause the Popup to fire `onClose`.
+		 *
+		 * @type {('self-first'|'self-only')}
+		 * @default 'self-only'
+		 * @public
+		 */
+		spotlightRestrict: PropTypes.oneOf(['self-first', 'self-only'])
+	};
+
+	static defaultProps = {
+		noAnimation: false,
+		noAutoDismiss: false,
+		open: false,
+		position: 'bottom',
+		scrimType: 'translucent',
+		spotlightRestrict: 'self-only'
+	};
+
+	static getDerivedStateFromProps (props, state) {
+		if (props.open !== state.prevOpen) {
+			if (props.open) {
+				return {
+					popupOpen: props.noAnimation || state.floatLayerOpen ? OpenState.OPEN : OpenState.CLOSED,
+					floatLayerOpen: true,
+					activator: Spotlight.getCurrent(),
+					prevOpen: props.open
+				};
 			} else {
 				// Disables the spotlight conatiner of popup when `noAnimation` set
-				if (noAnimation) {
-					const node = getContainerNode(containerIdRef.current);
+				if (props.noAnimation) {
+					const node = getContainerNode(state.containerId);
 					if (node) {
 						node.dataset['spotlightContainerDisabled'] = true;
 					}
 				}
 
-				setPopupOpen(OpenState.CLOSED);
-				setFloatLayerOpen(popupOpen === OpenState.OPEN ? !noAnimation : false);
-				setActivator(noAnimation ? null : activator);
-				setPrevOpen(open);
+				return {
+					popupOpen: OpenState.CLOSED,
+					floatLayerOpen: state.popupOpen === OpenState.OPEN ? !props.noAnimation : false,
+					activator: props.noAnimation ? null : state.activator,
+					prevOpen: props.open
+				};
 			}
 		}
 		return null;
-	}, [activator, floatLayerOpen, noAnimation, open, popupOpen, prevOpen]);
+	}
 
-	const handleKeyDown = useCallback((ev) => {
+	constructor (props) {
+		super(props);
+		this.paused = new Pause('Popup');
+		this.state = {
+			floatLayerOpen: this.props.open,
+			popupOpen: this.props.open ? OpenState.OPEN : OpenState.CLOSED,
+			prevOpen: this.props.open,
+			containerId: Spotlight.add(),
+			activator: null
+		};
+		checkScrimNone(this.props);
+	}
+
+	// Spot the content after it's mounted.
+	componentDidMount () {
+		if (this.props.open) {
+			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
+			// while the popup is rendering.
+			this.paused.pause();
+			if (getContainerNode(this.state.containerId)) {
+				this.spotPopupContent();
+			}
+		}
+	}
+
+	componentDidUpdate (prevProps, prevState) {
+		if (this.props.open !== prevProps.open) {
+			if (!this.props.noAnimation) {
+				if (!this.props.open && this.state.popupOpen === OpenState.CLOSED) {
+					// If the popup is supposed to be closed (!this.props.open) and is actually
+					// fully closed (OpenState.CLOSED), we must resume spotlight navigation. This
+					// can occur when quickly toggling a Popup open and closed.
+					this.paused.resume();
+				} else {
+					// Otherwise, we pause spotlight so it is locked until the popup is ready
+					this.paused.pause();
+				}
+			} else if (this.props.open) {
+				forwardShow(null, this.props);
+				this.spotPopupContent();
+			} else if (prevProps.open) {
+				forwardHide(null, this.props);
+				this.spotActivator(prevState.activator);
+			}
+		}
+
+		checkScrimNone(this.props);
+	}
+
+	componentWillUnmount () {
+		if (this.props.open) {
+			off('keydown', this.handleKeyDown);
+		}
+		Spotlight.remove(this.state.containerId);
+	}
+
+	handleFloatingLayerOpen = () => {
+		if (!this.props.noAnimation && this.state.popupOpen !== OpenState.OPEN) {
+			this.setState({
+				popupOpen: OpenState.OPENING
+			});
+		} else if (this.state.popupOpen === OpenState.OPEN && this.props.open) {
+			this.spotPopupContent();
+		}
+	};
+
+	handleKeyDown = (ev) => {
+		const {onClose, no5WayClose, position, spotlightRestrict} = this.props;
+
 		if (no5WayClose) return;
 
+		const {containerId} = this.state;
 		const keyCode = ev.keyCode;
 		const direction = getDirection(keyCode);
-		const spottables = Spotlight.getSpottableDescendants(containerIdRef.current).length;
+		const spottables = Spotlight.getSpottableDescendants(containerId).length;
 		const current = Spotlight.getCurrent();
 
-		if (direction && (!spottables || current && getContainerNode(containerIdRef.current).contains(current))) {
+		if (direction && (!spottables || current && getContainerNode(containerId).contains(current))) {
 			// explicitly restrict navigation in order to manage focus state when attempting to leave the popup
-			Spotlight.set(containerIdRef.current, {restrict: 'self-only'});
+			Spotlight.set(containerId, {restrict: 'self-only'});
 
 			if (onClose) {
 				let focusChanged;
@@ -377,29 +570,58 @@ const Popup = (props) => {
 					ev.stopPropagation();
 					// set the pointer mode to false on keydown
 					Spotlight.setPointerMode(false);
-					forwardCustom('onClose')(null, componentProps);
+					forwardCustom('onClose')(null, this.props);
 				}
 			}
 		}
-	}, [componentProps, no5WayClose, onClose, position, spotlightRestrict]);
+	};
 
-	const spotActivator = useCallback(() => {
-		pausedRef.current.resume();
+	handleDismiss = (ev) => {
+		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, this.props);
+	};
+
+	handlePopupHide = (ev) => {
+		forwardHide(ev, this.props);
+
+		this.setState({
+			floatLayerOpen: false
+		}, () => {
+			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === this.state.containerId) {
+				this.spotActivator(this.state.activator);
+			}
+			this.setState({activator: null});
+		});
+	};
+
+	handlePopupShow = (ev) => {
+		forwardShow(ev, this.props);
+
+		this.setState({
+			popupOpen: OpenState.OPEN
+		});
+
+		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === this.state.containerId) {
+			this.spotPopupContent();
+		}
+	};
+
+	spotActivator = (activator) => {
+		this.paused.resume();
 
 		// only spot the activator if the popup is closed
-		if (open) return;
+		if (this.props.open) return;
 
 		const current = Spotlight.getCurrent();
-		const containerNode = getContainerNode(containerIdRef.current);
+		const containerNode = getContainerNode(this.state.containerId);
 		const lastContainerId = getLastContainer();
 
-		setAddKeyDownListener(false);
+		off('keydown', this.handleKeyDown);
 
 		// if there is no currently-spotted control, or it is wrapped by the popup's container, we
 		// know it's safe to change focus
 		if (!current || (containerNode && containerNode.contains(current))) {
 			// attempt to set focus to the activator, if available
-			if (!Spotlight.isPaused() || !pausedRef.current.isPaused()) {
+			if (!Spotlight.isPaused()) {
 				if (activator) {
 					if (!Spotlight.focus(activator)) {
 						Spotlight.focus();
@@ -411,17 +633,19 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [activator, open]);
+	};
 
-	const spotPopupContent = useCallback(() => {
-		pausedRef.current.resume();
+	spotPopupContent = () => {
+		this.paused.resume();
 
 		// only spot the activator if the popup is open
-		if (!open) return;
+		if (!this.props.open) return;
 
-		setAddKeyDownListener(true);
+		const {containerId} = this.state;
 
-		if (!Spotlight.isPaused() && !Spotlight.focus(containerIdRef.current)) {
+		on('keydown', this.handleKeyDown);
+
+		if (!Spotlight.isPaused() && !Spotlight.focus(containerId)) {
 			const current = Spotlight.getCurrent();
 
 			// In cases where the container contains no spottable controls, or we're in pointer-mode, focus
@@ -430,264 +654,36 @@ const Popup = (props) => {
 			if (current) {
 				current.blur();
 			}
-			Spotlight.setActiveContainer(containerIdRef.current);
+			Spotlight.setActiveContainer(containerId);
 		}
-	}, [open]);
+	};
 
-	const handleFloatingLayerOpen = useCallback(() => {
-		if (!noAnimation && popupOpen !== OpenState.OPEN) {
-			setPopupOpen(OpenState.OPENING);
-		} else if (popupOpen === OpenState.OPEN && open) {
-			spotPopupContent();
-		}
-	}, [noAnimation, open, popupOpen, spotPopupContent]);
+	render () {
+		const {noAutoDismiss, scrimType, ...rest} = this.props;
 
-	const handleDismiss = useCallback((ev) => {
-		forwardCustom('onClose', () => ({detail: ev?.detail}))(null, componentProps);
-	}, [componentProps]);
+		delete rest.no5WayClose;
+		delete rest.onClose;
 
-	const handlePopupHide = useCallback((ev) => {
-		forwardHide(ev, componentProps);
-
-		setFloatLayerOpen(() => {
-			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
-				spotActivator();
-			}
-			setActivator(null);
-
-			return false;
-		});
-	}, [componentProps, spotActivator]);
-
-	const handlePopupShow = useCallback((ev) => {
-		forwardShow(ev, componentProps);
-
-		setPopupOpen(OpenState.OPEN);
-
-		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
-			spotPopupContent();
-		}
-	}, [componentProps, spotPopupContent]);
-
-	useEffect(() => {
-		getDerivedStateFromProps();
-	}, [getDerivedStateFromProps]);
-
-	useEffect(() => {
-		if (open !== prevOpen) {
-			if (!noAnimation) {
-				if (!open && (popupOpen === OpenState.OPENING || popupOpen === OpenState.OPEN)) {
-					// If the popup is supposed to be closed (!open) and is actually not fully
-					// closed (OpenState.OPENING or OpenState.OPEN), we must resume spotlight navigation. This
-					// can occur when quickly toggling a Popup open and closed.
-					pausedRef.current.resume();
-				} else {
-					// Otherwise, we pause spotlight so it is locked until the popup is ready
-					pausedRef.current.pause();
-				}
-			} else if (open) {
-				forwardShow(null, componentProps);
-				spotPopupContent();
-			} else if (prevOpen) {
-				forwardHide(null, componentProps);
-				spotActivator();
-			}
-		}
-
-		checkScrimNone(componentProps);
-	}, [componentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
-
-	useEffect(() => {
-		checkScrimNone(componentProps);
-
-		// Spot the content after it's mounted.
-		if (open) {
-			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
-			// while the popup is rendering.
-			pausedRef.current.pause();
-			if (getContainerNode(containerIdRef.current)) {
-				spotPopupContent();
-
-			}
-		}
-
-		return () => {
-			if (open) {
-				off('keydown', handleKeyDown);
-			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
-			Spotlight.remove(containerIdRef.current);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	useEffect(() => {
-		if (addKeyDownListener) {
-			on('keydown', handleKeyDown);
-		} else {
-			off('keydown', handleKeyDown);
-		}
-
-		return () => {
-			off('keydown', handleKeyDown);
-		};
-	}, [addKeyDownListener, handleKeyDown]);
-
-	return (
-		<FloatingLayer
-			noAutoDismiss={noAutoDismiss}
-			open={floatLayerOpen}
-			onOpen={handleFloatingLayerOpen}
-			onDismiss={handleDismiss}
-			scrimType={scrimType}
-		>
-			<SkinnedPopupBase
-				{...rest}
-				data-webos-voice-exclusive
-				onHide={handlePopupHide}
-				onShow={handlePopupShow}
-				open={popupOpen >= OpenState.OPENING}
-				spotlightId={containerIdRef.current}
-			/>
-		</FloatingLayer>
-	);
-};
-
-Popup.displayName = 'Popup';
-Popup.propTypes = /** @lends limestone/Popup.Popup.prototype */ {
-	/**
-	 * Prevents closing the popup via 5-way navigation out of the content.
-	 *
-	 * @type {Boolean}
-	 * @default false
-	 * @private
-	 */
-	no5WayClose: PropTypes.bool,
-
-	/**
-	 * Disables transition animation.
-	 *
-	 * @type {Boolean}
-	 * @default false
-	 * @public
-	 */
-	noAnimation: PropTypes.bool,
-
-	/**
-	 * Indicates that the popup will not trigger `onClose` when the user presses the cancel/back (e.g. `ESC`) key or
-	 * taps outside the popup.
-	 *
-	 * @type {Boolean}
-	 * @default false
-	 * @public
-	 */
-	noAutoDismiss: PropTypes.bool,
-
-	/**
-	 * Called on:
-	 *
-	 * * pressing `ESC` key,
-	 * * clicking on outside the boundary of the popup, or
-	 * * moving spotlight focus outside the boundary of the popup when `spotlightRestrict` is
-	 *   `'self-first'`.
-	 *
-	 * Event payload:
-	 *
-	 * * pressing `ESC` key, carries `detail` property containing `inputType` value of `'key'`.
-	 * * clicking outside the boundary of the popup, carries `detail` property containing
-	 *   `inputType` value of `'click'`.
-	 *
-	 * It is the responsibility of the callback to set the `open` property to `false`.
-	 *
-	 * @type {Function}
-	 * @public
-	 */
-	onClose: PropTypes.func,
-
-	/**
-	 * Called after hide transition has completed, and immediately with no transition.
-	 *
-	 * @type {Function}
-	 * @public
-	 */
-	onHide: PropTypes.func,
-
-	/**
-	 * Called when a key is pressed.
-	 *
-	 * @type {Function}
-	 * @public
-	 */
-	onKeyDown: PropTypes.func,
-
-	/**
-	 * Called after show transition has completed, and immediately with no transition.
-	 *
-	 * Note: The function does not run if Popup is initially opened and
-	 * {@link limestone/Popup.PopupBase.noAnimation|noAnimation} is `true`.
-	 *
-	 * @type {Function}
-	 * @public
-	 */
-	onShow: PropTypes.func,
-
-	/**
-	 * Controls the visibility of the Popup.
-	 *
-	 * By default, the Popup and its contents are not rendered until `open`.
-	 *
-	 * @type {Boolean}
-	 * @default false
-	 * @public
-	 */
-	open: PropTypes.bool,
-
-	/**
-	 * Position of the Popup on the screen.
-	 *
-	 * @type {('bottom'|'bottom left'|'bottom right'|'center'|'fullscreen'|'left'|'right'|'top'|'top left'|'top right')}
-	 * @default 'bottom'
-	 * @public
-	 */
-	position: PropTypes.oneOf(['bottom', 'bottom left', 'bottom right', 'center', 'fullscreen', 'left', 'right', 'top', 'top left', 'top right']),
-
-	/**
-	 * Scrim type.
-	 *
-	 * * Values: `'transparent'`, `'translucent'`, or `'none'`.
-	 *
-	 * `'none'` is not compatible with `spotlightRestrict` of `'self-only'`, use a transparent scrim
-	 * to prevent mouse focus when using popup.
-	 *
-	 * @type {('transparent'|'translucent'|'none')}
-	 * @default 'translucent'
-	 * @public
-	 */
-	scrimType: PropTypes.oneOf(['transparent', 'translucent', 'none']),
-
-	/**
-	 * Restricts or prioritizes navigation when focus attempts to leave the popup.
-	 *
-	 * * Values: `'self-first'`, or `'self-only'`.
-	 *
-	 * When using `self-first`, attempts to leave the popup via 5-way will fire `onClose` based
-	 * on the following values of `position`:
-	 *
-	 * * `'bottom'` - When leaving via 5-way up
-	 * * `'top'` - When leaving via 5-way down
-	 * * `'left'` - When leaving via 5-way right
-	 * * `'right'` - When leaving via 5-way left
-	 * * `'center'` - When leaving via any 5-way direction
-	 *
-	 * Note: If `onClose` is not set, then this has no effect on 5-way navigation. If the popup
-	 * has no spottable children, 5-way navigation will cause the Popup to fire `onClose`.
-	 *
-	 * @type {('self-first'|'self-only')}
-	 * @default 'self-only'
-	 * @public
-	 */
-	spotlightRestrict: PropTypes.oneOf(['self-first', 'self-only'])
-};
+		return (
+			<FloatingLayer
+				noAutoDismiss={noAutoDismiss}
+				open={this.state.floatLayerOpen}
+				onOpen={this.handleFloatingLayerOpen}
+				onDismiss={this.handleDismiss}
+				scrimType={scrimType}
+			>
+				<SkinnedPopupBase
+					{...rest}
+					data-webos-voice-exclusive
+					onHide={this.handlePopupHide}
+					onShow={this.handlePopupShow}
+					open={this.state.popupOpen >= OpenState.OPENING}
+					spotlightId={this.state.containerId}
+				/>
+			</FloatingLayer>
+		);
+	}
+}
 
 export default Popup;
 export {Popup, PopupBase};
