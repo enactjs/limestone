@@ -206,12 +206,13 @@
 				}
 			}
 
-			&:active {
+			&:active,
+			&.pressed {
 				.knob::before {
 					.lime-slider-press-motion();
 				}
 			}
-			&:not(:active) {
+			&:not(.pressed) {
 				.knob::before {
 					.lime-slider-release-motion();
 				}

@@ -2,6 +2,15 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/Card` press motion to work with key press
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Slider` press motion to work with key press
+
 ## [1.9.0] - 2026-01-28
 
 ### Added
