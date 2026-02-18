@@ -12,7 +12,6 @@
 
 import kind from '@enact/core/kind';
 import hoc from '@enact/core/hoc';
-import {checkPropTypes} from '@enact/core/util';
 import {ImageBase as UiImageBase} from '@enact/ui/Image';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import ForwardRef from '@enact/ui/ForwardRef';
@@ -94,8 +93,6 @@ const ImageBase = kind({
 const ResponsiveImageDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const ResponsiveImageDecorator = (props) => {
-		checkPropTypes(ResponsiveImageDecorator, props);
-
 		const [, setSrc] = useState(selectSrc(props.src));
 
 		useEffect(() => {

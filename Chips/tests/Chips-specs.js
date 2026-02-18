@@ -12,14 +12,12 @@ describe('Chips', () => {
 		children: [
 			<ChipBase
 				key="chip1"
-				id="chip1"
 				deleteButton={{icon: 'closex', position: 'right', onDelete: mockDeleteHandler}}
 			>
 				Chip 1
 			</ChipBase>,
 			<ChipBase
 				key="chip2"
-				id="chip2"
 				deleteButton={{icon: 'closex', position: 'right', onDelete: mockDeleteHandler}}
 			>
 				Chip 2
@@ -132,7 +130,6 @@ describe('Chips', () => {
 		expect(screen.getByText('Chip 1')).toBeInTheDocument();
 		expect(screen.getByText('Chip 2')).toBeInTheDocument();
 	});
-
 	it('should handle chips with different delete button positions', () => {
 		const mixedPositionProps = {
 			orientation: 'vertical',
@@ -306,14 +303,7 @@ describe('Chips', () => {
 					id="chip1"
 					deleteButton={{icon: 'closex', position: 'right', onDelete: mockDeleteWithParams}}
 				>
-					Chip 1
-				</ChipBase>,
-				<ChipBase
-					key="chip2"
-					id="chip2"
-					deleteButton={{icon: 'closex', position: 'right', onDelete: mockDeleteWithParams}}
-				>
-					Chip 2
+					Test Chip
 				</ChipBase>
 			]
 		};

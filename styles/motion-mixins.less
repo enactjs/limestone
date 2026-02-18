@@ -27,7 +27,7 @@ Motion Mixins
 }
 
 .lime-focus-in-motion() {
-	transform: @lime-focusexpand-focus-transform;
+	transform: @lime-button-focusexpand-focus-bg-transform;
 	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
 }
 
@@ -36,31 +36,21 @@ Motion Mixins
 }
 
 .lime-press-motion() {
-	transform: @lime-focusexpand-pressed-transform;
+	transform: @lime-button-focusexpand-pressed-bg-transform;
 	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
 }
 
 .lime-release-motion() {
-	transform: @lime-focusexpand-focus-transform;
+	transform: @lime-button-focusexpand-focus-bg-transform;
 	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }
 
-.lime-slider-focus-in-motion() {
-	transform: @lime-translate-center scale(1);
-	transition: transform var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
-}
-
-.lime-slider-focus-out-motion() {
-	transform: @lime-translate-center scale(@lime-slider-knob-resting-state-scale);
-	transition: transform var(--lime-focus-out-motion-duration) var(--lime-focus-out-motion-easing-function);
-}
-
-.lime-slider-press-motion() {
-	transform: @lime-translate-center scale(0.875);
+.lime-no-expand-press-motion() {
+	transform: @lime-button-noanimation-focusexpand-pressed-bg-transform;
 	transition: transform var(--lime-press-motion-duration) var(--lime-press-motion-easing-function);
 }
 
-.lime-slider-release-motion() {
-	transform: @lime-translate-center scale(1);
+.lime-no-expand-release-motion() {
+	transform: @lime-button-noanimation-focusexpand-focus-bg-transform;
 	transition: transform var(--lime-release-motion-duration) var(--lime-release-motion-easing-function);
 }

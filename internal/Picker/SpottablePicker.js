@@ -1,15 +1,9 @@
 import kind from '@enact/core/kind';
-import {checkPropTypes} from '@enact/core/util';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import PropTypes from 'prop-types';
 import Spottable from '@enact/spotlight/Spottable';
 
-const DivComponent = (props) => {
-	checkPropTypes(DivComponent, props);
-	const {innerRef, ...rest} = props;
-
-	return (<div {...rest} ref={innerRef} />);
-};
+const DivComponent = ({innerRef, ...rest}) => (<div {...rest} ref={innerRef} />);
 
 DivComponent.propTypes = {
 	innerRef: EnactPropTypes.ref

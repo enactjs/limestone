@@ -1,4 +1,3 @@
-import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
 import {useRef} from 'react';
@@ -35,10 +34,7 @@ function useNavButtonFocus ({index}) {
 
 const NavButtonFocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function NavButtonFocusDecorator (props) {
-		checkPropTypes(NavButtonFocusDecorator, props);
-
-		const {index, ...rest} = props;
+	function NavButtonFocusDecorator ({index, ...rest}) {
 		const nav = useNavButtonFocus({index});
 
 		return (

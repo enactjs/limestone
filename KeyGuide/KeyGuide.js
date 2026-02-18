@@ -20,7 +20,6 @@
 
 import kind from '@enact/core/kind';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {checkPropTypes} from '@enact/core/util';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Pure from '@enact/ui/internal/Pure';
 import {Cell, Row} from '@enact/ui/Layout';
@@ -39,10 +38,7 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = (props) => {
-	checkPropTypes(ImageItemBase, props);
-	const {children, imageSrc} = props;
-
+const ImageItemBase = ({children, imageSrc}) => {
 	return (
 		<Row className={componentCss.imageItem}>
 			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
@@ -98,17 +94,14 @@ const KeyGuideBase = kind({
 		 * @type {Array.<{children: (String|Component), key: (Number|String), icon: (String|Object|'red'|'green'|'yellow'|'blue')}>|Object.<{children: (String|Component), imageSrc: (String|Object)}>}
 		 * @public
 		 */
-		children: PropTypes.oneOfType([
-			PropTypes.arrayOf(PropTypes.shape({
-				children: EnactPropTypes.renderable.isRequired,
-				key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-				icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-			})),
-			PropTypes.shape({
-				children: EnactPropTypes.renderable.isRequired,
-				imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
-			})
-		]),
+		children: PropTypes.arrayOf(PropTypes.shape({
+			children: EnactPropTypes.renderable.isRequired,
+			key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+			icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		})) || PropTypes.shape({
+			children: EnactPropTypes.renderable.isRequired,
+			imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
+		}),
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the

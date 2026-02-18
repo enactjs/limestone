@@ -19,7 +19,7 @@
 
 import {forKey, forProp, forward, forwardWithPrevent, handle, not} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import {setDefaultProps} from '@enact/core/util';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -29,7 +29,6 @@ import ProgressBar from '@enact/ui/ProgressBar';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import UiSlider from '@enact/ui/Slider';
-import Touchable from '@enact/ui/Touchable';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
@@ -58,7 +57,6 @@ const sliderDefaultProps = {
 	max: 100,
 	min: 0,
 	orientation: 'horizontal',
-	pressed: false,
 	step: 1,
 	wheelInterval: 0
 };
@@ -75,9 +73,7 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	checkPropTypes(SliderBase, sliderProps);
-
-	const {active, className, css, disabled, focused, keyFrequency, max, min, pressed, showAnchor, showMinMax, ...rest} = sliderProps;
+	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -140,9 +136,8 @@ const SliderBase = (props) => {
 		componentCss.slider,
 		className,
 		{
-			[mergedCss.active]: active,
 			[mergedCss.hasMinMax]: showMinMax,
-			[mergedCss.pressed]: pressed,
+			[mergedCss.active]: active,
 			[mergedCss.showAnchor]: showAnchor
 		},
 		css && css.slider
@@ -353,15 +348,6 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	onKeyUp: PropTypes.func,
 
 	/**
-	 * Indicates if the component is pressed.
-	 *
-	 * @type {Boolean}
-	 * @default false
-	 * @private
-	 */
-	pressed: PropTypes.bool,
-
-	/**
 	 * Displays an anchor at `progressAnchor`.
 	 *
 	 * @type {Boolean}
@@ -462,7 +448,6 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
  */
 const SliderDecorator = compose(
 	Pure,
-	Touchable({activeProp: 'pressed'}),
 	Changeable,
 	SliderBehaviorDecorator,
 	Spottable,

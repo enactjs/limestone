@@ -12,12 +12,11 @@
  * @exports MediaOverlayDecorator
  */
 
-import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
 import {Layout, Cell} from '@enact/ui/Layout';
 import Media from '@enact/ui/Media';
-import Touchable from '@enact/ui/Touchable';
+import EnactPropTypes from '@enact/core/internal/prop-types';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
@@ -139,15 +138,6 @@ const MediaOverlayBase = kind({
 		placeholder: PropTypes.string,
 
 		/**
-		 * Indicates if the component is pressed.
-		 *
-		 * @type {Boolean}
-		 * @default false
-		 * @private
-		 */
-		pressed: PropTypes.bool,
-
-		/**
 		 * A number between `0` and `1` indicating the proportion of the filled portion of the bar.
 		 *
 		 * Only applicable when `showProgress` is enabled.
@@ -202,7 +192,6 @@ const MediaOverlayBase = kind({
 
 	defaultProps: {
 		mediaComponent: 'video',
-		pressed: false,
 		progress: 0,
 		textAlign: 'end'
 	},
@@ -210,16 +199,10 @@ const MediaOverlayBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'mediaOverlay',
-		publicClassNames: ['mediaOverlay', 'image', 'pressed', 'text']
-	},
-
-	computed: {
-		className: ({pressed, styler}) => styler.append({pressed})
+		publicClassNames: ['mediaOverlay', 'image', 'text']
 	},
 
 	render: ({caption, css, imageOverlay, loop, marqueeOn, mediaComponent, muted, noAutoPlay, placeholder, progress, showProgress, source, title, subtitle, text, textAlign, ...rest}) => {
-		delete rest.pressed;
-
 		return (
 			<div {...rest}>
 				<div className={css.bg} />
@@ -291,7 +274,6 @@ const MediaOverlayBase = kind({
 const MediaOverlayDecorator = compose(
 	MarqueeController({marqueeOnFocus: true}),
 	Pure,
-	Touchable({activeProp: 'pressed'}),
 	Spottable,
 	Slottable({slots: ['source']}),
 	Skinnable

@@ -503,7 +503,26 @@
 					&:not(.pressed) {
 						.bg {
 							.lime-bg-colors({
-								.lime-release-motion();
+								.lime-release-motion()
+							});
+						}
+					}
+				}
+
+				&:not(.focusExpand) {
+					&.pressed,
+					&:active {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-press-motion();
+							});
+						}
+					}
+
+					&:not(.pressed) {
+						.bg {
+							.lime-bg-colors({
+								.lime-no-expand-release-motion()
 							});
 						}
 					}

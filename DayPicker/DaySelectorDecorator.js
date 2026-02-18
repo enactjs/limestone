@@ -1,6 +1,6 @@
 import {forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
-import {checkPropTypes, coerceArray, memoize, setDefaultProps} from '@enact/core/util';
+import {coerceArray, memoize, setDefaultProps} from '@enact/core/util';
 import ilib from '@enact/i18n';
 import DateFmt from 'ilib/lib/DateFmt';
 import LocaleInfo from 'ilib/lib/LocaleInfo';
@@ -210,8 +210,6 @@ const daySelectorDecoratorDefaultProps = {
 const DaySelectorDecorator = hoc((config, Wrapped) => {
 	const DaySelector = (props) => {
 		const daySelectorDecoratorProps = setDefaultProps(props, daySelectorDecoratorDefaultProps);
-		checkPropTypes(DaySelector, daySelectorDecoratorProps);
-
 		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;
 
 		const state = getLocaleState(dayNameLength, locale);

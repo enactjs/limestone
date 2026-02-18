@@ -1,13 +1,12 @@
 // IconItem.module.less
 //
 @import '../styles/mixins.less';
-@import "../styles/motion-mixins.less";
 @import '../styles/variables.less';
 @import '../styles/skin.less';
 
 .iconItem {
 	position: relative;
-	.lime-focus-out-motion();
+	transition: transform 200ms ease-in-out;
 	will-change: transform;
 	height: @lime-iconitem-height;
 	width: @lime-iconitem-width;
@@ -76,7 +75,7 @@
 	}
 
 	.focus({
-		.lime-focus-in-motion();
+		transform: @lime-iconitem-focus-transform;
 
 		&.labelOnFocus {
 			.label, .labelContainer {
@@ -88,18 +87,6 @@
 			visibility: visible;
 		}
 	});
-
-	&:not([disabled]) {
-		.focus({
-			&.pressed,
-			&:active {
-				.lime-press-motion();
-			}
-			&:not(:pressed) {
-				.lime-release-motion();
-			}
-		});
-	}
 
 	:global(.noAnimation) & {
 		transition: none;

@@ -1,6 +1,6 @@
 import hoc from '@enact/core/hoc';
 import Registry from '@enact/core/internal/Registry';
-import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import {setDefaultProps} from '@enact/core/util';
 import {ResizeContext} from '@enact/ui/Resizable';
 import {objectify} from '@enact/ui/Skinnable/util';
 import PropTypes from 'prop-types';
@@ -21,9 +21,7 @@ const accessibilityDecoratorDefaultProps = {
 const AccessibilityDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const AccessibilityDecorator = (props) => {
-		const accessibilityDecoratorProps = setDefaultProps(props, accessibilityDecoratorDefaultProps);
-		checkPropTypes(AccessibilityDecorator, accessibilityDecoratorProps);
-		const {className, focusRing, highContrast, skinVariants, textSize, ...rest} = accessibilityDecoratorProps;
+		const {className, focusRing, highContrast, skinVariants, textSize, ...rest} = setDefaultProps(props, accessibilityDecoratorDefaultProps);
 		let accessibilityClassName = highContrast ? `enact-a11y-high-contrast enact-text-${textSize}` : `enact-text-${textSize}`;
 		accessibilityClassName = focusRing ? `enact-a11y-focus-ring ${accessibilityClassName}` : `${accessibilityClassName}`;
 		const combinedClassName = className ? `${className} ${accessibilityClassName}` : accessibilityClassName;

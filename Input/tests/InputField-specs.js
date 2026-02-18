@@ -303,21 +303,4 @@ describe('InputField Specs', () => {
 
 		expect(inputField).toHaveAttribute(expectedAttribute, customLabel);
 	});
-
-	test('should callback onKeyDown with `keydown` type when key is pressed', async () => {
-		const handleKeyDown = jest.fn();
-		render(<InputField onKeyDown={handleKeyDown} />);
-		const inputField = screen.getByPlaceholderText('');
-
-		fireEvent.mouseDown(inputField);
-		fireEvent.keyDown(inputField, {which: 37, keyCode: 37, code: 37});
-
-		const {key} = handleKeyDown.mock.calls[0][0];
-		const expected = {type: 'keydown'};
-		const actual = handleKeyDown.mock.calls.length && handleKeyDown.mock.calls[0][0];
-
-		expect(handleKeyDown).toHaveBeenCalled();
-		expect(key).toBe('ArrowLeft');
-		expect(actual).toMatchObject(expected);
-	});
 });

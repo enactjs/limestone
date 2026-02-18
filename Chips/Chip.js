@@ -1,4 +1,4 @@
-import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import {setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
@@ -48,7 +48,6 @@ const ChipDefaultProps = {
  * 		position: 'right'
  * 	}}
  * 	icon="check"
- * 	id="chip"
  * >
  *  Label
  * </Chip>
@@ -62,7 +61,6 @@ const ChipDefaultProps = {
 const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
-	checkPropTypes(ChipBase, chipProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
@@ -181,6 +179,7 @@ const ChipBase = (props) => {
 				className={chipClassName}
 				data-chip-index={id}
 				disabled={disabled}
+				focusEffect="static"
 				icon={icon ? icon : ''}
 				iconComponent={iconComponent}
 				size="small"
@@ -210,6 +209,8 @@ const ChipBase = (props) => {
 		</div>
 	);
 };
+
+ChipBase.displayName = 'Chip';
 
 ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	/**
@@ -283,8 +284,6 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 */
 	isImage: PropTypes.bool
 };
-
-ChipBase.displayName = 'Chip';
 
 /**
  * Limestone-specific Chip behaviors to apply to {@link limestone/Chips.Chip|Chip}.

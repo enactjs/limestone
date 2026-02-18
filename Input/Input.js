@@ -362,7 +362,7 @@ const InputPopupBase = kind({
 			if (maxLength != null) return maxLength;
 			return DEFAULT_LENGTH;
 		},
-		popupClassName: ({popupType, subtitle, title, type, styler}) => styler.join('inputPopup', popupType, type, {noTitle: !title, noSubtitle: !subtitle}),
+		popupClassName: ({popupType, type, styler}) => styler.join('inputPopup', popupType, type),
 		inputAreaClassName: ({buttons, styler}) => styler.join('inputArea', buttons ? 'withButtons' : '')
 	},
 

@@ -1,5 +1,4 @@
 import hoc from '@enact/core/hoc';
-import {checkPropTypes} from '@enact/core/util';
 import ilib from '@enact/i18n';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
@@ -8,7 +7,6 @@ import {fontOverrideGenerator} from './fontGenerator';
 
 const I18nFontDecorator = hoc((config, Wrapped) => {
 	const I18nDecorator = (props) => {
-		checkPropTypes(I18nDecorator, props);
 		const ilibLocale = ilib.getLocale();
 
 		useEffect(() => {

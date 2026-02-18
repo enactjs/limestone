@@ -144,7 +144,7 @@ const ButtonBase = kind({
 		 *
 		 * @type {('expand'|'static')}
 		 * @default 'expand'
-		 * @public
+		 * @private
 		 */
 		focusEffect: PropTypes.oneOf(['expand', 'static']),
 

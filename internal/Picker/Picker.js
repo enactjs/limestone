@@ -4,7 +4,7 @@ import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import platform from '@enact/core/platform';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
-import {cap, checkPropTypes, clamp, Job} from '@enact/core/util';
+import {cap, clamp, Job} from '@enact/core/util';
 import ForwardRef from '@enact/ui/ForwardRef';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
@@ -37,12 +37,7 @@ const isLeft = is('left');
 const isRight = is('right');
 const isUp = is('up');
 
-const DivComponent = (props) => {
-	checkPropTypes(DivComponent, props);
-
-	const {ref, ...rest} = props;
-	return (<div ref={ref} {...rest} />);
-};
+const DivComponent = ({ref, ...rest}) => (<div ref={ref} {...rest} />);
 
 DivComponent.propTypes = {
 	/**
@@ -93,7 +88,6 @@ const allowedClassNames = ['picker', 'valueWrapper', 'joined', 'horizontal', 've
  * @private
  */
 const PickerBase = (props) => {
-	checkPropTypes(PickerBase, props);
 	// Set to `true` onFocus and `false` onBlur to prevent setting aria-valuetext (which
 	// will notify the user) when the component does not have focus
 	const [active, setActive] = useState(false);

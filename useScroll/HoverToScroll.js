@@ -2,7 +2,7 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getLastPointerPosition} from '@enact/spotlight/src/pointer';
-import {checkPropTypes, perfNow} from '@enact/core/util';
+import {perfNow} from '@enact/core/util';
 import {constants} from '@enact/ui/useScroll';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -52,8 +52,6 @@ const directionToFocus = {
  * @private
  */
 const HoverToScrollBase = (props) => {
-	checkPropTypes(HoverToScrollBase, props);
-
 	const {
 		direction,
 		scrollContainerHandle: {current: scrollContainer},
@@ -239,11 +237,7 @@ HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.Hover
  * @ui
  * @private
  */
-const HoverToScroll = (props) => {
-	checkPropTypes(HoverToScroll, props);
-
-	const {scrollContainerHandle, ...rest} = props;
-
+const HoverToScroll = ({scrollContainerHandle, ...rest}) => {
 	return scrollContainerHandle ? (
 		<>
 			<HoverToScrollBase scrollContainerHandle={scrollContainerHandle} {...rest} direction="horizontal" />

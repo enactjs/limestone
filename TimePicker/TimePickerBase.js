@@ -1,5 +1,4 @@
 import kind from '@enact/core/kind';
-import {checkPropTypes} from '@enact/core/util';
 import {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 
@@ -29,7 +28,6 @@ const hours12 = [
  * @private
  */
 const HourPicker = (props) => {
-	checkPropTypes(HourPicker, props);
 	const {hasMeridiem, value, ...rest} = props;
 	const hours = hasMeridiem ? hours12 : hours24;
 

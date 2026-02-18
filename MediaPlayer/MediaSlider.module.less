@@ -4,6 +4,8 @@
 @import "../styles/skin.less";
 
 .sliderFrame {
+	@knob-transform-active: @lime-translate-center scale(1);
+	@knob-transform-resting: @lime-translate-center scale(@lime-mediaplayer-slider-knob-resting-state-scale);
 	@slider-padding-v: ((@lime-mediaplayer-slider-tap-area - @lime-mediaplayer-slider-height) / 2);
 	@slider-padding-h: @lime-mediaplayer-slider-knob-size;
 	flex: 1 0 auto;
@@ -30,11 +32,19 @@
 			.knob::before {
 				opacity: 1;
 			}
+
+			&.active,
+			&.pressed {
+				.knob::before {
+					transform: @knob-transform-active;
+				}
+			}
 		});
 
 		.spottable({
 			&.pressed {
 				.knob::before {
+					transform: @knob-transform-active;
 					opacity: 1;
 				}
 			}
@@ -53,8 +63,10 @@
 			height: @lime-mediaplayer-slider-knob-size;
 			border-width: 0;
 			border-radius: @lime-mediaplayer-slider-knob-size;
+			transform: @knob-transform-resting;
 			opacity: 0;
-			will-change: opacity;
+			will-change: transform, opacity;
+			transition: transform @activate-transition-function 0.2s, opacity ease 0.2s;
 		}
 	}
 

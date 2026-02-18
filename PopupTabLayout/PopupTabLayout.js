@@ -13,7 +13,7 @@ import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} f
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import useHandlers from '@enact/core/useHandlers';
-import {cap, checkPropTypes} from '@enact/core/util';
+import {cap} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -259,7 +259,7 @@ const PopupTabLayoutBase = kind({
 		dimensions: {
 			tabs: {
 				collapsed: 216,
-				normal: 660
+				normal: 888
 			},
 			content: {
 				expanded: 1320,
@@ -507,10 +507,7 @@ const tabPanelsHandlers = {
  * @ui
  * @public
  */
-const TabPanelsBase = (props) => {
-	checkPropTypes(TabPanelsBase, props);
-	const {rtl, ...rest} = props;
-
+const TabPanelsBase = ({rtl, ... rest}) => {
 	const onTransition = use(TabLayoutContext);
 	const handlers = useHandlers(tabPanelsHandlers, {rtl, ...rest}, {onTransition});
 
@@ -561,10 +558,7 @@ const TabPanels = I18nContextDecorator(
  * @ui
  * @public
  */
-const TabPanel = (props) => {
-	checkPropTypes(TabPanel, props);
-	const {spotlightId, ...rest} = props;
-
+const TabPanel = ({spotlightId, ...rest}) => {
 	useEffect(() => {
 		Spotlight.set(spotlightId, {partition: true});
 	}, [spotlightId]);
