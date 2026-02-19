@@ -3,6 +3,7 @@ import {forward} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import ri from '@enact/ui/resolution';
@@ -12,13 +13,13 @@ import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import $L from '../internal/$L';
+import {compareChildren} from '../internal/util';
 import Icon from '../Icon';
 import Item from '../Item';
 import Skinnable from '../Skinnable';
 import VirtualList from '../VirtualList';
 
 import css from './Dropdown.module.less';
-import {compareChildren} from '../internal/util';
 
 const isSelectedValid = ({children, selected}) => Array.isArray(children) && children[selected] != null;
 
@@ -191,6 +192,8 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
+		checkPropTypes(DropdownListSpotlightDecorator, props);
+
 		const clientSiblingRef = useRef(null);
 		const [state, setState] = useState({
 			prevChildren: props.children,

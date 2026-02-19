@@ -14,7 +14,7 @@ import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
-import {extractAriaProps, setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -98,12 +98,14 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
+		checkPropTypes(ContextualPopupDecorator, props);
+
 		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 
 		const [activator, setActivator] = useState(null);
 		const [arrowPosition, setArrowPosition] = useState({top: 0, left: 0});
 		const [containerPosition, setContainerPosition] = useState({top: 0, left: 0, right: 0});
-		const [direction, setDirection] = useState('');
+		const [direction, setDirection] = useState(componentProps.direction);
 
 		const adjustedDirection = useRef(componentProps.direction);
 		const containerId = useRef(Spotlight.add(componentProps.popupSpotlightId));

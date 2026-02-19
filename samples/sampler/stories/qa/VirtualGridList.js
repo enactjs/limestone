@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Button from '@enact/limestone/Button';
 import ContextualPopupDecorator from '@enact/limestone/ContextualPopupDecorator';
@@ -81,8 +82,17 @@ const ContextualPopupButton = ContextualPopupDecorator(Button);
 let lastIndex = 0;
 
 class MyVirtualList extends Component {
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidMount () {
 		this.scrollTo({index: lastIndex, animate: false, focus: true});
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	closePopup (index) {
@@ -130,9 +140,15 @@ MyVirtualList.propTypes = {
 class ButtonAndVirtualGridList extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
+
 		this.state = {
 			isPopup: false
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	renderPopup = (rest) => {
@@ -274,8 +290,17 @@ HorizontalSquaredVirtualGridList.parameters = {
 };
 
 class SnapToCenterVGL extends Component {
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidMount () {
 		this.scrollTo({index: 1, animate: false, focus: true, stickTo: 'center'});
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	renderItem = ({index, ...rest}) => {
@@ -355,7 +380,10 @@ SnapToCenterVirtualGridList.parameters = {
 const numOfListsInScroller = 4;
 const idOfListsInScroller = (index) => (`vgl_${index}`);
 
-const VirtualGridListInScroller = ({args, onNext, ...rest}) => {
+const VirtualGridListInScroller = (props) => {
+	checkPropTypes(VirtualGridListInScroller, props);
+	const {args, onNext, ...rest} = props;
+
 	const virtualGridListProps = {
 		...rest,
 		childProps: {onClick: onNext},
@@ -406,9 +434,15 @@ VirtualGridListInScroller.propTypes = {
 class VirtualGridListInScrollerSamples extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
+
 		this.state = {
 			index: 0
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	onBack = () => {

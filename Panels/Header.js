@@ -1,6 +1,7 @@
 import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import {isRtlText} from '@enact/i18n/util';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Row, Cell} from '@enact/ui/Layout';
@@ -524,6 +525,8 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
+		checkPropTypes(ContextAsDefaultsHeader, props);
+
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
 		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);

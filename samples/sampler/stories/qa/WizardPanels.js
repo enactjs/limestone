@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Alert from '@enact/limestone/Alert';
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
@@ -201,11 +202,17 @@ LongPrevNextButtons.parameters = {
 };
 
 class WizardPanelsWithChangingChildren extends Component {
-	constructor () {
-		super();
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+
 		this.state = {
 			clickCount: 0
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	onClick = () => {

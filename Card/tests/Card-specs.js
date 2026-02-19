@@ -40,7 +40,7 @@ describe('Card', () => {
 
 	test('should support `imageIconSrc` prop when `orientation="vertical"`', () => {
 		const imageIconSrc = 'imageIconSrc';
-		render(<CardBase imageIconSrc={imageIconSrc} orientation="vertical" />);
+		render(<CardBase imageIconSrc={imageIconSrc} orientation="vertical" src={src} />);
 
 		const expected = imageIconSrc;
 		const actual = screen.getAllByRole('img')[2].children.item(0);
@@ -50,7 +50,7 @@ describe('Card', () => {
 
 	test('should not support `imageIconSrc` prop when `orientation="horizontal"`', () => {
 		const imageIconSrc = 'imageIconSrc';
-		render(<CardBase imageIconSrc={imageIconSrc} orientation="horizontal" />);
+		render(<CardBase imageIconSrc={imageIconSrc} orientation="horizontal" src={src} />);
 
 		const expected = 2;
 		const actual = screen.getAllByRole('img').length;
@@ -60,7 +60,7 @@ describe('Card', () => {
 
 	test('should apply prop `fitImage`', () => {
 		const imageIconSrc = 'imageIconSrc';
-		render(<CardBase data-testid="card" fitImage imageIconSrc={imageIconSrc} />);
+		render(<CardBase data-testid="card" fitImage imageIconSrc={imageIconSrc} src={src} />);
 
 		const expected = 'fitImage';
 		const actual = screen.getByTestId('card');
@@ -69,7 +69,7 @@ describe('Card', () => {
 	});
 
 	test('should have "Select" voice intent', () => {
-		render(<CardBase data-testid="card" />);
+		render(<CardBase data-testid="card" src={src} />);
 		const card = screen.getByTestId('card');
 
 		expect(card).toHaveAttribute('data-webos-voice-intent', 'Select');

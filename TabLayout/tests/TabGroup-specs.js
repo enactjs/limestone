@@ -173,7 +173,7 @@ describe('TabGroup specs', () => {
 	});
 
 	test('should set the size for all tabs in horizontal orientation', () => {
-		const size = 456;
+		const size = 'small';
 
 		render(
 			<TabGroup

@@ -78,11 +78,11 @@ const HeadingBase = kind({
 		 * If the `spacing` prop is not set (defaulting to "auto"), these values automatically set
 		 * the spacing to the correlated names.
 		 *
-		 * @type {('large'|'medium'|'small'|'tiny')}
+		 * @type {('large'|'medium'|'small'|'tiny'|'title'|'subtitle')}
 		 * @default 'tiny'
 		 * @public
 		 */
-		size: PropTypes.oneOf(['large', 'medium', 'small', 'tiny']),
+		size: PropTypes.oneOf(['large', 'medium', 'small', 'tiny', 'title', 'subtitle']),
 
 		/**
 		 * The size for slotBefore and slotAfter.

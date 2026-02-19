@@ -1,6 +1,7 @@
 // MediaOverlay.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
@@ -20,6 +21,29 @@
 
 	.mediaContainer {
 		position: relative;
+		.lime-focus-out-motion();
+	}
+
+	.focus({
+		.mediaContainer {
+			.lime-focus-in-motion();
+		}
+	});
+
+	&:not([disabled]) {
+		.focus({
+			&.pressed,
+			&:active {
+				.mediaContainer {
+					.lime-press-motion();
+				}				
+			}
+			&:not(.pressed) {
+				.mediaContainer {
+					.lime-release-motion();
+				}
+			}
+		});
 	}
 
 	.media {
@@ -91,15 +115,6 @@
 		font-size: @lime-mediaoverlay-subtitle-font-size;
 		line-height: @lime-mediaoverlay-line-height;
 	}
-
-	.focus({
-		.image,
-		.media,
-		.progressBar {
-			transform: @lime-mediaoverlay-focus-media-transform;
-			transition: transform 200ms ease-in-out;
-		}
-	});
 
 	.applySkins({
 		.bg {

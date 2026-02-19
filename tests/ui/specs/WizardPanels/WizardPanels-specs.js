@@ -62,6 +62,7 @@ describe('WizardPanels', function () {
 		it('should focus on back button in header on left key', async function () {
 			await wizardPanels.focusNextButton();
 			await Page.spotlightSelect();
+			await Page.delay(500);
 
 			await wizardPanels.waitForLeave(1);
 			expect(await wizardPanels.view2.isExisting()).toBe(true);

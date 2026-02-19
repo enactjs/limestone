@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import DatePicker from '@enact/limestone/DatePicker';
@@ -199,10 +200,15 @@ class PopupFocusTest extends Component {
 
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			popupOpen: false
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	handleClosePopup = () => {

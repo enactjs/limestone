@@ -13,7 +13,7 @@ import {on, off} from '@enact/core/dispatcher';
 import {forward, forwardCustom} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
 import kind from '@enact/core/kind';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -300,6 +300,8 @@ const popupDefaultProps = {
  * @public
  */
 const Popup = (props) => {
+	checkPropTypes(Popup, props);
+
 	const componentProps = setDefaultProps(props, popupDefaultProps);
 	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
 

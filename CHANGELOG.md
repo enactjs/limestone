@@ -4,9 +4,70 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Fixed
+
+- `limestone/Card` press motion to work with key press
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Slider` press motion to work with key press
+
+## [1.9.0] - 2026-01-28
+
+### Added
+
+- `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
+- `limestone/Icon` supported icon list, adding new icons `btspeakermute`, `system`, `remotecontrolsetting`, `warning`, `filepdf`, `filedoc`, `filexls`, `subtitleru`, and `mypageru`
+
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
+- `limestone/Chip` styling to match the latest GUI
+- `limestone/IconItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` to not overflow text when `withoutMarquee` is set
+- `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
+- `limestone/PageViews` to properly navigate between multiple `PageViews`
+- `limestone/PageViews` to resume spotlight on unmount
+
+## [1.8.0] - 2025-12-30
+
+### Added
+
+- `limestone/MediaPlayer.MediaControls` `nextAriaLabel` prop to custom the aria-label of the next button
+- `limestone/MediaPlayer.MediaControls` `nextButtonDisabled` prop to disable the next button
+- `limestone/MediaPlayer.MediaControls` `nextIcon` prop to select the next button icon
+- `limestone/MediaPlayer.MediaControls` `noNextButton` prop to remove the next button
+- `limestone/MediaPlayer.MediaControls` `noPreviousButton` prop to remove the previous button
+- `limestone/MediaPlayer.MediaControls` `onNextButtonClick` prop to custom the next button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `onPreviousButtonClick` prop to custom the previous button behavior when it is clicked
+- `limestone/MediaPlayer.MediaControls` `previousAriaLabel` prop to custom the aria-label of the previous button
+- `limestone/MediaPlayer.MediaControls` `previousButtonDisabled` prop to disable the previous button
+- `limestone/MediaPlayer.MediaControls` `previousIcon` prop to select the previous button icon
+- `limestone/VideoPlayer` `onNext` prop to custom the next button behavior when it is clicked
+- `limestone/VideoPlayer` `onPrevious` prop to custom the previous button behavior when it is clicked
+- `limestone/VideoPlayer` `onWillNext` prop to custom the next button behavior before playing the next video when it is clicked
+- `limestone/VideoPlayer` `onWillPrevious` prop to custom the previous button behavior before playing the previous video when it is clicked
+
+### Changed
+
+- `limestone/TabLayout` styling to match the latest GUI
 - `limestone/VirtualList` warning condition so the message will be shown only when `itemSizes.minSize` and `cbScrollTo` are set
+
+### Fixed
+
+- `limestone/InputField` to not overflow the parent container.
+
+## [1.6.3] - 2025-12-26
+
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
 ## [1.7.0] - 2025-12-08
 

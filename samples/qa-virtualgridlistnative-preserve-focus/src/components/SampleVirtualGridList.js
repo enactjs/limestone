@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import ImageItem from '@enact/limestone/ImageItem';
 import {VirtualGridList} from '@enact/limestone/VirtualList';
 import ri from '@enact/ui/resolution';
@@ -12,7 +13,9 @@ const svgGenerator = (width, height, bgColor, textColor, customText) => (
 	`%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='36px' fill='%23${textColor}'%3E${customText}%3C/text%3E%3C/svg%3E`
 );
 
-const SampleVirtualGridList = ({index, onClick, ...rest}) => {
+const SampleVirtualGridList = (props) => {
+	checkPropTypes(SampleVirtualGridList, props);
+	const {index, onClick, ...rest} = props;
 	const renderItem = useCallback(({index, ...rest}) => { // eslint-disable-line no-shadow
 		const
 			color = Math.floor((Math.random() * (0x1000000 - 0x101010)) + 0x101010).toString(16),

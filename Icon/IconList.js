@@ -38,7 +38,9 @@ export default {
 	pausejumpforward  : 0x0EFFE3, // pausejumpforward
 	pausejumpbackward : 0x0EFFE4, // pausejumpbackward
 	jumpforward       : 0x0EFFE7, // indicator_end
+	next              : 0x0EFFE7, // indicator_end
 	jumpbackward      : 0x0EFFE8, // indicator_begin
+	previous          : 0x0EFFE8, // indicator_begin
 	skip              : 0x0EFFE9, // skip
 	list              : 0x0EFFEB, // list_simple
 	arrowlargedown    : 0x0EFFED, // caret_down_large
@@ -304,5 +306,13 @@ export default {
 	jumpforward2      : 0x0F01ED, // jumpforward
 	jumpbackward2     : 0x0F01EE, // jumpbackward
 	link2             : 0x0F01EF, // Link
-	btspeakermute     : 0x0F01F0  // bt_speaker_mute
+	btspeakermute     : 0x0F01F0, // bt_speaker_mute
+	system            : 0x0F01F1, // system
+	remotecontrolsetting : 0x0F01F2, // remote_control_setting
+	warning           : 0x0F01F3, // warning
+	filepdf           : 0x0F01F4, // file_pdf
+	filedoc           : 0x0F01F5, // file_doc
+	filexls           : 0x0F01F6, // file_xls
+	subtitleru        : 0x10017F, // subtitleru
+	mypageru          : 0x0F01F7  // mypageru
 };
