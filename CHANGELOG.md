@@ -16,7 +16,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
-- `limestone/Icon` supported icon list, adding new icons `btspeakermute`, `system`, `remotecontrolsetting`, `warning`, `filepdf`, `filedoc`, `filexls`, `subtitleru`, and `mypageru`
+- `limestone/Icon` supported icon list, adding new icons `btspeakermute`, `system`, `remotecontrolsetting`, `warning`, `filepdf`, `filedoc`, `filexls`, `subtitleru`, `mypageru` and `f1`
 
 ### Changed
 
