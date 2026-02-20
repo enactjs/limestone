@@ -91,7 +91,7 @@ describe('MediaSlider', () => {
 
 		const slider = screen.getByTestId('mediaslider-id');
 
-		fireEvent.mouseOver(slider, {clientX: 10});
+		fireEvent.pointerOver(slider, {clientX: 10});
 
 		expect(handleKnobMove).toHaveBeenCalled();
 	});
@@ -106,7 +106,7 @@ describe('MediaSlider', () => {
 		const slider = screen.getByTestId('mediaslider-id');
 
 		fireEvent.mouseEnter(slider);
-		fireEvent.mouseMove(slider, {clientX: 10});
+		fireEvent.pointerMove(slider, {clientX: 10});
 
 		expect(handleKnobMove).toHaveBeenCalled();
 	});

@@ -53,7 +53,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {noLockPointer} = config;
 	const Component = Spottable({emulateMouse: false}, Wrapped);
 	const forwardBlur = forward('onBlur');
-	const forwardMouseDown = forward('onMouseDown');
+	const forwardPointerDown = forward('onPointerDown');
 	const forwardFocus = forward('onFocus');
 	const forwardKeyDown = forwardWithPrevent('onKeyDown');
 	const forwardKeyUp = forward('onKeyUp');
@@ -248,7 +248,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		}, [blur, focusDecorator, props]);
 
-		const onMouseDown = useCallback((ev) => {
+		const onPointerDown = useCallback((ev) => {
 			const {disabled, spotlightDisabled} = props;
 
 			setDownTarget(ev);
@@ -258,7 +258,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				focusInput(ev.currentTarget, true);
 			}
 
-			forwardMouseDown(ev, props);
+			forwardPointerDown(ev, props);
 		}, [focusInput, props, setDownTarget]);
 
 		const onFocus = useCallback((ev) => {
@@ -284,7 +284,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				if (!props.disabled) {
 					if (focused.current === 'input' && dismissOnEnter && is('enter', keyCode)) {
 						focusDecorator(currentTarget);
-						// prevent Enter onKeyPress which triggers an onMouseDown via Spotlight
+						// prevent Enter onKeyPress which triggers an onPointerDown via Spotlight
 						ev.preventDefault();
 					} else if (focused.current !== 'input' && is('enter', keyCode)) {
 						focusInput(currentTarget, false);
@@ -307,7 +307,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				onFocus={onFocus}
 				onKeyDown={onKeyDown}
 				onKeyUp={onKeyUp}
-				onMouseDown={onMouseDown}
+				onPointerDown={onPointerDown}
 			/>
 		);
 	};

@@ -314,7 +314,7 @@ describe('Picker Specs', () => {
 		);
 		const picker = screen.getByLabelText('0 press ok button to change the value');
 
-		fireEvent.mouseDown(picker);
+		fireEvent.pointerDown(picker);
 
 		const expected = 1;
 		const actual = handleChange.mock.calls[0][0].value;
@@ -329,7 +329,7 @@ describe('Picker Specs', () => {
 		);
 		const picker = screen.getByLabelText('3 press ok button to change the value');
 
-		fireEvent.mouseDown(picker);
+		fireEvent.pointerDown(picker);
 
 		const expected = 0;
 		const actual = handleChange.mock.calls[0][0].value;

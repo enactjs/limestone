@@ -120,30 +120,10 @@ const ChipBase = (props) => {
 		}
 	}, [chipRef, getNextTargetFromDeleteButton, id]);
 
-	const handleMouseLeave = useCallback((ev) => {
-		if (containerRef.current.contains(ev.target)) {
-			deleteButtonRef.current?.classList.remove(css.focused);
-		}
-	}, []);
-
-	const handleFocus = useCallback((ev) => {
-		if (ev.target === chipRef.current) {
-			deleteButtonRef.current?.classList.add(css.focused);
-		}
-	}, [chipRef]);
-
 	const handleBlur = useCallback(() => {
 		if (Spotlight.getPointerMode() && !isHovering.current) {
 			deleteButtonRef.current?.classList.remove(css.focused);
 		}
-	}, []);
-
-	const handleMouseOver = useCallback(() => {
-		isHovering.current = true;
-	}, []);
-
-	const handleMouseOut = useCallback(() => {
-		isHovering.current = false;
 	}, []);
 
 	const handleDelete = useCallback((ev) => {
@@ -154,6 +134,26 @@ const ChipBase = (props) => {
 			deleteButton.onDelete(ev);
 		}
 	}, [deleteButton, handleChipDelete, id]);
+
+	const handleFocus = useCallback((ev) => {
+		if (ev.target === chipRef.current) {
+			deleteButtonRef.current?.classList.add(css.focused);
+		}
+	}, [chipRef]);
+
+	const handlePointerLeave = useCallback((ev) => {
+		if (containerRef.current.contains(ev.target)) {
+			deleteButtonRef.current?.classList.remove(css.focused);
+		}
+	}, []);
+
+	const handlePointerOut = useCallback(() => {
+		isHovering.current = false;
+	}, []);
+
+	const handlePointerOver = useCallback(() => {
+		isHovering.current = true;
+	}, []);
 
 	const iconComponent = useCallback(({children: childComponent, ...iconProps}) => {
 		return <>
@@ -167,11 +167,11 @@ const ChipBase = (props) => {
 		<div
 			{...rest}
 			className={css.chip}
-			onMouseLeave={handleMouseLeave}
 			onBlur={handleBlur}
-			onMouseOver={handleMouseOver}
-			onMouseOut={handleMouseOut}
 			onKeyDown={handleKeyDown}
+			onPointerLeave={handlePointerLeave}
+			onPointerOut={handlePointerOut}
+			onPointerOver={handlePointerOver}
 			ref={containerRef}
 		>
 			<Button

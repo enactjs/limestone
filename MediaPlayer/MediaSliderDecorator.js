@@ -83,12 +83,12 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 		constructor (props) {
 			super(props);
 
-			this.handleMouseOver = this.handleMouseOver.bind(this);
-			this.handleMouseOut = this.handleMouseOut.bind(this);
-			this.handleMouseMove = this.handleMouseMove.bind(this);
-			if (platform.touchEvent) {
-				this.handleTouchMove = this.handleTouchMove.bind(this);
-			}
+			this.handlePointerOver = this.handlePointerOver.bind(this);
+			this.handlePointerOut = this.handlePointerOut.bind(this);
+			this.handlePointerMove = this.handlePointerMove.bind(this);
+			// if (platform.touchEvent) {
+			// 	this.handleTouchMove = this.handleTouchMove.bind(this);
+			// }
 
 			handleBlur.bindAs(this, 'handleBlur');
 			handleFocus.bindAs(this, 'handleFocus');
@@ -156,7 +156,7 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 			return this.state.tracking;
 		}
 
-		handleMouseOver (ev) {
+		handlePointerOver (ev) {
 			if (ev.currentTarget.contains(ev.relatedTarget)) {
 				return;
 			}
@@ -165,7 +165,7 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 			this.move(ev.clientX);
 		}
 
-		handleMouseOut (ev) {
+		handlePointerOut (ev) {
 			if (ev.currentTarget.contains(ev.relatedTarget)) {
 				return;
 			}
@@ -173,14 +173,14 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 			this.untrack();
 		}
 
-		handleMouseMove (ev) {
+		handlePointerMove (ev) {
 			this.move(ev.clientX);
 		}
 
-		handleTouchMove (ev) {
-			// ignores multi touch
-			this.move(ev.touches[0].clientX);
-		}
+		// handleTouchMove (ev) {
+		// 	// ignores multi touch
+		// 	this.move(ev.touches[0].clientX);
+		// }
 
 		render () {
 			const {selection, ...rest} = this.props;
@@ -195,9 +195,9 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 
 			delete rest.onKnobMove;
 
-			if (platform.touchEvent) {
-				rest.onTouchMove = this.handleTouchMove;
-			}
+			// if (platform.touchEvent) {
+			// 	rest.onTouchMove = this.handleTouchMove;
+			// }
 
 			return (
 				<Wrapped
@@ -207,9 +207,9 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 					onFocus={this.handleFocus}
 					onKeyDown={this.handleKeyDown}
 					onKeyUp={this.handleKeyUp}
-					onMouseOver={this.handleMouseOver}
-					onMouseOut={this.handleMouseOut}
-					onMouseMove={this.handleMouseMove}
+					onPointerOver={this.handlePointerOver}
+					onPointerOut={this.handlePointerOut}
+					onPointerMove={this.handlePointerMove}
 					preview={this.state.tracking}
 					previewProportion={this.state.x}
 					progressAnchor={progressAnchor}

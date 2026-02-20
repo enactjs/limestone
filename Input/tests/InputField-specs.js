@@ -114,7 +114,7 @@ describe('InputField Specs', () => {
 		render(<InputField onBlur={handleChange} dismissOnEnter />);
 		const inputField = screen.getByPlaceholderText('');
 
-		fireEvent.mouseDown(inputField);
+		fireEvent.pointerDown(inputField);
 		fireEvent.keyUp(inputField, {which: 13, keyCode: 13, code: 13});
 
 		expect(handleChange).toHaveBeenCalled();
@@ -240,7 +240,7 @@ describe('InputField Specs', () => {
 		render(<InputField />);
 		const inputField = screen.getByPlaceholderText('');
 
-		fireEvent.mouseDown(inputField);
+		fireEvent.pointerDown(inputField);
 
 		const expected = 'paused';
 		const actual = isPaused();
