@@ -4,6 +4,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Icon` supported icon list, adding new icon `f1`
+
+
 ### Changed
 
 - `limestone/Slider` styling to match the latest GUI
