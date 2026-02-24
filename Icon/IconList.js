@@ -314,5 +314,6 @@ export default {
 	filedoc           : 0x0F01F5, // file_doc
 	filexls           : 0x0F01F6, // file_xls
 	subtitleru        : 0x10017F, // subtitleru
+	f1                : 0x0F01F8, // f1
 	mypageru          : 0x0F01F7  // mypageru
 };
