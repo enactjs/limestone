@@ -91,10 +91,11 @@
 
 	&:not([disabled]) {
 		.focus({
+			&.pressed,
 			&:active {
 				.lime-press-motion();
 			}
-			&:not(:active) {
+			&:not(.pressed) {
 				.lime-release-motion();
 			}
 		});

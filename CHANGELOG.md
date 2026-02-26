@@ -2,6 +2,20 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.9.1] - 2026-02-26
+
+### Changed
+
+- `limestone/Slider` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` press motion to work with key press
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Popup` to avoid popup content blinking into existence after render
+- `limestone/Slider` press motion to work with key press
+
 ## [1.9.0] - 2026-01-28
 
 ### Added
