@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.9.1] - 2026-02-26
 
 ### Changed
 
@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Card` press motion to work with key press
 - `limestone/IconItem` press motion to work with key press
 - `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Popup` to avoid popup content blinking into existence after render
 - `limestone/Slider` press motion to work with key press
 
 ## [1.9.0] - 2026-01-28
