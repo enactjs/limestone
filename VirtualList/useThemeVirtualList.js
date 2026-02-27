@@ -364,6 +364,11 @@ const useThemeVirtualList = (props) => {
 
 	const instance = {itemRefs, scrollContainerRef, scrollContentHandle, scrollContentRef};
 
+	// Tracks whether the list is currently scrolling. Read during render (not in an effect)
+	// so that itemRenderer can pass marqueeDisabled=true to items during scroll, suppressing
+	// MarqueeDecorator's per-recycle getBoundingClientRect() calls.
+	const isScrollingRef = useRef(false);
+
 	const {
 		addScaleEffect,
 		calculatePositionOnFocus,
@@ -375,12 +380,18 @@ const useThemeVirtualList = (props) => {
 		pauseSpotlight,
 		removeScaleEffect,
 		resetSnapToCenterStatus,
-		setContainerDisabled,
+		setContainerDisabled: setContainerDisabledBase,
 		setLastFocusedNode,
 		shouldPreventOverscrollEffect,
 		shouldPreventScrollByFocus,
 		updateStatesAndBounds
 	} = useSpottable(props, instance);
+
+	// Wrap setContainerDisabled to also track scrolling state for marqueeDisabled
+	const setContainerDisabled = useCallback((bool) => {
+		isScrollingRef.current = bool;
+		setContainerDisabledBase(bool);
+	}, [setContainerDisabledBase]);
 
 	usePreventScroll(props, instance);
 
@@ -437,7 +448,8 @@ const useThemeVirtualList = (props) => {
 			itemRenderer({
 				...itemRest,
 				[dataIndexAttribute]: index,
-				index
+				index,
+				marqueeDisabled: isScrollingRef.current
 			})
 		),
 		placeholderRenderer: (primary) => {

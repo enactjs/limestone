@@ -34,7 +34,7 @@ const MarqueeBase = ({...rest}) => {
 };
 const Marquee = MarqueeDecorator({invalidateProps: ['remeasure', 'contentSize']}, MarqueeBase);
 
-const ItemContent = ({componentRef, content, contentSize, css, label, labelPosition, marqueeOn, ...rest}) => {
+const ItemContent = ({componentRef, content, contentSize, css, label, labelPosition, marqueeDisabled, marqueeOn, ...rest}) => {
 	const LabelPositionClassname = {
 		[css.labelAbove]: labelPosition === 'above',
 		[css.labelAfter]: labelPosition === 'after',
@@ -47,6 +47,7 @@ const ItemContent = ({componentRef, content, contentSize, css, label, labelPosit
 	const itemContentClasses = classnames(css.itemContent, LabelPositionClassname);
 	const marqueeProps = {
 		contentSize,
+		marqueeDisabled,
 		marqueeOn
 	};
 
@@ -75,7 +76,8 @@ ItemContent.propTypes = {
 	content: PropTypes.any,
 	css: PropTypes.object,
 	label: PropTypes.any,
-	labelPosition: PropTypes.any
+	labelPosition: PropTypes.any,
+	marqueeDisabled: PropTypes.bool
 };
 
 /**
@@ -254,7 +256,7 @@ const ItemBase = kind({
 		label: ({label}) => (typeof label === 'number' ? label.toString() : label)
 	},
 
-	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
+	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeDisabled, marqueeOn, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
 		delete rest.size;
 
 		const keys = Object.keys(rest);
@@ -277,16 +279,18 @@ const ItemBase = kind({
 						{slotBefore}
 					</Cell>
 				) : null}
-				<ItemContent
-					componentRef={contentRef}
-					content={children}
-					contentSize={contentSize}
-					css={css}
-					label={label}
-					labelPosition={labelPosition}
-					marqueeOn={marqueeOn}
-					shrink={inline}
-				/>
+				{children}
+				{/*<ItemContent*/}
+				{/*	componentRef={contentRef}*/}
+				{/*	content={children}*/}
+				{/*	contentSize={contentSize}*/}
+				{/*	css={css}*/}
+				{/*	label={label}*/}
+				{/*	labelPosition={labelPosition}*/}
+				{/*	marqueeDisabled={marqueeDisabled}*/}
+				{/*	marqueeOn={marqueeOn}*/}
+				{/*	shrink={inline}*/}
+				{/*/>*/}
 				{slotAfter ? (
 					<Cell className={css.slotAfter} aria-label={slotAfterAria} shrink>
 						{slotAfter}
