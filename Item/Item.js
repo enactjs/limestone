@@ -117,12 +117,12 @@ const ItemBase = kind({
 		contentRef: EnactPropTypes.ref,
 
 		/**
-		 * The size for content.
-		 * This size is set by ItemMeasurementDecorator for invalidating Marquee.
-		 *
-		 * @type {Number}
-		 * @private
-		 */
+		  * The size for content.
+		  * This size is set by ItemMeasurementDecorator for invalidating Marquee.
+		  *
+		  * @type {Number}
+		  * @private
+		  */
 		contentSize: PropTypes.number,
 
 		/**
