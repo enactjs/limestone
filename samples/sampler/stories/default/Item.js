@@ -19,7 +19,6 @@ export const _Item = (args) => (
 		inline={args['inline']}
 		label={args['label']}
 		labelPosition={args['labelPosition']}
-		marqueeDisabled={args['marqueeDisabled']}
 		size={args['size']}
 		slotBefore={
 			args['slotBefore'] ? (
@@ -41,7 +40,6 @@ boolean('disabled', _Item, Config);
 boolean('inline', _Item, Config);
 text('label', _Item, Config);
 select('labelPosition', _Item, ['above', 'below', 'before', 'after'], Config);
-boolean('marqueeDisabled', _Item, Config);
 select('size', _Item, ['small', 'large'], Config);
 select('slotBefore', _Item, {'': '', '<Icon />': 'icon'}, Config);
 select('slotAfter', _Item, {'': '', '<Icon />': 'icon'}, Config);

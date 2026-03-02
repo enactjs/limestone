@@ -452,9 +452,9 @@ const useThemeVirtualList = (props) => {
 };
 
 function placeholderRenderer ({
-								  handlePlaceholderFocus,
-								  primary
-							  }) {
+	handlePlaceholderFocus,
+	primary
+}) {
 	return (primary ? null : (
 		<SpotlightPlaceholder
 			data-index={0}
