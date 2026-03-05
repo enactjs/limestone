@@ -44,15 +44,15 @@
     "@enact/spotlight": "^5.4.2",
     "@enact/ui": "^5.4.2",
     "@enact/webos": "^5.4.2",
-    "@enovaui/core-tokens": "^0.14.0",
-    "@enovaui/webos-tokens": "^0.14.0",
+    "@enovaui/core-tokens": "^0.15.0",
+    "@enovaui/webos-tokens": "^0.15.0",
     "classnames": "^2.5.1",
     "ilib": "^14.21.2",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.32.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "warning": "^4.0.3"
   },
   "peerDependencies": {
@@ -66,7 +66,7 @@
     }
   },
   "devDependencies": {
-    "@enact/docs-utils": "^0.4.15",
-    "@enact/ui-test-utils": "^4.0.0"
+    "@enact/docs-utils": "^0.4.16",
+    "@enact/ui-test-utils": "^4.0.1"
   }
 }
