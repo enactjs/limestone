@@ -131,10 +131,10 @@ const HoverToScrollBase = (props) => {
 
 				const scrollByHover = (currentTime) => {
 					if (props.fixedFocus) {
-						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'right' && scrollContainer[scrollPosition] < 550) {
+						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'right' && scrollContainer[scrollPosition] < 270) {
 							return nop;
 						}
-						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'left' && scrollContainer[scrollPosition] > 3500) {
+						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'left' && scrollContainer[scrollPosition] > 1880) {
 							return nop;
 						}
 					}
