@@ -488,7 +488,7 @@ const useScroll = (props) => {
 	};
 
 	assignProperties('scrollContentProps', {
-		...(props.itemRenderer ? {itemRefs, noAffordance, snapToCenter} : {editable, fadeOut}),
+		...(props.itemRenderer ? {itemRefs, noAffordance, snapToCenter, fixedFocus} : {editable, fadeOut}),
 		...voiceProps,
 		className: [
 			(props.direction === 'both' || props.direction === 'vertical') ? overscrollCss.vertical : overscrollCss.horizontal,
@@ -522,6 +522,7 @@ const useScroll = (props) => {
 	});
 
 	assignProperties('hoverToScrollProps', {
+		fixedFocus,
 		scrollContainerHandle,
 		scrollObserver
 	});

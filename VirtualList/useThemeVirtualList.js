@@ -177,7 +177,7 @@ const useSpottable = (props, instances) => {
 
 			mutableRef.current.lastFocusedIndex = nextIndex;
 
-			if (start >= startBoundary && end <= endBoundary) {
+			if ((start >= startBoundary && end <= endBoundary) || props.fixedFocus) {
 				// The next item could be still out of viewport. So we need to prevent scrolling into view with `isScrolledBy5way` flag.
 				mutableRef.current.isScrolledBy5way = true;
 				focusByIndex(nextIndex, direction);
@@ -433,13 +433,26 @@ const useThemeVirtualList = (props) => {
 			'data-webos-voice-disabled': voiceDisabled
 		},
 		getAffordance,
-		itemRenderer: ({index, ...itemRest}) => (
+		itemRenderer: ({index, ...itemRest}) => {
+			const hiddenItem = itemRenderer({
+				...itemRest,
+				[dataIndexAttribute]: index,
+				index,
+				spotlightDisabled: true
+			});
+			hiddenItem.props.style.visibility = "hidden";
+			const clientSize = scrollContentHandle.current.primary.clientSize;
+			const itemSize = scrollContentHandle.current.primary.itemSize;
+			if (props.fixedFocus && (index === 0 || index > props.dataSize - clientSize/itemSize)) { 
+				return (hiddenItem);
+			}
+			return (
 			itemRenderer({
 				...itemRest,
 				[dataIndexAttribute]: index,
 				index
 			})
-		),
+		)},
 		placeholderRenderer: (primary) => {
 			return placeholderRenderer({
 				handlePlaceholderFocus,
