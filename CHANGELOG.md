@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Card` `captionOverlayOnFocus` prop to work in `focusRing` mode
 - `limestone/Card` press motion to work with key press
 - `limestone/IconItem` press motion to work with key press
 - `limestone/MediaOverlay` press motion to work with key press
