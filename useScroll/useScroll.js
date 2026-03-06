@@ -329,6 +329,7 @@ const useScroll = (props) => {
 			snapToCenter,
 			style,
 			verticalScrollThumbAriaLabel,
+			fixedFocus,
 			...rest
 		} = props;
 
