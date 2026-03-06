@@ -73,7 +73,7 @@ const CardTests = [
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
 	// FocusRing
-	...withConfig({focusRing: true, focus: true}, defaultCardTests)
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests))
 ];
 
 export default CardTests;
