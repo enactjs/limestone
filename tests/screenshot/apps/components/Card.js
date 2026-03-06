@@ -29,6 +29,7 @@ const defaultCardTests = [
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} hasContainer roundedImage>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} hasContainer selected>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlayOnFocus>Short</Card>,
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
 	<Card src={img} label="This is very very very very long label. This is very very long label." captionOverlay>This is very very very very long caption. This is very very long caption.</Card>,
@@ -71,13 +72,8 @@ const CardTests = [
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
-	...withConfig({
-		focusRing: true,
-		focus: true
-	}, [
-		<Card src={img} label="Focus ring label">Short</Card>,
-		<Card src={img} label="Focus ring label" roundedImage>Short</Card>
-	])
+	// FocusRing
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests))
 ];
 
 export default CardTests;
