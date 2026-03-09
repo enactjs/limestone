@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/Card` `captionOverlayOnFocus` prop to work in `focusRing` mode
+
 ## [1.9.1] - 2026-02-26
 
 ### Changed
