@@ -1,0 +1,222 @@
+name: CI Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      checkout-ref:
+        description: 'Git ref to checkout (empty for default merge commit)'
+        type: string
+        required: false
+        default: ''
+      check-name:
+        description: 'Name for the check (used in PR comments)'
+        type: string
+        required: true
+      post-comment:
+        description: 'Whether to post results as PR comment'
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  test:
+    name: ${{ inputs.check-name }}
+    runs-on: self-hosted
+    permissions:
+      contents: read
+      pull-requests: write
+
+    env:
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+
+    steps:
+      - name: Cleanup previous build artifacts
+        run: rm -rf ../cli ../enact
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.checkout-ref || github.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Clone and setup Enact CLI
+        run: |
+          git clone --branch=develop --depth 1 https://github.com/enactjs/cli ../cli
+          pushd ../cli
+          npm install
+          npm install @testing-library/dom
+          npm link
+          popd
+
+      - name: Clone and setup Enact framework
+        run: |
+          git clone --branch=develop --depth 1 https://github.com/enactjs/enact ../enact
+          pushd ../enact
+          npm uninstall @enact/ui-test-utils --prefix packages/i18n
+          npm install
+          npm run lerna exec -- --ignore enact-sampler --concurrency 1 -- npm --no-package-lock install
+          npm run lerna exec -- --ignore enact-sampler --concurrency 1 -- npm --no-package-lock link
+          npm run interlink
+          popd
+
+      - name: Install project dependencies
+        run: |
+          rm -fr node_modules/@enact
+          npm uninstall @enact/ui-test-utils
+          npm install
+          enact link
+
+      - name: Run tests with coverage
+        id: test
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm test -- --runInBand --coverage 2>&1 | tee test-output.txt
+
+      - name: Run ESLint
+        id: lint
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run lint -- -- --report-unused-disable-directives --max-warnings 0 . 2>&1 | tee lint-output.txt
+
+      - name: Validate documentation
+        id: docs
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          npm run validate-docs 2>&1 | tee docs-output.txt
+
+      - name: Post results to PR
+        if: always() && inputs.post-comment && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            function readOutput(filePath, maxLen = 3000) {
+              try {
+                const content = fs.readFileSync(filePath, 'utf8');
+                if (content.length > maxLen) {
+                  return '...(truncated)\n' + content.slice(-maxLen);
+                }
+                return content;
+              } catch {
+                return 'No output available';
+              }
+            }
+
+            const testOutput = readOutput('test-output.txt');
+            const lintOutput = readOutput('lint-output.txt');
+            const docsOutput = readOutput('docs-output.txt');
+
+            // Parse coverage from Jest text output
+            let coverageLine = '';
+            try {
+              const lines = testOutput.split('\n');
+              const parse = (label) => {
+                const line = lines.find(l => l.includes(label));
+                const match = line && line.match(/([\d.]+)%/);
+                return match ? match[1] + '%' : 'N/A';
+              };
+              const stmts = parse('Statements');
+              const branch = parse('Branches');
+              const funcs = parse('Functions');
+              const lns = parse('Lines');
+              coverageLine = `| Coverage | Stmts: ${stmts} / Branch: ${branch} / Funcs: ${funcs} / Lines: ${lns} |`;
+            } catch {
+              coverageLine = '| Coverage | No coverage data available |';
+            }
+
+            const icon = (outcome) => outcome === 'success' ? ':white_check_mark:' : ':x:';
+            const testOutcome = '${{ steps.test.outcome }}';
+            const lintOutcome = '${{ steps.lint.outcome }}';
+            const docsOutcome = '${{ steps.docs.outcome }}';
+            const checkName = '${{ inputs.check-name }}';
+            const nodeVersion = process.version;
+
+            const marker = `<!-- ${checkName.replace(/\s+/g, '-').toLowerCase()}-results -->`;
+
+            const body = [
+              marker,
+              `## ${checkName} Results`,
+              '',
+              `**Node.js:** ${nodeVersion} | **Commit:** \`${context.sha.substring(0, 7)}\``,
+              '',
+              '| Check | Status |',
+              '|-------|--------|',
+              `| Tests | ${icon(testOutcome)} ${testOutcome} |`,
+              coverageLine,
+              `| ESLint | ${icon(lintOutcome)} ${lintOutcome} |`,
+              `| Docs Validation | ${icon(docsOutcome)} ${docsOutcome} |`,
+              '',
+              '<details>',
+              '<summary>Test Output</summary>',
+              '',
+              '```',
+              testOutput,
+              '```',
+              '</details>',
+              '',
+              '<details>',
+              '<summary>ESLint Output</summary>',
+              '',
+              '```',
+              lintOutput,
+              '```',
+              '</details>',
+              '',
+              '<details>',
+              '<summary>Docs Validation Output</summary>',
+              '',
+              '```',
+              docsOutput,
+              '```',
+              '</details>',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(c => c.body && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
+
+      - name: Verify all checks passed
+        if: always()
+        run: |
+          echo "Test: ${{ steps.test.outcome }}"
+          echo "Lint: ${{ steps.lint.outcome }}"
+          echo "Docs: ${{ steps.docs.outcome }}"
+          if [[ "${{ steps.test.outcome }}" != "success" ]] || \
+             [[ "${{ steps.lint.outcome }}" != "success" ]] || \
+             [[ "${{ steps.docs.outcome }}" != "success" ]]; then
+            echo "One or more checks failed"
+            exit 1
+          fi
+
+      - name: Cleanup build artifacts
+        if: always()
+        run: rm -rf ../cli ../enact

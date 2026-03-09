@@ -1,0 +1,21 @@
+name: CI - Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: ci-branch-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  ci-branch:
+    uses: ./.github/workflows/ci-reusable.yml
+    with:
+      checkout-ref: ${{ github.event.pull_request.head.sha }}
+      check-name: 'CI - Branch'
+    secrets: inherit
