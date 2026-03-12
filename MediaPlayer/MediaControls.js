@@ -3,6 +3,7 @@ import {on, off} from '@enact/core/dispatcher';
 import {forward} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import hoc from '@enact/core/hoc';
+import deprecate from '@enact/core/internal/deprecate';
 import {is} from '@enact/core/keymap';
 import {Job} from '@enact/core/util';
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
@@ -59,6 +60,15 @@ const forwardToggleMore = forward('onToggleMore');
 
 const animationDuration = 300;
 
+let warnedJumpBackwardAriaLabel = false;
+let warnedJumpBackwardIcon = false;
+let warnedJumpButtonsDisabled = false;
+let warnedJumpForwardAriaLabel = false;
+let warnedJumpForwardIcon = false;
+let warnedNoJumpButtons = false;
+let warnedOnJumpBackwardButtonClick = false;
+let warnedOnJumpForwardButtonClick = false;
+
 /**
  * A set of components for controlling media playback and rendering additional components.
  *
@@ -86,6 +96,9 @@ const MediaControlsBase = kind({
 		/**
 		 * The `aria-label` for the action guide.
 		 *
+		 * When the media has been loaded first, this aria-label is read after media title.
+		 * You can use this aria-label to guide the user to find the action guide button for more controls.
+		 *
 		 * @type {String}
 		 * @public
 		 */
@@ -93,6 +106,8 @@ const MediaControlsBase = kind({
 
 		/**
 		 * The `aria-label` for the action guide button.
+		 *
+		 * This aria-label is read when the action guide button is focused.
 		 *
 		 * @type {String}
 		 * @public
@@ -127,6 +142,7 @@ const MediaControlsBase = kind({
 		 * The `aria-label` for the jumpBackward button.
 		 *
 		 * @type {String}
+		 * @deprecated Will be removed in 2.0.0. Use `previousAriaLabel` instead.
 		 * @public
 		 */
 		jumpBackwardAriaLabel: PropTypes.string,
@@ -137,6 +153,7 @@ const MediaControlsBase = kind({
 		 *
 		 * @type {String}
 		 * @default 'jumpbackward'
+		 * @deprecated Will be removed in 2.0.0. Use `previousIcon` instead.
 		 * @public
 		 */
 		jumpBackwardIcon: PropTypes.string,
@@ -145,6 +162,7 @@ const MediaControlsBase = kind({
 		 * Disables state on the media "jump" buttons; the outer pair.
 		 *
 		 * @type {Boolean}
+		 * @deprecated Will be removed in 2.0.0. Use `previousButtonDisabled` and `nextButtonDisabled` instead.
 		 * @public
 		 */
 		jumpButtonsDisabled: PropTypes.bool,
@@ -153,6 +171,7 @@ const MediaControlsBase = kind({
 		 * The `aria-label` for the jumpForward button.
 		 *
 		 * @type {String}
+		 * @deprecated Will be removed in 2.0.0. Use `nextAriaLabel` instead.
 		 * @public
 		 */
 		jumpForwardAriaLabel: PropTypes.string,
@@ -163,6 +182,7 @@ const MediaControlsBase = kind({
 		 *
 		 * @type {String}
 		 * @default 'jumpforward'
+		 * @deprecated Will be removed in 2.0.0. Use `nextIcon` instead.
 		 * @public
 		 */
 		jumpForwardIcon: PropTypes.string,
@@ -201,12 +221,55 @@ const MediaControlsBase = kind({
 		moreComponentsSpotlightId: PropTypes.string,
 
 		/**
-		 * Removes the "jump" buttons. The buttons that skip forward or backward in the video.
+		 * The `aria-label` for the next button.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		nextAriaLabel: PropTypes.string,
+
+		/**
+		 * Disables the next button.
 		 *
 		 * @type {Boolean}
 		 * @public
 		 */
+		nextButtonDisabled: PropTypes.bool,
+
+		/**
+		 * Next {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'next'
+		 * @public
+		 */
+		nextIcon: PropTypes.string,
+
+		/**
+		 * Removes the "jump" buttons. The buttons that skip forward or backward in the video.
+		 *
+		 * @type {Boolean}
+		 * @deprecated Will be removed in 2.0.0. Use `noPreviousButton` and `noNextButton` instead.
+		 * @public
+		 */
 		noJumpButtons: PropTypes.bool,
+
+		/**
+		 * Removes the next button. The button that plays the next video of the playlist.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noNextButton: PropTypes.bool,
+
+		/**
+		 * Removes the previous button. The button that plays the previous video of the playlist.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noPreviousButton: PropTypes.bool,
 
 		/**
 		 * Called when the button in ActionGuide is clicked.
@@ -229,6 +292,7 @@ const MediaControlsBase = kind({
 		 * Called when the user clicks the JumpBackward button
 		 *
 		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onPreviousButtonClick` instead.
 		 * @public
 		 */
 		onJumpBackwardButtonClick: PropTypes.func,
@@ -237,6 +301,7 @@ const MediaControlsBase = kind({
 		 * Called when the user clicks the JumpForward button.
 		 *
 		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onNextButtonClick` instead.
 		 * @public
 		 */
 		onJumpForwardButtonClick: PropTypes.func,
@@ -250,12 +315,34 @@ const MediaControlsBase = kind({
 		onKeyDownFromMediaButtons: PropTypes.func,
 
 		/**
+		 * Called when the user clicks the next button.
+		 *
+		 * If this function is not set, the button will work as the default jumpForward button.
+		 * Next button will be the default in 2.0.0.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onNextButtonClick: PropTypes.func,
+
+		/**
 		 * Called when the user clicks the Play button.
 		 *
 		 * @type {Function}
 		 * @public
 		 */
 		onPlayButtonClick: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the previous button
+		 *
+		 * If this function is not set, the button will work as the default jumpBackward button.
+		 * Previous button will be the default in 2.0.0.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onPreviousButtonClick: PropTypes.func,
 
 		/**
 		 * `true` when the video is paused.
@@ -298,6 +385,32 @@ const MediaControlsBase = kind({
 		playPauseButtonDisabled: PropTypes.bool,
 
 		/**
+		 * The `aria-label` for the previous button.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		previousAriaLabel: PropTypes.string,
+
+		/**
+		 * Disables the previous button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		previousButtonDisabled: PropTypes.bool,
+
+		/**
+		 * Previous {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'previous'
+		 * @public
+		 */
+		previousIcon: PropTypes.string,
+
+		/**
 		 * When `true`, more components are visible.
 		 *
 		 * @type {Boolean}
@@ -336,9 +449,11 @@ const MediaControlsBase = kind({
 		jumpBackwardIcon: 'jumpbackward',
 		jumpForwardIcon: 'jumpforward',
 		moreComponentsSpotlightId: 'moreComponents',
+		nextIcon: 'next',
 		spotlightId: 'mediaControls',
 		pauseIcon: 'pause',
 		playIcon: 'play',
+		previousIcon: 'previous',
 		visible: true
 	},
 
@@ -356,7 +471,7 @@ const MediaControlsBase = kind({
 		moreComponentsRendered: ({showMoreComponents, moreComponentsRendered}) => showMoreComponents || moreComponentsRendered
 	},
 
-	render: ({
+	render: deprecate(({
 		actionGuideAriaLabel,
 		actionGuideButtonAriaLabel,
 		actionGuideDisabled,
@@ -373,16 +488,26 @@ const MediaControlsBase = kind({
 		mediaControlsRef,
 		mediaDisabled,
 		moreComponentsSpotlightId,
+		nextAriaLabel,
+		nextButtonDisabled,
+		nextIcon,
 		noJumpButtons,
+		noNextButton,
+		noPreviousButton,
 		onActionGuideClick,
 		onJumpBackwardButtonClick,
 		onJumpForwardButtonClick,
 		onKeyDownFromMediaButtons,
+		onNextButtonClick,
 		onPlayButtonClick,
+		onPreviousButtonClick,
 		paused,
 		pauseIcon,
 		playIcon,
 		playPauseButtonDisabled,
+		previousAriaLabel,
+		previousButtonDisabled,
+		previousIcon,
 		showMoreComponents,
 		moreComponentsRendered,
 		moreButtonsClassName,
@@ -394,12 +519,46 @@ const MediaControlsBase = kind({
 	}) => {
 		delete rest.onClose;
 		delete rest.visible;
+
+		if (!warnedJumpBackwardAriaLabel && jumpBackwardAriaLabel) {
+			deprecate({name: '`jumpBackwardAriaLabel`', until: '2.0.0', message: 'Use `previousAriaLabel` instead'});
+			warnedJumpBackwardAriaLabel = true;
+		}
+		if (!warnedJumpBackwardIcon && jumpBackwardIcon !== 'jumpbackward') {
+			deprecate({name: '`jumpBackwardIcon`', until: '2.0.0', message: 'Use `previousIcon` instead'});
+			warnedJumpBackwardIcon = true;
+		}
+		if (!warnedJumpButtonsDisabled && jumpButtonsDisabled) {
+			deprecate({name: '`jumpButtonsDisabled`', until: '2.0.0', message: 'Use `previousButtonDisabled` and `nextButtonDisabled` instead'});
+			warnedJumpButtonsDisabled = true;
+		}
+		if (!warnedJumpForwardAriaLabel && jumpForwardAriaLabel) {
+			deprecate({name: '`jumpForwardAriaLabel`', until: '2.0.0', message: 'Use `nextAriaLabel` instead'});
+			warnedJumpForwardAriaLabel = true;
+		}
+		if (!warnedJumpForwardIcon && jumpForwardIcon !== 'jumpforward') {
+			deprecate({name: '`jumpForwardIcon`', until: '2.0.0', message: 'Use `nextIcon` instead'});
+			warnedJumpForwardIcon = true;
+		}
+		if (!warnedNoJumpButtons && noJumpButtons) {
+			deprecate({name: '`noJumpButtons`', until: '2.0.0', message: 'Use `noPreviousButton` and `noNextButton` instead'});
+			warnedNoJumpButtons = true;
+		}
+		if (!warnedOnJumpBackwardButtonClick && onJumpBackwardButtonClick) {
+			deprecate({name: '`onJumpBackwardButtonClick`', until: '2.0.0', message: 'Use `onPreviousButtonClick` instead'});
+			warnedOnJumpBackwardButtonClick = true;
+		}
+		if (!warnedOnJumpForwardButtonClick && onJumpForwardButtonClick) {
+			deprecate({name: '`onJumpForwardButtonClick`', until: '2.0.0', message: 'Use `onNextButtonClick` instead'});
+			warnedOnJumpForwardButtonClick = true;
+		}
+
 		return (
 			<OuterContainer {...rest} id={id} mediaControlsRef={mediaControlsRef} spotlightId={spotlightId}>
 				<Container className={css.mediaControls} spotlightDisabled={spotlightDisabled} onKeyDown={onKeyDownFromMediaButtons}>
-					{noJumpButtons ? null : <MediaButton aria-label={jumpBackwardAriaLabel || $L('Previous')} backgroundOpacity="transparent" css={css} disabled={mediaDisabled || jumpButtonsDisabled} icon={jumpBackwardIcon} onClick={onJumpBackwardButtonClick} size="large" spotlightDisabled={spotlightDisabled} />}
+					{(noPreviousButton || noJumpButtons) ? null : <MediaButton aria-label={previousAriaLabel || jumpBackwardAriaLabel || $L('Previous')} backgroundOpacity="transparent" css={css} disabled={mediaDisabled || previousButtonDisabled || jumpButtonsDisabled} icon={previousIcon !== 'previous' ? previousIcon : jumpBackwardIcon} onClick={onPreviousButtonClick || onJumpBackwardButtonClick} size="large" spotlightDisabled={spotlightDisabled} />}
 					<MediaButton aria-label={paused ? $L('Play') : $L('Pause')} className={spotlightDefaultClass} backgroundOpacity="transparent" css={css} disabled={mediaDisabled || playPauseButtonDisabled} icon={paused ? playIcon : pauseIcon} onClick={onPlayButtonClick} size="large" spotlightDisabled={spotlightDisabled} />
-					{noJumpButtons ? null : <MediaButton aria-label={jumpForwardAriaLabel || $L('Next')} backgroundOpacity="transparent" css={css} disabled={mediaDisabled || jumpButtonsDisabled} icon={jumpForwardIcon} onClick={onJumpForwardButtonClick} size="large" spotlightDisabled={spotlightDisabled} />}
+					{(noNextButton || noJumpButtons) ? null : <MediaButton aria-label={nextAriaLabel || jumpForwardAriaLabel || $L('Next')} backgroundOpacity="transparent" css={css} disabled={mediaDisabled || nextButtonDisabled || jumpButtonsDisabled} icon={nextIcon !== 'next' ? nextIcon : jumpForwardIcon} onClick={onNextButtonClick || onJumpForwardButtonClick} size="large" spotlightDisabled={spotlightDisabled} />}
 				</Container>
 				{actionGuideShowing ?
 					<ActionGuide id={`${id}_actionGuide`} aria-label={actionGuideAriaLabel != null ? actionGuideAriaLabel : null} buttonAriaLabel={actionGuideButtonAriaLabel} css={css} className={actionGuideClassName} icon="arrowsmalldown" onClick={onActionGuideClick} disabled={actionGuideDisabled}>{actionGuideLabel}</ActionGuide> :
@@ -418,7 +577,11 @@ const MediaControlsBase = kind({
 				}
 			</OuterContainer>
 		);
-	}
+	}, {
+		name: 'features related to `jumpBackward` and `jumpForward` buttons',
+		until: '2.0.0',
+		message: 'Will be replaced with features related to `previous` and `next` buttons that play previous/next video of the playlist'
+	})
 });
 
 /**

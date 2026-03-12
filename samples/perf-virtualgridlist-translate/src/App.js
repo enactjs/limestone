@@ -18,6 +18,7 @@ const VirtualGridListSample = (props) => {
 	const scrollToRef = useRef(null);
 
 	useEffect(() => {
+		// Below is an example of using scrollTo method for setting an "initial" position of VirtualList.
 		scrollToRef.current({animate: false, focus: true, index: 19});
 	}, []);
 

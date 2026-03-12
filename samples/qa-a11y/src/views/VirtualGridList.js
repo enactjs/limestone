@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
-import CheckboxItem from '@enact/limestone/CheckboxItem';
+import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import ImageItem from '@enact/limestone/ImageItem';
 import {VirtualGridList} from '@enact/limestone/VirtualList';
 import Layout, {Cell} from '@enact/ui/Layout';
@@ -75,24 +75,26 @@ const VirtualGridListView = () => {
 	return (
 		<Layout orientation="vertical">
 			<Cell shrink>
-				<CheckboxItem
-					onToggle={handleToggleOrientation}
-					selected={horizontal}
-				>
-					Horizontal
-				</CheckboxItem>
-				<CheckboxItem
-					onToggle={handleToggleScrollMode}
-					selected={native}
-				>
-					Native
-				</CheckboxItem>
-				<CheckboxItem
-					onToggle={handleToggleRole}
-					selected={role}
-				>
-					Read X of Y
-				</CheckboxItem>
+				<CheckboxItemGroup>
+					<CheckboxItem
+						onToggle={handleToggleOrientation}
+						selected={horizontal}
+					>
+						Horizontal
+					</CheckboxItem>
+					<CheckboxItem
+						onToggle={handleToggleScrollMode}
+						selected={native}
+					>
+						Native
+					</CheckboxItem>
+					<CheckboxItem
+						onToggle={handleToggleRole}
+						selected={role}
+					>
+						Read X of Y
+					</CheckboxItem>
+				</CheckboxItemGroup>
 			</Cell>
 			<VirtualGridList
 				className={horizontal ? css.horizontalPadding : css.verticalPadding}

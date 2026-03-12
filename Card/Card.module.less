@@ -1,8 +1,12 @@
 // Card.module.less
 //
 @import '../styles/mixins.less';
+@import "../styles/motion-mixins.less";
 @import '../styles/variables.less';
 @import '../styles/skin.less';
+
+@card-caption-padding-left: .extract(@lime-card-vertical-caption-overlay-captions-padding, left)[];
+@card-caption-padding-right: .extract(@lime-card-vertical-caption-overlay-captions-padding, right)[];
 
 .resting-border(@z-index: 1) {
 	&::before {
@@ -33,6 +37,7 @@
 
 	.image {
 		position: relative;
+		.lime-focus-out-motion();
 	}
 
 	.selectionContainer {
@@ -48,13 +53,20 @@
 		border-style: solid;
 
 		.selectionIcon {
-			width: @lime-card-selection-icon-size;
-			height: @lime-card-selection-icon-size;
+			width: @lime-card-selection-check-icon-size;
+			height: @lime-card-selection-check-icon-size;
 			border-radius: @lime-card-selection-icon-border-radius;
 			margin: @lime-card-selection-icon-margin;
-			line-height: @lime-card-selection-icon-line-height;
+			line-height: @lime-card-selection-check-icon-line-height;
 			z-index: 3;
 		}
+	}
+
+	&:not(.isCheckIcon) .selectionContainer .selectionIcon {
+		--icon-size: @lime-card-selection-icon-size;
+		width: @lime-card-selection-icon-line-height;
+		height: @lime-card-selection-icon-line-height;
+		line-height: @lime-card-selection-icon-line-height;
 	}
 
 	.primaryBadge, .secondaryBadge {
@@ -71,15 +83,17 @@
 		right: @lime-card-badge-right;
 	}
 
+	.caption, .label {
+		overflow-wrap: break-word;
+	}
+
 	.caption {
-		height: @lime-card-caption-height;
 		font-size: @lime-card-caption-font-size;
 		line-height: @lime-card-caption-line-height;
 		font-weight: @lime-card-caption-font-weight;
 	}
 
 	.label {
-		height: @lime-card-label-height;
 		font-size: @lime-card-label-font-size;
 		line-height: @lime-card-label-line-height;
 		font-weight: @lime-card-label-font-weight;
@@ -138,6 +152,7 @@
 	&.vertical {
 		width: var(--card-image-width);
 		height: auto;
+		.lime-focus-out-motion();
 
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
@@ -161,6 +176,24 @@
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
 		}
 
+		&.captionOverlay {
+			&.splitCaption {
+				.caption {
+					width: ~"calc(var(--card-image-width) - (@{card-caption-padding-left} + @{card-caption-padding-right}))";
+				}
+
+				.label {
+					font-size: @lime-card-split-caption-label-font-size;
+					font-weight: @lime-card-split-caption-label-font-weight;
+					padding: @lime-card-split-caption-label-padding;
+
+					&:first-child {
+						padding-top: @lime-card-split-caption-lower-label-padding;
+					}
+				}
+			}
+		}
+
 		&.captionOverlayOnFocus .captions {
 			visibility: hidden;
 		}
@@ -181,6 +214,7 @@
 	&.horizontal {
 		width: @lime-card-horizontal-width;
 		height: @lime-card-horizontal-height;
+		.lime-focus-out-motion();
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
@@ -193,8 +227,7 @@
 
 	.focus({
 		&.hasContainer {
-			transform: scale(1.1);
-			transition: transform 200ms ease-in-out;
+			.lime-focus-in-motion();
 
 			&.roundedImage::before {
 				border-radius: @lime-card-border-radius;
@@ -202,12 +235,6 @@
 		}
 
 		&.vertical {
-			&:not(.captionOverlay):not(.hasContainer) .image,
-			&.captionOverlay {
-				transform: scale(1.1);
-				transition: transform 200ms ease-in-out;
-			}
-
 			&.captionOverlayOnFocus .captions {
 				visibility: visible;
 			}
@@ -218,6 +245,54 @@
 		}
 	});
 
+	&:not([disabled]) {
+		.focus({
+			&.hasContainer {
+				&.pressed,
+				&:active {
+					.lime-press-motion();
+				}
+				&:not(.pressed) {
+					.lime-release-motion();
+				}
+			}
+		});
+	}
+
+	&:not(:global(.focusRing)){
+		.focus({
+			&.vertical {
+				&:not(.captionOverlay):not(.hasContainer) .image,
+				&.captionOverlay {
+					.lime-focus-in-motion();
+				}
+			}
+		});
+
+		&:not([disabled]) {
+			.focus({
+				&.vertical {
+					&.captionOverlay {
+						&.pressed,
+						&:active {
+							.lime-press-motion();
+						}
+						&:not(.pressed) {
+							.lime-release-motion();
+						}
+					}
+
+					&:not(.captionOverlay):not(.hasContainer).pressed .image {
+						.lime-press-motion();
+					}
+					&:not(.captionOverlay):not(.hasContainer):not(.pressed) .image {
+						.lime-release-motion();
+					}
+				}
+			});
+		}
+	}
+
 	// Skin colors
 	.applySkins({
 		.selectionContainer {
@@ -227,8 +302,11 @@
 			}
 		}
 
-		&.selected .selectionIcon {
+		&.isCheckIcon.selected .selectionIcon {
 			background-color: @lime-card-selection-container-selected-color;
+		}
+
+		&.selected .selectionIcon {
 			color: @lime-card-selection-icon-selected-color;
 		}
 
@@ -271,6 +349,12 @@
 
 				&:not(.selected) {
 					.resting-border(5);
+				}
+
+				&.splitCaption {
+					.label {
+						color: @lime-card-label-main-color;
+					}
 				}
 			}
 

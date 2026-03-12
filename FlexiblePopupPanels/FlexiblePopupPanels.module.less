@@ -2,6 +2,16 @@
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
+// Module level variables, for use only in this file
+@flexiblepopuppanels-margin-top: .extract(@lime-flexiblepopuppanels-margin, top)[];
+@flexiblepopuppanels-padding-top: .extract(@lime-flexiblepopuppanels-padding, top)[] * 1px; // multiplied with 1px to have valid value for calc()
+@flexiblepopuppanels-padding-left: .extract(@lime-flexiblepopuppanels-padding, left)[];
+@flexiblepopuppanels-padding-right: .extract(@lime-flexiblepopuppanels-padding, right)[];
+@flexiblepopuppanels-panel-margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[];
+@flexiblepopuppanels-panel-margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[];
+@flexiblepopuppanels-body-padding-left: .extract(@lime-flexiblepopuppanels-body-padding, left)[];
+@flexiblepopuppanels-body-padding-right: .extract(@lime-flexiblepopuppanels-body-padding, right)[];
+
 .flexiblePopupPanels {
 	// Override for Popup
 	&.popup {
@@ -22,7 +32,7 @@
 			// The next line is very long, but it calculates the maximum height by adding up all
 			// of the paddings between this node and the edge of the screen, top and bottom.
 			// If the margin or padding configuration changes, this will likely need to be updated.
-			height: ~"calc(100vh -" ((extract(@lime-flexiblepopuppanels-margin, 1) * 2) + extract(@lime-flexiblepopuppanels-padding, 1) + extract(@lime-flexiblepopuppanels-padding, 1)) ~")";
+			height: ~"calc(100vh - (@{flexiblepopuppanels-margin-top} * 2 + @{flexiblepopuppanels-padding-top} * 2))";
 		}
 
 		&.noNavButton {
@@ -73,6 +83,7 @@
 		position: relative;
 		pointer-events: none;
 		padding: 0;
+
 		.enact-locale-rtl({
 			padding: 0;
 		});
@@ -151,8 +162,8 @@
 		}
 
 		.header {
-			margin-left: .extract(@lime-flexiblepopuppanels-panel-margin, left)[] + .extract(@lime-flexiblepopuppanels-body-padding, left)[];
-			margin-right: .extract(@lime-flexiblepopuppanels-panel-margin, right)[] + .extract(@lime-flexiblepopuppanels-body-padding, right)[];
+			margin-left: ~"calc(@{flexiblepopuppanels-panel-margin-left} + @{flexiblepopuppanels-body-padding-left})";
+			margin-right: ~"calc(@{flexiblepopuppanels-panel-margin-right} + @{flexiblepopuppanels-body-padding-right})";
 		}
 	}
 
@@ -168,21 +179,21 @@
 	// implementation-specific rather than being generally useful due to the container
 	// requiring border-box sizing in one dimension and content-box in the other.
 	// The following adds the left margin, left padding, width, right padding, and right margin
-	@panel-small-width: (
-		.extract(@lime-flexiblepopuppanels-panel-margin, left)[]
-		+ .extract(@lime-flexiblepopuppanels-padding, left)[]
-		+ @lime-flexiblepopuppanels-small-width
-		+ .extract(@lime-flexiblepopuppanels-padding, right)[]
-		+ .extract(@lime-flexiblepopuppanels-panel-margin, right)[]
-	);
+	@panel-small-width: ~"calc(
+		@{flexiblepopuppanels-panel-margin-left}
+		+ @{flexiblepopuppanels-padding-left}
+		+ @{lime-flexiblepopuppanels-small-width}
+		+ @{flexiblepopuppanels-padding-right}
+		+ @{flexiblepopuppanels-panel-margin-right}
+	)";
 	// The following adds the left margin, left padding, width, right padding, and right margin
-	@panel-large-width: (
-		.extract(@lime-flexiblepopuppanels-panel-margin, left)[]
-		+ .extract(@lime-flexiblepopuppanels-padding, left)[]
-		+ @lime-flexiblepopuppanels-large-width
-		+ .extract(@lime-flexiblepopuppanels-padding, right)[]
-		+ .extract(@lime-flexiblepopuppanels-panel-margin, right)[]
-	);
+	@panel-large-width: ~"calc(
+		@{flexiblepopuppanels-panel-margin-left}
+		+ @{flexiblepopuppanels-padding-left}
+		+ @{lime-flexiblepopuppanels-large-width}
+		+ @{flexiblepopuppanels-padding-right}
+		+ @{flexiblepopuppanels-panel-margin-right}
+	)";
 
 	// With a panel width defined, the container (viewport) extends to the width of both child panels,
 	// so we must only offset `left` by 50%, half as much, since now the container is twice as large.
@@ -208,7 +219,7 @@
 	// We offset by the width of the other panel so ViewManager's Arranger's transform
 	// can continue to use relative sizing.
 	&.small	+ &.large {
-		left: -@panel-small-width;
+		left: ~"calc(@{panel-small-width} * -1)";
 	}
 
 	&.large {
@@ -218,7 +229,7 @@
 	}
 
 	&.large	+ &.small {
-		left: -@panel-large-width;
+		left: ~"calc(@{panel-large-width})";
 	}
 
 	.enact-locale-rtl({

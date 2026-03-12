@@ -9,13 +9,14 @@
 
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
 import {on, off} from '@enact/core/dispatcher';
+import deprecate from '@enact/core/internal/deprecate';
 import {memoize} from '@enact/core/util';
 
 import {adaptEvent, call, forKey, forward, forwardCustom, forwardWithPrevent, handle, preventDefault, stopImmediate, returnsTrue} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
 import {platform} from '@enact/core/platform';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {perfNow, Job, shallowEqual} from '@enact/core/util';
+import {checkPropTypes, perfNow, Job, shallowEqual} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import {toUpperCase} from '@enact/i18n/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
@@ -72,7 +73,11 @@ const calcNumberValueOfPlaybackRate = (rate) => {
 	return (pbArray.length > 1) ? parseInt(pbArray[0]) / parseInt(pbArray[1]) : parseFloat(rate);
 };
 
-const RootComponent = ({playerRef, ...rest}) => (<div ref={playerRef} {...rest} />);
+const RootComponent = (props) => {
+	checkPropTypes(RootComponent, props);
+	const {playerRef, ...rest} = props;
+	return (<div ref={playerRef} {...rest} />);
+};
 
 RootComponent.propTypes = {
 	/*
@@ -129,6 +134,10 @@ const forwardJumpBackward = forwardWithState('onJumpBackward');
 const forwardWillJumpBackward = forwardWithState('onWillJumpBackward');
 const forwardJumpForward = forwardWithState('onJumpForward');
 const forwardWillJumpForward = forwardWithState('onWillJumpForward');
+const forwardPrevious = forwardWithState('onPrevious');
+const forwardWillPrevious = forwardWithState('onWillPrevious');
+const forwardNext = forwardWithState('onNext');
+const forwardWillNext = forwardWithState('onWillNext');
 
 const AnnounceState = {
 	// Video is loaded but additional announcements have not been made
@@ -146,6 +155,11 @@ const AnnounceState = {
 	// All announcements have been made
 	DONE: 4
 };
+
+let warnedOnJumpBackward = false;
+let warnedOnJumpForward = false;
+let warnedOnWillJumpBackward = false;
+let warnedOnWillJumpForward = false;
 
 /**
  * Every callback sent by {@link limestone/VideoPlayer|VideoPlayer} receives a status package,
@@ -329,8 +343,10 @@ const VideoPlayerBase = class extends Component {
 		 * * `onJumpBackwardButtonClick` - Called when the jump backward button is pressed
 		 * * `onJumpForwardButtonClick` - Called when the jump forward button is pressed
 		 * * `onKeyDown` - Called when a key is pressed
+		 * * `onNextButtonClick` - Called when the next button is pressed
 		 * * `onPause` - Called when the media is paused via a key event
 		 * * `onPlay` - Called when the media is played via a key event
+		 * * `onPreviousButtonClick` - Called when the previous button is pressed
 		 * * `onRewind` - Called when the media is rewound via a key event
 		 * * `onToggleMore` - Called when the more components are hidden or shown
 		 * * `paused` - `true` when the media is paused
@@ -463,6 +479,7 @@ const VideoPlayerBase = class extends Component {
 		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		 *
 		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onPrevious` instead.
 		 * @public
 		 */
 		onJumpBackward: PropTypes.func,
@@ -473,9 +490,20 @@ const VideoPlayerBase = class extends Component {
 		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		 *
 		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onNext` instead.
 		 * @public
 		 */
 		onJumpForward: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the next button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onNext: PropTypes.func,
 
 		/**
 		 * Called when the video has been paused.
@@ -492,6 +520,16 @@ const VideoPlayerBase = class extends Component {
 		 * @public
 		 */
 		onPlay: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the previous button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onPrevious: PropTypes.func,
 
 		/**
 		 * Called when the video has been rewound.
@@ -560,6 +598,7 @@ const VideoPlayerBase = class extends Component {
 		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		  *
 		  * @type {Function}
+		  * @deprecated Will be removed in 2.0.0. Use `onWillPrevious` instead.
 		  * @public
 		  */
 		onWillJumpBackward: PropTypes.func,
@@ -570,9 +609,20 @@ const VideoPlayerBase = class extends Component {
 		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
 		  *
 		  * @type {Function}
+		  * @deprecated Will be removed in 2.0.0. Use `onWillNext` instead.
 		  * @public
 		  */
 		onWillJumpForward: PropTypes.func,
+
+		/**
+		  * Called once before playing the next video in the playlist.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
+		onWillNext: PropTypes.func,
 
 		/**
 		  * Called once before the video is paused.
@@ -589,6 +639,16 @@ const VideoPlayerBase = class extends Component {
 		  * @public
 		  */
 		onWillPlay: PropTypes.func,
+
+		/**
+		  * Called once before playing the previous video in the playlist.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
+		onWillPrevious: PropTypes.func,
 
 		/**
 		  * Called once before the video is rewound.
@@ -818,7 +878,7 @@ const VideoPlayerBase = class extends Component {
 		this.selectPlaybackRates('fastForward');
 		this.sliderKnobProportion = 0;
 		this.mediaControlsSpotlightId = props.spotlightId + '_mediaControls';
-		this.jumpButtonPressed = null;
+		this.jumpKeyPressed = null;
 		this.playerRef = createRef();
 		this.playbackRate = 1;
 
@@ -931,8 +991,8 @@ const VideoPlayerBase = class extends Component {
 				const current = Spotlight.getCurrent();
 				if (!current || this.playerRef.current.contains(current)) {
 					// Set focus within media controls when they become visible.
-					if (Spotlight.focus(this.mediaControlsSpotlightId) && this.jumpButtonPressed === 0) {
-						this.jumpButtonPressed = null;
+					if (Spotlight.focus(this.mediaControlsSpotlightId) && this.jumpKeyPressed === 0) {
+						this.jumpKeyPressed = null;
 					}
 				}
 			}
@@ -1297,31 +1357,31 @@ const VideoPlayerBase = class extends Component {
 
 	handleControlsHandleAboveHold = () => {
 		if (shouldJump(this.props, this.state)) {
-			this.handleJump({keyCode: this.jumpButtonPressed === -1 ? jumpBackKeyCode : jumpForwardKeyCode});
+			this.handleJump({keyCode: this.jumpKeyPressed === -1 ? jumpBackKeyCode : jumpForwardKeyCode});
 		}
 	};
 
 	handleControlsHandleAboveKeyDown = ({keyCode}) => {
 		if (isEnter(keyCode)) {
-			this.jumpButtonPressed = 0;
+			this.jumpKeyPressed = 0;
 		} else if (isLeft(keyCode)) {
-			this.jumpButtonPressed = -1;
+			this.jumpKeyPressed = -1;
 		} else if (isRight(keyCode)) {
-			this.jumpButtonPressed = 1;
+			this.jumpKeyPressed = 1;
 		}
 	};
 
 	handleControlsHandleAboveKeyUp = ({keyCode}) => {
 		if (isEnter(keyCode) || isLeft(keyCode) || isRight(keyCode)) {
-			this.jumpButtonPressed = null;
+			this.jumpKeyPressed = null;
 		}
 	};
 
 	handleControlsHandleAboveDown = () => {
-		if (this.jumpButtonPressed === 0) {
+		if (this.jumpKeyPressed === 0) {
 			this.showControls();
-		} else if (this.jumpButtonPressed === -1 || this.jumpButtonPressed === 1) {
-			const keyCode = this.jumpButtonPressed === -1 ? jumpBackKeyCode : jumpForwardKeyCode;
+		} else if (this.jumpKeyPressed === -1 || this.jumpKeyPressed === 1) {
+			const keyCode = this.jumpKeyPressed === -1 ? jumpBackKeyCode : jumpForwardKeyCode;
 
 			if (shouldJump(this.props, this.state)) {
 				this.handleJump({keyCode});
@@ -1497,6 +1557,16 @@ const VideoPlayerBase = class extends Component {
 		this.seek(this.state.currentTime + distance);
 		this.startDelayedMiniFeedbackHide();
 
+		return true;
+	};
+
+	next = () => {
+		// next api will be implemented in 2.0.0.
+		return true;
+	};
+
+	previous = () => {
+		// previous api will be implemented in 2.0.0.
 		return true;
 	};
 
@@ -1919,6 +1989,18 @@ const VideoPlayerBase = class extends Component {
 		forwardJumpForward
 	);
 
+	onNext = this.props.onWillNext || this.props.onNext ? this.handle(
+		forwardWillNext,
+		// () => this.next(),
+		forwardNext
+	) : null;
+
+	onPrevious = this.props.onWillPrevious || this.props.onPrevious ? this.handle(
+		forwardWillPrevious,
+		// () => this.previous(),
+		forwardPrevious
+	) : null;
+
 	handleToggleMore = (ev) => {
 		const {showMoreComponents, liftDistance} = ev;
 
@@ -2003,6 +2085,23 @@ const VideoPlayerBase = class extends Component {
 			...mediaProps
 		} = this.props;
 
+		if (!warnedOnJumpBackward && mediaProps.onJumpBackward) {
+			deprecate({name: '`onJumpBackward`', until: '2.0.0', message: 'Use `onPrevious` instead'});
+			warnedOnJumpBackward = true;
+		}
+		if (!warnedOnJumpForward && mediaProps.onJumpForward) {
+			deprecate({name: '`onJumpForward`', until: '2.0.0', message: 'Use `onNext` instead'});
+			warnedOnJumpForward = true;
+		}
+		if (!warnedOnWillJumpBackward && mediaProps.onWillJumpBackward) {
+			deprecate({name: '`onWillJumpBackward`', until: '2.0.0', message: 'Use `onWillPrevious` instead'});
+			warnedOnWillJumpBackward = true;
+		}
+		if (!warnedOnWillJumpForward && mediaProps.onWillJumpForward) {
+			deprecate({name: '`onWillJumpForward`', until: '2.0.0', message: 'Use `onWillPrevious` instead'});
+			warnedOnWillJumpForward = true;
+		}
+
 		delete mediaProps.announce;
 		delete mediaProps.autoCloseTimeout;
 		delete mediaProps.children;
@@ -2016,14 +2115,18 @@ const VideoPlayerBase = class extends Component {
 		delete mediaProps.onFastForward;
 		delete mediaProps.onJumpBackward;
 		delete mediaProps.onJumpForward;
+		delete mediaProps.onNext;
 		delete mediaProps.onPause;
 		delete mediaProps.onPlay;
+		delete mediaProps.onPrevious;
 		delete mediaProps.onRewind;
 		delete mediaProps.onWillFastForward;
 		delete mediaProps.onWillJumpBackward;
 		delete mediaProps.onWillJumpForward;
+		delete mediaProps.onWillNext;
 		delete mediaProps.onWillPause;
 		delete mediaProps.onWillPlay;
+		delete mediaProps.onWillPrevious;
 		delete mediaProps.onWillRewind;
 		delete mediaProps.onScrub;
 		delete mediaProps.onSeekFailed;
@@ -2093,9 +2196,18 @@ const VideoPlayerBase = class extends Component {
 									icon="arrowhookleft"
 									iconFlip="auto"
 									onClick={this.handleBack}
+									size="small"
 								/> :
 								null
 						}
+						<FeedbackContent
+							className={css.miniFeedback}
+							playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
+							playbackState={this.pulsedPlaybackState || this.prevCommand}
+							visible={this.state.miniFeedbackVisible && !noMiniFeedback}
+						>
+							{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: false})}
+						</FeedbackContent>
 						<ControlsContainer
 							className={css.bottom + (this.state.mediaControlsVisible ? '' : ' ' + css.hidden) + (this.state.infoVisible ? ' ' + css.lift : '')}
 							spotlightDisabled={spotlightDisabled || !this.state.mediaControlsVisible}
@@ -2105,14 +2217,6 @@ const VideoPlayerBase = class extends Component {
 								Only render when `this.state.mediaControlsVisible` is true in order for `Marquee`
 								to make calculations correctly in `MediaTitle`.
 							*/}
-							<FeedbackContent
-								className={css.miniFeedback}
-								playbackRate={this.pulsedPlaybackRate || this.selectPlaybackRate(this.speedIndex)}
-								playbackState={this.pulsedPlaybackState || this.prevCommand}
-								visible={this.state.miniFeedbackVisible && !noMiniFeedback}
-							>
-								{secondsToTime(this.state.sliderTooltipTime, durFmt, {includeHour: true})}
-							</FeedbackContent>
 							{this.state.mediaSliderVisible ?
 								<div className={css.infoFrame}>
 									<MediaTitle
@@ -2182,8 +2286,10 @@ const VideoPlayerBase = class extends Component {
 								onFastForward={this.handleFastForward}
 								onJumpBackwardButtonClick={this.onJumpBackward}
 								onJumpForwardButtonClick={this.onJumpForward}
+								onNextButtonClick={this.onNext}
 								onPause={this.handlePause}
 								onPlay={this.handlePlay}
+								onPreviousButtonClick={this.onPrevious}
 								onRewind={this.handleRewind}
 								onToggleMore={this.handleToggleMore}
 								paused={this.state.paused}
@@ -2270,8 +2376,10 @@ const VideoPlayer = ApiDecorator(
 		'getVideoNode',
 		'hideControls',
 		'jump',
+		'next',
 		'pause',
 		'play',
+		'previous',
 		'rewind',
 		'seek',
 		'setPlaybackSpeed',

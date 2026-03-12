@@ -38,7 +38,7 @@ Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
-	'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
+		'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
 	'9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0cm9rZT0iIzU1NSIgZmlsbD0iI2FhYSIg' +
 	'ZmlsbC1vcGFjaXR5PSIwLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjgiIHN0cm9rZS13aWR0aD0iNiIgLz48L3N2Zz' +
 	'4NCg==';
@@ -240,8 +240,9 @@ const ImageItemBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({children, label, selected, showSelection}) => {
-			return `${children || ''}${label ? ` ${label}` : ''}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
+		'aria-label': ({'aria-label': customAriaLabel, children, label, selected, showSelection}) => {
+			const defaultAriaLabel = `${children || ''}${label ? ` ${label}` : ''}`;
+			return `${customAriaLabel || defaultAriaLabel}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
 		},
 		children: ({centered, children, css, 'data-index': index, imageIconComponent, imageIconSrc, label, orientation}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';

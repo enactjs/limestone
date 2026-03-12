@@ -1,4 +1,5 @@
 import {add, is} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
@@ -178,6 +179,7 @@ WithoutIcon.parameters = {
 };
 
 const WithVariousItemsSamplesBase = ({rtl}) => {
+	checkPropTypes(WithVariousItemsSamplesBase, {rtl});
 	const defaultOpen = true;
 	const [open, setOpenState] = useState(defaultOpen);
 	const [popupOpen, setPopupOpenState] = useState(false);

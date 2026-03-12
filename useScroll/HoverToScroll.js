@@ -2,6 +2,7 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getLastPointerPosition} from '@enact/spotlight/src/pointer';
+import {checkPropTypes, perfNow} from '@enact/core/util';
 import {constants} from '@enact/ui/useScroll';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -27,9 +28,10 @@ const getBoundsPropertyNames = (direction) => {
 	};
 };
 const hoverToScrollMultiplier = {
-	horizontal: 0.015,
-	vertical: 0.04
+	horizontal: 0.008,
+	vertical: 0.02
 };
+const hoverToScrollDelay = 0.7;
 const directionToFocus = {
 	horizontal: {
 		before: 'right',
@@ -50,6 +52,8 @@ const directionToFocus = {
  * @private
  */
 const HoverToScrollBase = (props) => {
+	checkPropTypes(HoverToScrollBase, props);
+
 	const {
 		direction,
 		scrollContainerHandle: {current: scrollContainer},
@@ -120,18 +124,22 @@ const HoverToScrollBase = (props) => {
 					(position === 'before' ? -1 : 1) * // scroll direction
 					bounds[clientSize] * // scroll page size
 					hoverToScrollMultiplier[direction]; // a scrolling speed factor
+				const startTime = perfNow();
 
 				mutableRef.current.hoveredPosition = position;
 				mutableRef.current.stopScrollByHover = scrollContainer.scrolling; // stop scrollByHover when it is in scrolling
 
-				const scrollByHover = () => {
+				const scrollByHover = (currentTime) => {
 					if (!mutableRef.current.stopScrollByHover) {
+						const elapsed = (currentTime - startTime) / 1000;
+						const distanceMultiplier = elapsed < hoverToScrollDelay ? 0 : Math.min(elapsed - hoverToScrollDelay / 1.5, 1);
+
 						scrollContainer.scrollTo({
 							position: {
 								[axis]: clamp(
 									0,
 									bounds[maxPosition],
-									scrollContainer[scrollPosition] + distance
+									scrollContainer[scrollPosition] + distance * distanceMultiplier
 								)
 							},
 							animate: false
@@ -231,7 +239,11 @@ HoverToScrollBase.propTypes = /** @lends limestone/useScroll.HoverToScroll.Hover
  * @ui
  * @private
  */
-const HoverToScroll = ({scrollContainerHandle, ...rest}) => {
+const HoverToScroll = (props) => {
+	checkPropTypes(HoverToScroll, props);
+
+	const {scrollContainerHandle, ...rest} = props;
+
 	return scrollContainerHandle ? (
 		<>
 			<HoverToScrollBase scrollContainerHandle={scrollContainerHandle} {...rest} direction="horizontal" />

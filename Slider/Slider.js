@@ -19,7 +19,7 @@
 
 import {forKey, forProp, forward, forwardWithPrevent, handle, not} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -29,6 +29,7 @@ import ProgressBar from '@enact/ui/ProgressBar';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import UiSlider from '@enact/ui/Slider';
+import Touchable from '@enact/ui/Touchable';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
@@ -57,6 +58,7 @@ const sliderDefaultProps = {
 	max: 100,
 	min: 0,
 	orientation: 'horizontal',
+	pressed: false,
 	step: 1,
 	wheelInterval: 0
 };
@@ -73,7 +75,9 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	const {active, className, css, disabled, focused, keyFrequency, showAnchor, ...rest} = sliderProps;
+	checkPropTypes(SliderBase, sliderProps);
+
+	const {active, className, css, disabled, focused, keyFrequency, max, min, pressed, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -137,6 +141,8 @@ const SliderBase = (props) => {
 		className,
 		{
 			[mergedCss.active]: active,
+			[mergedCss.hasMinMax]: showMinMax,
+			[mergedCss.pressed]: pressed,
 			[mergedCss.showAnchor]: showAnchor
 		},
 		css && css.slider
@@ -176,6 +182,8 @@ const SliderBase = (props) => {
 			className={componentClassName}
 			css={mergedCss}
 			disabled={disabled}
+			max={max}
+			min={min}
 			progressBarComponent={
 				<ProgressBar css={mergedCss} />
 			}
@@ -187,6 +195,12 @@ const SliderBase = (props) => {
 					css={mergedCss}
 					visible={focused}
 				/>
+			}
+			minMaxComponent={showMinMax ?
+				<div className={mergedCss.minMax}>
+					<div>{min}</div>
+					<div>{max}</div>
+				</div> : null
 			}
 		/>
 	);
@@ -339,12 +353,29 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	onKeyUp: PropTypes.func,
 
 	/**
+	 * Indicates if the component is pressed.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @private
+	 */
+	pressed: PropTypes.bool,
+
+	/**
 	 * Displays an anchor at `progressAnchor`.
 	 *
 	 * @type {Boolean}
 	 * @public
 	 */
 	showAnchor: PropTypes.bool,
+
+	/**
+	 * Displays the min and max values at the edges of the slider.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	showMinMax: PropTypes.bool,
 
 	/**
 	 * The amount to increment or decrement the value.
@@ -431,6 +462,7 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
  */
 const SliderDecorator = compose(
 	Pure,
+	Touchable({activeProp: 'pressed'}),
 	Changeable,
 	SliderBehaviorDecorator,
 	Spottable,

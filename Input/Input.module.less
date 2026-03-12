@@ -122,6 +122,11 @@
 
 		.titles {
 			height: @lime-input-fullscreen-title-height;
+
+			:global(.enact-orientation-portrait) & {
+				margin-inline: @lime-input-fullscreen-back-button-start;
+				width: initial;
+			}
 		}
 
 		.title {
@@ -223,6 +228,10 @@
 			padding: @lime-input-overlay-body-padding;
 		}
 
+		&:is(.noTitle, .noSubtitle) .titles {
+			height: @lime-input-overlay-no-title-height;
+		}
+
 		.title {
 			margin: @lime-input-overlay-title-margin;
 
@@ -234,6 +243,10 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+
+			:has(.number, .passwordnumber, .withButtons) & {
+				margin-bottom: 0;
+			}
 
 			.textField {
 				width: @lime-input-overlay-textfield-width;

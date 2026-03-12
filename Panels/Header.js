@@ -1,6 +1,7 @@
 import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import {isRtlText} from '@enact/i18n/util';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import {Row, Cell} from '@enact/ui/Layout';
@@ -501,7 +502,7 @@ const HeaderBase = kind({
 		return (
 			<header {...rest}>
 				{slotAbove ? <nav className={css.slotAbove}>{slotAbove}</nav> : null}
-				<Row className={css.titlesRow} align="center">
+				<Row className={css.titlesRow}>
 					<Cell className={css.slotBefore} shrink={!syncCellSize} size={syncCellSize} style={hideSlots}>
 						<span ref={slotBeforeRef} className={css.slotSizer}>
 							{backButton}{slotBefore}
@@ -524,6 +525,8 @@ const HeaderBase = kind({
 const ContextAsDefaultsHeader = (Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	function ContextAsDefaultsHeader (props) {
+		checkPropTypes(ContextAsDefaultsHeader, props);
+
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
 		const {type: panelsType} = use(PanelsStateContext);
 		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);
@@ -588,7 +591,7 @@ const HeaderMeasurementDecorator = (Wrapped) => {
 		const measurableProps = {
 			slotBeforeRef,
 			slotAfterRef,
-			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : null
+			slotSize: typeof slotSize === 'number' ? unit(slotSize, 'rem') : '0rem'
 		};
 
 		return <Wrapped {...props} {...measurableProps} />;

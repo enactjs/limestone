@@ -20,6 +20,7 @@ const prop = {
 		'transparent (Default for icon-only buttons)': 'transparent'
 	},
 	color: ['', 'red', 'green', 'yellow', 'blue'],
+	focusEffect: ['expand', 'static'],
 	iconFlip: ['', 'auto', 'both', 'horizontal', 'vertical'],
 	iconPosition: ['', 'before', 'after'],
 	icons: ['', ...iconNames],
@@ -57,6 +58,7 @@ export const _Button = (args) => (
 			centered={args['centered']}
 			color={args['color']}
 			disabled={args['disabled']}
+			focusEffect={args['focusEffect']}
 			icon={args['icon']}
 			iconFlip={args['iconFlip']}
 			iconPosition={args['iconPosition']}
@@ -78,6 +80,7 @@ boolean('bordered', _Button, Config);
 boolean('centered', _Button, Config);
 select('color', _Button, prop.color, Config);
 boolean('disabled', _Button, Config);
+select('focusEffect', _Button, prop.focusEffect, Config);
 select('icon', _Button, prop.icons, Config);
 select('iconFlip', _Button, prop.iconFlip, Config);
 select('iconPosition', _Button, prop.iconPosition, Config);

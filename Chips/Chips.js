@@ -1,4 +1,5 @@
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import IString from 'ilib/lib/IString';
 import Spotlight from '@enact/spotlight';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
 import {getAllContainerIds} from '@enact/spotlight/src/container';
@@ -7,6 +8,8 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {createContext, useCallback, useRef} from 'react';
+
+import $L from '../internal/$L';
 
 import css from './Chips.module.less';
 
@@ -24,7 +27,7 @@ const ChipsDefaultProps = {
  * <Chips>
  * 	{chips.map(({id, icon, children}) => {
  * 		return (
- * 			<Chip key={id} icon={icon} onClick={onClick}>
+ * 			<Chip key={id} id={id} icon={icon} onClick={onClick}>
  * 				{children}
  * 			</Chip>
  * 		);
@@ -39,10 +42,13 @@ const ChipsDefaultProps = {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
+	checkPropTypes(ChipsBase, chipsProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
+	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
+	const ariaId = Math.random().toString(36).substring(2, 10);
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
@@ -120,21 +126,28 @@ const ChipsBase = (props) => {
 	}, [children]);
 
 	return (
-		<div {...rest} className={chipsClassName} ref={containerRef}>
-			<ChipsContext
-				value={{
-					getNextTargetFromDeleteButton,
-					handleChipDelete,
-					registerChild
-				}}
+		<div role="region" aria-labelledby={`${ariaId}_chips`}>
+			<div
+				aria-label={ariaLabel}
+				className={chipsClassName}
+				id={`${ariaId}_chips`}
+				ref={containerRef}
+				role="group"
+				{...rest}
 			>
-				{children}
-			</ChipsContext>
+				<ChipsContext
+					value={{
+						getNextTargetFromDeleteButton,
+						handleChipDelete,
+						registerChild
+					}}
+				>
+					{children}
+				</ChipsContext>
+			</div>
 		</div>
 	);
 };
-
-ChipsBase.displayName = 'Chips';
 
 ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	/**
@@ -154,6 +167,8 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 */
 	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
+
+ChipsBase.displayName = 'Chips';
 
 /**
  * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.

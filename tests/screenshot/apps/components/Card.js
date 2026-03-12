@@ -29,8 +29,15 @@ const defaultCardTests = [
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} hasContainer roundedImage>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} hasContainer selected>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlayOnFocus>Short</Card>,
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
+	<Card src={img} label="This is very very very very long label. This is very very long label." captionOverlay>This is very very very very long caption. This is very very long caption.</Card>,
+	<Card src={img} label="Label" secondaryLabel="This is very very very very long label. This is very very long label." captionOverlay>This is very very very very long caption. This is very very long caption.</Card>,
+	<Card src={img} label="This is very very very very long label. This is very very long label." withoutMarquee>This is very very very very long caption. This is very very long caption.</Card>,
+	<Card src={img} label="Label" secondaryLabel="This is very very very very long label. This is very very long label." withoutMarquee>This is very very very very long caption. This is very very long caption.</Card>,
+	<Card src={img} label="This is very very very very long label. This is very very long label." captionOverlay withoutMarquee>This is very very very very long caption. This is very very long caption.</Card>,
+	<Card src={img} label="Label" secondaryLabel="This is very very very very long label. This is very very long label." captionOverlay withoutMarquee>This is very very very very long caption. This is very very long caption.</Card>,
 
 	// Horizontal
 	<Card src={img} orientation="horizontal">Short</Card>,
@@ -53,16 +60,20 @@ const CardTests = [
 	// Centered
 	...withProps({centered: true}, defaultCardTests),
 
+	// Icon
+	...withProps({icon: 'trash'}, defaultCardTests),
+
+	// Show ProgressBar
+	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
+
+	// Split Caption
+	...withProps({splitCaption: true}, defaultCardTests),
+
 	// Focused
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
-	...withConfig({
-		focusRing: true,
-		focus: true
-	}, [
-		<Card src={img} label="Focus ring label">Short</Card>,
-		<Card src={img} label="Focus ring label" roundedImage>Short</Card>
-	])
+	// FocusRing
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests))
 ];
 
 export default CardTests;

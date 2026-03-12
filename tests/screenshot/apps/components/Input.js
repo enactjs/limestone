@@ -4,12 +4,15 @@ import Item from '../../../../Item';
 
 import {withConfig, withProps} from './utils';
 
+const LoremString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis.";
+
 const BaseTests = [
 	<Input />,
 	<Input open title="Input Test" subtitle="Additional text" />,
 	<Input open title="Input Test" subtitle="Additional text" noBackButton />,
 	<Input open title="Input Test" subtitle="Additional text" placeholder="placeholder" />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" />,
+	<Input open title={LoremString} subtitle={LoremString} value={LoremString} />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" type="password" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="passwordnumber" />,
@@ -31,8 +34,16 @@ const BaseTests = [
 	</Input>
 ];
 
+const OverlayTestsNoTitleNoSubtitle = [
+	<Input open />,
+	<Input open title="Input Test" />,
+	<Input open subtitle="Additional text" />
+];
+
 const InputTests = [
 	...BaseTests,
+
+	...withProps({popupType: 'overlay'}, BaseTests),
 
 	// Large input
 	...withProps({size: 'large'}, BaseTests),
@@ -40,6 +51,7 @@ const InputTests = [
 	// Disabled tests
 	...withProps({disabled: true, popupType: 'fullscreen'}, BaseTests),
 	...withProps({disabled: true, popupType: 'overlay'}, BaseTests),
+	...withProps({disabled: true, popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle),
 
 	// RTL large input
 	...withConfig({locale: 'ar-SA'}, [
@@ -48,13 +60,15 @@ const InputTests = [
 
 	// RTL overlay number input tests
 	...withConfig({locale: 'ar-SA'}, [
-		...withProps({popupType: 'overlay'}, BaseTests.slice(5))
+		...withProps({popupType: 'overlay'}, BaseTests.slice(5)),
+		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
 	]),
 
 	// Large text mode
 	...withConfig({textSize: 'large'}, [
 		...withProps({popupType: 'fullscreen'}, BaseTests),
-		...withProps({popupType: 'overlay'}, BaseTests)
+		...withProps({popupType: 'overlay'}, BaseTests),
+		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
 	])
 ];
 

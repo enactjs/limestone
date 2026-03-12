@@ -6,7 +6,7 @@
  * @exports VirtualList
  */
 
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -64,6 +64,8 @@ const virtualListDefaultProps = {
  */
 let VirtualList = (props) => {
 	const virtualListProps = setDefaultProps(props, virtualListDefaultProps);
+	checkPropTypes(VirtualList, virtualListProps);
+
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualListProps.overscrollEffectOn = {
 			arrowKey: false,
@@ -87,7 +89,7 @@ let VirtualList = (props) => {
 		};
 
 	warning(
-		itemSizeProps.itemSizes && rest.cbScrollTo,
+		itemSizeProps.itemSizes && rest.cbScrollTo !== nop,
 		'VirtualList with `minSize` in `itemSize` prop does not support `cbScrollTo` prop'
 	);
 
@@ -580,6 +582,8 @@ const virtualGridListDefaultProps = {
  */
 let VirtualGridList = (props) => {
 	const virtualGridListProps = setDefaultProps(props, virtualGridListDefaultProps);
+	checkPropTypes(VirtualGridList, virtualGridListProps);
+
 	if (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) {
 		virtualGridListProps.overscrollEffectOn = {
 			arrowKey: false,

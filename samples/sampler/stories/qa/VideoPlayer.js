@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import {MediaControls} from '@enact/limestone/MediaPlayer';
 import VideoPlayer, {Video, VideoPlayerBase} from '@enact/limestone/VideoPlayer';
@@ -20,6 +21,7 @@ const videoTabLabel = 'VideoPlayer';
 class VideoSourceSwap extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			videoTitles: ['Cosmos Laundromat', 'Sintel', 'VideoTest'],
@@ -35,6 +37,7 @@ class VideoSourceSwap extends Component {
 	}
 
 	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 		const option = this.props.args['videoPlayerOption'];
 
 		if (option !== prevProps.args.videoPlayerOption) {

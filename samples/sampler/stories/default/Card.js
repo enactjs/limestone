@@ -1,7 +1,8 @@
 import {Card, CardBase} from '@enact/limestone/Card';
+import icons from '@enact/limestone/Icon/IconList';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {Card as UiCard} from '@enact/ui/Card';
 
 import {svgGenerator} from '../helper/svg';
@@ -17,6 +18,8 @@ const generateImageSrc = (color) => {
 	};
 };
 
+const iconsList = Object.keys(icons).sort();
+
 const prop = {
 	orientation: ['horizontal', 'vertical']
 };
@@ -28,11 +31,13 @@ export default {
 
 export const _Card = (args) => (
 	<Card
+		aria-label={args['aria-label']}
 		captionOverlay={args['captionOverlay']}
 		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
 		disabled={args['disabled']}
 		fitImage={args['fitImage']}
+		icon={args['icon']}
 		imageIconSrc={args['imageIconSrc']}
 		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
@@ -41,34 +46,44 @@ export const _Card = (args) => (
 		onClick={action('onClick')}
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
+		progress={args['progress']}
 		roundedImage={args['roundedImage']}
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		// eslint-disable-next-line no-undefined
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		selected={args['selected']}
+		showProgressBar={args['showProgressBar']}
+		splitCaption={args['splitCaption']}
 		src={args['src']}
+		withoutMarquee={args['withoutMarquee']}
 	>
 		{args['children']}
 	</Card>
 );
 
+text('aria-label', _Card, Config);
 boolean('captionOverlay', _Card, Config);
 boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
+text('children', _Card, Config, 'Card Caption');
 boolean('disabled', _Card, Config);
 boolean('fitImage', _Card, Config);
+select('icon', _Card, iconsList, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
 object('imageSize', _Card, Config);
 boolean('hasContainer', _Card, Config);
 text('label', _Card, Config, 'Card label');
 select('orientation', _Card, prop.orientation, Config);
 object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
+number('progress', _Card, Config, 0.5);
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
 boolean('selected', _Card, Config);
+boolean('showProgressBar', _Card, Config);
+boolean('splitCaption', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));
-text('children', _Card, Config, 'Card Caption');
+boolean('withoutMarquee', _Card, Config);
 
 _Card.storyName = 'Card';
 _Card.parameters = {

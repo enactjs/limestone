@@ -140,6 +140,17 @@ const RadioItem = Pure(
 	)
 );
 
+/**
+ * A container that surrounds multiple RadioItems.
+ *
+ * A list of multiple RadioItems wrapped with a RadioItemGroup component gets
+ * required audio guidance.
+ *
+ * @class RadioItemGroup
+ * @memberof limestone/RadioItem
+ * @ui
+ * @public
+ */
 const RadioItemGroup = (props) => {
 	const {children, groupId, itemProps, ...rest} = props;
 
@@ -172,9 +183,9 @@ const RadioItemGroup = (props) => {
 					id={groupId || "radioItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
 				>
-					{children.map((child) => {
+					{children.map((child, index) => {
 						const {children: itemValue, ...childRest} = child.props;
-						return <RadioItem {...childRest} {...itemProps}>{itemValue}</RadioItem>;
+						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
 					})}
 				</div>
 			</div>

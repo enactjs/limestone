@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Item from '@enact/limestone/Item';
 import {ScrollerBase} from '@enact/limestone/Scroller';
@@ -13,8 +14,10 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 
 import Alert from '../views/Alert';
 import Button from '../views/Button';
+import Card from '../views/Card';
 import Checkbox from '../views/Checkbox';
 import CheckboxItem from '../views/CheckboxItem';
+import Chips from '../views/Chips';
 import ContextualMenuDecorator from '../views/ContextualMenuDecorator';
 import ContextualPopupDecorator from '../views/ContextualPopupDecorator';
 import DatePicker from '../views/DatePicker';
@@ -67,8 +70,10 @@ const views = [
 	{debugProps: true, title: 'Option', view: Option},
 	{title: 'Alert', view: Alert},
 	{title: 'Button', view: Button},
+	{title: 'Card', view: Card},
 	{title: 'Checkbox', view: Checkbox},
 	{title: 'CheckboxItem', view: CheckboxItem},
+	{title: 'Chip/Chips', view: Chips},
 	{title: 'ContextualMenuDecorator', view: ContextualMenuDecorator},
 	{title: 'ContextualPopupDecorator', view: ContextualPopupDecorator},
 	{title: 'DatePicker', view: DatePicker},
@@ -109,7 +114,9 @@ const views = [
 	{isHeader: false, title: 'WizardPanels', view: WizardPanels}
 ];
 
-const AppBase = ({className, rtl, updateLocale, ...rest}) => {
+const AppBase = (props) => {
+	checkPropTypes(AppBase, props);
+	const {className, rtl, updateLocale, ...rest} = props;
 	const [isDebugMode, setIsDebugMode] = useState(false);
 	const [jumpToView, setJumpToView] = useState('');
 	const [selected, setSelected] = useState(0);
