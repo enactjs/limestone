@@ -81,6 +81,11 @@
 		padding: @lime-dropdown-padding;
 		margin: 0;
 
+		&.small {
+			min-width: unset;
+			max-width: unset;
+		}
+
 		&:not([disabled]) {
 			.focus({
 				&.pressed,
