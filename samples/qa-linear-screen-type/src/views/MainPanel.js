@@ -59,8 +59,8 @@ const MainPanel = ({onClickCheckbox}) => {
 			<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
 				<div>
 					<BodyText>Linear Scaling: </BodyText>
-					<CheckboxItem selected={baseScreen} id="baseScreen" onClick={handleBaseScreenClick}>Base Screen Report (Continuous Scaling)</CheckboxItem>
-					<CheckboxItem selected={currentScreen} id="currentScreen" onClick={handleCurrentScreenClick}>Current Screen Type Report</CheckboxItem>
+					<CheckboxItem selected={baseScreen} id="baseScreen" onClick={handleBaseScreenClick}>Base Screen Ratio (Continuous Scaling)</CheckboxItem>
+					<CheckboxItem selected={currentScreen} id="currentScreen" onClick={handleCurrentScreenClick}>Current Screen Ratio</CheckboxItem>
 				</div>
 				<div>
 					<BodyText>Original Scaling: </BodyText>
