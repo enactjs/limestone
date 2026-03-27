@@ -127,7 +127,7 @@ const HoverToScrollBase = (props) => {
 				const startTime = perfNow();
 
 				mutableRef.current.hoveredPosition = position;
-				mutableRef.current.stopScrollByHover = false;
+				mutableRef.current.stopScrollByHover = scrollContainer.scrolling; // stop scrollByHover when it is in scrolling
 
 				const scrollByHover = (currentTime) => {
 					if (!mutableRef.current.stopScrollByHover) {

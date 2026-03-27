@@ -58,15 +58,6 @@ const CardBase = kind({
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
-		 * The primary caption displayed with the image.
-		 *
-		 * @type {String}
-		 * @required
-		 * @public
-		 */
-		children: PropTypes.string.isRequired,
-
-		/**
 		 * Source for the image.
 		 * String value or Object of values used to determine which image will appear on
 		 * a specific screenSize.
@@ -110,6 +101,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		centered: PropTypes.bool,
+
+		/**
+		 * The primary caption displayed with the image.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		children: PropTypes.string,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the

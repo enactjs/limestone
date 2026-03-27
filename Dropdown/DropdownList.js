@@ -13,13 +13,13 @@ import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useReducer, useRef} from 'react';
 
 import $L from '../internal/$L';
+import {compareChildren} from '../internal/util';
 import Icon from '../Icon';
 import Item from '../Item';
 import Skinnable from '../Skinnable';
 import VirtualList from '../VirtualList';
 
 import css from './Dropdown.module.less';
-import {compareChildren} from '../internal/util';
 
 const ReadyState = {
 	// Initial state. Scrolling and focusing pending
