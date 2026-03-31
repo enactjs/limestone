@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 
-import {CardBase} from '../Card';
+import Card, {CardBase} from '../Card';
 
 const src = {
 	'hd': 'https://placehold.co/200x200/000000/ffffff/png',
@@ -83,5 +83,24 @@ describe('Card', () => {
 		const actual = screen.getByText('children');
 
 		expect(actual).not.toHaveAttribute(expected);
+	});
+
+	test('should be pressed when selected', () => {
+		render(<Card data-testid="card" src={src} />);
+		const card = screen.getByTestId('card');
+
+		// Select by key
+		fireEvent.keyDown(card, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(card).toHaveClass('pressed');
+
+		fireEvent.keyUp(card, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(card).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(card);
+		expect(card).toHaveClass('pressed');
+
+		fireEvent.mouseUp(card);
+		expect(card).not.toHaveClass('pressed');
 	});
 });

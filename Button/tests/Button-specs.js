@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Button, {ButtonBase} from '../Button';
@@ -28,6 +28,25 @@ describe('Button', () => {
 		const expected = 'focusExpand';
 
 		expect(button).toHaveClass(expected);
+	});
+
+	test('should be pressed when selected', () => {
+		render(<Button />);
+		const button = screen.getByRole('button');
+
+		// Select by key
+		fireEvent.keyDown(button, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(button).toHaveClass('pressed');
+
+		fireEvent.keyUp(button, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(button).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(button);
+		expect(button).toHaveClass('pressed');
+
+		fireEvent.mouseUp(button);
+		expect(button).not.toHaveClass('pressed');
 	});
 
 	test('should be able to disable the expand focus effect', () => {
