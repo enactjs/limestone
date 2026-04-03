@@ -15,7 +15,7 @@ const buttonMargin = () => ({margin: ri.scaleToRem(24)});
 const sliderMargin = () => ({margin: ri.scaleToRem(30)});
 
 const renderPopup = () => (
-	<div>
+	<div style={{textAlign: 'center'}}>
 		<Button style={buttonMargin()}>First Button</Button>
 		<Button style={buttonMargin()}>Second Button</Button>
 	</div>
@@ -94,7 +94,7 @@ export const With5WaySelectableActivator = (args) => (
 			popupComponent={renderPopup}
 			spotlightRestrict={args['spotlightRestrict']}
 		>
-			Hello Contextual Popup Button
+			Hello Contextual Popup Button Decorator
 		</ContextualPopupWithActivator>
 	</div>
 );
