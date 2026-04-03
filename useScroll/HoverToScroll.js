@@ -130,6 +130,14 @@ const HoverToScrollBase = (props) => {
 				mutableRef.current.stopScrollByHover = scrollContainer.scrolling; // stop scrollByHover when it is in scrolling
 
 				const scrollByHover = (currentTime) => {
+					if (props.fixedFocus) {
+						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'right' && scrollContainer[scrollPosition] < 270) {
+							return nop;
+						}
+						if (directionToFocus[direction][mutableRef.current.hoveredPosition] === 'left' && scrollContainer[scrollPosition] > 1880) {
+							return nop;
+						}
+					}
 					if (!mutableRef.current.stopScrollByHover) {
 						const elapsed = (currentTime - startTime) / 1000;
 						const distanceMultiplier = elapsed < hoverToScrollDelay ? 0 : Math.min(elapsed - hoverToScrollDelay / 1.5, 1);

@@ -568,7 +568,8 @@ const virtualGridListDefaultProps = {
 	role: 'list',
 	scrollMode: 'native',
 	verticalScrollbar: 'auto',
-	wrap: false
+	wrap: false,
+	fixedFocus: false,
 };
 
 /**
@@ -1032,7 +1033,9 @@ VirtualGridList.propTypes = /** @lends limestone/VirtualList.VirtualGridList.pro
 	wrap: PropTypes.oneOfType([
 		PropTypes.bool,
 		PropTypes.oneOf(['noAnimation'])
-	])
+	]),
+
+	fixedFocus: PropTypes.bool
 };
 
 VirtualGridList = Skinnable(

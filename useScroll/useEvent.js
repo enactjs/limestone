@@ -118,6 +118,25 @@ const useEventFocus = (props, instances) => {
 			}
 		}
 
+		if (props.fixedFocus && !spottable.current.isWheeling && scrollContainerHandle.current.lastInputType === 'arrowKey') {
+			const itemWidth = scrollContentRef.current.scrollWidth / props.dataSize;
+
+			// 'getPositionForScrollTo' should be included in 'themeScrollContainerHandle' in ui/useScroll/useScroll/useScrollBase
+			// if you want to use it
+			// but is this necessary?
+			// const opt = {
+			// 	index: Number(ev.target.dataset.index),
+			// 	stickTo: 'start',
+			// 	offset: itemWidth/2,
+			// };
+			// const pos = scrollContainerHandle.current.getPositionForScrollTo(opt);
+			// console.log('pos', pos);
+			// startScrollOnFocus(pos);
+
+			// We can just calculate the position
+			startScrollOnFocus({left: itemWidth*ev.target.dataset.index-itemWidth/2, top: 0});
+		}
+
 		if (!(shouldPreventScrollByFocus || Spotlight.getPointerMode() || scrollContainerHandle.current.isDragging || spottable.current.indexToFocus)) {
 			const
 				item = ev.target,
