@@ -15,7 +15,7 @@ const buttonMargin = () => ({margin: ri.scaleToRem(24)});
 const sliderMargin = () => ({margin: ri.scaleToRem(30)});
 
 const renderPopup = () => (
-	<div>
+	<div style={{textAlign: 'center'}}>
 		<Button style={buttonMargin()}>First Button</Button>
 		<Button style={buttonMargin()}>Second Button</Button>
 	</div>
