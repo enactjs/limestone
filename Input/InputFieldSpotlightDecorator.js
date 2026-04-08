@@ -87,8 +87,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				const length = inputNode.value.length;
 				inputNode.setSelectionRange(length, length);
 
-				// TODO check for RTL locale
-				inputNode.scrollLeft = inputNode.scrollWidth;
+				inputNode.scrollLeft = inputNode.dir === 'rtl' ? 0 : inputNode.scrollWidth;
 			}
 		}, [caretToEndOnFocus]);
 

@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {InputField} from '../';
@@ -319,5 +319,84 @@ describe('InputField Specs', () => {
 		expect(handleKeyDown).toHaveBeenCalled();
 		expect(key).toBe('ArrowLeft');
 		expect(actual).toMatchObject(expected);
+	});
+
+	describe('moveCaretToEnd', () => {
+		test('should move caret to end of value on mouse focus when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const value = 'hello';
+			render(<InputField caretToEndOnFocus value={value} />);
+			const inputField = screen.getByPlaceholderText('');
+			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runAllTimers());
+
+			expect(setSelectionRange).toHaveBeenCalledWith(value.length, value.length);
+
+			jest.useRealTimers();
+		});
+
+		test('should set scrollLeft to scrollWidth for LTR input when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const value = 'hello';
+			render(<InputField caretToEndOnFocus value={value} />);
+			const inputField = screen.getByPlaceholderText('');
+
+			let scrollLeft = 0;
+			Object.defineProperty(inputField, 'scrollLeft', {
+				get: () => scrollLeft,
+				set: (v) => {
+					scrollLeft = v;
+				},
+				configurable: true
+			});
+			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runAllTimers());
+
+			expect(scrollLeft).toBe(200);
+
+			jest.useRealTimers();
+		});
+
+		test('should set scrollLeft to 0 for RTL input when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const rtlValue = 'שועל החום הזריז';
+			render(<InputField caretToEndOnFocus value={rtlValue} />);
+			const inputField = screen.getByPlaceholderText('');
+
+			let scrollLeft = 999;
+			Object.defineProperty(inputField, 'scrollLeft', {
+				get: () => scrollLeft,
+				set: (v) => {
+					scrollLeft = v;
+				},
+				configurable: true
+			});
+			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runAllTimers());
+
+			expect(scrollLeft).toBe(0);
+
+			jest.useRealTimers();
+		});
+
+		test('should not move caret when caretToEndOnFocus is not set', () => {
+			jest.useFakeTimers();
+			render(<InputField value="hello" />);
+			const inputField = screen.getByPlaceholderText('');
+			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runAllTimers());
+
+			expect(setSelectionRange).not.toHaveBeenCalled();
+
+			jest.useRealTimers();
+		});
 	});
 });
