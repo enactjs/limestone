@@ -1,9 +1,9 @@
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {Children, createContext, useCallback, useRef, useState} from 'react';
+import {Children, createContext, useCallback, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
 import useFocusOnTransition from './useFocusOnTransition';
@@ -14,17 +14,15 @@ const PanelsContext = createContext(null);
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const prevIndex = useRef(index);
-	const reverse = useRef(rtl);
-	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
-	const prev = {reverseTransition: reverse.current, prevIndex: prevIndex.current};
+	const prevIndex = usePrevious(index);
 
-	if (prevIndex.current !== index) {
-		reverse.current = rtl ? (index > prevIndex.current) : (index < prevIndex.current);
-		prevIndex.current = index;
+	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
+	if (prevIndex !== index) {
+		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
+		return {reverseTransition: reverse, prevIndex: index};
 	}
 
-	return prev;
+	return {reverseTransition: rtl, prevIndex: index};
 }
 
 const defaultConfig = {

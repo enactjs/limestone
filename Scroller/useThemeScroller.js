@@ -132,13 +132,13 @@ const useSpottable = (props, instances) => {
 
 	const {addGlobalKeyDownEventListener, removeGlobalKeyDownEventListener} = useEventKey();
 
-	const setContainerDisabled = useCallback((bool) => {
+	const setContainerDisabled = useCallback(function self (bool) {
 		if (scrollContainerRef.current) {
 			scrollContainerRef.current.dataset.spotlightContainerDisabled = bool;
 
 			if (bool) {
 				addGlobalKeyDownEventListener(() => {
-					setContainerDisabled(false);
+					self(false);
 				});
 			} else {
 				removeGlobalKeyDownEventListener();
@@ -379,7 +379,7 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 		if (setNavigableFilter) {
 			setNavigableFilter({filterTarget: 'body'});
 		}
-	}, [props.focusableScrollbar, scrollContainerRef.current]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [props.focusableScrollbar, scrollContainerRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	scrollContentProps.setThemeScrollContentHandle({
 		calculatePositionOnFocus,

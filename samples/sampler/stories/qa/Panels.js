@@ -17,7 +17,7 @@ import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useState, useRef, useLayoutEffect} from 'react';
+import {useCallback, useState, useRef, useMemo} from 'react';
 
 import galleryIcon from '../../images/icon_app_gallery.png';
 import gameHomeIcon from '../../images/icon_app_game.png';
@@ -208,26 +208,27 @@ const TouchableDiv = Touchable('div');
 export const WithEditableScroller = (args) => {
 	const dataSize = args['editableDataSize'];
 	const [iconItems, setIconItems] = useState(itemsArr);
+	const [initialSelected, setInitialSelected] = useState({});
 	const [panelIndex, setPanelIndex] = useState(0);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(dataSize);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
 	const focusItem = useRef();
 	const divRef = useRef();
-	const mutableRef = useRef({
-		hideIndex: null,
-		initialSelected: {},
-		timer: null
-	});
+	const mutableRef = useRef({timer: null});
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			newItems.push(populateItems({index: i}));
 		}
-		setIconItems(itemsArr);
-		mutableRef.current.hideIndex = dataSize;
+		return newItems;
 	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setIconItems(newItemsArr);
+	}
 
 	const findItemNode = useCallback((node) => {
 		for (let current = node; current !== divRef.current && current !== document; current = current.parentNode) {
@@ -272,10 +273,10 @@ export const WithEditableScroller = (args) => {
 		if (!ev.target.className.includes('Button')) {
 			const targetItemNode = findItemNode(ev.target);
 			if (targetItemNode && targetItemNode.style.order) {
-				mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+				setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 			}
 		}
-	}, [findItemNode]);
+	}, [findItemNode, initialSelected]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, repeat, target} = ev;
@@ -283,7 +284,7 @@ export const WithEditableScroller = (args) => {
 			if (repeat && !mutableRef.current.timer) {
 				const targetItemNode = findItemNode(ev.target);
 				if (targetItemNode && targetItemNode.style.order) {
-					mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+					setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 				}
 				mutableRef.current.timer = setTimeout(() => {
 					setPanelIndex(panelIndex + 1);
@@ -291,7 +292,7 @@ export const WithEditableScroller = (args) => {
 
 			}
 		}
-	}, [findItemNode, panelIndex]);
+	}, [findItemNode, initialSelected, panelIndex]);
 
 	const handleKeyUp = useCallback((ev) => {
 		if (ev.target.getAttribute('role') === 'button') {
@@ -304,12 +305,12 @@ export const WithEditableScroller = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		mutableRef.current.initialSelected.scrollLeft = ev.scrollLeft;
-	}, []);
+		setInitialSelected({...initialSelected, scrollLeft: ev.scrollLeft});
+	}, [initialSelected]);
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
-		mutableRef.current.hideIndex = hideIndex;
+		setScrollerHideIndex(hideIndex);
 
 		// change data from the new orders
 		const newItems = [];
@@ -327,15 +328,13 @@ export const WithEditableScroller = (args) => {
 
 	const forward = useCallback(() => {
 		setPanelIndex(panelIndex + 1);
-		mutableRef.current.initialSelected.scrollLeft = 0;
-		mutableRef.current.initialSelected.itemIndex = null;
+		setInitialSelected({scrollLeft: 0, itemIndex: null});
 		mutableRef.current.timer = null;
 	}, [panelIndex]);
 
 	const backward = useCallback(() => {
 		setPanelIndex(panelIndex - 1);
-		mutableRef.current.initialSelected.scrollLeft = 0;
-		mutableRef.current.initialSelected.itemIndex = null;
+		setInitialSelected({scrollLeft: 0, itemIndex: null});
 		mutableRef.current.timer = null;
 	}, [panelIndex]);
 
@@ -391,13 +390,13 @@ export const WithEditableScroller = (args) => {
 						editable={{
 							centered: args['editableCentered'],
 							css,
-							hideIndex: mutableRef.current.hideIndex,
+							hideIndex: scrollerHideIndex,
 							onComplete: handleComplete,
 							removeItemFuncRef: removeItem,
 							hideItemFuncRef: hideItem,
 							showItemFuncRef: showItem,
 							focusItemFuncRef: focusItem,
-							initialSelected: mutableRef.current.initialSelected,
+							initialSelected: initialSelected,
 							selectItemBy: 'press'
 						}}
 					>

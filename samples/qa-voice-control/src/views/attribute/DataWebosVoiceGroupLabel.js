@@ -1,12 +1,13 @@
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
-import {useRef, useState} from 'react';
+import {useState} from 'react';
 
 import CommonView from '../../components/CommonView';
 
+const voiceGroupLabels = JSON.stringify(['우리집', '외국']);
+
 const DataWebosVoiceGroupLabel = () => {
 	const [result, setResult] = useState('');
-	const voiceGroupLabels = useRef(JSON.stringify(['우리집', '외국']));
 
 	const updateResult = (msg) => () => setResult(msg);
 
@@ -24,8 +25,8 @@ const DataWebosVoiceGroupLabel = () => {
 			</div>
 			<Heading>Group Names | 우리집, 외국</Heading>
 			<div>
-				<Button data-webos-voice-group-labels={voiceGroupLabels.current} onClick={updateResult('Selected > 우리집, 외국 | 고양이')}>고양이</Button>
-				<Button data-webos-voice-group-labels={voiceGroupLabels.current} onClick={updateResult('Selected > 우리집, 외국 | 강아지')}>강아지</Button>
+				<Button data-webos-voice-group-labels={voiceGroupLabels} onClick={updateResult('Selected > 우리집, 외국 | 고양이')}>고양이</Button>
+				<Button data-webos-voice-group-labels={voiceGroupLabels} onClick={updateResult('Selected > 우리집, 외국 | 강아지')}>강아지</Button>
 			</div>
 		</CommonView>
 	);

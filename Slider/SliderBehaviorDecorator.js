@@ -52,13 +52,10 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		const [useHintText, setUseHintText] = useState(true);
 		const [prevValue, setPrevValue] = useState(sliderBehaviorProps.value);
 
-		useEffect(() => {
-			if (sliderBehaviorProps.value !== prevValue) {
-				setUseHintText(false);
-				setPrevValue(sliderBehaviorProps.value);
-			}
-		}, [prevValue, sliderBehaviorProps.value]);
-
+		if (sliderBehaviorProps.value && sliderBehaviorProps.value !== prevValue) {
+			setUseHintText(false);
+			setPrevValue(sliderBehaviorProps.value);
+		}
 
 		useEffect(() => {
 			return () => {
