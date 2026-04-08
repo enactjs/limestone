@@ -10,6 +10,7 @@
  */
 
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import Group from '@enact/ui/Group';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
@@ -152,14 +153,10 @@ const RadioItem = Pure(
  * @public
  */
 const RadioItemGroup = (props) => {
+	checkPropTypes(RadioItemGroup, props);
 	const {children, groupId, itemProps, ...rest} = props;
 
-	RadioItemGroup.propTypes = {
-		groupId: PropTypes.string,
-		itemProps: PropTypes.object
-	};
-
-	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` compoenents using `ui/Group`
+	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` components using `ui/Group`
 		return (
 			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
 				<Group
@@ -191,6 +188,11 @@ const RadioItemGroup = (props) => {
 			</div>
 		);
 	}
+};
+
+RadioItemGroup.propTypes = {
+	groupId: PropTypes.string,
+	itemProps: PropTypes.object
 };
 
 export default RadioItem;

@@ -1,11 +1,15 @@
 import '@testing-library/jest-dom';
 import {render} from '@testing-library/react';
+import {useEffect} from 'react';
 
 import AsyncRenderChildren from '../AsyncRenderChildren';
 
 let data = {};
 const Component = (props) => {
-	data = props;
+	useEffect(() => {
+		data = props;
+	}, [props]);
+
 	return <AsyncRenderChildren {...props} />;
 };
 

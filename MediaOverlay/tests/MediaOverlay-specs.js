@@ -1,7 +1,7 @@
 /* global HTMLMediaElement */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 
 import MediaOverlay from '../MediaOverlay';
 
@@ -109,5 +109,24 @@ describe('MediaOverlay', () => {
 		const actual = screen.getByTestId('mediaOverlay');
 
 		expect(actual).toBe(expected);
+	});
+
+	test('should be pressed when selected', () => {
+		render(<MediaOverlay data-testid="mediaOverlay" source="abc.mp4" />);
+		const mediaOverlay = screen.getByTestId('mediaOverlay');
+
+		// Select by key
+		fireEvent.keyDown(mediaOverlay, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(mediaOverlay).toHaveClass('pressed');
+
+		fireEvent.keyUp(mediaOverlay, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(mediaOverlay).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(mediaOverlay);
+		expect(mediaOverlay).toHaveClass('pressed');
+
+		fireEvent.mouseUp(mediaOverlay);
+		expect(mediaOverlay).not.toHaveClass('pressed');
 	});
 });

@@ -34,7 +34,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
 import compose from 'ramda/src/compose';
-import {useEffect, useLayoutEffect, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {ProgressBarTooltip} from '../ProgressBar';
 import Skinnable from '../Skinnable';
@@ -92,9 +92,10 @@ const SliderBase = (props) => {
 
 	const tooltip = sliderProps.tooltip === true ? ProgressBarTooltip : sliderProps.tooltip;
 
+	const context = useMemo(() => ({lastWheelTimeStamp: 0}), []);
+
 	const spotlightAccelerator = useRef();
 	const ref = useRef();
-	const {current: context} = useRef({lastWheelTimeStamp: 0});
 
 	const handlers = useHandlers({
 		onBlur: handle(

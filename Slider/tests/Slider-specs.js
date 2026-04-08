@@ -79,6 +79,25 @@ describe('Slider', () => {
 		expect(slider).toHaveAttribute(expectedAttribute, expectedValue);
 	});
 
+	test('should be pressed when selected', () => {
+		render(<Slider />);
+		const slider = screen.getByRole('slider');
+
+		// Select by key
+		fireEvent.keyDown(slider, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(slider).toHaveClass('pressed');
+
+		fireEvent.keyUp(slider, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(slider).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(slider);
+		expect(slider).toHaveClass('pressed');
+
+		fireEvent.mouseUp(slider);
+		expect(slider).not.toHaveClass('pressed');
+	});
+
 	test('should activate the slider on enter keyup', () => {
 		render(<Slider activateOnSelect />);
 		const slider = screen.getByRole('slider');
