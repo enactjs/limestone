@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icon `f1`
+- `limestone/Alert` `buttonDirection` prop to control button layout direction (`auto`, `horizontal`, `vertical`)
 
 ### Changed
 
