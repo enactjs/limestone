@@ -19,7 +19,7 @@
 
 import {forKey, forProp, forward, forwardWithPrevent, handle, not} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -29,11 +29,12 @@ import ProgressBar from '@enact/ui/ProgressBar';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import UiSlider from '@enact/ui/Slider';
+import Touchable from '@enact/ui/Touchable';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
 import compose from 'ramda/src/compose';
-import {useEffect, useLayoutEffect, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {ProgressBarTooltip} from '../ProgressBar';
 import Skinnable from '../Skinnable';
@@ -57,6 +58,7 @@ const sliderDefaultProps = {
 	max: 100,
 	min: 0,
 	orientation: 'horizontal',
+	pressed: false,
 	step: 1,
 	wheelInterval: 0
 };
@@ -73,7 +75,9 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
+	checkPropTypes(SliderBase, sliderProps);
+
+	const {active, className, css, disabled, focused, keyFrequency, max, min, pressed, showAnchor, showMinMax, ...rest} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -88,9 +92,10 @@ const SliderBase = (props) => {
 
 	const tooltip = sliderProps.tooltip === true ? ProgressBarTooltip : sliderProps.tooltip;
 
+	const context = useMemo(() => ({lastWheelTimeStamp: 0}), []);
+
 	const spotlightAccelerator = useRef();
 	const ref = useRef();
-	const {current: context} = useRef({lastWheelTimeStamp: 0});
 
 	const handlers = useHandlers({
 		onBlur: handle(
@@ -136,8 +141,9 @@ const SliderBase = (props) => {
 		componentCss.slider,
 		className,
 		{
-			[mergedCss.hasMinMax]: showMinMax,
 			[mergedCss.active]: active,
+			[mergedCss.hasMinMax]: showMinMax,
+			[mergedCss.pressed]: pressed,
 			[mergedCss.showAnchor]: showAnchor
 		},
 		css && css.slider
@@ -348,6 +354,15 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	onKeyUp: PropTypes.func,
 
 	/**
+	 * Indicates if the component is pressed.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @private
+	 */
+	pressed: PropTypes.bool,
+
+	/**
 	 * Displays an anchor at `progressAnchor`.
 	 *
 	 * @type {Boolean}
@@ -448,6 +463,7 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
  */
 const SliderDecorator = compose(
 	Pure,
+	Touchable({activeProp: 'pressed'}),
 	Changeable,
 	SliderBehaviorDecorator,
 	Spottable,

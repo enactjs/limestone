@@ -1,6 +1,6 @@
 {
   "name": "limestone-sampler",
-  "version": "1.6.1",
+  "version": "1.9.0",
   "description": "Component and QA samples for Limestone",
   "private": true,
   "main": "index.js",
@@ -20,19 +20,19 @@
     "theme": "limestone"
   },
   "dependencies": {
-    "@enact/core": "^5.4.0",
-    "@enact/i18n": "^5.4.0",
+    "@enact/core": "^5.4.2",
+    "@enact/i18n": "^5.4.2",
     "@enact/limestone": "../../",
-    "@enact/spotlight": "^5.4.0",
-    "@enact/storybook-utils": "^7.0.2",
-    "@enact/ui": "^5.4.0",
-    "@storybook/addon-docs": "^9.1.6",
-    "@storybook/react-webpack5": "^9.1.6",
+    "@enact/spotlight": "^5.4.2",
+    "@enact/storybook-utils": "^7.0.3",
+    "@enact/ui": "^5.4.2",
+    "@storybook/addon-docs": "^9.1.19",
+    "@storybook/react-webpack5": "^9.1.19",
     "classnames": "^2.5.1",
     "ilib": "^14.21.2",
-    "react": "~19.0.3",
-    "react-dom": "~19.0.3",
+    "react": "~19.0.4",
+    "react-dom": "~19.0.4",
     "react-ga4": "^2.1.0",
-    "storybook": "^9.1.6"
+    "storybook": "^9.1.19"
   }
 }

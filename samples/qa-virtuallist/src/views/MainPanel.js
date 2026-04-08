@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import {InputField as Input} from '@enact/limestone/Input';
@@ -17,7 +18,9 @@ import css from './MainPanel.module.less';
 
 const childProps = {text: ' child props'};
 
-const MainPanel = ({...rest}) => {
+const MainPanel = (props) => {
+	checkPropTypes(MainPanel, props);
+	const {...rest} = props;
 	const dispatch = use(ListDispatchContext);
 	const {listItems} = use(ListContext);
 

@@ -1,4 +1,5 @@
 import kind from '@enact/core/kind';
+import {checkPropTypes} from '@enact/core/util';
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
@@ -51,10 +52,15 @@ const inputData = {
 class TooltipTest extends Component {
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			showButton: true
 		};
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	handleClick = () => {

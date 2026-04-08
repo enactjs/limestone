@@ -13,7 +13,7 @@ import {on, off} from '@enact/core/dispatcher';
 import {forward, forwardCustom} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
 import kind from '@enact/core/kind';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -21,7 +21,7 @@ import {getLastContainer} from '@enact/spotlight/src/container';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import warning from 'warning';
 
 import Skinnable from '../Skinnable';
@@ -300,6 +300,8 @@ const popupDefaultProps = {
  * @public
  */
 const Popup = (props) => {
+	checkPropTypes(Popup, props);
+
 	const componentProps = setDefaultProps(props, popupDefaultProps);
 	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
 
@@ -323,7 +325,7 @@ const Popup = (props) => {
 				setActivator(Spotlight.getCurrent());
 				setPrevOpen(open);
 			} else {
-				// Disables the spotlight conatiner of popup when `noAnimation` set
+				// Disables the spotlight container of popup when `noAnimation` set
 				if (noAnimation) {
 					const node = getContainerNode(containerIdRef.current);
 					if (node) {
@@ -469,7 +471,7 @@ const Popup = (props) => {
 		}
 	}, [componentProps, spotPopupContent]);
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		getDerivedStateFromProps();
 	}, [getDerivedStateFromProps]);
 

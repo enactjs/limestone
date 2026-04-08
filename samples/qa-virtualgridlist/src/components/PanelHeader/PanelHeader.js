@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import {Header} from '@enact/limestone/Panels';
@@ -30,6 +31,7 @@ import {
 import createRecord from '../../utils';
 
 const PanelHeader = (props) => {
+	checkPropTypes(PanelHeader, props);
 	const {nativeScroll, onChangeDirection, onChangeScrollMode, ...rest} = props;
 
 	const dispatch = use(RecordDispatchContext);

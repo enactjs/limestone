@@ -6,13 +6,46 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Icon` supported icon list, adding new icon `f1`
+
+### Changed
+
+- `limestone/Slider` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` `captionOverlayOnFocus` prop to work in `focusRing` mode
+- `limestone/Card` press motion to work with key press
+- `limestone/Dropdown` button to match `DropdownList` items size when `size` is `small`
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Popup` to not flicker on transition 
+- `limestone/Slider` press motion to work with key press
+- `limestone/useScroll` to not scroll on hover right after scroll by wheel
+
+## [1.9.0] - 2026-01-28
+
+### Added
+
 - `limestone/Button` `focusEffect` prop to set the visual effect applied to the button when focused.
+- `limestone/Icon` supported icon list, adding new icons `btspeakermute`, `system`, `remotecontrolsetting`, `warning`, `filepdf`, `filedoc`, `filexls`, `subtitleru`, and `mypageru`
+
+### Changed
+
+- `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
+- `limestone/Chip` styling to match the latest GUI
+- `limestone/IconItem` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Spinner` to match the latest GUI
 
 ### Fixed
 
 - `limestone/Card` to not overflow text when `withoutMarquee` is set
 - `limestone/Input` `overlay` `Back` button to not overflow the `InputField` in case the `Title` or `Subtitle` is not set
 - `limestone/PageViews` to properly navigate between multiple `PageViews`
+- `limestone/PageViews` to resume spotlight on unmount
 
 ## [1.8.0] - 2025-12-30
 
@@ -41,6 +74,12 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/InputField` to not overflow the parent container.
+
+## [1.6.3] - 2025-12-26
+
+### Changed
+
+- `limestone/VideoPlayer.FeedbackTooltip` to match the latest GUI
 
 ## [1.7.0] - 2025-12-08
 

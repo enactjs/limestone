@@ -2,6 +2,7 @@ import {forwardCustom} from '@enact/core/handle';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
+import {checkPropTypes} from '@enact/core/util';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import {getContainersForNode} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement, getTargetByDirectionFromPosition} from '@enact/spotlight/src/target';
@@ -83,15 +84,17 @@ const holdConfig = {
  * @public
  */
 const EditableWrapper = (props) => {
+	checkPropTypes(EditableWrapper, props);
+
 	const {children, editable, scrollContainerHandle, scrollContainerRef, scrollContentRef} = props;
-	const centered = editable?.centered != null ? editable.centered : true;
-	const selectItemBy = editable?.selectItemBy || 'longPress';
-	const customCss = editable?.css || {};
 	const removeItemFuncRef = editable?.removeItemFuncRef;
 	const hideItemFuncRef = editable?.hideItemFuncRef;
 	const showItemFuncRef = editable?.showItemFuncRef;
 	const focusItemFuncRef = editable?.focusItemFuncRef;
 	const blurItemFuncRef = editable?.blurItemFuncRef;
+	const centered = editable?.centered != null ? editable.centered : true;
+	const selectItemBy = editable?.selectItemBy || 'longPress';
+	const customCss = editable?.css || {};
 	const mergedCss = usePublicClassNames({componentCss, customCss, publicClassNames: true});
 
 	const dataSize = children?.length;
@@ -113,7 +116,7 @@ const EditableWrapper = (props) => {
 		// Indices
 		fromIndex: null,
 		prevToIndex: null,
-		hideIndex: null,
+		hideIndex: editable?.hideIndex ?? dataSize,
 
 		// Position for restoring focus after removing item
 		nextSpotlightRect: null,
@@ -142,8 +145,6 @@ const EditableWrapper = (props) => {
 		initialSelected: editable?.initialSelected
 	});
 	const announceRef = useRef({});
-
-	mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
 
 	// Functions
 
@@ -896,31 +897,31 @@ const EditableWrapper = (props) => {
 
 	useLayoutEffect(() => {
 		if (removeItemFuncRef) {
-			removeItemFuncRef.current = removeItem;
+			removeItemFuncRef.current = removeItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [removeItem, removeItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (hideItemFuncRef) {
-			hideItemFuncRef.current = hideItem;
+			hideItemFuncRef.current = hideItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [hideItem, hideItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (showItemFuncRef) {
-			showItemFuncRef.current = showItem;
+			showItemFuncRef.current = showItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [showItem, showItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (focusItemFuncRef) {
-			focusItemFuncRef.current = focusItem;
+			focusItemFuncRef.current = focusItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [focusItem, focusItemFuncRef]);
 
 	useLayoutEffect(() => {
 		if (blurItemFuncRef) {
-			blurItemFuncRef.current = blurItem;
+			blurItemFuncRef.current = blurItem; // eslint-disable-line react-hooks/immutability
 		}
 	}, [blurItem, blurItemFuncRef]);
 
@@ -991,6 +992,8 @@ const EditableWrapper = (props) => {
 
 	// We set 'data-is-hiding' for all hidden items at component mount
 	useEffect(() => {
+		mutableRef.current.hideIndex = editable?.hideIndex ?? dataSize;
+
 		children.map((child, index) => {
 			if (index >= mutableRef.current.hideIndex) {
 				const hiddenElement = document.querySelector('[aria-label="' + child.props['aria-label'] + '"]');

@@ -345,9 +345,11 @@ const useEventMonitor = (props, instances, context) => {
 
 	const mutableRef = useRef({pageKeyHandlerObj: {scrollByPageOnPointerMode}});
 
-	lastPointer = lastPointerProp;
-
 	// Hooks
+
+	useEffect(() => {
+		lastPointer = lastPointerProp;
+	}, [lastPointerProp]);
 
 	useEffect(() => {
 		const setMonitorEventTarget = (target) => {
@@ -532,7 +534,10 @@ const useEventVoice = (props, instances) => {
 					direction = directionFactor ? -1 : 1,
 					pageDistance = direction * (scrollVertically ? bounds.clientHeight : bounds.clientWidth) * paginationPageMultiplier;
 
-				scrollContainerHandle.current.lastInputType = 'pageKey';
+				const handleRef = scrollContainerHandle;
+				if (handleRef.current) {
+					handleRef.current.lastInputType = 'pageKey';
+				}
 
 				if (direction !== scrollContainerHandle.current.wheelDirection) {
 					scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;

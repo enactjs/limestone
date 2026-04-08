@@ -156,7 +156,10 @@ const useThemeScroll = (props, instances) => {
 			pageSize = isVerticalScrollBar ? bounds.clientHeight : bounds.clientWidth,
 			distance = pageSize * (isPagination ? paginationPageMultiplier : arrowKeyMultiplier);
 
-		scrollContainerHandle.current.lastInputType = inputType;
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current) {
+			handleRef.current.lastInputType = inputType;
+		}
 
 		if (direction !== wheelDirection) {
 			scrollContainerHandle.current.isScrollAnimationTargetAccumulated = false;
@@ -239,7 +242,10 @@ const useThemeScroll = (props, instances) => {
 		// oddly, Scroller manages scrollContainerHandle.current.bounds so if we don't update it here (it is also
 		// updated in calculateAndScrollTo, but we might not have made it to that point), it will be
 		// out of date when we land back in this method next time.
-		scrollContainerHandle.current.bounds.scrollHeight = scrollContainerHandle.current.getScrollBounds().scrollHeight;
+		const handleRef = scrollContainerHandle;
+		if (handleRef.current) {
+			handleRef.current.bounds.scrollHeight = scrollContainerHandle.current.getScrollBounds().scrollHeight;
+		}
 	}
 
 	function handleResizeWindow () {
@@ -464,7 +470,7 @@ const useScroll = (props) => {
 		verticalScrollbarHandle
 	});
 
-	assignProperties('scrollContainerProps', {
+	assignProperties('scrollContainerProps', { // eslint-disable-line react-hooks/refs
 		className: [
 			className,
 			css.scroll,
@@ -487,7 +493,7 @@ const useScroll = (props) => {
 		'data-webos-voice-group-label': voiceGroupLabel
 	};
 
-	assignProperties('scrollContentProps', {
+	assignProperties('scrollContentProps', { // eslint-disable-line react-hooks/refs
 		...(props.itemRenderer ? {itemRefs, noAffordance, snapToCenter} : {editable, fadeOut}),
 		...voiceProps,
 		className: [
@@ -505,7 +511,7 @@ const useScroll = (props) => {
 
 	const scrollThumbAriaLabelForByEnter = focusableScrollbar === 'byEnter' ? ' ' + $L('press ok button to read text') : '';
 
-	assignProperties('horizontalScrollbarProps', {
+	assignProperties('horizontalScrollbarProps', { // eslint-disable-line react-hooks/refs
 		...scrollbarProps,
 		'aria-label': horizontalScrollThumbAriaLabel == null ? $L('scroll left or right with left right button') + scrollThumbAriaLabelForByEnter : horizontalScrollThumbAriaLabel,
 		className: [css.horizontalScrollbar],
@@ -513,7 +519,7 @@ const useScroll = (props) => {
 		scrollbarHandle: horizontalScrollbarHandle
 	});
 
-	assignProperties('verticalScrollbarProps', {
+	assignProperties('verticalScrollbarProps', { // eslint-disable-line react-hooks/refs
 		...scrollbarProps,
 		'aria-label': verticalScrollThumbAriaLabel == null ? $L('scroll up or down with up down button') + scrollThumbAriaLabelForByEnter : verticalScrollThumbAriaLabel,
 		className: [css.verticalScrollbar],
@@ -521,7 +527,7 @@ const useScroll = (props) => {
 		scrollbarHandle: verticalScrollbarHandle
 	});
 
-	assignProperties('hoverToScrollProps', {
+	assignProperties('hoverToScrollProps', { // eslint-disable-line react-hooks/refs
 		scrollContainerHandle,
 		scrollObserver
 	});

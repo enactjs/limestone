@@ -8,6 +8,7 @@
 import {setDefaultTargetById} from '@enact/core/dispatcher';
 import hoc from '@enact/core/hoc';
 import {addAll} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import I18nDecorator from '@enact/i18n/I18nDecorator';
 import SpotlightRootDecorator, {activateInputType, getInputType as getLastInputType, setInputType} from '@enact/spotlight/SpotlightRootDecorator';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
@@ -245,6 +246,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	setDefaultTargetById(rootId);
 
 	const Decorator = (props) => {
+		checkPropTypes(Decorator, props);
 		const {skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
 		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {

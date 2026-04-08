@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Item from '@enact/limestone/Item';
 import {Header, Panel, Panels} from '@enact/limestone/Panels';
@@ -46,7 +47,7 @@ const prop = {
 const renderItem = (ItemComponent, size, vertical, onClick) => ({index, ...rest}) => {
 	const style = vertical ?
 		{} :
-		{height: '100%', width: ri.unit(size, 'rem'), writingMode: 'vertical-lr', margin: '0'};
+		{height: '100%', width: ri.unit(ri.scale(size), 'rem'), writingMode: 'vertical-lr', margin: '0'};
 
 	return (
 		<ItemComponent index={index} style={style} onClick={onClick} {...rest}>
@@ -82,6 +83,7 @@ class StatefulSwitchItem extends Component {
 
 	constructor (props) {
 		super(props);
+		checkPropTypes(this, this.props);
 
 		this.state = {
 			prevIndex: props.index,
@@ -98,6 +100,10 @@ class StatefulSwitchItem extends Component {
 		}
 
 		return null;
+	}
+
+	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 	}
 
 	onToggle = () => {
@@ -154,7 +160,7 @@ const CustomHeader = (props) => {
 	);
 };
 
-const InPanels = ({className, title, ...rest}) => {
+const InPanels = ({className, title, itemSize, ...rest}) => {
 	const [index, setIndex] = useState(0);
 	const handleSelectItem = useCallback(() => {
 		setIndex(index === 0 ? 1 : 0);
@@ -166,7 +172,8 @@ const InPanels = ({className, title, ...rest}) => {
 				<CustomHeader slot="header" title={`${title} Panel 0`} type="compact" />
 				<VirtualList
 					id="spotlight-list"
-					itemRenderer={renderItem(Item, rest.itemSize, true, handleSelectItem)}
+					itemSize={ri.scale(itemSize)}
+					itemRenderer={renderItem(Item, itemSize, true, handleSelectItem)}
 					spotlightId="virtual-list"
 					{...rest}
 				/>
@@ -184,7 +191,13 @@ class VirtualListWithCBScrollTo extends Component {
 		dataSize: PropTypes.number
 	};
 
+	constructor (props) {
+		super(props);
+		checkPropTypes(this, this.props);
+	}
+
 	componentDidUpdate (prevProps) {
+		checkPropTypes(this, this.props, prevProps);
 		if (this.props.dataSize !== prevProps.dataSize) {
 			this.scrollTo({animate: false, focus: false, index: 0});
 		}
@@ -212,7 +225,7 @@ export const HorizontalScrollInScroller = (args) => {
 		dataSize: updateDataSize(args['dataSize']),
 		direction: 'horizontal',
 		horizontalScrollbar: args['horizontalScrollbar'],
-		itemRenderer: renderItem(Item, ri.scale(args['itemSize']), false),
+		itemRenderer: renderItem(Item, args['itemSize'], false),
 		itemSize: ri.scale(args['itemSize']),
 		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
@@ -255,7 +268,7 @@ export const WithMoreItems = (args) => {
 			dataSize={updateDataSize(args['dataSize'])}
 			horizontalScrollbar={args['horizontalScrollbar']}
 			hoverToScroll={args['hoverToScroll']}
-			itemRenderer={renderItem(StatefulSwitchItem, ri.scale(args['itemSize']), true)}
+			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 			itemSize={ri.scale(args['itemSize'])}
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
@@ -294,7 +307,7 @@ export const WithSmallItemMinSizeAndLargeItemSize = (args) => {
 			direction="horizontal"
 			horizontalScrollbar={args['horizontalScrollbar']}
 			hoverToScroll={args['hoverToScroll']}
-			itemRenderer={renderItem(Item, ri.scale(args['size']), false)}
+			itemRenderer={renderItem(Item, args['size'], false)}
 			itemSize={updateItemSize({
 				minSize: ri.scale(args['minSize']),
 				dataSize: args['dataSize'],
@@ -328,7 +341,7 @@ export const _InPanels = (args) => {
 			dataSize={updateDataSize(args['dataSize'])}
 			horizontalScrollbar={args['horizontalScrollbar']}
 			hoverToScroll={args['hoverToScroll']}
-			itemSize={ri.scale(args['itemSize'])}
+			itemSize={args['itemSize']}
 			key={args['scrollMode']}
 			noScrollByWheel={args['noScrollByWheel']}
 			onKeyDown={action('onKeyDown')}
@@ -373,7 +386,7 @@ export const InFixedPopupPanels = (args) => {
 					dataSize={updateDataSize(args['dataSize'])}
 					horizontalScrollbar={args['horizontalScrollbar']}
 					hoverToScroll={args['hoverToScroll']}
-					itemRenderer={renderItem(Item, ri.scale(args['itemSize']), true)}
+					itemRenderer={renderItem(Item, args['itemSize'], true)}
 					itemSize={ri.scale(args['itemSize'])}
 					key={args['scrollMode']}
 					noScrollByWheel={args['noScrollByWheel']}
@@ -411,7 +424,7 @@ export const ScrollingTo0WheneverDataSizeChanges = (args) => {
 	return (
 		<VirtualListWithCBScrollTo
 			dataSize={updateDataSize(args['dataSize'])}
-			itemRenderer={renderItem(StatefulSwitchItem, ri.scale(args['itemSize']), true)}
+			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 			itemSize={ri.scale(args['itemSize'])}
 			key={args['scrollMode']}
 			scrollMode={args['scrollMode']}
@@ -439,7 +452,7 @@ export const OverscrollEffectOnWherePageKeyIsTrue = (args) => {
 				wheel: false
 			}}
 			dataSize={updateDataSize(args['dataSize'])}
-			itemRenderer={renderItem(StatefulSwitchItem, ri.scale(args['itemSize']), true)}
+			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 			itemSize={ri.scale(args['itemSize'])}
 			key={args['scrollMode']}
 			scrollMode={args['scrollMode']}
@@ -457,7 +470,7 @@ OverscrollEffectOnWherePageKeyIsTrue.parameters = {
 };
 
 export const WithExtraItems = (args) => {
-	let [itemSize, setItemSize] = useState(ri.scale(args['itemSize']));
+	let [itemSize, setItemSize] = useState(args['itemSize']);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -531,7 +544,7 @@ export const WithContainerItemsHaveSpottableControls = (args) => {
 			dataSize={updateDataSize(args['dataSize'])}
 			itemRenderer={renderItem(
 				ContainerItemWithControls,
-				ri.scale(args['itemSize']),
+				args['itemSize'],
 				true
 			)}
 			itemSize={ri.scale(args['itemSize'])}
@@ -674,5 +687,59 @@ export const WithChangingDataSizeAndItemSizes = () => {
 
 WithChangingDataSizeAndItemSizes.storyName = 'with changing dataSize and itemSizes';
 WithChangingDataSizeAndItemSizes.parameters = {
+	propTables: [Config]
+};
+
+export const WithHiddenLargeItemMarginList = (args) => {
+	updateDataSize(args['dataSize']);
+
+	const renderLargeMarginItem = useCallback(({index, ...rest}) => {
+		return (
+			<Item {...rest} style={{'margin-left': '300px', 'margin-right': '300px'}}>
+				{`Hidden Item ${index}`}
+			</Item>
+		);
+	}, []);
+
+	const renderSmallMarginItem = useCallback(({index, ...rest}) => {
+		return (
+			<Item {...rest} style={{height: '100%', width: ri.unit(ri.scale(args['itemSize']), 'rem'), writingMode: 'vertical-lr'}}>
+				{`Item ${index}`}
+			</Item>
+		);
+	}, [args]);
+
+	return (
+		<Column>
+			<Cell shrink>
+				<VirtualList
+					dataSize={args['dataSize']}
+					direction={'horizontal'}
+					itemRenderer={renderLargeMarginItem}
+					itemSize={ri.scale(args['itemSize'])}
+					key={'hiddenList'}
+					scrollMode={args['scrollMode']}
+				/>
+			</Cell>
+			<Cell>
+				<VirtualList
+					dataSize={args['dataSize']}
+					direction={'horizontal'}
+					itemRenderer={renderSmallMarginItem}
+					itemSize={ri.scale(args['itemSize'])}
+					key={'visibleList'}
+					scrollMode={args['scrollMode']}
+				/>
+			</Cell>
+		</Column>
+	);
+};
+
+number('dataSize', WithHiddenLargeItemMarginList, Config, 100);
+number('itemSize', WithHiddenLargeItemMarginList, Config, 156);
+select('scrollMode', WithHiddenLargeItemMarginList, prop.scrollModeOption, Config);
+
+WithHiddenLargeItemMarginList.storyName = 'with hidden large item margin list';
+WithHiddenLargeItemMarginList.parameters = {
 	propTables: [Config]
 };

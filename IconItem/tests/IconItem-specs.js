@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 
-import {IconItemBase} from '../IconItem';
+import IconItem, {IconItemBase} from '../IconItem';
 
 describe('IconItem', () => {
 	test('should support `background` prop', () => {
@@ -91,5 +91,24 @@ describe('IconItem', () => {
 		const actual = screen.getByTestId('iconitem');
 
 		expect(actual).toHaveClass(expected);
+	});
+
+	test('should be pressed when selected', () => {
+		render(<IconItem data-testid="iconitem" />);
+		const iconItem = screen.getByTestId('iconitem');
+
+		// Select by key
+		fireEvent.keyDown(iconItem, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(iconItem).toHaveClass('pressed');
+
+		fireEvent.keyUp(iconItem, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(iconItem).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(iconItem);
+		expect(iconItem).toHaveClass('pressed');
+
+		fireEvent.mouseUp(iconItem);
+		expect(iconItem).not.toHaveClass('pressed');
 	});
 });

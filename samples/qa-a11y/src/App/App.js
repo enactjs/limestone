@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Item from '@enact/limestone/Item';
 import {ScrollerBase} from '@enact/limestone/Scroller';
@@ -113,7 +114,9 @@ const views = [
 	{isHeader: false, title: 'WizardPanels', view: WizardPanels}
 ];
 
-const AppBase = ({className, rtl, updateLocale, ...rest}) => {
+const AppBase = (props) => {
+	checkPropTypes(AppBase, props);
+	const {className, rtl, updateLocale, ...rest} = props;
 	const [isDebugMode, setIsDebugMode] = useState(false);
 	const [jumpToView, setJumpToView] = useState('');
 	const [selected, setSelected] = useState(0);

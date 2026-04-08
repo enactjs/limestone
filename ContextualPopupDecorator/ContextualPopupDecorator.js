@@ -14,7 +14,7 @@ import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
-import {extractAriaProps, setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -22,7 +22,7 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
 import HolePunchScrim from './HolePunchScrim';
@@ -98,15 +98,17 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
+		checkPropTypes(ContextualPopupDecorator, props);
+
 		const componentProps = setDefaultProps(props, contextualPopupDecoratorDefaultProps);
 
 		const [activator, setActivator] = useState(null);
 		const [arrowPosition, setArrowPosition] = useState({top: 0, left: 0});
 		const [containerPosition, setContainerPosition] = useState({top: 0, left: 0, right: 0});
-		const [direction, setDirection] = useState('');
+		const [direction, setDirection] = useState(componentProps.direction);
+		const [holeBounds, setHoleBounds] = useState(null);
 
 		const adjustedDirection = useRef(componentProps.direction);
-		const containerId = useRef(Spotlight.add(componentProps.popupSpotlightId));
 		const containerNode = useRef(null);
 		const clientSiblingRef = useRef(null);
 		const overflow = useRef({});
@@ -118,6 +120,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const keyDownRef = useRef(null);
 		const keyUpRef = useRef(null);
+
+		const containerId = useMemo(() => Spotlight.add(componentProps.popupSpotlightId), [componentProps.popupSpotlightId]);
 
 		if (componentProps.setApiProvider) {
 			componentProps.setApiProvider();
@@ -141,7 +145,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			return Math.random().toString(36).substring(2, 10);
 		}, []);
 
-		const id = useRef(generateId());
+		const id = useMemo(() => generateId(), [generateId]);
 
 		const adjustRTL = useCallback((position) => {
 			let pos = position;
@@ -224,7 +228,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);
 
 		const updateLeaveFor = useCallback((localActivator) => {
-			Spotlight.set(containerId.current, {
+			Spotlight.set(containerId, {
 				leaveFor: {
 					up: localActivator,
 					down: localActivator,
@@ -232,7 +236,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					right: localActivator
 				}
 			});
-		}, []);
+		}, [containerId]);
 
 		const getContainerPosition = useCallback((localContainerNode, clientNode) => {
 			const {ARROW_OFFSET, MARGIN} = distances();
@@ -425,15 +429,15 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const spotPopupContent = useCallback(() => {
 			const {spotlightRestrict: localSpotlightRestrict} = componentProps;
-			const spottableDescendants = Spotlight.getSpottableDescendants(containerId.current);
+			const spottableDescendants = Spotlight.getSpottableDescendants(containerId);
 			if (localSpotlightRestrict === 'self-only' && spottableDescendants.length && Spotlight.getCurrent()) {
 				Spotlight.getCurrent().blur();
 			}
 
-			if (!Spotlight.focus(containerId.current)) {
-				Spotlight.setActiveContainer(containerId.current);
+			if (!Spotlight.focus(containerId)) {
+				Spotlight.setActiveContainer(containerId);
 			}
-		}, [componentProps]);
+		}, [componentProps, containerId]);
 
 		const handleKeyUp = useCallback(() => {
 			return handle(
@@ -482,7 +486,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			if (!localDirection) return;
 
-			const hasSpottables = Spotlight.getSpottableDescendants(containerId.current).length > 0;
+			const hasSpottables = Spotlight.getSpottableDescendants(containerId).length > 0;
 			const spotlessSpotlightModal = componentProps.spotlightRestrict === 'self-only' && !hasSpottables;
 			const shouldSpotPopup = current === activator && localDirection === PositionToDirection[adjustedDirection.current.split(' ')[0]] && hasSpottables;
 
@@ -495,7 +499,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 					spotPopupContent();
 				}
 			}
-		}, [activator, componentProps, handleDirectionalKey, spotPopupContent]);
+		}, [activator, componentProps, containerId, handleDirectionalKey, spotPopupContent]);
 
 		// handle key event from contextual popup and closes the popup
 		const handleContainerKeyDown = useCallback((ev) => {
@@ -560,7 +564,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, [componentProps, handleKeyDown, handleKeyUp]);
 
 		useEffect(() => {
-			const localId = containerId.current;
+			const localId = containerId;
 
 			if (componentProps.open) {
 				on('keydown', keyDownRef.current);
@@ -640,7 +644,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			...rest
 		} = componentProps;
 
-		const idFloatLayer = `${id.current}_floatLayer`;
+		const idFloatLayer = `${id}_floatLayer`;
 		let scrimType = rest.scrimType;
 		delete rest.scrimType;
 
@@ -658,10 +662,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			rest.skin = skin;
 		}
 
-		let holeBounds;
-		if (clientSiblingRef?.current && holepunchScrim) {
-			holeBounds = clientSiblingRef.current.getBoundingClientRect();
-		}
+		useEffect(() => {
+			if (clientSiblingRef?.current && holepunchScrim) {
+				setHoleBounds(clientSiblingRef.current.getBoundingClientRect());
+			}
+		}, [holepunchScrim]);
 
 		delete rest.direction;
 		delete rest.onClose;
@@ -697,7 +702,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 							offset={noArrow ? offset : 'none'}
 							showArrow={!noArrow}
 							skin={skin}
-							spotlightId={containerId.current}
+							spotlightId={containerId}
 							spotlightRestrict={spotlightRestrict}
 						>
 							<PopupComponent {...popupPropsRef} />

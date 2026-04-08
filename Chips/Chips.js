@@ -1,4 +1,4 @@
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import IString from 'ilib/lib/IString';
 import Spotlight from '@enact/spotlight';
 import {SpotlightContainerDecorator} from '@enact/spotlight/SpotlightContainerDecorator';
@@ -7,7 +7,7 @@ import {getNearestTargetFromPosition} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {createContext, useCallback, useRef} from 'react';
+import {createContext, useCallback, useMemo, useRef} from 'react';
 
 import $L from '../internal/$L';
 
@@ -19,6 +19,10 @@ const ChipsDefaultProps = {
 	orientation: 'vertical'
 };
 
+const generateAriaId = () => {
+	return Math.random().toString(36).substring(2, 10);
+};
+
 /**
  * A container that surrounds the chips.
  *
@@ -27,7 +31,7 @@ const ChipsDefaultProps = {
  * <Chips>
  * 	{chips.map(({id, icon, children}) => {
  * 		return (
- * 			<Chip key={id} icon={icon} onClick={onClick}>
+ * 			<Chip key={id} id={id} icon={icon} onClick={onClick}>
  * 				{children}
  * 			</Chip>
  * 		);
@@ -42,12 +46,13 @@ const ChipsDefaultProps = {
  */
 const ChipsBase = (props) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
+	checkPropTypes(ChipsBase, chipsProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
 	const childRefs = useRef([]);
 	const containerRef = useRef(null);
 	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
-	const ariaId = Math.random().toString(36).substring(2, 10);
+	const ariaId = useMemo(() => generateAriaId(), []);
 
 	const getPreviousChip = useCallback((id) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
@@ -148,8 +153,6 @@ const ChipsBase = (props) => {
 	);
 };
 
-ChipsBase.displayName = 'Chips';
-
 ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	/**
 	 * {@link limestone/Chips.Chip|Chip} to be rendered
@@ -168,6 +171,8 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 */
 	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
 };
+
+ChipsBase.displayName = 'Chips';
 
 /**
  * Applies Limestone specific behaviors to {@link limestone/Chips.Chips|Chips} components.

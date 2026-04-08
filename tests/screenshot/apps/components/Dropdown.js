@@ -37,6 +37,11 @@ const DropdownTests = [
 		size: 'large'
 	}, Widths),
 
+	// size="small"
+	...withProps({
+		size: 'small'
+	}, Widths),
+
 	// size="large"
 	...withProps({
 		focus: true
@@ -44,6 +49,11 @@ const DropdownTests = [
 
 	// open with number type width
 	<Dropdown open width={360} title="Number type width">
+		{children(5)}
+	</Dropdown>,
+
+	// open with number type width and small size
+	<Dropdown open width={360} size="small" title="Number type width and small size">
 		{children(5)}
 	</Dropdown>,
 

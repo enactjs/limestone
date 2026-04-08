@@ -1,6 +1,6 @@
+import {checkPropTypes, usePrevious} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useRef} from 'react';
 
 import css from './FlexiblePopupPanels.module.less';
 
@@ -8,14 +8,12 @@ const prevButtonSelector = `.${css.navCellBefore} .${css.navButton}`;
 const nextButtonSelector = `.${css.navCellAfter} .${css.navButton}`;
 
 function useNavButtonFocus ({index}) {
+	const prevIndex = usePrevious(index);
+
 	let autoFocus;
 
-	const {current: ref} = useRef({
-		index
-	});
-
 	// on index change
-	if (index !== ref.index) {
+	if (index !== prevIndex) {
 		const current = Spotlight.getCurrent();
 		// if the currently focused component is a nav button
 		if (current && current.classList.contains(css.navButton)) {
@@ -24,7 +22,6 @@ function useNavButtonFocus ({index}) {
 			// set autoFocus to point to the selector for the appropriate button
 			autoFocus = prevButtonFocused ? prevButtonSelector : nextButtonSelector;
 		}
-		ref.index = index;
 	}
 
 	return {
@@ -34,7 +31,10 @@ function useNavButtonFocus ({index}) {
 
 const NavButtonFocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
-	function NavButtonFocusDecorator ({index, ...rest}) {
+	function NavButtonFocusDecorator (props) {
+		checkPropTypes(NavButtonFocusDecorator, props);
+
+		const {index, ...rest} = props;
 		const nav = useNavButtonFocus({index});
 
 		return (

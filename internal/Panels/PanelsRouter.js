@@ -1,9 +1,9 @@
-import {useRef, useState, useCallback, Children} from 'react';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {createContext} from 'react';
+import {Children, createContext, useCallback, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
 import useFocusOnTransition from './useFocusOnTransition';
@@ -14,17 +14,15 @@ const PanelsContext = createContext(null);
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const prevIndex = useRef(index);
-	const reverse = useRef(rtl);
-	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
-	const prev = {reverseTransition: reverse.current, prevIndex: prevIndex.current};
+	const prevIndex = usePrevious(index);
 
-	if (prevIndex.current !== index) {
-		reverse.current = rtl ? (index > prevIndex.current) : (index < prevIndex.current);
-		prevIndex.current = index;
+	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
+	if (prevIndex !== index) {
+		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
+		return {reverseTransition: reverse, prevIndex: index};
 	}
 
-	return prev;
+	return {reverseTransition: rtl, prevIndex: index};
 }
 
 const defaultConfig = {
@@ -44,19 +42,30 @@ const defaultConfig = {
  * @private
  */
 const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
-	const PanelsProvider = ({
-		autoFocus = 'default-element',
-		children,
-		componentRef,
-		'data-spotlight-id': spotlightId,
-		index = 0,
-		onTransition,
-		onWillTransition,
-		rtl,
-		subtitle = '',
-		title = '',
-		...rest
-	}) => {
+	const PanelsProvider = (props) => {
+		const panelsProviderProps = setDefaultProps(props, {
+			autoFocus: 'default-element',
+			index: 0,
+			subtitle: '',
+			title: ''
+		});
+
+		checkPropTypes(PanelsProvider, panelsProviderProps);
+
+		const {
+			autoFocus,
+			children,
+			componentRef,
+			'data-spotlight-id': spotlightId,
+			index,
+			onTransition,
+			onWillTransition,
+			rtl,
+			subtitle,
+			title,
+			...rest
+		} = panelsProviderProps;
+
 		const [panel, setPanel] = useState(null);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
 		const autoFocusRef = useAutoFocus({autoFocus, hideChildren: panel == null});

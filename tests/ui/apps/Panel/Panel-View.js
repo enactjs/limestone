@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useEffect} from 'react';
 import spotlight from '@enact/spotlight';
 
 import Button from '../../../../Button';
@@ -33,9 +33,11 @@ function App ({defaultIndex = 0, ...rest}) {
 	const onNext = useCallback(() => setIndex(index + 1), [index, setIndex]);
 	const onPrev = useCallback(() => setIndex(index - 1), [index, setIndex]);
 
-	if (typeof window !== 'undefined') {
-		window.setPanelIndex = setIndex;
-	}
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			window.setPanelIndex = setIndex;
+		}
+	}, []);
 
 	return (
 		<Panels {...rest} index={index}>

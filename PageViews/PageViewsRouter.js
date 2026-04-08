@@ -1,20 +1,24 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
+import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
+import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useId, useRef, useCallback, Children} from 'react';
+import {useCallback, useEffect, useId, Children} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index, rtl) {
-	const prevIndex = useRef(index);
+	const prevIndex = usePrevious(index);
+
 	let reverse = false;
-	if (prevIndex.current !== index) {
-		reverse = rtl ? (index > prevIndex.current) : (index < prevIndex.current);
+
+	if (prevIndex !== index) {
+		reverse = rtl ? (index > prevIndex) : (index < prevIndex);
 	}
-	prevIndex.current = index;
-	return  {reverseTransition: reverse};
+
+	return {reverseTransition: reverse};
 }
 
 /**
@@ -25,17 +29,25 @@ function useReverseTransition (index, rtl) {
  * @private
  */
 function PageViewsRouter (Wrapped) {
-	const PageViewsProvider = ({
-		autoFocus,
-		children,
-		componentRef,
-		'data-spotlight-id': spotlightId,
-		index = 0,
-		onTransition,
-		onWillTransition,
-		rtl,
-		...rest
-	}) => {
+	const PageViewsProvider = (props) => {
+		const pageViewsProviderProps = setDefaultProps(props, {
+			index: 0
+		});
+
+		checkPropTypes(PageViewsProvider, pageViewsProviderProps);
+
+		const {
+			autoFocus,
+			children,
+			componentRef,
+			'data-spotlight-id': spotlightId,
+			index,
+			onTransition,
+			onWillTransition,
+			rtl,
+			...rest
+		} = pageViewsProviderProps;
+
 		const uniqueId = useId();
 		const totalIndex = Children.count(children);
 		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
@@ -51,6 +63,12 @@ function PageViewsRouter (Wrapped) {
 			focusOnWillTransition(ev);
 			a11yOnWillTransition(ev);
 		}, [a11yOnWillTransition, focusOnWillTransition]);
+
+		useEffect(() => {
+			return () => {
+				Spotlight.resume();
+			};
+		}, []);
 
 		return (
 			<Wrapped
