@@ -53,6 +53,8 @@
 		.buttonContainer {
 			box-sizing: border-box;
 			margin-top: @lime-alert-overlay-buttons-margin-top;
+			padding: @lime-alert-overlay-body-padding;
+			width: 100%;
 		}
 
 		.content {
@@ -72,7 +74,10 @@
 
 .popup {
 	&.overlay {
-		width: @lime-alert-overlay-width;
+		box-sizing: border-box;
+		width: var(--alert-overlay-width, @lime-alert-overlay-width);
+		min-width: @lime-alert-overlay-width;
+		max-width: calc(100vw - 2 * @lime-popup-position-corner-margin);
 		margin-left: auto;
 		margin-right: auto;
 

@@ -13,7 +13,7 @@ import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
-import {cloneElement} from 'react';
+import {Children, cloneElement} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -50,6 +50,20 @@ const AlertBase = kind({
 			PropTypes.element,
 			PropTypes.arrayOf(PropTypes.element)
 		]),
+
+		/**
+		 * Sets the buttons layout direction.
+		 *
+		 * In `auto` mode, button direction follows UX defaults:
+		 * * `overlay` - horizontal when there are exactly 2 buttons
+		 * * `fullscreen` - horizontal when there are less than 3 buttons
+		 * * otherwise vertical
+		 *
+		 * @type {('auto'|'horizontal'|'vertical')}
+		 * @default 'auto'
+		 * @public
+		 */
+		buttonDirection: PropTypes.oneOf(['auto', 'horizontal', 'vertical']),
 
 		/**
 		 * The contents of the body of the component.
@@ -167,6 +181,7 @@ const AlertBase = kind({
 	},
 
 	defaultProps: {
+		buttonDirection: 'auto',
 		open: false,
 		overlayPosition: 'center',
 		type: 'fullscreen'
@@ -201,10 +216,29 @@ const AlertBase = kind({
 		)
 	},
 
-	render: ({buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
+	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
 		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
+		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+		const resolvedButtonDirection = (buttonDirection !== 'auto')
+			? buttonDirection
+			: (
+				(type === 'overlay' && buttonCount === 2) ||
+				(type === 'fullscreen' && buttonCount < 3)
+					? 'horizontal'
+					: 'vertical'
+			);
+		const overlayHorizontalButtons = (
+			type === 'overlay' &&
+			resolvedButtonDirection === 'horizontal'
+		);
+		const popupStyle = overlayHorizontalButtons
+			? {
+				...rest.style,
+				'--alert-overlay-width': 'max-content'
+			}
+			: rest.style;
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
 
 		return (
@@ -216,6 +250,7 @@ const AlertBase = kind({
 					aria-labelledby={ariaLabelledBy}
 					css={css}
 					position={position}
+					style={popupStyle}
 				>
 					<Layout align="center center" orientation="vertical">
 						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
@@ -225,7 +260,11 @@ const AlertBase = kind({
 						</Cell>
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>
-								<Layout align="center" orientation="vertical" id={`${id}_buttons`}>
+								<Layout
+									align="center"
+									orientation={resolvedButtonDirection}
+									id={`${id}_buttons`}
+								>
 									{buttons}
 								</Layout>
 							</Cell> : null
