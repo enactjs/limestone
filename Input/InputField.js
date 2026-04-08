@@ -13,7 +13,7 @@ import compose from 'ramda/src/compose';
 import {Fragment} from 'react';
 
 import $L from '../internal/$L';
-import {MarqueeDecorator} from '../Marquee';
+import {MarqueeController, MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
 import Tooltip from '../TooltipDecorator/Tooltip';
 import {extractVoiceProps} from '../internal/util';
@@ -343,8 +343,6 @@ const InputFieldBase = kind({
 				{!active && (
 					<MarqueeText
 						className={css.marqueeText}
-						marqueeOn="render"
-						marqueeSpeed={60}
 					>
 						{value ? value : placeholder}
 					</MarqueeText>
@@ -398,6 +396,7 @@ const InputFieldDecorator = compose(
 	Changeable,
 	InputFieldSpotlightDecorator,
 	AnnounceDecorator,
+	MarqueeController({marqueeOnFocus: true}),
 	Skinnable
 );
 
