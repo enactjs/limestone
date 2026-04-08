@@ -24,7 +24,6 @@ import {calcAriaLabel, extractInputProps} from './util';
 
 import componentCss from './InputField.module.less';
 
-// Create a Marquee-enabled div for the text display
 const MarqueeText = MarqueeDecorator('div');
 
 /**
@@ -340,14 +339,13 @@ const InputFieldBase = kind({
 			>
 				<div className={css.bg} />
 				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
-				{!active && (
-					<MarqueeText
-						className={css.marqueeText}
-					>
+				{active ? (
+					<span className={css.inputHighlight}>{value ? value : placeholder}</span>
+				) : (
+					<MarqueeText className={css.marqueeText}>
 						{value ? value : placeholder}
 					</MarqueeText>
 				)}
-				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
 				<input
 					{...inputProps}
 					{...voiceProps}

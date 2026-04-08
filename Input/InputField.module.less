@@ -47,29 +47,6 @@
 	});
 }
 
-.marqueeText {
-	position: absolute;
-	top: 0;
-	left: 57px;
-	right: 57px;
-	height: 100%;
-	display: flex;
-	align-items: center;
-	pointer-events: none;
-	white-space: nowrap;
-	overflow: hidden;
-	z-index: 1;
-
-	.lime-body-text();
-	font-size: @lime-input-font-size;
-	font-weight: @lime-inputfield-font-weight;
-	color: inherit;
-
-	.enact-locale-rtl({
-		text-align: right;
-	});
-}
-
 .inputField {
 	display: inline-flex;
 	position: relative;
@@ -125,6 +102,29 @@
 		pointer-events: none;
 		opacity: 0;
 		z-index: -1;
+	}
+
+	.marqueeText {
+		position: absolute;
+		top: 0;
+		left: @lime-inputfield-marquee-spacing;
+		right: @lime-inputfield-marquee-spacing;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		pointer-events: none;
+		white-space: nowrap;
+		overflow: hidden;
+		z-index: 1;
+
+		.lime-body-text();
+		font-size: @lime-input-font-size;
+		font-weight: @lime-inputfield-font-weight;
+		color: inherit;
+
+		.enact-locale-rtl({
+			text-align: right;
+		});
 	}
 
 	&.large {
