@@ -95,6 +95,11 @@
 		-webkit-text-security: disc;
 	}
 
+	.marqueeText.passwordtel {
+		letter-spacing: @lime-inputfield-password-spacing;
+		-webkit-text-security: disc;
+	}
+
 	.inputHighlight {
 		position: absolute;
 		top: 0;
@@ -143,7 +148,8 @@
 		height: @lime-inputfield-small-height;
 		width: @lime-inputfield-small-width;
 
-		.input {
+		.input,
+		.marqueeText {
 			font-size: @lime-inputfield-small-font-size;
 			height: @lime-inputfield-small-height;
 			line-height: @lime-inputfield-small-height;
@@ -152,10 +158,6 @@
 		.inputHighlight {
 			line-height: @lime-inputfield-small-height;
 			height: @lime-inputfield-small-height;
-		}
-
-		.marqueeText {
-			font-size: @lime-inputfield-small-font-size;
 		}
 
 		&.hasIconBefore, &.hasIconAfter {
@@ -283,7 +285,8 @@
 				});
 			}
 
-			.input {
+			.input,
+			.marqueeText {
 				color: @lime-inputfield-label-inactive-color;
 			}
 
@@ -293,7 +296,8 @@
 					filter: unset;
 				}
 
-				.input {
+				.input,
+				.marqueeText {
 					color: @lime-inputfield-label-inactive-focused-color;
 				}
 			});

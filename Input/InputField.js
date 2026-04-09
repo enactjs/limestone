@@ -322,6 +322,7 @@ const InputFieldBase = kind({
 			inputProps.spellCheck = false;
 		}
 
+		delete rest.active;
 		delete rest.announce;
 		delete rest.caretToEndOnFocus;
 		delete rest.dismissOnEnter;
@@ -354,7 +355,7 @@ const InputFieldBase = kind({
 						type={isPasswordtel ? 'tel' : type}
 						value={value}
 					/>
-					<MarqueeText className={css.marqueeText}>
+					<MarqueeText className={classnames(css.marqueeText, {[css.passwordtel]: isPasswordtel || type === 'password'})}>
 						{value ? value : placeholder}
 					</MarqueeText>
 				</span>
