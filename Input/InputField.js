@@ -313,7 +313,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({active, css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
+	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPasswordtel = type === 'passwordtel';
