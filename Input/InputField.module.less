@@ -220,6 +220,11 @@
 			}
 		}
 
+		// Mirror the input's ::placeholder color on the marqueeText when no value is set
+		.marqueeText.placeholderText {
+			color: @lime-inputfield-label-inactive-color;
+		}
+
 		&.invalid input {
 			color: @lime-inputfield-invalid-color;
 		}
@@ -250,6 +255,10 @@
 				.input-placeholder({
 					color: @lime-inputfield-label-inactive-focused-color;
 				});
+			}
+
+			.marqueeText.placeholderText {
+				color: @lime-inputfield-label-inactive-focused-color;
 			}
 
 			// Set `.inputHighlight` opacity to make it appear that the text is highlighted

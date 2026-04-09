@@ -266,7 +266,7 @@ const InputFieldBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'inputField',
-		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'inputWrapper', 'marqueeText', 'tooltip', 'tooltipLabel']
+		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'inputWrapper', 'marqueeText', 'placeholderText', 'tooltip', 'tooltipLabel']
 	},
 
 	handlers: {
@@ -356,7 +356,10 @@ const InputFieldBase = kind({
 						value={value}
 					/>
 					<MarqueeText
-						className={classnames(css.marqueeText, {[css.passwordtel]: isPasswordtel || type === 'password'})}
+						className={classnames(css.marqueeText, {
+							[css.passwordtel]: isPasswordtel || type === 'password',
+							[css.placeholderText]: value === ''
+						})}
 						disabled={disabled}
 					>
 						{value !== '' ? value : placeholder}
