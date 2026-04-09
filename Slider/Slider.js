@@ -196,6 +196,11 @@ const SliderBase = (props) => {
 	const sliderMin = colorPicker ? 0 : min;
 	const sliderStep = colorPicker ? 1 : step;
 
+	const styleObject = {
+		'--semantic-color-surface-default-handle': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`,
+		'--semantic-color-surface-default-focused': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`
+	};
+
 	return (
 		<UiSlider
 			{...rest}
@@ -212,10 +217,7 @@ const SliderBase = (props) => {
 			}
 			ref={ref}
 			step={sliderStep}
-			style={{
-				'--semantic-color-surface-default-handle': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`,
-				'--semantic-color-surface-default-focused': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`
-			}}
+			style={colorPicker && styleObject}
 			tooltipComponent={
 				<ComponentOverride
 					component={tooltip}
