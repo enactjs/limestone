@@ -355,8 +355,11 @@ const InputFieldBase = kind({
 						type={isPasswordtel ? 'tel' : type}
 						value={value}
 					/>
-					<MarqueeText className={classnames(css.marqueeText, {[css.passwordtel]: isPasswordtel || type === 'password'})}>
-						{value ? value : placeholder}
+					<MarqueeText
+						className={classnames(css.marqueeText, {[css.passwordtel]: isPasswordtel || type === 'password'})}
+						disabled={disabled}
+					>
+						{value !== '' ? value : placeholder}
 					</MarqueeText>
 				</span>
 
