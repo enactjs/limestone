@@ -18,7 +18,7 @@
 
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {handle, forward, forwardCustom, forProp, not} from '@enact/core/handle';
-import kind from '@enact/core/kind';
+import {kind, functionalKind} from '@enact/core/kind';
 import {extractAriaProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Pause from '@enact/spotlight/Pause';
@@ -32,7 +32,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import warning from 'warning';
-
+import {useState} from 'react';
 import $L from '../internal/$L';
 import Button from '../Button';
 import ContextualPopupDecorator from '../ContextualPopupDecorator';
@@ -55,7 +55,8 @@ function pauseSpotlight (bool) {
 	}
 }
 
-const DropdownButtonBase = kind({
+// const DropdownButtonBase = kind({
+const DropdownButtonBase = functionalKind({
 	name: 'DropdownButtonBase',
 
 	propTypes: {
@@ -91,7 +92,8 @@ DropdownButton.displayName = 'DropdownButton';
  * @ui
  * @public
  */
-const DropdownBase = kind({
+// const DropdownBase = kind({
+const DropdownBase = functionalKind({
 	name: 'Dropdown',
 
 	propTypes: /** @lends limestone/Dropdown.DropdownBase.prototype */ {
@@ -270,6 +272,8 @@ const DropdownBase = kind({
 	computed: {
 		ariaLabelledBy: ({id, title}) => (title ? `${id}_title` : void 0),
 		children: ({children, selected}) => {
+			const [value, setValue] = useState('');
+
 			if (!Array.isArray(children)) return [];
 
 			return children.map((child, i) => {
@@ -325,6 +329,8 @@ const DropdownBase = kind({
 
 	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
 		delete rest.rtl;
+
+		const [value, setValue] = useState('');
 
 		const ariaProps = extractAriaProps(rest);
 		const calcAriaProps = ariaLabel != null ? null : {role: 'region', 'aria-labelledby': ariaLabelledBy};
