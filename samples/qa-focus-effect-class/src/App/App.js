@@ -20,22 +20,16 @@ const App = (props) => {
 
 	return (
 		<Panels {...props}>
-			<Panel title="QA Sample - Focus Effect Class">
-				<Header
-					title="VirtualList"
-					type="mini"
-				>
-					<Row>
-						<Cell>
-							<CheckboxItem onClick={onToggleDisabled}>Enable focusEffectClass</CheckboxItem>
-						</Cell>
-					</Row>
+			<Panel>
+				<Header type="mini">
+					<title>QA Sample - Focus Effect Class</title>
+						<CheckboxItem onClick={onToggleDisabled}>Enable focusEffectClass</CheckboxItem>
 					<hr />
 				</Header>
 
 				<Row>
 					<Button className={css.button1} size="large">
-						Button with custom focus effect class
+						Button with data-spotlight-focused attribute
 					</Button>
 				</Row>
 				<Row>

@@ -60,7 +60,7 @@ const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.default
 	 * A CSS class name to apply globally to every spottable component when it receives spotlight focus.
 	 *
 	 * This is the declarative equivalent of calling `setFocusEffectClass` imperatively. It acts as
-	 * an app-wide default
+	 * an app-wide default.
 	 *
 	 * @type {String}
 	 * @default null
