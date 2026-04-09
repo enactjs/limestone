@@ -45,7 +45,8 @@ import {
 	handleDecrement,
 	handleIncrement,
 	handleDecrementByWheel,
-	handleIncrementByWheel
+	handleIncrementByWheel,
+	hueGradient
 } from './utils';
 
 import componentCss from './Slider.module.less';
@@ -53,6 +54,7 @@ import componentCss from './Slider.module.less';
 const sliderDefaultProps = {
 	activateOnSelect: false,
 	active: false,
+	colorPicker: false,
 	disabled: false,
 	keyFrequency: [1],
 	max: 100,
@@ -77,7 +79,21 @@ const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
 	checkPropTypes(SliderBase, sliderProps);
 
-	const {active, className, css, disabled, focused, keyFrequency, max, min, pressed, showAnchor, showMinMax, ...rest} = sliderProps;
+	const {
+		active,
+		className,
+		colorPicker,
+		css,
+		disabled,
+		focused,
+		keyFrequency,
+		max,
+		min,
+		pressed,
+		showAnchor,
+		showMinMax,
+		...rest
+	} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -142,6 +158,7 @@ const SliderBase = (props) => {
 		className,
 		{
 			[mergedCss.active]: active,
+			[mergedCss.colorPicker]: colorPicker,
 			[mergedCss.hasMinMax]: showMinMax,
 			[mergedCss.pressed]: pressed,
 			[mergedCss.showAnchor]: showAnchor
@@ -175,21 +192,30 @@ const SliderBase = (props) => {
 	delete rest.tooltip;
 	delete rest.wheelInterval;
 
+	const sliderMax = colorPicker ? 360 : max;
+	const sliderMin = colorPicker ? 0 : min;
+	const sliderStep = colorPicker ? 1 : step;
+
 	return (
 		<UiSlider
 			{...rest}
 			{...handlers}
 			aria-disabled={disabled}
+			colorPicker={colorPicker}
 			className={componentClassName}
 			css={mergedCss}
 			disabled={disabled}
-			max={max}
-			min={min}
+			max={sliderMax}
+			min={sliderMin}
 			progressBarComponent={
-				<ProgressBar css={mergedCss} />
+				<ProgressBar css={mergedCss} style={{backgroundImage: colorPicker && hueGradient}} />
 			}
 			ref={ref}
-			step={step}
+			step={sliderStep}
+			style={{
+				'--semantic-color-surface-default-handle': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`,
+				'--semantic-color-surface-default-focused': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`
+			}}
 			tooltipComponent={
 				<ComponentOverride
 					component={tooltip}
@@ -199,8 +225,8 @@ const SliderBase = (props) => {
 			}
 			minMaxComponent={showMinMax ?
 				<div className={mergedCss.minMax}>
-					<div>{min}</div>
-					<div>{max}</div>
+					<div>{sliderMin}</div>
+					<div>{sliderMax}</div>
 				</div> : null
 			}
 		/>
@@ -226,6 +252,15 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * @public
 	 */
 	active: PropTypes.bool,
+
+	/**
+	 * Indicates if this component will be used as a colorPicker.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @public
+	 */
+	colorPicker: PropTypes.bool,
 
 	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the

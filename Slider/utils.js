@@ -3,6 +3,45 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import {calcProportion} from '@enact/ui/Slider/utils';
 
+const hueGradient =  `linear-gradient(to right, 
+	hsla(0, 100%, 50%, 1),
+	hsla(10, 100%, 50%, 1),
+	hsla(20, 100%, 50%, 1),
+	hsla(30, 100%, 50%, 1),
+	hsla(40, 100%, 50%, 1),
+	hsla(50, 100%, 50%, 1),
+	hsla(60, 100%, 50%, 1),
+	hsla(70, 100%, 50%, 1),
+	hsla(80, 100%, 50%, 1),
+	hsla(90, 100%, 50%, 1),
+	hsla(100, 100%, 50%, 1),
+	hsla(110, 100%, 50%, 1),
+	hsla(120, 100%, 50%, 1),
+	hsla(130, 100%, 50%, 1),
+	hsla(140, 100%, 50%, 1),
+	hsla(150, 100%, 50%, 1),
+	hsla(160, 100%, 50%, 1),
+	hsla(170, 100%, 50%, 1),
+	hsla(180, 100%, 50%, 1),
+	hsla(190, 100%, 50%, 1),
+	hsla(200, 100%, 50%, 1),
+	hsla(210, 100%, 50%, 1),
+	hsla(220, 100%, 50%, 1),
+	hsla(230, 100%, 50%, 1),
+	hsla(240, 100%, 50%, 1),
+	hsla(250, 100%, 50%, 1),
+	hsla(260, 100%, 50%, 1),
+	hsla(270, 100%, 50%, 1),
+	hsla(280, 100%, 50%, 1),
+	hsla(290, 100%, 50%, 1),
+	hsla(300, 100%, 50%, 1),
+	hsla(310, 100%, 50%, 1),
+	hsla(320, 100%, 50%, 1),
+	hsla(330, 100%, 50%, 1),
+	hsla(340, 100%, 50%, 1),
+	hsla(350, 100%, 50%, 1),
+	hsla(360, 100%, 50%, 1))`;
+
 const nop = () => {};
 
 const handleAcceleratedKeyDown = (ev, prop, {current: spotlightAccelerator}) => {
@@ -69,13 +108,24 @@ const checkInterval = (ev, {wheelInterval}, context) => {
 
 const emitChange = (direction) => forwardCustom(
 	'onChange',
-	(ev, {knobStep, max, min, step, value = min}) => {
-		const newValue = clamp(min, max, value + (calcStep(knobStep, step) * direction));
+	(ev, {colorPicker, knobStep, max, min, step, value = min}) => {
 
-		return {
-			value: newValue,
-			proportion: calcProportion(min, max, newValue)
-		};
+		if (colorPicker) {
+			const newValue = clamp(0, 360, value + (calcStep(knobStep, step) * direction));
+
+			return {
+				value: newValue,
+				proportion: calcProportion(min, max, newValue),
+				color: `hsla(${value}, 100%, 50%, 1)`
+			};
+		} else {
+			const newValue = clamp(min, max, value + (calcStep(knobStep, step) * direction));
+
+			return {
+				value: newValue,
+				proportion: calcProportion(min, max, newValue)
+			};
+		}
 	}
 );
 
@@ -152,5 +202,6 @@ export {
 	handleDecrement,
 	handleIncrement,
 	handleDecrementByWheel,
-	handleIncrementByWheel
+	handleIncrementByWheel,
+	hueGradient
 };

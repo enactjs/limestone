@@ -293,6 +293,38 @@
 			});
 		}
 
+		&.colorPicker {
+			.bar {
+				background-color: transparent;
+			}
+
+			.fill {
+				background-color: transparent;
+			}
+
+			.load {
+				background-color: transparent;
+			}
+
+			.focus({
+				.bar {
+					background-color: transparent;
+				}
+
+				.fill {
+					background-color: transparent;
+				}
+
+				.load {
+					background-color: transparent;
+				}
+
+				.knob::before {
+					border-color: @lime-slider-handle-colorPicker-focused-color;
+				}
+			})
+		}
+
 		&.showAnchor {
 			.progressBar {
 				&::after {
