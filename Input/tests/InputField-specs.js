@@ -22,7 +22,7 @@ describe('InputField Specs', () => {
 		const expected = 'hello';
 		const actual = inputField.textContent;
 
-		expect(actual).toBe(expected);
+		expect(actual).toContain(expected);
 	});
 
 	test('should callback onChange with `onChange` type when the text changes', async () => {
@@ -162,12 +162,12 @@ describe('InputField Specs', () => {
 		const actual = inputField.textContent;
 		const expected = 'hello';
 
-		expect(actual).toBe(expected);
+		expect(actual).toContain(expected);
 	});
 
 	test('should have dir equal to rtl when there is rtl text', () => {
 		render(<InputField value="שועל החום הזריז קפץ מעל הכלב העצלן.ציפור עפה השעועית עם שקי" />);
-		const inputField = screen.getByLabelText( 'שועל החום הזריז קפץ מעל הכלב העצלן.ציפור עפה השעועית עם שקי' + ' Input field').children.item(2);
+		const inputField = screen.getByPlaceholderText('');
 
 		const expectedAttribute = 'dir';
 		const expectedValue = 'rtl';
@@ -330,7 +330,7 @@ describe('InputField Specs', () => {
 			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
 
 			fireEvent.mouseDown(inputField);
-			act(() => jest.runAllTimers());
+			act(() => jest.runOnlyPendingTimers());
 
 			expect(setSelectionRange).toHaveBeenCalledWith(value.length, value.length);
 
@@ -354,7 +354,7 @@ describe('InputField Specs', () => {
 			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
 
 			fireEvent.mouseDown(inputField);
-			act(() => jest.runAllTimers());
+			act(() => jest.runOnlyPendingTimers());
 
 			expect(scrollLeft).toBe(200);
 
@@ -378,7 +378,7 @@ describe('InputField Specs', () => {
 			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
 
 			fireEvent.mouseDown(inputField);
-			act(() => jest.runAllTimers());
+			act(() => jest.runOnlyPendingTimers());
 
 			expect(scrollLeft).toBe(0);
 
@@ -392,7 +392,7 @@ describe('InputField Specs', () => {
 			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
 
 			fireEvent.mouseDown(inputField);
-			act(() => jest.runAllTimers());
+			act(() => jest.runOnlyPendingTimers());
 
 			expect(setSelectionRange).not.toHaveBeenCalled();
 

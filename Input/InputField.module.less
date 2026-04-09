@@ -4,7 +4,8 @@
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
-.input {
+.input,
+.marqueeText {
 	.lime-body-text();
 
 	padding: 0;
@@ -72,7 +73,8 @@
 	}
 
 	.input,
-	.inputHighlight {
+	.inputHighlight,
+	.marqueeText {
 		font-size: @lime-input-font-size;
 		font-weight: @lime-inputfield-font-weight;
 		height: @lime-inputfield-height;
@@ -104,27 +106,20 @@
 		z-index: -1;
 	}
 
-	.marqueeText {
-		position: absolute;
-		top: 0;
-		left: @lime-inputfield-marquee-spacing;
-		right: @lime-inputfield-marquee-spacing;
+	.inputWrapper {
+		position: relative;
+		flex-grow: 1;
+		overflow: hidden;
 		height: 100%;
 		display: flex;
 		align-items: center;
+	}
+
+	.marqueeText {
+		position: absolute;
 		pointer-events: none;
-		white-space: nowrap;
-		overflow: hidden;
-		z-index: 1;
-
-		.lime-body-text();
-		font-size: @lime-input-font-size;
-		font-weight: @lime-inputfield-font-weight;
-		color: inherit;
-
-		.enact-locale-rtl({
-			text-align: right;
-		});
+		display: flex;
+		align-items: center;
 	}
 
 	&.large {
@@ -132,13 +127,13 @@
 		width: @lime-inputfield-width;
 
 		&.hasIconBefore, &.hasIconAfter {
-			.input, .marqueeText {
+			.inputWrapper {
 				max-width: @lime-inputfield-withoneicon-width;
 			}
 		}
 
 		&.hasIconBefore&.hasIconAfter {
-			.input, .marqueeText {
+			.inputWrapper {
 				max-width: @lime-inputfield-withtwoicons-width;
 			}
 		}
@@ -160,13 +155,13 @@
 		}
 
 		&.hasIconBefore, &.hasIconAfter {
-			.input, .marqueeText {
+			.inputWrapper {
 				max-width: @lime-inputfield-small-withoneicon-width;
 			}
 		}
 
 		&.hasIconBefore&.hasIconAfter {
-			.input, .marqueeText {
+			.inputWrapper {
 				max-width: @lime-inputfield-small-withtwoicons-width;
 			}
 		}
@@ -303,11 +298,11 @@
 
 	// Hide input text when not active, show marquee instead
 	&:not(.active) .input {
-		color: transparent;
+		opacity: 0;
 	}
 
 	&.active .marqueeText {
-		display: none;
+		opacity: 0;
 	}
 
 	&.small .marqueeText {

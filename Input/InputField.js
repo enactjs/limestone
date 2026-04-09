@@ -266,7 +266,7 @@ const InputFieldBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'inputField',
-		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'marqueeText', 'tooltip', 'tooltipLabel']
+		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'inputWrapper', 'marqueeText', 'tooltip', 'tooltipLabel']
 	},
 
 	handlers: {
@@ -339,26 +339,26 @@ const InputFieldBase = kind({
 			>
 				<div className={css.bg} />
 				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
-				{active ? (
-					<span className={css.inputHighlight}>{value ? value : placeholder}</span>
-				) : (
+				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
+				<span className={css.inputWrapper}>
+					<input
+						{...inputProps}
+						{...voiceProps}
+						aria-hidden={isPasswordtel}
+						className={classnames(css.input, {[css.passwordtel]: isPasswordtel})}
+						dir={dir}
+						disabled={disabled}
+						onChange={onChange}
+						placeholder={placeholder}
+						tabIndex={-1}
+						type={isPasswordtel ? 'tel' : type}
+						value={value}
+					/>
 					<MarqueeText className={css.marqueeText}>
 						{value ? value : placeholder}
 					</MarqueeText>
-				)}
-				<input
-					{...inputProps}
-					{...voiceProps}
-					aria-hidden={isPasswordtel}
-					className={classnames(css.input, {[css.passwordtel]: isPasswordtel})}
-					dir={dir}
-					disabled={disabled}
-					onChange={onChange}
-					placeholder={placeholder}
-					tabIndex={-1}
-					type={isPasswordtel ? 'tel' : type}
-					value={value}
-				/>
+				</span>
+
 				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size="large">{iconAfter}</InputFieldDecoratorIcon>
 				{invalidTooltip}
 			</div>
