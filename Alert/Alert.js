@@ -39,19 +39,6 @@ const AlertBase = kind({
 
 	propTypes: /** @lends limestone/Alert.AlertBase.prototype */ {
 		/**
-		 * Buttons to be included under the component.
-		 *
-		 * Typically, up to 3 buttons are used.
-		 *
-		 * @type {Element|Element[]}
-		 * @public
-		 */
-		buttons: PropTypes.oneOfType([
-			PropTypes.element,
-			PropTypes.arrayOf(PropTypes.element)
-		]),
-
-		/**
 		 * Sets the buttons layout direction.
 		 *
 		 * In `auto` mode, button direction follows UX defaults:
@@ -64,6 +51,19 @@ const AlertBase = kind({
 		 * @public
 		 */
 		buttonDirection: PropTypes.oneOf(['auto', 'horizontal', 'vertical']),
+
+		/**
+		 * Buttons to be included under the component.
+		 *
+		 * Typically, up to 3 buttons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
+		buttons: PropTypes.oneOfType([
+			PropTypes.element,
+			PropTypes.arrayOf(PropTypes.element)
+		]),
 
 		/**
 		 * The contents of the body of the component.
@@ -221,24 +221,22 @@ const AlertBase = kind({
 		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
 		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
-		const resolvedButtonDirection = (buttonDirection !== 'auto')
-			? buttonDirection
-			: (
-				(type === 'overlay' && buttonCount === 2) ||
-				(type === 'fullscreen' && buttonCount < 3)
-					? 'horizontal'
-					: 'vertical'
-			);
+		let resolvedButtonDirection = buttonDirection;
+		if (buttonDirection === 'auto') {
+			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 3);
+			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
+		}
 		const overlayHorizontalButtons = (
 			type === 'overlay' &&
 			resolvedButtonDirection === 'horizontal'
 		);
-		const popupStyle = overlayHorizontalButtons
-			? {
+		let popupStyle = rest.style;
+		if (overlayHorizontalButtons) {
+			popupStyle = {
 				...rest.style,
 				'--alert-overlay-width': 'max-content'
-			}
-			: rest.style;
+			};
+		}
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
 
 		return (
