@@ -111,9 +111,12 @@
 		}
 	}
 
+	// footer buttons가 있을 때 contentsArea가 남은 공간을 채우도록
 	.contentsArea {
 		position: relative;
 		overflow: hidden;
+		flex: 1;
+		min-height: 0;
 	}
 
 	.viewManager {
@@ -123,6 +126,15 @@
 
 	.horizontalLayout {
 		height: 100%;
+	}
+
+	// footer Close/Next 버튼 영역
+	.footerButtons {
+		flex-shrink: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
 	}
 
 	.applySkins({
