@@ -24,7 +24,7 @@ export default {
 	component: 'PageViews'
 };
 
-export const _PageViews = (
+export const _PageViews = (args) => (
 	<PageViews
 		bannerMode={args['bannerMode']}
 		fullContents={args['fullContents']}
