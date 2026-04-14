@@ -287,4 +287,95 @@ describe('PageViews Specs', () => {
 			});
 		}
 	);
+
+	test(
+		'should render footer Close and Next buttons when `showFooterButtons` is true',
+		() => {
+			render(
+				<PageViews showFooterButtons index={0}>
+					<Page>content</Page>
+					<Page>content</Page>
+				</PageViews>
+			);
+
+			expect(screen.getByText('Close')).toBeInTheDocument();
+			expect(screen.getByText('Next')).toBeInTheDocument();
+		}
+	);
+
+	test(
+		'should not render footer Next button on the last page',
+		() => {
+			render(
+				<PageViews showFooterButtons index={1}>
+					<Page>content</Page>
+					<Page>content</Page>
+				</PageViews>
+			);
+
+			expect(screen.getByText('Close')).toBeInTheDocument();
+			expect(screen.queryByText('Next')).toBeNull();
+		}
+	);
+
+	test(
+		'should not render footer buttons when `bannerMode` is true',
+		() => {
+			render(
+				<PageViews showFooterButtons bannerMode index={0}>
+					<Page>content</Page>
+					<Page>content</Page>
+				</PageViews>
+			);
+
+			expect(screen.queryByText('Close')).toBeNull();
+		}
+	);
+
+	test(
+		'should fire `onFooterNextClick` and `onChange` when footer Next button is clicked',
+		async () => {
+			const handleChange = jest.fn();
+			const handleFooterNextClick = jest.fn();
+			const user = userEvent.setup();
+
+			render(
+				<PageViews showFooterButtons index={0} onChange={handleChange} onFooterNextClick={handleFooterNextClick}>
+					<Page />
+					<Page />
+					<Page />
+				</PageViews>
+			);
+
+			await user.click(screen.getByText('Next'));
+
+			await waitFor(() => {
+				expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
+			});
+			await waitFor(() => {
+				expect(handleFooterNextClick).toHaveBeenCalled();
+			});
+		}
+	);
+
+	test(
+		'should fire `onFooterCloseClick` when footer Close button is clicked',
+		async () => {
+			const handleFooterCloseClick = jest.fn();
+			const user = userEvent.setup();
+
+			render(
+				<PageViews showFooterButtons index={0} onFooterCloseClick={handleFooterCloseClick}>
+					<Page />
+					<Page />
+				</PageViews>
+			);
+
+			await user.click(screen.getByText('Close'));
+
+			await waitFor(() => {
+				expect(handleFooterCloseClick).toHaveBeenCalled();
+			});
+		}
+	);
 });
