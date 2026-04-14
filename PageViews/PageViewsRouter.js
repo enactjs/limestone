@@ -61,40 +61,30 @@ function PageViewsRouter (Wrapped) {
 		const ref = useChainRefs(autoFocusRef, a11yRef, componentRef);
 		const {reverseTransition} = useReverseTransition(index, rtl);
 
-		// 네비게이션 소스를 추적하는 ref
-		// 'internal-next' | 'internal-prev' | 'footer' | null
-		const navigationSource = useRef(null);
+		const navigationSource = useRef(null);  // 'internal-next' | 'internal-prev' | 'footer' | null
 
-		// 요구사항 2: 처음 로드될 때 footer Next 버튼에 포커스 (bannerMode 아닐 때)
 		useEffect(() => {
 			if (showFooterButtons && !bannerMode) {
 				Spotlight.focus(spotlightId, {enterTo: 'default-element'});
 			}
-			// 마운트 시 1회만 실행
-			// eslint-disable-next-line react-hooks/exhaustive-deps
 		}, []);
 
-		// 내부 Next 버튼 클릭 시 소스 기록
 		const handleNextClick = useCallback((ev) => {
 			navigationSource.current = 'internal-next';
 			onNextClick?.(ev);
 		}, [onNextClick]);
 
-		// 내부 Prev 버튼 클릭 시 소스 기록
 		const handlePrevClick = useCallback((ev) => {
 			navigationSource.current = 'internal-prev';
 			onPrevClick?.(ev);
 		}, [onPrevClick]);
 
-		// 요구사항 4: 하단 Next 버튼 클릭 — 소스 기록 후 Base handler(forwardCustomWithPrevent)에 위임
 		const handleFooterNextClick = useCallback((ev) => {
 			navigationSource.current = 'footer';
 			onFooterNextClick?.(ev);
 		}, [onFooterNextClick]);
 
-		// 트랜지션 완료 후 포커스 결정
 		const handleTransition = useCallback((ev) => {
-			// 요구사항 4 & 5: bannerMode가 아닐 때만 footer 포커스 관리
 			if (showFooterButtons && !bannerMode) {
 				const source = navigationSource.current;
 				const newIndex = ev.index;
@@ -102,11 +92,8 @@ function PageViewsRouter (Wrapped) {
 				if (source === 'footer' ||
 						(source === 'internal-next' && newIndex === totalIndex - 1) ||
 						(source === 'internal-prev' && newIndex === 0)) {
-					// spotlightDefaultClass가 isLastPage 기반으로 Close/Next 버튼에 적용되어 있으므로
-					// 컨테이너 포커스 시 default-element 전략으로 올바른 버튼을 찾음
 					Spotlight.focus(spotlightId, {enterTo: 'default-element'});
 				}
-				// 그 외 내부 navigate → Spotlight이 내부 버튼 포커스 자연 유지
 			}
 
 			navigationSource.current = null;
