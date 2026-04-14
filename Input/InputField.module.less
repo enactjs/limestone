@@ -124,6 +124,16 @@
 		position: absolute;
 		pointer-events: none;
 		display: flex;
+
+		// Keep the marquee text invisible in static  states
+		:global(.enact_ui_Marquee_Marquee_text) {
+			visibility: hidden;
+		}
+
+		:global(.enact_ui_Marquee_Marquee_text.enact_ui_Marquee_Marquee_willAnimate),
+		:global(.enact_ui_Marquee_Marquee_text.enact_ui_Marquee_Marquee_animate) {
+			visibility: visible;
+		}
 	}
 
 	&.large {
@@ -311,11 +321,6 @@
 			});
 		});
 	});
-
-	// Hide input text when not active, show marquee instead
-	&:not(.active) .input {
-		opacity: 0;
-	}
 
 	&.active .marqueeText {
 		display: none;
