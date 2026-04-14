@@ -143,6 +143,14 @@ const PageViewsBase = kind({
 		noAnimation: PropTypes.bool,
 
 		/**
+		 * Called when the footer Close button is clicked.
+		 *
+		 * @type {Function}
+		 * @public
+		 */		
+		onFooterCloseClick: PropTypes.func,
+
+		/**
 		 * Called when a transition completes.
 		 *
 		 * @type {Function}
@@ -299,15 +307,11 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		// footer 버튼 렌더링
-		// bannerMode일 때는 렌더링하지 않음
 		renderFooterButtons: ({bannerMode, css, index, onFooterCloseClick, onFooterNextClick, showFooterButtons, totalIndex, uniqueId}) => {
 			if (!showFooterButtons || bannerMode) return null;
 
 			const isLastPage = index >= totalIndex - 1;
 
-			// SpotlightContainerDecorator의 defaultElement 1순위가 spotlightDefaultClass이므로
-			// 포커스 받아야 할 버튼에 spotlightDefaultClass를 적용해 컨테이너 포커스 시 자동으로 찾을 수 있게 함
 			return (
 				<Row className={css.footerButtons}>
 					<Button
