@@ -67,7 +67,7 @@ function PageViewsRouter (Wrapped) {
 			if (showFooterButtons && !bannerMode) {
 				Spotlight.focus(spotlightId, {enterTo: 'default-element'});
 			}
-		}, []);
+		}, [bannerMode, showFooterButtons, spotlightId]);
 
 		const handleNextClick = useCallback((ev) => {
 			navigationSource.current = 'internal-next';

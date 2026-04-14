@@ -147,7 +147,7 @@ const PageViewsBase = kind({
 		 *
 		 * @type {Function}
 		 * @public
-		 */		
+		 */
 		onFooterCloseClick: PropTypes.func,
 
 		/**

@@ -90,8 +90,6 @@ describe('PageViews', function () {
 
 	describe('footerButtons', function () {
 
-		const {pageViewsPage1} = Page.components;
-
 		beforeEach(async function () {
 			await Page.open('FooterButtons');
 		});
