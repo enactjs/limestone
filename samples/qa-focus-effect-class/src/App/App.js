@@ -3,7 +3,7 @@ import CheckboxItem from '@enact/limestone/CheckboxItem';
 import {Header, Panel, Panels} from '@enact/limestone/Panels';
 import ThemeDecorator from '@enact/limestone/ThemeDecorator';
 import {setFocusEffectClass} from '@enact/spotlight/SpotlightRootDecorator';
-import {Cell, Row} from '@enact/ui/Layout';
+import {Row} from '@enact/ui/Layout';
 import {useCallback, useState} from 'react';
 
 import css from './App.module.less';
