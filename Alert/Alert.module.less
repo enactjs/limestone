@@ -62,6 +62,7 @@
 			.lime-alert-overlay-content();
 			padding: @lime-alert-overlay-body-padding;
 			margin: 0;
+			max-width: var(--alert-overlay-content-max-width, @lime-alert-overlay-width);
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
@@ -76,6 +77,10 @@
 	&.overlay {
 		box-sizing: border-box;
 		width: var(--alert-overlay-width, @lime-alert-overlay-width);
+		--alert-overlay-width: @lime-alert-overlay-width;
+		--alert-overlay-content-max-width: @lime-alert-overlay-width;
+		--alert-overlay-horizontal-button-width: ~"calc(@{lime-button-min-width-default} + (2 * @{lime-button-margin}))";
+		--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-body-padding, right)[];
 		min-width: @lime-alert-overlay-width;
 		max-width: calc(100vw - 2 * @lime-popup-position-corner-margin);
 		margin-left: auto;

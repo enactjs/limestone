@@ -232,9 +232,12 @@ const AlertBase = kind({
 		);
 		let popupStyle = rest.style;
 		if (overlayHorizontalButtons) {
+			const overlayHorizontalButtonCount = Math.max(1, Math.min(buttonCount, 4));
 			popupStyle = {
 				...rest.style,
-				'--alert-overlay-width': 'max-content'
+				'--alert-overlay-horizontal-button-count': overlayHorizontalButtonCount,
+				'--alert-overlay-width': `calc(var(--alert-overlay-horizontal-button-width) * ${overlayHorizontalButtonCount})`,
+				'--alert-overlay-content-max-width': 'calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))'
 			};
 		}
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
