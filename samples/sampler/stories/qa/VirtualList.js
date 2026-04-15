@@ -689,3 +689,57 @@ WithChangingDataSizeAndItemSizes.storyName = 'with changing dataSize and itemSiz
 WithChangingDataSizeAndItemSizes.parameters = {
 	propTables: [Config]
 };
+
+export const WithHiddenLargeItemMarginList = (args) => {
+	updateDataSize(args['dataSize']);
+
+	const renderLargeMarginItem = useCallback(({index, ...rest}) => {
+		return (
+			<Item {...rest} style={{'margin-left': '300px', 'margin-right': '300px'}}>
+				{`Hidden Item ${index}`}
+			</Item>
+		);
+	}, []);
+
+	const renderSmallMarginItem = useCallback(({index, ...rest}) => {
+		return (
+			<Item {...rest} style={{height: '100%', width: ri.unit(ri.scale(args['itemSize']), 'rem'), writingMode: 'vertical-lr'}}>
+				{`Item ${index}`}
+			</Item>
+		);
+	}, [args]);
+
+	return (
+		<Column>
+			<Cell shrink>
+				<VirtualList
+					dataSize={args['dataSize']}
+					direction={'horizontal'}
+					itemRenderer={renderLargeMarginItem}
+					itemSize={ri.scale(args['itemSize'])}
+					key={'hiddenList'}
+					scrollMode={args['scrollMode']}
+				/>
+			</Cell>
+			<Cell>
+				<VirtualList
+					dataSize={args['dataSize']}
+					direction={'horizontal'}
+					itemRenderer={renderSmallMarginItem}
+					itemSize={ri.scale(args['itemSize'])}
+					key={'visibleList'}
+					scrollMode={args['scrollMode']}
+				/>
+			</Cell>
+		</Column>
+	);
+};
+
+number('dataSize', WithHiddenLargeItemMarginList, Config, 100);
+number('itemSize', WithHiddenLargeItemMarginList, Config, 156);
+select('scrollMode', WithHiddenLargeItemMarginList, prop.scrollModeOption, Config);
+
+WithHiddenLargeItemMarginList.storyName = 'with hidden large item margin list';
+WithHiddenLargeItemMarginList.parameters = {
+	propTables: [Config]
+};

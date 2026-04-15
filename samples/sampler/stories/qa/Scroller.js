@@ -20,7 +20,7 @@ import ri from '@enact/ui/resolution';
 import {Scroller as UiScroller, ScrollerBasic as UiScrollerBasic} from '@enact/ui/Scroller';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {Component, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {Component, useCallback, useEffect, useRef, useState} from 'react';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -254,26 +254,26 @@ const ContainerDivWithLeaveForConfig = SpotlightContainerDecorator({leaveFor: {l
 
 export const EditableList = (args) => {
 	const dataSize = args['editableDataSize'];
-	const [items, setItems] = useState(itemsArr);
+	const [currentDataSize, setCurrentDataSize] = useState(null);
 	const [editMode, setEditMode] = useState(false);
+	const [items, setItems] = useState(itemsArr);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
 	const focusItem = useRef();
 	const blurItem = useRef();
 	const divRef = useRef();
-	const mutableRef = useRef({
-		hideIndex: null
-	});
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	if (dataSize !== currentDataSize) {
+		const localItemsArr = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			localItemsArr.push(populateItems({index: i}));
 		}
-		setItems(itemsArr);
-		mutableRef.current.hideIndex = dataSize;
-	}, [dataSize]);
+		setItems(localItemsArr);
+		setScrollerHideIndex(dataSize);
+		setCurrentDataSize(dataSize);
+	}
 
 	const onClickModeButton = useCallback(() => {
 		setEditMode(mode => !mode);
@@ -314,7 +314,7 @@ export const EditableList = (args) => {
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
-		mutableRef.current.hideIndex = hideIndex;
+		setScrollerHideIndex(hideIndex);
 
 		// change data from the new orders
 		const newItems = [];
@@ -351,7 +351,7 @@ export const EditableList = (args) => {
 						editable={{
 							centered: args['editableCentered'],
 							css,
-							hideIndex: mutableRef.current.hideIndex,
+							hideIndex: scrollerHideIndex,
 							onComplete: handleComplete,
 							removeItemFuncRef: removeItem,
 							hideItemFuncRef: hideItem,
@@ -449,16 +449,18 @@ EditableList.storyName = 'With Editable Items';
 
 export const EditableListWithLongPress = (args) => {
 	const dataSize = args['editableDataSize'];
+	const [currentDataSize, setCurrentDataSize] = useState(null);
 	const [items, setItems] = useState(itemsArr);
 	const removeItem = useRef();
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	if (dataSize !== currentDataSize) {
+		const localItemsArr = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			localItemsArr.push(populateItems({index: i}));
 		}
-		setItems(itemsArr);
-	}, [dataSize]);
+		setItems(localItemsArr);
+		setCurrentDataSize(dataSize);
+	}
 
 	const onClickRemoveButton = useCallback((ev) => {
 		if (removeItem.current) {
