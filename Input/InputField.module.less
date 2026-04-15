@@ -320,6 +320,11 @@
 		});
 	});
 
+	// Hide input text when not active, show marquee instead
+	&:not(.active) .input {
+		opacity: 0;
+	}
+
 	&.active .marqueeText {
 		display: none;
 	}
