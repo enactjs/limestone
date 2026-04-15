@@ -269,6 +269,11 @@
 				color: @lime-inputfield-label-inactive-focused-color;
 			}
 
+			// Hide input text when not active, show marquee instead
+			&:not(.active) .input {
+				opacity: 0;
+			}
+
 			// Set `.inputHighlight` opacity to make it appear that the text is highlighted
 			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
 			// .inputHighlight {
@@ -320,10 +325,10 @@
 		});
 	});
 
-	// Hide input text when not active, show marquee instead
-	&:not(.active) .input {
-		opacity: 0;
-	}
+	//// Hide input text when not active, show marquee instead
+	//&:not(.active) .input {
+	//	opacity: 0;
+	//}
 
 	&.active .marqueeText {
 		display: none;
