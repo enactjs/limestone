@@ -269,6 +269,11 @@
 				color: @lime-inputfield-label-inactive-focused-color;
 			}
 
+			// Keep the marquee text invisible in static  states
+			:global(.enact_ui_Marquee_Marquee_text) {
+				visibility: visible;
+			}
+
 			// Hide input text when not active, show marquee instead
 			&:not(.active) .input {
 				opacity: 0;
