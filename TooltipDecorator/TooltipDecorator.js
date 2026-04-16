@@ -73,16 +73,17 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const Decorator = (props) => {
 		checkPropTypes(Decorator, props);
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...props});
+		const tooltipRestProps = Object.assign({}, restProps);
 
 		if (tooltip) {
 			if (tooltipDestinationProp === 'children') {
-				restProps.children = [props.children, tooltip];
+				Object.assign(tooltipRestProps, {children: [props.children, tooltip]});
 			} else {
-				restProps[tooltipDestinationProp] = tooltip;
+				Object.assign(tooltipRestProps, {[tooltipDestinationProp]: tooltip});
 			}
 		}
 
-		return <Wrapped {...restProps} {...handlers} />;
+		return <Wrapped {...tooltipRestProps} {...handlers} />;
 	};
 
 	Decorator.displayName = 'TooltipDecorator';

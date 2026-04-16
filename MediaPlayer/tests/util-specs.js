@@ -1,6 +1,7 @@
 import {memoize} from '@enact/core/util';
 import DurationFmt from 'ilib/lib/DurationFmt';
 import {render} from '@testing-library/react';
+import {useEffect} from 'react';
 
 import {countReactChildren, parseTime, secondsToPeriod, secondsToTime} from '../util';
 
@@ -21,7 +22,10 @@ describe('util', () => {
 			let actual;
 
 			const Parent = ({children}) => {
-				actual = countReactChildren(children);
+				useEffect(() => {
+					actual = countReactChildren(children);
+				}, [children]);
+
 				return <ul>{children}</ul>;
 			};
 

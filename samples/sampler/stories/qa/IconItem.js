@@ -12,7 +12,7 @@ import ri from '@enact/ui/resolution';
 import {ScrollerBasic as UiScrollerBasic} from '@enact/ui/Scroller';
 import Touchable from '@enact/ui/Touchable';
 import classNames from 'classnames';
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import galleryIcon from '../../images/icon_app_gallery.png';
 import gameHomeIcon from '../../images/icon_app_game.png';
@@ -83,26 +83,31 @@ const TouchableDiv = Touchable('div');
 
 export const EditableIcon = (args) => {
 	const dataSize = args['editableDataSize'];
-	const [items, setItems] = useState(itemsArr);
 	const [editMode, setEditMode] = useState(false);
+	const [initialSelected, setInitialSelected] = useState({});
+	const [items, setItems] = useState(itemsArr);
+	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
 	const removeItem = useRef();
 	const hideItem = useRef();
 	const showItem = useRef();
 	const focusItem = useRef();
 	const blurItem = useRef();
 	const divRef = useRef();
-	const mutableRef = useRef({
-		hideIndex: null,
-		initialSelected: {},
-		timer: null
-	});
+	const mutableRef = useRef({timer: null});
+
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
+		for (let i = 0; i < dataSize; i++) {
+			newItems.push(populateItems({index: i}));
+		}
+		return newItems;
+	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setItems(newItemsArr);
+	}
 
 	useLayoutEffect(() => {
-		itemsArr = [];
-		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
-		}
-		setItems(itemsArr);
 		mutableRef.current.hideIndex = dataSize;
 	}, [dataSize]);
 
@@ -116,8 +121,7 @@ export const EditableIcon = (args) => {
 
 	const onClickModeButton = useCallback(() => {
 		setEditMode(mode => !mode);
-		mutableRef.current.initialSelected.scrollLeft = 0;
-		mutableRef.current.initialSelected.itemIndex = null;
+		setInitialSelected({scrollLeft: 0, itemIndex: null});
 		mutableRef.current.timer = null;
 	}, [setEditMode]);
 
@@ -162,10 +166,10 @@ export const EditableIcon = (args) => {
 		if (ev.target?.parentNode?.parentNode.getAttribute('role') !== 'button') {
 			const targetItemNode = findItemNode(ev.target);
 			if (targetItemNode && targetItemNode.style.order) {
-				mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+				setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 			}
 		}
-	}, [findItemNode]);
+	}, [findItemNode, initialSelected]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, repeat, target} = ev;
@@ -173,7 +177,7 @@ export const EditableIcon = (args) => {
 			if (repeat && !mutableRef.current.timer) {
 				const targetItemNode = findItemNode(ev.target);
 				if (targetItemNode && targetItemNode.style.order) {
-					mutableRef.current.initialSelected.itemIndex = targetItemNode.style.order;
+					setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
 				}
 				mutableRef.current.timer = setTimeout(() => {
 					setEditMode(true);
@@ -181,7 +185,7 @@ export const EditableIcon = (args) => {
 
 			}
 		}
-	}, [findItemNode]);
+	}, [findItemNode, initialSelected]);
 
 	const handleKeyUp = useCallback((ev) => {
 		if (ev.target.getAttribute('role') === 'button') {
@@ -194,12 +198,12 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		mutableRef.current.initialSelected.scrollLeft = ev.scrollLeft;
-	}, []);
+		setInitialSelected({...initialSelected, scrollLeft: ev.scrollLeft});
+	}, [initialSelected]);
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
-		mutableRef.current.hideIndex = hideIndex;
+		setScrollerHideIndex(hideIndex);
 
 		// change data from the new orders
 		const newItems = [];
@@ -218,8 +222,7 @@ export const EditableIcon = (args) => {
 	const handleGlobalKeyUp = useCallback((ev) => {
 		if (isCancel(ev.keyCode)) {
 			setEditMode(false);
-			mutableRef.current.initialSelected.scrollLeft = 0;
-			mutableRef.current.initialSelected.itemIndex = null;
+			setInitialSelected({scrollLeft: 0, itemIndex: null});
 			mutableRef.current.timer = null;
 		}
 	}, []);
@@ -241,14 +244,14 @@ export const EditableIcon = (args) => {
 						editable={{
 							centered: args['editableCentered'],
 							css,
-							hideIndex: mutableRef.current.hideIndex,
+							hideIndex: scrollerHideIndex,
 							onComplete: handleComplete,
 							removeItemFuncRef: removeItem,
 							hideItemFuncRef: hideItem,
 							showItemFuncRef: showItem,
 							blurItemFuncRef: blurItem,
 							focusItemFuncRef: focusItem,
-							initialSelected: mutableRef.current.initialSelected,
+							initialSelected: initialSelected,
 							selectItemBy: 'press'
 						}}
 						focusableScrollbar={args['focusableScrollbar']}
@@ -351,13 +354,17 @@ export const EditableIconWithLongPress = (args) => {
 	const [items, setItems] = useState(itemsArr);
 	const removeItem = useRef();
 
-	useLayoutEffect(() => {
-		itemsArr = [];
+	const newItemsArr = useMemo(() => {
+		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
-			itemsArr.push(populateItems({index: i}));
+			newItems.push(populateItems({index: i}));
 		}
-		setItems(itemsArr);
+		return newItems;
 	}, [dataSize]);
+
+	if (items !== newItemsArr) {
+		setItems(newItemsArr);
+	}
 
 	const onClickRemoveButton = useCallback((ev) => {
 		if (removeItem.current) {
