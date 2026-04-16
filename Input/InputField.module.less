@@ -122,16 +122,16 @@
 		position: absolute;
 		pointer-events: none;
 		display: flex;
+	}
 
-		// Keep the marquee text invisible in static  states
-		:global(.enact_ui_Marquee_Marquee_text) {
-			visibility: hidden;
-		}
+	// Keep the marquee text invisible in static states; show only when animating
+	.marqueeTextInner {
+		visibility: hidden;
+	}
 
-		:global(.enact_ui_Marquee_Marquee_text.enact_ui_Marquee_Marquee_willAnimate),
-		:global(.enact_ui_Marquee_Marquee_text.enact_ui_Marquee_Marquee_animate) {
-			visibility: visible;
-		}
+	.marqueeTextAnimate,
+	.marqueeTextWillAnimate {
+		visibility: visible;
 	}
 
 	&.large {
@@ -269,8 +269,8 @@
 				color: @lime-inputfield-label-inactive-focused-color;
 			}
 
-			// Keep the marquee text invisible in static  states
-			:global(.enact_ui_Marquee_Marquee_text) {
+			// Keep the marquee text visible when focused
+			.marqueeTextInner {
 				visibility: visible;
 			}
 

@@ -24,7 +24,11 @@ import {calcAriaLabel, extractInputProps} from './util';
 
 import componentCss from './InputField.module.less';
 
-const MarqueeText = MarqueeDecorator('div');
+const MarqueeText = MarqueeDecorator({css: {
+	text: componentCss.marqueeTextInner,
+	animate: componentCss.marqueeTextAnimate,
+	willAnimate: componentCss.marqueeTextWillAnimate
+}}, 'div');
 
 /**
  * A Limestone styled input component.
