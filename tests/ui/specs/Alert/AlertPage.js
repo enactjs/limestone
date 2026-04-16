@@ -8,6 +8,9 @@ class AlertCommon {
 	get buttonOverlay () {
 		return element('#openOverlay', browser);
 	}
+	get buttonOverlaySpotlightAdd () {
+		return element('#openOverlaySpotlightAdd', browser);
+	}
 	get alertLayer () {
 		return element('#floatLayer', browser);
 	}
@@ -47,10 +50,15 @@ class AlertPage extends Page {
 		this.alertCommon = new AlertCommon('alertMain');
 		this.components.alertFullscreen = new AlertInterface('alertFullscreen');
 		this.components.alertOverlay = new AlertInterface('alertOverlay');
+		this.components.alertPointerMode = new AlertInterface('alertSpotlightAdd');
 	}
 
-	async open (urlExtra) {
-		await super.open('Alert-View', urlExtra);
+	async open (specification = '', urlExtra) {
+		await super.open(`Alert${specification}-View`, urlExtra);
+	}
+
+	async getSpotlightAddCalls () {
+		return browser.execute(() => window.__spotlightAddCalls || 0);
 	}
 }
 
