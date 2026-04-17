@@ -121,3 +121,20 @@ describe('Alert', () => {
 		});
 	});
 });
+
+describe('Alert spotlight add', () => {  // NXT-12863
+
+	beforeEach(async () => {
+		await Page.open('SpotlightAdd');
+	});
+
+	it('should not call Spotlight.add on re-renders after initial mount', async () => {
+		// The view runs a 16ms ticker that triggers ~31 re-renders over 500ms.
+		// window.__spotlightAddCalls stays 0, Spotlight.add() is called only once on initial mount.
+		await browser.pause(500);
+
+		const callCount = await Page.getSpotlightAddCalls();
+
+		expect(callCount).toBe(0);
+	});
+});
