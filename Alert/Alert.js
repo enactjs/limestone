@@ -216,7 +216,7 @@ const AlertBase = kind({
 		)
 	},
 
-	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
+	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, title, type, style, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
 		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
@@ -230,14 +230,12 @@ const AlertBase = kind({
 			type === 'overlay' &&
 			resolvedButtonDirection === 'horizontal'
 		);
-		let popupStyle = rest.style;
+		let popupStyle = style;
 		if (overlayHorizontalButtons) {
 			const overlayHorizontalButtonCount = Math.max(1, Math.min(buttonCount, 4));
 			popupStyle = {
-				...rest.style,
-				'--alert-overlay-horizontal-button-count': overlayHorizontalButtonCount,
-				'--alert-overlay-width': `calc(var(--alert-overlay-horizontal-button-width) * ${overlayHorizontalButtonCount})`,
-				'--alert-overlay-content-max-width': 'calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))'
+				...style,
+				'--alert-overlay-horizontal-button-count': overlayHorizontalButtonCount
 			};
 		}
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
@@ -262,7 +260,7 @@ const AlertBase = kind({
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>
 								<Layout
-									align="center"
+									align="center center"
 									orientation={resolvedButtonDirection}
 									id={`${id}_buttons`}
 								>

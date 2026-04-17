@@ -54,7 +54,6 @@
 			box-sizing: border-box;
 			margin-top: @lime-alert-overlay-buttons-margin-top;
 			padding: @lime-alert-overlay-body-padding;
-			width: 100%;
 		}
 
 		.content {
@@ -77,12 +76,13 @@
 	&.overlay {
 		box-sizing: border-box;
 		width: var(--alert-overlay-width, @lime-alert-overlay-width);
-		--alert-overlay-width: @lime-alert-overlay-width;
-		--alert-overlay-content-max-width: @lime-alert-overlay-width;
+		--alert-overlay-horizontal-button-count: 1;
 		--alert-overlay-horizontal-button-width: ~"calc(@{lime-button-min-width-default} + (2 * @{lime-button-margin}))";
+		--alert-overlay-width: ~"max(@{lime-alert-overlay-width}, calc(var(--alert-overlay-horizontal-button-width) * var(--alert-overlay-horizontal-button-count)))";
+		--alert-overlay-content-max-width: ~"calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))";
 		--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-body-padding, right)[];
 		min-width: @lime-alert-overlay-width;
-		max-width: calc(100vw - 2 * @lime-popup-position-corner-margin);
+		max-width: @lime-alert-overlay-max-width;
 		margin-left: auto;
 		margin-right: auto;
 
