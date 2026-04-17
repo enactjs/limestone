@@ -117,6 +117,15 @@ const PageViewsBase = kind({
 		css: PropTypes.object,
 
 		/**
+		 * The label of the footer Close button.
+		 *
+		 * @type {String}
+		 * @default 'Close'
+		 * @public
+		 */
+		footerCloseLabel: PropTypes.string,
+
+		/**
 		 * When `true`, maximize its contents area.
 		 *
 		 * @type {Boolean}
@@ -307,7 +316,7 @@ const PageViewsBase = kind({
 
 	computed: {
 		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		renderFooterButtons: ({bannerMode, css, index, onFooterCloseClick, onFooterNextClick, showFooterButtons, totalIndex, uniqueId}) => {
+		renderFooterButtons: ({bannerMode, css, footerCloseLabel, index, onFooterCloseClick, onFooterNextClick, showFooterButtons, totalIndex, uniqueId}) => {
 			if (!showFooterButtons || bannerMode) return null;
 
 			const isLastPage = index >= totalIndex - 1;
@@ -319,7 +328,7 @@ const PageViewsBase = kind({
 						spotlightId={"PageViews-footer-close" + uniqueId}
 						onClick={onFooterCloseClick}
 					>
-						{$L('Close')}
+						{footerCloseLabel || $L('Close')}
 					</Button>
 					{!isLastPage ? (
 						<Button
@@ -426,6 +435,7 @@ const PageViewsBase = kind({
 		delete rest.arranger;
 		delete rest.bannerMode;
 		delete rest.children;
+		delete rest.footerCloseLabel;
 		delete rest.noAnimation;
 		delete rest.onFooterCloseClick;
 		delete rest.onFooterNextClick;
