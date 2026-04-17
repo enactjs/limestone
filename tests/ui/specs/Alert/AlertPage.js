@@ -53,6 +53,10 @@ class AlertPage extends Page {
 		this.components.alertPointerMode = new AlertInterface('alertSpotlightAdd');
 	}
 
+	async open (specification = '', urlExtra) {
+		await super.open(`Alert${specification}-View`, urlExtra);
+	}
+
 	async getSpotlightAddCalls () {
 		return browser.execute(() => window.__spotlightAddCalls || 0);
 	}
