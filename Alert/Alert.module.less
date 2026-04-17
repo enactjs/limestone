@@ -75,12 +75,13 @@
 .popup {
 	&.overlay {
 		box-sizing: border-box;
-		width: var(--alert-overlay-width, @lime-alert-overlay-width);
 		--alert-overlay-horizontal-button-count: 1;
 		--alert-overlay-horizontal-button-width: ~"calc(@{lime-button-min-width-default} + (2 * @{lime-button-margin}))";
-		--alert-overlay-width: ~"max(@{lime-alert-overlay-width}, calc(var(--alert-overlay-horizontal-button-width) * var(--alert-overlay-horizontal-button-count)))";
-		--alert-overlay-content-max-width: ~"calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))";
+		--alert-overlay-horizontal-buttons-total-width: ~"calc(var(--alert-overlay-horizontal-button-width) * var(--alert-overlay-horizontal-button-count))";
+		--alert-overlay-width: ~"max(@{lime-alert-overlay-width}, var(--alert-overlay-horizontal-buttons-total-width))";
 		--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-body-padding, right)[];
+		--alert-overlay-content-max-width: ~"calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))";
+		width: var(--alert-overlay-width);
 		min-width: @lime-alert-overlay-width;
 		max-width: @lime-alert-overlay-max-width;
 		margin-left: auto;
