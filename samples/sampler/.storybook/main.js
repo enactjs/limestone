@@ -7,10 +7,9 @@ import {dirname} from 'path';
 import {loadCsf} from 'storybook/internal/csf-tools';
 import {fileURLToPath} from 'url';
 
-const require = createRequire(import.meta.url);
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 
 export default {
 	core: {
