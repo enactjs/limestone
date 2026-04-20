@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.9.3] - 2026-04-20
+
+### Fixed
+
+- `limestone/Popup` to not delay when closed with pointer
+
 ## [1.9.2] - 2026-03-10
 
 ### Fixed
