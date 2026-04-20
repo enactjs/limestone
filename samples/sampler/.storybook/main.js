@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+
 import webpack from '@enact/storybook-utils/configs/webpack.js';
 import {readFileSync} from 'fs';
 import {createRequire} from 'module';
