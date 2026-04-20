@@ -47,12 +47,12 @@
     "@enovaui/core-tokens": "^0.14.0",
     "@enovaui/webos-tokens": "^0.14.0",
     "classnames": "^2.5.1",
-    "ilib": "^14.21.2",
+    "ilib": "^14.21.3",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.32.0",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "warning": "^4.0.3"
   },
   "peerDependencies": {
@@ -63,7 +63,7 @@
     "vue-template-compiler": "@vue/compiler-sfc@3.4.31"
   },
   "devDependencies": {
-    "@enact/docs-utils": "^0.4.16",
-    "@enact/ui-test-utils": "^4.0.1"
+    "@enact/docs-utils": "^0.4.17",
+    "@enact/ui-test-utils": "^4.0.2"
   }
 }
