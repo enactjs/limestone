@@ -293,8 +293,8 @@ describe('PageViews Specs', () => {
 		() => {
 			render(
 				<PageViews showFooterButtons index={0}>
-					<Page>content</Page>
-					<Page>content</Page>
+					<Page />
+					<Page />
 				</PageViews>
 			);
 
@@ -308,8 +308,8 @@ describe('PageViews Specs', () => {
 		() => {
 			render(
 				<PageViews showFooterButtons index={1}>
-					<Page>content</Page>
-					<Page>content</Page>
+					<Page />
+					<Page />
 				</PageViews>
 			);
 
@@ -323,8 +323,8 @@ describe('PageViews Specs', () => {
 		() => {
 			render(
 				<PageViews showFooterButtons bannerMode index={0}>
-					<Page>content</Page>
-					<Page>content</Page>
+					<Page />
+					<Page />
 				</PageViews>
 			);
 
@@ -333,15 +333,16 @@ describe('PageViews Specs', () => {
 	);
 
 	test(
-		'should fire `onFooterNextClick` and `onChange` when footer Next button is clicked',
+		'should fire `onFooterNextClick`, `onChange`, and `onTransition` when footer Next button is clicked',
 		async () => {
 			const handleChange = jest.fn();
 			const handleFooterNextClick = jest.fn();
+			const spy = jest.fn();
 			const user = userEvent.setup();
+			let index = 0;
 
-			render(
-				<PageViews showFooterButtons index={0} onChange={handleChange} onFooterNextClick={handleFooterNextClick}>
-					<Page />
+			const {rerender} = render(
+				<PageViews showFooterButtons index={index} onChange={handleChange} onFooterNextClick={handleFooterNextClick} onTransition={spy} noAnimation>
 					<Page />
 					<Page />
 				</PageViews>
@@ -354,6 +355,23 @@ describe('PageViews Specs', () => {
 			});
 			await waitFor(() => {
 				expect(handleFooterNextClick).toHaveBeenCalled();
+			});
+
+			spy.mockClear();
+			index++;
+
+			rerender(
+				<PageViews showFooterButtons index={index} onChange={handleChange} onFooterNextClick={handleFooterNextClick} onTransition={spy} noAnimation>
+					<Page />
+					<Page />
+				</PageViews>
+			);
+
+			const expected = {index, type: 'onTransition'};
+			const actual = spy.mock.calls.length && spy.mock.calls[0][0];
+
+			await waitFor(() => {
+				expect(actual).toMatchObject(expected);
 			});
 		}
 	);
