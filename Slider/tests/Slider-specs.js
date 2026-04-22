@@ -566,7 +566,7 @@ describe('Slider', () => {
 	});
 
 	test('should apply colorPicker to slider', () => {
-		render(<Slider colorPicker={true} />);
+		render(<Slider colorPicker />);
 
 		const slider = screen.getByRole('slider');
 
