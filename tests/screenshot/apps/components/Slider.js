@@ -273,6 +273,10 @@ const SliderTests = [
 	{
 		locale: 'ar-SA',
 		component: <Slider disabled backgroundProgress={0.25} value={50} />
+	},
+	{
+		colorPicket: true,
+		component: <Slider />
 	}
 ];
 export default SliderTests;

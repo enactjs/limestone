@@ -564,4 +564,14 @@ describe('Slider', () => {
 
 		expect(tooltip).toBeNull();
 	});
+
+	test('should apply colorPicker to slider', () => {
+		render(<Slider colorPicker={true} />);
+
+		const slider = screen.getByRole('slider');
+
+		const expected = 'colorPicker';
+
+		expect(slider).toHaveClass(expected);
+	});
 });
