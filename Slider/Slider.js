@@ -213,7 +213,7 @@ const SliderBase = (props) => {
 			max={sliderMax}
 			min={sliderMin}
 			progressBarComponent={
-				<ProgressBar css={mergedCss} style={{backgroundImage: colorPicker && hueGradient}} />
+				<ProgressBar css={mergedCss} style={{backgroundImage: colorPicker && hueGradient(rest.orientation)}} />
 			}
 			ref={ref}
 			step={sliderStep}

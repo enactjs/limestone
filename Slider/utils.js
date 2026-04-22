@@ -3,7 +3,7 @@ import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
 import {calcProportion} from '@enact/ui/Slider/utils';
 
-const hueGradient =  `linear-gradient(to right, 
+const hueGradient = (orientation) =>  `linear-gradient(${orientation === 'horizontal' ? 'to right' : 'to top'}, 
 	hsla(0, 100%, 50%, 1),
 	hsla(10, 100%, 50%, 1),
 	hsla(20, 100%, 50%, 1),
