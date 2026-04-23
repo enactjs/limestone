@@ -41,6 +41,7 @@ const app = (props) => <div {...props}>
 			<InputField
 				id="input6"
 				defaultValue="InputField with extremely long text that should marquee"
+				marqueeContent
 			/>
 		</div>
 	</div>
