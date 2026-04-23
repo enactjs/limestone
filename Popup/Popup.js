@@ -314,8 +314,12 @@ const Popup = (props) => {
 	const [popupOpen, setPopupOpen] = useState(open ? OpenState.OPEN : OpenState.CLOSED);
 	const [prevOpen, setPrevOpen] = useState(open);
 
-	const containerIdRef = useRef(Spotlight.add());
+	const containerIdRef = useRef(null);
 	const pausedRef = useRef(new Pause('Popup'));
+
+	if (!containerIdRef.current) {
+		containerIdRef.current = Spotlight.add();
+	}
 
 	const getDerivedStateFromProps = useCallback(() => {
 		if (open !== prevOpen) {
@@ -517,7 +521,6 @@ const Popup = (props) => {
 			if (open) {
 				off('keydown', handleKeyDown);
 			}
-			// eslint-disable-next-line react-hooks/exhaustive-deps
 			Spotlight.remove(containerIdRef.current);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
