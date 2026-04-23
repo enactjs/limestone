@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Icon` supported icon list, adding new icon `f1`
 - `limestone/Alert` `buttonDirection` prop to control button layout direction (`auto`, `horizontal`, `vertical`)
+- `limestone/PageViews` `showFooterButtons` prop to show optional Close/Next buttons
+- `limestone/PageViews` `footerCloseLabel` prop to custom the Close button label
+- `limestone/PageViews` `onFooterCloseClick` prop to custom the Close button behavior when it is clicked
+- `limestone/ThemeDecorator` config `focusEffectClass` to support customization for spottable components
 
 ### Changed
 
@@ -23,7 +27,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Dropdown` button to match `DropdownList` items size when `size` is `small`
 - `limestone/IconItem` press motion to work with key press
 - `limestone/MediaOverlay` press motion to work with key press
-- `limestone/Popup` to not flicker on transition 
+- `limestone/Popup` to not flicker on transition
+- `limestone/Popup` to not delay when closed with pointer
 - `limestone/Slider` press motion to work with key press
 - `limestone/useScroll` to not scroll on hover right after scroll by wheel
 

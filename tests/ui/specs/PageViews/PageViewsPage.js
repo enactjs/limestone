@@ -18,6 +18,10 @@ class PageViewsInterface {
 		return $(`#PrevNavButton`);
 	}
 
+	get footerDefaultButton () {
+		return $(`.spottable-default`);
+	}
+
 	get isPageExist () {
 		return this.self.isExisting();
 	}
