@@ -526,23 +526,23 @@ describe('Input specs', () => {
 
 	describe('marqueeInputField', () => {
 		test('should not render a marquee node in the InputField by default', () => {
-			const {baseElement} = render(
+			const {rootElement} = render(
 				<FloatingLayerController>
 					<Input open value="hello" />
 				</FloatingLayerController>
 			);
-			const marqueeText = baseElement.querySelector('.marqueeText');
+			const marqueeText = rootElement.querySelector('.marqueeText');
 
 			expect(marqueeText).toBeNull();
 		});
 
 		test('should render a marquee node in the InputField when marqueeInputField is true', () => {
-			const {baseElement} = render(
+			const {rootElement} = render(
 				<FloatingLayerController>
 					<Input open marqueeInputField value="hello" />
 				</FloatingLayerController>
 			);
-			const marqueeText = baseElement.querySelector('.marqueeText');
+			const marqueeText = rootElement.querySelector('.marqueeText');
 
 			expect(marqueeText).not.toBeNull();
 			expect(marqueeText.querySelector('.marquee')).not.toBeNull();

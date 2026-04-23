@@ -142,6 +142,15 @@ const InputPopupBase = kind({
 		length: PropTypes.number,
 
 		/**
+		 * Wraps the `InputField`'s value display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		marqueeInputField: PropTypes.bool,
+
+		/**
 		 * The maximum length of number input fields.
 		 *
 		 * Overridden by `length` value.
@@ -164,15 +173,6 @@ const InputPopupBase = kind({
 		 * @public
 		 */
 		minLength: PropTypes.number,
-
-		/**
-		 * Wraps the `InputField`'s value display in a marquee.
-		 *
-		 * @type {Boolean}
-		 * @default false
-		 * @public
-		 */
-		marqueeInputField: PropTypes.bool,
 
 		/**
 		 * Omits the back button.
