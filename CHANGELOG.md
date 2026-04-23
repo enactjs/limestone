@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icon `f1`
+- `limestone/Slider` `colorPicker` prop to change slider functionality
 
 ### Changed
 
