@@ -275,8 +275,7 @@ const SliderTests = [
 		component: <Slider disabled backgroundProgress={0.25} value={50} />
 	},
 	{
-		colorPicket: true,
-		component: <Slider />
+		component: <Slider colorPicker />
 	}
 ];
 export default SliderTests;
