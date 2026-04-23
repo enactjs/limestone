@@ -2,7 +2,7 @@ import {PageViews} from '@enact/limestone/PageViews';
 import Item from '@enact/limestone/Item';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, select} from '@enact/storybook-utils/addons/controls';
+import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Cell, Row, Column} from '@enact/ui/Layout';
 
 PageViews.displayName = 'PageViews';
@@ -10,7 +10,8 @@ PageViews.displayName = 'PageViews';
 const Config = mergeComponentMetadata('PageViews', PageViews);
 Config.defaultProps = {
 	pageIndicatorPosition: 'bottom',
-	pageIndicatorType: 'dot'
+	pageIndicatorType: 'dot',
+	showFooterButtons: false
 };
 
 const propOptions = {
@@ -27,13 +28,16 @@ export const _PageViews = (args) => (
 	<PageViews
 		bannerMode={args['bannerMode']}
 		fullContents={args['fullContents']}
+		footerCloseLabel={args['footerCloseLabel']}
 		onChange={action('onChange')}
+		onFooterCloseClick={action('onFooterCloseClick')}
 		onNextClick={action('onNextClick')}
 		onPrevClick={action('onPrevClick')}
 		onTransition={action('onTransition')}
 		onWillTransition={action('onWillTransition')}
 		pageIndicatorPosition={args['pageIndicatorPosition']}
 		pageIndicatorType={args['pageIndicatorType']}
+		showFooterButtons={args['showFooterButtons']}
 	>
 		<PageViews.Page aria-label="This is a description for page 1">
 			<div style={{padding: '24px', width: '50%'}}>
@@ -84,6 +88,8 @@ export const _PageViews = (args) => (
 
 boolean('bannerMode', _PageViews, Config, false);
 boolean('fullContents', _PageViews, Config, false);
+text('footerCloseLabel', _PageViews, Config, 'Close');
+boolean('showFooterButtons', _PageViews, Config, false);
 select('pageIndicatorPosition', _PageViews, propOptions.pageIndicatorPosition, Config, 'bottom');
 select('pageIndicatorType', _PageViews, propOptions.pageIndicatorType, Config, 'dot');
 
