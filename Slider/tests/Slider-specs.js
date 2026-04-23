@@ -578,7 +578,7 @@ describe('Slider', () => {
 	test('should fire `onChange` with `onChange` type when value changed for `colorPicker`', () => {
 		const handleChange = jest.fn();
 
-		render(<Slider activateOnSelect defaultValue={50} onChange={handleChange} />);
+		render(<Slider activateOnSelect colorPicker defaultValue={50} onChange={handleChange} />);
 		const slider = screen.getByRole('slider');
 
 		activate(slider);
