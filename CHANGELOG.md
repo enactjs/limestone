@@ -7,7 +7,9 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icon `f1`
-- `limestone/Inputfield` to marquee text on focus,
+- `limestone/Input` props `marqueeInputField` to marquee inputField text on focus
+- `limestone/Inputfield` props `caretToEndOnFocus` to move caret to the end of the input field on input activation via 5-way
+- `limestone/Inputfield` props `marqueeContent` to marquee text on focus
 - `limestone/PageViews` `showFooterButtons` prop to show optional Close/Next buttons
 - `limestone/PageViews` `footerCloseLabel` prop to custom the Close button label
 - `limestone/PageViews` `onFooterCloseClick` prop to custom the Close button behavior when it is clicked
