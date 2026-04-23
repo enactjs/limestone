@@ -87,4 +87,52 @@ describe('PageViews', function () {
 			expect(await $('#PageViewsButton2').isFocused()).toBe(true);
 		});
 	});
+
+	describe('footerButtons', function () {
+
+		beforeEach(async function () {
+			await Page.open('FooterButtons');
+		});
+
+		it('should focus footer Next button on initial load', async function () {
+			expect(await Page.focusedText).toBe('Next');
+		});
+
+		it('should focus footer Close button when footer Next navigates to the last page', async function () {
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await Page.focusedText).toBe('Next');
+
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await Page.focusedText).toBe('Close');
+		});
+
+		it('should focus internal next button during navigation and footer Close button when reaching the last page with the internal next button', async function () {
+			await Page.spotlightUp();  // focus internal next button
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await pageViewsPage1.nextButton.isFocused()).toBe(true);
+
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await Page.focusedText).toBe('Close');
+		});
+
+		it('should focus internal previous button during navigation and footer Next button when reaching the first page with the internal previous button', async function () {
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			await Page.spotlightSelect();
+			await browser.pause(500);
+
+			await Page.spotlightUp();  // focus internal previous button
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await pageViewsPage1.prevButton.isFocused()).toBe(true);
+
+			await Page.spotlightSelect();
+			await browser.pause(500);
+			expect(await Page.focusedText).toBe('Next');
+		});
+	});
 });
