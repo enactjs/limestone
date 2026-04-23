@@ -30,6 +30,7 @@ export const _InputField = (args) => (
 		iconBefore={args['iconBefore']}
 		invalid={args['invalid']}
 		invalidMessage={args['invalidMessage']}
+		marqueeContent={args['marqueeContent']}
 		onBeforeChange={action('onBeforeChange')}
 		onChange={action('onChange')}
 		placeholder={args['placeholder']}
@@ -46,6 +47,7 @@ select('iconAfter', _InputField, iconNames, Config);
 select('iconBefore', _InputField, iconNames, Config);
 boolean('invalid', _InputField, Config);
 text('invalidMessage', _InputField, Config);
+boolean('marqueeContent', _InputField, Config);
 text('placeholder', _InputField, Config);
 select('size', _InputField, ['small', 'large'], Config);
 select('type', _InputField, prop.type, Config, prop.type[0]);

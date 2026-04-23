@@ -166,6 +166,15 @@ const InputPopupBase = kind({
 		minLength: PropTypes.number,
 
 		/**
+		 * Wraps the `InputField`'s value display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		marqueeInputField: PropTypes.bool,
+
+		/**
 		 * Omits the back button.
 		 *
 		 * @type {Boolean}
@@ -309,6 +318,7 @@ const InputPopupBase = kind({
 
 	defaultProps: {
 		defaultValue: '',
+		marqueeInputField: false,
 		popupType: 'fullscreen',
 		numberInputField: 'auto',
 		size: 'small',
@@ -376,6 +386,7 @@ const InputPopupBase = kind({
 		disabled,
 		inputAreaClassName,
 		inputFieldSpotlightId,
+		marqueeInputField,
 		noBackButton,
 		noSubmitButton,
 		numberInputField,
@@ -469,6 +480,7 @@ const InputPopupBase = kind({
 									css={css}
 									maxLength={maxLength}
 									minLength={minLength}
+									marqueeContent={marqueeInputField}
 									size={size}
 									autoFocus
 									type={type}

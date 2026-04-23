@@ -151,6 +151,15 @@ const InputFieldBase = kind({
 		invalidMessage: PropTypes.string,
 
 		/**
+		 * Wraps the input's value/placeholder display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		marqueeContent: PropTypes.bool,
+
+		/**
 		 * Called before the input value is changed.
 		 *
 		 * The change can be prevented by calling `preventDefault` on the event.
@@ -262,6 +271,7 @@ const InputFieldBase = kind({
 		disabled: false,
 		dismissOnEnter: false,
 		invalid: false,
+		marqueeContent: false,
 		placeholder: '',
 		size: 'small',
 		type: 'text'
@@ -294,11 +304,12 @@ const InputFieldBase = kind({
 			const title = (value == null || value === '') ? placeholder : '';
 			return calcAriaLabel(title, type, value);
 		},
-		className: ({active, iconAfter, iconBefore, invalid, size, styler}) => styler.append(
+		className: ({active, iconAfter, iconBefore, invalid, marqueeContent, size, styler}) => styler.append(
 			{
 				active,
 				hasIconAfter: iconAfter,
 				hasIconBefore: iconBefore,
+				hasMarquee: marqueeContent,
 				invalid
 			},
 			size
@@ -317,7 +328,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
+	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, marqueeContent, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPasswordtel = type === 'passwordtel';
@@ -359,15 +370,17 @@ const InputFieldBase = kind({
 						type={isPasswordtel ? 'tel' : type}
 						value={value}
 					/>
-					<MarqueeText
-						className={classnames(css.marqueeText, {
-							[css.passwordtel]: isPasswordtel || type === 'password',
-							[css.placeholderText]: value === ''
-						})}
-						disabled={disabled}
-					>
-						{value !== '' ? value : placeholder}
-					</MarqueeText>
+					{marqueeContent ? (
+						<MarqueeText
+							className={classnames(css.marqueeText, {
+								[css.passwordtel]: isPasswordtel || type === 'password',
+								[css.placeholderText]: value === ''
+							})}
+							disabled={disabled}
+						>
+							{value !== '' ? value : placeholder}
+						</MarqueeText>
+					) : null}
 				</span>
 
 				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size="large">{iconAfter}</InputFieldDecoratorIcon>

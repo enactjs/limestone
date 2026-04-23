@@ -321,6 +321,23 @@ describe('InputField Specs', () => {
 		expect(actual).toMatchObject(expected);
 	});
 
+	describe('marqueeContent', () => {
+		test('should not render a marquee node by default', () => {
+			const {container} = render(<InputField value="hello" />);
+			const marqueeText = container.querySelector('.marqueeText');
+
+			expect(marqueeText).toBeNull();
+		});
+
+		test('should render a marquee node when marqueeContent is true', () => {
+			const {container} = render(<InputField marqueeContent value="hello" />);
+			const marqueeText = container.querySelector('.marqueeText');
+
+			expect(marqueeText).not.toBeNull();
+			expect(marqueeText.querySelector('.marquee')).not.toBeNull();
+		});
+	});
+
 	describe('moveCaretToEnd', () => {
 		test('should move caret to end of value on mouse focus when caretToEndOnFocus is true', () => {
 			jest.useFakeTimers();
