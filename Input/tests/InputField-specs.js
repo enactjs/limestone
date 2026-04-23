@@ -323,15 +323,15 @@ describe('InputField Specs', () => {
 
 	describe('marqueeContent', () => {
 		test('should not render a marquee node by default', () => {
-			const {inputField} = render(<InputField value="hello" />);
-			const marqueeText = inputField.querySelector('.marqueeText');
+			const {baseElement} = render(<InputField value="hello" />);
+			const marqueeText = baseElement.querySelector('.marqueeText');
 
 			expect(marqueeText).toBeNull();
 		});
 
 		test('should render a marquee node when marqueeContent is true', () => {
-			const {inputField} = render(<InputField marqueeContent value="hello" />);
-			const marqueeText = inputField.querySelector('.marqueeText');
+			const {baseElement} = render(<InputField marqueeContent value="hello" />);
+			const marqueeText = baseElement.querySelector('.marqueeText');
 
 			expect(marqueeText).not.toBeNull();
 			expect(marqueeText.querySelector('.marquee')).not.toBeNull();
