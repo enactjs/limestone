@@ -1,7 +1,7 @@
 import {forKey, forProp, forwardCustom, handle, oneOf, preventDefault, stop} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
 import {clamp} from '@enact/core/util';
-import {calcProportion} from '@enact/ui/Slider/utils';
+import {calcProportion, hslToHex} from '@enact/ui/Slider/utils';
 
 const hueGradient = (orientation) =>  `linear-gradient(${orientation === 'horizontal' ? 'to right' : 'to top'}, 
 	hsla(0, 100%, 50%, 1),
@@ -116,7 +116,10 @@ const emitChange = (direction) => forwardCustom(
 			return {
 				value: newValue,
 				proportion: calcProportion(min, max, newValue),
-				color: `hsla(${value}, 100%, 50%, 1)`
+				color: {
+					hex: hslToHex(value),
+					hsl: `hsla(${value}, 100%, 50%, 1)`
+				}
 			};
 		} else {
 			const newValue = clamp(min, max, value + (calcStep(knobStep, step) * direction));
