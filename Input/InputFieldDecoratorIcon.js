@@ -37,7 +37,7 @@ const InputDecoratorIconBase = kind({
 		delete rest.position;
 
 		return children ? (
-			<Icon {...rest}>{children}</Icon>
+			<Icon {...rest} data-input-icon>{children}</Icon>
 		) : null;
 	}
 });

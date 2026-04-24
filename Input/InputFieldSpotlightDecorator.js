@@ -277,8 +277,9 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			setDownTarget(ev);
 			// focus the <input> whenever clicking on any part of the component to ensure both that
-			// the <input> has focus and Spotlight is paused.
-			if (!disabled && !spotlightDisabled) {
+			// the <input> has focus and Spotlight is paused. Skip when the target is a decorative
+			// icon so it doesn't activate the input.
+			if (!disabled && !spotlightDisabled && !ev.target.closest('[data-input-icon]')) {
 				focusInput(ev.currentTarget, true);
 			}
 
