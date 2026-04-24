@@ -181,6 +181,17 @@ const dropIn = {
 	twoDisabledSmallButtons: [
 		<Button key="yes" disabled size="small">Yes</Button>,
 		<Button key="no" disabled size="small">No</Button>
+	],
+	threeSmallButtons: [
+		<Button key="yes" size="small">Yes</Button>,
+		<Button key="no" size="small">No</Button>,
+		<Button key="later" size="small">Later</Button>
+	],
+	fourSmallButtons: [
+		<Button key="one" size="small">One</Button>,
+		<Button key="two" size="small">Two</Button>,
+		<Button key="three" size="small">Three</Button>,
+		<Button key="four" size="small">Four</Button>
 	]
 };
 
@@ -196,6 +207,13 @@ const LtrTests = [
 	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlayTests),
 	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayTests),
 	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.twoSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.fourSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.twoSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.threeSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlayTests),
 
 	// With image
 	// QWTC-1928 start.
