@@ -326,8 +326,6 @@ const DropdownBase = functionalKind({
 	useRender: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
 		delete rest.rtl;
 
-		// Resume spotlight on unmount so a Dropdown removed while open
-		// doesn't leak its pause lock to the rest of the app.
 		useEffect(() => () => {
 			console.log("useEffect");
 			pauseSpotlight(false);
