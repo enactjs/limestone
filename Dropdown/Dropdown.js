@@ -18,7 +18,7 @@
 
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {handle, forward, forwardCustom, forProp, not} from '@enact/core/handle';
-import {kind, functionalKind} from '@enact/core/kind';
+import {functionalKind} from '@enact/core/kind';
 import {extractAriaProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Pause from '@enact/spotlight/Pause';
@@ -32,7 +32,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import warning from 'warning';
-import {useState} from 'react';
+import {useEffect} from 'react';
 import $L from '../internal/$L';
 import Button from '../Button';
 import ContextualPopupDecorator from '../ContextualPopupDecorator';
@@ -55,7 +55,6 @@ function pauseSpotlight (bool) {
 	}
 }
 
-// const DropdownButtonBase = kind({
 const DropdownButtonBase = functionalKind({
 	name: 'DropdownButtonBase',
 
@@ -63,7 +62,7 @@ const DropdownButtonBase = functionalKind({
 		forwardRef: EnactPropTypes.ref
 	},
 
-	render: ({forwardRef, ...props}) => (
+	useRender: ({forwardRef, ...props}) => (
 		<Button
 			{...props}
 			css={css}
@@ -92,7 +91,6 @@ DropdownButton.displayName = 'DropdownButton';
  * @ui
  * @public
  */
-// const DropdownBase = kind({
 const DropdownBase = functionalKind({
 	name: 'Dropdown',
 
@@ -272,8 +270,6 @@ const DropdownBase = functionalKind({
 	computed: {
 		ariaLabelledBy: ({id, title}) => (title ? `${id}_title` : void 0),
 		children: ({children, selected}) => {
-			const [value, setValue] = useState('');
-
 			if (!Array.isArray(children)) return [];
 
 			return children.map((child, i) => {
@@ -327,10 +323,15 @@ const DropdownBase = functionalKind({
 		)
 	},
 
-	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
+	useRender: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
 		delete rest.rtl;
 
-		const [value, setValue] = useState('');
+		// Resume spotlight on unmount so a Dropdown removed while open
+		// doesn't leak its pause lock to the rest of the app.
+		useEffect(() => () => {
+			console.log("useEffect");
+			pauseSpotlight(false);
+		});
 
 		const ariaProps = extractAriaProps(rest);
 		const calcAriaProps = ariaLabel != null ? null : {role: 'region', 'aria-labelledby': ariaLabelledBy};
