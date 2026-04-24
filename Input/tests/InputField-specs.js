@@ -419,16 +419,18 @@ describe('InputField Specs', () => {
 
 	describe('decorator icons', () => {
 		test('should render iconBefore and iconAfter with data-input-icon attribute', () => {
-			const {baseElement} = render(<InputField iconBefore="plus" iconAfter="minus" />);
-			const icons = baseElement.querySelectorAll('[data-input-icon]');
+			render(<InputField iconBefore="plus" iconAfter="minus" />);
+
+			const icons = document.querySelectorAll('[data-input-icon]');
 
 			expect(icons).toHaveLength(2);
 		});
 
 		test('should not activate the input when iconBefore is clicked', () => {
-			const {baseElement} = render(<InputField iconBefore="plus" value="hello" />);
+			render(<InputField iconBefore="plus" value="hello" />);
+
 			const inputField = screen.getByPlaceholderText('');
-			const icon = baseElement.querySelector('[data-input-icon]');
+			const icon = document.querySelector('[data-input-icon]');
 			const focusSpy = jest.spyOn(inputField, 'focus');
 
 			fireEvent.mouseDown(icon);
@@ -437,9 +439,10 @@ describe('InputField Specs', () => {
 		});
 
 		test('should not activate the input when iconAfter is clicked', () => {
-			const {baseElement} = render(<InputField iconAfter="minus" value="hello" />);
+			render(<InputField iconAfter="minus" value="hello" />);
+
 			const inputField = screen.getByPlaceholderText('');
-			const icon = baseElement.querySelector('[data-input-icon]');
+			const icon = document.querySelector('[data-input-icon]');
 			const focusSpy = jest.spyOn(inputField, 'focus');
 
 			fireEvent.mouseDown(icon);
