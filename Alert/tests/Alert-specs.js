@@ -114,6 +114,61 @@ describe('Alert', () => {
 
 		expect(image).toHaveClass(expectedClass);
 	});
+
+	test('should align buttons horizontally by default in fullscreen when button count is less than 3', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open>
+					<buttons>
+						<Button>yes</Button>
+						<Button>no</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('horizontal');
+	});
+
+	test('should align buttons vertically by default in fullscreen when button count is 3', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open>
+					<buttons>
+						<Button>yes</Button>
+						<Button>no</Button>
+						<Button>later</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('vertical');
+	});
+
+	test('should allow overriding button direction to vertical', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open buttonDirection="vertical">
+					<buttons>
+						<Button>yes</Button>
+						<Button>no</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('vertical');
+	});
 });
 
 describe('AlertOverlay specs', () => {
@@ -213,5 +268,40 @@ describe('AlertOverlay specs', () => {
 		const expectedClass = 'thumbnail';
 
 		expect(image).toHaveClass(expectedClass);
+	});
+
+	test('should align buttons horizontally by default in overlay when button count is 2', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay">
+					<buttons>
+						<Button size="small">yes</Button>
+						<Button size="small">no</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('horizontal');
+	});
+
+	test('should align buttons vertically by default in overlay when button count is not 2', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay">
+					<buttons>
+						<Button size="small">yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('vertical');
 	});
 });

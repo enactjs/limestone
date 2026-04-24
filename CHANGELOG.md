@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Alert` `buttonDirection` prop to control button layout direction (`auto`, `horizontal`, `vertical`)
 - `limestone/Icon` supported icon list, adding new icon `f1`
 - `limestone/PageViews` `showFooterButtons` prop to show optional Close/Next buttons
 - `limestone/PageViews` `footerCloseLabel` prop to custom the Close button label
