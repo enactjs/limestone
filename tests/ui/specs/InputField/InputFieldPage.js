@@ -26,8 +26,15 @@ class SpotlightMultiplePage extends Page {
 	get disabledInput () {
 		return $('#input5');
 	}
+	get input6 () {
+		return $('#input6');
+	}
 	get inputElement1 () {
 		return $('#input1 input');
+	}
+
+	isMarqueeAnimating (id) {
+		return $(`#${id} .enact_ui_Marquee_Marquee_animate`).isExisting();
 	}
 }
 

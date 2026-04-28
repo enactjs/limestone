@@ -14,6 +14,7 @@ const SelectionInput = props => {
 const InputFieldTests = [
 	<InputField />,
 	<InputField placeholder="Placeholder InputField" />,
+	<InputField marqueeContent placeholder="Placeholder InputField" />,
 	<InputField placeholder="Placeholder InputField" disabled />,
 
 	// InputField field of type 'number' should be empty with letters as input
@@ -32,6 +33,11 @@ const InputFieldTests = [
 	<InputField value={LoremString} />,
 	<InputField value="!@#$%^&()_+-=[]\;',./{}|:?" />,
 	<InputField value="012345678901234567890123456789" />,
+
+	// Long Text and marqueeContent
+	<InputField marqueeContent value={LoremString} />,
+	<InputField marqueeContent value="!@#$%^&()_+-=[]\;',./{}|:?" />,
+	<InputField marqueeContent value="012345678901234567890123456789" />,
 
 	// 'invalid' Knob - Tooltip is on the Right and Aligns with InputField in LTR Layout - [QWTC-2162]
 	<InputField value={LoremString} invalid />,
@@ -68,6 +74,7 @@ const InputFieldTests = [
 	...withProps({focus: true}, [
 		<InputField />,
 		<InputField placeholder="Focused Placeholder InputField" />,
+		<InputField marqueeContent placeholder="Focused Placeholder InputField" />,
 		<InputField placeholder="Focused Placeholder InputField" disabled />,
 
 		// InputField field of type 'number' should be empty with letters as input
