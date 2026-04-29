@@ -26,6 +26,7 @@
     "@enact/spotlight": "^5.4.2",
     "@enact/storybook-utils": "^8.0.0",
     "@enact/ui": "^5.4.2",
+    "@github-ui/storybook-addon-performance-panel": "^1.1.4",
     "@storybook/react-webpack5": "^10.3.5",
     "classnames": "^2.5.1",
     "ilib": "^14.21.2",
