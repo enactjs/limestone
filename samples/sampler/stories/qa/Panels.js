@@ -226,9 +226,7 @@ export const WithEditableScroller = (args) => {
 		return newItems;
 	}, [dataSize]);
 
-	if (items !== newItemsArr) {
-		setIconItems(newItemsArr);
-	}
+	if (dataSize !== iconItems.length) setIconItems(newItemsArr);
 
 	const findItemNode = useCallback((node) => {
 		for (let current = node; current !== divRef.current && current !== document; current = current.parentNode) {
