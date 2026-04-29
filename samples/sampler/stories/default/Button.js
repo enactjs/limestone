@@ -75,7 +75,6 @@ export const _Button = (args) => (
 	</Fragment>
 );
 
-text('children', _Button, Config, 'click me');
 select('backgroundOpacity', _Button, prop.backgroundOpacity, Config);
 boolean('bordered', _Button, Config);
 boolean('centered', _Button, Config);
@@ -92,6 +91,7 @@ boolean('shadowed', _Button, Config);
 select('size', _Button, prop.size, Config);
 text('tooltipText', _Button, Config);
 select('tooltipType', _Button, prop.tooltipType, Config);
+text('children', _Button, Config, 'click me');
 
 _Button.storyName = 'Button';
 _Button.parameters = {
