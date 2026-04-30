@@ -158,7 +158,7 @@
 @lime-item-font-size:               var(--primitive-font-size-60);
 @lime-item-font-size-large:         var(--primitive-font-size-72);
 @lime-item-label-font-size:         var(--primitive-font-size-48);
-@lime-item-label-font-size-large:   var(--primitive-font-size-54);
+@lime-item-label-font-size-large:   var(--primitive-font-size-57);
 @lime-item-small-font-size:         var(--primitive-font-size-60);
 @lime-item-small-font-size-large:   var(--primitive-font-size-72);
 @lime-item-small-label-font-size:   var(--primitive-font-size-48);
@@ -170,9 +170,9 @@
 @lime-picker-font-size:             var(--primitive-font-size-54);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
+@lime-radioitem-icon-font-size-large: var(--primitive-font-size-56);
 @lime-steps-step-number-font-size: var(--primitive-font-size-48);
 @lime-switch-icon-font-size:        var(--primitive-font-size-84);
-@lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
 @lime-tablayout-tab-font-size: var(--primitive-font-size-60);
 @lime-tooltip-label-font-size:      var(--primitive-font-size-54);
@@ -293,6 +293,7 @@
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
 @lime-item-label-line-height: 1.25em;
+@lime-item-label-line-height-large: 1.2em;
 @lime-item-small-font-weight: @lime-item-font-weight;
 @lime-item-small-label-font-weight: @lime-item-label-font-weight;
 @lime-item-small-line-height: @lime-common-line-height;
@@ -669,8 +670,6 @@
 @lime-icon-small-size: 72px;
 @lime-icon-tiny-size: 60px;
 @lime-icon-margin: var(--primitive-spacing-24);
-@lime-icon-large-size-large: (@lime-icon-large-size * 1.2);
-@lime-icon-small-size-large: (@lime-icon-small-size * 1.2);
 
 // IconItem
 // ---------------------------------------
@@ -1098,12 +1097,13 @@
 @lime-switch-height: 60px;
 @lime-switch-width: 120px;
 @lime-switch-icon-height: 48px;
+@lime-switch-icon-height-large: 57px;
 @lime-switch-icon-line-height: @lime-switch-height;
-@lime-switch-height-large: @lime-icon-small-size-large;
-@lime-switch-width-large: 162px;
-@lime-switch-icon-height-large: @lime-icon-small-size-large;
-@lime-switch-icon-line-height-large: @lime-switch-icon-height-large;
+@lime-switch-icon-line-height-large: @lime-switch-height-large;
+@lime-switch-height-large: 72px;
+@lime-switch-width-large: 144px;
 @lime-switch-icon-top: ((@lime-switch-height - @lime-switch-icon-height) / 2);
+@lime-switch-icon-top-large: ((@lime-switch-height-large - @lime-switch-icon-height-large) / 2);
 @lime-switch-spottable-margin: @lime-component-spacing;
 @lime-switch-spottable-border-radius: var(--primitive-radius-24);
 @lime-switch-spottable-position: ~"calc(@{lime-component-spacing} * -1)"; // These correlate with the numbers from 'margin" above

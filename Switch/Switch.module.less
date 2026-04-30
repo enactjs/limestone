@@ -32,10 +32,32 @@
 		left: @lime-switch-icon-top;
 	}
 
+	.lime-custom-text({
+		.client {
+			width: @lime-switch-width-large;
+			height: @lime-switch-height-large;
+
+		}
+
+		.icon {
+			height: @lime-switch-icon-height-large;
+			width: @lime-switch-icon-height-large;
+			line-height: @lime-switch-icon-line-height-large;
+			top: @lime-switch-icon-top-large;
+			left: @lime-switch-icon-top-large;
+		}
+	});
+
 	&.selected {
 		.icon {
 			left: (@lime-switch-width - @lime-switch-icon-height - @lime-switch-icon-top);
 		}
+
+		.lime-custom-text({
+			.icon {
+				left: (@lime-switch-width-large - @lime-switch-icon-height-large - @lime-switch-icon-top-large);
+			}
+		});
 	}
 
 	&.animated {
