@@ -10,7 +10,11 @@ const commonItemTests = [
 	<Item>Default Item</Item>,
 	<Item disabled>Disabled Item</Item>,
 	<Item inline>Inline Item</Item>,
-	<Item inline disabled>Disabled Inline Item</Item>
+	<Item inline disabled>Disabled Inline Item</Item>,
+	<Item label="Item label">Default Item with label</Item>,
+	<Item disabled label="Item label">Disabled Item with label</Item>,
+	<Item inline label="Item label">Inline Item with label</Item>,
+	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>
 ];
 // Long text
 const longTextItemTests = [
