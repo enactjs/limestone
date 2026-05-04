@@ -95,17 +95,14 @@ export const EditableIcon = (args) => {
 	const divRef = useRef();
 	const mutableRef = useRef({timer: null});
 
-	const newItemsArr = useMemo(() => {
+	useMemo(() => {
 		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
 			newItems.push(populateItems({index: i}));
 		}
-		return newItems;
+		setItems(newItems);
 	}, [dataSize]);
 
-	if (items !== newItemsArr) {
-		setItems(newItemsArr);
-	}
 
 	useLayoutEffect(() => {
 		mutableRef.current.hideIndex = dataSize;
@@ -121,7 +118,7 @@ export const EditableIcon = (args) => {
 
 	const onClickModeButton = useCallback(() => {
 		setEditMode(mode => !mode);
-		setInitialSelected({scrollLeft: 0, itemIndex: null});
+		setInitialSelected((prevState) => ({...prevState, scrollLeft: 0, itemIndex: null}));
 		mutableRef.current.timer = null;
 	}, [setEditMode]);
 
@@ -166,10 +163,10 @@ export const EditableIcon = (args) => {
 		if (ev.target?.parentNode?.parentNode.getAttribute('role') !== 'button') {
 			const targetItemNode = findItemNode(ev.target);
 			if (targetItemNode && targetItemNode.style.order) {
-				setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
+				setInitialSelected((prevState) => ({...prevState, itemIndex: targetItemNode.style.order}));
 			}
 		}
-	}, [findItemNode, initialSelected]);
+	}, [findItemNode]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, repeat, target} = ev;
@@ -177,7 +174,7 @@ export const EditableIcon = (args) => {
 			if (repeat && !mutableRef.current.timer) {
 				const targetItemNode = findItemNode(ev.target);
 				if (targetItemNode && targetItemNode.style.order) {
-					setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
+					setInitialSelected((prevState) => ({...prevState, itemIndex: targetItemNode.style.order}));
 				}
 				mutableRef.current.timer = setTimeout(() => {
 					setEditMode(true);
@@ -185,7 +182,7 @@ export const EditableIcon = (args) => {
 
 			}
 		}
-	}, [findItemNode, initialSelected]);
+	}, [findItemNode]);
 
 	const handleKeyUp = useCallback((ev) => {
 		if (ev.target.getAttribute('role') === 'button') {
@@ -198,8 +195,8 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		setInitialSelected({...initialSelected, scrollLeft: ev.scrollLeft});
-	}, [initialSelected]);
+		setInitialSelected((prevState) => ({...prevState, scrollLeft: ev.scrollLeft}));
+	}, []);
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
@@ -222,7 +219,7 @@ export const EditableIcon = (args) => {
 	const handleGlobalKeyUp = useCallback((ev) => {
 		if (isCancel(ev.keyCode)) {
 			setEditMode(false);
-			setInitialSelected({scrollLeft: 0, itemIndex: null});
+			setInitialSelected((prevState) => ({...prevState, scrollLeft: 0, itemIndex: null}));
 			mutableRef.current.timer = null;
 		}
 	}, []);
@@ -354,17 +351,13 @@ export const EditableIconWithLongPress = (args) => {
 	const [items, setItems] = useState(itemsArr);
 	const removeItem = useRef();
 
-	const newItemsArr = useMemo(() => {
+	useMemo(() => {
 		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
 			newItems.push(populateItems({index: i}));
 		}
-		return newItems;
+		setItems(newItems);
 	}, [dataSize]);
-
-	if (items !== newItemsArr) {
-		setItems(newItemsArr);
-	}
 
 	const onClickRemoveButton = useCallback((ev) => {
 		if (removeItem.current) {
