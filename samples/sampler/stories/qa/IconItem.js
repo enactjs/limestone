@@ -83,6 +83,7 @@ const TouchableDiv = Touchable('div');
 
 export const EditableIcon = (args) => {
 	const dataSize = args['editableDataSize'];
+	const [prevDataSize, setPrevDataSize] = useState(-1);
 	const [editMode, setEditMode] = useState(false);
 	const [initialSelected, setInitialSelected] = useState({});
 	const [items, setItems] = useState(itemsArr);
@@ -95,14 +96,19 @@ export const EditableIcon = (args) => {
 	const divRef = useRef();
 	const mutableRef = useRef({timer: null});
 
-	useMemo(() => {
+	const newItemsArr = useMemo(() => {
 		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
 			newItems.push(populateItems({index: i}));
 		}
-		setItems(newItems);
+
+		return newItems;
 	}, [dataSize]);
 
+	if (dataSize !== prevDataSize) {
+		setItems(newItemsArr);
+		setPrevDataSize(dataSize);
+	}
 
 	useLayoutEffect(() => {
 		mutableRef.current.hideIndex = dataSize;
@@ -348,16 +354,23 @@ EditableIcon.storyName = 'with editable scroller';
 
 export const EditableIconWithLongPress = (args) => {
 	const dataSize = args['editableDataSize'];
+	const [prevDataSize, setPrevDataSize] = useState(-1);
 	const [items, setItems] = useState(itemsArr);
 	const removeItem = useRef();
 
-	useMemo(() => {
+	const newItemsArr = useMemo(() => {
 		const newItems = [];
 		for (let i = 0; i < dataSize; i++) {
 			newItems.push(populateItems({index: i}));
 		}
-		setItems(newItems);
+
+		return newItems;
 	}, [dataSize]);
+
+	if (dataSize !== prevDataSize) {
+		setItems(newItemsArr);
+		setPrevDataSize(dataSize);
+	}
 
 	const onClickRemoveButton = useCallback((ev) => {
 		if (removeItem.current) {
