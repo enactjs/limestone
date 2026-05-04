@@ -19,6 +19,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Checkbox` styling to match the latest GUI
+- `limestone/Item` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Switch` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
 - `@storybook/addon-docs` version to `^10.3.4`.
 - `@storybook/react-webpack5` version to `^10.3.4`.

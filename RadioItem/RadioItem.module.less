@@ -12,6 +12,12 @@
 }
 
 .radioItem {
+	--icon-size: @lime-icon-tiny-size;
+
+	.lime-custom-text({
+		--icon-size: @lime-icon-small-size;
+	});
+
 	.slotBefore {
 		> * {
 			// Override Item's slotBefore margin
@@ -22,12 +28,6 @@
 				margin-inline-end: @lime-radioitem-icon-margin;
 			}
 		}
-
-		--icon-size: @lime-icon-tiny-size;
-
-		.lime-custom-text({
-			--icon-size: @lime-icon-small-size;
-		});
 	}
 
 	.icon {
