@@ -24,6 +24,7 @@
 		min-width: @lime-button-height-large;
 		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
+		--icon-size: @lime-icon-large-size-large;
 
 		&.red,
 		&.green,
@@ -59,6 +60,10 @@
 	.icon {
 		flex-shrink: 0;
 		.margin-start-end(@lime-button-icon-margin-start, @lime-button-icon-margin-end);
+
+		.lime-custom-text({
+			--icon-size: @lime-icon-large-size-large;
+		});
 	}
 
 	// Button with icon and text
@@ -227,6 +232,12 @@
 					height: @lime-button-small-colordot-height-font-size-large;
 				}
 			}
+
+			.icon {
+				.lime-custom-text({
+					--icon-size: @lime-icon-small-size-large;
+				});
+			}
 		});
 	}
 
@@ -249,6 +260,16 @@
 		&.large {
 			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
 			.padding-start-end(.extract(@lime-button-icon-padding, left)[], .extract(@lime-button-icon-padding, right)[]);
+
+
+			.icon {
+				--icon-size: @lime-button-icon-only-icon-large;
+
+				.lime-custom-text({
+					--icon-size: @lime-button-icon-only-icon-large-size-large;
+					overflow: visible;
+				})
+			}
 		}
 
 		&.small {
@@ -259,6 +280,15 @@
 			.lime-custom-text({
 				min-width: @lime-button-small-height-large;
 			});
+
+			.icon {
+				--icon-size: @lime-button-icon-only-icon-small;
+
+				.lime-custom-text({
+					--icon-size: @lime-button-icon-only-icon-small-size-large;
+					overflow: visible;
+				})
+			}
 		}
 
 		&.iconAfter,
