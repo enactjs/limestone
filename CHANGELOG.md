@@ -41,6 +41,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Dropdown` button to match `DropdownList` items size when `size` is `small`
 - `limestone/IconItem` press motion to work with key press
 - `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Heading` subtitle to apply proper large text typography
 - `limestone/Popup` to not flicker on transition
 - `limestone/Popup` to not delay when closed with pointer
 - `limestone/Scroller.EditableWrapper` to not stop the `Marquee` when editing is complete
