@@ -19,8 +19,8 @@
         "@storybook/react-webpack5": "^10.3.5",
         "classnames": "^2.5.1",
         "ilib": "^14.21.2",
-        "react": "^19.2.5",
-        "react-dom": "^19.2.5",
+        "react": "~19.0.4",
+        "react-dom": "~19.0.4",
         "react-ga4": "^2.1.0",
         "storybook": "^10.3.5"
       }
@@ -328,6 +328,33 @@
         "warning": "^4.0.3"
       }
     },
+    "node_modules/@enact/core/node_modules/react": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.2.5.tgz",
+      "integrity": "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/@enact/core/node_modules/react-dom": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.5.tgz",
+      "integrity": "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.27.0"
+      },
+      "peerDependencies": {
+        "react": "^19.2.5"
+      }
+    },
+    "node_modules/@enact/core/node_modules/scheduler": {
+      "version": "0.27.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "license": "MIT"
+    },
     "node_modules/@enact/i18n": {
       "version": "5.4.2",
       "resolved": "https://registry.npmjs.org/@enact/i18n/-/i18n-5.4.2.tgz",
@@ -344,6 +371,33 @@
       "peerDependencies": {
         "ilib": "^14.21.0 || ^14.21.0-webos1"
       }
+    },
+    "node_modules/@enact/i18n/node_modules/react": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.2.5.tgz",
+      "integrity": "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/@enact/i18n/node_modules/react-dom": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.5.tgz",
+      "integrity": "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.27.0"
+      },
+      "peerDependencies": {
+        "react": "^19.2.5"
+      }
+    },
+    "node_modules/@enact/i18n/node_modules/scheduler": {
+      "version": "0.27.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "license": "MIT"
     },
     "node_modules/@enact/limestone": {
       "resolved": "../..",
@@ -363,6 +417,33 @@
         "react-dom": "^19.2.3",
         "warning": "^4.0.3"
       }
+    },
+    "node_modules/@enact/spotlight/node_modules/react": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.2.5.tgz",
+      "integrity": "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/@enact/spotlight/node_modules/react-dom": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.5.tgz",
+      "integrity": "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.27.0"
+      },
+      "peerDependencies": {
+        "react": "^19.2.5"
+      }
+    },
+    "node_modules/@enact/spotlight/node_modules/scheduler": {
+      "version": "0.27.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "license": "MIT"
     },
     "node_modules/@enact/storybook-utils": {
       "version": "8.0.0",
@@ -32481,6 +32562,33 @@
         "warning": "^4.0.3"
       }
     },
+    "node_modules/@enact/ui/node_modules/react": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.2.5.tgz",
+      "integrity": "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==",
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/@enact/ui/node_modules/react-dom": {
+      "version": "19.2.5",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.5.tgz",
+      "integrity": "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==",
+      "license": "MIT",
+      "dependencies": {
+        "scheduler": "^0.27.0"
+      },
+      "peerDependencies": {
+        "react": "^19.2.5"
+      }
+    },
+    "node_modules/@enact/ui/node_modules/scheduler": {
+      "version": "0.27.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
+      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "license": "MIT"
+    },
     "node_modules/@esbuild/aix-ppc64": {
       "version": "0.27.1",
       "resolved": "https://registry.npmjs.org/@esbuild/aix-ppc64/-/aix-ppc64-0.27.1.tgz",
@@ -33030,9 +33138,9 @@
       "license": "MIT"
     },
     "node_modules/@storybook/icons": {
-      "version": "2.0.1",
-      "resolved": "https://registry.npmjs.org/@storybook/icons/-/icons-2.0.1.tgz",
-      "integrity": "sha512-/smVjw88yK3CKsiuR71vNgWQ9+NuY2L+e8X7IMrFjexjm6ZR8ULrV2DRkTA61aV6ryefslzHEGDInGpnNeIocg==",
+      "version": "2.0.2",
+      "resolved": "https://registry.npmjs.org/@storybook/icons/-/icons-2.0.2.tgz",
+      "integrity": "sha512-KZBCpXsshAIjczYNXR/rlxEtCUX/eAbpFNwKi8bcOomrLA4t/SyPz5RF+lVPO2oZBUE4sAkt43mfJUevQDSEEw==",
       "license": "MIT",
       "peerDependencies": {
         "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
@@ -33114,6 +33222,21 @@
       "peerDependencies": {
         "typescript": ">= 4.x",
         "webpack": ">= 4"
+      }
+    },
+    "node_modules/@storybook/react-dom-shim": {
+      "version": "10.3.5",
+      "resolved": "https://registry.npmjs.org/@storybook/react-dom-shim/-/react-dom-shim-10.3.5.tgz",
+      "integrity": "sha512-Gw8R7XZm0zSUH0XAuxlQJhmizsLzyD6x00KOlP6l7oW9eQHXGfxg3seNDG3WrSAcW07iP1/P422kuiriQlOv7g==",
+      "license": "MIT",
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/storybook"
+      },
+      "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+        "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+        "storybook": "^10.3.5"
       }
     },
     "node_modules/@storybook/react-webpack5": {
@@ -35766,9 +35889,9 @@
       }
     },
     "node_modules/react": {
-      "version": "19.2.5",
-      "resolved": "https://registry.npmjs.org/react/-/react-19.2.5.tgz",
-      "integrity": "sha512-llUJLzz1zTUBrskt2pwZgLq59AemifIftw4aB7JxOqf1HY2FDaGDxgwpAPVzHU1kdWabH7FauP4i1oEeer2WCA==",
+      "version": "19.0.5",
+      "resolved": "https://registry.npmjs.org/react/-/react-19.0.5.tgz",
+      "integrity": "sha512-yIoQWl4moQfHFKNGmyJavhOki09GwCRcMFuXv3y3KMXoQrGnDi0ZHGe4H9EtQE+jrMWU4hgxaILMS4rxTkJdGw==",
       "license": "MIT",
       "engines": {
         "node": ">=0.10.0"
@@ -35805,15 +35928,15 @@
       }
     },
     "node_modules/react-dom": {
-      "version": "19.2.5",
-      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.5.tgz",
-      "integrity": "sha512-J5bAZz+DXMMwW/wV3xzKke59Af6CHY7G4uYLN1OvBcKEsWOs4pQExj86BBKamxl/Ik5bx9whOrvBlSDfWzgSag==",
+      "version": "19.0.5",
+      "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-19.0.5.tgz",
+      "integrity": "sha512-yqJj7o8tlj5FiLpycpClCCTp1f1FXvMgCkFej41N1iTmVDiTeDIay6Y69sn8w9JXSCzZyCLP3fotgEhZagDZWw==",
       "license": "MIT",
       "dependencies": {
-        "scheduler": "^0.27.0"
+        "scheduler": "^0.25.0"
       },
       "peerDependencies": {
-        "react": "^19.2.5"
+        "react": "^19.0.5"
       }
     },
     "node_modules/react-ga4": {
@@ -35971,9 +36094,9 @@
       }
     },
     "node_modules/scheduler": {
-      "version": "0.27.0",
-      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz",
-      "integrity": "sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==",
+      "version": "0.25.0",
+      "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.25.0.tgz",
+      "integrity": "sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==",
       "license": "MIT"
     },
     "node_modules/schema-utils": {
