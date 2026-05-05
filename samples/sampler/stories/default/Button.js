@@ -81,7 +81,6 @@ boolean('centered', _Button, Config);
 select('color', _Button, prop.color, Config);
 boolean('disabled', _Button, Config);
 select('focusEffect', _Button, prop.focusEffect, Config);
-text('children', _Button, Config, 'click me');
 select('icon', _Button, prop.icons, Config);
 select('iconFlip', _Button, prop.iconFlip, Config);
 select('iconPosition', _Button, prop.iconPosition, Config);
@@ -92,7 +91,7 @@ boolean('shadowed', _Button, Config);
 select('size', _Button, prop.size, Config);
 text('tooltipText', _Button, Config);
 select('tooltipType', _Button, prop.tooltipType, Config);
-
+text('children', _Button, Config, 'click me');
 
 _Button.storyName = 'Button';
 _Button.parameters = {
