@@ -12,18 +12,6 @@ const baseTests = [
 	<Header type="standard" title="Title Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor." subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor." marqueeOn="hover" />
 ];
 
-const largeTextSubtitleTests = withConfig({skinVariants: ['largeText']}, [
-	<Header type="standard" title="Title" subtitle="Subtitle" />,
-	<Header type="compact" title="Title" subtitle="Subtitle" />,
-	<Header type="wizard" centered title="Title" subtitle="Subtitle" />,
-	<Header
-		type="standard"
-		title="Title Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor."
-		subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor."
-		marqueeOn="hover"
-	/>
-]);
-
 const dropIn = {
 	steps: <Steps current={3} total={5} />,
 	backButton: <Button icon="arrowlargeleft" />,
@@ -36,6 +24,28 @@ const dropIn = {
 		</Fragment>
 	)
 };
+
+const subtitleComparisonTests = [
+	<Header type="standard" title="Title" subtitle="Subtitle" />,
+	<Header type="standard" title="Title" subtitle="Subtitle" slotAfter={dropIn.singleButton} />,
+	<Header type="standard" title="Title" subtitle="Subtitle" slotAfter={dropIn.doubleButtons} />,
+	<Header type="standard" title="Title" subtitle="Subtitle" slotBefore={dropIn.singleButton} slotAfter={dropIn.singleButton} />,
+	<Header type="standard" title="Title" subtitle="Subtitle">{dropIn.doubleButtons}</Header>,
+	<Header type="compact" title="Title" subtitle="Subtitle" />,
+	<Header type="compact" title="Title" subtitle="Subtitle" slotAfter={dropIn.singleButton} />,
+	<Header type="compact" title="Title" subtitle="Subtitle" slotAfter={dropIn.doubleButtons} />,
+	<Header type="wizard" centered title="Title" subtitle="Subtitle" />,
+	<Header type="wizard" centered title="Title" subtitle="Subtitle" slotBefore={dropIn.backButton} slotAfter={dropIn.nextButton} />,
+	<Header type="wizard" centered title="Title" subtitle="Subtitle">{dropIn.singleButton}</Header>,
+	<Header
+		type="standard"
+		title="Title Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor."
+		subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor."
+		marqueeOn="hover"
+	/>
+];
+
+const largeTextSubtitleTests = withConfig({skinVariants: ['largeText']}, subtitleComparisonTests);
 
 const headerWithChildrenTests = [
 	<Header type="standard" title="Title">{dropIn.doubleButtons}</Header>,
@@ -134,6 +144,7 @@ const LtrTests = [
 
 const HeaderTests = [
 	...LtrTests,
+	...subtitleComparisonTests,
 	...largeTextSubtitleTests,
 	...specificTests,
 	...withConfig({locale: 'ar-SA'}, LtrTests),
