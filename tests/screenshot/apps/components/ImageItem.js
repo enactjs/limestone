@@ -68,8 +68,17 @@ const defaultImageItemTests = [
 	])
 ];
 
+const largeTextComparisonTests = [
+	<ImageItem src={img} style={verticalStyle} orientation="vertical">LargeText Caption</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="LargeText Label">LargeText Caption</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="LargeText Label" showSelection>LargeText Caption</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="LargeText Label" selected showSelection>LargeText Caption</ImageItem>
+];
+
 const ImageItemTests = [
 	...defaultImageItemTests,
+	...largeTextComparisonTests,
+	...withConfig({skinVariants: ['largeText']}, largeTextComparisonTests),
 
 	// Centered
 	...withProps({centered:true}, defaultImageItemTests),
