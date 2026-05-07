@@ -28,7 +28,7 @@
 		.enact-locale-tallglyph({
 			font-size: @lime-tallglyph-imageitem-caption-font-size;
 		});
-	} 
+	}
 
 	.label {
 		font-size: @lime-imageitem-label-font-size;
@@ -54,6 +54,14 @@
 			width: @lime-imageitem-vertical-selection-icon-size-large;
 			height: @lime-imageitem-vertical-selection-icon-size-large;
 			line-height: @lime-imageitem-vertical-selection-icon-size-large;
+			.lime-custom-text({
+				--icon-size: @lime-icon-small-size-large;
+			});
+		}
+
+		&.vertical .imageIcon {
+			width: @lime-imageitem-vertical-image-icon-size-large;
+			height: @lime-imageitem-vertical-image-icon-size-large;
 		}
 	});
 
