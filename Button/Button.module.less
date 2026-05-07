@@ -259,16 +259,6 @@
 		&.large {
 			padding: @lime-button-icon-padding; // adjust the padding to center the icon because of the existence of `Marquee` as a sibling even if there are no children in `Marquee`
 			.padding-start-end(.extract(@lime-button-icon-padding, left)[], .extract(@lime-button-icon-padding, right)[]);
-
-
-			.icon {
-				--icon-size: @lime-button-icon-only-icon-large;
-
-				.lime-custom-text({
-					--icon-size: @lime-button-icon-only-icon-large-size-large;
-					overflow: visible;
-				})
-			}
 		}
 
 		&.small {
@@ -279,15 +269,6 @@
 			.lime-custom-text({
 				min-width: @lime-button-small-height-large;
 			});
-
-			.icon {
-				--icon-size: @lime-button-icon-only-icon-small;
-
-				.lime-custom-text({
-					--icon-size: @lime-button-icon-only-icon-small-size-large;
-					overflow: visible;
-				})
-			}
 		}
 
 		&.iconAfter,
