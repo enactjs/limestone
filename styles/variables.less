@@ -122,9 +122,9 @@
 @lime-base-font-size:               var(--primitive-font-size-60);
 @lime-body-font-size:               @lime-base-font-size;
 @lime-body-small-font-size:         var(--primitive-font-size-54);
-@lime-button-font-size-large:       var(--primitive-font-size-96);
+@lime-button-font-size-large:       var(--primitive-font-size-72);
 @lime-button-font-size:             var(--primitive-font-size-60);
-@lime-button-small-font-size-large: var(--primitive-font-size-72);
+@lime-button-small-font-size-large: var(--primitive-font-size-66);
 @lime-button-small-font-size:       var(--primitive-font-size-54);
 @lime-card-caption-font-size:       var(--primitive-font-size-60);
 @lime-card-label-font-size:         var(--primitive-font-size-48);
@@ -360,8 +360,8 @@
 @lime-button-margin: var(--primitive-spacing-36);
 @lime-button-focusexpand-margin: 9px .extract(@lime-button-margin, right)[]; // 9px provides enough space for the expanded focus state
 @lime-button-h-padding: var(--primitive-spacing-60);
-@lime-button-height-large: 192px;
 @lime-button-height: 132px;
+@lime-button-height-large: @lime-button-height;
 @lime-button-icon-h-margin: var(--primitive-spacing-24);
 @lime-button-icon-margin-end: @lime-button-icon-h-margin;
 @lime-button-icon-margin-start: 0;
@@ -381,25 +381,31 @@
 @lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
 @lime-button-small-h-padding: var(--primitive-spacing-60);
-@lime-button-small-height-large: 144px;
 @lime-button-small-height: 108px;
+@lime-button-small-height-large: @lime-button-small-height;
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
 @lime-button-small-min-width-default: 720px;
 @lime-button-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
+@lime-button-colordot-width-font-size-large: 72px;
 @lime-button-colordot-h-margin: var(--primitive-spacing-84);
 @lime-button-colordot-height: 12px;
+@lime-button-colordot-height-font-size-large: 15px;
 @lime-button-colordot-h-padding: var(--primitive-spacing-24);
 @lime-button-colordot-padding-start: var(--primitive-spacing-36);
 @lime-button-small-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-small-colordot-width: 51px;
+@lime-button-small-colordot-width-font-size-large: 60px;
 @lime-button-small-colordot-h-margin: var(--primitive-spacing-72);
 @lime-button-small-colordot-height: 9px;
+@lime-button-small-colordot-height-font-size-large: 12px;
 @lime-button-small-colordot-padding-start: var(--primitive-spacing-30);
 @lime-button-icon-only-colordot-width: 66px;
+@lime-button-icon-only-colordot-width-font-size-large: 78px;
 @lime-button-icon-only-colordot-height: 9px;
+@lime-button-icon-only-colordot-height-font-size-large: 12px;
 @lime-button-collapse-duration: 300ms;
 @lime-button-collapsable-icon-margin: 0 var(--primitive-spacing-24);
 

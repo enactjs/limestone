@@ -602,9 +602,10 @@ const EditableWrapper = (props) => {
 		if (selectItemBy === 'press') {
 			if (getPointerMode()) {
 				Spotlight.setPointerMode(false);
+				Spotlight.focus(focusTarget);
 			}
 
-			Spotlight.focus(focusTarget);
+			if (focusTarget !== Spotlight.getCurrent()) Spotlight.focus(focusTarget);
 			focusItem(focusTarget);
 		}
 		setTimeout(() => {

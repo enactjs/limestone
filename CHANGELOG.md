@@ -19,6 +19,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
@@ -37,6 +38,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/MediaOverlay` press motion to work with key press
 - `limestone/Popup` to not flicker on transition
 - `limestone/Popup` to not delay when closed with pointer
+- `limestone/Scroller.EditableWrapper` to not stop the `Marquee` when editing is complete
 - `limestone/Slider` press motion to work with key press
 - `limestone/useScroll` to not scroll on hover right after scroll by wheel
 

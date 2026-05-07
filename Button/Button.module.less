@@ -24,6 +24,17 @@
 		min-width: @lime-button-height-large;
 		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
+
+		&.red,
+		&.green,
+		&.yellow,
+		&.blue {
+			.client::before {
+				bottom: @lime-button-colordot-bottom;
+				width: @lime-button-colordot-width-font-size-large;
+				height: @lime-button-colordot-height-font-size-large;
+			}
+		}
 	});
 
 	&.focusStatic {
@@ -48,6 +59,10 @@
 	.icon {
 		flex-shrink: 0;
 		.margin-start-end(@lime-button-icon-margin-start, @lime-button-icon-margin-end);
+
+		.lime-custom-text({
+			--icon-size: @lime-icon-large-size-large;
+		});
 	}
 
 	// Button with icon and text
@@ -206,6 +221,22 @@
 			&.minWidth {
 				min-width: @lime-button-small-min-width-default;
 			}
+
+			&.red,
+			&.green,
+			&.yellow,
+			&.blue {
+				.client::before {
+					width: @lime-button-small-colordot-width-font-size-large;
+					height: @lime-button-small-colordot-height-font-size-large;
+				}
+			}
+
+			.icon {
+				.lime-custom-text({
+					--icon-size: @lime-icon-small-size-large;
+				});
+			}
 		});
 	}
 
@@ -271,6 +302,14 @@
 				width: @lime-button-icon-only-colordot-width;
 				height: @lime-button-icon-only-colordot-height;
 			}
+
+			.lime-custom-text({
+				.client::before {
+					width: @lime-button-icon-only-colordot-width-font-size-large;
+					height: @lime-button-icon-only-colordot-height-font-size-large;
+				}
+			})
+
 		}
 	}
 
