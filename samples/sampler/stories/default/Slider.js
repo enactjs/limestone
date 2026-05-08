@@ -17,6 +17,7 @@ export const _Slider = (args) => (
 	<Slider
 		activateOnSelect={args['activateOnSelect'] || false}
 		backgroundProgress={args['backgroundProgress']}
+		colorPicker={args['colorPicker']}
 		disabled={args['disabled']}
 		keyFrequency={args['keyFrequency']}
 		knobStep={args['knobStep']}
@@ -90,6 +91,7 @@ boolean('showAnchor', _Slider, SliderConfig);
 boolean('showMinMax', _Slider, SliderConfig);
 number('step', _Slider, SliderConfig, 1);
 number('wheelInterval', _Slider, SliderConfig);
+boolean('colorPicker', _Slider, SliderConfig);
 
 _Slider.storyName = 'Slider';
 _Slider.parameters = {

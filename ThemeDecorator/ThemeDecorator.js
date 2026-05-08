@@ -57,6 +57,18 @@ const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.default
 	disableFullscreen: false,
 
 	/**
+	 * A CSS class name to apply globally to every spottable component when it receives spotlight focus.
+	 *
+	 * This is the declarative equivalent of calling `setFocusEffectClass` imperatively. It acts as
+	 * an app-wide default.
+	 *
+	 * @type {String}
+	 * @default null
+	 * @public
+	 */
+	focusEffectClass: null,
+
+	/**
 	 * Enables a floating layer for popup components.
 	 *
 	 * If not applied, app will be responsible for applying the decorator.
@@ -171,8 +183,7 @@ const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.default
  * @public
  */
 const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
-	const {accessible, ri, i18n, spotlight, float, noAutoFocus, overlay,
-		skin, disableFullscreen, rootId} = config;
+	const {accessible, disableFullscreen, float, focusEffectClass, i18n, noAutoFocus, overlay, ri, rootId, skin, spotlight} = config;
 
 	// Apply classes depending on screen type (overlay / fullscreen)
 	const bgClassName = classNames({
@@ -203,7 +214,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			)
 		);
 	}
-	if (spotlight) App = SpotlightRootDecorator({noAutoFocus, rootId}, App);
+	if (spotlight) App = SpotlightRootDecorator({focusEffectClass, noAutoFocus, rootId}, App);
 	if (skin) App = Skinnable(App);
 	if (accessible) App = AccessibilityDecorator(App);
 

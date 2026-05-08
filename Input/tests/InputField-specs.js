@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {InputField} from '../';
@@ -22,7 +22,7 @@ describe('InputField Specs', () => {
 		const expected = 'hello';
 		const actual = inputField.textContent;
 
-		expect(actual).toBe(expected);
+		expect(actual).toContain(expected);
 	});
 
 	test('should callback onChange with `onChange` type when the text changes', async () => {
@@ -162,12 +162,12 @@ describe('InputField Specs', () => {
 		const actual = inputField.textContent;
 		const expected = 'hello';
 
-		expect(actual).toBe(expected);
+		expect(actual).toContain(expected);
 	});
 
 	test('should have dir equal to rtl when there is rtl text', () => {
 		render(<InputField value="שועל החום הזריז קפץ מעל הכלב העצלן.ציפור עפה השעועית עם שקי" />);
-		const inputField = screen.getByLabelText( 'שועל החום הזריז קפץ מעל הכלב העצלן.ציפור עפה השעועית עם שקי' + ' Input field').children.item(2);
+		const inputField = screen.getByPlaceholderText('');
 
 		const expectedAttribute = 'dir';
 		const expectedValue = 'rtl';
@@ -319,5 +319,135 @@ describe('InputField Specs', () => {
 		expect(handleKeyDown).toHaveBeenCalled();
 		expect(key).toBe('ArrowLeft');
 		expect(actual).toMatchObject(expected);
+	});
+
+	describe('marqueeContent', () => {
+		test('should not render a marquee node by default', () => {
+			const {baseElement} = render(<InputField value="hello" />);
+			const marqueeText = baseElement.querySelector('.marqueeText');
+
+			expect(marqueeText).toBeNull();
+		});
+
+		test('should render a marquee node when marqueeContent is true', () => {
+			const {baseElement} = render(<InputField marqueeContent value="hello" />);
+			const marqueeText = baseElement.querySelector('.marqueeText');
+
+			expect(marqueeText).not.toBeNull();
+			expect(marqueeText.querySelector('.marquee')).not.toBeNull();
+		});
+	});
+
+	describe('moveCaretToEnd', () => {
+		test('should move caret to end of value on mouse focus when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const value = 'hello';
+			render(<InputField caretToEndOnFocus value={value} />);
+			const inputField = screen.getByPlaceholderText('');
+			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runOnlyPendingTimers());
+
+			expect(setSelectionRange).toHaveBeenCalledWith(value.length, value.length);
+
+			jest.useRealTimers();
+		});
+
+		test('should set scrollLeft to scrollWidth for LTR input when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const value = 'hello';
+			render(<InputField caretToEndOnFocus value={value} />);
+			const inputField = screen.getByPlaceholderText('');
+
+			let scrollLeft = 0;
+			Object.defineProperty(inputField, 'scrollLeft', {
+				get: () => scrollLeft,
+				set: (v) => {
+					scrollLeft = v;
+				},
+				configurable: true
+			});
+			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runOnlyPendingTimers());
+
+			expect(scrollLeft).toBe(200);
+
+			jest.useRealTimers();
+		});
+
+		test('should set scrollLeft to 0 for RTL input when caretToEndOnFocus is true', () => {
+			jest.useFakeTimers();
+			const rtlValue = 'שועל החום הזריז';
+			render(<InputField caretToEndOnFocus value={rtlValue} />);
+			const inputField = screen.getByPlaceholderText('');
+
+			let scrollLeft = 999;
+			Object.defineProperty(inputField, 'scrollLeft', {
+				get: () => scrollLeft,
+				set: (v) => {
+					scrollLeft = v;
+				},
+				configurable: true
+			});
+			Object.defineProperty(inputField, 'scrollWidth', {get: () => 200, configurable: true});
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runOnlyPendingTimers());
+
+			expect(scrollLeft).toBe(0);
+
+			jest.useRealTimers();
+		});
+
+		test('should not move caret when caretToEndOnFocus is not set', () => {
+			jest.useFakeTimers();
+			render(<InputField value="hello" />);
+			const inputField = screen.getByPlaceholderText('');
+			const setSelectionRange = jest.spyOn(inputField, 'setSelectionRange');
+
+			fireEvent.mouseDown(inputField);
+			act(() => jest.runOnlyPendingTimers());
+
+			expect(setSelectionRange).not.toHaveBeenCalled();
+
+			jest.useRealTimers();
+		});
+	});
+
+	describe('decorator icons', () => {
+		test('should render iconBefore and iconAfter with data-input-icon attribute', () => {
+			render(<InputField iconBefore="plus" iconAfter="minus" />);
+
+			const icons = document.querySelectorAll('[data-input-icon]');
+
+			expect(icons).toHaveLength(2);
+		});
+
+		test('should not activate the input when iconBefore is clicked', () => {
+			render(<InputField iconBefore="plus" value="hello" />);
+
+			const inputField = screen.getByPlaceholderText('');
+			const icon = document.querySelector('[data-input-icon]');
+			const focusSpy = jest.spyOn(inputField, 'focus');
+
+			fireEvent.mouseDown(icon);
+
+			expect(focusSpy).not.toHaveBeenCalled();
+		});
+
+		test('should not activate the input when iconAfter is clicked', () => {
+			render(<InputField iconAfter="minus" value="hello" />);
+
+			const inputField = screen.getByPlaceholderText('');
+			const icon = document.querySelector('[data-input-icon]');
+			const focusSpy = jest.spyOn(inputField, 'focus');
+
+			fireEvent.mouseDown(icon);
+
+			expect(focusSpy).not.toHaveBeenCalled();
+		});
 	});
 });

@@ -3,7 +3,7 @@ import useChainRefs from '@enact/core/useChainRefs';
 import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useId, Children} from 'react';
+import {useCallback, useEffect, useId, Children, useRef} from 'react';
 
 import {useAutoFocus, useFocusOnTransition, useToggleRole} from '../internal/Panels';
 
@@ -22,7 +22,7 @@ function useReverseTransition (index, rtl) {
 }
 
 /**
- * PageViewsRouter passes children, index and transition handlers
+ * PageViewsRouter passes children, index and transition handlers.
  *
  * @class PageViewsRouter
  * @memberof limestone/PageViews
@@ -38,13 +38,19 @@ function PageViewsRouter (Wrapped) {
 
 		const {
 			autoFocus,
+			bannerMode,
 			children,
 			componentRef,
 			'data-spotlight-id': spotlightId,
 			index,
+			onFooterCloseClick,
+			onFooterNextClick,
+			onNextClick,
+			onPrevClick,
 			onTransition,
 			onWillTransition,
 			rtl,
+			showFooterButtons,
 			...rest
 		} = pageViewsProviderProps;
 
@@ -54,10 +60,50 @@ function PageViewsRouter (Wrapped) {
 		const autoFocusRef = useAutoFocus({autoFocus});
 		const ref = useChainRefs(autoFocusRef, a11yRef, componentRef);
 		const {reverseTransition} = useReverseTransition(index, rtl);
+
+		const navigationSource = useRef(null);  // 'internal-next' | 'internal-prev' | 'footer' | null
+
+		useEffect(() => {
+			if (showFooterButtons && !bannerMode) {
+				Spotlight.focus(spotlightId, {enterTo: 'default-element'});
+			}
+		}, [bannerMode, showFooterButtons, spotlightId]);
+
+		const handleNextClick = useCallback((ev) => {
+			navigationSource.current = 'internal-next';
+			onNextClick?.(ev);
+		}, [onNextClick]);
+
+		const handlePrevClick = useCallback((ev) => {
+			navigationSource.current = 'internal-prev';
+			onPrevClick?.(ev);
+		}, [onPrevClick]);
+
+		const handleFooterNextClick = useCallback((ev) => {
+			navigationSource.current = 'footer';
+			onFooterNextClick?.(ev);
+		}, [onFooterNextClick]);
+
+		const handleTransition = useCallback((ev) => {
+			if (showFooterButtons && !bannerMode) {
+				const source = navigationSource.current;
+				const newIndex = ev.index;
+
+				if (source === 'footer' ||
+						(source === 'internal-next' && newIndex === totalIndex - 1) ||
+						(source === 'internal-prev' && newIndex === 0)) {
+					Spotlight.focus(spotlightId, {enterTo: 'default-element'});
+				}
+			}
+
+			navigationSource.current = null;
+			onTransition?.(ev);
+		}, [bannerMode, onTransition, showFooterButtons, spotlightId, totalIndex]);
+
 		const {
 			onWillTransition: focusOnWillTransition,
 			...transition
-		} = useFocusOnTransition({onTransition, onWillTransition, spotlightId});
+		} = useFocusOnTransition({onTransition: handleTransition, onWillTransition, spotlightId});
 
 		const handleWillTransition = useCallback((ev) => {
 			focusOnWillTransition(ev);
@@ -74,13 +120,19 @@ function PageViewsRouter (Wrapped) {
 			<Wrapped
 				{...rest}
 				{...transition}
+				bannerMode={bannerMode}
 				componentRef={ref}
 				data-spotlight-id={spotlightId}
 				index={index}
-				totalIndex={totalIndex}
+				onFooterCloseClick={onFooterCloseClick}
+				onFooterNextClick={handleFooterNextClick}
+				onNextClick={handleNextClick}
+				onPrevClick={handlePrevClick}
 				onWillTransition={handleWillTransition}
 				reverseTransition={reverseTransition}
 				rtl={rtl}
+				showFooterButtons={showFooterButtons}
+				totalIndex={totalIndex}
 				uniqueId={uniqueId}
 			>
 				{children}
@@ -108,20 +160,20 @@ function PageViewsRouter (Wrapped) {
 		componentRef: EnactPropTypes.ref,
 
 		/**
-		* The spotlight id for the panel.
-		*
-		* @type {String}
-		* @private
-		*/
+		 * The spotlight id for the panel.
+		 *
+		 * @type {String}
+		 * @private
+		 */
 		'data-spotlight-id': PropTypes.string,
 
 		/**
-		* The currently selected step.
-		*
-		* @type {Number}
-		* @default 0
-		* @private
-		*/
+		 * The currently selected step.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @private
+		 */
 		index: PropTypes.number,
 
 		/**
@@ -133,19 +185,19 @@ function PageViewsRouter (Wrapped) {
 		noAnimation: PropTypes.bool,
 
 		/**
-		* Called when a transition completes.
-		*
-		* @type {Function}
-		* @private
-		*/
+		 * Called when a transition completes.
+		 *
+		 * @type {Function}
+		 * @private
+		 */
 		onTransition: PropTypes.func,
 
 		/**
-		* Called when a transition begins.
-		*
-		* @type {Function}
-		* @private
-		*/
+		 * Called when a transition begins.
+		 *
+		 * @type {Function}
+		 * @private
+		 */
 		onWillTransition: PropTypes.func,
 
 		/**

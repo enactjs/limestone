@@ -2,14 +2,24 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.10.0] - 2026-05-08
 
 ### Added
 
+- `limestone/Alert` `buttonDirection` prop to control button layout direction (`auto`, `horizontal`, `vertical`)
 - `limestone/Icon` supported icon list, adding new icon `f1`
+- `limestone/Input` props `marqueeInputField` to marquee inputField text on focus
+- `limestone/Inputfield` prop `caretToEndOnFocus` to move caret to the end of the input field on input activation via 5-way
+- `limestone/Inputfield` prop `marqueeContent` to marquee text on focus
+- `limestone/PageViews` `showFooterButtons` prop to show optional Close/Next buttons
+- `limestone/PageViews` `footerCloseLabel` prop to custom the Close button label
+- `limestone/PageViews` `onFooterCloseClick` prop to custom the Close button behavior when it is clicked
+- `limestone/Slider` `colorPicker` prop to change slider functionality
+- `limestone/ThemeDecorator` config `focusEffectClass` to support customization for spottable components
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
 - `@storybook/addon-docs` version to `^10.3.4`.
 - `@storybook/react-webpack5` version to `^10.3.4`.
@@ -24,8 +34,35 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/MediaOverlay` press motion to work with key press
 - `limestone/Popup` to not flicker on transition
 - `limestone/Popup` to not delay when closed with pointer
+- `limestone/Scroller.EditableWrapper` to not stop the `Marquee` when editing is complete
 - `limestone/Slider` press motion to work with key press
 - `limestone/useScroll` to not scroll on hover right after scroll by wheel
+
+## [1.9.3] - 2026-04-20
+
+### Fixed
+
+- `limestone/Popup` to not delay when closed with pointer
+
+## [1.9.2] - 2026-03-10
+
+### Fixed
+
+- `limestone/Card` `captionOverlayOnFocus` prop to work in `focusRing` mode
+
+## [1.9.1] - 2026-02-26
+
+### Changed
+
+- `limestone/Slider` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` press motion to work with key press
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Popup` to avoid popup content blinking into existence after render
+- `limestone/Slider` press motion to work with key press
 
 ## [1.9.0] - 2026-01-28
 

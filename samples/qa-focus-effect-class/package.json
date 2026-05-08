@@ -1,7 +1,7 @@
 {
-  "name": "qa-i18n",
+  "name": "qa-focus-effect-class",
   "version": "0.1.0",
-  "description": "A general template for an Enact Limestone application for webOS TVs",
+  "description": "A qa sample for testing focus effect class",
   "author": "",
   "main": "src/index.js",
   "scripts": {
@@ -11,7 +11,6 @@
     "watch": "enact pack --watch",
     "clean": "enact clean",
     "lint": "enact lint --strict .",
-    "license": "enact license",
     "test": "enact test",
     "test-watch": "enact test --watch"
   },
@@ -19,6 +18,7 @@
   "private": true,
   "repository": "",
   "enact": {
+    "title": "QA Focus Effect Class",
     "theme": "limestone"
   },
   "dependencies": {
@@ -27,7 +27,6 @@
     "@enact/limestone": "../../",
     "@enact/spotlight": "^5.5.0",
     "@enact/ui": "^5.5.0",
-    "@enact/webos": "^5.5.0",
     "ilib": "^14.21.3",
     "prop-types": "^15.8.1",
     "react": "^19.2.6",
