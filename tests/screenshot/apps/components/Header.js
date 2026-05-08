@@ -123,6 +123,7 @@ const LtrTests = [
 const HeaderTests = [
 	...LtrTests,
 	...specificTests,
+	...withConfig({skinVariants: ['largeText']}, LtrTests),
 	...withConfig({locale: 'ar-SA'}, LtrTests),
 
 	// Tallglyph Validation
