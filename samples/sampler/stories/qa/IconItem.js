@@ -94,6 +94,7 @@ export const EditableIcon = (args) => {
 	const focusItem = useRef();
 	const blurItem = useRef();
 	const divRef = useRef();
+	const scrollLeftRef = useRef(0);
 	const mutableRef = useRef({timer: null});
 
 	const newItemsArr = useMemo(() => {
@@ -161,6 +162,7 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleHoldStart = useCallback(() => {
+		setInitialSelected((prevState) => ({...prevState, scrollLeft: scrollLeftRef.current}));
 		setEditMode(true);
 	}, [setEditMode]);
 
@@ -182,6 +184,7 @@ export const EditableIcon = (args) => {
 					setInitialSelected((prevState) => ({...prevState, itemIndex: targetItemNode.style.order}));
 				}
 				mutableRef.current.timer = setTimeout(() => {
+					setInitialSelected((prevState) => ({...prevState, scrollLeft: scrollLeftRef.current}));
 					setEditMode(true);
 				}, 200);
 
@@ -200,7 +203,7 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		setInitialSelected((prevState) => ({...prevState, scrollLeft: ev.scrollLeft}));
+		scrollLeftRef.current = ev.scrollLeft;
 	}, []);
 
 	const handleComplete = useCallback((ev) => {
