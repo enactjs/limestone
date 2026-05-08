@@ -10,6 +10,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Heading` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
+- `limestone/Input` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI

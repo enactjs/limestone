@@ -149,6 +149,7 @@
 @lime-imageitem-label-font-size-large: var(--primitive-font-size-58);
 @lime-input-font-size:              var(--primitive-font-size-78);
 @lime-input-keypad-key-font-size: var(--primitive-font-size-90);
+@lime-input-keypad-key-font-size-large: var(--primitive-font-size-108);
 @lime-input-fullscreen-title-font-size: var(--primitive-font-size-108);
 @lime-input-fullscreen-numbercell-font-size:  126px;
 @lime-input-fullscreen-numbercell-password-font-size:  var(--primitive-font-size-48);
@@ -159,6 +160,8 @@
 @lime-input-overlay-numberfield-font-size:    @lime-input-font-size;
 @lime-input-invalid-tooltip-font-size:        @lime-inputfield-invalid-tooltip-font-size;
 @lime-inputfield-invalid-tooltip-font-size:   var(--primitive-font-size-48);
+@lime-input-invalid-tooltip-font-size-large:  @lime-inputfield-invalid-tooltip-font-size-large;
+@lime-inputfield-invalid-tooltip-font-size-large: var(--primitive-font-size-58);
 @lime-inputfield-small-font-size:	var(--primitive-font-size-60);
 @lime-item-font-size:               var(--primitive-font-size-60);
 @lime-item-font-size-large:         var(--primitive-font-size-72);
@@ -797,7 +800,8 @@
 @lime-input-overlay-no-title-height: 120px;
 @lime-input-overlay-title-margin: 0 var(--primitive-spacing-144) 0 var(--primitive-spacing-144);
 @lime-input-invalid-tooltip-margin-top: var(--primitive-spacing-24);
-@lime-input-invalid-tooltip-line-height: 60px;
+@lime-input-invalid-tooltip-line-height: var(--primitive-font-size-60);
+@lime-input-invalid-tooltip-line-height-large: 70px;
 
 // InputField
 // ---------------------------------------
@@ -809,6 +813,8 @@
 @lime-inputfield-text-indent: 0.2em;
 @lime-inputfield-border-radius: var(--semantic-radius-button);
 @lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
+@lime-inputfield-invalid-tooltip-line-height: @lime-input-invalid-tooltip-line-height;
+@lime-inputfield-invalid-tooltip-line-height-large: @lime-input-invalid-tooltip-line-height-large;
 @lime-inputfield-height: 168px;
 @lime-inputfield-width: 1560px;
 @lime-inputfield-withoneicon-width: 1386px;
