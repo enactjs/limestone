@@ -36,6 +36,32 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Slider` press motion to work with key press
 - `limestone/useScroll` to not scroll on hover right after scroll by wheel
 
+## [1.9.3] - 2026-04-20
+
+### Fixed
+
+- `limestone/Popup` to not delay when closed with pointer
+
+## [1.9.2] - 2026-03-10
+
+### Fixed
+
+- `limestone/Card` `captionOverlayOnFocus` prop to work in `focusRing` mode
+
+## [1.9.1] - 2026-02-26
+
+### Changed
+
+- `limestone/Slider` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Card` press motion to work with key press
+- `limestone/IconItem` press motion to work with key press
+- `limestone/MediaOverlay` press motion to work with key press
+- `limestone/Popup` to avoid popup content blinking into existence after render
+- `limestone/Slider` press motion to work with key press
+
 ## [1.9.0] - 2026-01-28
 
 ### Added
