@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
+import {checkPropTypes} from '@enact/core/util';
 import {is} from '@enact/core/keymap';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Button from '@enact/limestone/Button';
@@ -43,7 +44,9 @@ export default {
 	component: 'PopupTabLayout'
 };
 
-const PopupTabLayoutSamplesBase = ({args, rtl}) => {
+const PopupTabLayoutSamplesBase = (props) => {
+	checkPropTypes(PopupTabLayoutSamplesBase, props);
+	const {args, rtl} = props;
 	const includeIcons = args['include icons'];
 
 	const [open, setOpenState] = useState(false);

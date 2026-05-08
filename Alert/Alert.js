@@ -13,7 +13,7 @@ import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
-import {cloneElement} from 'react';
+import {Children, cloneElement} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -38,6 +38,20 @@ const AlertBase = kind({
 	name: 'Alert',
 
 	propTypes: /** @lends limestone/Alert.AlertBase.prototype */ {
+		/**
+		 * Sets the buttons layout direction.
+		 *
+		 * In `auto` mode, button direction follows UX defaults:
+		 * * `overlay` - horizontal when there are exactly 2 buttons
+		 * * `fullscreen` - horizontal when there are less than 3 buttons
+		 * * otherwise vertical
+		 *
+		 * @type {('auto'|'horizontal'|'vertical')}
+		 * @default 'auto'
+		 * @public
+		 */
+		buttonDirection: PropTypes.oneOf(['auto', 'horizontal', 'vertical']),
+
 		/**
 		 * Buttons to be included under the component.
 		 *
@@ -167,6 +181,7 @@ const AlertBase = kind({
 	},
 
 	defaultProps: {
+		buttonDirection: 'auto',
 		open: false,
 		overlayPosition: 'center',
 		type: 'fullscreen'
@@ -201,10 +216,28 @@ const AlertBase = kind({
 		)
 	},
 
-	render: ({buttons, contentComponent, children, css, id, image, overlayPosition, title, type, ...rest}) => {
+	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, title, type, style, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
 		const position = (type === 'overlay' ? overlayPosition : type);
 		const showTitle = (fullscreen && title);
+		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+		let resolvedButtonDirection = buttonDirection;
+		if (buttonDirection === 'auto') {
+			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 3);
+			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
+		}
+		const overlayHorizontalButtons = (
+			type === 'overlay' &&
+			resolvedButtonDirection === 'horizontal'
+		);
+		let popupStyle = style;
+		if (overlayHorizontalButtons) {
+			const overlayHorizontalButtonCount = Math.max(1, Math.min(buttonCount, 4));
+			popupStyle = {
+				...style,
+				'--alert-overlay-horizontal-button-count': overlayHorizontalButtonCount
+			};
+		}
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
 
 		return (
@@ -216,6 +249,7 @@ const AlertBase = kind({
 					aria-labelledby={ariaLabelledBy}
 					css={css}
 					position={position}
+					style={popupStyle}
 				>
 					<Layout align="center center" orientation="vertical">
 						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
@@ -225,7 +259,11 @@ const AlertBase = kind({
 						</Cell>
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>
-								<Layout align="center" orientation="vertical" id={`${id}_buttons`}>
+								<Layout
+									align="center center"
+									orientation={resolvedButtonDirection}
+									id={`${id}_buttons`}
+								>
 									{buttons}
 								</Layout>
 							</Cell> : null

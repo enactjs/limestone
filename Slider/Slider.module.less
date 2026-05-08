@@ -206,12 +206,13 @@
 				}
 			}
 
-			&:active {
+			&:active,
+			&.pressed {
 				.knob::before {
 					.lime-slider-press-motion();
 				}
 			}
-			&:not(:active) {
+			&:not(.pressed) {
 				.knob::before {
 					.lime-slider-release-motion();
 				}
@@ -290,6 +291,26 @@
 					}
 				}
 			});
+		}
+
+		&.colorPicker {
+			.bar,
+			.fill,
+			.load {
+				background-color: transparent;
+			}
+
+			.focus({
+				.bar,
+				.fill,
+				.load {
+					background-color: transparent;
+				}
+
+				.knob::before {
+					border-color: @lime-slider-handle-colorPicker-focused-color;
+				}
+			})
 		}
 
 		&.showAnchor {

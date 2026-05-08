@@ -4,7 +4,8 @@
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
-.input {
+.input,
+.marqueeText {
 	.lime-body-text();
 
 	padding: 0;
@@ -72,7 +73,8 @@
 	}
 
 	.input,
-	.inputHighlight {
+	.inputHighlight,
+	.marqueeText {
 		font-size: @lime-input-font-size;
 		font-weight: @lime-inputfield-font-weight;
 		height: @lime-inputfield-height;
@@ -93,6 +95,11 @@
 		-webkit-text-security: disc;
 	}
 
+	.marqueeText.passwordtel {
+		letter-spacing: @lime-inputfield-password-spacing;
+		-webkit-text-security: disc;
+	}
+
 	.inputHighlight {
 		position: absolute;
 		top: 0;
@@ -104,18 +111,42 @@
 		z-index: -1;
 	}
 
+	.inputWrapper {
+		position: relative;
+		flex-grow: 1;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.marqueeText {
+		position: absolute;
+		pointer-events: none;
+		display: flex;
+	}
+
+	// Keep the marquee text invisible in static states; show only when animating
+	.marqueeTextInner {
+		visibility: hidden;
+	}
+
+	.marqueeTextAnimate,
+	.marqueeTextWillAnimate {
+		visibility: visible;
+	}
+
 	&.large {
 		padding: @lime-inputfield-padding-large;
 		width: @lime-inputfield-width;
 
 		&.hasIconBefore, &.hasIconAfter {
-			.input {
+			.inputWrapper {
 				max-width: @lime-inputfield-withoneicon-width;
 			}
 		}
 
 		&.hasIconBefore&.hasIconAfter {
-			.input {
+			.inputWrapper {
 				max-width: @lime-inputfield-withtwoicons-width;
 			}
 		}
@@ -125,7 +156,8 @@
 		height: @lime-inputfield-small-height;
 		width: @lime-inputfield-small-width;
 
-		.input {
+		.input,
+		.marqueeText {
 			font-size: @lime-inputfield-small-font-size;
 			height: @lime-inputfield-small-height;
 			line-height: @lime-inputfield-small-height;
@@ -137,13 +169,13 @@
 		}
 
 		&.hasIconBefore, &.hasIconAfter {
-			.input {
+			.inputWrapper {
 				max-width: @lime-inputfield-small-withoneicon-width;
 			}
 		}
 
 		&.hasIconBefore&.hasIconAfter {
-			.input {
+			.inputWrapper {
 				max-width: @lime-inputfield-small-withtwoicons-width;
 			}
 		}
@@ -197,6 +229,10 @@
 			}
 		}
 
+		.marqueeText.placeholderText {
+			color: @lime-inputfield-label-inactive-color;
+		}
+
 		&.invalid input {
 			color: @lime-inputfield-invalid-color;
 		}
@@ -227,6 +263,20 @@
 				.input-placeholder({
 					color: @lime-inputfield-label-inactive-focused-color;
 				});
+			}
+
+			.marqueeText.placeholderText {
+				color: @lime-inputfield-label-inactive-focused-color;
+			}
+
+			// Keep the marquee text visible when focused
+			.marqueeTextInner {
+				visibility: visible;
+			}
+
+			// Hide input text when not active, show marquee instead
+			&.hasMarquee:not(.active) .input {
+				opacity: 0;
 			}
 
 			// Set `.inputHighlight` opacity to make it appear that the text is highlighted
@@ -261,7 +311,8 @@
 				});
 			}
 
-			.input {
+			.input,
+			.marqueeText {
 				color: @lime-inputfield-label-inactive-color;
 			}
 
@@ -271,10 +322,15 @@
 					filter: unset;
 				}
 
-				.input {
+				.input,
+				.marqueeText {
 					color: @lime-inputfield-label-inactive-focused-color;
 				}
 			});
 		});
 	});
+
+	&.active .marqueeText {
+		display: none;
+	}
 }

@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 
+import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import Slider from '@enact/limestone/Slider';
 import PropTypes from 'prop-types';
@@ -7,7 +8,9 @@ import {useState} from 'react';
 
 import Section from '../components/Section';
 
-const CustomSlider = ({customText, ...rest}) => {
+const CustomSlider = (props) => {
+	checkPropTypes(CustomSlider, props);
+	const {customText, ...rest} = props;
 	const [value, setValue] = useState(0);
 	const valueText = `${customText} ${value}`;
 

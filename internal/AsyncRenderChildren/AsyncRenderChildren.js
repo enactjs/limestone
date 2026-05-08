@@ -1,3 +1,4 @@
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import PropTypes from 'prop-types';
 import {useState, useRef, useEffect} from 'react';
 
@@ -14,7 +15,10 @@ const delayToRenderChildren = 600;
  * @ui
  * @private
  */
-function AsyncRenderChildren ({children, fallback = '', index}) {
+function AsyncRenderChildren (props) {
+	const asyncRenderChildrenProps = setDefaultProps(props, {fallback: ''});
+	checkPropTypes(AsyncRenderChildren, asyncRenderChildrenProps);
+	const {children, fallback, index} = asyncRenderChildrenProps;
 	const [prevIndex, setPrevIndex] = useState(index);
 	const timerRef = useRef(null);
 	const async = (index !== prevIndex);

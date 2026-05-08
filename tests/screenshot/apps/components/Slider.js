@@ -58,6 +58,30 @@ const SliderTests = [
 	<Slider css={css} orientation="vertical" value={50} />,
 	<Slider css={css} orientation="vertical" value={50} showAnchor />,
 
+	// Color Picker
+	<Slider colorPicker />,
+	<Slider colorPicker showMinMax />,
+	<Slider colorPicker disabled />,
+	<Slider colorPicker value={50} />,
+	{
+		component: <Slider colorPicker value={50} tooltip />,
+		wrapper: {
+			padded: true
+		},
+		focus: true
+	},
+	<Slider orientation="vertical" colorPicker />,
+	<Slider orientation="vertical" colorPicker showMinMax />,
+	<Slider orientation="vertical" colorPicker disabled />,
+	<Slider orientation="vertical" colorPicker value={50} />,
+	{
+		component: <Slider orientation="vertical" colorPicker value={50} tooltip />,
+		wrapper: {
+			padded: true
+		},
+		focus: true
+	},
+
 	// *************************************************************
 	// tooltip - all positions
 	// NOTE: Tooltip won't show on slider without focus. Nothing should show!

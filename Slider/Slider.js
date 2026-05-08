@@ -19,7 +19,7 @@
 
 import {forKey, forProp, forward, forwardWithPrevent, handle, not} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Spottable from '@enact/spotlight/Spottable';
@@ -29,11 +29,12 @@ import ProgressBar from '@enact/ui/ProgressBar';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import UiSlider from '@enact/ui/Slider';
+import Touchable from '@enact/ui/Touchable';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import anyPass from 'ramda/src/anyPass';
 import compose from 'ramda/src/compose';
-import {useEffect, useLayoutEffect, useRef} from 'react';
+import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {ProgressBarTooltip} from '../ProgressBar';
 import Skinnable from '../Skinnable';
@@ -44,7 +45,8 @@ import {
 	handleDecrement,
 	handleIncrement,
 	handleDecrementByWheel,
-	handleIncrementByWheel
+	handleIncrementByWheel,
+	hueGradient
 } from './utils';
 
 import componentCss from './Slider.module.less';
@@ -52,11 +54,13 @@ import componentCss from './Slider.module.less';
 const sliderDefaultProps = {
 	activateOnSelect: false,
 	active: false,
+	colorPicker: false,
 	disabled: false,
 	keyFrequency: [1],
 	max: 100,
 	min: 0,
 	orientation: 'horizontal',
+	pressed: false,
 	step: 1,
 	wheelInterval: 0
 };
@@ -73,7 +77,23 @@ const sliderDefaultProps = {
  */
 const SliderBase = (props) => {
 	const sliderProps = setDefaultProps(props, sliderDefaultProps);
-	const {active, className, css, disabled, focused, keyFrequency, max, min, showAnchor, showMinMax, ...rest} = sliderProps;
+	checkPropTypes(SliderBase, sliderProps);
+
+	const {
+		active,
+		className,
+		colorPicker,
+		css,
+		disabled,
+		focused,
+		keyFrequency,
+		max,
+		min,
+		pressed,
+		showAnchor,
+		showMinMax,
+		...rest
+	} = sliderProps;
 
 	validateSteppedOnce(p => p.knobStep, {
 		component: 'Slider',
@@ -88,9 +108,10 @@ const SliderBase = (props) => {
 
 	const tooltip = sliderProps.tooltip === true ? ProgressBarTooltip : sliderProps.tooltip;
 
+	const context = useMemo(() => ({lastWheelTimeStamp: 0}), []);
+
 	const spotlightAccelerator = useRef();
 	const ref = useRef();
-	const {current: context} = useRef({lastWheelTimeStamp: 0});
 
 	const handlers = useHandlers({
 		onBlur: handle(
@@ -136,8 +157,10 @@ const SliderBase = (props) => {
 		componentCss.slider,
 		className,
 		{
-			[mergedCss.hasMinMax]: showMinMax,
 			[mergedCss.active]: active,
+			[mergedCss.colorPicker]: colorPicker,
+			[mergedCss.hasMinMax]: showMinMax,
+			[mergedCss.pressed]: pressed,
 			[mergedCss.showAnchor]: showAnchor
 		},
 		css && css.slider
@@ -169,21 +192,32 @@ const SliderBase = (props) => {
 	delete rest.tooltip;
 	delete rest.wheelInterval;
 
+	const sliderMax = colorPicker ? 360 : max;
+	const sliderMin = colorPicker ? 0 : min;
+	const sliderStep = colorPicker ? 1 : step;
+
+	const styleObject = {
+		'--semantic-color-surface-default-handle': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`,
+		'--semantic-color-surface-default-focused': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`
+	};
+
 	return (
 		<UiSlider
 			{...rest}
 			{...handlers}
 			aria-disabled={disabled}
+			colorPicker={colorPicker}
 			className={componentClassName}
 			css={mergedCss}
 			disabled={disabled}
-			max={max}
-			min={min}
+			max={sliderMax}
+			min={sliderMin}
 			progressBarComponent={
-				<ProgressBar css={mergedCss} />
+				<ProgressBar css={mergedCss} style={{backgroundImage: colorPicker && hueGradient(rest.orientation)}} />
 			}
 			ref={ref}
-			step={step}
+			step={sliderStep}
+			style={colorPicker && styleObject}
 			tooltipComponent={
 				<ComponentOverride
 					component={tooltip}
@@ -193,8 +227,8 @@ const SliderBase = (props) => {
 			}
 			minMaxComponent={showMinMax ?
 				<div className={mergedCss.minMax}>
-					<div>{min}</div>
-					<div>{max}</div>
+					<div>{sliderMin}</div>
+					<div>{sliderMax}</div>
 				</div> : null
 			}
 		/>
@@ -220,6 +254,15 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * @public
 	 */
 	active: PropTypes.bool,
+
+	/**
+	 * Indicates if this component will be used as a colorPicker.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @public
+	 */
+	colorPicker: PropTypes.bool,
 
 	/**
 	 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -348,6 +391,15 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	onKeyUp: PropTypes.func,
 
 	/**
+	 * Indicates if the component is pressed.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @private
+	 */
+	pressed: PropTypes.bool,
+
+	/**
 	 * Displays an anchor at `progressAnchor`.
 	 *
 	 * @type {Boolean}
@@ -448,6 +500,7 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
  */
 const SliderDecorator = compose(
 	Pure,
+	Touchable({activeProp: 'pressed'}),
 	Changeable,
 	SliderBehaviorDecorator,
 	Spottable,

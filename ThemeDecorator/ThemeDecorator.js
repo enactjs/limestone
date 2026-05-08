@@ -8,6 +8,7 @@
 import {setDefaultTargetById} from '@enact/core/dispatcher';
 import hoc from '@enact/core/hoc';
 import {addAll} from '@enact/core/keymap';
+import {checkPropTypes} from '@enact/core/util';
 import I18nDecorator from '@enact/i18n/I18nDecorator';
 import SpotlightRootDecorator, {activateInputType, getInputType as getLastInputType, setInputType} from '@enact/spotlight/SpotlightRootDecorator';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
@@ -54,6 +55,18 @@ const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.default
 	 * @public
 	 */
 	disableFullscreen: false,
+
+	/**
+	 * A CSS class name to apply globally to every spottable component when it receives spotlight focus.
+	 *
+	 * This is the declarative equivalent of calling `setFocusEffectClass` imperatively. It acts as
+	 * an app-wide default.
+	 *
+	 * @type {String}
+	 * @default null
+	 * @public
+	 */
+	focusEffectClass: null,
 
 	/**
 	 * Enables a floating layer for popup components.
@@ -170,8 +183,7 @@ const defaultConfig = /** @lends limestone/ThemeDecorator.ThemeDecorator.default
  * @public
  */
 const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
-	const {accessible, ri, i18n, spotlight, float, noAutoFocus, overlay,
-		skin, disableFullscreen, rootId} = config;
+	const {accessible, disableFullscreen, float, focusEffectClass, i18n, noAutoFocus, overlay, ri, rootId, skin, spotlight} = config;
 
 	// Apply classes depending on screen type (overlay / fullscreen)
 	const bgClassName = classNames({
@@ -202,7 +214,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			)
 		);
 	}
-	if (spotlight) App = SpotlightRootDecorator({noAutoFocus, rootId}, App);
+	if (spotlight) App = SpotlightRootDecorator({focusEffectClass, noAutoFocus, rootId}, App);
 	if (skin) App = Skinnable(App);
 	if (accessible) App = AccessibilityDecorator(App);
 
@@ -245,6 +257,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	setDefaultTargetById(rootId);
 
 	const Decorator = (props) => {
+		checkPropTypes(Decorator, props);
 		const {skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
 		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {

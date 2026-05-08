@@ -79,6 +79,25 @@ describe('Slider', () => {
 		expect(slider).toHaveAttribute(expectedAttribute, expectedValue);
 	});
 
+	test('should be pressed when selected', () => {
+		render(<Slider />);
+		const slider = screen.getByRole('slider');
+
+		// Select by key
+		fireEvent.keyDown(slider, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(slider).toHaveClass('pressed');
+
+		fireEvent.keyUp(slider, {key: 'Enter', code: 'Enter', keyCode: 13, which: 13});
+		expect(slider).not.toHaveClass('pressed');
+
+		// Select by pointer
+		fireEvent.mouseDown(slider);
+		expect(slider).toHaveClass('pressed');
+
+		fireEvent.mouseUp(slider);
+		expect(slider).not.toHaveClass('pressed');
+	});
+
 	test('should activate the slider on enter keyup', () => {
 		render(<Slider activateOnSelect />);
 		const slider = screen.getByRole('slider');
@@ -544,5 +563,30 @@ describe('Slider', () => {
 		const tooltip = screen.queryByText('0');
 
 		expect(tooltip).toBeNull();
+	});
+
+	test('should apply `colorPicker`', () => {
+		render(<Slider colorPicker />);
+
+		const slider = screen.getByRole('slider');
+
+		const expected = 'colorPicker';
+
+		expect(slider).toHaveClass(expected);
+	});
+
+	test('should fire `onChange` with `onChange` type when value changed for `colorPicker`', () => {
+		const handleChange = jest.fn();
+
+		render(<Slider activateOnSelect colorPicker defaultValue={50} onChange={handleChange} />);
+		const slider = screen.getByRole('slider');
+
+		activate(slider);
+		leftKeyDown(slider);
+
+		const expected = {type: 'onChange'};
+		const actual = handleChange.mock.calls.length && handleChange.mock.calls[0][0];
+
+		expect(actual).toMatchObject(expected);
 	});
 });

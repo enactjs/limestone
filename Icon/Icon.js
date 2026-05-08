@@ -489,6 +489,7 @@ const IconBase = kind({
  * filedoc
  * filexls
  * subtitleru
+ * f1
  * mypageru
 };
  * ```

@@ -8,6 +8,7 @@
  */
 
 import hoc from '@enact/core/hoc';
+import {checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import PropTypes from 'prop-types';
 
@@ -70,17 +71,19 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {screenEdgeKeepout, tooltipDestinationProp} = config;
 
 	const Decorator = (props) => {
+		checkPropTypes(Decorator, props);
 		const {tooltip, handlers, restProps} = useTooltip({screenEdgeKeepout, ...props});
+		const tooltipRestProps = Object.assign({}, restProps);
 
 		if (tooltip) {
 			if (tooltipDestinationProp === 'children') {
-				restProps.children = [props.children, tooltip];
+				Object.assign(tooltipRestProps, {children: [props.children, tooltip]});
 			} else {
-				restProps[tooltipDestinationProp] = tooltip;
+				Object.assign(tooltipRestProps, {[tooltipDestinationProp]: tooltip});
 			}
 		}
 
-		return <Wrapped {...restProps} {...handlers} />;
+		return <Wrapped {...tooltipRestProps} {...handlers} />;
 	};
 
 	Decorator.displayName = 'TooltipDecorator';

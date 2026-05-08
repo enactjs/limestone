@@ -1,6 +1,6 @@
 import {forward, forwardCustom} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
-import {setDefaultProps} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
@@ -43,6 +43,7 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
 	const SliderBehaviorDecorator = (props) => {
 		const sliderBehaviorProps = setDefaultProps(props, sliderBehaviorDefaultProps);
+		checkPropTypes(SliderBehaviorDecorator, sliderBehaviorProps);
 
 		const paused = useMemo(() => new Pause(), []);
 		const [active, setActive] = useState(false);
@@ -51,13 +52,10 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		const [useHintText, setUseHintText] = useState(true);
 		const [prevValue, setPrevValue] = useState(sliderBehaviorProps.value);
 
-		useEffect(() => {
-			if (sliderBehaviorProps.value !== prevValue) {
-				setUseHintText(false);
-				setPrevValue(sliderBehaviorProps.value);
-			}
-		}, [prevValue, sliderBehaviorProps.value]);
-
+		if (sliderBehaviorProps.value && sliderBehaviorProps.value !== prevValue) {
+			setUseHintText(false);
+			setPrevValue(sliderBehaviorProps.value);
+		}
 
 		useEffect(() => {
 			return () => {
@@ -66,11 +64,14 @@ const SliderBehaviorDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 		const getValueText = useCallback(() => {
-			const {'aria-valuetext': ariaValueText, max, min, orientation, value = min} = sliderBehaviorProps;
+			const {'aria-valuetext': ariaValueText, colorPicker, max, min, orientation, value = min} = sliderBehaviorProps;
+
+			const sliderMax = colorPicker ? 360 : max;
+			const sliderMin = colorPicker ? 0 : min;
 
 			const valueText = (ariaValueText != null) ? ariaValueText : value;
-			const verticalHint = `${new IString($L('From {startValue} to {lastValue}')).format({startValue: min, lastValue: max})} ${valueText} ${$L('change a value with up down button')}`;
-			const horizontalHint = `${new IString($L('From {startValue} to {lastValue}')).format({startValue: min, lastValue: max})} ${valueText} ${$L('change a value with left right button')}`;
+			const verticalHint = `${new IString($L('From {startValue} to {lastValue}')).format({startValue: sliderMin, lastValue: sliderMax})} ${valueText} ${$L('change a value with up down button')}`;
+			const horizontalHint = `${new IString($L('From {startValue} to {lastValue}')).format({startValue: sliderMin, lastValue: sliderMax})} ${valueText} ${$L('change a value with left right button')}`;
 
 			if (useHintText) {
 				return orientation === 'horizontal' ? horizontalHint : verticalHint;

@@ -1,19 +1,42 @@
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import {Header, Panel} from '@enact/limestone/Panels';
 import Scroller from '@enact/limestone/Scroller';
 import Layout, {Cell} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 
-const View = ({debugProps = false, handleDebug, isAriaHidden = false, isDebugMode = false, isHeader = true, noCloseButton = false, title, view: ComponentView}) => {
+const viewDefaultProps = {
+	debugProps: false,
+	isAriaHidden: false,
+	isDebugMode: false,
+	isHeader: true,
+	noCloseButton: false
+};
+
+const View = (props) => {
+	const viewProps = setDefaultProps(props, viewDefaultProps);
+	checkPropTypes(View, viewProps);
+
+	const {
+		debugProps,
+		handleDebug,
+		isAriaHidden,
+		isDebugMode,
+		isHeader,
+		noCloseButton,
+		title,
+		view: ComponentView
+	} = viewProps;
+
 	const
 		header = isHeader ? <Header aria-hidden={isAriaHidden} noCloseButton={noCloseButton} title={title} type="compact" /> : null,
-		props = debugProps ? {handleDebug, isDebugMode} : null;
+		componentProps = debugProps ? {handleDebug, isDebugMode} : null;
 
 	return (
 		<Panel aria-owns="floatLayer" style={{padding: 0}}>
 			{header}
 			<Layout orientation="vertical">
 				<Cell component={Scroller}>
-					<ComponentView {...props} />
+					<ComponentView {...componentProps} />
 				</Cell>
 			</Layout>
 		</Panel>

@@ -1,3 +1,4 @@
+import {checkPropTypes} from '@enact/core/util';
 import {Cell, Row} from '@enact/ui/Layout';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import {InputField as Input} from '@enact/limestone/Input';
@@ -8,7 +9,9 @@ import ScrollModeSwitch from '../ScrollModeSwitch';
 
 import styles from './Controls.module.less';
 
-const Controls = ({handleFocusableScrollbar, handleHeight, handleScrollMode, handleWidth, height, nativeScroll, width}) => {
+const Controls = (props) => {
+	checkPropTypes(Controls, props);
+	const {handleFocusableScrollbar, handleHeight, handleScrollMode, handleWidth, height, nativeScroll, width} = props;
 	const inputWidth = {width: '5em'};
 
 	return (
