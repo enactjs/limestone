@@ -564,4 +564,29 @@ describe('Slider', () => {
 
 		expect(tooltip).toBeNull();
 	});
+
+	test('should apply `colorPicker`', () => {
+		render(<Slider colorPicker />);
+
+		const slider = screen.getByRole('slider');
+
+		const expected = 'colorPicker';
+
+		expect(slider).toHaveClass(expected);
+	});
+
+	test('should fire `onChange` with `onChange` type when value changed for `colorPicker`', () => {
+		const handleChange = jest.fn();
+
+		render(<Slider activateOnSelect colorPicker defaultValue={50} onChange={handleChange} />);
+		const slider = screen.getByRole('slider');
+
+		activate(slider);
+		leftKeyDown(slider);
+
+		const expected = {type: 'onChange'};
+		const actual = handleChange.mock.calls.length && handleChange.mock.calls[0][0];
+
+		expect(actual).toMatchObject(expected);
+	});
 });

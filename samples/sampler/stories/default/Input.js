@@ -42,6 +42,7 @@ export const _Input = (args) => {
 		disabled: args['disabled'],
 		'aria-label': args['aria-label'],
 		popupAriaLabel: args['popupAriaLabel'],
+		marqueeInputField: args['marqueeInputField'],
 		noBackButton: args['noBackButton'],
 		noSubmitButton: args['noSubmitButton'],
 		backButtonAriaLabel: args['backButtonAriaLabel']
@@ -82,6 +83,7 @@ text('subtitle', _Input, ConfigPopup, 'Title Below Text');
 text('title', _Input, ConfigPopup, 'Title Text');
 text('aria-label', _Input, ConfigPopup, '');
 text('popupAriaLabel', _Input, ConfigPopup, '');
+boolean('marqueeInputField', _Input, ConfigPopup);
 boolean('noBackButton', _Input, ConfigPopup);
 boolean('noSubmitButton', _Input, ConfigPopup);
 select('backButtonAriaLabel', _Input, prop.backButtonAriaLabel, ConfigPopup);

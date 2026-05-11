@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-
 import webpack from '@enact/storybook-utils/configs/webpack.js';
 import {readFileSync} from 'fs';
 import {createRequire} from 'module';
@@ -9,7 +7,7 @@ import {fileURLToPath} from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
+const moduleRequire = createRequire(import.meta.url);
 
 export default {
 	core: {
@@ -44,7 +42,8 @@ export default {
 	staticDirs: ['../public'],
 	addons: [
 		'@enact/storybook-utils/addons/actions',
-		'@enact/storybook-utils/addons/controls'
+		'@enact/storybook-utils/addons/controls',
+		...(process.env.PERF_PANEL === 'true' ? ['@github-ui/storybook-addon-performance-panel'] : [])
 	],
 	webpackFinal: async (config, {configType}) => {
 		const webpackFinalConfig = await webpack(config, configType, __dirname);

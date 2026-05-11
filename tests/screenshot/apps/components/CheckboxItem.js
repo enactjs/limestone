@@ -81,6 +81,19 @@ const CheckboxItemTests = [
 		<CheckboxItem inline indeterminat>Hello Focused CheckboxItem</CheckboxItem>
 	]),
 
+	...withConfig({textSize: 'large'}, [
+		<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem selected>Hello Focused CheckboxItem</CheckboxItem>,
+		// [QWTC-1861]
+		<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem inline selected>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem label="label"><Icon slot="slotBefore">home</Icon>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem inline label="label"><Icon slot="slotBefore">home</Icon>Hello Focused Inline CheckboxItem</CheckboxItem>,
+		<CheckboxItem indeterminat>Hello Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem inline indeterminat>Hello Focused CheckboxItem</CheckboxItem>
+	]),
+
 	// *************************************************************
 	// locale = 'ar-SA'
 	{

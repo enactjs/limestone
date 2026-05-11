@@ -6,7 +6,7 @@ import {getDirection, Spotlight} from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
 import Spottable from '@enact/spotlight/Spottable';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {lockPointer, releasePointer} from './pointer';
 
@@ -36,7 +36,7 @@ const defaultConfig = {
 	 * @type {Boolean}
 	 * @default false
 	 * @memberof limestone/Input/InputSpotlightDecorator.InputSpotlightDecorator.defaultConfig
-	*/
+	 */
 	noLockPointer: false
 };
 
@@ -62,6 +62,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const InputSpotlightDecorator = ({...props}) => {
 		checkPropTypes(InputSpotlightDecorator, props);
 
+		const {caretToEndOnFocus = false} = props;
 		const downTarget = useRef(null);
 		const focused = useRef(null);
 		const node = useRef(null);
@@ -71,6 +72,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			node: null
 		});
 		const paused = useMemo(() => new Pause('InputSpotlightDecorator'), []);
+		const [active, setActive] = useState(false);
 
 		const setDownTarget = useCallback((ev) => {
 			const {repeat, target} = ev;
@@ -79,6 +81,15 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				downTarget.current = target;
 			}
 		}, []);
+
+		const moveCaretToEnd = useCallback((inputNode) => {
+			if (caretToEndOnFocus && inputNode && SELECTABLE_TYPES.test(inputNode.type)) {
+				const length = inputNode.value.length;
+				inputNode.setSelectionRange(length, length);
+
+				inputNode.scrollLeft = inputNode.dir === 'rtl' ? 0 : inputNode.scrollWidth;
+			}
+		}, [caretToEndOnFocus]);
 
 		const updateFocus = useCallback(() => {
 			// focus node if `InputSpotlightDecorator` is pausing Spotlight or if Spotlight is paused
@@ -92,17 +103,30 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				} else {
 					node.current.focus();
 				}
+
+				// Move caret to end if caretToEndOnFocus is enabled and we're focusing an input
+				if (focused.current === 'input') {
+					if (fromMouse.current) {
+						setTimeout(() => {
+							moveCaretToEnd(node.current);
+						}, 0);
+					} else {
+						moveCaretToEnd(node.current);
+					}
+				}
 			}
 
 			const focusChanged = focused.current !== prevStatus.current.focused;
 			if (focusChanged) {
 				if (focused.current === 'input') {
+					setActive(true);
 					forwardCustom('onActivate')(null, props);
 					if (!noLockPointer) {
 						lockPointer(node.current);
 					}
 					paused.pause();
 				} else if (prevStatus.current.focused === 'input') {
+					setActive(false);
 					forwardCustom('onDeactivate')(null, props);
 					if (!noLockPointer) {
 						releasePointer(prevStatus.current.node);
@@ -115,7 +139,7 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 				focused: focused.current,
 				node: node.current
 			};
-		}, [paused, props]);
+		}, [moveCaretToEnd, paused, props]);
 
 		const blur = useCallback(() => {
 			if (focused.current || node.current) {
@@ -253,8 +277,9 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			setDownTarget(ev);
 			// focus the <input> whenever clicking on any part of the component to ensure both that
-			// the <input> has focus and Spotlight is paused.
-			if (!disabled && !spotlightDisabled) {
+			// the <input> has focus and Spotlight is paused. Skip when the target is a decorative
+			// icon so it doesn't activate the input.
+			if (!disabled && !spotlightDisabled && !ev.target.closest('[data-input-icon]')) {
 				focusInput(ev.currentTarget, true);
 			}
 
@@ -297,12 +322,14 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const componentProps = Object.assign({}, props);
 		delete componentProps.autoFocus;
+		delete componentProps.caretToEndOnFocus;
 		delete componentProps.onActivate;
 		delete componentProps.onDeactivate;
 
 		return (
 			<Component
 				{...componentProps}
+				active={active}
 				onBlur={onBlur}
 				onFocus={onFocus}
 				onKeyDown={onKeyDown}
@@ -322,6 +349,15 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @public
 		 */
 		autoFocus: PropTypes.bool,
+
+		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		caretToEndOnFocus: PropTypes.bool,
 
 		/**
 		 * Applies a disabled style and the control becomes non-interactive.

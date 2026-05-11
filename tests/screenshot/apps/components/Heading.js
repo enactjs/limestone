@@ -50,6 +50,11 @@ const HeadingTests = [
 	<Heading size="medium" spacing="auto">Heading</Heading>,
 	<Heading size="small" spacing="auto">Heading</Heading>,
 	<Heading size="tiny" spacing="auto">Heading</Heading>,
+	<Heading size="subtitle" spacing="auto">Heading Subtitle</Heading>,
+	{
+		skinVariants: ['largeText'],
+		component: <Heading size="subtitle" spacing="auto">Heading Subtitle</Heading>
+	},
 	{
 		locale: 'ar-SA',
 		component: <Heading>Heading</Heading>

@@ -84,6 +84,50 @@ const RadioItemTests = [
 		<RadioItem selected inline><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>
 	]),
 
+	...withConfig({textSize: 'large'}, [
+		<RadioItem>Focused RadioItem</RadioItem>,
+		// [QWTC-2231]
+		<RadioItem disabled>Focused RadioItem</RadioItem>,
+		<RadioItem inline>Focused Inline RadioItem</RadioItem>,
+		<RadioItem disabled inline>Focused RadioItem Not Checked</RadioItem>,
+		<RadioItem selected disabled>Focused RadioItem Checked</RadioItem>,
+		// Selected - disabled - inline
+		<RadioItem selected disabled inline>Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected inline>Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected>Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected disabled icon="arrowup">Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected disabled inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected icon="arrowup">Focused RadioItem Checked</RadioItem>,
+		// Icon slotBefore
+		<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
+		<RadioItem inline><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
+		<RadioItem selected><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
+		<RadioItem selected inline><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
+		// [QWTC-1851]
+		<RadioItem disabled>مساء الخير</RadioItem>,
+		// [QWTC-1851]
+		<RadioItem inline>مساء الخير</RadioItem>,
+		// [QWTC-1855]
+		<RadioItem disabled>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+		// [QWTC-1855]
+		<RadioItem inline>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+		// [QWTC-1855]
+		<RadioItem disabled>តន្ត្រី</RadioItem>,
+		// [QWTC-1855]
+		<RadioItem inline>តន្ត្រី</RadioItem>,
+		// [QWTC-1855]
+		<RadioItem inline>ฟิ้  ไั  ஒ  து</RadioItem>,
+		// [QWTC-1852]
+		<RadioItem>ฟิ้  ไั  ஒ  து</RadioItem>,
+		// [QWTC-1852]
+		<RadioItem selected>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+		// [QWTC-1852]
+		<RadioItem selected>តន្ត្រី</RadioItem>,
+		// [QWTC-1852]
+		<RadioItem selected>ฟิ้  ไั  ஒ  து</RadioItem>
+	]),
+
 	// *************************************************************
 	// locale = 'ar-SA'
 

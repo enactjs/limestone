@@ -13,6 +13,7 @@ import compose from 'ramda/src/compose';
 import {Fragment} from 'react';
 
 import $L from '../internal/$L';
+import {MarqueeController, MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
 import Tooltip from '../TooltipDecorator/Tooltip';
 import {extractVoiceProps} from '../internal/util';
@@ -22,6 +23,12 @@ import InputFieldSpotlightDecorator from './InputFieldSpotlightDecorator';
 import {calcAriaLabel, extractInputProps} from './util';
 
 import componentCss from './InputField.module.less';
+
+const MarqueeText = MarqueeDecorator({css: {
+	text: componentCss.marqueeTextInner,
+	animate: componentCss.marqueeTextAnimate,
+	willAnimate: componentCss.marqueeTextWillAnimate
+}}, 'div');
 
 /**
  * A Limestone styled input component.
@@ -39,12 +46,29 @@ const InputFieldBase = kind({
 
 	propTypes: /** @lends limestone/Input.InputFieldBase.prototype */ {
 		/**
+		 * Indicates the input is currently active/focused for editing
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		active: PropTypes.bool,
+
+		/**
 		 * Passed by AnnounceDecorator for accessibility.
 		 *
 		 * @type {Function}
 		 * @public
 		 */
 		announce: PropTypes.func,
+
+		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		caretToEndOnFocus: PropTypes.bool,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -125,6 +149,15 @@ const InputFieldBase = kind({
 		 * @public
 		 */
 		invalidMessage: PropTypes.string,
+
+		/**
+		 * Wraps the input's value/placeholder display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		marqueeContent: PropTypes.bool,
 
 		/**
 		 * Called before the input value is changed.
@@ -233,9 +266,12 @@ const InputFieldBase = kind({
 	},
 
 	defaultProps: {
+		active: false,
+		caretToEndOnFocus: false,
 		disabled: false,
 		dismissOnEnter: false,
 		invalid: false,
+		marqueeContent: false,
 		placeholder: '',
 		size: 'small',
 		type: 'text'
@@ -244,7 +280,7 @@ const InputFieldBase = kind({
 	styles: {
 		css: componentCss,
 		className: 'inputField',
-		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'tooltip', 'tooltipLabel']
+		publicClassNames: ['bg', 'inputField', 'input', 'inputHighlight', 'inputWrapper', 'marqueeText', 'placeholderText', 'tooltip', 'tooltipLabel']
 	},
 
 	handlers: {
@@ -268,10 +304,12 @@ const InputFieldBase = kind({
 			const title = (value == null || value === '') ? placeholder : '';
 			return calcAriaLabel(title, type, value);
 		},
-		className: ({iconAfter, iconBefore, invalid, size, styler}) => styler.append(
+		className: ({active, iconAfter, iconBefore, invalid, marqueeContent, size, styler}) => styler.append(
 			{
+				active,
 				hasIconAfter: iconAfter,
 				hasIconBefore: iconBefore,
+				hasMarquee: marqueeContent,
 				invalid
 			},
 			size
@@ -290,7 +328,7 @@ const InputFieldBase = kind({
 		value: ({value}) => typeof value === 'number' ? value : (value || '')
 	},
 
-	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, onChange, placeholder, type, value, ...rest}) => {
+	render: ({css, dir, disabled, iconAfter, iconBefore, invalidTooltip, marqueeContent, onChange, placeholder, type, value, ...rest}) => {
 		const inputProps = extractInputProps(rest);
 		const voiceProps = extractVoiceProps(rest);
 		const isPasswordtel = type === 'passwordtel';
@@ -299,7 +337,9 @@ const InputFieldBase = kind({
 			inputProps.spellCheck = false;
 		}
 
+		delete rest.active;
 		delete rest.announce;
+		delete rest.caretToEndOnFocus;
 		delete rest.dismissOnEnter;
 		delete rest.invalid;
 		delete rest.invalidMessage;
@@ -316,19 +356,33 @@ const InputFieldBase = kind({
 				<div className={css.bg} />
 				<InputFieldDecoratorIcon className={css.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>
 				<span className={css.inputHighlight}>{value ? value : placeholder}</span>
-				<input
-					{...inputProps}
-					{...voiceProps}
-					aria-hidden={isPasswordtel}
-					className={classnames(css.input, {[css.passwordtel]: isPasswordtel})}
-					dir={dir}
-					disabled={disabled}
-					onChange={onChange}
-					placeholder={placeholder}
-					tabIndex={-1}
-					type={isPasswordtel ? 'tel' : type}
-					value={value}
-				/>
+				<span className={css.inputWrapper}>
+					<input
+						{...inputProps}
+						{...voiceProps}
+						aria-hidden={isPasswordtel}
+						className={classnames(css.input, {[css.passwordtel]: isPasswordtel})}
+						dir={dir}
+						disabled={disabled}
+						onChange={onChange}
+						placeholder={placeholder}
+						tabIndex={-1}
+						type={isPasswordtel ? 'tel' : type}
+						value={value}
+					/>
+					{marqueeContent ? (
+						<MarqueeText
+							className={classnames(css.marqueeText, {
+								[css.passwordtel]: isPasswordtel || type === 'password',
+								[css.placeholderText]: value === ''
+							})}
+							disabled={disabled}
+						>
+							{value !== '' ? value : placeholder}
+						</MarqueeText>
+					) : null}
+				</span>
+
 				<InputFieldDecoratorIcon className={css.iconAfter} position="after" size="large">{iconAfter}</InputFieldDecoratorIcon>
 				{invalidTooltip}
 			</div>
@@ -364,6 +418,7 @@ const InputFieldDecorator = compose(
 	Changeable,
 	InputFieldSpotlightDecorator,
 	AnnounceDecorator,
+	MarqueeController({marqueeOnFocus: true}),
 	Skinnable
 );
 

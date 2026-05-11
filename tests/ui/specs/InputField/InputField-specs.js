@@ -26,6 +26,19 @@ describe('InputField', function () {
 		expect(actual.value).toBe('right');
 	});
 
+	it('should marquee on focus', async function () {
+		await Page.open();
+		await Page.spotlightDown();
+		await Page.spotlightDown();
+		await Page.spotlightDown();
+
+		expect(await Page.input6.isFocused()).toBe(true);
+
+		await browser.pause(2000);
+
+		expect(await Page.isMarqueeAnimating('input6')).toBe(true);
+	});
+
 	describe('disabled', function () {
 		it('should be spottable', async function () {
 			await Page.open();
