@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withProps} from './utils';
+import {LoremString, withConfig, withProps} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -237,6 +237,16 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <SelectionInput value="Selection value" />
-	}
+	},
+
+	// Large text mode
+	...withConfig({textSize: 'large'}, [
+		<InputField />,
+		<InputField placeholder="Placeholder InputField" />,
+		<InputField marqueeContent placeholder="Placeholder InputField" />,
+		<InputField placeholder="Placeholder InputField" disabled />,
+		<InputField value={LoremString} invalid />,
+		<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
+	])
 ];
 export default InputFieldTests;
