@@ -3,6 +3,7 @@ import {getBooleanType, getObjectType} from '@enact/storybook-utils/addons/contr
 import ReactGA4 from "react-ga4";
 
 import ThemeEnvironment from '../src/ThemeEnvironment';
+import lgIdentityBackground from '../images/LGIdentity.jpg';
 
 // NOTE: Locales taken from strawman. Might need to add more in the future.
 const locales = {
@@ -30,6 +31,7 @@ const locales = {
 
 const backgrounds = {
 	'Default (Based on Skin)': 'default',
+	'LG Identity': 			   `#bb3352 url("${lgIdentityBackground}") no-repeat center/cover`,
 	'Strawberries (Red)':      '#bb3352 url("https://picsum.photos/1280/720?image=1080") no-repeat center/cover',
 	'Tunnel (Green)':          '#4e6a40 url("https://picsum.photos/1280/720?image=1063") no-repeat center/cover',
 	'Mountains (Blue)':        '#5985a8 url("https://picsum.photos/1280/720?image=930") no-repeat center/cover',

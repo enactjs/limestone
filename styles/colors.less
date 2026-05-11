@@ -24,8 +24,12 @@
 
 // Overlay Alert
 // ---------------------------------------
-@lime-alert-overlay-bg-color: var(--semantic-color-background-popup-default);
-@lime-alert-overlay-bg-color-opacity: 1;
+@lime-alert-overlay-bg-color: #E0E0E0;
+@lime-alert-overlay-bg-color-opacity: 0.5;
+@lime-alert-overlay-bg-fill: ~"color(from" @lime-alert-overlay-bg-color ~"srgb r g b /" @lime-alert-overlay-bg-color-opacity ~")";
+@lime-alert-overlay-bg-gradient: linear-gradient(to bottom, fade(#F2F2F2, 95%) 30%, fade(#F2F2F2, 0%) 100%);
+@lime-alert-overlay-stroke-gradient: linear-gradient(to bottom, fade(#FFFFFF, 100%) 0%, fade(#FFFFFF, 10%) 62%, fade(#FFFFFF, 30%) 100%);
+@lime-alert-overlay-stroke-width: 0.125rem; // 6px
 @lime-alert-overlay-button-bg-color: var(--semantic-color-surface-popup-default);
 @lime-alert-overlay-label-color: var(--semantic-color-on-background-popup-main);
 @lime-alert-overlay-label-sub-color: var(--semantic-color-on-background-popup-sub);

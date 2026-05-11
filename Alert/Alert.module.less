@@ -105,7 +105,12 @@
 			--semantic-color-on-background-sub: @lime-alert-overlay-label-sub-color;
 			--semantic-color-stroke-selection-inactive: @lime-alert-overlay-label-color;
 
-			background-color: ~"color(from" @lime-alert-overlay-bg-color ~"srgb r g b /" @lime-alert-overlay-bg-color-opacity ~")";
+			background:
+				@lime-alert-overlay-bg-gradient padding-box,
+				linear-gradient(@lime-alert-overlay-bg-fill, @lime-alert-overlay-bg-fill) padding-box,
+				@lime-alert-overlay-stroke-gradient border-box;
+			backdrop-filter: blur(8px);
+			border: @lime-alert-overlay-stroke-width solid transparent;
 			box-shadow: @lime-alert-overlay-shadow;
 
 			:global(.noAnimation) & {
