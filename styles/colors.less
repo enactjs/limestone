@@ -165,6 +165,13 @@
 // FixedPopupPanels
 // ---------------------------------------
 @lime-fixedpopuppanels-background-color: var(--semantic-color-background-overlay-default);
+@lime-fixedpopuppanels-overlay-bg-color: #393A40;
+@lime-fixedpopuppanels-overlay-bg-color-opacity: 0.9;
+@lime-fixedpopuppanels-overlay-bg-fill: ~"color(from" @lime-fixedpopuppanels-overlay-bg-color ~"srgb r g b /" @lime-fixedpopuppanels-overlay-bg-color-opacity ~")";
+@lime-fixedpopuppanels-overlay-bg-gradient: linear-gradient(to bottom, fade(#43444A, 95%) 30%, fade(#43444A, 0%) 100%);
+@lime-fixedpopuppanels-overlay-stroke-gradient: linear-gradient(to bottom, fade(#666973, 90%) 0%, fade(#666973, 10%) 62%, fade(#666973, 30%) 100%);
+@lime-fixedpopuppanels-overlay-stroke-opacity: 0.8;
+@lime-fixedpopuppanels-overlay-stroke-width: 6px;
 
 // FlexiblePopupPanels
 // ---------------------------------------

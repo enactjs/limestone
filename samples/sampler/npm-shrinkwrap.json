@@ -36,7 +36,7 @@
         "@enact/ui": "^5.5.0",
         "@enact/webos": "^5.5.0",
         "@enovaui/core-tokens": "^3.1.0",
-        "@enovaui/webos-tokens": "^0.15.0",
+        "@enovaui/webos-tokens": "^3.1.0",
         "classnames": "^2.5.1",
         "ilib": "^14.21.3",
         "invariant": "^2.2.4",

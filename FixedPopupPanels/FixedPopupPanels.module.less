@@ -61,16 +61,24 @@
 
 		// Overrides for Viewport
 		.viewport {
-			background-color: @lime-fixedpopuppanels-background-color;
+			background:
+				@lime-fixedpopuppanels-overlay-bg-gradient padding-box,
+				linear-gradient(@lime-fixedpopuppanels-overlay-bg-fill, @lime-fixedpopuppanels-overlay-bg-fill) padding-box,
+				@lime-fixedpopuppanels-overlay-stroke-gradient border-box;
+			border: @lime-fixedpopuppanels-overlay-stroke-width solid transparent;
 			border-radius: @lime-fixedpopuppanels-border-radius;
 			box-shadow: @lime-overlay-shadow;
-			outline-color: @lime-overlay-outline-color;
-			outline-width: @lime-overlay-outline-width;
-			outline-style: @lime-overlay-outline-style;
-			outline-offset: -@lime-overlay-outline-width;
+			opacity: 1;
 
 			:global(.noAnimation) & {
 				box-shadow: none;
+			}
+
+			:has(:global(.highContrast)) & {
+				outline-color: @lime-overlay-outline-color;
+				outline-width: @lime-overlay-outline-width;
+				outline-style: @lime-overlay-outline-style;
+				outline-offset: -@lime-overlay-outline-width;
 			}
 		}
 	});
