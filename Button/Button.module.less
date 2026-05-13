@@ -34,6 +34,11 @@
 				width: @lime-button-colordot-width-font-size-large;
 				height: @lime-button-colordot-height-font-size-large;
 			}
+
+			&:not(.minWidth) .client::before {
+				width: @lime-button-icon-only-colordot-width;
+				height: @lime-button-icon-only-colordot-height;
+			}
 		}
 	});
 
@@ -93,6 +98,20 @@
 			height: @lime-button-colordot-height;
 			border-radius: @lime-button-colordot-border-radius;
 			transform: translate(-50%, 50%);
+		}
+
+		&:not(.minWidth) {
+			.client::before {
+				width: @lime-button-icon-only-colordot-width;
+				height: @lime-button-icon-only-colordot-height;
+			}
+
+			.lime-custom-text({
+				.client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
+				}
+			});
 		}
 
 		// Standard Button Scenario
@@ -187,6 +206,20 @@
 				height: @lime-button-small-colordot-height;
 			}
 
+			&:not(.minWidth) {
+				.client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
+				}
+
+				.lime-custom-text({
+					.client::before {
+						width: @lime-button-icon-only-colordot-width;
+						height: @lime-button-icon-only-colordot-height;
+					}
+				});
+			}
+
 			// Standard Button Scenario
 			&.minWidth {
 				.client {
@@ -229,6 +262,11 @@
 				.client::before {
 					width: @lime-button-small-colordot-width-font-size-large;
 					height: @lime-button-small-colordot-height-font-size-large;
+				}
+
+				&:not(.minWidth) .client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
 				}
 			}
 
@@ -282,33 +320,6 @@
 					width: 100%;
 				})
 			}
-
-			&.red,
-			&.green,
-			&.yellow,
-			&.blue {
-				.client::before {
-					width: @lime-button-icon-only-colordot-width;
-					height: @lime-button-icon-only-colordot-height;
-				}
-			}
-		}
-
-		&.red,
-		&.green,
-		&.yellow,
-		&.blue {
-			.client::before {
-				width: @lime-button-icon-only-colordot-width;
-				height: @lime-button-icon-only-colordot-height;
-			}
-
-			.lime-custom-text({
-				.client::before {
-					width: @lime-button-icon-only-colordot-width-font-size-large;
-					height: @lime-button-icon-only-colordot-height-font-size-large;
-				}
-			})
 
 		}
 	}
