@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
 - `limestone/Heading` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI

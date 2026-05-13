@@ -53,8 +53,9 @@
 		border-style: solid;
 
 		.selectionIcon {
-			width: @lime-card-selection-check-icon-size;
-			height: @lime-card-selection-check-icon-size;
+			--icon-size: @lime-card-selection-check-icon-size;
+			width: @lime-card-selection-check-icon-line-height;
+			height: @lime-card-selection-check-icon-line-height;
 			border-radius: @lime-card-selection-icon-border-radius;
 			margin: @lime-card-selection-icon-margin;
 			line-height: @lime-card-selection-check-icon-line-height;
@@ -292,6 +293,46 @@
 			});
 		}
 	}
+
+	.lime-custom-text({
+		.caption {
+			font-size: @lime-card-caption-large-font-size;
+			line-height: @lime-card-caption-large-line-height;
+		}
+
+		.label {
+			font-size: @lime-card-label-large-font-size;
+			line-height: @lime-card-label-large-line-height;
+		}
+
+		&.captionOverlay {
+			&.splitCaption {
+				.label {
+					font-size: @lime-card-split-caption-label-large-font-size;
+				}
+			}
+		}
+
+		.selectionContainer .selectionIcon {
+			--icon-size: @lime-card-selection-large-icon-size;
+			width: @lime-card-selection-icon-large-line-height;
+			height: @lime-card-selection-icon-large-line-height;
+			line-height: @lime-card-selection-icon-large-line-height;
+		}
+
+		&:is(.isCheckIcon) .selectionContainer .selectionIcon {
+			--icon-size: @lime-card-selection-check-large-icon-size;
+			width: @lime-card-selection-check-icon-large-line-height;
+			height: @lime-card-selection-check-icon-large-line-height;
+			line-height: @lime-card-selection-check-icon-large-line-height;
+		}
+
+		&.vertical {
+			&:not(.captionOverlay):not(.captionOverlayOnFocus):is(.hasLabel) .image {
+				height:~"calc(var(--card-image-height) - 36px)";
+			}
+		}
+	});
 
 	// Skin colors
 	.applySkins({
