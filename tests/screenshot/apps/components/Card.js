@@ -54,6 +54,9 @@ const defaultCardTests = [
 const CardTests = [
 	...defaultCardTests,
 
+	// Large text
+	...withConfig({skinVariants: ['largeText']}, defaultCardTests),
+
 	// Disabled
 	...withProps({disabled: true}, defaultCardTests),
 
