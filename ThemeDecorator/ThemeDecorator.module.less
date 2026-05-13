@@ -46,6 +46,10 @@
 	// Prevent Chrome from highlighting tapped elements
 	-webkit-tap-highlight-color: transparent;
 
+	.lime-custom-text({
+		.lime-text-base(@lime-base-font-size-large, self);
+	});
+
 	&.bg,
 	& > .bg {
 		padding: @lime-app-keepout;
