@@ -88,6 +88,13 @@
 		}
 	}
 
+	.lime-custom-text({
+		.tooltip .tooltipLabel {
+			font-size: @lime-input-invalid-tooltip-font-size-large;
+			line-height: @lime-input-invalid-tooltip-line-height-large;
+		}
+	});
+
 	.keypad {
 		.enact-locale-rtl({
 			direction: ltr;
@@ -101,6 +108,9 @@
 
 			.icon {
 				font-size: @lime-input-keypad-key-font-size;
+				.lime-custom-text({
+					font-size: @lime-input-keypad-key-font-size-large;
+				});
 			}
 		}
 	}
