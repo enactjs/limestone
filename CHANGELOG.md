@@ -12,8 +12,16 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/PageViews` styling to match the latest GUI
+- `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI
+- `limestone/TabLayout` styling to match the latest GUI
+- `limestone/TooltipDecorator` styling to match the latest GUI
+- `limestone/VideoPlayer` styling to match the latest GUI
 
 ## [1.10.0] - 2026-05-08
 
