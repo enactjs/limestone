@@ -12,6 +12,7 @@ const BaseTests = [
 	<Input open title="Input Test" subtitle="Additional text" noBackButton />,
 	<Input open title="Input Test" subtitle="Additional text" placeholder="placeholder" />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" />,
+	<Input open title="Input Test" subtitle="Additional text" invalid invalidMessage="This is a bad value" />,
 	<Input open title={LoremString} subtitle={LoremString} value={LoremString} />,
 	<Input open title="Input Test" subtitle="Additional text" value="value" type="password" />,
 	<Input open title="Input Test" subtitle="Additional text" value="1234" type="number" />,

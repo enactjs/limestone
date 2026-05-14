@@ -200,8 +200,16 @@
 		.tooltipLabel {
 			font-size: @lime-inputfield-invalid-tooltip-font-size;
 			font-weight: @lime-inputfield-invalid-tooltip-font-weight;
+			line-height: @lime-inputfield-invalid-tooltip-line-height;
 		}
 	}
+
+	.lime-custom-text({
+		.tooltip .tooltipLabel {
+			font-size: @lime-inputfield-invalid-tooltip-font-size-large;
+			line-height: @lime-inputfield-invalid-tooltip-line-height-large;
+		}
+	});
 
 	// Skin colors
 	.applySkins({
