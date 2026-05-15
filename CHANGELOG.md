@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Scroller` focus area to be separated from the vertical and horizontal scrollbars when `focusableScrollbar` is `"byEnter"`
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI

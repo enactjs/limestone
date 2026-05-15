@@ -374,6 +374,14 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	const {calculatePositionOnFocus, focusOnNode, setContainerDisabled} = useSpottable(scrollContentProps, {scrollContainerRef, scrollContentHandle, scrollContentRef});
 	const {setNavigableFilter, ...focusableBodyProps} = (props.focusableScrollbar === 'byEnter') ? getFocusableBodyProps(scrollContainerRef, contentId, isScrollbarVisible) : {};
 
+	if (focusableBodyProps.className) {
+		focusableBodyProps.className = classNames(
+			focusableBodyProps.className,
+			isVerticalScrollbarVisible && css.hasVerticalScrollbar,
+			isHorizontalScrollbarVisible && css.hasHorizontalScrollbar
+		);
+	}
+
 	useLayoutEffect(() => {
 		// Initial filter setting
 		if (setNavigableFilter) {
