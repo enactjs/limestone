@@ -55,7 +55,7 @@ const MediaOverlayTests = [
 		<MediaOverlay caption="Focused DTV 7-1" progress={0.5} showProgress title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>
 	]),
 
-	// Focused
+	// Large text
 	...withConfig({textSize: 'large'}, [
 		<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
 		<MediaOverlay imageOverlay={img} caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM" />,
