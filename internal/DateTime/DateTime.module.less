@@ -1,5 +1,6 @@
 // DateTime.module.less
 //
+@import "../../styles/mixins.less";
 @import "../../styles/skin.less";
 @import "../../styles/variables.less";
 
@@ -30,6 +31,23 @@
 			margin-inline-end: 0
 		}
 	}
+
+	.lime-custom-text({
+		.pickers {
+			> * {
+				width: @lime-datetime-picker-width-large;
+				> * {
+					width: 100%;
+				}
+			}
+		}
+
+		.heading {
+			font-size: @lime-datetime-fontsize-large;
+			margin: @lime-datetime-heading-margin-large;
+			width: @lime-datetime-heading-width-large;
+		}
+	});
 
 	.applySkins({
 		.heading {

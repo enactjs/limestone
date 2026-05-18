@@ -226,6 +226,57 @@
 		width: @lime-picker-large-value-width;
 	}
 
+	.lime-custom-text({
+		.heading {
+			font-size: @lime-datetime-fontsize-large;
+		}
+
+		.valueWrapper {
+			height: @lime-picker-value-height-large;
+			line-height: @lime-picker-value-height-large;
+		}
+
+		.sizingPlaceholder,
+		.valueWrapper {
+			.lime-text-base(@lime-picker-font-size-large);
+			font-weight: @lime-picker-font-weight;
+		}
+
+		&.joined {
+			.icon {
+				--icon-size: @lime-picker-icon-size-large;
+			}
+
+			.valueWrapper {
+				line-height: @lime-picker-value-height-large;
+			}
+
+			&.horizontal:not(.arrow) {
+				.sizingPlaceholder,
+				.valueWrapper {
+					font-size: @lime-picker-joined-font-size-large;
+					height: @lime-picker-joined-value-height;
+					line-height: @lime-picker-joined-value-height-large;
+				}
+
+				.indicatorContainer {
+					.indicator {
+						width: @lime-picker-indicator-width-large;
+						height: @lime-picker-indicator-height-large;
+					}
+				}
+			}
+
+			&.vertical {
+				.valueWrapper {
+					font-size: @lime-picker-joined-font-size-large;
+					height: @lime-picker-joined-value-height;
+					line-height: @lime-picker-joined-value-height-large;
+				}
+			}
+		}
+	});
+
 	// Skin colors
 	.applySkins({
 		color: @lime-picker-label-color;
