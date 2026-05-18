@@ -85,7 +85,7 @@ const DotSpinnerBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({['aria-label']: aria, children}) => aria || (!children ? 'Loading' : undefined),
+		'aria-label': ({['aria-label']: aria, children}) => aria || (!children ? 'Loading' : null),
 		className: ({children, paused, size, transparent, styler}) =>
 			styler.append(size, {content: !!children, paused, transparent})
 	},
