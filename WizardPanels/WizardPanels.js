@@ -384,7 +384,7 @@ const WizardPanelsBase = kind({
 
 		const isPrevButtonVisible = prevButton !== false && (prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0));
 		const isNextButtonVisible = nextButton !== false && (nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1));
-
+console.log(nextButton)
 		return (
 			<DecoratedPanelBase
 				{...rest}
@@ -404,6 +404,7 @@ const WizardPanelsBase = kind({
 						<NavigationButton
 							aria-label={$L('Previous')}
 							backgroundOpacity="transparent"
+							className={css.prevButton}
 							component={prevButton}
 							focusEffectIconOnly
 							icon="arrowlargeleft"
@@ -416,6 +417,7 @@ const WizardPanelsBase = kind({
 						<NavigationButton
 							aria-label={$L('Next')}
 							backgroundOpacity="transparent"
+							className={css.nextButton}
 							component={nextButton}
 							focusEffectIconOnly
 							icon="arrowlargeright"

@@ -106,6 +106,12 @@
 		.title {
 			margin-top: @lime-header-standard-title-margin-top;
 		}
+
+		@media (aspect-ratio <= 1/1) {
+			.title {
+				margin-top: 0;
+			}
+		}
 	}
 
 	&.centered:not(.isPopupHeader) {
@@ -150,7 +156,6 @@
 	///
 
 	&.standard,
-	&.mini,
 	&.wizard {
 		&.slotBefore:not(.centered) .slotBefore {
 			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
@@ -203,11 +208,11 @@
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 
-		&.slotBefore:not(.centered) .slotBefore {
+		.slotBefore {
 			.margin-start-end(0, @lime-header-compact-slotbefore-margin-end);
 		}
 
-		&.slotAfter:not(.centered) .slotAfter {
+		.slotAfter {
 			.margin-start-end(@lime-header-compact-slotafter-margin-start, 0);
 		}
 
@@ -267,6 +272,14 @@
 
 		.title {
 			.lime-font-size(@lime-header-mini-title-font-size, @lime-non-latin-header-mini-title-font-size);
+		}
+
+		.slotBefore {
+			.margin-start-end(0, @lime-header-mini-slotbefore-margin-end);
+		}
+
+		.slotAfter {
+			.margin-start-end(@lime-header-mini-slotafter-margin-start, 0);
 		}
 
 		&.withSubtitle:not(.noSubtitle) {
