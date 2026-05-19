@@ -205,6 +205,24 @@
 	}
 
 	.lime-custom-text({
+		.input,
+		.inputHighlight,
+		.marqueeText {
+			font-size: @lime-input-font-size-large;
+			line-height: @lime-inputfield-height;
+		}
+
+		&.small {
+			.input,
+			.marqueeText {
+				font-size: @lime-inputfield-small-font-size-large;
+				line-height: @lime-inputfield-small-height-large;
+			}
+
+			.inputHighlight {
+				line-height: @lime-inputfield-small-height-large;
+			}
+		}
 		.tooltip .tooltipLabel {
 			font-size: @lime-inputfield-invalid-tooltip-font-size-large;
 			line-height: @lime-inputfield-invalid-tooltip-line-height-large;
