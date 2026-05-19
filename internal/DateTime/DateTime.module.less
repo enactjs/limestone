@@ -1,5 +1,6 @@
 // DateTime.module.less
 //
+@import "../../styles/mixins.less";
 @import "../../styles/skin.less";
 @import "../../styles/variables.less";
 
@@ -30,6 +31,12 @@
 			margin-inline-end: 0
 		}
 	}
+
+	.lime-custom-text({
+		.heading {
+			font-size: @lime-datetime-fontsize-large;
+		}
+	});
 
 	.applySkins({
 		.heading {
