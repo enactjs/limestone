@@ -80,9 +80,35 @@ const ButtonTests = [
 	<Button color="yellow" icon="plus" iconPosition="after" minWidth={false} />,
 	<Button color="blue" icon="plus" iconPosition="after" minWidth={false} />,
 
+	// color + size small (text button) - colordot height for small normal
+	<Button color="red" size="small">click me</Button>,
+	// color + size small (icon-only) - colordot height for small normal
+	<Button color="red" icon="plus" iconPosition="before" minWidth={false} size="small" />,
+
 	// [QWTC-2259] - Color Underbar displays on Small / Large size in Selected state
 	<Button selected color="red" icon="minus" iconPosition="after" minWidth={false} size="large" />,
 	<Button selected color="red" icon="minus" iconPosition="after" minWidth={false} size="small" />,
+
+	// largeText + color buttons (size large / default) - colordot dimensions for large+largeText
+	{
+		textSize: 'large',
+		component: <Button color="red">click me</Button>
+	},
+	// largeText + color buttons (size small) - colordot dimensions for small+largeText
+	{
+		textSize: 'large',
+		component: <Button color="red" size="small">click me</Button>
+	},
+	// largeText + icon-only color buttons (size large / default)
+	{
+		textSize: 'large',
+		component: <Button color="red" icon="plus" iconPosition="before" minWidth={false} />
+	},
+	// largeText + icon-only color buttons (size small)
+	{
+		textSize: 'large',
+		component: <Button color="red" icon="plus" iconPosition="before" minWidth={false} size="small" />
+	},
 
 	// iconPosition = before (Default) + icon
 	<Button icon="plus">click me</Button>,
@@ -197,6 +223,21 @@ const ButtonTests = [
 		// iconPosition = before (Default) + color + icon + iconPosition + minWidth
 		<Button color="yellow" icon="plus" iconPosition="before" minWidth={false}>Focused button</Button>,
 		<Button color="blue" icon="minus" iconPosition="after" minWidth={false}>Focused button</Button>,
+		// color + size small (text button, focused) - colordot height for small normal
+		<Button color="red" size="small">Focused button</Button>,
+		// color + size small (icon-only, focused) - colordot height for small normal
+		<Button color="red" icon="plus" iconPosition="before" minWidth={false} size="small" />,
+
+		// largeText + color buttons (focused, size large / default)
+		{
+			textSize: 'large',
+			component: <Button color="red">Focused button</Button>
+		},
+		// largeText + color buttons (focused, size small)
+		{
+			textSize: 'large',
+			component: <Button color="red" size="small">Focused button</Button>
+		},
 
 		// iconPosition = before (Default) + icon
 		<Button icon="plus">Focused button</Button>,
