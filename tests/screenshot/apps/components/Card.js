@@ -73,7 +73,10 @@ const CardTests = [
 	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
 
 	// FocusRing
-	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests))
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests)),
+
+	// Large text
+	...withConfig({skinVariants: ['largeText']}, defaultCardTests)
 ];
 
 export default CardTests;

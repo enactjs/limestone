@@ -226,6 +226,43 @@
 		width: @lime-picker-large-value-width;
 	}
 
+	.lime-custom-text({
+		.valueWrapper {
+			font-size: @lime-picker-font-size-large;
+			height: @lime-picker-value-height-large;
+			line-height: @lime-picker-value-height-large;
+		}
+
+		&.joined {
+			.valueWrapper {
+				line-height: @lime-picker-value-height-large;
+			}
+
+			&.horizontal:not(.arrow) {
+				.valueWrapper {
+					font-size: @lime-picker-joined-font-size-large;
+					height: @lime-picker-joined-value-height-large;
+					line-height: @lime-picker-joined-value-height-large;
+				}
+
+				.indicatorContainer {
+					.indicator {
+						width: @lime-picker-indicator-width-large;
+						height: @lime-picker-indicator-height-large;
+					}
+				}
+			}
+
+			&.vertical {
+				.valueWrapper {
+					font-size: @lime-picker-joined-font-size-large;
+					height: @lime-picker-joined-value-height-large;
+					line-height: @lime-picker-joined-value-height-large;
+				}
+			}
+		}
+	});
+
 	// Skin colors
 	.applySkins({
 		color: @lime-picker-label-color;
