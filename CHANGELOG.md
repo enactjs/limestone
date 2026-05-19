@@ -6,7 +6,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
-- `limestone/Scroller` focus area to be separated from the vertical and horizontal scrollbars when `focusableScrollbar` is `"byEnter"`
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Checkbox` styling to match the latest GUI
@@ -15,10 +14,13 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
 - `limestone/Item` styling to match the latest GUI
+- `limestone/Panels.Header` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Scroller` focus area to be separated from the vertical and horizontal scrollbars when `focusableScrollbar` is `"byEnter"`
 - `limestone/Switch` styling to match the latest GUI
 - `limestone/TimePicker` styling to match the latest GUI
+- `limestone/WizardPanels` styling to match the latest GUI
 
 ## [1.10.0] - 2026-05-08
 
