@@ -19,6 +19,21 @@
 		opacity: 0;
 	}
 
+	&.hasVerticalScrollbar::before {
+		right: var(--scroll-scrollbar-size);
+	}
+
+	&.hasHorizontalScrollbar::before {
+		bottom: var(--scroll-scrollbar-size);
+	}
+
+	.enact-locale-rtl({
+		&.hasVerticalScrollbar::before {
+			right: 0;
+			left: var(--scroll-scrollbar-size);
+		}
+	});
+
 	.focus({
 		:global(.spotlight-input-key)& {
 			&::before {
