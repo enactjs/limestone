@@ -1,6 +1,6 @@
 import Spotlight from '@enact/spotlight';
 import Spottable from '@enact/spotlight/Spottable';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const SpotlightPlaceholder = Spottable('div');
 
@@ -15,9 +15,13 @@ const SpotlightPlaceholder = Spottable('div');
 const ScrollbarPlaceholder = () => {
 	const [showPlaceholder, setShowPlaceholder] = useState(true);
 
-	if (showPlaceholder) {
-		setShowPlaceholder(false);
-	}
+	// The placeholder needs to mount and then unmount so its `onSpotlightDisappear` fires and
+	// hands focus over to the real scrollbar once it is ready.
+	useEffect(() => {
+		if (showPlaceholder) {
+			setShowPlaceholder(false); // eslint-disable-line react-hooks/set-state-in-effect
+		}
+	}, [showPlaceholder]);
 
 	const resetFocus = useCallback(() => {
 		setTimeout(() => {
