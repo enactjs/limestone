@@ -56,12 +56,18 @@
 
 	&.number .stepsRow {
 		min-height: @lime-pageviews-number-steps-area-min-height;
+
 		.pageNumber {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-evenly;
 			padding: @lime-pageviews-navigation-text-area-padding;
 			width: @lime-pageviews-number-steps-number-width;
+			font-size: @lime-pageviews-number-steps-number-font-size;
+
+			:global(.largeText) & {
+				font-size: @lime-pageviews-number-steps-number-font-size-large;
+			}
 
 			.separator {
 				width: @lime-pageviews-number-steps-separator-width;

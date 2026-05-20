@@ -43,7 +43,12 @@ const ToolTipTests = withConfig({
 
 	TooltipDisplay({type: 'balloon', direction:'right', arrowAnchor:'middle', tooltipWidth: 200, marquee: true}),
 
-	TooltipDisplay({type: 'balloon', direction:'left', arrowAnchor:'middle', tooltipWidth: 200, marquee: true})
+	TooltipDisplay({type: 'balloon', direction:'left', arrowAnchor:'middle', tooltipWidth: 200, marquee: true}),
+
+	// textSize = 'large'
+	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction:'above', arrowAnchor:'center'})},
+
+	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction:'below', arrowAnchor:'center'})}
 
 ]);
 
