@@ -19,11 +19,12 @@ const childProps = {text: ' child props'};
 spotlight.setPointerMode(false);
 
 const items = [],
-	itemStyle = {margin: 0};
+	itemStyle = {margin: 0},
+	itemStyleWithMargin = {margin: ri.scaleToRem(10)};
 
 // eslint-disable-next-line enact/display-name
-const renderItem = (size, disabled) => ({index, text, ...rest}) => {
-	const style = {height: ri.scaleToRem(size), ...itemStyle};
+const renderItem = (size, disabled, withMargin) => ({index, text, ...rest}) => {
+	const style = {height: ri.scaleToRem(size), ...(withMargin ? itemStyleWithMargin : itemStyle)};
 	return (
 		<StatefulSwitchItem index={index} style={style} {...rest} id={`item${index}`} disabled={disabled && (index % 15) !== 0}>
 			{items[index].item + (text || '')}
@@ -95,6 +96,7 @@ class app extends Component {
 			disabled: false,
 			hasChildProps: false,
 			hideScrollbar: false,
+			itemMargin: false,
 			nativeScroll: true,
 			numItems: 100,
 			spacing: 0,
@@ -152,7 +154,7 @@ class app extends Component {
 	render () {
 		const
 			inputStyle = {width: ri.scaleToRem(300)},
-			{disabled, hasChildProps, hideScrollbar, nativeScroll, numItems, itemSize, spacing, wrap} = this.state,
+			{disabled, hasChildProps, hideScrollbar, itemMargin, nativeScroll, numItems, itemSize, spacing, wrap} = this.state,
 			buttonDefaultProps = {minWidth: false, size: 'small'};
 		return (
 			<div {...this.props} id="list" ref={this.rootRef}>
@@ -165,6 +167,7 @@ class app extends Component {
 						<Button {...buttonDefaultProps} id="disabled" onClick={this.onToggle} selected={disabled}>DisabledItem</Button>
 						<Button {...buttonDefaultProps} id="hasChildProps" onClick={this.onToggle} selected={hasChildProps}>childProps</Button>
 						<Button {...buttonDefaultProps} id="nativeScroll" onClick={this.onToggle} selected={nativeScroll}>NativeScroll</Button>
+						<Button {...buttonDefaultProps} id="itemMargin" onClick={this.onToggle} selected={itemMargin}>ItemMargin</Button>
 						<InputField id="numItems" defaultValue={numItems} type="number" onChange={this.onChangeNumItems} size="small" style={inputStyle} />
 						<InputField id="spacing" defaultValue={spacing} type="number" onChange={this.onChangeSpacing} size="small" style={inputStyle} />
 						<InputField id="itemSize" defaultValue={itemSize} type="number" onChange={this.onChangeitemSize} size="small" style={inputStyle} />
@@ -185,7 +188,7 @@ class app extends Component {
 											cbScrollTo={this.getScrollTo}
 											childProps={this.state.hasChildProps ? childProps : null}
 											dataSize={numItems}
-											itemRenderer={renderItem(itemSize, disabled)}
+											itemRenderer={renderItem(itemSize, disabled, itemMargin)}
 											itemSize={ri.scale(itemSize)}
 											key={nativeScroll ? 'native' : 'translate'}
 											onKeyDown={this.onKeyDown}

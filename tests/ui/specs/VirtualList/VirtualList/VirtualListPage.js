@@ -57,6 +57,9 @@ class VirtualListPage extends Page {
 	get buttonNativeScroll () {
 		return element('#nativeScroll', browser);
 	}
+	get buttonItemMargin () {
+		return element('#itemMargin', browser);
+	}
 	get buttonHeaderChildren () {
 		return element('#headerChildrenButton', browser);
 	}
@@ -215,6 +218,14 @@ class VirtualListPage extends Page {
 		return await browser.execute(function () {
 			return document.activeElement.clientHeight;
 		});
+	}
+
+	async getOverscrollTranslate (orientation) {
+		return await browser.execute(function (_scrollContentSelector, _orientation) {
+			const el = document.querySelector(_scrollContentSelector);
+			return el ? el.style.getPropertyValue('--scroll-overscroll-translate-' + _orientation) : '';
+		}, scrollContentSelector, orientation);
+
 	}
 
 	// key input api
