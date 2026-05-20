@@ -55,6 +55,14 @@ const MediaOverlayTests = [
 		<MediaOverlay caption="Focused DTV 7-1" progress={0.5} showProgress title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>
 	]),
 
+	// Large text
+	...withConfig({textSize: 'large'}, [
+		<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+		<MediaOverlay imageOverlay={img} caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM" />,
+		<MediaOverlay text="Focused The quick brown fox jumped over the lazy dog. The bean bird flies at sundown." textAlign="start"><source src={videoSrc} /></MediaOverlay>,
+		<MediaOverlay caption="Focused DTV 7-1" progress={0.5} showProgress title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>
+	]),
+
 	// *************************************************************
 	// locale = 'ar-SA'
 	// *************************************************************
