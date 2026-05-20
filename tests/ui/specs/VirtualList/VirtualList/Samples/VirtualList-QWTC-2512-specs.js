@@ -16,15 +16,11 @@ describe('VirtualList Samples', function () {
 		await Page.fiveWayToItem(20);
 
 		// Step3. 5-way spot 'JumpToItem10WithoutFocus' button and select
-		await Page.spotlightLeft();
-		await Page.spotlightUp();
-		await Page.spotlightUp();
-		await Page.spotlightRight();
+		await Page.buttonJumpToItemWithoutFocus.moveTo();
 		await Page.spotlightSelect();
 
 		// Step4. Move focus to the list(In this view, Left button -> Item 0)
-		await Page.spotlightDown();
-		await Page.spotlightDown();
+		await Page.buttonLeft.moveTo();
 		await Page.spotlightRight();
 
 		// Wait for scroll animation

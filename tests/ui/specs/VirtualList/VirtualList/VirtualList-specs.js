@@ -140,10 +140,13 @@ describe('VirtualList', function () {
 			await Page.buttonItemMargin.moveTo();
 			await Page.spotlightSelect();
 
-			// Navigate to the last item to reach the bottom edge
-			await Page.buttonLeft.moveTo();
-			await Page.spotlightRight();
-			await Page.fiveWayToItem(99);
+			// Jump to the last item to reach the bottom edge
+			await Page.buttonJumpToLast.moveTo();
+			await Page.spotlightSelect();
+			await Page.delay(500);
+
+			// Wheel down past the bottom edge to trigger overscroll effect
+			await Page.scrollWheel(100);
 			await Page.delay(500);
 
 			// Verify overscroll translate CSS property is set (effect triggered)
@@ -156,11 +159,13 @@ describe('VirtualList', function () {
 			await Page.buttonItemMargin.moveTo();
 			await Page.spotlightSelect();
 
-			// Navigate to the last item, then back to the first item to reach the top edge
-			await Page.buttonLeft.moveTo();
-			await Page.spotlightRight();
-			await Page.fiveWayToItem(99);
-			await Page.fiveWayToItem(0);
+			// Jump to the first item to reach the top edge
+			await Page.buttonJumpToFirst.moveTo();
+			await Page.spotlightSelect();
+			await Page.delay(500);
+
+			// Wheel up past the top edge to trigger overscroll effect
+			await Page.scrollWheel(-100);
 			await Page.delay(500);
 
 			// Verify overscroll translate CSS property is set (effect triggered)

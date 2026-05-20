@@ -133,6 +133,14 @@ class app extends Component {
 		this.scrollTo({animate: false, focus, index: 10});
 	};
 
+	jumpToLast = () => {
+		this.scrollTo({animate: false, focus: true, index: this.state.numItems - 1});
+	};
+
+	jumpToFirst = () => {
+		this.scrollTo({animate: false, focus: true, index: 0});
+	};
+
 	onToggle = ({currentTarget}) => {
 		const key = currentTarget.getAttribute('id');
 		this.setState((state) => ({[key]: !state[key]}));
@@ -168,6 +176,8 @@ class app extends Component {
 						<Button {...buttonDefaultProps} id="hasChildProps" onClick={this.onToggle} selected={hasChildProps}>childProps</Button>
 						<Button {...buttonDefaultProps} id="nativeScroll" onClick={this.onToggle} selected={nativeScroll}>NativeScroll</Button>
 						<Button {...buttonDefaultProps} id="itemMargin" onClick={this.onToggle} selected={itemMargin}>ItemMargin</Button>
+						<Button {...buttonDefaultProps} id="jumpToLast" onClick={this.jumpToLast}>JumpToLastItem</Button>
+						<Button {...buttonDefaultProps} id="jumpToFirst" onClick={this.jumpToFirst}>JumpToFirstItem</Button>
 						<InputField id="numItems" defaultValue={numItems} type="number" onChange={this.onChangeNumItems} size="small" style={inputStyle} />
 						<InputField id="spacing" defaultValue={spacing} type="number" onChange={this.onChangeSpacing} size="small" style={inputStyle} />
 						<InputField id="itemSize" defaultValue={itemSize} type="number" onChange={this.onChangeitemSize} size="small" style={inputStyle} />
