@@ -47,7 +47,7 @@ const KeyGuideTests = [
 		<KeyGuide arrowPosition="bottom" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>,
 		<KeyGuide arrowPosition="right" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>,
 		<KeyGuide arrowPosition="left" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>,
-		<KeyGuide arrowPosition="none" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>,
+		<KeyGuide arrowPosition="none" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>
 	])
 ];
 
