@@ -66,6 +66,18 @@
 		}
 	}
 
+	:global(.largeText) & {
+		.title {
+			font-size: @lime-video-player-label-font-size-large;
+			line-height: @lime-video-player-label-line-height-large;
+		}
+
+		.infoComponents {
+			font-size: @lime-video-player-info-font-size-large;
+			line-height: @lime-video-player-info-line-height-large;
+		}
+	}
+
 	:global(.noAnimation) & {
 		&.hidden {
 			transition: none;

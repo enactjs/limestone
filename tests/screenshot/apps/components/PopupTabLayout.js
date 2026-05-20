@@ -102,6 +102,11 @@ const PopupTabLayoutTests = [
 		wrapper: {full: true}
 	},
 	{
+		component: <PopupTabLayout open>{someTabsWithIcons}</PopupTabLayout>,
+		wrapper: {full: true},
+		textSize: 'large'
+	},
+	{
 		component: <PopupTabLayout open>{oneTabWithIcons}</PopupTabLayout>,
 		wrapper: {full: true}
 	},
@@ -116,6 +121,11 @@ const PopupTabLayoutTests = [
 	{
 		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
 		wrapper: {full: true}
+	},
+	{
+		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
+		wrapper: {full: true},
+		textSize: 'large'
 	},
 	{
 		component: <PopupTabLayout open collapsed>{oneTabWithIcons}</PopupTabLayout>,
@@ -144,6 +154,11 @@ const PopupTabLayoutTests = [
 	{
 		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
 		wrapper: {full: true}
+	},
+	{
+		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
+		wrapper: {full: true},
+		textSize: 'large'
 	}
 ];
 export default PopupTabLayoutTests;

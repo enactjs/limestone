@@ -16,6 +16,10 @@
 			.position(auto, 0, 0, 0);
 			font-size: @lime-video-slider-tooltip-thumbnail-content-font-size;
 			margin-bottom: @lime-video-slider-tooltip-thumbnail-content-margin-bottom;
+
+			:global(.largeText) & {
+				font-size: @lime-video-slider-tooltip-thumbnail-content-font-size-large;
+			}
 		}
 	}
 
@@ -68,6 +72,11 @@
 		text-align: center;
 		margin-bottom: @lime-video-slider-tooltip-margin-bottom;
 		padding: @lime-video-slider-tooltip-content-padding;
+
+		:global(.largeText) & {
+			font-size: @lime-video-slider-tooltip-font-size-large;
+			line-height: @lime-video-slider-tooltip-line-height-large;
+		}
 	}
 
 	.alignmentContainer {
