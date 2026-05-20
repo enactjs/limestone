@@ -384,7 +384,7 @@ const WizardPanelsBase = kind({
 
 		const isPrevButtonVisible = prevButton !== false && (prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0));
 		const isNextButtonVisible = nextButton !== false && (nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1));
-console.log(nextButton)
+
 		return (
 			<DecoratedPanelBase
 				{...rest}
