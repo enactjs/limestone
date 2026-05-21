@@ -1,5 +1,6 @@
 // Chip.module.less
 //
+@import "../styles/mixins.less";
 @import "../styles/variables.less";
 
 .chip {
@@ -31,6 +32,12 @@
 			top: ~"calc(-100% - " @lime-chip-button-spacing ~")";
 			left: 50%;
 			transform: translateX(-50%);
+		}
+	}
+
+	:global(.largeText) & {
+		.button.small {
+			min-width: @lime-chip-min-width;
 		}
 	}
 

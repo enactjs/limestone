@@ -30,6 +30,9 @@ const BodyTextTests = [
 		...commonTests
 	]),
 
+	// Large Text
+	...withConfig({skinVariants: ['largeText']}, [...commonTests]),
+
 	// Indian
 	{
 		locale: 'bn-IN',
