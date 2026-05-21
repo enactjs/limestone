@@ -85,7 +85,10 @@ const IconItemTests = [
 	}, [
 		<IconItem background="#1b1b1b" icon="usb" />,
 		<IconItem background="#1b1b1b" icon="usb" label="Label" />
-	])
+	]),
+
+	// Large Text
+	...withConfig({skinVariants: ['largeText']}, defaultIconItemTests)
 ];
 
 export default IconItemTests;

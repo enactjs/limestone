@@ -32,6 +32,24 @@
 		--icon-size: @lime-icon-tiny-size;
 	}
 
+	.lime-custom-text({
+		&.large {
+			--icon-size: @lime-icon-large-size-large;
+		}
+
+		&.medium {
+			--icon-size: @lime-icon-medium-size-large;
+		}
+
+		&.small {
+			--icon-size: @lime-icon-small-size-large;
+		}
+
+		&.tiny {
+			--icon-size: @lime-icon-tiny-size-large;
+		}
+	});
+
 	// Icon size calculations
 	width: @icon-size;
 	height: @icon-size;

@@ -11,7 +11,8 @@ const LtrTests = [
 const ActionGuideTests = [
 	...LtrTests,
 	...withConfig({locale: 'vi-VN'}, LtrTests),  // Tallglyph validation
-	...withConfig({locale: 'ar-SA'}, LtrTests)
+	...withConfig({locale: 'ar-SA'}, LtrTests),
+	...withConfig({skinVariants: ['largeText']}, LtrTests) // Large Text
 ];
 
 export default ActionGuideTests;
