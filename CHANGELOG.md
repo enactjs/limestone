@@ -14,6 +14,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/DatePicker` styling to match the latest GUI
 - `limestone/Heading` styling to match the latest GUI
+- `limestone/Icon` styling to match the latest GUI
 - `limestone/IconItem` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Input` styling to match the latest GUI
