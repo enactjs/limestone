@@ -105,6 +105,28 @@
 		transition: none;
 	}
 
+	.lime-custom-text({
+		&.hasTitle {
+			height: @lime-iconitem-title-height-large;
+		}
+
+		.icon {
+			height: @lime-iconitem-icon-height-large;
+			width: @lime-iconitem-icon-width-large;
+			line-height: @lime-iconitem-icon-height-large;
+		}
+
+		.label {
+			font-size: @lime-iconitem-label-font-size-large;
+			line-height: @lime-iconitem-label-line-height-large;
+		}
+
+		.title {
+			font-size: @lime-iconitem-title-font-size-large;
+			line-height: @lime-iconitem-title-line-height-large;
+		}
+	});
+
 	// Skin colors
 	.applySkins({
 		&.bordered .content {

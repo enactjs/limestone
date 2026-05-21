@@ -73,6 +73,18 @@ const VideoPlayerTests = [
 	{
 		component: commonVideoPlayer({src: '', noButtonComponent: true}),
 		wrapper: {full: true}
+	},
+
+	// textSize = 'large'
+	{
+		component: commonVideoPlayer({src: '', poster: posterUrl, title: videoTitle}),
+		wrapper: {full: true},
+		textSize: 'large'
+	},
+	{
+		component: commonVideoPlayer({src: videoUrl, noAutoPlay: true}),
+		wrapper: {full: true},
+		textSize: 'large'
 	}
 ];
 export default VideoPlayerTests;
