@@ -35,6 +35,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/TooltipDecorator` styling to match the latest GUI
 - `limestone/VideoPlayer` styling to match the latest GUI
 
+### Fixed
+
+- `limestone/Scroller` to set initial focus on the scrollbar thumb when navigating between panels with `focusableScrollbar`
+
+
 ## [1.10.0] - 2026-05-08
 
 ### Added
