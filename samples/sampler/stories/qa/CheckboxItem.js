@@ -1,5 +1,6 @@
 import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import Item, {ItemBase} from '@enact/limestone/Item';
+import Scroller from '@enact/limestone/Scroller';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -105,3 +106,70 @@ boolean('itemProps-inline', Grouped, Config, false);
 select('select', Grouped, ['single', 'radio', 'multiple'], Group, 'multiple');
 
 Grouped.storyName = 'grouped';
+
+export const MultipleCheckBoxItems = (args) => (
+
+	<Scroller>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 1
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 2
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 3
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 4
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 5
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 6
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 7
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 8
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 9
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 10
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 11
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 12
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 13
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 14
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 15
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 16
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 17
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 18
+		</CheckboxItem>
+		<CheckboxItem formCheckbox={args['formCheckbox']}>
+			Checkbox Item 19
+		</CheckboxItem>
+	</Scroller>
+);
+
+boolean('formCheckbox', MultipleCheckBoxItems, Config, false);
+
+MultipleCheckBoxItems.storyName = 'multipleCheckboxItems';
