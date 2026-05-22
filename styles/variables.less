@@ -656,8 +656,8 @@
 @lime-header-compact-titles-row-padding: 0 0 #guide.header[compact-subtitle-height];
 @lime-header-compact-subtitle-padding: 0;
 @lime-header-compact-subtitle-margin-top: (#guide.header[compact-subtitle-height] - #guide.header[compact-subtitle-line-height]);
-@lime-header-compact-slotbefore-margin-end: var(--primitive-spacing-24);
-@lime-header-compact-slotafter-margin-start: var(--primitive-spacing-30);
+@lime-header-compact-slotbefore-margin-end: var(--primitive-spacing-12);
+@lime-header-compact-slotafter-margin-start: var(--primitive-spacing-12);
 @lime-header-mini-margin:
 	var(--primitive-spacing-6)
 	@lime-component-spacing
@@ -683,6 +683,8 @@
 		)[@result]
 	)
 	.extract(#guide.header[mini-padding], left)[];
+@lime-header-mini-slotbefore-margin-end: var(--primitive-spacing-12);
+@lime-header-mini-slotafter-margin-start: var(--primitive-spacing-12);
 @lime-header-wizard-nosubtitle-padding-bottom: ~"calc(@{lime-header-subtitle-height} + var(--primitive-spacing-6))";
 @lime-header-wizard-margin: 0;
 @lime-header-wizard-padding:

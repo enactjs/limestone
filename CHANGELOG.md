@@ -23,6 +23,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/KeyGuide` styling to match the latest GUI
 - `limestone/MediaOverlay` styling to match the latest GUI
 - `limestone/PageViews` styling to match the latest GUI
+- `limestone/Panels.Header` styling to match the latest GUI
 - `limestone/Picker` styling to match the latest GUI
 - `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
