@@ -11,7 +11,7 @@ const Config = mergeComponentMetadata('Heading', UiHeading, HeadingBase, Heading
 // Set up some defaults for info and controls
 const prop = {
 	marqueeOn: ['hover', 'render'],
-	size: ['large', 'medium', 'small', 'tiny'],
+	size: ['large', 'medium', 'small', 'tiny', 'title', 'subtitle'],
 	spacing: ['auto', 'large', 'medium', 'small', 'none']
 };
 

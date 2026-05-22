@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
-import {render, fireEvent, screen} from '@testing-library/react';
+import Spotlight from '@enact/spotlight';
+import {act, render, fireEvent, screen} from '@testing-library/react';
+import {Profiler} from 'react';
 
 import Scroller from '../Scroller';
 
@@ -92,7 +94,7 @@ describe('Scroller', () => {
 	});
 
 	describe('focusable Scrollbar', () => {
-		test('should have focuable body and thumb when \'focusableScrollbar\' is "byEnter"',
+		test('should have focusable body and thumb when \'focusableScrollbar\' is "byEnter"',
 			() => {
 				const id = 'scroller';
 
@@ -122,7 +124,7 @@ describe('Scroller', () => {
 			}
 		);
 
-		test('should have focuable scroll thumb when \'focusableScrollbar\' is true',
+		test('should have focusable scroll thumb when \'focusableScrollbar\' is true',
 			() => {
 				const id = 'scroller';
 
@@ -146,6 +148,92 @@ describe('Scroller', () => {
 				expect(verticalScrollbar).toHaveClass(expected);
 			}
 		);
+
+		describe('ScrollbarPlaceholder focus restoration', () => {
+			let focusSpy, pointerModeSpy, currentSpy, pausedSpy, containerSpy;
+			let placeholderElement;
+
+			const renderWithFocusedPlaceholder = () => {
+				placeholderElement = null;
+				currentSpy.mockImplementation(() => placeholderElement);
+
+				const onRender = (id, phase) => {
+					if (phase === 'mount') {
+						placeholderElement = document.querySelector('[data-spotlight-ignore-restore]');
+					}
+				};
+
+				const view = render(
+					<Profiler id="placeholder" onRender={onRender}>
+						<Scroller focusableScrollbar="byEnter" verticalScrollbar="visible">
+							{contents}
+						</Scroller>
+					</Profiler>
+				);
+
+				currentSpy.mockImplementation(() => null);
+				focusSpy.mockClear();
+
+				return view;
+			};
+
+			beforeEach(() => {
+				jest.useFakeTimers();
+				focusSpy = jest.spyOn(Spotlight, 'focus').mockImplementation(() => true);
+				pointerModeSpy = jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(false);
+				currentSpy = jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(null);
+				pausedSpy = jest.spyOn(Spotlight, 'isPaused').mockReturnValue(false);
+				containerSpy = jest.spyOn(Spotlight, 'getActiveContainer').mockReturnValue('active-container');
+			});
+
+			afterEach(() => {
+				focusSpy.mockRestore();
+				pointerModeSpy.mockRestore();
+				currentSpy.mockRestore();
+				pausedSpy.mockRestore();
+				containerSpy.mockRestore();
+				jest.useRealTimers();
+			});
+
+			test('should focus the active container after the placeholder disappears', () => {
+				renderWithFocusedPlaceholder();
+
+				act(() => jest.advanceTimersByTime(0));
+
+				expect(focusSpy).toHaveBeenCalledWith('active-container', {toOuterContainer: true});
+			});
+
+			test('should not focus when pointer mode is active', () => {
+				pointerModeSpy.mockReturnValue(true);
+				renderWithFocusedPlaceholder();
+
+				act(() => jest.advanceTimersByTime(0));
+
+				expect(focusSpy).not.toHaveBeenCalled();
+			});
+
+			test('should defer focus while spotlight is paused, then focus after 400ms once it unpauses', () => {
+				pausedSpy.mockReturnValue(true);
+				renderWithFocusedPlaceholder();
+
+				act(() => jest.advanceTimersByTime(0));
+				expect(focusSpy).not.toHaveBeenCalled();
+
+				pausedSpy.mockReturnValue(false);
+				act(() => jest.advanceTimersByTime(400));
+
+				expect(focusSpy).toHaveBeenCalledWith('active-container', {toOuterContainer: true});
+			});
+
+			test('should not focus after the 400ms retry if spotlight is still paused', () => {
+				pausedSpy.mockReturnValue(true);
+				renderWithFocusedPlaceholder();
+
+				act(() => jest.advanceTimersByTime(400));
+
+				expect(focusSpy).not.toHaveBeenCalled();
+			});
+		});
 	});
 
 	describe('Scrollbar accessibility', () => {
