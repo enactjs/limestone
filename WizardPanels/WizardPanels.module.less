@@ -3,11 +3,6 @@
 @import "../styles/mixins.less";
 @import "../styles/variables.less";
 
-// Module level variables, for use only in this file
-@header-wizard-top-padding: .extract(@lime-header-wizard-padding, top)[];
-@header-slotabove-bottom-margin: .extract(@lime-header-slotabove-margin, bottom)[];
-@navigation-button-top-spacing: ~'calc(@{header-wizard-top-padding} - @{header-slotabove-bottom-margin})';
-
 .wizardPanels {
 	&.noSteps {
 		.steps {
@@ -28,12 +23,5 @@
 	.footer {
 		text-align: center;
 		margin: @lime-wizardpanels-footer-margin;
-	}
-
-	@media (aspect-ratio <= 1/1) {
-		.nextButton,
-		.prevButton {
-			margin-top: ~'calc(-1 * (@{navigation-button-top-spacing} + @{lime-wizardpanels-steps-height}))';
-		}
 	}
 }

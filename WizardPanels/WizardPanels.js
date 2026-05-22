@@ -404,7 +404,6 @@ const WizardPanelsBase = kind({
 						<NavigationButton
 							aria-label={$L('Previous')}
 							backgroundOpacity="transparent"
-							className={css.prevButton}
 							component={prevButton}
 							focusEffectIconOnly
 							icon="arrowlargeleft"
@@ -417,7 +416,6 @@ const WizardPanelsBase = kind({
 						<NavigationButton
 							aria-label={$L('Next')}
 							backgroundOpacity="transparent"
-							className={css.nextButton}
 							component={nextButton}
 							focusEffectIconOnly
 							icon="arrowlargeright"
