@@ -30,6 +30,33 @@ const CheckboxItemTests = [
 	<CheckboxItem selected disabled inline indeterminate>CheckboxItem</CheckboxItem>,
 	<CheckboxItem indeterminate indeterminateIcon="lock">CheckboxItem</CheckboxItem>, 	// not selected
 
+	// FormCheckbox
+	<CheckboxItem formCheckbox />,
+	<CheckboxItem formCheckbox >CheckboxItem</CheckboxItem>, 					// not selected
+	<CheckboxItem formCheckbox label="label">CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox disabled>CheckboxItem</CheckboxItem>,	// not selected
+	<CheckboxItem formCheckbox inline>CheckboxItem</CheckboxItem>,		// not selected
+	<CheckboxItem formCheckbox inline label="label">CheckboxItem</CheckboxItem>,		// not selected
+	<CheckboxItem formCheckbox disabled inline>CheckboxItem</CheckboxItem>,	// not selected
+	// [QWTC-1861]
+	<CheckboxItem formCheckbox selected>CheckboxItem Checked</CheckboxItem>,
+	<CheckboxItem formCheckbox selected label="label">CheckboxItem Checked</CheckboxItem>,
+	// [QWTC-1861]
+	<CheckboxItem formCheckbox selected disabled>CheckboxItem Checked</CheckboxItem>,
+	<CheckboxItem formCheckbox selected disabled label="label">CheckboxItem Checked</CheckboxItem>,
+	<CheckboxItem formCheckbox selected inline>CheckboxItem Checked</CheckboxItem>,
+	<CheckboxItem formCheckbox selected disabled inline>CheckboxItem Checked</CheckboxItem>,
+
+	<CheckboxItem formCheckbox indeterminate>CheckboxItem</CheckboxItem>, 			// not selected
+	<CheckboxItem formCheckbox disabled indeterminate>CheckboxItem</CheckboxItem>,	// not selected
+	<CheckboxItem formCheckbox inline indeterminate>CheckboxItem</CheckboxItem>,		// not selected
+	<CheckboxItem formCheckbox disabled inline indeterminate>CheckboxItem</CheckboxItem>, // not selected
+	<CheckboxItem formCheckbox selected indeterminate>CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox selected disabled indeterminate>CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox selected inline indeterminate>CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox selected disabled inline indeterminate>CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox indeterminate indeterminateIcon="lock">CheckboxItem</CheckboxItem>, 	// not selected
+
 	// Custom icon
 	<CheckboxItem icon="star" selected>Custom icon CheckboxItem</CheckboxItem>,
 	<CheckboxItem icon="star" selected inline>Custom icon CheckboxItem</CheckboxItem>,
