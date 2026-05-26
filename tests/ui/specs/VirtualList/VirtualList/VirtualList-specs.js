@@ -129,4 +129,48 @@ describe('VirtualList', function () {
 			await expectFocusedItem(5, 'focus Item 05');
 		});
 	});
+
+	describe('overscroll effect with item margin', function () {
+		beforeEach(async function () {
+			await Page.open();
+		});
+
+		it('should trigger overscroll effect at the bottom when items have margin', async function () {
+			// Enable item margin
+			await Page.buttonItemMargin.moveTo();
+			await Page.spotlightSelect();
+
+			// Jump to the last item to reach the bottom edge
+			await Page.buttonJumpToLast.moveTo();
+			await Page.spotlightSelect();
+			await Page.delay(500);
+
+			// Wheel down past the bottom edge to trigger overscroll effect
+			await Page.scrollWheel(100);
+			await Page.delay(500);
+
+			// Verify overscroll translate CSS property is set (effect triggered)
+			const translate = await Page.getOverscrollTranslate('vertical');
+			expect(translate).not.toBe('');
+		});
+
+		it('should trigger overscroll effect at the top when items have margin', async function () {
+			// Enable item margin
+			await Page.buttonItemMargin.moveTo();
+			await Page.spotlightSelect();
+
+			// Jump to the first item to reach the top edge
+			await Page.buttonJumpToFirst.moveTo();
+			await Page.spotlightSelect();
+			await Page.delay(500);
+
+			// Wheel up past the top edge to trigger overscroll effect
+			await Page.scrollWheel(-100);
+			await Page.delay(500);
+
+			// Verify overscroll translate CSS property is set (effect triggered)
+			const translate = await Page.getOverscrollTranslate('vertical');
+			expect(translate).not.toBe('');
+		});
+	});
 });
