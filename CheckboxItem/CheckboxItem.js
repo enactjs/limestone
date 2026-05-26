@@ -80,7 +80,7 @@ const CheckboxItemBase = kind({
 		/**
 		 * Enables the "formCheckbox" state.
 		 *
-		 * In "formCheckbox" mode the spotlight is located on the Checkbox component and the Item does not receive
+		 * In "formCheckbox" mode,  the spotlight is located on the Checkbox component and the Item does not receive
 		 * visual feedback on focus
 		 *
 		 * @type {Boolean}
