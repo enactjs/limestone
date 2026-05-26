@@ -4,7 +4,7 @@
  * @example
  * <FormCheckboxItem>A Checkbox for a form</FormCheckboxItem>
  *
- * @deprecated Will be Deprecated starting with Limestone 2.0.0. Switch to using CheckboxItem
+ * @deprecated Will be removed in 2.0.0. Use {@link limestone/CheckboxItem} instead.
  * @module limestone/FormCheckboxItem
  * @exports FormCheckboxItem
  * @exports FormCheckboxItemBase
