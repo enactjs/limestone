@@ -94,12 +94,12 @@ const CheckboxItemTests = [
 
 		// FormCheckbox
 		<CheckboxItem formCheckbox />,
-		<CheckboxItem formCheckbox >CheckboxItem</CheckboxItem>, 					// not selected
-		<CheckboxItem formCheckbox label="label">CheckboxItem</CheckboxItem>,
-		<CheckboxItem formCheckbox disabled>CheckboxItem</CheckboxItem>,	// not selected
-		<CheckboxItem formCheckbox inline>CheckboxItem</CheckboxItem>,		// not selected
-		<CheckboxItem formCheckbox inline label="label">CheckboxItem</CheckboxItem>,		// not selected
-		<CheckboxItem formCheckbox disabled inline>CheckboxItem</CheckboxItem>,	// not selected
+		<CheckboxItem formCheckbox >Focused CheckboxItem</CheckboxItem>, 					// not selected
+		<CheckboxItem formCheckbox label="label">Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem formCheckbox disabled>Focused CheckboxItem</CheckboxItem>,	// not selected
+		<CheckboxItem formCheckbox inline>Focused CheckboxItem</CheckboxItem>,		// not selected
+		<CheckboxItem formCheckbox inline label="label">Focused CheckboxItem</CheckboxItem>,		// not selected
+		<CheckboxItem formCheckbox disabled inline>Focused CheckboxItem</CheckboxItem>,	// not selected
 		// [QWTC-1861]
 		<CheckboxItem formCheckbox selected>CheckboxItem Checked</CheckboxItem>,
 		<CheckboxItem formCheckbox selected label="label">CheckboxItem Checked</CheckboxItem>
