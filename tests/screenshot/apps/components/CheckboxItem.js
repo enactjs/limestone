@@ -30,6 +30,18 @@ const CheckboxItemTests = [
 	<CheckboxItem selected disabled inline indeterminate>CheckboxItem</CheckboxItem>,
 	<CheckboxItem indeterminate indeterminateIcon="lock">CheckboxItem</CheckboxItem>, 	// not selected
 
+	// FormCheckbox
+	<CheckboxItem formCheckbox />,
+	<CheckboxItem formCheckbox >CheckboxItem</CheckboxItem>, 					// not selected
+	<CheckboxItem formCheckbox label="label">CheckboxItem</CheckboxItem>,
+	<CheckboxItem formCheckbox disabled>CheckboxItem</CheckboxItem>,	// not selected
+	<CheckboxItem formCheckbox inline>CheckboxItem</CheckboxItem>,		// not selected
+	<CheckboxItem formCheckbox inline label="label">CheckboxItem</CheckboxItem>,		// not selected
+	<CheckboxItem formCheckbox disabled inline>CheckboxItem</CheckboxItem>,	// not selected
+	// [QWTC-1861]
+	<CheckboxItem formCheckbox selected>CheckboxItem Checked</CheckboxItem>,
+	<CheckboxItem formCheckbox selected label="label">CheckboxItem Checked</CheckboxItem>,
+
 	// Custom icon
 	<CheckboxItem icon="star" selected>Custom icon CheckboxItem</CheckboxItem>,
 	<CheckboxItem icon="star" selected inline>Custom icon CheckboxItem</CheckboxItem>,
@@ -78,7 +90,18 @@ const CheckboxItemTests = [
 		<CheckboxItem label="label"><Icon slot="slotBefore">home</Icon>Hello Focused CheckboxItem</CheckboxItem>,
 		<CheckboxItem inline label="label"><Icon slot="slotBefore">home</Icon>Hello Focused Inline CheckboxItem</CheckboxItem>,
 		<CheckboxItem indeterminat>Hello Focused CheckboxItem</CheckboxItem>,
-		<CheckboxItem inline indeterminat>Hello Focused CheckboxItem</CheckboxItem>
+		<CheckboxItem inline indeterminat>Hello Focused CheckboxItem</CheckboxItem>,
+
+		// FormCheckbox
+		<CheckboxItem formCheckbox >Focused CheckboxItem</CheckboxItem>, 					// not selected
+		<CheckboxItem formCheckbox label="label">Focused CheckboxItem</CheckboxItem>,
+		<CheckboxItem formCheckbox disabled>Focused CheckboxItem</CheckboxItem>,	// not selected
+		<CheckboxItem formCheckbox inline>Focused CheckboxItem</CheckboxItem>,		// not selected
+		<CheckboxItem formCheckbox inline label="label">Focused CheckboxItem</CheckboxItem>,		// not selected
+		<CheckboxItem formCheckbox disabled inline>Focused CheckboxItem</CheckboxItem>,	// not selected
+		// [QWTC-1861]
+		<CheckboxItem formCheckbox selected>Focused CheckboxItem Checked</CheckboxItem>,
+		<CheckboxItem formCheckbox selected label="label">Focused CheckboxItem Checked</CheckboxItem>
 	]),
 
 	...withConfig({textSize: 'large'}, [

@@ -4,6 +4,14 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased] 
 
+### Deprecated
+
+- `limestone/FormCheckboxItem` to be removed in 2.0.0
+
+### Added
+
+- `limestone/CheckboxItem` `formCheckbox` prop to mirror the behaviour of `FormCheckboxItem`
+
 ### Changed
 
 - `limestone/ActionGuide` styling to match the latest GUI
