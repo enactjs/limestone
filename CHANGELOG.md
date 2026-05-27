@@ -42,6 +42,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/PopupTabLayout` styling to match the latest GUI
 - `limestone/RadioItem` styling to match the latest GUI
 - `limestone/Scroller` focus area to be separated from the vertical and horizontal scrollbars when `focusableScrollbar` is `"byEnter"`
+- `limestone/ProgressBar` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/Switch` styling to match the latest GUI

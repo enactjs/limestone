@@ -1125,23 +1125,33 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-focusin-transform: scale(1.33);
+@lime-slider-focusin-transform: scale(1.25);
 @lime-slider-focusout-transform: scale(1);
-@lime-slider-press-transform: scale(1.16);
+@lime-slider-press-transform: scale(1.125);
 @lime-slider-release-transform: @lime-slider-focusin-transform;
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
+@lime-slider-color-picker-bar-height: 48px;
+@lime-slider-color-picker-bar-border-radius: (@lime-slider-color-picker-bar-height / 2);
+@lime-slider-color-picker-knob-container-size: (@lime-slider-knob-width + 12px);
+@lime-slider-color-picker-knob-container-size-focused: (@lime-slider-knob-width-large + 12px);
+@lime-slider-color-picker-knob-outline-width: 6px;
 @lime-slider-bar-vertical-min-height: 240px;
-@lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
-@lime-slider-bar-padding: var(--primitive-spacing-24);
-@lime-slider-knob-width: 36px;
-@lime-slider-knob-width-large: @lime-slider-knob-width;
+@lime-slider-height: 132px;
+@lime-slider-height-min-max: (@lime-slider-height + 24px);
+@lime-slider-bar-padding: var(--primitive-spacing-48);
+@lime-slider-knob-width: 48px;
+@lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;
-@lime-slider-knob-height-large: @lime-slider-knob-height;
+@lime-slider-knob-height-large: @lime-slider-knob-width-large;
+@lime-slider-knob-focused-size: (@lime-slider-knob-width * 1.25);
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
+@lime-slider-tooltip-offset-focused: (@lime-slider-knob-focused-size / 2);
 @lime-slider-min-max-margin-top: var(--primitive-spacing-24);
 @lime-slider-min-max-font-size: var(--primitive-font-size-48);
+@lime-slider-min-max-font-size-large: var(--primitive-font-size-60);
 @lime-slider-min-max-font-weight: var(--primitive-font-weight-regular);
 @lime-slider-min-max-line-height: 60px;
+@lime-slider-min-max-line-height-large: 72px;
 @lime-slider-vertical-min-max-margin-left: var(--primitive-spacing-24);
 @lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
