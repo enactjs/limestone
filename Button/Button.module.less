@@ -21,9 +21,13 @@
 	.lime-custom-text({
 		font-size: @lime-button-font-size-large;
 		height: @lime-button-height-large;
-		min-width: @lime-button-height-large;
+		min-width: @lime-button-min-width;
 		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
+
+		&.minWidth {
+			min-width: @lime-button-min-width-default-large;
+		}
 
 		&.red,
 		&.green,
@@ -243,12 +247,12 @@
 		.lime-custom-text({
 			font-size: @lime-button-small-font-size-large;
 			height: @lime-button-small-height-large;
-			min-width: @lime-button-small-height-large;
+			min-width: @lime-button-small-min-width;
 			line-height: (@lime-button-small-height-large - (2 * @lime-button-border-width));
 			--button-height: $height;
 
 			&.minWidth {
-				min-width: @lime-button-small-min-width-default;
+				min-width: @lime-button-small-min-width-default-large;
 			}
 
 			&.red,
@@ -273,7 +277,8 @@
 		min-width: @lime-button-height;
 
 		.lime-custom-text({
-			min-width: @lime-button-height-large;
+			min-width: @lime-button-icon-only-height-large;
+			height: @lime-button-icon-only-height-large;
 		});
 
 		.client {
@@ -295,7 +300,8 @@
 			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
 
 			.lime-custom-text({
-				min-width: @lime-button-small-height-large;
+				height: @lime-button-small-icon-only-height-large;
+				min-width: @lime-button-small-icon-only-height-large;
 			});
 		}
 
