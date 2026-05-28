@@ -26,7 +26,6 @@ export default {
 
 export const _ImageItem = (args) => {
 	let style;
-	const hasContent = args['children'].length || args['label'];
 	const isVertical = args['orientation'] === 'vertical';
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
 
