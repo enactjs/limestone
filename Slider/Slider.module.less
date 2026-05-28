@@ -17,7 +17,7 @@
 
 	.progressBar {
 		position: relative;
-		height: @lime-slider-bar-height;
+		height: 100%;
 		width: 100%;
 
 		.bar {
@@ -107,9 +107,7 @@
 		@h-gap: (@lime-slider-knob-width / 2);
 		@v-gap: @lime-slider-bar-padding;
 		width: auto;
-		height: auto;
 		padding: @v-gap @h-gap;
-		box-sizing: border-box;
 
 		.fill,
 		.load {
@@ -121,7 +119,7 @@
 		}
 
 		&.hasMinMax {
-			padding-bottom: (@lime-slider-height-min-max - @lime-slider-bar-padding - @lime-slider-bar-height);
+			padding-bottom: @lime-slider-bar-min-max-padding-bottom;
 		}
 
 		.minMax {
@@ -136,10 +134,6 @@
 		min-height: @lime-slider-bar-vertical-min-height;
 		display: inline-block;
 		vertical-align: top;
-
-		.progressBar {
-			height: 100%;
-		}
 
 		.fill,
 		.load {
