@@ -35,6 +35,7 @@ export const _CheckboxItem = (args) => {
 		<CheckboxItem
 			// disabled and inline have problems when set to `null` from the internal nullify...
 			disabled={args['disabled']}
+			formCheckbox={args['formCheckbox']}
 			icon={args['icon']}
 			indeterminate={args['indeterminate']}
 			indeterminateIcon={args['indeterminateIcon']}
@@ -51,6 +52,7 @@ export const _CheckboxItem = (args) => {
 
 select('slotBefore', _CheckboxItem, ['', ...iconNames], Config);
 boolean('disabled', _CheckboxItem, Config);
+boolean('formCheckbox', _CheckboxItem, Config);
 select('icon', _CheckboxItem, iconNames, Config);
 boolean('indeterminate', _CheckboxItem, Config);
 select('indeterminateIcon', _CheckboxItem, iconNames, Config);

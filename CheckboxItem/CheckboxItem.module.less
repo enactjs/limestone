@@ -28,11 +28,45 @@
 		});
 	}
 
+	&.formCheckbox {
+		.slotBefore {
+			.checkbox {
+				margin-inline-end: @lime-checkboxitem-form-checkbox-margin-end;
+			}
+		}
+	}
+
 	.applySkins({
 		&.selected {
 			.bg {
 				background-color: @lime-checkboxitem-item-container-selected-color;
 			}
+		}
+
+		&.formCheckbox {
+			.focus({
+				color: @lime-checkboxitem-form-label-main-focused-color;
+
+				.bg {
+					background-color: transparent;
+					opacity: 0;
+				}
+
+				.disabled({
+					color: @lime-checkboxitem-form-label-main-disabled-focused-color;
+
+					.slotBefore {
+						// Overrides Item's rule, setting all content fields to the content opacity.
+						// Standalone Checkbox handles this coloration on its own, so that rule isn't
+						// needed, so we reset it back to default here.
+						opacity: initial;
+					}
+
+					&.hasSlotBefore .slotBefore > :last-child {
+						opacity: @lime-disabled-focus-content-opacity;
+					}
+				});
+			});
 		}
 	});
 }

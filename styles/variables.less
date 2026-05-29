@@ -500,6 +500,7 @@
 @lime-checkboxitem-padding-rtl: var(--primitive-spacing-36) var(--primitive-spacing-60) var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-checkboxitem-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-60);
 @lime-checkboxitem-withlabel-padding-rtl: var(--primitive-spacing-48) var(--primitive-spacing-60) var(--primitive-spacing-48) var(--primitive-spacing-48);
+@lime-checkboxitem-form-checkbox-margin-end: abs(.extract(@lime-checkbox-container-position, right)[]); // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
 
 // Chip
 // ---------------------------------------
