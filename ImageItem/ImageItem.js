@@ -285,20 +285,16 @@ const ImageItemBase = kind({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
 			wideImage: orientation === 'horizontal' && wideImage
 		}),
-		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
+		selectionComponent: ({css, selectionComponent : SelectionComponent}) => {
 			if (SelectionComponent) {
 				return <SelectionComponent />;
-			} else if (orientation === 'vertical') {
-				return <Icon className={css.selectionIcon} >checkmark</Icon>;
 			} else {
-				return <Checkbox className={css.selectionIcon} selected={selected} size="tiny" />;
+				return <Icon className={css.selectionIcon} >checkmark</Icon>;
 			}
 		}
 	},
 
 	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
-		const isSlotBefore = orientation === 'horizontal' && showSelection;
-
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
@@ -314,14 +310,13 @@ const ImageItemBase = kind({
 				orientation={orientation}
 				imageComponent={
 					<Image>
-						{orientation === 'vertical' && showSelection ? (
+						{showSelection ? (
 							<div className={css.selectionContainer}>
 								{SelectionComponent}
 							</div>
 						) : null}
 					</Image>
 				}
-				slotBefore={isSlotBefore && SelectionComponent}
 			/>
 		);
 	}
