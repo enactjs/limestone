@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased] 
+## [1.10.1] - 2026-06-01 
 
 ### Changed
 
