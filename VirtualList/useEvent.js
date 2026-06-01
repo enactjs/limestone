@@ -23,14 +23,15 @@ const
 		return number >= 0 ? number : -1;
 	};
 
-let prevKeyDownIndex = -1;
-
 const useEventKey = (props, instances, context) => {
 	// Mutable value
 
 	const mutableRef = useRef({
 		fn: null
 	});
+
+	const prevKeyDownIndexRef = useRef(-1);
+	const hasProcessedKeyDownRef = useRef(false);
 
 	// Functions
 
@@ -116,6 +117,7 @@ const useEventKey = (props, instances, context) => {
 			handle5WayKeyUp,
 			handleDirectionKeyDown,
 			handlePageUpDownKeyDown,
+			resetAccelerator,
 			spotlightAcceleratorProcessKey
 		} = context;
 
@@ -150,17 +152,47 @@ const useEventKey = (props, instances, context) => {
 					} else if (index >= 0 && candidateIndex !== index) { // the focused node is an item and focus will move out of the item
 						const {repeat} = ev;
 						const {isDownKey, isUpKey, isLeftMovement, isRightMovement, isWrapped, nextIndex} = getNextIndex({index, keyCode, repeat});
+						const {dimensionToExtent} = scrollContentHandle.current;
+
+						// VirtualList recycles DOM nodes during scroll. If a node gets reused for a different index
+						// while browser focus stays on it, target.dataset.index reflects the new (wrong) index.
+						// Detect this by checking if the index jumped unnaturally during key repeat.
+						const isOutdatedIndex = repeat && prevKeyDownIndexRef.current !== -1 && (
+							(isDownKey && (prevKeyDownIndexRef.current > index || index > prevKeyDownIndexRef.current + dimensionToExtent)) ||
+							(isUpKey && (prevKeyDownIndexRef.current < index || index < prevKeyDownIndexRef.current - dimensionToExtent))
+						);
+
+						// Block the first repeat event when entering VirtualList from outside with acceleration.
+						// prevKeyDownIndexRef is -1 only on first entry; a repeat here means key was held before entering.
+						const isFirstEntryRepeat = repeat && !hasProcessedKeyDownRef.current;
+
+						if (isFirstEntryRepeat) {
+							ev.preventDefault();
+							ev.stopPropagation();
+							resetAccelerator();
+							return;
+						}
+
+						if (isOutdatedIndex) {
+							ev.preventDefault();
+							ev.stopPropagation();
+							resetAccelerator();
+							const correctedNextIndex = isDownKey ? prevKeyDownIndexRef.current + 1 : prevKeyDownIndexRef.current - 1;
+							if (correctedNextIndex >= 0 && correctedNextIndex < props.dataSize) {
+								const currentItemNode = instances.itemRefs.current[prevKeyDownIndexRef.current % scrollContentHandle.current.state.numOfItems];
+								const correctedTarget = (currentItemNode && parseInt(currentItemNode.dataset.index) === prevKeyDownIndexRef.current) ? currentItemNode : target;
+								handleDirectionKeyDown(ev, 'acceleratedKeyDown', {
+									isWrapped: false, keyCode, nextIndex: correctedNextIndex, repeat, target: correctedTarget
+								});
+								prevKeyDownIndexRef.current = correctedNextIndex;
+							}
+							// At list boundary: keep prevKeyDownIndexRef.current unchanged so next event stays recoverable
+							return;
+						}
 
 						if (nextIndex >= 0) { // if the candidate is another item
 							ev.preventDefault();
 							ev.stopPropagation();
-
-							if (repeat && prevKeyDownIndex !== -1 &&
-								((isDownKey && prevKeyDownIndex > index) || (isUpKey && prevKeyDownIndex < index))) {
-								// Ignore keyEvent from item with wrong data-index (Workaround for data-index bug)
-								// Sometimes keyDown event occurs before the data-index updated, it causes reverse focus change
-								return;
-							}
 
 							if (props.scrollContainerHandle && props.scrollContainerHandle.current) {
 								props.scrollContainerHandle.current.lastInputType = 'arrowKey';
@@ -215,7 +247,8 @@ const useEventKey = (props, instances, context) => {
 						}
 					}
 
-					prevKeyDownIndex = index;
+					prevKeyDownIndexRef.current = index;
+					hasProcessedKeyDownRef.current = true;
 
 					if (isLeaving) {
 						handleDirectionKeyDown(ev, 'keyLeave');
