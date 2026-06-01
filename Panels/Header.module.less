@@ -3,10 +3,12 @@
 @import "../styles/mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
+@import "../styles/variables-base.less";
 
 // Module level variables, for use only in this file
 @header-compact-padding-left: .extract(@lime-header-compact-padding, left)[];
 @header-compact-padding-right: .extract(@lime-header-compact-padding, right)[];
+@button-offset: .lime-taparea(@lime-button-height)[@_tap-offset];
 
 .header {
 	position: relative;
@@ -33,13 +35,6 @@
 
 		.back {
 			margin-inline-start: 0;
-
-			.lime-custom-text({
-				.lime-large-button-text();
-				height: @lime-button-height;
-				line-height: (@lime-button-height - (2 * @lime-button-border-width));
-				min-width: @lime-button-height;
-			});
 		}
 
 		.close {
@@ -120,6 +115,16 @@
 		.slotBelow {
 			text-align: center;
 		}
+
+		&.mini .title {
+			margin-top: ~'calc(abs(@{button-offset}) / 2)';
+		}
+
+		:global(.enact-orientation-portrait) & {
+			&.standard .title {
+				margin-top: ~'calc(abs(@{button-offset}) / -2)';
+			}
+		}
 	}
 
 	///
@@ -157,7 +162,6 @@
 	///
 
 	&.standard,
-	&.mini,
 	&.wizard {
 		&.slotBefore:not(.centered) .slotBefore {
 			.margin-start-end(0, @lime-header-standard-slotbefore-margin-end);
@@ -210,11 +214,11 @@
 			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 
-		&.slotBefore:not(.centered) .slotBefore {
+		&.slotBefore .slotBefore {
 			.margin-start-end(0, @lime-header-compact-slotbefore-margin-end);
 		}
 
-		&.slotAfter:not(.centered) .slotAfter {
+		&.slotAfter .slotAfter {
 			.margin-start-end(@lime-header-compact-slotafter-margin-start, 0);
 		}
 
@@ -257,6 +261,13 @@
 				text-align: center;
 			}
 		}
+
+		:global(.enact-orientation-portrait) & {
+			&.slotBefore .slotBefore,
+			&.slotAfter .slotAfter {
+				margin-top: ~'calc((@{lime-button-height} + @{button-offset}) * -1)';
+			}
+		}
 	}
 
 	// Mini Header
@@ -274,6 +285,18 @@
 
 		.title {
 			.lime-font-size(@lime-header-mini-title-font-size, @lime-non-latin-header-mini-title-font-size);
+
+			&:not(.isPopupHeader) {
+				margin-top: ~'calc(abs(@{button-offset}) / 2)';
+			}
+		}
+
+		&.slotBefore .slotBefore {
+			.margin-start-end(0, @lime-header-mini-slotbefore-margin-end);
+		}
+
+		&.slotAfter .slotAfter {
+			.margin-start-end(@lime-header-mini-slotafter-margin-start, 0);
 		}
 
 		&.withSubtitle:not(.noSubtitle) {

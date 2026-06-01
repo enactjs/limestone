@@ -2,6 +2,45 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.10.1] - 2026-06-01 
+
+### Changed
+
+- `limestone/ActionGuide` styling to match the latest GUI
+- `limestone/BodyText` styling to match the latest GUI
+- `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
+- `limestone/Checkbox` styling to match the latest GUI
+- `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/DatePicker` styling to match the latest GUI
+- `limestone/Heading` styling to match the latest GUI
+- `limestone/Icon` styling to match the latest GUI
+- `limestone/IconItem` styling to match the latest GUI
+- `limestone/ImageItem` styling to match the latest GUI
+- `limestone/Input` styling to match the latest GUI
+- `limestone/InputField` styling to match the latest GUI
+- `limestone/Item` styling to match the latest GUI
+- `limestone/KeyGuide` styling to match the latest GUI
+- `limestone/MediaOverlay` styling to match the latest GUI
+- `limestone/PageViews` styling to match the latest GUI
+- `limestone/Panels.Header` styling to match the latest GUI
+- `limestone/Picker` styling to match the latest GUI
+- `limestone/PopupTabLayout` styling to match the latest GUI
+- `limestone/RadioItem` styling to match the latest GUI
+- `limestone/Scroller` focus area to be separated from the vertical and horizontal scrollbars when `focusableScrollbar` is `"byEnter"`
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Steps` styling to match the latest GUI
+- `limestone/Switch` styling to match the latest GUI
+- `limestone/TabLayout` styling to match the latest GUI
+- `limestone/TimePicker` styling to match the latest GUI
+- `limestone/TooltipDecorator` styling to match the latest GUI
+- `limestone/VideoPlayer` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Scroller` to set initial focus on the scrollbar thumb when navigating between panels with `focusableScrollbar`
+
+
 ## [1.10.0] - 2026-05-08
 
 ### Added
@@ -33,6 +72,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/MediaOverlay` press motion to work with key press
 - `limestone/Popup` to not flicker on transition
 - `limestone/Popup` to not delay when closed with pointer
+- `limestone/Scroller.EditableWrapper` to not stop the `Marquee` when editing is complete
 - `limestone/Slider` press motion to work with key press
 - `limestone/useScroll` to not scroll on hover right after scroll by wheel
 

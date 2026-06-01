@@ -86,6 +86,7 @@ export const EditableIcon = (args) => {
 	const [editMode, setEditMode] = useState(false);
 	const [initialSelected, setInitialSelected] = useState({});
 	const [items, setItems] = useState(itemsArr);
+	const [prevDataSize, setPrevDataSize] = useState();
 	const [scrollerHideIndex, setScrollerHideIndex] = useState(null);
 	const removeItem = useRef();
 	const hideItem = useRef();
@@ -93,6 +94,7 @@ export const EditableIcon = (args) => {
 	const focusItem = useRef();
 	const blurItem = useRef();
 	const divRef = useRef();
+	const scrollLeftRef = useRef(0);
 	const mutableRef = useRef({timer: null});
 
 	const newItemsArr = useMemo(() => {
@@ -103,8 +105,9 @@ export const EditableIcon = (args) => {
 		return newItems;
 	}, [dataSize]);
 
-	if (items !== newItemsArr) {
+	if (dataSize !== prevDataSize) {
 		setItems(newItemsArr);
+		setPrevDataSize(dataSize);
 	}
 
 	useLayoutEffect(() => {
@@ -121,7 +124,7 @@ export const EditableIcon = (args) => {
 
 	const onClickModeButton = useCallback(() => {
 		setEditMode(mode => !mode);
-		setInitialSelected({scrollLeft: 0, itemIndex: null});
+		setInitialSelected((prevState) => ({...prevState, scrollLeft: 0, itemIndex: null}));
 		mutableRef.current.timer = null;
 	}, [setEditMode]);
 
@@ -159,6 +162,7 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleHoldStart = useCallback(() => {
+		setInitialSelected((prevState) => ({...prevState, scrollLeft: scrollLeftRef.current}));
 		setEditMode(true);
 	}, [setEditMode]);
 
@@ -166,10 +170,10 @@ export const EditableIcon = (args) => {
 		if (ev.target?.parentNode?.parentNode.getAttribute('role') !== 'button') {
 			const targetItemNode = findItemNode(ev.target);
 			if (targetItemNode && targetItemNode.style.order) {
-				setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
+				setInitialSelected((prevState) => ({...prevState, itemIndex: targetItemNode.style.order}));
 			}
 		}
-	}, [findItemNode, initialSelected]);
+	}, [findItemNode]);
 
 	const handleKeyDown = useCallback((ev) => {
 		const {keyCode, repeat, target} = ev;
@@ -177,15 +181,16 @@ export const EditableIcon = (args) => {
 			if (repeat && !mutableRef.current.timer) {
 				const targetItemNode = findItemNode(ev.target);
 				if (targetItemNode && targetItemNode.style.order) {
-					setInitialSelected({...initialSelected, itemIndex: targetItemNode.style.order});
+					setInitialSelected((prevState) => ({...prevState, itemIndex: targetItemNode.style.order}));
 				}
 				mutableRef.current.timer = setTimeout(() => {
+					setInitialSelected((prevState) => ({...prevState, scrollLeft: scrollLeftRef.current}));
 					setEditMode(true);
 				}, 200);
 
 			}
 		}
-	}, [findItemNode, initialSelected]);
+	}, [findItemNode]);
 
 	const handleKeyUp = useCallback((ev) => {
 		if (ev.target.getAttribute('role') === 'button') {
@@ -198,8 +203,8 @@ export const EditableIcon = (args) => {
 	}, []);
 
 	const handleScroll = useCallback((ev) => {
-		setInitialSelected({...initialSelected, scrollLeft: ev.scrollLeft});
-	}, [initialSelected]);
+		scrollLeftRef.current = ev.scrollLeft;
+	}, []);
 
 	const handleComplete = useCallback((ev) => {
 		const {orders, hideIndex} = ev;
@@ -222,7 +227,7 @@ export const EditableIcon = (args) => {
 	const handleGlobalKeyUp = useCallback((ev) => {
 		if (isCancel(ev.keyCode)) {
 			setEditMode(false);
-			setInitialSelected({scrollLeft: 0, itemIndex: null});
+			setInitialSelected((prevState) => ({...prevState, scrollLeft: 0, itemIndex: null}));
 			mutableRef.current.timer = null;
 		}
 	}, []);
@@ -352,6 +357,7 @@ EditableIcon.storyName = 'with editable scroller';
 export const EditableIconWithLongPress = (args) => {
 	const dataSize = args['editableDataSize'];
 	const [items, setItems] = useState(itemsArr);
+	const [prevDataSize, setPrevDataSize] = useState();
 	const removeItem = useRef();
 
 	const newItemsArr = useMemo(() => {
@@ -362,8 +368,9 @@ export const EditableIconWithLongPress = (args) => {
 		return newItems;
 	}, [dataSize]);
 
-	if (items !== newItemsArr) {
+	if (dataSize !== prevDataSize) {
 		setItems(newItemsArr);
+		setPrevDataSize(dataSize);
 	}
 
 	const onClickRemoveButton = useCallback((ev) => {

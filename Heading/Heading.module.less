@@ -42,6 +42,10 @@
 		});
 		font-weight: @lime-heading-subtitle-font-weight;
 		font-size: @lime-heading-subtitle-font-size;
+		.lime-custom-text({
+			font-size: @lime-heading-subtitle-font-size-large;
+			line-height: @lime-heading-subtitle-line-height-large;
+		});
 	}
 	&.large {
 		font-family: @lime-heading-large-font-family;
@@ -89,6 +93,21 @@
 		margin-bottom: 0;
 		min-height: 0;
 	}
+
+	.lime-custom-text({
+		&.large {
+			font-size: @lime-heading-large-font-size-large;
+		}
+		&.medium {
+			font-size: @lime-heading-medium-font-size-large;
+		}
+		&.small {
+			font-size: @lime-heading-small-font-size-large;
+		}
+		&.tiny {
+			font-size: @lime-heading-tiny-font-size-large;
+		}
+	});
 
 	// Skin colors
 	.applySkins({

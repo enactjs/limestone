@@ -69,7 +69,9 @@
 		standard-title-line-height: 144px;
 		standard-titles-gap: 18px;
 		standard-subtitle-font-size: 54px;
+		standard-subtitle-font-size-large: 66px;
 		standard-subtitle-line-height: 72px;
+		standard-subtitle-line-height-large: 84px;
 
 		wizard-padding: 156px 132px 6px 132px;
 		wizard-title-font-size: 108px;
@@ -115,71 +117,110 @@
 // Font Sizes
 // ---------------------------------------
 @lime-actionguide-label-font-size:  var(--primitive-font-size-48);
+@lime-actionguide-label-font-size-large:  var(--primitive-font-size-60);
 @lime-actionguide-label-font-weight: var(--primitive-font-weight-regular);
 @lime-alert-overlay-font-size:      var(--primitive-font-size-60);
 @lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
 @lime-alert-title-font-size:        var(--primitive-font-size-108);
 @lime-base-font-size:               var(--primitive-font-size-60);
+@lime-base-font-size-large:         var(--primitive-font-size-72);
 @lime-body-font-size:               @lime-base-font-size;
+@lime-body-font-size-large:         @lime-base-font-size-large;
 @lime-body-small-font-size:         var(--primitive-font-size-54);
-@lime-button-font-size-large:       var(--primitive-font-size-96);
+@lime-body-small-font-size-large:   var(--primitive-font-size-66);
+@lime-button-font-size-large:       var(--primitive-font-size-72);
 @lime-button-font-size:             var(--primitive-font-size-60);
-@lime-button-small-font-size-large: var(--primitive-font-size-72);
+@lime-button-small-font-size-large: var(--primitive-font-size-66);
 @lime-button-small-font-size:       var(--primitive-font-size-54);
 @lime-card-caption-font-size:       var(--primitive-font-size-60);
+@lime-card-caption-font-size-large:       var(--primitive-font-size-72);
 @lime-card-label-font-size:         var(--primitive-font-size-48);
+@lime-card-label-font-size-large:         var(--primitive-font-size-58);
 @lime-card-split-caption-label-font-size:	var(--primitive-font-size-60);
+@lime-card-split-caption-label-font-size-large:	var(--primitive-font-size-72);
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
 @lime-heading-large-font-size:      var(--primitive-font-size-72);
+@lime-heading-large-font-size-large:      var(--primitive-font-size-86);
 @lime-heading-medium-font-size:     var(--primitive-font-size-66);
+@lime-heading-medium-font-size-large:     var(--primitive-font-size-80);
 @lime-heading-small-font-size:      var(--primitive-font-size-54);
+@lime-heading-small-font-size-large:      var(--primitive-font-size-66);
 @lime-heading-tiny-font-size:       var(--primitive-font-size-48);
+@lime-heading-tiny-font-size-large:       var(--primitive-font-size-58);
 @lime-heading-subtitle-font-size:   #guide.header[standard-subtitle-font-size];
+@lime-heading-subtitle-font-size-large:   #guide.header[standard-subtitle-font-size-large];
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
 @lime-iconitem-label-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-label-font-size-large:     var(--primitive-font-size-50);
 @lime-iconitem-title-font-size:     var(--primitive-font-size-48);
+@lime-iconitem-title-font-size-large:     var(--primitive-font-size-58);
 @lime-imageitem-caption-font-size:  var(--primitive-font-size-60);
+@lime-imageitem-caption-font-size-large: var(--primitive-font-size-72);
 @lime-imageitem-label-font-size:    var(--primitive-font-size-48);
+@lime-imageitem-label-font-size-large: var(--primitive-font-size-58);
 @lime-input-font-size:              var(--primitive-font-size-78);
+@lime-input-font-size-large:        var(--primitive-font-size-94);
 @lime-input-keypad-key-font-size: var(--primitive-font-size-90);
+@lime-input-keypad-key-font-size-large: var(--primitive-font-size-108);
 @lime-input-fullscreen-title-font-size: var(--primitive-font-size-108);
 @lime-input-fullscreen-numbercell-font-size:  126px;
 @lime-input-fullscreen-numbercell-password-font-size:  var(--primitive-font-size-48);
+@lime-input-fullscreen-numbercell-password-font-size-large:  var(--primitive-font-size-56);
 @lime-input-fullscreen-numberfield-font-size: @lime-input-font-size;
+@lime-input-fullscreen-numberfield-font-size-large: @lime-input-font-size-large;
 @lime-input-overlay-title-font-size:          var(--primitive-font-size-90);
 @lime-input-overlay-numbercell-font-size:     var(--primitive-font-size-108);
 @lime-input-overlay-numbercell-password-font-size:  var(--primitive-font-size-40);
+@lime-input-overlay-numbercell-password-font-size-large:  var(--primitive-font-size-48);
 @lime-input-overlay-numberfield-font-size:    @lime-input-font-size;
+@lime-input-overlay-numberfield-font-size-large:    @lime-input-font-size-large;
 @lime-input-invalid-tooltip-font-size:        @lime-inputfield-invalid-tooltip-font-size;
 @lime-inputfield-invalid-tooltip-font-size:   var(--primitive-font-size-48);
+@lime-input-invalid-tooltip-font-size-large:  @lime-inputfield-invalid-tooltip-font-size-large;
+@lime-inputfield-invalid-tooltip-font-size-large: var(--primitive-font-size-58);
 @lime-inputfield-small-font-size:	var(--primitive-font-size-60);
+@lime-inputfield-small-font-size-large:	var(--primitive-font-size-72);
 @lime-item-font-size:               var(--primitive-font-size-60);
 @lime-item-font-size-large:         var(--primitive-font-size-72);
 @lime-item-label-font-size:         var(--primitive-font-size-48);
-@lime-item-label-font-size-large:   var(--primitive-font-size-54);
+@lime-item-label-font-size-large:   var(--primitive-font-size-58);
 @lime-item-small-font-size:         var(--primitive-font-size-60);
 @lime-item-small-font-size-large:   var(--primitive-font-size-72);
 @lime-item-small-label-font-size:   var(--primitive-font-size-48);
 @lime-keyguide-font-size:           var(--primitive-font-size-60);
+@lime-keyguide-font-size-large:           var(--primitive-font-size-72);
 @lime-mediaoverlay-caption-font-size:  var(--primitive-font-size-60);
+@lime-mediaoverlay-caption-font-size-large:  var(--primitive-font-size-72);
 @lime-mediaoverlay-text-font-size:     var(--primitive-font-size-48);
+@lime-mediaoverlay-text-font-size-large:     var(--primitive-font-size-60);
 @lime-mediaoverlay-subtitle-font-size: var(--primitive-font-size-48);
+@lime-mediaoverlay-subtitle-font-size-large: var(--primitive-font-size-58);
 @lime-mediaplayer-times-text-size:    var(--primitive-font-size-48);
+@lime-mediaplayer-times-text-size-large:    var(--primitive-font-size-58);
+@lime-pageviews-number-steps-number-font-size: @lime-base-font-size;
+@lime-pageviews-number-steps-number-font-size-large: @lime-base-font-size-large;
 @lime-picker-font-size:             var(--primitive-font-size-54);
+@lime-picker-font-size-large:             var(--primitive-font-size-66);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
+@lime-picker-joined-font-size-large:      var(--primitive-font-size-80);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
+@lime-radioitem-icon-font-size-large: var(--primitive-font-size-56);
 @lime-steps-step-number-font-size: var(--primitive-font-size-48);
+@lime-steps-step-number-font-size-large: var(--primitive-font-size-58);
 @lime-switch-icon-font-size:        var(--primitive-font-size-84);
-@lime-switch-icon-font-size-large:  138px;
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
 @lime-tablayout-tab-font-size: var(--primitive-font-size-60);
+@lime-tablayout-tab-font-size-large: var(--primitive-font-size-72);
 @lime-tooltip-label-font-size:      var(--primitive-font-size-54);
+@lime-tooltip-label-font-size-large:    var(--primitive-font-size-66);
 @lime-tallglyph-alert-title-font-size:  @lime-alert-title-font-size;
 @lime-non-latin-body-font-size:         var(--primitive-font-size-54);
 @lime-non-latin-body-small-font-size:   var(--primitive-font-size-48);
+@lime-non-latin-body-small-font-size-large:   var(--primitive-font-size-60);
 @lime-tallglyph-body-small-font-size:   var(--primitive-font-size-48);
+@lime-tallglyph-body-small-font-size-large:   var(--primitive-font-size-60);
 @lime-non-latin-button-large-font-size: var(--primitive-font-size-54);
 @lime-non-latin-button-small-font-size: var(--primitive-font-size-48);
 @lime-non-latin-header-compact-title-font-size: @lime-header-compact-title-font-size;
@@ -251,6 +292,7 @@
 @lime-heading-subtitle-font-family: @lime-font-family;
 @lime-heading-subtitle-font-weight: var(--primitive-font-weight-regular);
 @lime-heading-subtitle-line-height: @lime-heading-title-line-height;
+@lime-heading-subtitle-line-height-large: #guide.header[standard-subtitle-line-height-large];
 @lime-heading-large-font-family: @lime-font-family;
 @lime-heading-large-font-weight: @lime-spottable-font-weight;
 @lime-heading-medium-font-family: @lime-heading-large-font-family;
@@ -293,6 +335,7 @@
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
 @lime-item-label-line-height: 1.25em;
+@lime-item-label-line-height-large: 1.2em;
 @lime-item-small-font-weight: @lime-item-font-weight;
 @lime-item-small-label-font-weight: @lime-item-label-font-weight;
 @lime-item-small-line-height: @lime-common-line-height;
@@ -317,6 +360,7 @@
 // ---------------------------------------
 @lime-actionguide-max-width: 1500px;
 @lime-actionguide-label-height: 60px;
+@lime-actionguide-label-height-large: 70px;
 @lime-actionguide-icon-height: 84px;
 @lime-actionguide-icon-margin: 0 0 ~"calc("var(--primitive-spacing-12) ~"* -1)" 0;
 @lime-actionguide-padding: var(--primitive-spacing-12) 0 var(--primitive-spacing-36) 0;
@@ -359,8 +403,8 @@
 @lime-button-margin: var(--primitive-spacing-36);
 @lime-button-focusexpand-margin: 9px .extract(@lime-button-margin, right)[]; // 9px provides enough space for the expanded focus state
 @lime-button-h-padding: var(--primitive-spacing-60);
-@lime-button-height-large: 192px;
 @lime-button-height: 132px;
+@lime-button-height-large: @lime-button-height;
 @lime-button-icon-h-margin: var(--primitive-spacing-24);
 @lime-button-icon-margin-end: @lime-button-icon-h-margin;
 @lime-button-icon-margin-start: 0;
@@ -380,25 +424,29 @@
 @lime-button-small-margin: var(--primitive-spacing-24);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
 @lime-button-small-h-padding: var(--primitive-spacing-60);
-@lime-button-small-height-large: 144px;
 @lime-button-small-height: 108px;
+@lime-button-small-height-large: @lime-button-small-height;
 @lime-button-small-max-width: 1020px;
 @lime-button-small-min-width: 264px;
 @lime-button-small-min-width-default: 720px;
 @lime-button-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-colordot-border-radius: var(--semantic-radius-full);
 @lime-button-colordot-width: 60px;
+@lime-button-colordot-width-font-size-large: 72px;
 @lime-button-colordot-h-margin: var(--primitive-spacing-84);
-@lime-button-colordot-height: 12px;
+@lime-button-colordot-height: 24px;
+@lime-button-colordot-height-font-size-large: 30px;
 @lime-button-colordot-h-padding: var(--primitive-spacing-24);
 @lime-button-colordot-padding-start: var(--primitive-spacing-36);
 @lime-button-small-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-small-colordot-width: 51px;
+@lime-button-small-colordot-width-font-size-large: 60px;
 @lime-button-small-colordot-h-margin: var(--primitive-spacing-72);
-@lime-button-small-colordot-height: 9px;
+@lime-button-small-colordot-height: 21px;
+@lime-button-small-colordot-height-font-size-large: 24px;
 @lime-button-small-colordot-padding-start: var(--primitive-spacing-30);
-@lime-button-icon-only-colordot-width: 66px;
-@lime-button-icon-only-colordot-height: 9px;
+@lime-button-icon-only-colordot-width: 30px;
+@lime-button-icon-only-colordot-height: 12px;
 @lime-button-collapse-duration: 300ms;
 @lime-button-collapsable-icon-margin: 0 var(--primitive-spacing-24);
 
@@ -408,20 +456,25 @@
 @lime-card-border-radius: var(--semantic-radius-container);
 @lime-card-image-border-width: 6px;
 @lime-card-resting-border-width: 3px;
-@lime-card-selection-check-icon-size: 90px;
-@lime-card-selection-icon-size: 120px;
+@lime-card-selection-check-icon-size: 48px;
+@lime-card-selection-check-icon-size-large: 58px;
+@lime-card-selection-icon-size: 144px;
+@lime-card-selection-icon-size-large: (@lime-card-selection-icon-size * 1.2);
 @lime-card-selection-icon-border-radius: 50%;
 @lime-card-selection-icon-margin: 0;
-@lime-card-selection-check-icon-line-height: 90px;
-@lime-card-selection-icon-line-height: 144px;
+@lime-card-selection-check-icon-container-large: 72px;
+@lime-card-selection-check-icon-line-height: 60px;
+@lime-card-selection-check-icon-line-height-large: 70px;
+@lime-card-selection-icon-line-height: 180px;
 @lime-card-badge-size: 108px;
 @lime-card-badge-margin: 0;
 @lime-card-badge-top: var(--primitive-spacing-24);
 @lime-card-badge-left: var(--primitive-spacing-24);
 @lime-card-badge-right: var(--primitive-spacing-24);
 @lime-card-caption-line-height: 84px;
+@lime-card-caption-line-height-large: 100px;
 @lime-card-label-line-height: 60px;
-@lime-card-split-caption-label-line-height: 84px;
+@lime-card-label-line-height-large: 70px;
 @lime-card-split-caption-label-padding: 0 var(--primitive-spacing-48);
 @lime-card-split-caption-lower-label-padding: var(--primitive-spacing-18);
 @lime-card-vertical-captions-padding: var(--primitive-spacing-36) 0;
@@ -478,7 +531,9 @@
 // Date and Time Picker
 @lime-datecomponentpicker-margin: 0 var(--primitive-spacing-24);
 @lime-datetime-fontsize: var(--primitive-font-size-66);
+@lime-datetime-fontsize-large: var(--primitive-font-size-80);
 @lime-datetime-heading-margin: 0 0 var(--primitive-spacing-132);
+@lime-timepicker-colon-fontsize-large: var(--primitive-font-size-72);
 @lime-timepicker-colon-margin: 0 var(--primitive-spacing-6);
 
 // Dropdown
@@ -601,8 +656,8 @@
 @lime-header-compact-titles-row-padding: 0 0 #guide.header[compact-subtitle-height];
 @lime-header-compact-subtitle-padding: 0;
 @lime-header-compact-subtitle-margin-top: (#guide.header[compact-subtitle-height] - #guide.header[compact-subtitle-line-height]);
-@lime-header-compact-slotbefore-margin-end: var(--primitive-spacing-24);
-@lime-header-compact-slotafter-margin-start: var(--primitive-spacing-30);
+@lime-header-compact-slotbefore-margin-end: var(--primitive-spacing-12);
+@lime-header-compact-slotafter-margin-start: var(--primitive-spacing-12);
 @lime-header-mini-margin:
 	var(--primitive-spacing-6)
 	@lime-component-spacing
@@ -628,6 +683,8 @@
 		)[@result]
 	)
 	.extract(#guide.header[mini-padding], left)[];
+@lime-header-mini-slotbefore-margin-end: var(--primitive-spacing-12);
+@lime-header-mini-slotafter-margin-start: var(--primitive-spacing-12);
 @lime-header-wizard-nosubtitle-padding-bottom: ~"calc(@{lime-header-subtitle-height} + var(--primitive-spacing-6))";
 @lime-header-wizard-margin: 0;
 @lime-header-wizard-padding:
@@ -665,30 +722,37 @@
 // Icon
 // ---------------------------------------
 @lime-icon-large-size: 84px;
-@lime-icon-medium-size: 78px;
-@lime-icon-small-size: 72px;
-@lime-icon-tiny-size: 60px;
-@lime-icon-margin: var(--primitive-spacing-24);
 @lime-icon-large-size-large: (@lime-icon-large-size * 1.2);
+@lime-icon-medium-size: 78px;
+@lime-icon-medium-size-large: (@lime-icon-medium-size * 1.2);
+@lime-icon-small-size: 72px;
 @lime-icon-small-size-large: (@lime-icon-small-size * 1.2);
+@lime-icon-tiny-size: 60px;
+@lime-icon-tiny-size-large: (@lime-icon-tiny-size * 1.2);
+@lime-icon-margin: var(--primitive-spacing-24);
 
 // IconItem
 // ---------------------------------------
 @lime-iconitem-height: 256px;
 @lime-iconitem-width: 334px;
 @lime-iconitem-title-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~"+ 24px)";
+@lime-iconitem-title-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~"+ 24px)";
 @lime-iconitem-border-radius: var(--semantic-radius-container);
 @lime-iconitem-border-style: solid;
 @lime-iconitem-border-width: 4px;
 @lime-iconitem-icon-margin: 0;
 @lime-iconitem-icon-height: 120px;
+@lime-iconitem-icon-height-large: 146px;
 @lime-iconitem-icon-width: @lime-iconitem-icon-height;
+@lime-iconitem-icon-width-large: @lime-iconitem-icon-height-large;
 @lime-iconitem-image-height: 230px;
 @lime-iconitem-image-width: @lime-iconitem-image-height;
 @lime-iconitem-label-image-height: ~"calc("@lime-iconitem-height ~"- "@lime-iconitem-label-line-height ~"- 24px)";
 @lime-iconitem-label-line-height: 54px;
+@lime-iconitem-label-line-height-large: 64px;
 @lime-iconitem-label-padding: 0 var(--primitive-spacing-12);
 @lime-iconitem-title-line-height: 60px;
+@lime-iconitem-title-line-height-large: 70px;
 @lime-iconitem-title-margin: var(--primitive-spacing-24) 0 0 0;
 
 // ImageItem
@@ -697,7 +761,9 @@
 @lime-imageitem-border-radius: var(--semantic-radius-button);
 @lime-imageitem-image-border-width: 6px;
 @lime-imageitem-caption-line-height: 84px;
+@lime-imageitem-caption-line-height-large: 100px;
 @lime-imageitem-label-line-height: 60px;
+@lime-imageitem-label-line-height-large: 70px;
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
 @lime-imageitem-horizontal-padding: var(--primitive-spacing-30);
@@ -718,7 +784,9 @@
 @lime-imageitem-vertical-focus-image-transform: scale(1.1);
 @lime-imageitem-vertical-image-icon-margin: 0 var(--primitive-spacing-24) 0 0;
 @lime-imageitem-vertical-image-icon-size: 132px;
+@lime-imageitem-vertical-image-icon-size-large: (@lime-imageitem-vertical-image-icon-size * 1.2);
 @lime-imageitem-vertical-selection-icon-size: 120px;
+@lime-imageitem-vertical-selection-icon-size-large: (@lime-imageitem-vertical-selection-icon-size * 1.2);
 
 // Input
 // ---------------------------------------
@@ -781,6 +849,7 @@
 @lime-input-overlay-title-margin: 0 var(--primitive-spacing-144) 0 var(--primitive-spacing-144);
 @lime-input-invalid-tooltip-margin-top: var(--primitive-spacing-24);
 @lime-input-invalid-tooltip-line-height: 60px;
+@lime-input-invalid-tooltip-line-height-large: 70px;
 
 // InputField
 // ---------------------------------------
@@ -792,11 +861,14 @@
 @lime-inputfield-text-indent: 0.2em;
 @lime-inputfield-border-radius: var(--semantic-radius-button);
 @lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
+@lime-inputfield-invalid-tooltip-line-height: @lime-input-invalid-tooltip-line-height;
+@lime-inputfield-invalid-tooltip-line-height-large: @lime-input-invalid-tooltip-line-height-large;
 @lime-inputfield-height: 168px;
 @lime-inputfield-width: 1560px;
 @lime-inputfield-withoneicon-width: 1386px;
 @lime-inputfield-withtwoicons-width: 1272px;
 @lime-inputfield-small-height: 132px;
+@lime-inputfield-small-height-large: 156px;
 @lime-inputfield-highlight-height: 100%;
 @lime-inputfield-small-width: 1200px;
 @lime-inputfield-small-withoneicon-width: 990px;
@@ -822,8 +894,10 @@
 // Keyguide
 // ---------------------------------------
 @lime-keyguide-colordot-height: 12px;
+@lime-keyguide-colordot-height-large: calc(@lime-keyguide-colordot-height * 1.2);
 @lime-keyguide-colordot-margin: 0 ((@lime-icon-large-size - @lime-keyguide-colordot-width) / 2); // Keep this centered by adapting its margins
 @lime-keyguide-colordot-width: 60px;
+@lime-keyguide-colordot-width-large: calc(@lime-keyguide-colordot-width * 1.2);
 @lime-keyguide-colordot-border-radius: var(--semantic-radius-full);
 @lime-keyguide-font-weight: var(--primitive-font-weight-regular);
 @lime-keyguide-icon-border-radius: var(--semantic-radius-container);
@@ -850,7 +924,8 @@
 @lime-mediaoverlay-caption-margin-bottom: var(--primitive-spacing-36);
 @lime-mediaoverlay-caption-font-weight: var(--primitive-font-weight-semibold);
 @lime-mediaoverlay-font-weight: var(--primitive-font-weight-regular);
-@lime-mediaoverlay-line-height: 1.3em;
+@lime-mediaoverlay-line-height: 60px;
+@lime-mediaoverlay-line-height-large: 70px;
 @lime-mediaoverlay-caption-line-height: 1.4em;
 @lime-mediaoverlay-padding: var(--primitive-spacing-24);
 @lime-mediaoverlay-progressbar-margin: var(--primitive-spacing-24);
@@ -865,6 +940,7 @@
 @lime-mediaplayer-button-border-radius: 96px;
 @lime-mediaplayer-button-height: 180px;
 @lime-mediaplayer-button-icon-size: 108px;
+@lime-mediaplayer-button-icon-size-large: 130px;
 @lime-mediaplayer-button-padding: var(--primitive-spacing-36);
 @lime-mediaplayer-controls-actionguide-height: 168px;
 @lime-mediaplayer-controls-actionguide-padding-bottom: 0;
@@ -881,6 +957,7 @@
 @lime-mediaplayer-slider-knob-size: 36px;
 @lime-mediaplayer-slider-tap-area: 60px;
 @lime-mediaplayer-times-line-height: 60px;
+@lime-mediaplayer-times-line-height-large: 70px;
 @lime-mediaplayer-times-min-width: 192px;
 
 // PageViews
@@ -918,6 +995,7 @@
 @lime-picker-item-padding: 0 @lime-spotlight-outset;
 @lime-picker-focus-duration: @lime-spotlight-focus-animation-duration;
 @lime-picker-value-height: 72px;
+@lime-picker-value-height-large: 84px;
 @lime-picker-vertical-height: 362px;
 @lime-picker-vertical-large-value-width: 696px;
 @lime-picker-joined-horizontal-border-radius: var(--semantic-radius-full);
@@ -927,13 +1005,16 @@
 @lime-picker-joined-horizontal-value-margin: 0 0 var(--primitive-spacing-48) 0;
 @lime-picker-joined-vertical-border-radius: var(--semantic-radius-button);
 @lime-picker-joined-value-height: 90px;
+@lime-picker-joined-value-height-large: 110px;
 @lime-picker-small-value-width: (@lime-icon-large-size + (@lime-spotlight-outset * 3));
 @lime-picker-medium-value-width: 360px;
 @lime-picker-large-value-width: 468px;
 @lime-picker-incrementer-margin: var(--primitive-spacing-36);
 @lime-picker-incrementer-width: 120px;
 @lime-picker-indicator-width: 24px;
+@lime-picker-indicator-width-large: calc(@lime-picker-indicator-width * 1.2);
 @lime-picker-indicator-height: 24px;
+@lime-picker-indicator-height-large: calc(@lime-picker-indicator-height * 1.2);
 @lime-picker-indicator-border-radius: @lime-picker-indicator-width;
 @lime-picker-indicator-inactive-scale: 0.75;
 @lime-picker-indicator-active-scale: 1;
@@ -954,6 +1035,7 @@
 // ---------------------------------------
 @lime-popuptablayout-margin: var(--primitive-spacing-60) auto var(--primitive-spacing-132) var(--primitive-spacing-60);
 @lime-popuptablayout-tab-icon-size: 96px;
+@lime-popuptablayout-tab-icon-size-large: (@lime-popuptablayout-tab-icon-size * 1.2);
 @lime-popuptablayout-tabs-border-radius: var(--semantic-radius-container);
 @lime-popuptablayout-tabs-content-spacing: var(--primitive-spacing-36);
 @lime-popuptablayout-content-border-radius: var(--semantic-radius-popup);
@@ -1094,16 +1176,17 @@
 
 // Switch
 // ---------------------------------------
-@lime-switch-border-radius: var(--primitive-radius-30);
+@lime-switch-border-radius: var(--primitive-radius-999);
 @lime-switch-height: 60px;
 @lime-switch-width: 120px;
 @lime-switch-icon-height: 48px;
+@lime-switch-icon-height-large: 57px;
 @lime-switch-icon-line-height: @lime-switch-height;
-@lime-switch-height-large: @lime-icon-small-size-large;
-@lime-switch-width-large: 162px;
-@lime-switch-icon-height-large: @lime-icon-small-size-large;
-@lime-switch-icon-line-height-large: @lime-switch-icon-height-large;
+@lime-switch-icon-line-height-large: @lime-switch-height-large;
+@lime-switch-height-large: 72px;
+@lime-switch-width-large: 144px;
 @lime-switch-icon-top: ((@lime-switch-height - @lime-switch-icon-height) / 2);
+@lime-switch-icon-top-large: ((@lime-switch-height-large - @lime-switch-icon-height-large) / 2);
 @lime-switch-spottable-margin: @lime-component-spacing;
 @lime-switch-spottable-border-radius: var(--primitive-radius-24);
 @lime-switch-spottable-position: ~"calc(@{lime-component-spacing} * -1)"; // These correlate with the numbers from 'margin" above
@@ -1144,6 +1227,7 @@
 @lime-tooltip-point-height: 37px; // actual value is 36px. +1px to ensure no gaps
 @lime-tooltip-border-radius: var(--semantic-radius-button);
 @lime-tooltip-label-line-height: 72px;
+@lime-tooltip-label-line-height-large: 84px;
 @lime-tooltip-padding: var(--primitive-spacing-12) var(--primitive-spacing-48);
 @lime-tooltip-margin-offset: var(--primitive-spacing-18); // GUI for the length of the arrow
 @lime-tooltip-marquee-width: 600px;
@@ -1160,10 +1244,13 @@
 @lime-video-slider-tooltip-shift-position-bottom:  ~"calc(@{lime-video-slider-tooltip-position-bottom} + @{lime-video-slider-tooltip-arrow-border-top})";
 @lime-video-slider-tooltip-margin-bottom:          var(--primitive-spacing-6);
 @lime-video-slider-tooltip-font-size:              var(--primitive-font-size-48);
+@lime-video-slider-tooltip-font-size-large:        var(--primitive-font-size-58);
 @lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
 @lime-video-slider-tooltip-line-height:            72px;
+@lime-video-slider-tooltip-line-height-large:      84px;
 @lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-42);
 @lime-video-slider-tooltip-thumbnail-content-font-size:     var(--primitive-font-size-54);
+@lime-video-slider-tooltip-thumbnail-content-font-size-large: var(--primitive-font-size-56);
 @lime-video-slider-tooltip-thumbnail-content-margin-bottom: var(--primitive-spacing-30);
 @lime-video-slider-tooltip-thumbnail-border-radius: var(--primitive-radius-12);
 @lime-video-slider-tooltip-thumbnail-border-width:  12px;
@@ -1171,6 +1258,7 @@
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;
 @lime-video-feedback-icon-font-size:               1.25em;
+@lime-video-feedback-icon-font-size-large:         1.5em;
 @lime-video-feedback-mini-font-size:               var(--primitive-font-size-66);
 @lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
 @lime-video-feedback-mini-padding:                 var(--primitive-spacing-18) var(--primitive-spacing-60);
@@ -1181,9 +1269,11 @@
 @lime-video-feedback-message-font-weight:          var(--primitive-font-weight-semibold);
 @lime-video-player-badge-text-size:                var(--primitive-font-size-48);
 @lime-video-player-info-font-size:                 var(--primitive-font-size-54);
+@lime-video-player-info-font-size-large:           var(--primitive-font-size-66);
 @lime-video-player-info-font-weight:               var(--primitive-font-weight-regular);
 @lime-video-player-info-height:                    84px;
 @lime-video-player-info-line-height:               72px;
+@lime-video-player-info-line-height-large:         84px;
 @lime-video-player-info-padding:                   var(--primitive-spacing-72) var(--primitive-spacing-48) 0;
 @lime-video-player-info-margin-bottom:             var(--primitive-spacing-60);
 @lime-video-player-slider-container-height:        132px;
@@ -1191,8 +1281,10 @@
 @lime-video-player-padding-bottom:                 0;
 @lime-video-player-padding-side:                   var(--primitive-spacing-132);
 @lime-video-player-label-font-size:                var(--primitive-font-size-90);
+@lime-video-player-label-font-size-large:          var(--primitive-font-size-108);
 @lime-video-player-label-font-weight:              var(--primitive-font-weight-semibold);
 @lime-video-player-label-line-height:              120px;
+@lime-video-player-label-line-height-large:        146px;
 
 // VirtualList
 // ---------------------------------------

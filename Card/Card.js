@@ -388,12 +388,13 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, icon, pressed, roundedImage, hasContainer, orientation, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, icon, label, pressed, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			pressed,
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
+			hasLabel: (orientation === 'vertical') && (label && secondaryLabel),
 			isCheckIcon: icon === 'check'
 		}),
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption

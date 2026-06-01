@@ -38,4 +38,20 @@
 	}
 
 	.locale-japanese-line-break();
+
+	.lime-custom-text({
+		font-size: @lime-body-font-size-large;
+
+		&.small {
+			font-size: @lime-body-small-font-size-large;
+
+			.enact-locale-tallglyph({
+				font-size: @lime-tallglyph-body-small-font-size-large;
+			});
+
+			.lime-locale-non-latin({
+				font-size: @lime-non-latin-body-small-font-size-large;
+			});
+		}
+	});
 }

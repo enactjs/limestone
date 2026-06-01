@@ -70,6 +70,7 @@ const defaultImageItemTests = [
 
 const ImageItemTests = [
 	...defaultImageItemTests,
+	...withConfig({skinVariants: ['largeText']}, defaultImageItemTests),
 
 	// Centered
 	...withProps({centered:true}, defaultImageItemTests),

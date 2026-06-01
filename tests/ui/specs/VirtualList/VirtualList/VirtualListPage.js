@@ -57,6 +57,15 @@ class VirtualListPage extends Page {
 	get buttonNativeScroll () {
 		return element('#nativeScroll', browser);
 	}
+	get buttonItemMargin () {
+		return element('#itemMargin', browser);
+	}
+	get buttonJumpToLast () {
+		return element('#jumpToLast', browser);
+	}
+	get buttonJumpToFirst () {
+		return element('#jumpToFirst', browser);
+	}
 	get buttonHeaderChildren () {
 		return element('#headerChildrenButton', browser);
 	}
@@ -215,6 +224,26 @@ class VirtualListPage extends Page {
 		return await browser.execute(function () {
 			return document.activeElement.clientHeight;
 		});
+	}
+
+	async getOverscrollTranslate (orientation) {
+		return await browser.execute(function (_scrollContentSelector, _orientation) {
+			const el = document.querySelector(_scrollContentSelector);
+			return el ? el.style.getPropertyValue('--scroll-overscroll-translate-' + _orientation) : '';
+		}, scrollContentSelector, orientation);
+	}
+
+	async scrollWheel (deltaY) {
+		const {x, y, width, height} = await browser.execute(function (_scrollableSelector) {
+			const el = document.querySelector(_scrollableSelector);
+			return el ? el.getBoundingClientRect().toJSON() : null;
+		}, scrollableSelector);
+		await browser.action('wheel').scroll({
+			x: Math.round(x + width / 2),
+			y: Math.round(y + height / 2),
+			deltaX: 0,
+			deltaY
+		}).perform();
 	}
 
 	// key input api

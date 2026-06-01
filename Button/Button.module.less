@@ -24,6 +24,22 @@
 		min-width: @lime-button-height-large;
 		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
+
+		&.red,
+		&.green,
+		&.yellow,
+		&.blue {
+			.client::before {
+				bottom: @lime-button-colordot-bottom;
+				width: @lime-button-colordot-width-font-size-large;
+				height: @lime-button-colordot-height-font-size-large;
+			}
+
+			&:not(.minWidth) .client::before {
+				width: @lime-button-icon-only-colordot-width;
+				height: @lime-button-icon-only-colordot-height;
+			}
+		}
 	});
 
 	&.focusStatic {
@@ -78,6 +94,20 @@
 			height: @lime-button-colordot-height;
 			border-radius: @lime-button-colordot-border-radius;
 			transform: translate(-50%, 50%);
+		}
+
+		&:not(.minWidth) {
+			.client::before {
+				width: @lime-button-icon-only-colordot-width;
+				height: @lime-button-icon-only-colordot-height;
+			}
+
+			.lime-custom-text({
+				.client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
+				}
+			});
 		}
 
 		// Standard Button Scenario
@@ -172,6 +202,20 @@
 				height: @lime-button-small-colordot-height;
 			}
 
+			&:not(.minWidth) {
+				.client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
+				}
+
+				.lime-custom-text({
+					.client::before {
+						width: @lime-button-icon-only-colordot-width;
+						height: @lime-button-icon-only-colordot-height;
+					}
+				});
+			}
+
 			// Standard Button Scenario
 			&.minWidth {
 				.client {
@@ -205,6 +249,21 @@
 
 			&.minWidth {
 				min-width: @lime-button-small-min-width-default;
+			}
+
+			&.red,
+			&.green,
+			&.yellow,
+			&.blue {
+				.client::before {
+					width: @lime-button-small-colordot-width-font-size-large;
+					height: @lime-button-small-colordot-height-font-size-large;
+				}
+
+				&:not(.minWidth) .client::before {
+					width: @lime-button-icon-only-colordot-width;
+					height: @lime-button-icon-only-colordot-height;
+				}
 			}
 		});
 	}
@@ -248,29 +307,11 @@
 				margin: 0; // reset margins for `IconButton`
 
 				.lime-custom-text({
+					overflow: visible;
 					width: 100%;
 				})
 			}
 
-			&.red,
-			&.green,
-			&.yellow,
-			&.blue {
-				.client::before {
-					width: @lime-button-icon-only-colordot-width;
-					height: @lime-button-icon-only-colordot-height;
-				}
-			}
-		}
-
-		&.red,
-		&.green,
-		&.yellow,
-		&.blue {
-			.client::before {
-				width: @lime-button-icon-only-colordot-width;
-				height: @lime-button-icon-only-colordot-height;
-			}
 		}
 	}
 

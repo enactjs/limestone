@@ -88,6 +88,13 @@
 		}
 	}
 
+	.lime-custom-text({
+		.tooltip .tooltipLabel {
+			font-size: @lime-input-invalid-tooltip-font-size-large;
+			line-height: @lime-input-invalid-tooltip-line-height-large;
+		}
+	});
+
 	.keypad {
 		.enact-locale-rtl({
 			direction: ltr;
@@ -101,6 +108,9 @@
 
 			.icon {
 				font-size: @lime-input-keypad-key-font-size;
+				.lime-custom-text({
+					font-size: @lime-input-keypad-key-font-size-large;
+				});
 			}
 		}
 	}
@@ -169,12 +179,6 @@
 
 			:global(.enact-orientation-portrait) & {
 				margin: @lime-portrait-input-fullscreen-keypad-margin;
-			}
-
-			:global(.enact-text-large) & {
-				.key {
-					height: @lime-button-height-large;
-				}
 			}
 		}
 
@@ -283,14 +287,6 @@
 			width: @lime-input-overlay-keypad-width;
 			justify-content: flex-end;
 			column-gap: @lime-input-overlay-keypad-gap;
-
-			// Temporarily disabled to avoid breaking layout
-			:global(.enact-text-large) & {
-				width: @lime-input-overlay-keypad-width-large;
-				.key {
-					height: @lime-button-height-large;
-				}
-			}
 		}
 
 		.buttonArea {
@@ -307,6 +303,40 @@
 			}
 		}
 	}
+
+	.lime-custom-text({
+		&.fullscreen {
+			.numberCell {
+				&.password {
+					font-size: @lime-input-fullscreen-numbercell-password-font-size-large;
+				}
+			}
+
+			.joined {
+				font-size: @lime-input-fullscreen-numberfield-font-size-large;
+
+				&.password {
+					font-size: @lime-input-fullscreen-numbercell-password-font-size-large;
+				}
+			}
+		}
+
+		&.overlay {
+			.numberCell {
+				&.password {
+					font-size: @lime-input-overlay-numbercell-password-font-size-large;
+				}
+			}
+
+			.joined {
+				font-size: @lime-input-overlay-numberfield-font-size-large;
+
+				&.password {
+					font-size: @lime-input-overlay-numbercell-password-font-size-large;
+				}
+			}
+		}
+	});
 
 	.applySkins({
 		background-color: @lime-input-fullscreen-background-color;

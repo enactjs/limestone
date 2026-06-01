@@ -50,6 +50,11 @@ const HeadingTests = [
 	<Heading size="medium" spacing="auto">Heading</Heading>,
 	<Heading size="small" spacing="auto">Heading</Heading>,
 	<Heading size="tiny" spacing="auto">Heading</Heading>,
+	<Heading size="subtitle" spacing="auto">Heading Subtitle</Heading>,
+	{
+		skinVariants: ['largeText'],
+		component: <Heading size="subtitle" spacing="auto">Heading Subtitle</Heading>
+	},
 	{
 		locale: 'ar-SA',
 		component: <Heading>Heading</Heading>
@@ -68,7 +73,17 @@ const HeadingTests = [
 	<Heading size="medium" style={{fontStyle: 'italic', fontWeight: 700}}>Heading</Heading>,
 
 	...bidirectionalTests,
-	...withProps({forceDirection: 'locale'}, bidirectionalTests)
+	...withProps({forceDirection: 'locale'}, bidirectionalTests),
+
+	// Large Text
+	...withConfig({skinVariants: ['largeText']}, [
+		<Heading>This is a new Heading - default</Heading>,
+		<Heading spacing="auto">This is a new Heading - spacing is auto</Heading>,
+		<Heading spacing="small">This is a new Heading - spacing is small</Heading>,
+		<Heading spacing="medium">This is a new Heading - spacing is medium</Heading>,
+		<Heading spacing="large">This is a new Heading - spacing is large</Heading>,
+		<Heading spacing="none">This is a new Heading - spacing is none</Heading>
+	])
 ];
 
 export default HeadingTests;
