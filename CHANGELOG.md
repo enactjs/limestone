@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/VirtualList` focus jump and scroll freeze when scrolled by long press
+
 ## [1.9.3] - 2026-04-20
 
 ### Fixed
