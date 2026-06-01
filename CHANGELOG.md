@@ -2,7 +2,21 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [1.10.1] - 2026-06-01 
+## [unreleased]
+
+### Changed
+
+- `limestone/ImageItem` styling to match the latest GUI
+
+## [1.10.1] - 2026-06-01
+
+### Deprecated
+
+- `limestone/FormCheckboxItem` to be removed in 2.0.0
+
+### Added
+
+- `limestone/CheckboxItem` `formCheckbox` prop to mirror the behaviour of `FormCheckboxItem`
 
 ### Changed
 

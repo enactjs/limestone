@@ -21,6 +21,7 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {Children} from 'react';
 
 import $L from '../internal/$L';
 import {CheckboxBase} from '../Checkbox';
@@ -28,6 +29,8 @@ import {ItemBase, ItemDecorator} from '../Item';
 import Skinnable from '../Skinnable';
 
 import componentCss from './CheckboxItem.module.less';
+
+const hasChildren = (children) => (Children.toArray(children).filter(Boolean).length > 0);
 
 const Item = ItemDecorator(ItemBase);
 
@@ -73,6 +76,17 @@ const CheckboxItemBase = kind({
 		 * @public
 		 */
 		css: PropTypes.object,
+
+		/**
+		 * Enables the "formCheckbox" state.
+		 *
+		 * In "formCheckbox" mode,  the spotlight is located on the Checkbox component and the Item does not receive
+		 * visual feedback on focus
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		formCheckbox: PropTypes.bool,
 
 		/**
 		 * The icon content.
@@ -135,6 +149,10 @@ const CheckboxItemBase = kind({
 		slotBefore: PropTypes.node
 	},
 
+	defaultProps: {
+		formCheckbox: false
+	},
+
 	styles: {
 		css: componentCss,
 		className: 'checkboxItem',
@@ -142,10 +160,15 @@ const CheckboxItemBase = kind({
 	},
 
 	computed: {
-		className: ({label, styler}) => styler.append({hasLabel: label != null})
+		className: ({formCheckbox, label, slotBefore, styler}) => styler.append({
+			formCheckbox: formCheckbox === true,
+			hasLabel: (label != null && label.length > 0),
+			hasSlotBefore: hasChildren(slotBefore)
+		}),
+		label: ({label}) => label != null && label.length > 0 ? label : null
 	},
 
-	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
+	render: ({children, css, formCheckbox, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
 		<Item
 			data-webos-voice-intent="SelectCheckItem"
 			role="checkbox"
@@ -160,6 +183,7 @@ const CheckboxItemBase = kind({
 					selected={selected}
 					indeterminate={indeterminate}
 					indeterminateIcon={indeterminateIcon}
+					standalone={formCheckbox}
 				>
 					{icon}
 				</Checkbox>
