@@ -164,6 +164,7 @@
 	&.colorPicker {
 		@cp-v-gap: ((@lime-slider-color-picker-knob-container-size - @lime-slider-color-picker-bar-height) / 2);
 		@cp-h-gap: (@lime-slider-color-picker-knob-container-size / 2);
+		align-self: center;
 
 		.knob {
 			--lime-tooltip-offset: @cp-h-gap;
@@ -173,11 +174,6 @@
 			height: @lime-slider-knob-width;
 			width: @lime-slider-knob-width;
 			border-radius: (@lime-slider-knob-width / 2);
-			transition:
-				height var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function),
-				width var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function),
-				border-radius var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function),
-				box-shadow var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
 		}
 
 		&.horizontal {
@@ -186,6 +182,7 @@
 
 			.progressBar {
 				height: @lime-slider-color-picker-bar-height;
+				border-radius: @lime-slider-color-picker-bar-border-radius;
 
 				.bar {
 					border-radius: @lime-slider-color-picker-bar-border-radius;
@@ -198,6 +195,7 @@
 
 			.progressBar {
 				width: @lime-slider-color-picker-bar-height;
+				border-radius: @lime-slider-color-picker-bar-border-radius;
 
 				.bar {
 					border-radius: @lime-slider-color-picker-bar-border-radius;
@@ -222,16 +220,9 @@
 		.knob::before {
 			background-color: @lime-slider-handle-color;
 			border-color: @lime-slider-handle-border-color;
-			box-shadow: @lime-slider-handle-shadow;
 		}
 
 		:global(.spotlight-input-mouse) & {
-			&:hover:not([disabled]) {
-				.knob::before {
-					box-shadow: @lime-slider-handle-hover-shadow;
-				}
-			}
-
 			&:hover:not([disabled]):not(.colorPicker) {
 				.knob::before {
 					.lime-slider-focus-in-motion();
@@ -369,7 +360,6 @@
 				background-color: var(--semantic-color-surface-default-handle);
 				border-width: 0;
 				outline: @lime-slider-color-picker-knob-outline-width solid @lime-slider-handle-colorPicker-outline-color;
-				box-shadow: @lime-slider-handle-shadow;
 				transform: @lime-translate-center;
 			}
 
