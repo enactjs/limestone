@@ -82,6 +82,53 @@ const SliderTests = [
 		focus: true
 	},
 
+	// Latest GUI
+	{
+		component: <Slider value={25} />,
+		wrapper: {
+			padded: true
+		},
+		focus: true
+	},
+	{
+		component: <Slider value={25} showMinMax min={0} max={100} />,
+		wrapper: {
+			padded: true
+		}
+	},
+	{
+		component: <Slider disabled value={25} />,
+		wrapper: {
+			padded: true
+		}
+	},
+	{
+		component: <Slider colorPicker value={120} />,
+		wrapper: {
+			padded: true
+		}
+	},
+	{
+		component: <Slider colorPicker value={120} />,
+		wrapper: {
+			padded: true
+		},
+		focus: true
+	},
+	{
+		component: <Slider colorPicker disabled value={120} />,
+		wrapper: {
+			padded: true
+		}
+	},
+	{
+		component: <Slider value={25} showMinMax min={0} max={100} />,
+		wrapper: {
+			padded: true
+		},
+		focus: true
+	},
+
 	// *************************************************************
 	// tooltip - all positions
 	// NOTE: Tooltip won't show on slider without focus. Nothing should show!
