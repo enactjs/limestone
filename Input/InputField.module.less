@@ -1,4 +1,4 @@
-// Input.module.less
+// InputField.module.less
 //
 @import "../styles/mixins.less";
 @import "../styles/variables.less";
@@ -228,6 +228,10 @@
 		}
 	});
 
+	&.active .marqueeText {
+		display: none;
+	}
+
 	// Skin colors
 	.applySkins({
 		caret-color: @lime-inputfield-cursor-color;
@@ -354,8 +358,4 @@
 			});
 		});
 	});
-
-	&.active .marqueeText {
-		display: none;
-	}
 }
