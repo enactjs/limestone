@@ -160,7 +160,6 @@
 	&.colorPicker {
 		@cp-v-gap: ((@lime-slider-color-picker-knob-container-size - @lime-slider-color-picker-bar-height) / 2);
 		@cp-h-gap: (@lime-slider-color-picker-knob-container-size / 2);
-		align-self: center;
 
 		.knob {
 			--lime-tooltip-offset: @cp-h-gap;
@@ -175,6 +174,7 @@
 		&.horizontal {
 			min-height: @lime-slider-color-picker-knob-container-size;
 			padding: @cp-v-gap @cp-h-gap;
+			align-content: center;
 
 			.progressBar {
 				height: @lime-slider-color-picker-bar-height;
@@ -354,7 +354,6 @@
 
 			.knob::before {
 				background-color: var(--semantic-color-surface-default-handle);
-				border-width: 0;
 				outline: @lime-slider-color-picker-knob-outline-width solid @lime-slider-handle-colorPicker-outline-color;
 				transform: @lime-translate-center;
 			}
