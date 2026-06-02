@@ -29,7 +29,7 @@ const useEventKey = (props, instances, context) => {
 	const mutableRef = useRef({
 		fn: null
 	});
-	
+
 	const prevKeyDownIndexRef = useRef(-1);
 	const hasProcessedKeyDownRef = useRef(false);
 
