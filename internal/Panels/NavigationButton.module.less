@@ -8,30 +8,37 @@
 	&.small {
 		min-width: @lime-button-small-height;
 		padding: @lime-button-icon-small-padding;
+
 		& .bg {
 			width: @lime-button-small-height;
 		}
 	}
+
 	&.large {
 		min-width: @lime-button-height;
 		padding: @lime-button-icon-padding;
+
 		& .bg {
 			width: @lime-button-height;
 		}
 	}
+
 	&.iconAfter {
 		.bg {
 			.position-start-end(auto, 0);
 		}
+
 		.icon {
 			.margin-start-end(@lime-wizardpanels-button-icon-text-gap, 0);
 		}
 	}
+
 	&.iconBefore {
 		.icon {
 			.margin-start-end(0, @lime-wizardpanels-button-icon-text-gap);
 		}
 	}
+
 	.applySkins({
 		.client :not(.icon) {
 			color: var(--semantic-color-on-background-main);
