@@ -269,9 +269,6 @@
 		.inputHighlight {
 			color: transparent;
 			background-color: transparent;
-			// Set `.inputHighlight` background color to make it appear that the text is highlighted
-			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
-			// background-color: @lime-spotlight-color;
 		}
 
 		.tooltip {
@@ -307,12 +304,6 @@
 			&.hasMarquee:not(.active) .input {
 				opacity: 0;
 			}
-
-			// Set `.inputHighlight` opacity to make it appear that the text is highlighted
-			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
-			// .inputHighlight {
-			// 	opacity: 1;
-			// }
 		});
 
 		:global(.noAnimation) & {
