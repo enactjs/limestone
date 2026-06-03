@@ -20,5 +20,13 @@ errorShots
 coverage
 .eslintcache
 
+# Screenshot tests (tests/screenshot/) — generated artifacts only
+# Playwright baselines: snapshots/<Component>/<TestName>/*.png (same paths as WDIO reference/)
+tests/screenshot/playwright/snapshots
+tests/screenshot/playwright/test-results
+tests/screenshot/playwright/reports
+tests/screenshot/playwright/blob-report
+tests/screenshot/playwright/.test-data.json
+
 # Mac
 .DS_Store
