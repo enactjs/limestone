@@ -3,7 +3,7 @@ import fs from 'fs';
 import {test, expect} from '@playwright/test';
 
 import {assertComponentSource, TEST_DATA_FILE} from '../paths.js';
-import {getScreenshotBasename, getScreenshotName} from './screenshot-name.js';
+import {getScreenshotBasename} from './screenshot-name.js';
 import {openComponent} from './limestone-page.js';
 
 const testIdFilter = process.env.PLAYWRIGHT_TEST_ID != null
@@ -65,7 +65,6 @@ function getScreenshotTests ({testName, skin, highContrast, concurrency, compone
 
 			tests.push({
 				title: `${component}~/${testName}~/${testCase.title}~/${testId}`,
-				screenshotPath: getScreenshotName(component, testName, testCase.title),
 				snapshotBasename: getScreenshotBasename(testCase.title),
 				params: {component, testId, skin, highContrast}
 			});

@@ -7,11 +7,25 @@ import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT} from './paths.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
 
+/** Jenkins: SPEC=Default → Default* shards; PLAYWRIGHT_SPEC=Default-spec → one file (TV). */
+function resolveTestMatch () {
+	const spec = process.env.PLAYWRIGHT_SPEC?.trim();
+	if (!spec) {
+		return '**/*-spec.js';
+	}
+	const base = spec.replace(/\.js$/, '');
+	if (base.endsWith('-spec')) {
+		return `**/${base}.js`;
+	}
+	return `**/*${base}*-spec.js`;
+}
+
 export default defineConfig({
 	testDir: path.join(__dirname, 'specs'),
-	testMatch: '**/*-spec.js',
+	testMatch: resolveTestMatch(),
 	testIgnore: ['**/utils/**', '**/scripts/**'],
 	globalSetup: path.join(__dirname, 'global-setup.js'),
+	globalTeardown: path.join(__dirname, 'global-teardown.js'),
 	snapshotPathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}'),
 	expect: {
 		toHaveScreenshot: {
