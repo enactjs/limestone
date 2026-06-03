@@ -24,11 +24,13 @@
 			&.small { margin-top: ~"calc(@{lime-contextualpopup-offset-small} * -1)"; }
 			&.large { margin-top: ~"calc(@{lime-contextualpopup-offset-large} * -1)"; }
 		}
+
 		&.below {
 			&.overlap {	margin-top: ~"calc(@{lime-contextualpopup-offset-overlap} * -1)"; }
 			&.small { margin-top: @lime-contextualpopup-offset-small; }
 			&.large { margin-top: @lime-contextualpopup-offset-large; }
 		}
+
 		&.right {
 			&.top,
 			&.middle,
@@ -38,6 +40,7 @@
 				&.large { margin-left: @lime-contextualpopup-offset-large; }
 			}
 		}
+
 		&.left  {
 			&.top,
 			&.middle,
@@ -67,9 +70,11 @@
 		&.above {
 			transform: rotate(180deg);
 		}
+
 		&.left {
 			transform: rotate(90deg);
 		}
+
 		&.right {
 			transform: rotate(-90deg);
 		}
