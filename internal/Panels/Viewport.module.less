@@ -10,18 +10,18 @@
 	// force directionality for relative positioning below
 	direction: ltr;
 
-	& > * {
-		// reset direction in views for RTL locales
-		.enact-locale-rtl({
-			direction: rtl;
-		});
-	}
-
 	&.transitioning::before {
 		content: "";
 		position: absolute;
 		.position(0);
 		z-index: 10000;
+	}
+
+	& > * {
+		// reset direction in views for RTL locales
+		.enact-locale-rtl({
+			direction: rtl;
+		});
 	}
 
 	> :nth-child(2) {
