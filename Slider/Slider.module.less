@@ -229,10 +229,6 @@
 		.focus({
 			background-color: transparent;
 
-			.fill {
-				background-color: @lime-slider-track-active-color;
-			}
-
 			&:not(.colorPicker) {
 				.knob {
 					--lime-tooltip-offset: @lime-slider-tooltip-offset-focused;
@@ -363,18 +359,7 @@
 					.knob {
 						--lime-tooltip-offset: @cp-f-tooltip-offset;
 					}
-
-					.knob::before {
-						height: @lime-slider-knob-width-large;
-						width: @lime-slider-knob-width-large;
-						border-radius: (@lime-slider-knob-width-large / 2);
-					}
 				}
-			}
-
-			.knob::before {
-				background-color: @lime-slider-handle-disabled-color;
-				outline-color: @lime-slider-handle-border-color;
 			}
 
 			.focus({
