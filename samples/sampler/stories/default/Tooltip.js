@@ -1,9 +1,9 @@
-import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import Button from '@enact/limestone/Button';
 import Tooltip from '../../../../Tooltip/Tooltip';
-import Button from '../../../../Button/Button';
-import {svgGenerator} from "../helper/svg";
+import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {mergeComponentMetadata} from '@enact/storybook-utils';
+
+import {svgGenerator} from '../helper/svg';
 
 Tooltip.displayName = 'Tooltip';
 
@@ -16,12 +16,17 @@ const TooltipButton = Tooltip(Button);
 
 const Config = mergeComponentMetadata('Tooltip', Tooltip);
 
+Config.defaultProps = {
+    direction: 'below center',
+    forceOpen: false,
+    marquee: false
+};
+
 const src = {
     hd: svgGenerator(200, 200, '7ed31d', 'ffffff', '200 X 200'),
     fhd: svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300'),
     uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
 };
-
 
 export const _Tooltip = (args) => (
     <TooltipButton
@@ -30,18 +35,23 @@ export const _Tooltip = (args) => (
         direction={args['direction']}
         text={args['text']}
         src={args['hasImage'] ? args['src'] : undefined}
+        size={{
+            height: args['height'],
+            width: args['width'],
+        }}
     >
         Click me
     </TooltipButton>
 );
 
 boolean('forceOpen', _Tooltip);
-boolean('marquee', _Tooltip);
+select('direction', _Tooltip, ['below center', 'above center', 'right middle', 'left middle'], Config);
 boolean('hasImage', _Tooltip, false);
-text('text', _Tooltip);
-select('direction', _Tooltip, ['below', 'above', 'right', 'left']);
+boolean('marquee', _Tooltip);
+text('text', _Tooltip, Config, 'Tooltip');
+number('height', _Tooltip, Config, 0);
+number('width', _Tooltip, Config, 0);
 object('src', _Tooltip, Config, src);
-
 
 _Tooltip.storyName = 'Tooltip';
 _Tooltip.parameters = {
