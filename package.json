@@ -54,7 +54,7 @@
     "@enovaui/core-tokens": "^2.0.0",
     "@enovaui/webos-tokens": "^2.0.0",
     "classnames": "^2.5.1",
-    "ilib": "^14.21.0 || ^14.21.0-webos1",
+    "ilib": "^14.22.0",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.32.0",
