@@ -29,13 +29,90 @@ tests/screenshot/
 | Specs | `../specs/*-specs.js` | `specs/*-spec.js` |
 | Assertions / baselines | `dist/screenshots/reference/` | `playwright/snapshots/` (same `<Component>/<TestName>/` paths) |
 
-## How a scenario runs (e.g. Chip, testId 3)
+## How a component reaches Playwright (e.g. Chip, testId 3)
 
+Playwright never opens `apps/components/Chip.js` at test time. That file is **source** for the screenshot app; the runner only serves the **built** bundle under `../dist/` and drives cases by URL query (`component` + `testId`).
+
+### 1. Author scenarios in `apps/components/`
+
+`Chip.js` exports an array of JSX cases (order = `testId`):
+
+```js
+const ChipTests = [
+  <Chip>Default Chip</Chip>,           // testId 0
+  <Chip icon="home">…</Chip>,          // testId 1
+  …
+  <Chip icon="checkmark">Chip with checkmark Icon</Chip>,  // testId 3
+  …
+];
+export default ChipTests;
 ```
-Chip.js → LimestoneComponents / testMetadata → buildApps → ../dist/
+
+`withConfig({…}, […])` expands into more entries (focus, `largeText`, etc.), so Chip ends up with ~51 cases — same list WDIO uses.
+
+### 2. Register the component
+
+`apps/LimestoneComponents.js` imports `Chip` from `./components/Chip` and puts it in the `components` map. For each key it runs `generateTestData` (`@enact/ui-test-utils`) to build `testMetadata[Chip]`: one `{title, …}` per array index (titles come from props/children when the JSX has no explicit `title`).
+
+### 3. Build into `../dist/`
+
+`global-setup` (unless `PLAYWRIGHT_SKIP_BUILD=1`) calls `buildApps('screenshot')` from `@enact/ui-test-utils/build-apps`. That packs `Limestone-View` (entry `screenshot/index.js`) into `dist/Limestone-View/`. The bundle includes **all** registered components and `testMetadata` from step 2. Assets from `../images/` and `../videos/` are copied as part of the same build WDIO uses.
+
+### 4. Cache case list for the runner
+
+On first run (or when dist is newer than the cache), `global-setup` opens:
+
+`http://localhost:4568/Limestone-View/?request`
+
+With `?request`, the app sets `window.__TEST_DATA = testMetadata` and does not render a case. Playwright writes that JSON to `playwright/.test-data.json`, e.g.:
+
+```json
+{ "Chip": [ { "title": "…" }, { "title": "…" }, … ] }
+```
+
+`registerScreenshotTests` reads this file to know **which** `(component, testId, title)` pairs exist — it does not parse `Chip.js` again.
+
+### 5. Playwright spec → one test per case
+
+`specs/neutral/Default-spec.js` calls `registerScreenshotTests({ testName: 'Limestone', skin: 'neutral', … })`. That loops `.test-data.json` and, for each included case, registers a Playwright test.
+
+For **Chip, testId 3** on the Default shard (`concurrency: 1`, `PLAYWRIGHT_INSTANCES=5` → only ids where `testId % 5 === 0` on that shard; component runs use `PLAYWRIGHT_INSTANCES=1` so **all** Chip ids run):
+
+| Filter | Example |
+|--------|---------|
+| Shard | `testId % PLAYWRIGHT_INSTANCES === concurrency - 1` |
+| Component | `PLAYWRIGHT_COMPONENT=Chip` (from `run-playwright-component.mjs`) |
+| Single case | `PLAYWRIGHT_TEST_ID=3` |
+
+Playwright test title: `Chip~/Limestone~/<case title>~/3`.
+
+### 6. Open the case in the browser
+
+`openComponent` navigates to the built app (base URL port **4568**):
+
+`/Limestone-View/?locale=en-US&component=Chip&testId=3&skin=neutral&highContrast=false`
+
+`Limestone-View` calls `prepareTest('Chip', 3)`, clones `components.Chip[3]` from the bundle, applies theme/skin from query + per-case metadata, and renders `[data-ui-test-id="test"]`.
+
+### 7. Screenshot baseline
+
+`toHaveScreenshot` uses `getScreenshotName('Chip', 'Limestone', <case title>)` →  
+`snapshots/Chip/Limestone/<sanitized-title>.png` (same path layout as WDIO `dist/screenshots/reference/`).
+
+```text
+apps/components/Chip.js
+  → LimestoneComponents.js (import + generateTestData)
+  → buildApps → tests/screenshot/dist/Limestone-View/
   → global-setup ?request → .test-data.json
-  → registerScreenshotTests → GET …?component=Chip&testId=3&skin=…
-  → prepareTest in bundle → toHaveScreenshot
+  → Default-spec.js → registerScreenshotTests
+  → page: ?component=Chip&testId=3&skin=neutral&…
+  → prepareTest(Chip, 3) in bundle → toHaveScreenshot
+```
+
+**Quick run for that one case:**
+
+```bash
+npm run test-playwright:component -- Chip --test-id 3
 ```
 
 ## Setup
