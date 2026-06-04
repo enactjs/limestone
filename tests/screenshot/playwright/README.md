@@ -61,6 +61,7 @@ Run from the **repository root**:
 | `npm run test-playwright:component -- Sprite --update` | Refresh baselines |
 | `npm run test-ss:component -- Sprite` | WDIO, same component (Default shard) |
 | `npm run benchmark-screenshots -- Chip` | Playwright vs WDIO timing (`--build` to rebuild dist) |
+| `npm run benchmark-screenshots -- Chip --parallel 5` | Same, up to 5 cases at a time per runner |
 
 Without baselines, add `--update` once.
 
@@ -108,21 +109,31 @@ npm run test-playwright
 
 ## Benchmark (local)
 
-Compare end-to-end runtime for one component (Default shard, `instances` / `workers` = 1, existing `tests/screenshot/dist`):
+Compare end-to-end runtime for one component (Default shard, all cases, existing `tests/screenshot/dist`):
 
 ```bash
 npm run benchmark-screenshots -- Chip
-# optional: PLAYWRIGHT_SKIP_BUILD=1 if dist is already built
+npm run benchmark-screenshots -- Chip --parallel 5   # faster: 5 workers / 5 WDIO browsers
+# optional: --build to rebuild dist; PLAYWRIGHT_SKIP_BUILD=1 when dist exists
 ```
 
-Both runners filter a single component name (WDIO uses `--component ^Name$` so `Chip` does not include `Chips`).
+**Parallelism:** `--parallel N` (default `1`) runs every case for the component, but up to `N` at once. Playwright uses `PLAYWRIGHT_INSTANCES=1` (no shard filter) and `PLAYWRIGHT_WORKERS=N`. WDIO uses `--instances 1` (all cases) and `--parallel N` for `wdio:maxInstances` (requires `@enact/ui-test-utils` with `--parallel` support).
 
-| Component | Cases | Playwright | WebdriverIO | Faster |
-|-----------|------:|-----------:|--------------:|--------|
-| Sprite | 4 | 16.7 s | 18.0 s | Playwright (~8%) |
-| Chip | 51 | 99.2 s | 84.6 s | WDIO (~15%) |
+Both runners filter a single component name (WDIO uses `--component ^Name$` so `Chip` does not include `Chips`). Benchmark still runs Playwright then WDIO sequentially; ports **4568** / **4567** stay separate.
 
-Measured on Windows (Chrome 132), June 2026; times include browser startup and screenshot compare. Chip ≈ 1.9 s/test (Playwright) vs ≈ 1.7 s/test (WDIO). Full suite (`Button` ≈ 205 cases) is much slower — use component scripts for day-to-day runs.
+| Component | Cases | Parallel | Playwright | WebdriverIO | Faster |
+|-----------|------:|---------:|-----------:|--------------:|--------|
+| Sprite | 4 | 1 | 16.7 s | 18.0 s | Playwright (~8%) |
+| Chip | 51 | 1 | 99.2 s | 84.6 s | WDIO (~15%) |
+| Chip | 51 | 5 | 58.9 s | 154.8 s | Playwright (~62%) |
+
+Measured on Windows (Chrome 132), June 2026; times include browser startup and screenshot compare. Benchmark runs Playwright then WDIO (not at the same time).
+
+**Sequential (`--parallel 1`, default):** Chip ≈ 1.9 s/test (Playwright) vs ≈ 1.7 s/test (WDIO).
+
+**Parallel 5 (`--parallel 5`):** Chip ≈ 1.2 s/test (Playwright) vs ≈ 3.0 s/test (WDIO). Playwright wall time drops (~41%); WDIO can be slower on one machine with many Chrome sessions (visual compare + resource contention) — CI uses sharded jobs plus `--parallel` instead of one large component run.
+
+Full suite (`Button` ≈ 205 cases) is much slower — use component scripts for day-to-day runs.
 
 **View results:** Playwright — `npm run test-playwright:report` and `snapshots/<Component>/Limestone/`. WDIO — `tests/screenshot/dist/newFiles.html` / `failedTests.html` and `dist/screenshots/reference/`.
 

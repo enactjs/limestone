@@ -3,7 +3,7 @@ import fs from 'fs';
 import {test, expect} from '@playwright/test';
 
 import {assertComponentSource, TEST_DATA_FILE} from '../paths.js';
-import {getScreenshotBasename} from './screenshot-name.js';
+import {getScreenshotName} from './screenshot-name.js';
 import {openComponent} from './limestone-page.js';
 
 const testIdFilter = process.env.PLAYWRIGHT_TEST_ID != null
@@ -65,8 +65,7 @@ function getScreenshotTests ({testName, skin, highContrast, concurrency, compone
 
 			tests.push({
 				title: `${component}~/${testName}~/${testCase.title}~/${testId}`,
-				snapshotBasename: getScreenshotBasename(testCase.title),
-				params: {component, testId, skin, highContrast}
+				params: {component, testId, skin, highContrast, caseTitle: testCase.title}
 			});
 		});
 	}
@@ -89,15 +88,18 @@ export function registerScreenshotTests (config) {
 		for (const screenshotTest of cases) {
 			test(screenshotTest.title, async ({page}) => {
 				await openComponent(page, screenshotTest.params);
-				await expect(page).toHaveScreenshot([
-					screenshotTest.params.component,
-					config.testName,
-					screenshotTest.snapshotBasename
-				], {
-					animations: 'disabled',
-					caret: 'hide',
-					maxDiffPixelRatio: 0
-				});
+				await expect(page).toHaveScreenshot(
+					getScreenshotName(
+						screenshotTest.params.component,
+						config.testName,
+						screenshotTest.params.caseTitle
+					),
+					{
+						animations: 'disabled',
+						caret: 'hide',
+						maxDiffPixelRatio: 0
+					}
+				);
 			});
 		}
 	});
