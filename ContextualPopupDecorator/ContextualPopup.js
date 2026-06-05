@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Skinnable from '../Skinnable';
 
-import css from './ContextualPopup.module.less';
+import componentCss from './ContextualPopup.module.less';
 
 /**
  * An SVG arrow for {@link limestone/ContextualPopupDecorator/ContextualPopup.ContextualPopup}.
@@ -26,17 +26,17 @@ const ContextualPopupArrow = kind({
 	},
 
 	styles: {
-		css,
+		css: componentCss,
 		className: 'arrow'
 	},
 
 	computed: {
-		className: ({direction, styler}) => styler.append(direction, css.arrow)
+		className: ({direction, styler}) => styler.append(direction, componentCss.arrow)
 	},
 
 	render: (props) => (
 		<svg {...props} viewBox="0 0 30 30">
-			<path d="M0 20 L15 2 L30 20" className={css.arrowFill} />
+			<path d="M0 20 L15 2 L30 20" className={componentCss.arrowFill} />
 		</svg>
 	)
 });
@@ -153,7 +153,7 @@ const ContextualPopupBase = kind({
 	},
 
 	styles: {
-		css,
+		css: componentCss,
 		className: 'container',
 		publicClassNames: true
 	},
@@ -173,11 +173,11 @@ const ContextualPopupBase = kind({
 		)
 	},
 
-	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, css: mergedCss, showArrow, ...rest}) => {
+	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, css, showArrow, ...rest}) => {
 		delete rest.direction;
 
 		return (
-			<ContextualPopupRoot aria-live="off" role="alert" {...rest} className={mergedCss.contextualPopup}>
+			<ContextualPopupRoot aria-live="off" role="alert" {...rest} className={css.contextualPopup}>
 				<div className={className} style={containerPosition} ref={containerRef}>
 					{children}
 				</div>
