@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /**
  * Run Playwright screenshot tests for one component (all cases; INSTANCES=1, WORKERS from --parallel).
  *
@@ -32,7 +33,7 @@ const component = args.find(a => !a.startsWith('--') && args.indexOf(a) === args
 const update = args.includes('--update');
 const testId = flagValue('--test-id');
 const title = flagValue('--title');
-const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1', 10) || 1);
+const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1') || 1);
 
 if (!component) {
 	console.error('Usage: npm run test-playwright:component -- <ComponentName> [options]');

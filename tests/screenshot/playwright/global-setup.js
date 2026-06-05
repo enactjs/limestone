@@ -75,18 +75,18 @@ export default async function globalSetup () {
 		return;
 	}
 
-	const browser = await chromium.launch({
+	const pwBrowser = await chromium.launch({
 		channel: 'chrome',
 		headless: true
 	});
 
 	try {
-		const page = await browser.newPage();
+		const page = await pwBrowser.newPage();
 		await page.goto(`${baseURL}/Limestone-View/?request`, {waitUntil: 'networkidle'});
 		const testData = await page.evaluate(() => window.__TEST_DATA);
 
 		fs.writeFileSync(testDataFile, JSON.stringify(testData));
 	} finally {
-		await browser.close();
+		await pwBrowser.close();
 	}
 }
