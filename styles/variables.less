@@ -100,7 +100,7 @@
 // Locale
 // ---------------------------------------
 // Cambodian(km), Sinhala(si), Thai(th), Vietnamse(vi)
-@locale-tallglyph-languages: km, si, th, vi;
+@locale-tallglyph-languages: km, si, th, vi;  // used by the enact-locale-tallglyph enact mixin
 
 // Spotlight
 // ---------------------------------------
@@ -302,7 +302,6 @@
 @lime-heading-tiny-font-family: @lime-heading-large-font-family;
 @lime-heading-tiny-font-weight: @lime-heading-large-font-weight;
 @lime-heading-letter-spacing: 0;
-@lime-non-latin-heading-font-family: @lime-non-latin-font-family-bold;
 @lime-tallglyph-heading-line-height: @lime-tallglyph-heading-title-line-height;
 @lime-tallglyph-heading-subtitle-line-height: @lime-tallglyph-heading-title-line-height;
 @lime-tallglyph-heading-title-line-height: 1.5em;
@@ -346,7 +345,6 @@
 @lime-tallglyph-item-label-line-height: @lime-tallglyph-item-line-height;
 @lime-tallglyph-item-small-line-height: @lime-tallglyph-line-height;
 @lime-tallglyph-item-small-line-height-large: @lime-tallglyph-item-small-line-height;
-@lime-tallglyph-item-small-label-line-height: @lime-tallglyph-item-small-line-height;
 
 // Picker
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
@@ -497,9 +495,7 @@
 // CheckboxItem
 // ---------------------------------------
 @lime-checkboxitem-padding: var(--primitive-spacing-36) var(--primitive-spacing-48) var(--primitive-spacing-36) var(--primitive-spacing-60);
-@lime-checkboxitem-padding-rtl: var(--primitive-spacing-36) var(--primitive-spacing-60) var(--primitive-spacing-36) var(--primitive-spacing-48);
 @lime-checkboxitem-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-60);
-@lime-checkboxitem-withlabel-padding-rtl: var(--primitive-spacing-48) var(--primitive-spacing-60) var(--primitive-spacing-48) var(--primitive-spacing-48);
 @lime-checkboxitem-form-checkbox-margin-end: abs(.extract(@lime-checkbox-container-position, right)[]); // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
 
 // Chip
@@ -659,11 +655,6 @@
 @lime-header-compact-subtitle-margin-top: (#guide.header[compact-subtitle-height] - #guide.header[compact-subtitle-line-height]);
 @lime-header-compact-slotbefore-margin-end: var(--primitive-spacing-12);
 @lime-header-compact-slotafter-margin-start: var(--primitive-spacing-12);
-@lime-header-mini-margin:
-	var(--primitive-spacing-6)
-	@lime-component-spacing
-	.extract(#guide.header[mini-padding], bottom)[]
-	@lime-component-spacing; // 6px top to account for a focused button, so it doesn't clip.
 @lime-header-mini-margin: #guide.header[mini-margin];
 @lime-header-mini-padding:
 	(
@@ -702,7 +693,6 @@
 	.extract(#guide.header[wizard-padding], left)[]; // 66px comes from the GUI guide, as the distance from the bottom of the 2-line subtitle to the top of the content area. We must subtract the padding-top of panel.body to get the total spacing to match the guide.
 @lime-header-wizard-title-padding: 0;
 @lime-header-wizard-subtitle-padding: 0;
-@lime-header-back-container-width: ~"calc(@{lime-button-small-height} + @{lime-button-icon-small-h-margin})";
 
 // Heading
 // ---------------------------------------
@@ -841,7 +831,6 @@
 @lime-input-overlay-keypad-gap: var(--primitive-spacing-60);
 @lime-input-overlay-keypad-margin: var(--primitive-spacing-132) 198px var(--primitive-spacing-60) 198px;
 @lime-input-overlay-keypad-width: 624px;
-@lime-input-overlay-keypad-width-large: 120px + (@lime-button-height-large * 3);
 @lime-input-overlay-buttonarea-margin: 0;
 @lime-input-overlay-submitbutton-margin: var(--primitive-spacing-60) auto 0 auto;
 @lime-input-overlay-invalid-tooltip-width: 738px;
@@ -878,7 +867,6 @@
 // Item
 // ---------------------------------------
 @lime-item-height: 156px;
-@lime-item-height-large: @lime-item-height;
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
 @lime-item-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48);
@@ -937,7 +925,6 @@
 
 // MediaPlayer
 // ---------------------------------------
-@lime-mediaplayer-button-client-padding: 0 var(--primitive-spacing-18);
 @lime-mediaplayer-button-border-radius: 96px;
 @lime-mediaplayer-button-height: 180px;
 @lime-mediaplayer-button-icon-size: 108px;
@@ -947,13 +934,11 @@
 @lime-mediaplayer-controls-actionguide-padding-bottom: 0;
 @lime-mediaplayer-controls-actionguide-padding-top: var(--primitive-spacing-72);
 @lime-mediaplayer-controls-actionguide-time: 0.2s;		// Length of the animation
-@lime-mediaplayer-controls-button-margin-start: var(--primitive-spacing-90);
 @lime-mediaplayer-controls-gap: var(--primitive-spacing-120);
 @lime-mediaplayer-controls-height: 180px;
 @lime-mediaplayer-controls-margin-top: var(--primitive-spacing-36);
 @lime-mediaplayer-controls-moreComponents-gap: 204px;
 @lime-mediaplayer-controls-moreComponents-margin-top: var(--primitive-spacing-60);
-@lime-mediaplayer-controls-moreComponents-time: 0.3s;		// Length of the animation
 @lime-mediaplayer-slider-height: 12px;
 @lime-mediaplayer-slider-knob-size: 36px;
 @lime-mediaplayer-slider-tap-area: 60px;
@@ -1120,7 +1105,6 @@
 @lime-scroll-horizontal-fade-out-padding: 0 @lime-scroll-fade-out-size;
 @lime-scroll-hover-area-size: 120px;
 @lime-scroll-focusablebody-padding: var(--primitive-spacing-72) var(--primitive-spacing-48) var(--primitive-spacing-72) var(--primitive-spacing-90);
-@lime-scroll-focusablebody-padding-rtl: var(--primitive-spacing-72) var(--primitive-spacing-90) var(--primitive-spacing-72) var(--primitive-spacing-48);
 @lime-scroll-focusablebody-focus-border-radius: var(--primitive-radius-12);
 
 // Slider
@@ -1205,7 +1189,6 @@
 @lime-tablayout-collapse-duration: 250ms;
 @lime-tablayout-vertical-content-margin-top: 0;
 @lime-tablayout-horizontal-content-margin-top: var(--primitive-spacing-96);
-@lime-tablayout-horizontal-tabs-margin: 0 var(--primitive-spacing-18);
 @lime-tablayout-horizontal-tabs-padding: var(--primitive-spacing-12);
 @lime-tablayout-horizontal-tabs-spacing: var(--primitive-spacing-48);
 @lime-tablayout-vertical-tabs-padding: var(--primitive-spacing-36);
