@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /**
  * Run WDIO screenshot tests for one component (Default shard, instances 1 = all cases).
  *
@@ -24,7 +25,7 @@ function flagValue (name) {
 
 const component = args.find(a => !a.startsWith('--'));
 const skipBuild = args.includes('--skip-build');
-const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1', 10) || 1);
+const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1') || 1);
 
 if (!component) {
 	console.error('Usage: npm run test-ss:component -- <ComponentName> [--skip-build] [--parallel <n>]');

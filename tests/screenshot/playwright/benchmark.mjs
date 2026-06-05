@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 /**
  * Compare Playwright vs WebdriverIO runtime for one component (all its screenshot cases).
  *
@@ -27,7 +28,7 @@ function flagValue (name) {
 
 const component = args.find(a => !a.startsWith('--'));
 const withBuild = args.includes('--build');
-const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1', 10) || 1);
+const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1') || 1);
 
 if (!component) {
 	console.error('Usage: npm run benchmark-screenshots -- <ComponentName> [--build] [--parallel <n>]');
@@ -64,9 +65,9 @@ function runCommand (label, command, commandArgs, env = {}) {
 }
 
 async function main () {
-	const parallelLabel = parallel === 1
-		? '1 worker / 1 browser (sequential)'
-		: `parallel ${parallel} (PW: workers=${parallel}, instances=1; WDIO: --parallel ${parallel}, --instances 1)`;
+	const parallelLabel = parallel === 1 ?
+		'1 worker / 1 browser (sequential)' :
+		`parallel ${parallel} (PW: workers=${parallel}, instances=1; WDIO: --parallel ${parallel}, --instances 1)`;
 
 	console.log(`\nBenchmark: ${component} (all cases, ${parallelLabel})`);
 	if (skipBuild) {
@@ -99,13 +100,20 @@ async function main () {
 	const pwSec = playwright.durationMs / 1000;
 	const wdioSec = wdio.durationMs / 1000;
 	const delta = wdioSec - pwSec;
+	let winner = 'tie';
+
+	if (delta > 0) {
+		winner = 'Playwright faster';
+	} else if (delta < 0) {
+		winner = 'WDIO faster';
+	}
 
 	console.log('\n--- Results ---');
 	console.log(`Component:    ${component}`);
 	console.log(`Parallelism:  ${parallel}`);
 	console.log(`Playwright:   ${pwSec.toFixed(1)}s`);
 	console.log(`WebdriverIO:  ${wdioSec.toFixed(1)}s`);
-	console.log(`Difference:   ${Math.abs(delta).toFixed(1)}s (${delta > 0 ? 'Playwright faster' : delta < 0 ? 'WDIO faster' : 'tie'})\n`);
+	console.log(`Difference:   ${Math.abs(delta).toFixed(1)}s (${winner})\n`);
 }
 
 main().catch(err => {
