@@ -4,28 +4,18 @@
 @import "../styles/mixins.less";
 
 .checkboxItem {
-	/* Needed to prevent global class being added in the DOM */
+	.padding-start-end(@lime-checkboxitem-padding);
 
 	&.selected {
 		/* Available for customization */
 	}
-
-	padding: @lime-checkboxitem-padding;
-
-	.enact-locale-rtl({
-		padding: @lime-checkboxitem-padding-rtl;
-	});
 
 	.bg {
 		/* Available for customization */
 	}
 
 	&.hasLabel {
-		padding: @lime-checkboxitem-withlabel-padding;
-
-		.enact-locale-rtl({
-			padding: @lime-checkboxitem-withlabel-padding-rtl;
-		});
+		.padding-start-end(@lime-checkboxitem-withlabel-padding);
 	}
 
 	&.formCheckbox {

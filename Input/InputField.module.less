@@ -1,4 +1,4 @@
-// Input.module.less
+// InputField.module.less
 //
 @import "../styles/mixins.less";
 @import "../styles/variables.less";
@@ -228,6 +228,10 @@
 		}
 	});
 
+	&.active .marqueeText {
+		display: none;
+	}
+
 	// Skin colors
 	.applySkins({
 		caret-color: @lime-inputfield-cursor-color;
@@ -265,9 +269,6 @@
 		.inputHighlight {
 			color: transparent;
 			background-color: transparent;
-			// Set `.inputHighlight` background color to make it appear that the text is highlighted
-			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
-			// background-color: @lime-spotlight-color;
 		}
 
 		.tooltip {
@@ -303,12 +304,6 @@
 			&.hasMarquee:not(.active) .input {
 				opacity: 0;
 			}
-
-			// Set `.inputHighlight` opacity to make it appear that the text is highlighted
-			// when `.input` has transparent background and when `.inputField` has focus, but not `.input`.
-			// .inputHighlight {
-			// 	opacity: 1;
-			// }
 		});
 
 		:global(.noAnimation) & {
@@ -354,8 +349,4 @@
 			});
 		});
 	});
-
-	&.active .marqueeText {
-		display: none;
-	}
 }

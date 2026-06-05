@@ -34,6 +34,7 @@
 		font-size: @lime-heading-title-font-size;
 		.font-kerning();
 	}
+
 	&.subtitle {
 		.lime-font(@lime-heading-subtitle-font-family, @lime-non-latin-font-family);
 		.enact-locale-line-height(@lime-heading-subtitle-line-height, @lime-tallglyph-heading-subtitle-line-height);
@@ -47,21 +48,25 @@
 			line-height: @lime-heading-subtitle-line-height-large;
 		});
 	}
+
 	&.large {
 		font-family: @lime-heading-large-font-family;
 		font-weight: @lime-heading-large-font-weight;
 		font-size: @lime-heading-large-font-size;
 	}
+
 	&.medium {
 		font-family: @lime-heading-medium-font-family;
 		font-weight: @lime-heading-medium-font-weight;
 		font-size: @lime-heading-medium-font-size;
 	}
+
 	&.small {
 		font-family: @lime-heading-small-font-family;
 		font-weight: @lime-heading-small-font-weight;
 		font-size: @lime-heading-small-font-size;
 	}
+
 	&.tiny {
 		margin: @lime-heading-margin-tiny;
 		font-family: @lime-heading-tiny-font-family;
@@ -74,21 +79,26 @@
 	&.titleSpacing {
 		margin-bottom: @lime-heading-spacing-title;
 	}
+
 	&.subtitleSpacing {
 		margin-bottom: @lime-heading-spacing-subtitle;
 	}
+
 	&.largeSpacing {
 		margin-bottom: (@lime-heading-spacing-large - @lime-heading-border-width);
 		min-height: (@lime-heading-spacing-large - @lime-heading-border-width);
 	}
+
 	&.mediumSpacing {
 		margin-bottom: (@lime-heading-spacing-medium - @lime-heading-border-width);
 		min-height: (@lime-heading-spacing-medium - @lime-heading-border-width);
 	}
+
 	&.smallSpacing {
 		margin-bottom: @lime-heading-spacing-small-margin-bottom;
 		min-height: (@lime-heading-spacing-small - @lime-heading-border-width);
 	}
+
 	&.noneSpacing {
 		margin-bottom: 0;
 		min-height: 0;
@@ -98,12 +108,15 @@
 		&.large {
 			font-size: @lime-heading-large-font-size-large;
 		}
+
 		&.medium {
 			font-size: @lime-heading-medium-font-size-large;
 		}
+
 		&.small {
 			font-size: @lime-heading-small-font-size-large;
 		}
+
 		&.tiny {
 			font-size: @lime-heading-tiny-font-size-large;
 		}

@@ -223,7 +223,7 @@ const AlertBase = kind({
 		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
 		let resolvedButtonDirection = buttonDirection;
 		if (buttonDirection === 'auto') {
-			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 3);
+			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
 			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
 		}
 		const overlayHorizontalButtons = (

@@ -59,12 +59,6 @@
 		}
 	}
 
-	&.wizard {
-		.titlesRow {
-			padding-bottom: @lime-header-subtitle-height;
-		}
-	}
-
 	.slotBefore,
 	.slotAfter,
 	.slotSizer {
@@ -85,6 +79,13 @@
 				margin-inline-start: @lime-header-standard-slotafter-margin-start;
 			}
 		}
+
+		text-align: right;
+
+		// Align `slotAfter` contents to the left in RTL
+		.enact-locale-rtl({
+			text-align: left;
+		});
 	}
 
 	.slotBefore {
@@ -94,6 +95,14 @@
 				margin-inline-end: @lime-header-standard-slotbefore-margin-end;
 			}
 		}
+	}
+
+	.slotAbove {
+		margin: @lime-header-slotabove-margin;
+	}
+
+	.slotBelow {
+		margin: @lime-header-slotbelow-margin;
 	}
 
 	&.centered:not(.isPopupHeader):not(.wizard) {
@@ -139,24 +148,6 @@
 		.margin-start-end(@lime-header-subtitle-margin-start, 0);
 	}
 
-	.slotAbove {
-		margin: @lime-header-slotabove-margin;
-	}
-
-	// Align `slotAfter` contents to the right LTR
-	.slotAfter {
-		text-align: right;
-
-		// Align `slotAfter` contents to the left in RTL
-		.enact-locale-rtl({
-			text-align: left;
-		});
-	}
-
-	.slotBelow {
-		margin: @lime-header-slotbelow-margin;
-	}
-
 	///
 	/// Begin "types" rules configuration
 	///
@@ -199,6 +190,7 @@
 
 		.title {
 			padding: @lime-header-compact-title-padding;
+			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 
 		.titlesRow {
@@ -208,10 +200,6 @@
 		.subtitle {
 			padding: @lime-header-compact-subtitle-padding;
 			margin-top: @lime-header-compact-subtitle-margin-top;
-		}
-
-		.title {
-			.lime-font-size(@lime-header-compact-title-font-size, @lime-non-latin-header-compact-title-font-size);
 		}
 
 		&.slotBefore .slotBefore {
@@ -245,6 +233,10 @@
 				position: absolute;
 				width: 100%;
 			}
+		}
+
+		.titlesRow {
+			padding-bottom: @lime-header-subtitle-height;
 		}
 
 		.title {
