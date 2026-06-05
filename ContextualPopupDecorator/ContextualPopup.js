@@ -105,6 +105,21 @@ const ContextualPopupBase = kind({
 		containerRef: EnactPropTypes.ref,
 
 		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `contextualPopup` - The root component class
+		 * * `container` - The popup body class
+		 * * `outline` - Applied to the container to render the focus outline
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object,
+
+		/**
 		 * Direction of ContextualPopup.
 		 *
 		 * @type {('above'|'above center'|'above left'|'above right'|'below'|'below center'|'below left'|'below right'|'left middle'|'left top'|'left bottom'|'right middle'|'right top'|'right bottom')}
@@ -139,7 +154,8 @@ const ContextualPopupBase = kind({
 
 	styles: {
 		css,
-		className: 'container'
+		className: 'container',
+		publicClassNames: true
 	},
 
 	computed: {
@@ -153,15 +169,15 @@ const ContextualPopupBase = kind({
 			},
 			direction.split(' '),
 			offset,
-			css.outline
+			'outline'
 		)
 	},
 
-	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, showArrow, ...rest}) => {
+	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, css: mergedCss, showArrow, ...rest}) => {
 		delete rest.direction;
 
 		return (
-			<ContextualPopupRoot aria-live="off" role="alert" {...rest} className={css.contextualPopup}>
+			<ContextualPopupRoot aria-live="off" role="alert" {...rest} className={mergedCss.contextualPopup}>
 				<div className={className} style={containerPosition} ref={containerRef}>
 					{children}
 				</div>

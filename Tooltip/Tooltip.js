@@ -55,10 +55,10 @@ const Tooltip = hoc(defaultConfig, (config, Wrapped) => {
 			<ContextualWrapped
 				noArrow
 				direction={direction}
+				css={componentCss}
 				onBlur={onBlur}
 				onFocus={onFocus}
 				open={open || forceOpen}
-				popupClassName={componentCss.tooltip}
 				popupComponent={popupComponent}
 				{...rest}
 			/>

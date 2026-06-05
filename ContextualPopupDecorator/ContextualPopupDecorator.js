@@ -633,6 +633,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const {
 			'data-webos-voice-exclusive': voiceExclusive,
+			css: popupCss,
 			popupComponent: PopupComponent,
 			popupClassName,
 			noAutoDismiss,
@@ -692,6 +693,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 						{holepunchScrim ? <HolePunchScrim holeBounds={holeBounds} /> : null}
 						<ContextualPopupContainer
 							{...ariaProps}
+							css={popupCss}
 							className={popupClassName}
 							onKeyDown={handleContainerKeyDown}
 							direction={direction}
@@ -735,6 +737,16 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @public
 		 */
 		'data-webos-voice-exclusive': PropTypes.bool,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of the
+		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object,
 
 		/**
 		 * Direction of popup with respect to the wrapped component.
