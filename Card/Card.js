@@ -393,7 +393,7 @@ const CardBase = kind({
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			pressed,
 			roundedImage,
-			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay),
+			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay && !captionOverlayOnFocus),
 			hasLabel: (orientation === 'vertical') && (label && secondaryLabel),
 			isCheckIcon: icon === 'check'
 		}),
