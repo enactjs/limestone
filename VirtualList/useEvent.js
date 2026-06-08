@@ -203,7 +203,6 @@ const useEventKey = (props, instances, context) => {
 							handleDirectionKeyDown(ev, 'acceleratedKeyDown', {isWrapped, keyCode, nextIndex, repeat, target});
 						} else { // if the candidate is not found
 							const {dataSize, focusableScrollbar, isHorizontalScrollbarVisible, isVerticalScrollbarVisible} = props;
-							const {isPrimaryDirectionVertical} = scrollContentHandle.current;
 							const column = index % dimensionToExtent;
 							const row = (index - column) % dataSize / dimensionToExtent;
 							const directions = {};
