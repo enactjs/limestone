@@ -152,14 +152,16 @@ const useEventKey = (props, instances, context) => {
 					} else if (index >= 0 && candidateIndex !== index) { // the focused node is an item and focus will move out of the item
 						const {repeat} = ev;
 						const {isDownKey, isUpKey, isLeftMovement, isRightMovement, isWrapped, nextIndex} = getNextIndex({index, keyCode, repeat});
-						const {dimensionToExtent} = scrollContentHandle.current;
+						const {dimensionToExtent, isPrimaryDirectionVertical} = scrollContentHandle.current;
 
 						// VirtualList recycles DOM nodes during scroll. If a node gets reused for a different index
 						// while browser focus stays on it, target.dataset.index reflects the new (wrong) index.
 						// Detect this by checking if the index jumped unnaturally during key repeat.
+						const isForwardKey = isPrimaryDirectionVertical ? isDownKey : isRightMovement;
+						const isBackwardKey = isPrimaryDirectionVertical ? isUpKey : isLeftMovement;
 						const isOutdatedIndex = repeat && prevKeyDownIndexRef.current !== -1 && (
-							(isDownKey && (prevKeyDownIndexRef.current > index || index > prevKeyDownIndexRef.current + dimensionToExtent)) ||
-							(isUpKey && (prevKeyDownIndexRef.current < index || index < prevKeyDownIndexRef.current - dimensionToExtent))
+							(isForwardKey && (prevKeyDownIndexRef.current > index || index > prevKeyDownIndexRef.current + dimensionToExtent)) ||
+							(isBackwardKey && (prevKeyDownIndexRef.current < index || index < prevKeyDownIndexRef.current - dimensionToExtent))
 						);
 
 						// Block the first repeat event when entering VirtualList from outside with acceleration.
@@ -177,7 +179,7 @@ const useEventKey = (props, instances, context) => {
 							ev.preventDefault();
 							ev.stopPropagation();
 							resetAccelerator();
-							const correctedNextIndex = isDownKey ? prevKeyDownIndexRef.current + 1 : prevKeyDownIndexRef.current - 1;
+							const correctedNextIndex = isForwardKey ? prevKeyDownIndexRef.current + dimensionToExtent : prevKeyDownIndexRef.current - dimensionToExtent;
 							if (correctedNextIndex >= 0 && correctedNextIndex < props.dataSize) {
 								const currentItemNode = instances.itemRefs.current[prevKeyDownIndexRef.current % scrollContentHandle.current.state.numOfItems];
 								const correctedTarget = (currentItemNode && parseInt(currentItemNode.dataset.index) === prevKeyDownIndexRef.current) ? currentItemNode : target;
