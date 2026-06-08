@@ -8,30 +8,30 @@
 		min-height: fit-content;
 		overflow: hidden;
 		padding: @lime-tooltip-padding;
-		border-radius: 0;
+		border-radius: var(--semantic-radius-button);
 
 		&.above {
-			&.small { margin-top: ~"calc(@{lime-contextualpopup-offset-small} * -1.3)"; }
-			&.large { margin-top: ~"calc(@{lime-contextualpopup-offset-large} * -1.3)"; }
+			&.small { margin-top: ~"calc(@{lime-contextualpopup-offset-small} * -2.5)"; }
+			&.large { margin-top: ~"calc(@{lime-contextualpopup-offset-large} * -2.5)"; }
 		}
 		&.below {
-			&.small { margin-top: calc(@lime-contextualpopup-offset-small * 1.3); }
-			&.large { margin-top: calc(@lime-contextualpopup-offset-large * 1.3); }
+			&.small { margin-top: calc(@lime-contextualpopup-offset-small * 2.5); }
+			&.large { margin-top: calc(@lime-contextualpopup-offset-large * 2.5); }
 		}
 		&.right {
 			&.top,
 			&.middle,
 			&.bottom {
-				&.small { margin-left: calc(@lime-contextualpopup-offset-small * 1.3); }
-				&.large { margin-left: calc(@lime-contextualpopup-offset-large * 1.3); }
+				&.small { margin-left: calc(@lime-contextualpopup-offset-small * 2.5); }
+				&.large { margin-left: calc(@lime-contextualpopup-offset-large * 2.5); }
 			}
 		}
 		&.left  {
 			&.top,
 			&.middle,
 			&.bottom {
-				&.small { margin-left: ~"calc(@{lime-contextualpopup-offset-small} * -1.3)"; }
-				&.large { margin-left: ~"calc(@{lime-contextualpopup-offset-large} * -1.3)"; }
+				&.small { margin-left: ~"calc(@{lime-contextualpopup-offset-small} * -2.5)"; }
+				&.large { margin-left: ~"calc(@{lime-contextualpopup-offset-large} * -2.5)"; }
 			}
 		}
 	}

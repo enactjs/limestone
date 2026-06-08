@@ -20,8 +20,8 @@ import Spotlight, {getDirection} from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
-import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
@@ -633,7 +633,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 		const {
 			'data-webos-voice-exclusive': voiceExclusive,
-			css: popupCss,
+			popupCss,
 			popupComponent: PopupComponent,
 			popupClassName,
 			noAutoDismiss,
@@ -739,16 +739,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		'data-webos-voice-exclusive': PropTypes.bool,
 
 		/**
-		 * Customizes the component by mapping the supplied collection of CSS class names to the
-		 * corresponding internal elements and states of the
-		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
-		 *
-		 * @type {Object}
-		 * @public
-		 */
-		css: PropTypes.object,
-
-		/**
 		 * Direction of popup with respect to the wrapped component.
 		 *
 		 * @type {('above'|'above center'|'above left'|'above right'|'below'|'below center'|'below left'|'below right'|'left middle'|'left top'|'left bottom'|'right middle'|'right top'|'right bottom')}
@@ -817,6 +807,16 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @public
 		 */
 		popupClassName: PropTypes.string,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of the
+		 * {@link limestone/ContextualPopupDecorator.ContextualPopup|ContextualPopup}.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		popupCss: PropTypes.object,
 
 		/**
 		 * An object containing properties to be passed to popup component.
