@@ -59,10 +59,13 @@ export default defineConfig({
 		}
 	},
 	webServer: {
-		command: `npx --yes serve ${distDir} -l ${PLAYWRIGHT_PORT}`,
+		command: process.platform === 'win32'
+			? `npx.cmd --yes serve "${distDir}" -l ${PLAYWRIGHT_PORT}`
+			: `npx --yes serve ${distDir} -l ${PLAYWRIGHT_PORT}`,
 		url: PLAYWRIGHT_BASE_URL,
 		reuseExistingServer: true,
-		timeout: 120000
+		timeout: 120000,
+		shell: process.platform === 'win32'
 	},
 	projects: [
 		{
