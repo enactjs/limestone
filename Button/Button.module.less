@@ -266,10 +266,6 @@
 	&.iconOnly {
 		min-width: @lime-button-height;
 
-		.lime-custom-text({
-			height: @lime-button-icon-only-height-large;
-		});
-
 		.client {
 			padding: 0;
 
@@ -287,11 +283,6 @@
 			min-width: @lime-button-small-height;
 			padding: @lime-button-icon-small-padding;
 			.padding-start-end(.extract(@lime-button-icon-small-padding, left)[], .extract(@lime-button-icon-small-padding, right)[]);
-
-			.lime-custom-text({
-				height: @lime-button-small-icon-only-height-large;
-				min-width: @lime-button-small-icon-only-height-large;
-			});
 		}
 
 		&.iconAfter,
