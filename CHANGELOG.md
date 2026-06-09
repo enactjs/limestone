@@ -14,6 +14,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Card` styling when both `hasContainer` and `captionOverlayOnFocus` are true
 
+### Fixed
+
+- `limestone/VirtualList` focus jump and scroll freeze when scrolled by long press
+
 ## [1.10.1] - 2026-06-01
 
 ### Deprecated
