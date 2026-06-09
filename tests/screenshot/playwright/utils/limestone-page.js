@@ -18,11 +18,12 @@ function buildUrl (urlExtra = '?locale=en-US') {
 
 async function open (page, urlExtra = '?locale=en-US') {
 	await page.goto(buildUrl(urlExtra), {waitUntil: 'networkidle'});
-	await page.waitForTimeout(200);
 }
 
 export async function openComponent (page, params) {
 	const query = serializeParams(Object.assign({locale: 'en-US'}, params));
 	await open(page, `?${query}`);
 	await page.locator('[data-ui-test-id="test"]').waitFor({state: 'visible', timeout: 30000});
+	// Wait for web fonts to finish loading so glyphs are painted before the screenshot.
+	await page.evaluate(() => document.fonts.ready);
 }

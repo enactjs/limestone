@@ -10,7 +10,9 @@ From the **repository root**:
 
 ```bash
 npm install
-npm run prepare-playwright          # installs Chrome for Playwright (once per machine)
+npm run bootstrap                       # enact CLI — required for the screenshot build
+npm link @enact/ui-test-utils           # see “Link local ui-test-utils” below until npm publishes ./build-apps
+npm run prepare-playwright              # optional if Chrome is already available (see below)
 
 # First time for a component — create PNG baselines (use parallel 1 for stability)
 npm run test-playwright:component -- Sprite --update
@@ -36,6 +38,7 @@ npm run benchmark-screenshots -- Chip
 | Spec files | `tests/screenshot/specs/**/*-specs.js` | `tests/screenshot/playwright/specs/**/*-spec.js` |
 | Baselines | `dist/screenshots/reference/` | `playwright/snapshots/` |
 | Compare API | `@wdio/visual-service` | `expect(page).toHaveScreenshot()` |
+| Viewport | 1920×**1167** (WDIO window) | 1920×**1080** (FHD) |
 
 Playwright does **not** read `apps/components/*.js` at test time. It serves the **built** app from `dist/` and selects cases with URL query parameters (`component`, `testId`, `skin`, …).
 
@@ -55,12 +58,14 @@ tests/screenshot/
   scripts/
     run-playwright-component.mjs
     run-component-wdio.mjs
+    parse-component-args.mjs
   playwright/             ← this folder
     specs/neutral|light/  *-spec.js (27 shards)
-    utils/                registerScreenshotTests, limestone-page, screenshot-name
-    snapshots/            PNG baselines
-    global-setup.js       build, .test-data.json, serve :4568 if needed
-    global-teardown.js    stops serve when global-setup started it
+    utils/                registerScreenshotTests, limestone-page, screenshot-name, shard-registry
+    snapshots/            PNG baselines (gitignored — generate with --update)
+    .shard-registry.jsonl run-time shard log (gitignored; see shard-registry.js)
+    global-setup.js       build, dist check, .test-data.json, serve :4568 if needed
+    global-teardown.js    shard coverage check, stops serve when global-setup started it
     playwright.config.mjs
     paths.js
     benchmark.mjs
@@ -143,10 +148,13 @@ npm run test-playwright:component -- Chip --test-id 3
 
 ```bash
 npm install
-npm run prepare-playwright
+npm run bootstrap
+npm run prepare-playwright   # optional on machines that already have Chrome (see below)
 ```
 
-`prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall` — run it once per machine (CI runs it via `build-scripts/enact-playwright-tests.sh`).
+`prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall`. Run it on **fresh machines and CI** (`build-scripts/enact-playwright-tests.sh`). On a machine where Chrome is already installed, Playwright prints *"chrome" is already installed on the system!"* — that is success; you can skip this step on later runs.
+
+`global-setup.js` calls `assertScreenshotDist()` after the build step. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error (not a 120s webServer timeout).
 
 ### Build screenshot dist
 
@@ -158,6 +166,40 @@ $env:PLAYWRIGHT_SKIP_BUILD='1'   # PowerShell
 ```
 
 Or build via WDIO / `buildApps` before running Playwright.
+
+### Link local `@enact/ui-test-utils` (until `./build-apps` is published)
+
+Playwright `global-setup.js` imports `@enact/ui-test-utils/build-apps`. The npm release **4.0.2** does not export that path yet; the local `ui-test-utils` repo does (see `exports["./build-apps"]` in its `package.json`). Until a new version is published, link the local package:
+
+```bash
+# From your ui-test-utils clone (must include "./build-apps": "./src/build-apps.js" in exports)
+cd ../ui-test-utils
+npm install
+npm link
+
+# From limestone repo root
+cd ../limestone
+npm link @enact/ui-test-utils
+npm install   # refresh lockfile/node_modules if needed
+```
+
+Alternative without global link — in limestone root `package.json`:
+
+```json
+"@enact/ui-test-utils": "file:../ui-test-utils"
+```
+
+Then `npm install` from limestone root.
+
+To undo `npm link`:
+
+```bash
+cd limestone
+npm unlink @enact/ui-test-utils
+npm install
+```
+
+When `@enact/ui-test-utils` is published with the `./build-apps` export, remove the link and use the registry version from `package.json` again.
 
 ### Baselines
 
@@ -206,14 +248,41 @@ PLAYWRIGHT_SKIP_BUILD=1 npm run test-playwright:component -- Button --parallel 5
 npm run test-playwright:component -- Button --title "Focused"
 ```
 
-Component script sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component) and `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**).
+Component script sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component), `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**), and runs only **`specs/neutral/Default-spec.js`** (neutral skin, no high contrast). Light / high-contrast cases require the full suite or a different spec shard.
+
+#### `scripts/parse-component-args.mjs` — why it exists
+
+npm passes arguments after `--` to the Node script. A naive parser such as `args.find(a => !a.startsWith('--'))` treats **flag values** as the component name — e.g. `… --test-id 0 Sprite` would resolve component `"0"` instead of `"Sprite"`.
+
+`parseComponentArgs()` is a small shared parser used by:
+
+- `run-playwright-component.mjs` — `--update`, `--test-id`, `--title`, `--parallel`
+- `benchmark.mjs` — `--build`, `--parallel`
+
+**Rules:**
+
+- The **component name** is the first positional token (non-flag argument).
+- Flags with values (`--test-id`, `--title`, `--parallel`) consume the next token as their value, not as the component.
+- Boolean flags: `--update`, `--build`, `--skip-build`.
+
+**Examples:**
+
+| Command | Component resolved |
+|---------|-------------------|
+| `npm run test-playwright:component -- Button --parallel 5` | `Button` |
+| `npm run test-playwright:component -- Button --test-id 0` | `Button` |
+| `npm run benchmark-screenshots -- Chip --build` | `Chip` |
+
+Put the component name **first** after `--` (as in the examples above). `run-component-wdio.mjs` still uses the older parser — use the same name-first order there too.
 
 ### Full suite
 
 Runs every registered component across **27** spec shards (`Default`…`Default9`, `HighContrast*`, `Light*` under `specs/neutral` and `specs/light`).
 
 ```bash
-npm install && npm run prepare-playwright
+npm install && npm run bootstrap
+npm link @enact/ui-test-utils   # until ./build-apps is on npm (see above)
+npm run prepare-playwright
 
 # First time or after UI changes
 npm run test-playwright:update
@@ -250,6 +319,26 @@ npm run test-playwright
 | **Shard** | `concurrency` in spec + `PLAYWRIGHT_INSTANCES` | Which `testId`s this spec file owns (`testId % instances === concurrency - 1`) |
 | **Workers** | `PLAYWRIGHT_WORKERS` or `--parallel` on component script | How many tests run at once in one Playwright process |
 | **Component filter** | `PLAYWRIGHT_COMPONENT` | Only one component's cases |
+
+**Shard coverage:** `PLAYWRIGHT_INSTANCES` must match the shard files you actually run. If you set `PLAYWRIGHT_INSTANCES=9` but only invoke shards 1–5, cases with `testId % 9` in `{5,6,7,8}` are silently skipped. `global-teardown` fails the run when it detects this partial coverage (single-shard runs such as TV-style `Default-spec` only are exempt). Shards with `concurrency > PLAYWRIGHT_INSTANCES` are inert (empty) — expected when the default instances is **5** but nine shard files exist per skin.
+
+#### `utils/shard-registry.js` — why it exists
+
+Each `*-spec.js` file is independent: it only knows its own `concurrency` value and cannot see which other spec files ran in the same Playwright process. That makes **partial shard runs look successful** — the suite is green even when whole slices of `testId`s were never rendered.
+
+`shard-registry.js` collects which shards actually loaded and validates coverage at the end of the run:
+
+| Step | Where | What |
+|------|--------|------|
+| Reset | `global-setup.js` → `clearShardRegistry()` | Deletes `playwright/.shard-registry.jsonl` from any previous run |
+| Record | `registerScreenshotTests()` → `recordShard()` | Appends one JSON line per spec file: skin, highContrast, `concurrency`, `PLAYWRIGHT_INSTANCES` |
+| Validate | `global-teardown.js` → `validateShardCoverage()` | For each skin/HC group, ensures shards `1…PLAYWRIGHT_INSTANCES` all ran when more than one shard was invoked |
+
+**Skipped when** `PLAYWRIGHT_COMPONENT` is set (component script uses `PLAYWRIGHT_INSTANCES=1` and a single spec — no cross-shard risk).
+
+**Example failure:** `PLAYWRIGHT_INSTANCES=9` but only `Default-spec.js` … `Default5-spec.js` are on the command line → teardown throws *Incomplete Playwright shard coverage* listing missing shards.
+
+The registry file is **gitignored** (`.shard-registry.jsonl`); it is a run-time artifact only.
 
 Full suite: many spec files × 5 workers each. Component run: one spec file, all cases, N workers.
 
@@ -302,7 +391,7 @@ Measured **locally on Windows, Chrome 132, June 2026**. Times include browser st
 | Chip | 51 | 1 | 103.8 s | 83.9 s | WDIO (~19%) | 2.0 | 1.6 |
 | Chip | 51 | 5 | 50.2 s † | 137.7 s | Playwright (~64%) | 1.0 | 2.7 |
 | Button | 205 | 1 | 525.4 s | 1427.2 s | Playwright (~63%) | 2.6 | 7.0 |
-| Button | 205 | 5 | 111.4 s † | 979.3 s | Playwright (~89%) | 0.5 | 4.8 |
+| Button | 205 | 5 | 96 s † | 979.3 s | Playwright (~89%) | 0.5 | 4.8 |
 
 † Parallel Playwright runs can **flake on focus cases** (spotlight timing). Wall time is still representative; use `--parallel 1` for `--update` on focus-heavy components, or re-run failed ids with `--test-id`.
 
@@ -346,13 +435,15 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 
 | Issue | Fix |
 |-------|-----|
-| WebServer / server timeout | Build `tests/screenshot/dist/` (unset `PLAYWRIGHT_SKIP_BUILD`) |
+| WebServer / server timeout | Ensure `tests/screenshot/dist/Limestone-View/index.html` exists (unset `PLAYWRIGHT_SKIP_BUILD`, run `npm run bootstrap`) |
+| Missing dist / build failed | Read the `assertScreenshotDist()` error; link `@enact/ui-test-utils` if you see `./build-apps` export error |
 | Snapshot does not exist | `npm run test-playwright:component -- <Name> --update` |
 | Snapshot diff on focus cases in parallel | Re-baseline with `--parallel 1`, or run failing `--test-id` alone |
 | No tests found | Check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_SPEC`; delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
 | Missing images on build | Place assets under `tests/screenshot/images/`, `videos/` |
 | Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port (must match `webServer` in config) |
-| `build-apps` import error | Requires `@enact/ui-test-utils` with export `./build-apps` (local link or published version) |
+| `build-apps` import error | Link or pin `@enact/ui-test-utils` with export `./build-apps` (see **Link local @enact/ui-test-utils** above) |
+| Incomplete shard coverage | Ensure `PLAYWRIGHT_INSTANCES` matches invoked shard files (see **Sharding vs workers**) |
 | WDIO `--parallel` ignored | Update `@enact/ui-test-utils` (see ui-test-utils PR for `--parallel` CLI) |
 
 ---
@@ -392,6 +483,7 @@ Add matching `playwright/specs/**/<Name>-spec.js` with the same `skin`, `highCon
 "test-playwright:update": "... --update-snapshots",
 "test-playwright:report": "playwright show-report tests/screenshot/playwright/reports/html",
 "test-playwright:component": "node tests/screenshot/scripts/run-playwright-component.mjs",
+"test-ss:component": "node tests/screenshot/scripts/run-component-wdio.mjs",
 "prepare-playwright": "playwright install chrome",
 "benchmark-screenshots": "node tests/screenshot/playwright/benchmark.mjs"
 ```

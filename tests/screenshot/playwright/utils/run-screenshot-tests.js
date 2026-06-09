@@ -5,6 +5,7 @@ import {test as baseTest, expect as baseExpect} from '@playwright/test';
 import {assertComponentSource, TEST_DATA_FILE} from '../paths.js';
 import {getScreenshotName} from './screenshot-name.js';
 import {openComponent} from './limestone-page.js';
+import {recordShard} from './shard-registry.js';
 
 const testIdFilter = process.env.PLAYWRIGHT_TEST_ID != null ?
 	Number.parseInt(process.env.PLAYWRIGHT_TEST_ID) :
@@ -83,10 +84,11 @@ export function registerScreenshotTests (config) {
 		suiteName = `${config.testName} (shard ${config.concurrency})`;
 	}
 	const cases = getScreenshotTests(config);
+	recordShard(config, maxInstances);
 
 	baseTest.describe(suiteName, () => {
 		baseTest.beforeEach(async ({page}) => {
-			await page.setViewportSize({width: 1920, height: 1167});
+			await page.setViewportSize({width: 1920, height: 1080});
 		});
 
 		for (const screenshotTest of cases) {

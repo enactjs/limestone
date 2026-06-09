@@ -14,21 +14,13 @@ import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
 
-import {assertComponentSource, SCREENSHOT_DIST} from './paths.js';
+import {assertComponentSource, SCREENSHOT_VIEW_INDEX} from './paths.js';
+import {parseComponentArgs} from '../scripts/parse-component-args.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..', '..', '..');
 
-const args = process.argv.slice(2).filter(a => a !== '--');
-
-function flagValue (name) {
-	const index = args.indexOf(name);
-	return index === -1 ? null : args[index + 1];
-}
-
-const component = args.find(a => !a.startsWith('--'));
-const withBuild = args.includes('--build');
-const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1') || 1);
+const {component, withBuild, parallel} = parseComponentArgs();
 
 if (!component) {
 	console.error('Usage: npm run benchmark-screenshots -- <ComponentName> [--build] [--parallel <n>]');
@@ -40,7 +32,7 @@ if (!component) {
 
 assertComponentSource(component);
 
-const distIndex = path.join(SCREENSHOT_DIST, 'Limestone-View', 'index.html');
+const distIndex = SCREENSHOT_VIEW_INDEX;
 const skipBuild = !withBuild && fs.existsSync(distIndex);
 
 function runCommand (label, command, commandArgs, env = {}) {

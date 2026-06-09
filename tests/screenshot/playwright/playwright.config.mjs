@@ -44,7 +44,7 @@ export default defineConfig({
 	use: {
 		baseURL: PLAYWRIGHT_BASE_URL,
 		trace: 'on-first-retry',
-		viewport: {width: 1920, height: 1167},
+		viewport: {width: 1920, height: 1080},
 		launchOptions: {
 			args: [
 				'--disable-infobars',
@@ -59,9 +59,9 @@ export default defineConfig({
 		}
 	},
 	webServer: {
-		command: process.platform === 'win32'
-			? `npx.cmd --yes serve "${distDir}" -l ${PLAYWRIGHT_PORT}`
-			: `npx --yes serve ${distDir} -l ${PLAYWRIGHT_PORT}`,
+		command: process.platform === 'win32' ?
+			`npx.cmd --yes serve "${distDir}" -l ${PLAYWRIGHT_PORT}` :
+			`npx --yes serve ${distDir} -l ${PLAYWRIGHT_PORT}`,
 		url: PLAYWRIGHT_BASE_URL,
 		reuseExistingServer: true,
 		timeout: 120000,

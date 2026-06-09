@@ -27,6 +27,7 @@ tests/screenshot/playwright/test-results
 tests/screenshot/playwright/reports
 tests/screenshot/playwright/blob-report
 tests/screenshot/playwright/.test-data.json
+tests/screenshot/playwright/.shard-registry.jsonl
 
 # Mac
 .DS_Store

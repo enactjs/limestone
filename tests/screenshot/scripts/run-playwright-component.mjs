@@ -15,6 +15,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 
 import {assertComponentSource} from '../playwright/paths.js';
+import {parseComponentArgs} from './parse-component-args.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..', '..', '..');
@@ -22,18 +23,7 @@ const playwrightRoot = path.join(__dirname, '..', 'playwright');
 const config = path.join(playwrightRoot, 'playwright.config.mjs');
 const spec = 'specs/neutral/Default-spec.js';
 
-const args = process.argv.slice(2).filter(a => a !== '--');
-
-function flagValue (name) {
-	const index = args.indexOf(name);
-	return index === -1 ? null : args[index + 1];
-}
-
-const component = args.find(a => !a.startsWith('--') && args.indexOf(a) === args.findIndex(x => !x.startsWith('--')));
-const update = args.includes('--update');
-const testId = flagValue('--test-id');
-const title = flagValue('--title');
-const parallel = Math.max(1, Number.parseInt(flagValue('--parallel') ?? '1') || 1);
+const {component, update, testId, title, parallel} = parseComponentArgs();
 
 if (!component) {
 	console.error('Usage: npm run test-playwright:component -- <ComponentName> [options]');

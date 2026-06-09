@@ -10,11 +10,30 @@ export const PLAYWRIGHT_BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://lo
 export const PLAYWRIGHT_PORT = new URL(PLAYWRIGHT_BASE_URL).port || '4568';
 
 export const SCREENSHOT_DIST = path.join(screenshotRoot, 'dist');
+export const SCREENSHOT_VIEW_INDEX = path.join(SCREENSHOT_DIST, 'Limestone-View', 'index.html');
 export const SCREENSHOT_COMPONENTS = path.join(screenshotRoot, 'apps', 'components');
 export const TEST_DATA_FILE = path.join(__dirname, '.test-data.json');
 
 function componentSourcePath (componentName) {
 	return path.join(SCREENSHOT_COMPONENTS, `${componentName}.js`);
+}
+
+export function assertScreenshotDist () {
+	if (fs.existsSync(SCREENSHOT_VIEW_INDEX)) {
+		return;
+	}
+
+	if (process.env.PLAYWRIGHT_SKIP_BUILD) {
+		throw new Error(
+			`Missing ${SCREENSHOT_VIEW_INDEX}. ` +
+			'Unset PLAYWRIGHT_SKIP_BUILD to build automatically, or run npm run test-ss once to populate tests/screenshot/dist/.'
+		);
+	}
+
+	throw new Error(
+		`Screenshot build did not produce ${SCREENSHOT_VIEW_INDEX}. ` +
+		'Run npm run bootstrap, then retry (buildApps(\'screenshot\') requires the enact CLI).'
+	);
 }
 
 export function assertComponentSource (componentName) {
