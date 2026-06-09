@@ -13,11 +13,14 @@ import css from './Scroller.module.less';
 const dataSize = 3;
 const imageItems = Array.from({length: dataSize}, (v, i) => i);
 
-const ScrollerTests = [
+const scrollerSmokeTests = [
 	<Scroller />,
 	<Scroller>Scroller</Scroller>,
 	<Scroller style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Two-way scroller</div></Scroller>,
-	<Scroller scrollbarTrackCss={css} style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Customized scrollbarTrack Style</div></Scroller>,
+	<Scroller scrollbarTrackCss={css} style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Customized scrollbarTrack Style</div></Scroller>
+];
+
+const scrollerQwtcTests = [
 	// QWTC-570 - partially automated(step3~4). Step5~6 will be worked in ui-test.
 	<Scroller
 		direction="horizontal"
@@ -70,7 +73,10 @@ const ScrollerTests = [
 				);
 			})
 		}
-	</Scroller>,
+	</Scroller>
+];
+
+const scrollerCommentedTests = [
 	{
 		wrapper: {
 			tall: true
@@ -100,16 +106,22 @@ const ScrollerTests = [
 			tall: true
 		},
 		component: <Scroller focusableScrollbar horizontalScrollbar="visible" verticalScrollbar="visible">Scroller</Scroller>
-	},
-	...withConfig({focus: true}, [
-		<Scroller focusableScrollbar style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Two-way scroller</div></Scroller>,
-		<Scroller focusableScrollbar scrollbarTrackCss={css} style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Customized scrollbarTrack Style</div></Scroller>
-	]),
-
-	...withConfig({focus: true}, [
-		<Scroller focusableScrollbar="byEnter" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Two-way scroller</div></Scroller>,
-		<Scroller focusableScrollbar="byEnter" verticalScrollbar="visible" style={{height: '300px', width: '300px'}}><div style={{height: '600px'}}>Focused Body (byEnter) Vertical scroller</div></Scroller>,
-		<Scroller focusableScrollbar="byEnter" horizontalScrollbar="visible" verticalScrollbar="hidden" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Horizontal scroller</div></Scroller>
-	])
+	}
 ];
+
+const scrollerFocusTests = [
+	<Scroller focusableScrollbar style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Two-way scroller</div></Scroller>,
+	<Scroller focusableScrollbar scrollbarTrackCss={css} style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Customized scrollbarTrack Style</div></Scroller>,
+	<Scroller focusableScrollbar="byEnter" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Two-way scroller</div></Scroller>,
+	<Scroller focusableScrollbar="byEnter" verticalScrollbar="visible" style={{height: '300px', width: '300px'}}><div style={{height: '600px'}}>Focused Body (byEnter) Vertical scroller</div></Scroller>,
+	<Scroller focusableScrollbar="byEnter" horizontalScrollbar="visible" verticalScrollbar="hidden" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Horizontal scroller</div></Scroller>
+];
+
+const ScrollerTests = [
+	...scrollerSmokeTests,
+	...scrollerQwtcTests,
+	...scrollerCommentedTests,
+	...withConfig({focus: true}, scrollerFocusTests)
+];
+
 export default ScrollerTests;

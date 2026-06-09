@@ -8,48 +8,46 @@ const TooltipDisplay = (props) => (
 	</div>
 );
 
-const ToolTipTests = withConfig({
-	wrapper: {
-		full: true
-	}
-}, [
-	TooltipDisplay({type: 'balloon', direction:'above', arrowAnchor:'center'}),
+const tooltipSmokeTests = [
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center'}),
+	TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center'}),
+	TooltipDisplay({type: 'balloon', direction: 'right', arrowAnchor: 'middle'}),
+	TooltipDisplay({type: 'balloon', direction: 'left', arrowAnchor: 'middle'}),
+	TooltipDisplay({type: 'transparent', direction: 'below', arrowAnchor: 'center'}),
+	TooltipDisplay({type: 'transparent', direction: 'above', arrowAnchor: 'center'}),
+	TooltipDisplay({type: 'transparent', direction: 'left', arrowAnchor: 'middle'})
+];
 
-	TooltipDisplay({type: 'balloon', direction:'below', arrowAnchor:'center'}),
-
-	TooltipDisplay({type: 'balloon', direction:'right', arrowAnchor:'middle'}),
-
-	TooltipDisplay({type: 'balloon', direction:'left', arrowAnchor:'middle'}),
-
-	TooltipDisplay({type: 'transparent', direction:'below', arrowAnchor:'center'}),
-
-	TooltipDisplay({type: 'transparent', direction:'above', arrowAnchor:'center'}),
-
-	TooltipDisplay({type: 'transparent', direction:'left', arrowAnchor:'middle'}),
-
+const tooltipCommentedTests = [
 	// Custom width
-	TooltipDisplay({type: 'balloon', direction:'above', arrowAnchor:'center', tooltipWidth: 200}),
-
-	TooltipDisplay({type: 'balloon', direction:'below', arrowAnchor:'center', tooltipWidth: 200}),
-
-	TooltipDisplay({type: 'balloon', direction:'right', arrowAnchor:'middle', tooltipWidth: 200}),
-
-	TooltipDisplay({type: 'balloon', direction:'left', arrowAnchor:'middle', tooltipWidth: 200}),
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipWidth: 200}),
+	TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center', tooltipWidth: 200}),
+	TooltipDisplay({type: 'balloon', direction: 'right', arrowAnchor: 'middle', tooltipWidth: 200}),
+	TooltipDisplay({type: 'balloon', direction: 'left', arrowAnchor: 'middle', tooltipWidth: 200}),
 
 	// Testing marquee
-	TooltipDisplay({type: 'balloon', direction:'above', arrowAnchor:'center', tooltipWidth: 200, marquee: true}),
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipWidth: 200, marquee: true}),
+	TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center', tooltipWidth: 200, marquee: true}),
+	TooltipDisplay({type: 'balloon', direction: 'right', arrowAnchor: 'middle', tooltipWidth: 200, marquee: true}),
+	TooltipDisplay({type: 'balloon', direction: 'left', arrowAnchor: 'middle', tooltipWidth: 200, marquee: true})
+];
 
-	TooltipDisplay({type: 'balloon', direction:'below', arrowAnchor:'center', tooltipWidth: 200, marquee: true}),
-
-	TooltipDisplay({type: 'balloon', direction:'right', arrowAnchor:'middle', tooltipWidth: 200, marquee: true}),
-
-	TooltipDisplay({type: 'balloon', direction:'left', arrowAnchor:'middle', tooltipWidth: 200, marquee: true}),
-
+const tooltipLargeTextTests = [
 	// textSize = 'large'
-	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction:'above', arrowAnchor:'center'})},
+	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center'})},
+	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center'})}
+];
 
-	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction:'below', arrowAnchor:'center'})}
+const TooltipTests = [
+	...withConfig({
+		wrapper: {
+			full: true
+		}
+	}, [
+		...tooltipSmokeTests,
+		...tooltipCommentedTests,
+		...tooltipLargeTextTests
+	])
+];
 
-]);
-
-export default ToolTipTests;
+export default TooltipTests;

@@ -43,10 +43,6 @@ const updateDataSize = (dataSize) => {
 updateDataSize(defaultDataSize);
 
 class SnapToCenterVGL extends Component {
-	constructor (props) {
-		super(props);
-	}
-
 	componentDidMount () {
 		this.scrollTo({index: 1, animate: false, focus: this.props.focus, stickTo: 'center'});
 	}
@@ -101,8 +97,7 @@ class SnapToCenterVGL extends Component {
 	}
 }
 
-const VirtualGridListTests = [
-	// [QWTC-2107], [QWTC-2109]
+const virtualGridListSmokeTests = [
 	<div>
 		<VirtualGridList
 			dataSize={items.length}
@@ -118,6 +113,32 @@ const VirtualGridListTests = [
 			itemSize={{minWidth: ri.scale(688), minHeight: ri.scale(570)}}
 			itemRenderer={renderItem}
 			verticalScrollbar="visible"
+		/>
+	</div>,
+	<div>
+		<VirtualGridList
+			dataSize={items.length}
+			direction="horizontal"
+			itemSize={{minWidth: ri.scale(270), minHeight: ri.scale(270)}}
+			itemRenderer={renderItem}
+			style={{height: ri.scale(300)}}
+		/>
+	</div>,
+	<div>
+		<SnapToCenterVGL focus />
+	</div>,
+	<div>
+		<SnapToCenterVGL />
+	</div>
+];
+
+const virtualGridListQwtcTests = [
+	// [QWTC-2107], [QWTC-2109]
+	<div>
+		<VirtualGridList
+			dataSize={items.length}
+			itemSize={{minWidth: ri.scale(688), minHeight: ri.scale(570)}}
+			itemRenderer={renderItem}
 		/>
 	</div>,
 	// [QWTC-2107]
@@ -149,21 +170,22 @@ const VirtualGridListTests = [
 			spacing={ri.scale(60)}
 			style={{height: ri.scale(300)}}
 		/>
-	</div>,
-	<div>
-		<SnapToCenterVGL focus />
-	</div>,
-	<div>
-		<SnapToCenterVGL />
-	</div>,
+	</div>
+];
+
+const virtualGridListRtlTests = [
 	// [QWTC-2109]
-	...withConfig({locale: 'ar-SA'}, [
-		<VirtualGridList
-			dataSize={items.length}
-			itemSize={{minWidth: ri.scale(270), minHeight: ri.scale(270)}}
-			itemRenderer={renderItem}
-		/>
-	])
+	<VirtualGridList
+		dataSize={items.length}
+		itemSize={{minWidth: ri.scale(270), minHeight: ri.scale(270)}}
+		itemRenderer={renderItem}
+	/>
+];
+
+const VirtualGridListTests = [
+	...virtualGridListSmokeTests,
+	...virtualGridListQwtcTests,
+	...withConfig({locale: 'ar-SA'}, virtualGridListRtlTests)
 ];
 
 export default VirtualGridListTests;

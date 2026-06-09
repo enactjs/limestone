@@ -7,11 +7,9 @@ import {LongerLoremString, withConfig} from './utils';
 const customPrevButton = (<Button>Previous</Button>);
 const customNextButton = (<Button>Next</Button>);
 
-const WizardPanelTests = withConfig({
-	wrapper: {
-		full: true
-	}
-}, [
+const wrapper = {full: true};
+
+const wizardSmokeTests = [
 	<WizardPanels>
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
@@ -24,13 +22,19 @@ const WizardPanelTests = withConfig({
 	<WizardPanels index={1}>
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
-	</WizardPanels>,
+	</WizardPanels>
+];
+
+const wizardQwtcTests = [
 	// [QWTC-1908] - 'nextButton' and 'prevButton' to show on all the panels
 	<WizardPanels index={1} prevButtonVisibility="always" nextButtonVisibility="always" title="WizardPanel">
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
 		<Panel>View 3</Panel>
-	</WizardPanels>,
+	</WizardPanels>
+];
+
+const wizardCommentedTests = [
 	// Test to never show next/prev button on all the panels
 	<WizardPanels index={0} prevButtonVisibility="never" nextButtonVisibility="never" title="WizardPanel">
 		<Panel>View 1</Panel>
@@ -58,15 +62,6 @@ const WizardPanelTests = withConfig({
 		<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
 		<Panel>View 2</Panel>
 	</WizardPanels>,
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels noSteps>
-				<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
-				<Panel>View 2</Panel>
-			</WizardPanels>
-		)
-	},
 	// Test no buttons
 	<WizardPanels index={0}>
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
@@ -76,6 +71,24 @@ const WizardPanelTests = withConfig({
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 		<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 	</WizardPanels>,
+	// Test custom buttons
+	<WizardPanels index={1} title="WizardPanel">
+		<Panel>View 1</Panel>
+		<Panel prevButton={customPrevButton} nextButton={customNextButton}>View 2</Panel>
+		<Panel>View 3</Panel>
+	</WizardPanels>
+];
+
+const wizardRtlTests = [
+	{
+		locale: 'ar-SA',
+		component: (
+			<WizardPanels noSteps>
+				<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
+				<Panel>View 2</Panel>
+			</WizardPanels>
+		)
+	},
 	{
 		locale: 'ar-SA',
 		component: (
@@ -94,12 +107,6 @@ const WizardPanelTests = withConfig({
 			</WizardPanels>
 		)
 	},
-	// Test custom buttons
-	<WizardPanels index={1} title="WizardPanel">
-		<Panel>View 1</Panel>
-		<Panel prevButton={customPrevButton} nextButton={customNextButton}>View 2</Panel>
-		<Panel>View 3</Panel>
-	</WizardPanels>,
 	{
 		locale: 'ar-SA',
 		component: (
@@ -122,6 +129,15 @@ const WizardPanelTests = withConfig({
 		),
 		locale: 'ar-SA'
 	}
-]);
+];
 
-export default WizardPanelTests;
+const WizardPanelsTests = [
+	...withConfig({wrapper}, [
+		...wizardSmokeTests,
+		...wizardQwtcTests,
+		...wizardCommentedTests,
+		...wizardRtlTests
+	])
+];
+
+export default WizardPanelsTests;

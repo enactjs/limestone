@@ -11,7 +11,7 @@ const SelectionInput = props => {
 	return <InputField {...props} />;
 };
 
-const InputFieldTests = [
+const inputFieldSmokeTests = [
 	<InputField />,
 	<InputField placeholder="Placeholder InputField" />,
 	<InputField marqueeContent placeholder="Placeholder InputField" />,
@@ -27,8 +27,10 @@ const InputFieldTests = [
 	<InputField value="Simple value" type="password" />,
 	<InputField value="Simple value" type="password" disabled />,
 	<InputField value="https://enactjs.com" type="url" />,
-	<InputField value="https://enactjs.com" type="url" disabled />,
+	<InputField value="https://enactjs.com" type="url" disabled />
+];
 
+const inputFieldQwtcTests = [
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]
 	<InputField value={LoremString} />,
 	<InputField value="!@#$%^&()_+-=[]\;',./{}|:?" />,
@@ -65,11 +67,15 @@ const InputFieldTests = [
 	// Disabled Characters Displays in the Disabled InputField - [QWTC-1969]
 	// This will also test: Transparent Disabled InputField Displays with Background - [QWTC-1965]
 	<InputField value="I am value" />,
-	<InputField value="I am a disabled value" disabled />,
+	<InputField value="I am a disabled value" disabled />
+];
 
+const inputFieldCommentedTests = [
 	// Selection color
-	<SelectionInput value="Selection value" />,
+	<SelectionInput value="Selection value" />
+];
 
+const inputFieldFocusTests = [
 	// Focused
 	...withProps({focus: true}, [
 		<InputField />,
@@ -86,11 +92,20 @@ const InputFieldTests = [
 		<InputField value="Focused Simple value" type="password" disabled />,
 		<InputField value="https://enactjs.com" type="url" />,
 		<InputField value="https://enactjs.com" type="url" disabled />
-	]),
+	])
+];
 
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
+const inputFieldLargeTextTests = [
+	// Large text mode
+	<InputField />,
+	<InputField placeholder="Placeholder InputField" />,
+	<InputField marqueeContent placeholder="Placeholder InputField" />,
+	<InputField placeholder="Placeholder InputField" disabled />,
+	<InputField value={LoremString} invalid />,
+	<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
+];
+
+const inputFieldRtlTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField />
@@ -216,7 +231,6 @@ const InputFieldTests = [
 		component: <InputField value="តន្ត្រី" />
 	},
 
-
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
 	{
 		locale: 'ar-SA',
@@ -237,16 +251,16 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <SelectionInput value="Selection value" />
-	},
-
-	// Large text mode
-	...withConfig({textSize: 'large'}, [
-		<InputField />,
-		<InputField placeholder="Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Placeholder InputField" />,
-		<InputField placeholder="Placeholder InputField" disabled />,
-		<InputField value={LoremString} invalid />,
-		<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
-	])
+	}
 ];
+
+const InputFieldTests = [
+	...inputFieldSmokeTests,
+	...inputFieldQwtcTests,
+	...inputFieldCommentedTests,
+	...inputFieldFocusTests,
+	...withConfig({textSize: 'large'}, inputFieldLargeTextTests),
+	...inputFieldRtlTests
+];
+
 export default InputFieldTests;

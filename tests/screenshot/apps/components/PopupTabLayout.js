@@ -3,6 +3,8 @@ import PopupTabLayout, {Tab, TabPanels, TabPanel} from '../../../../PopupTabLayo
 import BodyText from '../../../../BodyText';
 import {Header} from '../../../../Panels';
 
+const popupTabLayoutWrapper = {full: true};
+
 const Block = ({style, ...rest}) => {
 	const blockStyles = ({height = 99, width = 99} = {}) => ({
 		backgroundColor: '#58a',
@@ -73,92 +75,109 @@ const tabWithSizedBlockTall = SimpleTab({title: 'Tall', icon: 'stop', style: {he
 
 const tabWithCenteredHeader = SimpleTab({title: 'One', centeredHeader: true});
 
-const PopupTabLayoutTests = [
+const popupTabLayoutSmokeTests = [
+	{
+		component: <PopupTabLayout open>{tabs}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open scrimType="transparent">{tabs}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open scrimType="none">{tabs}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabsWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{someTabsWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{oneTabWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open collapsed>{tabs}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open collapsed>{tabsWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open collapsed>{oneTabWithIcons}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithSizedBlockSmall}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithSizedBlockLarge}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithSizedBlockSkinny}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithSizedBlockFat}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithSizedBlockTall}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	},
+	{
+		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
+		wrapper: popupTabLayoutWrapper
+	}
+];
+
+const popupTabLayoutQwtcTests = [
 	// QWTC-2423 start
 	{
 		component: <PopupTabLayout open>{tabs}</PopupTabLayout>,
-		wrapper: {full: true}
+		wrapper: popupTabLayoutWrapper
 	},
 	{
 		component: <PopupTabLayout open>{tabs}</PopupTabLayout>,
 		locale: 'ar-SA',
-		wrapper: {full: true}
-	},
+		wrapper: popupTabLayoutWrapper
+	}
 	// QWTC-2423 end
-	{
-		component: <PopupTabLayout open scrimType="transparent">{tabs}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open scrimType="none">{tabs}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
+];
+
+const popupTabLayoutLargeTextTests = [
 	{
 		component: <PopupTabLayout open>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true},
+		wrapper: popupTabLayoutWrapper,
 		textSize: 'large'
 	},
 	{
-		component: <PopupTabLayout open>{oneTabWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open collapsed>{tabs}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open collapsed>{tabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
 		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: {full: true},
+		wrapper: popupTabLayoutWrapper,
 		textSize: 'large'
 	},
 	{
-		component: <PopupTabLayout open collapsed>{oneTabWithIcons}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithSizedBlockSmall}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithSizedBlockLarge}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithSizedBlockSkinny}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithSizedBlockFat}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithSizedBlockTall}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
 		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
-		wrapper: {full: true},
+		wrapper: popupTabLayoutWrapper,
 		textSize: 'large'
 	}
 ];
+
+const PopupTabLayoutTests = [
+	...popupTabLayoutSmokeTests,
+	...popupTabLayoutQwtcTests,
+	...popupTabLayoutLargeTextTests
+];
+
 export default PopupTabLayoutTests;

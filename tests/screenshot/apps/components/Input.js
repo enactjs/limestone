@@ -6,7 +6,7 @@ import {withConfig, withProps} from './utils';
 
 const LoremString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis.";
 
-const BaseTests = [
+const inputSmokeTests = [
 	<Input />,
 	<Input open title="Input Test" subtitle="Additional text" />,
 	<Input open title="Input Test" subtitle="Additional text" noBackButton />,
@@ -35,42 +35,54 @@ const BaseTests = [
 	</Input>
 ];
 
-const OverlayTestsNoTitleNoSubtitle = [
+const overlayTestsNoTitleNoSubtitle = [
 	<Input open />,
 	<Input open title="Input Test" />,
 	<Input open subtitle="Additional text" />
 ];
 
-const InputTests = [
-	...BaseTests,
-
-	...withProps({popupType: 'overlay'}, BaseTests),
-
+const inputLargeTests = [
 	// Large input
-	...withProps({size: 'large'}, BaseTests),
+	...withProps({size: 'large'}, inputSmokeTests)
+];
 
+const inputDisabledTests = [
 	// Disabled tests
-	...withProps({disabled: true, popupType: 'fullscreen'}, BaseTests),
-	...withProps({disabled: true, popupType: 'overlay'}, BaseTests),
-	...withProps({disabled: true, popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle),
+	...withProps({disabled: true, popupType: 'fullscreen'}, inputSmokeTests),
+	...withProps({disabled: true, popupType: 'overlay'}, inputSmokeTests),
+	...withProps({disabled: true, popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
+];
 
+const inputRtlLargeTests = [
 	// RTL large input
-	...withConfig({locale: 'ar-SA'}, [
-		...withProps({size: 'large'}, BaseTests)
-	]),
+	...withProps({size: 'large'}, inputSmokeTests)
+];
 
+const inputRtlOverlayTests = [
 	// RTL overlay number input tests
-	...withConfig({locale: 'ar-SA'}, [
-		...withProps({popupType: 'overlay'}, BaseTests.slice(5)),
-		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
-	]),
+	...withProps({popupType: 'overlay'}, inputSmokeTests.slice(5)),
+	...withProps({popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
+];
 
+const inputLargeTextTests = [
 	// Large text mode
-	...withConfig({textSize: 'large'}, [
-		...withProps({popupType: 'fullscreen'}, BaseTests),
-		...withProps({popupType: 'overlay'}, BaseTests),
-		...withProps({popupType: 'overlay'}, OverlayTestsNoTitleNoSubtitle)
-	])
+	...withProps({popupType: 'fullscreen'}, inputSmokeTests),
+	...withProps({popupType: 'overlay'}, inputSmokeTests),
+	...withProps({popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
+];
+
+const inputCommentedTests = [
+	...inputLargeTests,
+	...inputDisabledTests
+];
+
+const InputTests = [
+	...inputSmokeTests,
+	...inputCommentedTests,
+	...withProps({popupType: 'overlay'}, inputSmokeTests),
+	...withConfig({locale: 'ar-SA'}, inputRtlLargeTests),
+	...withConfig({locale: 'ar-SA'}, inputRtlOverlayTests),
+	...withConfig({textSize: 'large'}, inputLargeTextTests)
 ];
 
 export default InputTests;

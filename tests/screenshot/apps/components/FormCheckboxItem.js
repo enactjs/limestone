@@ -35,20 +35,27 @@ const slotBeforeFormCheckboxItemTests = (prefix) => {
 	];
 };
 
-const FormCheckboxItemTests = [
+const formCheckboxItemSmokeTests = [
 	// Basic
 	<FormCheckboxItem />,
-	// [QWTC-2120] start
+	<FormCheckboxItem indeterminate indeterminateIcon="lock">FormCheckboxItem</FormCheckboxItem>
+];
+
+// [QWTC-2120] start
+const formCheckboxItemQwtcTests = [
 	...basicFormCheckboxItemTests(''),
 	...withConfig({focus: true}, basicFormCheckboxItemTests('Focused ')),
-	// [QWTC-2120] end
-	...withProps({indeterminate: true}, basicFormCheckboxItemTests('')),
-	<FormCheckboxItem indeterminate indeterminateIcon="lock">FormCheckboxItem</FormCheckboxItem>,
+	...withProps({indeterminate: true}, basicFormCheckboxItemTests(''))
+];
+// [QWTC-2120] end
 
+const formCheckboxItemSlotBeforeTests = [
 	// Icon slotBefore
 	...slotBeforeFormCheckboxItemTests(''),
-	...withConfig({focus: true}, slotBeforeFormCheckboxItemTests('Focused ')),
+	...withConfig({focus: true}, slotBeforeFormCheckboxItemTests('Focused '))
+];
 
+const formCheckboxItemCenteredTests = [
 	// Centered
 	<FormCheckboxItem centered>Hello FormCheckboxItem</FormCheckboxItem>,
 	<FormCheckboxItem centered>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam dapibus imperdiet. Morbi diam ex, vulputate eget luctus eu, gravida at ligula. Sed tristique eros sit amet iaculis varius. Phasellus rutrum augue id nulla consectetur, a vulputate velit dictum. Vestibulum ultrices tellus ac cursus condimentum. Aliquam sit amet consectetur nulla, viverra bibendum metus.</FormCheckboxItem>,
@@ -57,11 +64,15 @@ const FormCheckboxItemTests = [
 	}, [
 		<FormCheckboxItem centered>Hello FormCheckboxItem</FormCheckboxItem>,
 		<FormCheckboxItem centered>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam dapibus imperdiet. Morbi diam ex, vulputate eget luctus eu, gravida at ligula. Sed tristique eros sit amet iaculis varius. Phasellus rutrum augue id nulla consectetur, a vulputate velit dictum. Vestibulum ultrices tellus ac cursus condimentum. Aliquam sit amet consectetur nulla, viverra bibendum metus.</FormCheckboxItem>
-	]),
+	])
+];
 
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
+const formCheckboxItemCommentedTests = [
+	...formCheckboxItemSlotBeforeTests,
+	...formCheckboxItemCenteredTests
+];
+
+const formCheckboxItemRtlTests = [
 	{
 		locale: 'ar-SA',
 		component: <FormCheckboxItem>FormCheckboxItem</FormCheckboxItem>
@@ -131,4 +142,12 @@ const FormCheckboxItemTests = [
 		component: <FormCheckboxItem indeterminate indeterminateIcon="lock">FormCheckboxItem Checked</FormCheckboxItem>
 	}
 ];
+
+const FormCheckboxItemTests = [
+	...formCheckboxItemSmokeTests,
+	...formCheckboxItemQwtcTests,
+	...formCheckboxItemCommentedTests,
+	...formCheckboxItemRtlTests
+];
+
 export default FormCheckboxItemTests;

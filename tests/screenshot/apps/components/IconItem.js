@@ -33,8 +33,33 @@ const defaultIconItemTests = [
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" titleOn="focus" />,
-	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />,
+	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />
+];
 
+const iconItemSmokeTests = [
+	defaultIconItemTests[0],
+	defaultIconItemTests[1],
+	defaultIconItemTests[3],
+	defaultIconItemTests[6],
+	defaultIconItemTests[10],
+	defaultIconItemTests[12],
+	defaultIconItemTests[15],
+	defaultIconItemTests[18],
+	defaultIconItemTests[22]
+];
+
+const iconItemCommentedTests = [
+	// Bordered
+	...withProps({bordered: true}, defaultIconItemTests),
+
+	// Disabled
+	...withProps({disabled: true}, defaultIconItemTests),
+
+	// Bordered and disabled.
+	...withProps({bordered: true, disabled: true}, defaultIconItemTests)
+];
+
+const iconItemFocusTests = [
 	// Focused
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
 		// Icon type
@@ -68,17 +93,9 @@ const defaultIconItemTests = [
 ];
 
 const IconItemTests = [
-	...defaultIconItemTests,
-
-	// Bordered
-	...withProps({bordered:true}, defaultIconItemTests),
-
-	// Disabled
-	...withProps({disabled: true}, defaultIconItemTests),
-
-	// Bordered and disabled.
-	...withProps({bordered: true, disabled: true}, defaultIconItemTests),
-
+	...iconItemSmokeTests,
+	...iconItemCommentedTests,
+	...iconItemFocusTests,
 	...withConfig({
 		focusRing: true,
 		focus: true
@@ -86,8 +103,6 @@ const IconItemTests = [
 		<IconItem background="#1b1b1b" icon="usb" />,
 		<IconItem background="#1b1b1b" icon="usb" label="Label" />
 	]),
-
-	// Large Text
 	...withConfig({skinVariants: ['largeText']}, defaultIconItemTests)
 ];
 

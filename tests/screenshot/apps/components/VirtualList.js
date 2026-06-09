@@ -16,7 +16,20 @@ const renderItem = () => ({index, ...rest}) => { // eslint-disable-line enact/di
 	);
 };
 
-const VirtualListTests = [
+const virtualListSmokeTests = [
+	<div>
+		<VirtualList
+			dataSize={10}
+			focusableScrollbar
+			horizontalScrollbar="visible"
+			itemSize={ri.scale( 144)}
+			itemRenderer={renderItem(ri.scale(144))}
+			verticalScrollbar="visible"
+		/>
+	</div>
+];
+
+const virtualListQwtcTests = [
 	// [QWTC-2339] The Light skin tested on 'tests/screenshot/specs/light/Light-specs*.js'.
 	<div>
 		<VirtualList
@@ -36,6 +49,11 @@ const VirtualListTests = [
 			verticalScrollbar="visible"
 		/>
 	</div>
+];
+
+const VirtualListTests = [
+	...virtualListSmokeTests,
+	...virtualListQwtcTests
 ];
 
 export default VirtualListTests;

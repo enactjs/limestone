@@ -11,7 +11,7 @@ import css from './ImageItem.module.less';
 // vertical ImageItem doesn't render well without defined styles right now.
 const verticalStyle = {height: ri.scale(540), width: ri.scale(640)};
 
-const defaultImageItemTests = [
+const imageItemBaseCases = [
 	// Vertical
 	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
 	<ImageItem src={img} style={verticalStyle} orientation="vertical">Short</ImageItem>,
@@ -41,55 +41,70 @@ const defaultImageItemTests = [
 	<ImageItem src={img} orientation="horizontal" label="Short" wideImage >Short</ImageItem>,
 	<ImageItem src={img} orientation="horizontal" label="Short" imageIconSrc={img} wideImage >Short</ImageItem>,
 	<ImageItem src={img} orientation="horizontal" label="Short" showSelection wideImage >Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection wideImage >Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection wideImage >Short</ImageItem>
+];
 
-	// Focused
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		// Vertical
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical">Focused Short</ImageItem>,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" />,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img} />,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short">Focused Short</ImageItem>,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" showSelection>Focused Short</ImageItem>,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" selected showSelection>Focused Short</ImageItem>,
-		<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img} css={css}>Focused Short</ImageItem>,
+const imageItemFocusTests = [
+	// Vertical
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical">Focused Short</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" />,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img} />,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short">Focused Short</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" showSelection>Focused Short</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" selected showSelection>Focused Short</ImageItem>,
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img} css={css}>Focused Short</ImageItem>,
 
-		// Horizontal
-		<ImageItem src={img} orientation="horizontal" />,
-		<ImageItem src={img} orientation="horizontal">Focused Short</ImageItem>,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short" />,
-		<ImageItem src={img} orientation="horizontal" imageIconSrc={img} />,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short">Focused Short</ImageItem>,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short" showSelection>Focused Short</ImageItem>,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
-	])
+	// Horizontal
+	<ImageItem src={img} orientation="horizontal" />,
+	<ImageItem src={img} orientation="horizontal">Focused Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Focused Short" />,
+	<ImageItem src={img} orientation="horizontal" imageIconSrc={img} />,
+	<ImageItem src={img} orientation="horizontal" label="Focused Short">Focused Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Focused Short" showSelection>Focused Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
+];
+
+const defaultImageItemCases = [
+	...imageItemBaseCases,
+	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests)
+];
+
+const imageItemSmokeTests = [
+	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
+	<ImageItem src={img} orientation="horizontal" />,
+	<ImageItem src={img} orientation="horizontal" wideImage />
+];
+
+const imageItemCommentedTests = [
+	...imageItemBaseCases.slice(1, 9),
+	...imageItemBaseCases.slice(10, 17),
+	...imageItemBaseCases.slice(18),
+
+	// Centered
+	...withProps({centered: true}, defaultImageItemCases),
+
+	// Disabled
+	...withProps({disabled: true}, defaultImageItemCases),
+
+	// Centered and disabled.
+	...withProps({centered: true, disabled: true}, defaultImageItemCases)
 ];
 
 const ImageItemTests = [
-	...defaultImageItemTests,
-	...withConfig({skinVariants: ['largeText']}, defaultImageItemTests),
-
-	// Centered
-	...withProps({centered:true}, defaultImageItemTests),
-
-	// Disabled
-	...withProps({disabled: true}, defaultImageItemTests),
-
-	// Centered and disabled.
-	...withProps({centered: true, disabled: true}, defaultImageItemTests),
-
+	...imageItemSmokeTests,
+	...imageItemCommentedTests,
+	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests),
+	...withConfig({skinVariants: ['largeText']}, defaultImageItemCases),
 	...withConfig({
 		focusRing: true,
 		focus: true
 	}, [
 		<ImageItem src={img} style={{height: ri.scale(360), width: ri.scale(480)}} orientation="vertical" />
 	]),
-
-	// RTL
-	...withConfig({locale: 'ar-SA'}, defaultImageItemTests)
+	...withConfig({locale: 'ar-SA'}, defaultImageItemCases)
 ];
 
 export default ImageItemTests;

@@ -30,7 +30,14 @@ const headerWithChildrenTests = [
 	<Header type="standard" title="Title" subtitle="Subtitle">{dropIn.doubleButtons}</Header>
 ];
 
-const specificTests = [
+const headerSmokeTests = [
+	<Header type="standard" title="Title" />,
+	<Header type="compact" title="Title" />,
+	<Header type="wizard" centered title="Title" />,
+	<Header type="mini" title="Title" />
+];
+
+const headerQwtcTests = [
 	// [QWTC-1886]
 	<Header type="standard" title="Enact" slotAfter={dropIn.singleButton} />,
 	// [QWTC-1881]
@@ -50,7 +57,6 @@ const specificTests = [
 		component: <Header type="compact" title="غينيا واستمر" slotAfter={dropIn.singleButton} subtitle="غينيا واستمر" />
 	},
 	// end of [QWTC-1887]
-
 	// [QWTC-1879]
 	<Header type="standard" title="ฟิ้  ไั  ஒ  த" slotAfter={dropIn.singleButton} subtitle="ฟิ้  ไั  ஒ  த" />,
 	// [QWTC-1878]
@@ -65,7 +71,7 @@ const specificTests = [
 	<Header centered noCloseButton type="wizard" title="Enact" slotAbove={dropIn.steps} slotAfter={dropIn.singleButton} slotBefore={dropIn.singleButton} subtitle="An app framework">{dropIn.singleButton}</Header>
 ];
 
-const LtrTests = [
+const headerLtrTests = [
 	// Initial
 	...withProps({type: 'standard'}, baseTests),
 	...withProps({type: 'compact'}, baseTests),
@@ -120,19 +126,27 @@ const LtrTests = [
 	...withProps({shadowed: true}, baseTests)
 ];
 
-const HeaderTests = [
-	...LtrTests,
-	...specificTests,
-	...withConfig({skinVariants: ['largeText']}, LtrTests),
-	...withConfig({locale: 'ar-SA'}, LtrTests),
+const headerCommentedTests = headerLtrTests;
 
+const headerLargeTextTests = headerLtrTests;
+
+const headerRtlTests = headerLtrTests;
+
+const headerTallglyphTests = [
 	// Tallglyph Validation
-	...withConfig({locale: 'vi-VN'}, [
-		// Initial
-		...withProps({type: 'standard'}, baseTests),
-		...withProps({type: 'compact'}, baseTests),
-		...withProps({type: 'wizard', centered: true}, baseTests)
-	])
+	// Initial
+	...withProps({type: 'standard'}, baseTests),
+	...withProps({type: 'compact'}, baseTests),
+	...withProps({type: 'wizard', centered: true}, baseTests)
+];
+
+const HeaderTests = [
+	...headerSmokeTests,
+	...headerQwtcTests,
+	...headerCommentedTests,
+	...withConfig({skinVariants: ['largeText']}, headerLargeTextTests),
+	...withConfig({locale: 'ar-SA'}, headerRtlTests),
+	...withConfig({locale: 'vi-VN'}, headerTallglyphTests)
 ];
 
 export default HeaderTests;

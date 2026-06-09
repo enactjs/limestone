@@ -1,12 +1,15 @@
 import DayPicker from '../../../../DayPicker';
 
-import {withConfig} from "./utils";
+import {withConfig} from './utils';
 
-const DayPickerTests = [
+const dayPickerSmokeTests = [
 	<DayPicker />,
 	<DayPicker selected={1} />,
 	<DayPicker disabled />,
-	<DayPicker disabled selected={1} />,
+	<DayPicker disabled selected={1} />
+];
+
+const dayPickerRtlTests = [
 	// *************************************************************
 	// locale = 'ar-SA', [QWTC-2428]
 	{
@@ -29,8 +32,10 @@ const DayPickerTests = [
 	{
 		locale: 'ar-SA',
 		component: <DayPicker disabled selected={[0, 1, 2, 3, 4, 5, 6]} />
-	},
+	}
+];
 
+const dayPickerQwtcTests = [
 	// *************************************************************
 	// locale = 'es-ES', [QWTC-637]
 	{
@@ -48,12 +53,19 @@ const DayPickerTests = [
 	{
 		locale: 'es-ES',
 		component: <DayPicker disabled selected={1} />
-	},
+	}
+];
 
-	...withConfig({focus: true}, [
-		<DayPicker selected={2} />,
-		<DayPicker disabled selected={2} />
-	])
+const dayPickerFocusTests = [
+	<DayPicker selected={2} />,
+	<DayPicker disabled selected={2} />
+];
+
+const DayPickerTests = [
+	...dayPickerSmokeTests,
+	...dayPickerQwtcTests,
+	...dayPickerRtlTests,
+	...withConfig({focus: true}, dayPickerFocusTests)
 ];
 
 export default DayPickerTests;
