@@ -1,11 +1,11 @@
 import fs from 'fs';
-import path from 'path';
 import {spawn} from 'child_process';
 
 import buildApps from '@enact/ui-test-utils/build-apps';
 import {chromium} from '@playwright/test';
 
-import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT, SCREENSHOT_DIST, TEST_DATA_FILE} from './paths.js';
+import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT, SCREENSHOT_DIST, SCREENSHOT_VIEW_INDEX, TEST_DATA_FILE, assertScreenshotDist} from './paths.js';
+import {clearShardRegistry} from './utils/shard-registry.js';
 
 const baseURL = PLAYWRIGHT_BASE_URL;
 const distPath = SCREENSHOT_DIST;
@@ -52,7 +52,7 @@ function shouldRefreshTestData () {
 	if (!fs.existsSync(testDataFile)) {
 		return true;
 	}
-	const distIndex = path.join(distPath, 'Limestone-View', 'index.html');
+	const distIndex = SCREENSHOT_VIEW_INDEX;
 	if (!fs.existsSync(distIndex)) {
 		return true;
 	}
@@ -60,10 +60,16 @@ function shouldRefreshTestData () {
 }
 
 export default async function globalSetup () {
+	clearShardRegistry();
+
 	if (!process.env.PLAYWRIGHT_SKIP_BUILD) {
 		await buildApps('screenshot');
 	}
 
+	assertScreenshotDist();
+
+	// Reuse an existing server on PLAYWRIGHT_BASE_URL when present; otherwise start `serve`
+	// so global-setup can fetch test metadata before Playwright's webServer hook runs.
 	try {
 		await fetch(baseURL);
 	} catch {
