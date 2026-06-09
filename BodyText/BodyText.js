@@ -82,11 +82,14 @@ const BodyTextBase = kind({
 		 * @default 'large'
 		 * @public
 		 */
-		size: PropTypes.oneOf(['small', 'large'])
+		size: PropTypes.oneOf(['small', 'large']),
+
+		allowMultiline: PropTypes.bool
 	},
 
 	defaultProps: {
 		noWrap: false,
+		allowMultiline: false,
 		size: 'large'
 	},
 
@@ -96,10 +99,14 @@ const BodyTextBase = kind({
 	},
 
 	computed: {
+		children: ({children, allowMultiline, noWrap}) => {
+			return allowMultiline && noWrap ? [...children.split('\n')] : (typeof children === 'string') ? children?.replaceAll('\n', ' ') : children;
+		},
 		className: ({noWrap, size, styler}) => styler.append(size, {noWrap})
 	},
 
 	render: ({centered, css, noWrap, ...rest}) => {
+		delete rest.allowMultiline;
 		delete rest.size;
 
 		if (noWrap) {

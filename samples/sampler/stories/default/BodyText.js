@@ -19,6 +19,7 @@ export default {
 
 export const _BodyText = (args) => (
 	<BodyText
+		allowMultiline={args['allowMultiline']}
 		centered={args['centered']}
 		noWrap={args['noWrap']}
 		size={args['size']}
@@ -27,6 +28,7 @@ export const _BodyText = (args) => (
 	</BodyText>
 );
 
+boolean('allowMultiline', _BodyText, Config);
 boolean('centered', _BodyText, Config);
 boolean('noWrap', _BodyText, Config);
 select('size', _BodyText, ['', 'large', 'small'], Config);
