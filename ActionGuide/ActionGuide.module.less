@@ -16,6 +16,11 @@
 		height: @lime-actionguide-icon-height;
 		min-width: @lime-actionguide-icon-height;
 		width: @lime-actionguide-icon-height;
+
+		// The icon-only Button centers its icon with padding sized for the default (larger) button width. Since we size the button to the icon itself, that
+		&.hasIcon.large {
+			padding: 0;
+		}
 	}
 
 	.label {
