@@ -115,13 +115,14 @@ describe('Alert', () => {
 		expect(image).toHaveClass(expectedClass);
 	});
 
-	test('should align buttons horizontally by default in fullscreen when button count is less than 3', () => {
+	test('should align buttons horizontally by default in fullscreen when button count is less than 4', () => {
 		render(
 			<FloatingLayerController>
 				<Alert open>
 					<buttons>
 						<Button>yes</Button>
 						<Button>no</Button>
+						<Button>maybe</Button>
 					</buttons>
 				</Alert>
 			</FloatingLayerController>
@@ -133,13 +134,14 @@ describe('Alert', () => {
 		expect(buttonsLayout).toHaveClass('horizontal');
 	});
 
-	test('should align buttons vertically by default in fullscreen when button count is 3', () => {
+	test('should align buttons vertically by default in fullscreen when button count is 4', () => {
 		render(
 			<FloatingLayerController>
 				<Alert open>
 					<buttons>
 						<Button>yes</Button>
 						<Button>no</Button>
+						<Button>maybe</Button>
 						<Button>later</Button>
 					</buttons>
 				</Alert>

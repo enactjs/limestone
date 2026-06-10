@@ -1,3 +1,5 @@
+// Viewport.module.less
+//
 @import "../../styles/mixins.less";
 
 .viewport {
@@ -5,6 +7,8 @@
 	.position(0);
 	overflow: hidden;
 	white-space: nowrap;  // Avoid awkward positioning when using non-positioned panels
+	// force directionality for relative positioning below
+	direction: ltr;
 
 	&.transitioning::before {
 		content: "";
@@ -13,8 +17,6 @@
 		z-index: 10000;
 	}
 
-	// force directionality for relative positioning below
-	direction: ltr;
 	& > * {
 		// reset direction in views for RTL locales
 		.enact-locale-rtl({

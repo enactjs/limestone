@@ -15,6 +15,7 @@
 
 	.mediaSlider {
 		margin: 0 @slider-padding-h;
+		min-height: auto;
 		padding: @slider-padding-v 0;
 		height: @lime-mediaplayer-slider-height;
 
@@ -44,9 +45,6 @@
 	// Knob
 	.knob {
 		@activate-transition-function: cubic-bezier(0.15, 0.85, 0.6, 1.65);
-		//@slide-transition-function:    cubic-bezier(0.15, 0.85, 0.53, 1.09);
-
-		//transition: transform @slide-transition-function 0.2s;
 
 		&::before {
 			width: @lime-mediaplayer-slider-knob-size;

@@ -11,6 +11,8 @@ const keyDownUp = (keyCode) => (elm) => {
 	return fireEvent.keyUp(elm, {keyCode});
 };
 
+const keyDownRepeat = (keyCode) => (elm) => fireEvent.keyDown(elm, {keyCode, repeat: true});
+
 const pressLeftKey = keyDownUp(37);
 const pressRightKey = keyDownUp(39);
 const pressUpKey = keyDownUp(38);
@@ -167,6 +169,49 @@ describe('VirtualList useEvent', () => {
 		expect(spy).toHaveBeenCalled();
 
 		global.Element.prototype.scrollTo = scrollToFn;
+	});
+
+	test('should handle repeat keydown on first VirtualList entry without error', () => {
+		render(
+			<VirtualList
+				clientSize={clientSize}
+				dataSize={dataSize}
+				itemRenderer={renderItem}
+				itemSize={itemSize}
+			/>
+		);
+
+		const list = screen.getByRole('list');
+		const item0 = list.children.item(0).children.item(0);
+
+		focus(item0);
+		expect(currentFocusIndex).toBe(0);
+
+		keyDownRepeat(40)(item0);
+		expect(currentFocusIndex).toBe(0);
+	});
+
+	test('should handle repeat keydown when data-index jumps unexpectedly without error', () => {
+		render(
+			<VirtualList
+				clientSize={clientSize}
+				dataSize={dataSize}
+				itemRenderer={renderItem}
+				itemSize={itemSize}
+			/>
+		);
+
+		const list = screen.getByRole('list');
+		const item0 = list.children.item(0).children.item(0);
+		const item1 = list.children.item(1).children.item(0);
+
+		focus(item0);
+		pressDownKey(item0);
+		expect(currentFocusIndex).toBe(1);
+
+		item1.dataset.index = '20';
+		keyDownRepeat(40)(item1);
+		expect(currentFocusIndex).toBe(1);
 	});
 
 	test('should scroll by page-down key', () => {

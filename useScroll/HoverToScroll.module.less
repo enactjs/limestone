@@ -13,19 +13,24 @@
 	:global(.spotlight-input-touch) & {
 		pointer-events: var(--scroller-hover-to-scroll-by-touch, none)
 	}
+
 	&.vertical {
 		width: 100%;
 		height: @lime-scroll-hover-area-size;
+
 		&.after {
 			bottom: 0;
 		}
 	}
+
 	&.horizontal {
 		width: @lime-scroll-hover-area-size;
 		height: 100%;
+
 		&.before {
 			.position-start-end(0, auto);
 		}
+
 		&.after {
 			.position-start-end(auto, 0);
 		}

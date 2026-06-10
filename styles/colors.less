@@ -133,12 +133,8 @@
 @lime-checkbox-border-selected-focused-color: @lime-checkbox-border-selected-color;
 @lime-checkbox-border-selected-disabled-color: @lime-checkbox-border-selected-color;
 @lime-checkbox-border-selected-disabled-focused-color: @lime-checkbox-border-selected-color;
-@lime-checkbox-border-disabled-color: @lime-checkbox-border-color;
-@lime-checkbox-border-disabled-focused-color: @lime-checkbox-border-focused-color;
 @lime-checkbox-border-indeterminate-color: var(--semantic-color-stroke-selection-inactive);
 @lime-checkbox-border-indeterminate-focused-color: var(--semantic-color-stroke-selection-inactive-focused);
-@lime-checkbox-border-indeterminate-disabled-color: @lime-checkbox-border-indeterminate-color;
-@lime-checkbox-border-indeterminate-disabled-focused-color: @lime-checkbox-border-indeterminate-focused-color;
 
 // CheckboxItem
 // ---------------------------------------
@@ -268,6 +264,7 @@
 @lime-item-label-sub-selected-color: var(--semantic-color-on-background-sub);
 @lime-item-container-selected-color: ~"color(from" var(--semantic-color-surface-default-translucent) ~"srgb r g b / 0.1)";
 @lime-item-container-disabled-focused-color: var(--semantic-color-surface-default-disabled-focused);
+@lime-item-focus-background: '';
 
 // KeyGuide
 // ---------------------------------------
@@ -329,7 +326,7 @@
 // ---------------------------------------
 @lime-progressbar-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
 @lime-progressbar-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
-@lime-progressbar-track-active-color: var(--semantic-color-surface-accent);
+@lime-progressbar-track-active-color: var(--semantic-color-surface-white);
 @lime-progressbar-track-active-focused-color: var(--semantic-color-surface-default-focused);
 
 // ProgressButton
@@ -373,13 +370,13 @@
 @lime-slider-min-max-color: var(--semantic-color-on-background-sub);
 @lime-slider-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
 @lime-slider-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
-@lime-slider-track-active-color: var(--semantic-color-surface-accent);
-@lime-slider-track-active-focused-color: var(--semantic-color-surface-accent);
-@lime-slider-handle-color: var(--semantic-color-surface-default-handle);
-@lime-slider-handle-colorPicker-focused-color: var(--semantic-color-surface-white);
+@lime-slider-track-active-color: var(--semantic-color-surface-white);
+@lime-slider-track-active-focused-color: var(--semantic-color-surface-white);
+@lime-slider-handle-color: var(--semantic-color-surface-white);
+@lime-slider-handle-colorPicker-outline-color: var(--semantic-color-surface-white);
 @lime-slider-handle-border-color: transparent;
 @lime-slider-handle-focused-border-color: @lime-slider-handle-border-color;
-@lime-slider-handle-focused-color: var(--semantic-color-surface-default-focused);
+@lime-slider-handle-focused-color: var(--semantic-color-surface-white);
 @lime-slider-handle-disabled-color: transparent;
 @lime-slider-handle-focused-shadow: 0 24px 36px @lime-shadow-color;
 @lime-slider-disabled-bar-opacity: 0.3;

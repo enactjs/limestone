@@ -16,6 +16,14 @@
 	margin: @lime-icon-margin;
 	overflow: hidden; // prevent drawing outside the icon DOM box. Glyph icons are scaled 2x larger, which means their inline dimensions fall outside the container. This prevents them from drawing and receiving pointer events.
 
+	// Icon size calculations
+	width: @icon-size;
+	height: @icon-size;
+	font-size: @icon-size;
+	line-height: @icon-size;
+	background-position: center 0;
+	background-size: @icon-size calc(@icon-size * 2);
+
 	&.large {
 		--icon-size: @lime-icon-large-size;
 	}
@@ -49,14 +57,6 @@
 			--icon-size: @lime-icon-tiny-size-large;
 		}
 	});
-
-	// Icon size calculations
-	width: @icon-size;
-	height: @icon-size;
-	font-size: @icon-size;
-	line-height: @icon-size;
-	background-position: center 0;
-	background-size: @icon-size calc(@icon-size * 2);
 
 	&.dingbat {
 		font-family: @lime-icon-other-font-family;

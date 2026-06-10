@@ -83,6 +83,9 @@ const useSpottable = (props, instances) => {
 		handle5WayKeyUp: () => {
 			SpotlightAccelerator.reset();
 		},
+		resetAccelerator: () => {
+			SpotlightAccelerator.reset();
+		},
 		spotlightAcceleratorProcessKey: (ev) => {
 			return SpotlightAccelerator.processKey(ev, nop);
 		}
