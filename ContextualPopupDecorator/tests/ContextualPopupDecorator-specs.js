@@ -1,3 +1,4 @@
+import * as dispatcher from '@enact/core/dispatcher';
 import {getPointerMode} from '@enact/spotlight/src/pointer';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
@@ -504,6 +505,35 @@ describe('ContextualPopupDecorator Specs', () => {
 
 		expect(scrimDivFirst).toHaveClass(expectedFirst);
 		expect(scrimDivSecond).toHaveClass(expectedSecond);
+	});
+
+	test('should remove global key listeners on unmount while open', () => {
+		const offSpy = jest.spyOn(dispatcher, 'off');
+		const Root = FloatingLayerDecorator('div');
+		const popup = () => <div><Button>first</Button><Button>second</Button></div>;
+		const {rerender, unmount} = render(
+			<Root>
+				<ContextualButton popupComponent={popup} spotlightRestrict="self-only">
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		rerender(
+			<Root>
+				<ContextualButton open popupComponent={popup} spotlightRestrict="self-only">
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		offSpy.mockClear();
+		unmount();
+
+		expect(offSpy).toHaveBeenCalledWith('keydown', expect.any(Function));
+		expect(offSpy).toHaveBeenCalledWith('keyup', expect.any(Function));
+
+		offSpy.mockRestore();
 	});
 
 	test('should create and observe with `ResizeObserver` when the popup opened and disconnect when the popup closed', () => {

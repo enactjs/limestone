@@ -584,10 +584,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 
 			return () => {
-				if (componentProps.open) {
-					off('keydown', keyDownRef.current);
-					off('keyup', keyUpRef.current);
-				}
+				off('keydown', keyDownRef.current);
+				off('keyup', keyUpRef.current);
 				Spotlight.remove(localId);
 
 				if (resizeObserver.current) {
