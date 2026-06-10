@@ -1,11 +1,15 @@
 import fs from 'fs';
+import path from 'path';
 
 import {test as baseTest, expect as baseExpect} from '@playwright/test';
 
 import {assertComponentSource, TEST_DATA_FILE} from '../paths.js';
-import {getScreenshotName} from './screenshot-name.js';
+import {getScreenshotPathSegments} from './screenshot-name.js';
 import {openComponent} from './limestone-page.js';
 import {recordShard} from './shard-registry.js';
+
+const forceUpdate = process.env.PLAYWRIGHT_FORCE_UPDATE === '1';
+const componentExactMatch = process.env.PLAYWRIGHT_COMPONENT_EXACT === '1';
 
 const testIdFilter = process.env.PLAYWRIGHT_TEST_ID != null ?
 	Number.parseInt(process.env.PLAYWRIGHT_TEST_ID) :
@@ -26,8 +30,12 @@ function resolveComponentFilter (config) {
 function shouldIncludeTest (component, testId, title, configComponent) {
 	const componentFilter = resolveComponentFilter({component: configComponent});
 	if (componentFilter) {
-		const pattern = componentFilter.startsWith('^') ? componentFilter : `^${componentFilter}$`;
-		if (!component.match(new RegExp(pattern))) {
+		if (componentExactMatch) {
+			const pattern = componentFilter.startsWith('^') ? componentFilter : `^${componentFilter}$`;
+			if (!component.match(new RegExp(pattern))) {
+				return false;
+			}
+		} else if (!component.includes(componentFilter)) {
 			return false;
 		}
 	}
@@ -38,6 +46,32 @@ function shouldIncludeTest (component, testId, title, configComponent) {
 		return false;
 	}
 	return true;
+}
+
+function resolveSnapshotPath (testInfo, segments) {
+	return testInfo.snapshotPath(...segments, {kind: 'screenshot'});
+}
+
+/**
+ * WDIO autoSaveBaseline: create missing baselines without --update.
+ * PLAYWRIGHT_FORCE_UPDATE (--update) always overwrites existing baselines.
+ * Snapshot path: snapshots/<Component>/<TestName>/<case>.png (same as WDIO).
+ */
+async function assertPageScreenshot (page, testInfo, segments, options) {
+	const filePath = resolveSnapshotPath(testInfo, segments);
+
+	if (forceUpdate || !fs.existsSync(filePath)) {
+		fs.mkdirSync(path.dirname(filePath), {recursive: true});
+		await page.screenshot({
+			animations: 'disabled',
+			caret: 'hide',
+			type: 'png',
+			path: filePath
+		});
+		return;
+	}
+
+	await baseExpect(page).toHaveScreenshot(segments, options);
 }
 
 /**
@@ -92,10 +126,12 @@ export function registerScreenshotTests (config) {
 		});
 
 		for (const screenshotTest of cases) {
-			baseTest(screenshotTest.title, async ({page}) => {
+			baseTest(screenshotTest.title, async ({page}, testInfo) => {
 				await openComponent(page, screenshotTest.params);
-				await baseExpect(page).toHaveScreenshot(
-					getScreenshotName(
+				await assertPageScreenshot(
+					page,
+					testInfo,
+					getScreenshotPathSegments(
 						screenshotTest.params.component,
 						config.testName,
 						screenshotTest.params.caseTitle

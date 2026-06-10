@@ -13,6 +13,7 @@ export const SCREENSHOT_DIST = path.join(screenshotRoot, 'dist');
 export const SCREENSHOT_VIEW_INDEX = path.join(SCREENSHOT_DIST, 'Limestone-View', 'index.html');
 export const SCREENSHOT_COMPONENTS = path.join(screenshotRoot, 'apps', 'components');
 export const TEST_DATA_FILE = path.join(__dirname, '.test-data.json');
+export const SNAPSHOTS_DIR = path.join(__dirname, 'snapshots');
 
 function componentSourcePath (componentName) {
 	return path.join(SCREENSHOT_COMPONENTS, `${componentName}.js`);
@@ -23,16 +24,21 @@ export function assertScreenshotDist () {
 		return;
 	}
 
+	const distHint = !fs.existsSync(SCREENSHOT_DIST) ?
+		`Directory ${SCREENSHOT_DIST} does not exist. ` :
+		'';
+
 	if (process.env.PLAYWRIGHT_SKIP_BUILD) {
 		throw new Error(
-			`Missing ${SCREENSHOT_VIEW_INDEX}. ` +
-			'Unset PLAYWRIGHT_SKIP_BUILD to build automatically, or run npm run test-ss once to populate tests/screenshot/dist/.'
+			`${distHint}Missing ${SCREENSHOT_VIEW_INDEX}. ` +
+			'Remove --skip-build (or unset PLAYWRIGHT_SKIP_BUILD) to build automatically, ' +
+			'or run npm run test-ss once to populate tests/screenshot/dist/.'
 		);
 	}
 
 	throw new Error(
-		`Screenshot build did not produce ${SCREENSHOT_VIEW_INDEX}. ` +
-		'Run npm run bootstrap, then retry (buildApps(\'screenshot\') requires the enact CLI).'
+		`${distHint}Screenshot build did not produce ${SCREENSHOT_VIEW_INDEX}. ` +
+		'Run npm run bootstrap, link @enact/ui-test-utils if build-apps is missing from exports, then retry.'
 	);
 }
 
