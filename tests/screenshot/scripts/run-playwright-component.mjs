@@ -13,6 +13,7 @@
  *   npm run test-playwright:component -- Sprite --parallel 5
  */
 import {assertComponentSource} from '../playwright/paths.js';
+import {ensureScreenshotDist} from './ensure-screenshot-dist.mjs';
 import {parseComponentArgs} from './parse-component-args.mjs';
 import {spawnPlaywright} from './spawn-playwright.mjs';
 
@@ -41,10 +42,6 @@ if (update) {
 	env.PLAYWRIGHT_FORCE_UPDATE = '1';
 }
 
-if (skipBuild) {
-	env.PLAYWRIGHT_SKIP_BUILD = '1';
-}
-
 if (spec) {
 	env.PLAYWRIGHT_SPEC = spec;
 }
@@ -62,6 +59,12 @@ if (spec) {
 	filters.push(`spec ~ ${spec}`);
 }
 console.log(`Playwright: ${filters.join(', ')}`);
+
+const {skipBuild: skipBuildInSetup} = await ensureScreenshotDist({skipBuild});
+
+if (skipBuild || skipBuildInSetup) {
+	env.PLAYWRIGHT_SKIP_BUILD = '1';
+}
 
 const exitCode = spawnPlaywright({
 	env,
