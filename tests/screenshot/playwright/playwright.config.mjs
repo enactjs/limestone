@@ -6,6 +6,7 @@ import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT} from './paths.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
+const serverHealthUrl = `${PLAYWRIGHT_BASE_URL}/Limestone-View/index.html`;
 
 /** Jenkins: SPEC=Default → Default* shards; PLAYWRIGHT_SPEC=Default-spec → one file (TV). */
 function resolveTestMatch () {
@@ -26,6 +27,7 @@ export default defineConfig({
 	testIgnore: ['**/utils/**', '**/scripts/**'],
 	globalSetup: path.join(__dirname, 'global-setup.js'),
 	globalTeardown: path.join(__dirname, 'global-teardown.js'),
+	updateSnapshots: 'none',
 	snapshotPathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}'),
 	expect: {
 		toHaveScreenshot: {
@@ -62,8 +64,8 @@ export default defineConfig({
 		command: process.platform === 'win32' ?
 			`npx.cmd --yes serve "${distDir}" -l ${PLAYWRIGHT_PORT}` :
 			`npx --yes serve ${distDir} -l ${PLAYWRIGHT_PORT}`,
-		url: PLAYWRIGHT_BASE_URL,
-		reuseExistingServer: true,
+		url: serverHealthUrl,
+		reuseExistingServer: !process.env.CI,
 		timeout: 120000,
 		shell: process.platform === 'win32'
 	},

@@ -17,3 +17,8 @@ export function getScreenshotName (component, testName, title) {
 	return path.posix.join(component, testName, getScreenshotBasename(title));
 }
 
+/** Playwright snapshot segments — array form keeps WDIO folder layout (not flat dashes). */
+export function getScreenshotPathSegments (component, testName, title) {
+	return getScreenshotName(component, testName, title).split('/');
+}
+

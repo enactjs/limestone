@@ -14,11 +14,11 @@ npm run bootstrap                       # enact CLI — required for the screens
 npm link @enact/ui-test-utils           # see “Link local ui-test-utils” below until npm publishes ./build-apps
 npm run prepare-playwright              # optional if Chrome is already available (see below)
 
-# First time for a component — create PNG baselines (use parallel 1 for stability)
-npm run test-playwright:component -- Sprite --update
-
-# Verify screenshots against baselines
+# First time for a component — baselines are created automatically on pass
 npm run test-playwright:component -- Sprite
+
+# Force refresh baselines after UI changes
+npm run test-playwright:component -- Sprite --update
 
 # Compare Playwright vs WDIO runtime on one component
 npm run benchmark-screenshots -- Chip
@@ -56,6 +56,7 @@ tests/screenshot/
   dist/                   ← buildApps('screenshot') output (shared)
   specs/                  ← WDIO *-specs.js
   scripts/
+    run-playwright.mjs
     run-playwright-component.mjs
     run-component-wdio.mjs
     parse-component-args.mjs
@@ -126,7 +127,7 @@ registerScreenshotTests({
 
 ### 7. Screenshot
 
-`toHaveScreenshot(getScreenshotName('Chip', 'Limestone', <title>))` writes/compares under `playwright/snapshots/` (filename encodes component, test name, and case title — same naming rules as WDIO reference PNGs).
+`toHaveScreenshot(getScreenshotPathSegments('Chip', 'Limestone', <title>))` writes/compares under `playwright/snapshots/<Component>/<TestName>/<case>.png` — same folder layout as WDIO `dist/screenshots/reference/`.
 
 **One case only:**
 
@@ -154,18 +155,18 @@ npm run prepare-playwright   # optional on machines that already have Chrome (se
 
 `prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall`. Run it on **fresh machines and CI** (`build-scripts/enact-playwright-tests.sh`). On a machine where Chrome is already installed, Playwright prints *"chrome" is already installed on the system!"* — that is success; you can skip this step on later runs.
 
-`global-setup.js` calls `assertScreenshotDist()` after the build step. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error (not a 120s webServer timeout).
+`global-setup.js` calls `assertScreenshotDist()` after the build step. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error in global-setup (static server is started there after dist is verified).
 
 ### Build screenshot dist
 
-The first Playwright run builds `tests/screenshot/dist/` automatically. To reuse an existing build:
+The first Playwright run builds `tests/screenshot/dist/` automatically. To reuse an existing build, pass `--skip-build`:
 
-```powershell
-$env:PLAYWRIGHT_SKIP_BUILD='1'   # PowerShell
-# export PLAYWRIGHT_SKIP_BUILD=1  # bash
+```bash
+npm run test-playwright -- --skip-build
+npm run test-playwright:component -- Button --skip-build
 ```
 
-Or build via WDIO / `buildApps` before running Playwright.
+Or set `PLAYWRIGHT_SKIP_BUILD=1` (same effect as `--skip-build`).
 
 ### Link local `@enact/ui-test-utils` (until `./build-apps` is published)
 
@@ -203,13 +204,16 @@ When `@enact/ui-test-utils` is published with the `./build-apps` export, remove 
 
 ### Baselines
 
-Playwright needs PNG baselines under `playwright/snapshots/`. Without them, tests fail with “snapshot doesn't exist”.
+Missing PNG baselines under `playwright/snapshots/` are **created automatically** on the first run (same idea as WDIO `autoSaveBaseline`). Use `--update` to **force** overwriting existing baselines.
 
 ```bash
-# One component (recommended)
+# First run — baselines are written as tests pass
+npm run test-playwright:component -- Sprite
+
+# Force refresh all baselines for one component
 npm run test-playwright:component -- Sprite --update
 
-# Entire suite (long — thousands of PNGs)
+# Force refresh entire suite
 npm run test-playwright:update
 ```
 
@@ -226,10 +230,16 @@ All commands run from the **repository root**.
 | Command | What it does |
 |---------|----------------|
 | `npm run test-playwright` | Full suite — all components, all Playwright shards |
-| `npm run test-playwright:update` | Update all Playwright baselines |
+| `npm run test-playwright -- --component Button` | All specs; components whose name contains `Button` |
+| `npm run test-playwright -- --spec Light` | `Light*` specs only; all components |
+| `npm run test-playwright -- --component Button --spec Light` | Both filters combined |
+| `npm run test-playwright -- --skip-build` | Skip `buildApps('screenshot')` when `dist/` already exists |
+| `npm run test-playwright:update` | Force-update all Playwright baselines (`--update`) |
 | `npm run test-playwright:report` | Open HTML report (`playwright/reports/html/`) |
-| `npm run test-playwright:component -- <Name>` | One component, all its cases (Default neutral shard) |
-| `npm run test-playwright:component -- <Name> --update` | Refresh baselines for that component |
+| `npm run test-playwright:component -- <Name>` | One component, all spec shards |
+| `npm run test-playwright:component -- <Name> --update` | Force refresh baselines for that component |
+| `npm run test-playwright:component -- <Name> --skip-build` | Skip screenshot build |
+| `npm run test-playwright:component -- <Name> --spec Light` | One component, `Light*` specs only |
 | `npm run test-playwright:component -- <Name> --test-id <n>` | Single case by index |
 | `npm run test-playwright:component -- <Name> --parallel <n>` | Same cases, `n` Playwright workers |
 | `npm run test-ss:component -- <Name>` | WDIO equivalent (for comparison) |
@@ -239,16 +249,21 @@ All commands run from the **repository root**.
 
 ```bash
 # Verify (skip rebuild if dist exists)
-PLAYWRIGHT_SKIP_BUILD=1 npm run test-playwright:component -- Button
+npm run test-playwright:component -- Button --skip-build
 
 # Faster local run
-PLAYWRIGHT_SKIP_BUILD=1 npm run test-playwright:component -- Button --parallel 5
+npm run test-playwright:component -- Button --skip-build --parallel 5
 
 # Filter by title regex
 npm run test-playwright:component -- Button --title "Focused"
+
+# Light skin only
+npm run test-playwright:component -- Button --spec Light
 ```
 
-Component script sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component), `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**), and runs only **`specs/neutral/Default-spec.js`** (neutral skin, no high contrast). Light / high-contrast cases require the full suite or a different spec shard.
+Each run prints total wall-clock time when finished (e.g. `Playwright (Button) finished in 42.3s`).
+
+Component script sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component), `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**), and runs **all** matching spec shards unless `--spec` is set.
 
 #### `scripts/parse-component-args.mjs` — why it exists
 
@@ -256,7 +271,8 @@ npm passes arguments after `--` to the Node script. A naive parser such as `args
 
 `parseComponentArgs()` is a small shared parser used by:
 
-- `run-playwright-component.mjs` — `--update`, `--test-id`, `--title`, `--parallel`
+- `run-playwright.mjs` — `--component`, `--spec`, `--update`, `--skip-build`, `--parallel`
+- `run-playwright-component.mjs` — `--update`, `--skip-build`, `--spec`, `--test-id`, `--title`, `--parallel`
 - `benchmark.mjs` — `--build`, `--parallel`
 
 **Rules:**
@@ -264,6 +280,7 @@ npm passes arguments after `--` to the Node script. A naive parser such as `args
 - The **component name** is the first positional token (non-flag argument).
 - Flags with values (`--test-id`, `--title`, `--parallel`) consume the next token as their value, not as the component.
 - Boolean flags: `--update`, `--build`, `--skip-build`.
+- Value flags: `--spec` (component script and full suite via `run-playwright.mjs`).
 
 **Examples:**
 
@@ -284,11 +301,19 @@ npm install && npm run bootstrap
 npm link @enact/ui-test-utils   # until ./build-apps is on npm (see above)
 npm run prepare-playwright
 
-# First time or after UI changes
+# First run or after UI changes — force refresh all baselines
 npm run test-playwright:update
 
-# Verify
-PLAYWRIGHT_SKIP_BUILD=1 npm run test-playwright
+# Verify (all components, all specs)
+npm run test-playwright
+
+# Skip rebuild when dist/ already exists
+npm run test-playwright -- --skip-build
+
+# Filter examples
+npm run test-playwright -- --component Button
+npm run test-playwright -- --spec Light
+npm run test-playwright -- --component Button --spec Light
 
 # HTML report
 npm run test-playwright:report
@@ -308,8 +333,7 @@ npm run test-playwright:report
 
 ```powershell
 $env:PLAYWRIGHT_SPEC='Default'
-$env:PLAYWRIGHT_SKIP_BUILD='1'
-npm run test-playwright
+npm run test-playwright -- --skip-build
 ```
 
 ### Sharding vs workers
@@ -419,9 +443,11 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 
 | Variable | Effect |
 |----------|--------|
-| `PLAYWRIGHT_SKIP_BUILD=1` | Skip `buildApps('screenshot')` in global-setup |
+| `PLAYWRIGHT_SKIP_BUILD=1` | Skip `buildApps('screenshot')` in global-setup (same as `--skip-build`) |
+| `PLAYWRIGHT_FORCE_UPDATE=1` | Force overwrite baselines (same as `--update`) |
+| `PLAYWRIGHT_COMPONENT_EXACT=1` | Exact component name match (set by component script) |
+| `PLAYWRIGHT_COMPONENT` | Filter components (substring match from `--component`; exact when set by component script) |
 | `PLAYWRIGHT_REFRESH_TEST_DATA=1` | Force-regenerate `.test-data.json` |
-| `PLAYWRIGHT_COMPONENT` | Filter to one component (set by `run-playwright-component.mjs`) |
 | `PLAYWRIGHT_TEST_ID` | Filter to one case index |
 | `PLAYWRIGHT_TITLE` | Filter cases by title regex |
 | `PLAYWRIGHT_INSTANCES` | Shard divisor (`testId % instances`); component script sets `1` |
@@ -435,13 +461,12 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 
 | Issue | Fix |
 |-------|-----|
-| WebServer / server timeout | Ensure `tests/screenshot/dist/Limestone-View/index.html` exists (unset `PLAYWRIGHT_SKIP_BUILD`, run `npm run bootstrap`) |
-| Missing dist / build failed | Read the `assertScreenshotDist()` error; link `@enact/ui-test-utils` if you see `./build-apps` export error |
-| Snapshot does not exist | `npm run test-playwright:component -- <Name> --update` |
+| Missing dist / build failed | Read the `assertScreenshotDist()` error (fail-fast in global-setup, not a webServer timeout); link `@enact/ui-test-utils` if build-apps fails |
+| Snapshot diff | Re-baseline with `--update`, or run failing `--test-id` alone |
 | Snapshot diff on focus cases in parallel | Re-baseline with `--parallel 1`, or run failing `--test-id` alone |
 | No tests found | Check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_SPEC`; delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
 | Missing images on build | Place assets under `tests/screenshot/images/`, `videos/` |
-| Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port (must match `webServer` in config) |
+| Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port; restart any stale `serve` on 4568 |
 | `build-apps` import error | Link or pin `@enact/ui-test-utils` with export `./build-apps` (see **Link local @enact/ui-test-utils** above) |
 | Incomplete shard coverage | Ensure `PLAYWRIGHT_INSTANCES` matches invoked shard files (see **Sharding vs workers**) |
 | WDIO `--parallel` ignored | Update `@enact/ui-test-utils` (see ui-test-utils PR for `--parallel` CLI) |
@@ -467,8 +492,8 @@ On TV: typically `PLAYWRIGHT_SPEC=Default-spec` (single shard).
 
 1. Edit `tests/screenshot/apps/components/<Name>.js`
 2. Register in `tests/screenshot/apps/LimestoneComponents.js` if new component
-3. Run tests (build runs unless `PLAYWRIGHT_SKIP_BUILD=1`)
-4. `npm run test-playwright:component -- <Name> --update` for new PNGs
+3. Run tests (build runs unless `--skip-build`); missing baselines are created automatically
+4. `npm run test-playwright:component -- <Name> --update` to force refresh PNGs after UI changes
 
 ### New WDIO shard
 
@@ -479,8 +504,8 @@ Add matching `playwright/specs/**/<Name>-spec.js` with the same `skin`, `highCon
 ## Related npm scripts (root `package.json`)
 
 ```json
-"test-playwright": "playwright test --config tests/screenshot/playwright/playwright.config.mjs",
-"test-playwright:update": "... --update-snapshots",
+"test-playwright": "node tests/screenshot/scripts/run-playwright.mjs",
+"test-playwright:update": "node tests/screenshot/scripts/run-playwright.mjs -- --update",
 "test-playwright:report": "playwright show-report tests/screenshot/playwright/reports/html",
 "test-playwright:component": "node tests/screenshot/scripts/run-playwright-component.mjs",
 "test-ss:component": "node tests/screenshot/scripts/run-component-wdio.mjs",

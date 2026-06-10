@@ -1,4 +1,4 @@
-const VALUE_FLAGS = new Set(['--test-id', '--title', '--parallel']);
+const VALUE_FLAGS = new Set(['--test-id', '--title', '--parallel', '--spec']);
 
 /**
  * Parse component CLI args without treating flag values as the component name.
@@ -32,10 +32,12 @@ export function parseComponentArgs (argv = process.argv) {
 	return {
 		component,
 		update: flags.has('--update'),
+		// --build is used by benchmark.mjs only; Playwright runners use --skip-build instead.
 		withBuild: flags.has('--build'),
 		skipBuild: flags.has('--skip-build'),
 		testId: values['--test-id'],
 		title: values['--title'],
+		spec: values['--spec'],
 		parallel: Math.max(1, Number.parseInt(values['--parallel'] ?? '1') || 1)
 	};
 }

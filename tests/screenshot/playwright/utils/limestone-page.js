@@ -17,7 +17,7 @@ function buildUrl (urlExtra = '?locale=en-US') {
 }
 
 async function open (page, urlExtra = '?locale=en-US') {
-	await page.goto(buildUrl(urlExtra), {waitUntil: 'networkidle'});
+	await page.goto(buildUrl(urlExtra), {waitUntil: 'load'});
 }
 
 export async function openComponent (page, params) {
