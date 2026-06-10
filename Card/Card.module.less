@@ -94,10 +94,29 @@
 		font-weight: @lime-card-caption-font-weight;
 	}
 
-	.label {
-		font-size: @lime-card-label-font-size;
-		line-height: @lime-card-label-line-height;
-		font-weight: @lime-card-label-font-weight;
+	.labels {
+		gap: @lime-card-labels-spacing;
+
+		.labelContainer {
+			align-items: center;
+			gap: @lime-card-label-container-spacing;
+
+			.label {
+				font-size: @lime-card-label-font-size;
+				line-height: @lime-card-label-line-height;
+				font-weight: @lime-card-label-font-weight;
+			}
+
+			&:has(.labelIcon) {
+				.label {
+					margin-top: '~calc(@{lime-icon-small-size} - @{lime-card-label-line-height})';
+				}
+
+				.labelIcon {
+					margin: 0;
+				}
+			}
+		}
 	}
 
 	&.selected {
@@ -430,7 +449,8 @@
 					color: @lime-card-label-main-focused-color;
 				}
 
-				.label {
+				.label,
+				.labelIcon {
 					color: @lime-card-label-sub-focused-color;
 				}
 			}

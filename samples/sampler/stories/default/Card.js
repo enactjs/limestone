@@ -1,5 +1,6 @@
 import {Card, CardBase} from '@enact/limestone/Card';
 import icons from '@enact/limestone/Icon/IconList';
+import {Icon} from '@enact/limestone/Icon';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
@@ -19,9 +20,25 @@ const generateImageSrc = (color) => {
 };
 
 const iconsList = Object.keys(icons).sort();
+const randomIcon = iconsList[Math.floor(Math.random() * iconsList.length)];
 
 const prop = {
-	orientation: ['horizontal', 'vertical']
+	orientation: ['horizontal', 'vertical'],
+	icons: {
+		'no icons': null,
+		'1 icon': [
+			<Icon>{randomIcon}</Icon>
+		],
+		'2 icons': [
+			<Icon>{randomIcon}</Icon>,
+			<Icon>{randomIcon}</Icon>
+		],
+		'3 icons': [
+			<Icon>{randomIcon}</Icon>,
+			<Icon>{randomIcon}</Icon>,
+			<Icon>{randomIcon}</Icon>
+		]
+	}
 };
 
 export default {
@@ -38,6 +55,7 @@ export const _Card = (args) => (
 		disabled={args['disabled']}
 		fitImage={args['fitImage']}
 		icon={args['icon']}
+		labelIcons={prop.icons[args['labelIcons']]}
 		imageIconSrc={args['imageIconSrc']}
 		imageSize={args['imageSize']}
 		hasContainer={args['hasContainer']}
@@ -51,6 +69,7 @@ export const _Card = (args) => (
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		// eslint-disable-next-line no-undefined
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
+		secondaryLabelIcons={prop.icons[args['secondaryLabelIcons']]}
 		selected={args['selected']}
 		showProgressBar={args['showProgressBar']}
 		splitCaption={args['splitCaption']}
@@ -73,12 +92,14 @@ object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
 object('imageSize', _Card, Config);
 boolean('hasContainer', _Card, Config);
 text('label', _Card, Config, 'Card label');
+select('labelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config, 'no icons');
 select('orientation', _Card, prop.orientation, Config);
 object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
 number('progress', _Card, Config, 0.5);
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
+select('secondaryLabelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config, 'no icons');
 boolean('selected', _Card, Config);
 boolean('showProgressBar', _Card, Config);
 boolean('splitCaption', _Card, Config);

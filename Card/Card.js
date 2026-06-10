@@ -17,11 +17,13 @@
 
 import {forProp, forward, handle, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
+import {mapAndFilterChildren} from '@enact/core/util';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
-import {Cell, Row} from '@enact/ui/Layout';
+import {Cell, Column, Row} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
 import ri from '@enact/ui/resolution';
+import {cloneElement} from 'react';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
@@ -197,6 +199,19 @@ const CardBase = kind({
 		label: PropTypes.string,
 
 		/**
+		 * Icons to be included with the secondary caption.
+		 *
+		 * Typically, up to 3 icons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
+		labelIcons: PropTypes.oneOfType([
+			PropTypes.element,
+			PropTypes.arrayOf(PropTypes.element)
+		]),
+
+		/**
 		 * The layout orientation of the component.
 		 *
 		 * @type {('horizontal'|'vertical')}
@@ -263,6 +278,19 @@ const CardBase = kind({
 		secondaryLabel: PropTypes.string,
 
 		/**
+		 * Icons to be included with the ternary caption.
+		 *
+		 * Typically, up to 3 icons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
+		secondaryLabelIcons: PropTypes.oneOfType([
+			PropTypes.element,
+			PropTypes.arrayOf(PropTypes.element)
+		]),
+
+		/**
 		 * Applies a selected visual effect to the image.
 		 *
 		 * @type {Boolean}
@@ -323,9 +351,16 @@ const CardBase = kind({
 			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, orientation, progress, secondaryLabel, showProgressBar, splitCaption, withoutMarquee}) => {
+		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, secondaryLabel, secondaryLabelIcons, showProgressBar, splitCaption, withoutMarquee}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
+			const getLabelIcons = (icons, key) => {
+				return mapAndFilterChildren(icons, (labelIcon, idx) => (
+					<Cell shrink key={`${key}${idx}`}>
+						{cloneElement(labelIcon, {className: css.labelIcon})}
+					</Cell>
+				)) || null;
+			};
 
 			const captions = (
 				<Row className={css.captions}>
@@ -340,15 +375,39 @@ const CardBase = kind({
 					{withoutMarquee ? (
 						<Cell>
 							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
-							{typeof label !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div> : null}
-							{typeof secondaryLabel !== 'undefined' ? <div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div> : null}
+							<Column className={css.labels}>
+								{typeof label !== 'undefined' ? (
+									<Row className={css.labelContainer}>
+										{getLabelIcons(labelIcons, 'labelIcons')}
+										<div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div>
+									</Row>
+								) : null}
+								{typeof secondaryLabel !== 'undefined' ? (
+									<Row className={css.labelContainer}>
+										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons')}
+										<div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div>
+									</Row>
+								) : null}
+							</Column>
 							{showProgressBar ? <ProgressBar progress={progress} /> : null}
 						</Cell>
 					) : (
 						<Cell>
 							<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
-							{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
-							{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
+							<Column className={css.labels}>
+								{typeof label !== 'undefined' ? (
+									<Row className={css.labelContainer}>
+										{getLabelIcons(labelIcons, 'labelIcons')}
+										<Cell align="center"><Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee></Cell>
+									</Row>
+								) : null}
+								{typeof secondaryLabel !== 'undefined' ? (
+									<Row className={css.labelContainer}>
+										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons')}
+										<Cell align="center"><Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee></Cell>
+									</Row>
+								) : null}
+							</Column>
 							{showProgressBar ? <ProgressBar progress={progress} /> : null}
 						</Cell>
 					)}
@@ -404,8 +463,10 @@ const CardBase = kind({
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.label;
+		delete rest.labelIcons;
 		delete rest.progress;
 		delete rest.secondaryLabel;
+		delete rest.secondaryLabelIcons;
 		delete rest.showProgressBar;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
