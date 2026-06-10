@@ -27,12 +27,12 @@ function killProcessTree (childProcess) {
 /** Free the Playwright port when a previous run left `serve` listening or wedged. */
 export function killProcessOnPort (listenPort = port) {
 	if (process.platform === 'win32') {
-		const result = spawnSync('netstat', ['-ano'], {encoding: 'utf8', shell: true});
-		if (result.status !== 0) {
+		const netstat = spawnSync('netstat', ['-ano'], {encoding: 'utf8', shell: true});
+		if (netstat.status !== 0) {
 			return;
 		}
 
-		for (const line of result.stdout.split('\n')) {
+		for (const line of netstat.stdout.split('\n')) {
 			if (!line.includes(`:${listenPort}`) || !line.includes('LISTENING')) {
 				continue;
 			}
@@ -45,12 +45,12 @@ export function killProcessOnPort (listenPort = port) {
 		return;
 	}
 
-	const result = spawnSync('lsof', ['-ti', `:${listenPort}`], {encoding: 'utf8'});
-	if (result.status !== 0 || !result.stdout.trim()) {
+	const lsof = spawnSync('lsof', ['-ti', `:${listenPort}`], {encoding: 'utf8'});
+	if (lsof.status !== 0 || !lsof.stdout.trim()) {
 		return;
 	}
 
-	for (const pid of result.stdout.trim().split('\n')) {
+	for (const pid of lsof.stdout.trim().split('\n')) {
 		if (/^\d+$/.test(pid)) {
 			spawnSync('kill', ['-9', pid], {stdio: 'ignore'});
 		}
