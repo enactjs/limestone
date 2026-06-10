@@ -12,8 +12,9 @@
  *   npm run test-playwright -- --skip-build
  *   npm run test-playwright -- --parallel 5
  */
-import {spawnPlaywright} from './spawn-playwright.mjs';
+import {ensureScreenshotDist} from './ensure-screenshot-dist.mjs';
 import {parsePlaywrightArgs} from './parse-playwright-args.mjs';
+import {spawnPlaywright} from './spawn-playwright.mjs';
 
 const {component, spec, update, skipBuild, parallel, testId, title} = parsePlaywrightArgs();
 const env = {};
@@ -33,10 +34,6 @@ if (update) {
 	env.PLAYWRIGHT_FORCE_UPDATE = '1';
 }
 
-if (skipBuild) {
-	env.PLAYWRIGHT_SKIP_BUILD = '1';
-}
-
 if (parallel != null) {
 	env.PLAYWRIGHT_WORKERS = String(parallel);
 }
@@ -53,6 +50,12 @@ if (filters.length) {
 	console.log(`Playwright filters: ${filters.join(', ')}`);
 } else {
 	console.log('Playwright: all components, all specs');
+}
+
+const {skipBuild: skipBuildInSetup} = await ensureScreenshotDist({skipBuild});
+
+if (skipBuild || skipBuildInSetup) {
+	env.PLAYWRIGHT_SKIP_BUILD = '1';
 }
 
 const exitCode = spawnPlaywright({env});
