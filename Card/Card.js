@@ -105,6 +105,15 @@ const CardBase = kind({
 		centered: PropTypes.bool,
 
 		/**
+		 * Centers the title and `imageIconSrc` horizontally and vertically.
+		 * It only applies when `captionOverlay` or `captionOverlayOnFocus` is `true`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		centeredTitle: PropTypes.bool,
+
+		/**
 		 * The primary caption displayed with the image.
 		 *
 		 * @type {String}
@@ -351,9 +360,11 @@ const CardBase = kind({
 			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionOverlay, captionOverlayOnFocus, centered, children, css, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, secondaryLabel, secondaryLabelIcons, showProgressBar, splitCaption, withoutMarquee}) => {
+		children: ({captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, secondaryLabel, secondaryLabelIcons, showProgressBar, splitCaption, withoutMarquee}) => {
+			const isCenteredTitle = (captionOverlay || captionOverlayOnFocus) && orientation === 'vertical' && centeredTitle;
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
-			const alignment = centered && !imageIconSrc ? {alignment: 'center'} : null;
+			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
+			const CaptionsComponent = isCenteredTitle ? Column : Row;
 			const getLabelIcons = (icons, key) => {
 				return mapAndFilterChildren(icons, (labelIcon, idx) => (
 					<Cell shrink key={`${key}${idx}`}>
@@ -363,7 +374,7 @@ const CardBase = kind({
 			};
 
 			const captions = (
-				<Row className={css.captions}>
+				<CaptionsComponent className={css.captions}>
 					{hasImageIcon ? (
 						<Cell
 							className={css.imageIcon}
@@ -373,7 +384,7 @@ const CardBase = kind({
 						/>
 					) : null}
 					{withoutMarquee ? (
-						<Cell>
+						<Cell className={css.captionCell}>
 							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
 							<Column className={css.labels}>
 								{typeof label !== 'undefined' ? (
@@ -392,7 +403,7 @@ const CardBase = kind({
 							{showProgressBar ? <ProgressBar progress={progress} /> : null}
 						</Cell>
 					) : (
-						<Cell>
+						<Cell className={css.captionCell}>
 							<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
 							<Column className={css.labels}>
 								{typeof label !== 'undefined' ? (
@@ -408,10 +419,10 @@ const CardBase = kind({
 									</Row>
 								) : null}
 							</Column>
-							{showProgressBar ? <ProgressBar progress={progress} /> : null}
+							{(showProgressBar && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
 						</Cell>
 					)}
-				</Row>
+				</CaptionsComponent>
 			);
 
 			const splitCaptions = (
@@ -447,9 +458,10 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, icon, label, pressed, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
+		className: ({captionOverlay, captionOverlayOnFocus, centeredTitle, icon, label, pressed, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
+			centeredTitle,
 			pressed,
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay && !captionOverlayOnFocus),

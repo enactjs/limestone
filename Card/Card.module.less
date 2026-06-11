@@ -96,6 +96,7 @@
 
 	.labels {
 		gap: @lime-card-labels-spacing;
+		height: fit-content;
 
 		.labelContainer {
 			align-items: center;
@@ -108,8 +109,11 @@
 			}
 
 			&:has(.labelIcon) {
+				height: @lime-icon-small-size;
+				will-change: transform;
+
 				.label {
-					margin-top: '~calc(@{lime-icon-small-size} - @{lime-card-label-line-height})';
+					margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
 				}
 
 				.labelIcon {
@@ -194,6 +198,30 @@
 
 		&.captionOverlay .captions {
 			padding: @lime-card-vertical-caption-overlay-captions-padding;
+		}
+
+		&.captionOverlay.centeredTitle {
+			.captions {
+				gap: 24px;
+				justify-content: center;
+			}
+
+			.captionCell {
+				max-height: fit-content;
+			}
+
+			.children {
+				height: 100%;
+			}
+
+			.labels {
+				display: none;
+			}
+
+			.imageIcon {
+				width: @lime-card-selection-icon-size;
+				height: @lime-card-selection-icon-size;
+			}
 		}
 
 		&.captionOverlay {
@@ -393,6 +421,10 @@
 			&.captionOverlay {
 				.captions {
 					background: @lime-card-captions-gradient-color;
+				}
+
+				&.centeredTitle .captions {
+					background: transparent;
 				}
 
 				&.roundedImage .captions {

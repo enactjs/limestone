@@ -20,23 +20,23 @@ const generateImageSrc = (color) => {
 };
 
 const iconsList = Object.keys(icons).sort();
-const randomIcon = iconsList[Math.floor(Math.random() * iconsList.length)];
+const randomIcon = () => iconsList[Math.floor(Math.random() * iconsList.length)];
 
 const prop = {
 	orientation: ['horizontal', 'vertical'],
 	icons: {
 		'no icons': null,
 		'1 icon': [
-			<Icon>{randomIcon}</Icon>
+			<Icon>{randomIcon()}</Icon>
 		],
 		'2 icons': [
-			<Icon>{randomIcon}</Icon>,
-			<Icon>{randomIcon}</Icon>
+			<Icon>{randomIcon()}</Icon>,
+			<Icon>{randomIcon()}</Icon>
 		],
 		'3 icons': [
-			<Icon>{randomIcon}</Icon>,
-			<Icon>{randomIcon}</Icon>,
-			<Icon>{randomIcon}</Icon>
+			<Icon>{randomIcon()}</Icon>,
+			<Icon>{randomIcon()}</Icon>,
+			<Icon>{randomIcon()}</Icon>
 		]
 	}
 };
@@ -52,6 +52,7 @@ export const _Card = (args) => (
 		captionOverlay={args['captionOverlay']}
 		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
+		centeredTitle={args['centeredTitle']}
 		disabled={args['disabled']}
 		fitImage={args['fitImage']}
 		icon={args['icon']}
@@ -84,6 +85,7 @@ text('aria-label', _Card, Config);
 boolean('captionOverlay', _Card, Config);
 boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
+boolean('centeredTitle', _Card, Config);
 text('children', _Card, Config, 'Card Caption');
 boolean('disabled', _Card, Config);
 boolean('fitImage', _Card, Config);
