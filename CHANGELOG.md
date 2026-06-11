@@ -4,6 +4,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Alert` `size` prop for overlay type
+- `limestone/Alert` styling to match the latest GUI
+
 ### Changed
 
 - `limestone/ImageItem` styling to match the latest GUI
