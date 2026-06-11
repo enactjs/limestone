@@ -26,7 +26,7 @@ function parseTestIdFilter () {
 		);
 	}
 
-	return Number.parseInt(trimmed, 10);
+	return Number.parseInt(trimmed);
 }
 
 const testIdFilter = parseTestIdFilter();

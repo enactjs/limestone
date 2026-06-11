@@ -36,8 +36,8 @@ function printComponentUsage () {
 }
 
 function buildSuiteEnv () {
-	const {component, spec, update, skipBuild, parallel, testId, title} = parsePlaywrightArgs();
-	const env = {};
+	const {component, spec, update, skipBuild: skipBuildFlag, parallel, testId, title} = parsePlaywrightArgs();
+	const playwrightEnv = {};
 	const filters = [];
 
 	let resolvedComponent = component;
@@ -53,29 +53,29 @@ function buildSuiteEnv () {
 	}
 
 	if (resolvedComponent) {
-		env.PLAYWRIGHT_COMPONENT = resolvedComponent;
+		playwrightEnv.PLAYWRIGHT_COMPONENT = resolvedComponent;
 		filters.push(`component ~ ${resolvedComponent}`);
 	}
 
 	if (spec) {
-		env.PLAYWRIGHT_SPEC = spec;
+		playwrightEnv.PLAYWRIGHT_SPEC = spec;
 		filters.push(`spec ~ ${spec}`);
 	}
 
 	if (update) {
-		env.PLAYWRIGHT_FORCE_UPDATE = '1';
+		playwrightEnv.PLAYWRIGHT_FORCE_UPDATE = '1';
 	}
 
 	if (parallel != null) {
-		env.PLAYWRIGHT_WORKERS = String(parallel);
+		playwrightEnv.PLAYWRIGHT_WORKERS = String(parallel);
 	}
 
 	if (testId != null) {
-		env.PLAYWRIGHT_TEST_ID = testId;
+		playwrightEnv.PLAYWRIGHT_TEST_ID = testId;
 	}
 
 	if (resolvedTitle != null) {
-		env.PLAYWRIGHT_TITLE = resolvedTitle;
+		playwrightEnv.PLAYWRIGHT_TITLE = resolvedTitle;
 		filters.push(`title ~ ${resolvedTitle}`);
 	}
 
@@ -85,11 +85,11 @@ function buildSuiteEnv () {
 		console.log('Playwright: all components, all specs');
 	}
 
-	return {env, skipBuild, label: 'Playwright'};
+	return {env: playwrightEnv, skipBuild: skipBuildFlag, label: 'Playwright'};
 }
 
 function buildComponentEnv () {
-	const {component, update, skipBuild, spec, testId, title, parallel} = parseComponentArgs();
+	const {component, update, skipBuild: skipBuildFlag, spec, testId, title, parallel} = parseComponentArgs();
 
 	if (!component) {
 		printComponentUsage();
@@ -98,7 +98,7 @@ function buildComponentEnv () {
 
 	assertComponentSource(component);
 
-	const env = {
+	const playwrightEnv = {
 		PLAYWRIGHT_COMPONENT: component,
 		PLAYWRIGHT_COMPONENT_EXACT: '1',
 		PLAYWRIGHT_INSTANCES: '1',
@@ -106,19 +106,19 @@ function buildComponentEnv () {
 	};
 
 	if (update) {
-		env.PLAYWRIGHT_FORCE_UPDATE = '1';
+		playwrightEnv.PLAYWRIGHT_FORCE_UPDATE = '1';
 	}
 
 	if (spec) {
-		env.PLAYWRIGHT_SPEC = spec;
+		playwrightEnv.PLAYWRIGHT_SPEC = spec;
 	}
 
 	if (testId != null) {
-		env.PLAYWRIGHT_TEST_ID = testId;
+		playwrightEnv.PLAYWRIGHT_TEST_ID = testId;
 	}
 
 	if (title != null) {
-		env.PLAYWRIGHT_TITLE = title;
+		playwrightEnv.PLAYWRIGHT_TITLE = title;
 	}
 
 	const filters = [`component ${component}`];
@@ -127,7 +127,7 @@ function buildComponentEnv () {
 	}
 	console.log(`Playwright: ${filters.join(', ')}`);
 
-	return {env, skipBuild, label: `Playwright (${component})`};
+	return {env: playwrightEnv, skipBuild: skipBuildFlag, label: `Playwright (${component})`};
 }
 
 const {env, skipBuild, label} = isComponentPlaywrightRun() ?
