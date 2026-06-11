@@ -106,11 +106,11 @@ const pageViewsCommentedTests = [
 
 const pageViewsRtlTests = [
 	pageViewsSmokeTests[1],
+	pageViewsCommentedTests[1],
+	pageViewsCommentedTests[0],
 	pageViewsSmokeTests[2],
 	pageViewsSmokeTests[3],
-	pageViewsSmokeTests[5],
-	pageViewsSmokeTests[7],
-	pageViewsSmokeTests[9]
+	pageViewsCommentedTests[4]
 ];
 
 const PageViewsTests = [
