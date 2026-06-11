@@ -22,7 +22,7 @@ const inputData = {
 	longTitle:
 	'Core, The building blocks of an Enact application. Limestone, our touch-centric UI library.',
 	longChildren:
-	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis. Praesent quis tellus non diam viverra feugiat. In quis mattis purus, quis tristique mi. Mauris vitae tellus tempus, convallis ligula id, laoreet eros. Nullam eu tempus odio, non mollis tellus. Phasellus vitae iaculis nisl. Sed ipsum felis, suscipit vel est quis, interdum pretium dolor. Curabitur sit amet purus ac massa ullamcorper egestas ornare vel lectus. Nullam quis velit sed ex finibus cursus. Duis porttitor congue cursus.'
+	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis. Praesent quis tellus non diam viverra feugiat. In quis mattis purus, quis tristique mi. Mauris vitae tellus tempus, convallis ligula id, laoreet eros. Nullam eu tempus odio, non mollis tellus. Phasellus vitae iaculis nisl. Sed ipsum felis, suscipit vel est quis, interdum pretium dolor.'
 };
 
 export default {
@@ -60,6 +60,7 @@ export const WithLongTitle = (args) => (
 		buttonDirection={args['buttonDirection']}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -76,6 +77,7 @@ export const WithLongTitle = (args) => (
 boolean('open', WithLongTitle, Config);
 text('title', WithLongTitle, Config, inputData.longTitle);
 select('type', WithLongTitle, ['fullscreen', 'overlay'], Config);
+select('size', WithLongTitle, ['small', 'medium', 'large'], Config);
 select('buttonDirection', WithLongTitle, ['auto', 'horizontal', 'vertical'], Config, 'auto');
 text('children', WithLongTitle, Config, 'Additional text content for Alert');
 boolean('image', WithLongTitle, ImageConfig);
@@ -89,6 +91,7 @@ export const WithLongChildren = (args) => (
 		buttonDirection={args['buttonDirection']}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -105,6 +108,7 @@ export const WithLongChildren = (args) => (
 boolean('open', WithLongChildren, Config);
 text('title', WithLongChildren, Config, 'Fullscreen Alert Title');
 select('type', WithLongChildren, ['fullscreen', 'overlay'], Config);
+select('size', WithLongChildren, ['small', 'medium', 'large'], Config);
 select('buttonDirection', WithLongChildren, ['auto', 'horizontal', 'vertical'], Config, 'auto');
 text('children', WithLongChildren, Config, inputData.longChildren);
 boolean('image', WithLongChildren, ImageConfig);
@@ -118,6 +122,7 @@ export const WithLongTitleAndLongChildren = (args) => (
 		buttonDirection={args['buttonDirection']}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -134,6 +139,7 @@ export const WithLongTitleAndLongChildren = (args) => (
 boolean('open', WithLongTitleAndLongChildren, Config);
 text('title', WithLongTitleAndLongChildren, Config, inputData.longTitle);
 select('type', WithLongTitleAndLongChildren, ['fullscreen', 'overlay'], Config);
+select('size', WithLongTitleAndLongChildren, ['small', 'medium', 'large'], Config);
 select('buttonDirection', WithLongTitleAndLongChildren, ['auto', 'horizontal', 'vertical'], Config, 'auto');
 text('children', WithLongTitleAndLongChildren, Config, inputData.longChildren);
 boolean('image', WithLongTitleAndLongChildren, ImageConfig);
@@ -145,8 +151,10 @@ WithLongTitleAndLongChildren.storyName = 'with long title and long children';
 export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
 	<Alert
 		buttonDirection={args['buttonDirection']}
+		css={css}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -163,7 +171,7 @@ export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
 		<div>
 			<CheckboxItem>This is CheckboxItem</CheckboxItem>
 		</div>
-		<Scroller style={{height: ri.scaleToRem(800)}}>
+		<Scroller className={css.scroller}>
 			<div style={{height: ri.scaleToRem(1600)}}>
 				{args['children']}
 			</div>
@@ -174,6 +182,7 @@ export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
 boolean('open', WithDifferentTypesOfComponentsAndLongChildren, Config, true);
 text('title', WithDifferentTypesOfComponentsAndLongChildren, Config, 'Overlay Alert Title');
 select('type', WithDifferentTypesOfComponentsAndLongChildren, ['fullscreen', 'overlay'], Config, 'overlay');
+select('size', WithDifferentTypesOfComponentsAndLongChildren, ['small', 'medium', 'large'], Config);
 select('buttonDirection', WithDifferentTypesOfComponentsAndLongChildren, ['auto', 'horizontal', 'vertical'], Config, 'auto');
 text('children', WithDifferentTypesOfComponentsAndLongChildren, Config, inputData.longChildren);
 boolean('image', WithDifferentTypesOfComponentsAndLongChildren, ImageConfig);
@@ -188,6 +197,7 @@ export const WithThumbnailAndScroller = (args) => (
 		css={css}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title={args['title']}
 		type={args['type']}
 	>
@@ -195,7 +205,7 @@ export const WithThumbnailAndScroller = (args) => (
 			<AlertImage src={args['src']} type={args['type (image)']} />
 		</image>
 		{args['type'] === 'fullscreen' ? prop.threeButtons : prop.threeSmallButtons}
-		<Row>
+		<Row style={{flex: 1, height: 'auto'}}>
 			<AlertImage iconSize="small" src={args['src']} type="icon" />
 			<Scroller className={css.scroller}>
 				<div style={{height: ri.scaleToRem(1600)}}>
@@ -210,6 +220,7 @@ boolean('open', WithThumbnailAndScroller, Config, true);
 text('title', WithThumbnailAndScroller, Config, 'Overlay Alert Title');
 select('type', WithThumbnailAndScroller, ['fullscreen', 'overlay'], Config, 'overlay');
 select('buttonDirection', WithThumbnailAndScroller, ['auto', 'horizontal', 'vertical'], Config, 'auto');
+select('size', WithThumbnailAndScroller, ['small', 'medium', 'large'], Config);
 text('children', WithThumbnailAndScroller, Config, inputData.longChildren);
 select('type (image)', WithThumbnailAndScroller, ['icon', 'thumbnail'], ImageConfig, 'thumbnail');
 text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
@@ -221,6 +232,7 @@ export const WithCustomSizeImage = (args) => (
 		buttonDirection={args['buttonDirection']}
 		open={args['open']}
 		onClose={action('onClose')}
+		size={args['size']}
 		title="Fullscreen Alert Title"
 		type={args['type']}
 	>
@@ -234,6 +246,8 @@ export const WithCustomSizeImage = (args) => (
 
 boolean('open', WithCustomSizeImage, Config);
 select('buttonDirection', WithCustomSizeImage, ['auto', 'horizontal', 'vertical'], Config, 'auto');
+select('size', WithCustomSizeImage, ['small', 'medium', 'large'], Config);
 text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e', 'image'));
+select('type', WithCustomSizeImage, ['fullscreen', 'overlay'], Config, 'overlay');
 
 WithCustomSizeImage.storyName = 'with custom size image';
