@@ -52,7 +52,7 @@ export default async function globalSetup () {
 			const page = await pwBrowser.newPage();
 			const requestUrl = `${baseURL}/Limestone-View/?request`;
 			await page.goto(requestUrl, {waitUntil: 'load'});
-			await page.waitForFunction(() => window.__TEST_DATA != null, undefined, {timeout: 30000});
+			await page.waitForFunction(() => window.__TEST_DATA != null, null, {timeout: 30000});
 			const testData = await page.evaluate(() => window.__TEST_DATA);
 
 			if (testData == null) {
