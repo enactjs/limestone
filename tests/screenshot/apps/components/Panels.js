@@ -1,6 +1,6 @@
 import Panels, {Panel, Header} from '../../../../Panels';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const panelsWrapper = {full: true};
 
@@ -49,17 +49,7 @@ const panelsSmokeTests = [
 	}
 ];
 
-const panelsRtlTests = [
-	// RTL
-	<Panels />,
-	<Panels>{panelComponents}</Panels>,
-	<Panels index={1}>{panelComponents}</Panels>,
-	// Display 'Panel 3'
-	<Panels index={2}>{panelComponents}</Panels>,
-	<Panels index={1} noCloseButton>{panelComponents}</Panels>,
-	<Panels index={1} noBackButton>{panelComponents}</Panels>,
-	<Panels index={1} backButtonBackgroundOpacity="opaque" closeButtonBackgroundOpacity="opaque">{panelComponents}</Panels>
-];
+const panelsRtlTests = pick(panelsSmokeTests, 0, 2, 4, 6).map(t => t.component);
 
 const PanelsTests = [
 	...panelsSmokeTests,

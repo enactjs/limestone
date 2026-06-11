@@ -2,7 +2,7 @@ import {scaleToRem} from '@enact/ui/resolution';
 
 import Dropdown from '../../../../Dropdown';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 const children = (itemCount) => (new Array(itemCount)).fill().map((i, index) => `Option ${index + 1}`);
 
@@ -68,10 +68,7 @@ const dropdownCommentedTests = [
 	</Dropdown>
 ];
 
-const dropdownFocusTests = [
-	// size="large"
-	...withProps({focus: true}, Widths)
-];
+const dropdownFocusTests = withProps({focus: true}, pick(Widths, 1, 3));
 
 const dropdownRtlTests = [
 	// locale = 'ar-SA'

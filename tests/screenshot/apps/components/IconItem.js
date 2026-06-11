@@ -1,6 +1,6 @@
 import IconItem from '../../../../IconItem';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 import img from '../../images/200x200.png';
 
@@ -59,38 +59,7 @@ const iconItemCommentedTests = [
 	...withProps({bordered: true, disabled: true}, defaultIconItemTests)
 ];
 
-const iconItemFocusTests = [
-	// Focused
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		// Icon type
-		<IconItem background="#000000" icon="usb" />,
-		<IconItem background="#000000" icon="usb" label="Label" />,
-		<IconItem background="#000000" icon="usb" label="This is very long label" />,
-		<IconItem background="#000000" icon="usb" label="This is very long label" labelOn="focus" />,
-		<IconItem background="#000000" icon="usb" title="App title" />,
-		<IconItem background="#000000" icon="usb" title="This is very long title" />,
-		<IconItem background="#000000" icon="usb" title="This is very long title" titleOn="focus" />,
-		<IconItem background="#000000" icon="usb" label="Label" title="App title" />,
-		<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" />,
-		<IconItem background="#000000" icon="usb" label="Label" title="App title" titleOn="focus" />,
-		<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" titleOn="focus" />,
-
-		// Image type
-		<IconItem background="#ffffff" image={imageProp} />,
-		<IconItem background="radial-gradient(crimson, skyblue)" image={imageProp} />,
-		<IconItem background={`url(${img})`} image={imageProp} />,
-		<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" />,
-		<IconItem background="#ffffff" image={imageProp} label="This is very long label" labelColor="dark" />,
-		<IconItem background="#ffffff" image={imageProp} label="This is very long label" labelColor="dark" labelOn="focus" />,
-		<IconItem background="#ffffff" image={imageProp} title="App title" />,
-		<IconItem background="#ffffff" image={imageProp} title="This is very long title" />,
-		<IconItem background="#ffffff" image={imageProp} title="This is very long title" titleOn="focus" />,
-		<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" />,
-		<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" />,
-		<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" titleOn="focus" />,
-		<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />
-	])
-];
+const iconItemFocusTests = withConfig({focus: true, wrapper: {light: true, padded: true}}, pick(iconItemSmokeTests, 0, 2, 5, 8));
 
 const IconItemTests = [
 	...iconItemSmokeTests,

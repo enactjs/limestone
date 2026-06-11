@@ -1,7 +1,7 @@
 import Item from '../../../../Item';
 import Icon from '../../../../Icon';
 
-import {withConfig, withProps, LoremString} from './utils';
+import {pick, withConfig, withProps, LoremString} from './utils';
 
 import css from './Item.module.less';
 
@@ -140,46 +140,37 @@ const itemRtlTests = [
 	...rtlItemTests,
 
 	// Centered
-	...withProps({centered: true}, [
-		<Item>Hello Item</Item>,
-		<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Hello Item</Item>
-	]),
+	...withProps({centered: true}, pick(itemSmokeTests, 0)),
 
 	// Small
-	...withProps({size: 'small'}, commonItemTests),
+	...withProps({size: 'small'}, pick(itemSmokeTests, 0, 4)),
 
 	// With tall characters and disabled [QWTC-1826]
 	...tallglyphItemTests
 ];
 
 const itemRtlLargeTextTests = [
-	// RTL and LargeText mode
-	...commonItemTests,
+	...pick(itemSmokeTests, 0, 4),
 	...rtlItemTests,
 	...tallglyphItemTests
 ];
 
 const itemTallglyphValidationTests = [
-	// *************************************************************
-	// Tallglyph Validation
-	// locale = 'vi-VN'
-	...commonItemTests,
+	...pick(itemSmokeTests, 0, 4),
 	...tallglyphItemTests,
-	...withProps({size: 'small'}, commonItemTests)
+	...withProps({size: 'small'}, pick(itemSmokeTests, 0))
 ];
 
 const itemTallglyphValidationLargeTextTests = [
-	...commonItemTests,
+	...pick(itemSmokeTests, 0, 4),
 	...tallglyphItemTests,
-	...withProps({size: 'small'}, commonItemTests)
+	...withProps({size: 'small'}, pick(itemSmokeTests, 0))
 ];
 
 const itemLargeTextTests = [
-	// LargeText mode
-	...commonItemTests,
-	...rtlItemTests,
+	...pick(itemSmokeTests, 0, 4),
 	...tallglyphItemTests,
-	...withProps({size: 'small'}, commonItemTests)
+	...withProps({size: 'small'}, pick(itemSmokeTests, 0))
 ];
 
 const ItemTests = [

@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withConfig, withProps} from './utils';
+import {LoremString, pick, withConfig, withProps} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -75,41 +75,12 @@ const inputFieldCommentedTests = [
 	<SelectionInput value="Selection value" />
 ];
 
-const inputFieldFocusTests = [
-	// Focused
-	...withProps({focus: true}, [
-		<InputField />,
-		<InputField placeholder="Focused Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Focused Placeholder InputField" />,
-		<InputField placeholder="Focused Placeholder InputField" disabled />,
+const inputFieldFocusTests = withProps({focus: true}, pick(inputFieldSmokeTests, 0, 1, 4, 9));
 
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" />,
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" disabled />,
-
-		<InputField value="Focused Simple value" type="password" />,
-		<InputField value="Focused Simple value" type="password" disabled />,
-		<InputField value="https://enactjs.com" type="url" />,
-		<InputField value="https://enactjs.com" type="url" disabled />
-	])
-];
-
-const inputFieldLargeTextTests = [
-	// Large text mode
-	<InputField />,
-	<InputField placeholder="Placeholder InputField" />,
-	<InputField marqueeContent placeholder="Placeholder InputField" />,
-	<InputField placeholder="Placeholder InputField" disabled />,
-	<InputField value={LoremString} invalid />,
-	<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
-];
+const inputFieldLargeTextTests = pick(inputFieldSmokeTests, 0, 1, 3, 9);
 
 const inputFieldRtlTests = [
-	{
-		locale: 'ar-SA',
-		component: <InputField />
-	},
+	...withConfig({locale: 'ar-SA'}, pick(inputFieldSmokeTests, 0, 1, 4, 9)),
 
 	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
 	{
@@ -121,52 +92,6 @@ const inputFieldRtlTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField value="HHHHHH" />
-	},
-
-	{
-		locale: 'ar-SA',
-		component: <InputField placeholder="Placeholder InputField" />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField placeholder="Placeholder InputField" disabled />
-	},
-
-	// InputField field of type 'number' should be empty with letters as input
-	{
-		locale: 'ar-SA',
-		component: <InputField value="Simple value" type="number" />
-	},
-
-	// InputField field of type 'number' should be empty with letters as input
-	{
-		locale: 'ar-SA',
-		component: <InputField value="Simple value" type="number" disabled />
-	},
-
-	{
-		locale: 'ar-SA',
-		component: <InputField value="1234567890" type="number" />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField value="1234567890" type="number" disabled />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField value="Simple value" type="password" />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField value="Simple value" type="password" disabled />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField value="https://enactjs.com" type="url" />
-	},
-	{
-		locale: 'ar-SA',
-		component: <InputField value="https://enactjs.com" type="url" disabled />
 	},
 
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]

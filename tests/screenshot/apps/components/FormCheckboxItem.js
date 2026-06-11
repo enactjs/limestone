@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import FormCheckboxItem from '../../../../FormCheckboxItem';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 const basicFormCheckboxItemTests = (prefix) => {
 	const normalName = prefix + 'FormCheckboxItem';
@@ -72,76 +72,11 @@ const formCheckboxItemCommentedTests = [
 	...formCheckboxItemCenteredTests
 ];
 
-const formCheckboxItemRtlTests = [
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem>FormCheckboxItem</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem disabled>FormCheckboxItem</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem inline>FormCheckboxItem</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem disabled inline>FormCheckboxItem</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected disabled>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected inline>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected disabled inline>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem disabled indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem inline indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem disabled inline indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected disabled indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected inline indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem selected disabled inline indeterminate>FormCheckboxItem Checked</FormCheckboxItem>
-	},
-	{
-		locale: 'ar-SA',
-		component: <FormCheckboxItem indeterminate indeterminateIcon="lock">FormCheckboxItem Checked</FormCheckboxItem>
-	}
-];
+const formCheckboxItemRtlTests = withConfig({locale: 'ar-SA'}, [
+	...pick(basicFormCheckboxItemTests(''), 0, 4, 6),
+	<FormCheckboxItem indeterminate>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem indeterminate indeterminateIcon="lock">FormCheckboxItem Checked</FormCheckboxItem>
+]);
 
 const FormCheckboxItemTests = [
 	...formCheckboxItemSmokeTests,

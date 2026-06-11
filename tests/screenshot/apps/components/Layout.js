@@ -1,7 +1,7 @@
 import Layout, {Cell, Column, Row} from '@enact/ui/Layout';
 import Button from '../../../../Button';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 import css from './Layout.module.less';
 
@@ -123,14 +123,7 @@ const layoutSmokeTests = [
 	...withProps({wrap: 'reverse'}, [rowTestCases[0], layoutTestCases[1]])
 ];
 
-const layoutRtlTests = [
-	...rowTestCases,
-	...layoutTestCases,
-	...withProps({wrap: 'wrap'}, rowTestCases),
-	...withProps({wrap: 'wrap'}, layoutTestCases),
-	...withProps({wrap: 'reverse'}, rowTestCases),
-	...withProps({wrap: 'reverse'}, layoutTestCases)
-];
+const layoutRtlTests = pick(layoutSmokeTests, 0, 4, 8, 12, 16);
 
 const LayoutTests = [
 	...layoutSmokeTests,

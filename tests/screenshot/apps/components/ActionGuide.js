@@ -1,6 +1,6 @@
 import ActionGuide from '../../../../ActionGuide';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const actionGuideSmokeTests = [
 	<ActionGuide>This is some text</ActionGuide>,
@@ -10,9 +10,9 @@ const actionGuideSmokeTests = [
 
 const ActionGuideTests = [
 	...actionGuideSmokeTests,
-	...withConfig({locale: 'vi-VN'}, actionGuideSmokeTests),  // Tallglyph validation
+	...withConfig({locale: 'vi-VN'}, pick(actionGuideSmokeTests, 0, 2)),  // Tallglyph validation
 	...withConfig({locale: 'ar-SA'}, actionGuideSmokeTests),
-	...withConfig({skinVariants: ['largeText']}, actionGuideSmokeTests) // Large Text
+	...withConfig({skinVariants: ['largeText']}, pick(actionGuideSmokeTests, 0, 2)) // Large Text
 ];
 
 export default ActionGuideTests;

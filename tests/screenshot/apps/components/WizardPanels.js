@@ -2,7 +2,7 @@ import BodyText from '../../../../BodyText';
 import Button from '../../../../Button';
 import WizardPanels, {Panel} from '../../../../WizardPanels';
 
-import {LongerLoremString, withConfig} from './utils';
+import {LongerLoremString, pick, withConfig} from './utils';
 
 const customPrevButton = (<Button>Previous</Button>);
 const customNextButton = (<Button>Next</Button>);
@@ -79,57 +79,7 @@ const wizardCommentedTests = [
 	</WizardPanels>
 ];
 
-const wizardRtlTests = [
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels noSteps>
-				<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
-				<Panel>View 2</Panel>
-			</WizardPanels>
-		)
-	},
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels index={0}>
-				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
-				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
-			</WizardPanels>
-		)
-	},
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels index={1}>
-				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
-				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
-			</WizardPanels>
-		)
-	},
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels index={1} title="WizardPanel">
-				<Panel>View 1</Panel>
-				<Panel prevButton={customPrevButton} nextButton={customNextButton}>View 2</Panel>
-				<Panel>View 3</Panel>
-			</WizardPanels>
-		)
-	},
-
-	// RTL
-	{
-		component: (
-			<WizardPanels index={1} title="WizardPanel">
-				<Panel>View 1</Panel>
-				<Panel>View 2</Panel>
-				<Panel>View 3</Panel>
-			</WizardPanels>
-		),
-		locale: 'ar-SA'
-	}
-];
+const wizardRtlTests = withConfig({locale: 'ar-SA'}, pick(wizardSmokeTests, 0, 2));
 
 const WizardPanelsTests = [
 	...withConfig({wrapper}, [

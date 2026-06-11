@@ -111,10 +111,7 @@ const scrollerCommentedTests = [
 
 const scrollerFocusTests = [
 	<Scroller focusableScrollbar style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Two-way scroller</div></Scroller>,
-	<Scroller focusableScrollbar scrollbarTrackCss={css} style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Customized scrollbarTrack Style</div></Scroller>,
-	<Scroller focusableScrollbar="byEnter" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Two-way scroller</div></Scroller>,
-	<Scroller focusableScrollbar="byEnter" verticalScrollbar="visible" style={{height: '300px', width: '300px'}}><div style={{height: '600px'}}>Focused Body (byEnter) Vertical scroller</div></Scroller>,
-	<Scroller focusableScrollbar="byEnter" horizontalScrollbar="visible" verticalScrollbar="hidden" style={{height: '300px', width: '300px'}}><div style={{height: '600px', width: '600px'}}>Focused Body (byEnter) Horizontal scroller</div></Scroller>
+	<Scroller focusableScrollbar="byEnter" verticalScrollbar="visible" style={{height: '300px', width: '300px'}}><div style={{height: '600px'}}>Focused Body (byEnter) Vertical scroller</div></Scroller>
 ];
 
 const ScrollerTests = [

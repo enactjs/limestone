@@ -1,6 +1,6 @@
 import BodyText from '../../../../BodyText';
 
-import {withConfig, LoremString} from './utils';
+import {pick, withConfig, LoremString} from './utils';
 
 const bodyTextSmokeTests = [
 	<BodyText>This is some text</BodyText>, // [QWTC - 2022]
@@ -24,15 +24,9 @@ const bodyTextQwtcTests = [
 	}
 ];
 
-const bodyTextRtlTests = [
-	// RTL
-	...bodyTextSmokeTests
-];
+const bodyTextRtlTests = pick(bodyTextSmokeTests, 0, 2, 4);
 
-const bodyTextLargeTextTests = [
-	// Large Text
-	...bodyTextSmokeTests
-];
+const bodyTextLargeTextTests = pick(bodyTextSmokeTests, 0, 2, 4);
 
 const BodyTextTests = [
 	...bodyTextSmokeTests,

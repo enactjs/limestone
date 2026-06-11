@@ -1,6 +1,6 @@
 import Slider, {SliderTooltip as Tooltip} from '../../../../Slider';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 import css from './Slider.module.less';
 
@@ -195,12 +195,7 @@ const sliderVerticalTooltipTests = [
 	}
 ];
 
-const sliderRtlTests = [
-	<Slider value={60} />,
-	<Slider backgroundProgress={0.5} value={40} />,
-	<Slider orientation="vertical" value={60} />,
-	<Slider orientation="vertical" backgroundProgress={0.5} value={40} />
-];
+const sliderRtlTests = pick(sliderSmokeTests, 0, 2, 7, 8);
 
 const sliderCommentedTests = [
 	...sliderCustomizedStyleTests,

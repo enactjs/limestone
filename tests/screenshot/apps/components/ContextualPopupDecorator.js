@@ -3,7 +3,7 @@ import ri from '@enact/ui/resolution';
 import Button from '../../../../Button';
 import ContextualPopupDecorator from '../../../../ContextualPopupDecorator';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const Popup = () => <div>hello</div>;
 const Wrapped = ContextualPopupDecorator(Button);
@@ -60,22 +60,8 @@ const contextualPopupSmokeTests = [
 ];
 
 const contextualPopupRtlTests = [
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
-	<ContextualPopupButton />,
-	<ContextualPopupButton direction="above center" />,
-	<ContextualPopupButton direction="below center" />,
-	<ContextualPopupButton direction="left middle" />,
-	<ContextualPopupButton direction="right middle" />,
-
-	// *************************************************************
-	// ContextualPopupButton with no arrow
-	// *************************************************************
-	<ContextualPopupButtonNoArrow offset="none" />,
-	<ContextualPopupButtonNoArrow offset="overlap" />,
-	<ContextualPopupButtonNoArrow offset="small" />,
-	<ContextualPopupButtonNoArrow offset="large" />
+	...pick(contextualPopupSmokeTests, 1, 3),
+	...pick(contextualPopupSmokeTests, 10, 13)
 ];
 
 const contextualPopupCommentedTests = [

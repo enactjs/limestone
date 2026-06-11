@@ -2,7 +2,7 @@ import ri from '@enact/ui/resolution';
 
 import ImageItem from '../../../../ImageItem';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -44,38 +44,17 @@ const imageItemBaseCases = [
 	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection wideImage >Short</ImageItem>
 ];
 
-const imageItemFocusTests = [
-	// Vertical
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical">Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img} />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short">Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" selected showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img} css={css}>Focused Short</ImageItem>,
-
-	// Horizontal
-	<ImageItem src={img} orientation="horizontal" />,
-	<ImageItem src={img} orientation="horizontal">Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" />,
-	<ImageItem src={img} orientation="horizontal" imageIconSrc={img} />,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short">Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
-];
-
-const defaultImageItemCases = [
-	...imageItemBaseCases,
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests)
-];
-
 const imageItemSmokeTests = [
 	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
 	<ImageItem src={img} orientation="horizontal" />,
 	<ImageItem src={img} orientation="horizontal" wideImage />
+];
+
+const imageItemFocusTests = pick(imageItemSmokeTests, 0, 1, 2);
+
+const defaultImageItemCases = [
+	...imageItemBaseCases,
+	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests)
 ];
 
 const imageItemCommentedTests = [
@@ -97,14 +76,14 @@ const ImageItemTests = [
 	...imageItemSmokeTests,
 	...imageItemCommentedTests,
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests),
-	...withConfig({skinVariants: ['largeText']}, defaultImageItemCases),
+	...withConfig({skinVariants: ['largeText']}, imageItemSmokeTests),
 	...withConfig({
 		focusRing: true,
 		focus: true
 	}, [
 		<ImageItem src={img} style={{height: ri.scale(360), width: ri.scale(480)}} orientation="vertical" />
 	]),
-	...withConfig({locale: 'ar-SA'}, defaultImageItemCases)
+	...withConfig({locale: 'ar-SA'}, imageItemSmokeTests)
 ];
 
 export default ImageItemTests;

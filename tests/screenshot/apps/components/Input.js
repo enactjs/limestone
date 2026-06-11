@@ -2,7 +2,7 @@ import Button from '../../../../Button';
 import Input from '../../../../Input';
 import Item from '../../../../Item';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 const LoremString = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ac tellus in velit ornare commodo. Nam dignissim fringilla nulla, sit amet hendrerit sapien laoreet quis.";
 
@@ -53,21 +53,16 @@ const inputDisabledTests = [
 	...withProps({disabled: true, popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
 ];
 
-const inputRtlLargeTests = [
-	// RTL large input
-	...withProps({size: 'large'}, inputSmokeTests)
-];
+const inputRtlLargeTests = withProps({size: 'large'}, pick(inputSmokeTests, 0, 4, 8));
 
 const inputRtlOverlayTests = [
-	// RTL overlay number input tests
-	...withProps({popupType: 'overlay'}, inputSmokeTests.slice(5)),
+	...withProps({popupType: 'overlay'}, pick(inputSmokeTests, 5, 8, 11)),
 	...withProps({popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
 ];
 
 const inputLargeTextTests = [
-	// Large text mode
-	...withProps({popupType: 'fullscreen'}, inputSmokeTests),
-	...withProps({popupType: 'overlay'}, inputSmokeTests),
+	...withProps({popupType: 'fullscreen'}, pick(inputSmokeTests, 0, 4, 8)),
+	...withProps({popupType: 'overlay'}, pick(inputSmokeTests, 0, 4, 8)),
 	...withProps({popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
 ];
 

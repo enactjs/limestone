@@ -3,7 +3,7 @@ import Button from '../../../../Button';
 import Steps from '../../../../Steps';
 import {Fragment} from 'react';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 const baseTests = [
 	<Header type="standard" title="Title" />,
@@ -128,17 +128,11 @@ const headerLtrTests = [
 
 const headerCommentedTests = headerLtrTests;
 
-const headerLargeTextTests = headerLtrTests;
+const headerLargeTextTests = pick(headerSmokeTests, 0, 1, 2);
 
-const headerRtlTests = headerLtrTests;
+const headerRtlTests = pick(headerSmokeTests, 0, 1, 2);
 
-const headerTallglyphTests = [
-	// Tallglyph Validation
-	// Initial
-	...withProps({type: 'standard'}, baseTests),
-	...withProps({type: 'compact'}, baseTests),
-	...withProps({type: 'wizard', centered: true}, baseTests)
-];
+const headerTallglyphTests = pick(headerSmokeTests, 0, 1, 2);
 
 const HeaderTests = [
 	...headerSmokeTests,

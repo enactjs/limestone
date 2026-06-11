@@ -2,7 +2,7 @@ import {generateDate} from '@enact/ui-test-utils/utils';
 
 import DatePicker from '../../../../DatePicker';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const jan30 = generateDate('2019-01-30');
 const jan31 = generateDate('2019-01-31');
@@ -21,19 +21,7 @@ const datePickerQwtcTests = [
 	<DatePicker defaultValue={minYear} noLabel />
 ];
 
-const datePickerRtlTests = [
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
-	{
-		locale: 'ar-SA',
-		component: <DatePicker defaultValue={jan31} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <DatePicker defaultValue={jan31} disabled />
-	}
-];
+const datePickerRtlTests = withConfig({locale: 'ar-SA'}, pick(datePickerSmokeTests, 0, 1));
 
 const datePickerLargeTextTests = [
 	// large text [QWTC-2092]
@@ -44,12 +32,7 @@ const datePickerLargeTextTests = [
 ];
 
 const datePickerFocusTests = [
-	// *************************************************************
-	// focused
-	// *************************************************************
-	<DatePicker defaultValue={jan30} />,
-	<DatePicker defaultValue={jan30} disabled />,
-	<DatePicker defaultValue={jan30} noLabel />
+	<DatePicker defaultValue={jan30} />
 ];
 
 const DatePickerTests = [

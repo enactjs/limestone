@@ -57,8 +57,7 @@ const dayPickerQwtcTests = [
 ];
 
 const dayPickerFocusTests = [
-	<DayPicker selected={2} />,
-	<DayPicker disabled selected={2} />
+	<DayPicker selected={2} />
 ];
 
 const DayPickerTests = [

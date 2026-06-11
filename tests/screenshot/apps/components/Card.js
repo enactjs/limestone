@@ -2,7 +2,7 @@ import Card from '../../../../Card';
 import Icon from '../../../../Icon';
 import Image from '../../../../Image';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -111,7 +111,9 @@ const cardFocusTests = [
 const cardLargeTextTests = [
 	// Large text
 	...withConfig({skinVariants: ['largeText']}, defaultCardTests),
-	...withConfig({skinVariants: ['largeText']}, newTypeCardTests)
+	...withConfig({skinVariants: ['largeText']}, newTypeCardTests),
+	...withConfig({focus: true, wrapper: {padded: true}}, pick(cardSmokeTests, 0, 5, 10)),
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, pick(cardSmokeTests, 0)))
 ];
 
 const CardTests = [

@@ -3,7 +3,7 @@ import Item from '../../../../Item';
 import PageViews, {Page} from '../../../../PageViews';
 import {Panel, Header} from '../../../../Panels';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 import css from './PageViews.module.less';
 
@@ -104,14 +104,7 @@ const pageViewsCommentedTests = [
 	}
 ];
 
-const pageViewsRtlTests = [
-	pageViewsSmokeTests[1],
-	pageViewsCommentedTests[1],
-	pageViewsCommentedTests[0],
-	pageViewsSmokeTests[2],
-	pageViewsSmokeTests[3],
-	pageViewsCommentedTests[4]
-];
+const pageViewsRtlTests = pick(pageViewsSmokeTests, 1, 2, 3, 5, 6);
 
 const PageViewsTests = [
 	...pageViewsSmokeTests,

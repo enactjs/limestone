@@ -1,7 +1,7 @@
 import Chips, {Chip} from '../../../../Chips';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const chipsSmokeTests = [
 	<Chips>
@@ -41,19 +41,7 @@ const chipsSmokeTests = [
 	</Chips>
 ];
 
-const chipsFocusTests = [
-	// When Chips get focus, the focus goes to the Chip
-	<Chips>
-		<Chip deleteButton>Focused Chip 1</Chip>
-		<Chip deleteButton>Chip 2</Chip>
-		<Chip deleteButton>Chip 3</Chip>
-	</Chips>,
-	<Chips orientation="horizontal">
-		<Chip>Focused Chip 1</Chip>
-		<Chip>Chip 2</Chip>
-		<Chip>Chip 3</Chip>
-	</Chips>
-];
+const chipsFocusTests = pick(chipsSmokeTests, 2, 1);
 
 const ChipsTests = [
 	...chipsSmokeTests,

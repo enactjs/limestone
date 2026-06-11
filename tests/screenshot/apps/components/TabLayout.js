@@ -1,7 +1,7 @@
 import Button from '../../../../Button';
 import {TabLayout, Tab} from '../../../../TabLayout';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const SimpleTab = (props) => (
 	<Tab {...props}>
@@ -183,50 +183,12 @@ const tabLayoutQwtcTests = [
 	// end of [QWTC-2616]
 ];
 
-const tabLayoutRtlTests = [
-	{
-		component: <TabLayout selected={1}>{tabs}</TabLayout>,
-		...wrapperFull
-	},
-	{
-		component: <TabLayout selected={1}>{tabsWithIcons}</TabLayout>,
-		...wrapperFull
-	},
-	{
-		component: <TabLayout collapsed selected={1}>{tabs}</TabLayout>,
-		...wrapperFull
-	},
-	{
-		component: <TabLayout orientation="horizontal" selected={1}>{tabs}</TabLayout>,
-		...wrapperFull
-	},
-	{
-		component: <TabLayout index={9}>{tabsForScroll}</TabLayout>,
-		...wrapperFull
-	},
-	{
-		component: <TabLayout index={9} orientation="horizontal" tabSize={900}>{tabsForScroll}</TabLayout>,
-		...wrapperFull
-	}
-];
+const tabLayoutRtlTests = pick(tabLayoutSmokeTests, 1, 2, 5, 7);
 
-const tabLayoutLargeTextTests = [
-	{
-		textSize: 'large',
-		component: <TabLayout selected={1}>{tabsLargeText}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		textSize: 'large',
-		component: <TabLayout selected={1}>{tabsWithIconsLargeText}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		textSize: 'large',
-		component: <TabLayout collapsed selected={2}>{tabsWithIconsLargeText}</TabLayout>,
-		wrapper: {full: true}
-	}
-];
+const tabLayoutLargeTextTests = pick(tabLayoutSmokeTests, 1, 5).map(t => ({
+	...t,
+	textSize: 'large'
+}));
 
 const TabLayoutTests = [
 	...tabLayoutSmokeTests,

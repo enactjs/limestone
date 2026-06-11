@@ -1,6 +1,6 @@
 import RangePicker from '../../../../RangePicker';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 import css from './Picker.module.less';
 
@@ -122,21 +122,8 @@ const rangePickerTitleTests = [
 ];
 
 const rangePickerFocusTests = [
-	// *************************************************************
-	// joined and focused
-	// *************************************************************
 	<RangePicker joined min={10} max={15} value={12} />,
-	<RangePicker disabled joined min={10} max={15} value={12} />,
-	<RangePicker width="small" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" joined min={10} max={15} value={12} />,
-	<RangePicker width="large" joined min={10} max={15} value={12} />,
-	<RangePicker width={3} joined min={10} max={15} value={12} />,
-	<RangePicker orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker disabled orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="small" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="large" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width={3} orientation="vertical" joined min={10} max={15} value={12} />
+	<RangePicker orientation="vertical" joined min={10} max={15} value={12} />
 ];
 
 const rangePickerRtlTests = [
@@ -155,64 +142,12 @@ const rangePickerRtlTests = [
 	// End of [QWTC-2143]
 ];
 
-const rangePickerLargeTextTests = [
-	{
-		textSize: 'large',
-		component: <RangePicker orientation="vertical" min={0} max={100} value={5} />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker orientation="vertical" width="medium" min={0} max={100} value={5} />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker orientation="vertical" width="large" min={0} max={100} value={5} />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker width="medium" min={0} max={100} value={5} disabled />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker orientation="vertical" width="large" min={0} max={5} value={5} disabled />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker min={0} max={5} value={0} width="large" wrap />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker min={0} max={5} orientation="vertical" value={0} width="large" wrap />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker min={0} max={5} value={0} wrap joined width="medium" />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker min={0} max={5} value={0} wrap joined changedBy="arrow" width="medium" />
-	},
-	{
-		textSize: 'large',
-		component: <RangePicker min={0} max={5} value={0} orientation="vertical" wrap joined width="large" />
-	}
-];
+const rangePickerLargeTextTests = pick(rangePickerSmokeTests, 0, 4, 8).map(component => ({
+	textSize: 'large',
+	component
+}));
 
-const rangePickerRtlFocusTests = [
-	// joined and focused
-	<RangePicker joined min={10} max={15} value={12} />,
-	<RangePicker disabled joined min={10} max={15} value={12} />,
-	<RangePicker width="small" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" joined min={10} max={15} value={12} />,
-	<RangePicker width="large" joined min={10} max={15} value={12} />,
-	<RangePicker width={3} joined min={10} max={15} value={12} />,
-	<RangePicker orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker disabled orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="small" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="large" orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width={3} orientation="vertical" joined min={10} max={15} value={12} />
-];
+const rangePickerRtlFocusTests = rangePickerFocusTests;
 
 const rangePickerCommentedTests = [
 	...rangePickerDisabledTests,

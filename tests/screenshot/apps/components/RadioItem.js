@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import RadioItem from '../../../../RadioItem';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const radioItemSmokeTests = [
 	<RadioItem>RadioItem</RadioItem>,
@@ -92,25 +92,9 @@ const radioItemFocusTests = [
 ];
 
 const radioItemLargeTextTests = [
-	<RadioItem>Focused RadioItem</RadioItem>,
+	...pick(radioItemSmokeTests, 0, 2, 4),
 	// [QWTC-2231]
 	<RadioItem disabled>Focused RadioItem</RadioItem>,
-	<RadioItem inline>Focused Inline RadioItem</RadioItem>,
-	<RadioItem disabled inline>Focused RadioItem Not Checked</RadioItem>,
-	<RadioItem selected disabled>Focused RadioItem Checked</RadioItem>,
-	// Selected - disabled - inline
-	<RadioItem selected disabled inline>Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected inline>Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected>Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected disabled icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected disabled inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	// Icon slotBefore
-	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
-	<RadioItem inline><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
-	<RadioItem selected><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
 	// [QWTC-1851]
 	<RadioItem disabled>مساء الخير</RadioItem>,
 	// [QWTC-1851]
@@ -137,10 +121,7 @@ const radioItemLargeTextTests = [
 
 const radioItemRtlTests = [
 	// RadioItem* is NOT selected - RTL [QWTC-1854]
-	<RadioItem>RadioItem</RadioItem>,
-	<RadioItem disabled>RadioItem</RadioItem>,
-	<RadioItem inline>Inline RadioItem</RadioItem>,
-	<RadioItem disabled inline>RadioItem Not Checked</RadioItem>,
+	...pick(radioItemSmokeTests, 0, 2, 3),
 	// [QWTC-1851]
 	<RadioItem disabled>مساء الخير</RadioItem>,
 	// [QWTC-1851]

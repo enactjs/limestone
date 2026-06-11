@@ -1,6 +1,6 @@
 import ProgressButton from '../../../../ProgressButton';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const progressButtonSmokeTests = [
 	<ProgressButton>Update</ProgressButton>,
@@ -85,20 +85,9 @@ const progressButtonTransparentTests = [
 	<ProgressButton backgroundOpacity="transparent" color="blue" minWidth={false}>Update</ProgressButton>
 ];
 
-const progressButtonRtlTests = [
-	<ProgressButton showProgress progress={0.5}>Update</ProgressButton>,
-	<ProgressButton color="red">Update</ProgressButton>,
-	<ProgressButton selected color="red">Update</ProgressButton>,
-	<ProgressButton size="large" showProgress progress={0.5}>Update</ProgressButton>
-];
+const progressButtonRtlTests = pick(progressButtonSmokeTests, 2, 4);
 
-const progressButtonFocusTests = [
-	<ProgressButton>Focused Update</ProgressButton>,
-	<ProgressButton disabled>Focused Update</ProgressButton>,
-	<ProgressButton showProgress progress={0.5}>Focused Update</ProgressButton>,
-	<ProgressButton color="red">Focused Update</ProgressButton>,
-	<ProgressButton size="large" showProgress progress={0.5}>Focused Update</ProgressButton>
-];
+const progressButtonFocusTests = pick(progressButtonSmokeTests, 0, 2, 4);
 
 const progressButtonCommentedTests = [
 	...progressButtonSizeLargeTests,

@@ -1,5 +1,7 @@
 import {isValidElement, cloneElement} from 'react';
 
+const pick = (tests, ...indices) => indices.map(i => tests[i]).filter(t => t != null);
+
 const withProps = (props, tests) => {
 	return tests.map(t => {
 		if (isValidElement(t)) {
@@ -37,6 +39,7 @@ const LongerLoremString = `Longer ${LoremString} ${LoremString} ${LoremString} $
 export {
 	LongerLoremString,
 	LoremString,
+	pick,
 	withConfig,
 	withProps
 };

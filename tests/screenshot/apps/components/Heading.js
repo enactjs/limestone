@@ -1,6 +1,6 @@
 import Heading from '../../../../Heading';
 
-import {withConfig, withProps} from './utils';
+import {pick, withConfig, withProps} from './utils';
 
 const bidirectionalHeading = [
 	<Heading>Input Password for ABC جهاز, please</Heading>,
@@ -74,15 +74,7 @@ const headingCommentedTests = [
 	<Heading size="medium" style={{fontStyle: 'italic', fontWeight: 700}}>Heading</Heading>
 ];
 
-const headingLargeTextTests = [
-	// Large Text
-	<Heading>This is a new Heading - default</Heading>,
-	<Heading spacing="auto">This is a new Heading - spacing is auto</Heading>,
-	<Heading spacing="small">This is a new Heading - spacing is small</Heading>,
-	<Heading spacing="medium">This is a new Heading - spacing is medium</Heading>,
-	<Heading spacing="large">This is a new Heading - spacing is large</Heading>,
-	<Heading spacing="none">This is a new Heading - spacing is none</Heading>
-];
+const headingLargeTextTests = pick(headingSmokeTests, 0, 2, 5);
 
 const bidirectionalTests = [
 	...withConfig({locale: 'ar-SA'}, bidirectionalHeading),

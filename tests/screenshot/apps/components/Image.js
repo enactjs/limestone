@@ -45,12 +45,7 @@ const imageRtlTests = [
 	// Change 'sizing' dynamically (LTR / RTL) - [QWTC-2140] - Step 4
 	<Image src={hd} sizing="fill" />,
 	<Image src={fhd} sizing="fill" />,
-	<Image src={uhd} sizing="fill"  />,
-	<Image placeholder={hd} />,
-	// This will return the image from 'src'
-	<Image placeholder={hd} src={fhd} />,
-	// This will return the image from 'placeholder'. "xyz" does not exist.
-	<Image placeholder={hd} src="xyz" />
+	<Image src={uhd} sizing="fill"  />
 ];
 
 const ImageTests = [

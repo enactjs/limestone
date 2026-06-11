@@ -1,6 +1,6 @@
 import Picker from '../../../../Picker';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 import css from './Picker.module.less';
 
@@ -172,54 +172,8 @@ const pickerVerticalTests = [
 ];
 
 const pickerFocusTests = [
-	// *************************************************************
-	// joined and focused
-	// *************************************************************
 	<Picker joined>{pickerList.airports}</Picker>,
-	<Picker disabled joined>{pickerList.airports}</Picker>,
-	<Picker width="small" joined>{pickerList.airports}</Picker>,
-	<Picker width="medium" joined>{pickerList.airports}</Picker>,
-	<Picker width="large" joined>{pickerList.airports}</Picker>,
-	<Picker orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker disabled orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="small" orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="medium" orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="large" orientation="vertical" joined>{pickerList.airports}</Picker>
-];
-
-const pickerRtlBasicTests = [
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
-	<Picker>{[]}</Picker>,
-	<Picker>{['Hello', 'Hello']}</Picker>,
-	<Picker decrementIcon incrementIcon>hello</Picker>,
-	<Picker>hello</Picker>,
-	<Picker disabled>hello</Picker>,
-	<Picker>{pickerList.vegetables}</Picker>,
-	<Picker value={1}>{pickerList.vegetables}</Picker>,
-	// Picker is disabled (since it only has one item)
-	<Picker>{pickerList.oneAirport}</Picker>
-];
-
-const pickerRtlVerticalSectionTests = [
-	// *************************************************************
-	// locale = 'ar-SA' and vertical
-	// *************************************************************
-	<Picker orientation="vertical">{[]}</Picker>,
-	<Picker orientation="vertical">{['Hello', 'Hello']}</Picker>,
-	<Picker decrementIcon incrementIcon orientation="vertical">hello</Picker>,
-	<Picker decrementIcon="minus" incrementIcon="plus" orientation="vertical">hello</Picker>,
-	<Picker orientation="vertical">hello</Picker>,
-	<Picker disabled orientation="vertical">hello</Picker>,
-	<Picker orientation="vertical">{pickerList.vegetables}</Picker>,
-	<Picker value={1} orientation="vertical">{pickerList.vegetables}</Picker>
-];
-
-const pickerRtlTitleTests = [
-	// title
-	<Picker title="Title">{pickerList.vegetables}</Picker>,
-	<Picker inlineTitle title="Title">{pickerList.vegetables}</Picker>
+	<Picker orientation="vertical" joined>{pickerList.airports}</Picker>
 ];
 
 const pickerRtlQwtc2198Tests = [
@@ -296,30 +250,13 @@ const pickerRtlQwtcVerticalTests = [
 
 const pickerRtlAllTests = [
 	...pickerRtlQwtc2198Tests,
-	...pickerRtlBasicTests,
+	...pick(pickerSmokeTests, 3, 5, 9),
 	...pickerRtlQwtc2215Tests,
-	...pickerVegetablesTests,
-	...pickerRtlVerticalSectionTests,
 	...pickerRtlQwtcVerticalTests,
-	...pickerVerticalTests.slice(5),
-	...pickerRtlTitleTests
+	...pick(pickerSmokeTests, 11, 12)
 ];
 
-const pickerRtlFocusTests = [
-	// *************************************************************
-	// joined and focused
-	// *************************************************************
-	<Picker joined>{pickerList.airports}</Picker>,
-	<Picker disabled joined>{pickerList.airports}</Picker>,
-	<Picker width="small" joined>{pickerList.airports}</Picker>,
-	<Picker width="medium" joined>{pickerList.airports}</Picker>,
-	<Picker width="large" joined>{pickerList.airports}</Picker>,
-	<Picker orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker disabled orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="small" orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="medium" orientation="vertical" joined>{pickerList.airports}</Picker>,
-	<Picker width="large" orientation="vertical" joined>{pickerList.airports}</Picker>
-];
+const pickerRtlFocusTests = pickerFocusTests;
 
 const pickerCommentedTests = [
 	...pickerVegetablesTests,

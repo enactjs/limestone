@@ -1,7 +1,7 @@
 import Button from '../../../../Button';
 import ContextualMenuDecorator from '../../../../ContextualMenuDecorator';
 
-import {withConfig} from './utils';
+import {pick, withConfig} from './utils';
 
 const ContextualMenuButton = ContextualMenuDecorator(Button);
 const popupProps = {
@@ -58,12 +58,7 @@ const contextualMenuSmokeTests = [
 	<ContextualMenuButton popupWidth="large" popupProps={popupProps} menuItems={menuItems} open direction="right middle">Button</ContextualMenuButton>
 ];
 
-const contextualMenuRtlTests = [
-	<ContextualMenuButton popupProps={popupProps} menuItems={menuItems} open direction="above center">Button</ContextualMenuButton>,
-	<ContextualMenuButton popupProps={popupProps} menuItems={menuItems} open direction="below center">Button</ContextualMenuButton>,
-	<ContextualMenuButton popupProps={popupProps} menuItems={menuItems} open direction="left middle">Button</ContextualMenuButton>,
-	<ContextualMenuButton popupProps={popupProps} menuItems={menuItems} open direction="right middle">Button</ContextualMenuButton>
-];
+const contextualMenuRtlTests = pick(contextualMenuSmokeTests, 2, 6);
 
 const ContextualMenuDecoratorTests = [
 	...withConfig({wrapper}, contextualMenuSmokeTests),

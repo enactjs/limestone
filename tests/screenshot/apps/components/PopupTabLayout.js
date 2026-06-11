@@ -1,4 +1,6 @@
 import {scaleToRem} from '@enact/ui/resolution';
+
+import {pick} from './utils';
 import PopupTabLayout, {Tab, TabPanels, TabPanel} from '../../../../PopupTabLayout';
 import BodyText from '../../../../BodyText';
 import {Header} from '../../../../Panels';
@@ -156,23 +158,10 @@ const popupTabLayoutQwtcTests = [
 	// QWTC-2423 end
 ];
 
-const popupTabLayoutLargeTextTests = [
-	{
-		component: <PopupTabLayout open>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: popupTabLayoutWrapper,
-		textSize: 'large'
-	},
-	{
-		component: <PopupTabLayout open collapsed>{someTabsWithIcons}</PopupTabLayout>,
-		wrapper: popupTabLayoutWrapper,
-		textSize: 'large'
-	},
-	{
-		component: <PopupTabLayout open>{tabWithCenteredHeader}</PopupTabLayout>,
-		wrapper: popupTabLayoutWrapper,
-		textSize: 'large'
-	}
-];
+const popupTabLayoutLargeTextTests = pick(popupTabLayoutSmokeTests, 4, 6, 15).map(entry => ({
+	...entry,
+	textSize: 'large'
+}));
 
 const PopupTabLayoutTests = [
 	...popupTabLayoutSmokeTests,

@@ -1,24 +1,15 @@
 import Region from '../../../../Region';
 
+import {withConfig} from './utils';
+
 const regionSmokeTests = [
 	<Region title="Region" />,
 	<Region title="Region">Region Body</Region>
 ];
 
-const regionRtlTests = [
-	{
-		locale: 'ar-SA',
-		component: <Region title="Region" />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Region title="Region">Region Body</Region>
-	}
-];
-
 const RegionTests = [
 	...regionSmokeTests,
-	...regionRtlTests
+	...withConfig({locale: 'ar-SA'}, regionSmokeTests)
 ];
 
 export default RegionTests;
