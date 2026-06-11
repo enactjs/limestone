@@ -33,28 +33,40 @@ export default async function globalSetup () {
 
 	assertScreenshotDist();
 
+	if (!shouldRefreshTestData()) {
+		return;
+	}
+
 	// Playwright lifecycle: globalSetup → webServer (playwright.config.mjs) → tests → teardown.
 	// We start serve here only to fetch ?request metadata into .test-data.json, then stop our
 	// process so webServer can own the port for the full run (reuseExistingServer when not CI).
 	await ensureStaticServer();
 
-	if (!shouldRefreshTestData()) {
-		return;
-	}
-
-	const pwBrowser = await chromium.launch({
-		channel: 'chrome',
-		headless: true
-	});
-
 	try {
-		const page = await pwBrowser.newPage();
-		await page.goto(`${baseURL}/Limestone-View/?request`, {waitUntil: 'load'});
-		const testData = await page.evaluate(() => window.__TEST_DATA);
+		const pwBrowser = await chromium.launch({
+			channel: 'chrome',
+			headless: true
+		});
 
-		fs.writeFileSync(testDataFile, JSON.stringify(testData));
+		try {
+			const page = await pwBrowser.newPage();
+			const requestUrl = `${baseURL}/Limestone-View/?request`;
+			await page.goto(requestUrl, {waitUntil: 'load'});
+			await page.waitForFunction(() => window.__TEST_DATA != null, undefined, {timeout: 30000});
+			const testData = await page.evaluate(() => window.__TEST_DATA);
+
+			if (testData == null) {
+				throw new Error(
+					`No window.__TEST_DATA at ${requestUrl}. The screenshot build may be stale or broken — ` +
+					'rebuild tests/screenshot/dist (unset PLAYWRIGHT_SKIP_BUILD) and retry.'
+				);
+			}
+
+			fs.writeFileSync(testDataFile, JSON.stringify(testData));
+		} finally {
+			await pwBrowser.close();
+		}
 	} finally {
-		await pwBrowser.close();
 		stopStaticServer();
 	}
 }

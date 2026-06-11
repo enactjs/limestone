@@ -52,8 +52,9 @@ export function validateShardCoverage () {
 		const covering = [...shards].filter(shard => shard <= maxWorkers).sort((a, b) => a - b);
 		const required = [...Array(maxWorkers)].map((_, index) => index + 1);
 		const missing = required.filter(shard => !covering.includes(shard));
+		const isShard1OnlyRun = covering.length === 1 && covering[0] === 1;
 
-		if (covering.length > 1 && missing.length > 0) {
+		if (missing.length > 0 && !isShard1OnlyRun) {
 			throw new Error(
 				`Incomplete Playwright shard coverage for ${groupKey}: ` +
 				`PLAYWRIGHT_INSTANCES=${maxWorkers} requires shards ${required.join(', ')}, ` +

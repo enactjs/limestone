@@ -1,10 +1,9 @@
 import {spawn, spawnSync} from 'child_process';
 
-import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT, SCREENSHOT_DIST} from './paths.js';
+import {PLAYWRIGHT_PORT, SCREENSHOT_DIST, SCREENSHOT_HEALTH_URL} from './paths.js';
 
 const distPath = SCREENSHOT_DIST;
 const port = PLAYWRIGHT_PORT;
-const healthCheckUrl = `${PLAYWRIGHT_BASE_URL}/Limestone-View/index.html`;
 
 /** Set when global-setup starts `serve` for ?request metadata (stopped before tests). */
 export const staticServer = {
@@ -32,8 +31,10 @@ export function killProcessOnPort (listenPort = port) {
 			return;
 		}
 
+		const portPattern = new RegExp(`:${String(listenPort)}(?!\\d)`);
+
 		for (const line of netstat.stdout.split('\n')) {
-			if (!line.includes(`:${listenPort}`) || !line.includes('LISTENING')) {
+			if (!portPattern.test(line) || !line.includes('LISTENING')) {
 				continue;
 			}
 
@@ -81,7 +82,7 @@ async function fetchWithTimeout (url, timeoutMs = 5000) {
 
 async function isServerHealthy () {
 	try {
-		const response = await fetchWithTimeout(healthCheckUrl);
+		const response = await fetchWithTimeout(SCREENSHOT_HEALTH_URL);
 		return response.ok;
 	} catch {
 		return false;
@@ -122,5 +123,5 @@ export async function ensureStaticServer () {
 
 	stopStaticServer();
 	startStaticServer();
-	await waitForServer(healthCheckUrl);
+	await waitForServer(SCREENSHOT_HEALTH_URL);
 }

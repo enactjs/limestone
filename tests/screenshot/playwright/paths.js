@@ -10,7 +10,9 @@ export const PLAYWRIGHT_BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://lo
 export const PLAYWRIGHT_PORT = new URL(PLAYWRIGHT_BASE_URL).port || '4568';
 
 export const SCREENSHOT_DIST = path.join(screenshotRoot, 'dist');
-export const SCREENSHOT_VIEW_INDEX = path.join(SCREENSHOT_DIST, 'Limestone-View', 'index.html');
+export const SCREENSHOT_VIEW = 'Limestone-View';
+export const SCREENSHOT_VIEW_INDEX = path.join(SCREENSHOT_DIST, SCREENSHOT_VIEW, 'index.html');
+export const SCREENSHOT_HEALTH_URL = `${PLAYWRIGHT_BASE_URL}/${SCREENSHOT_VIEW}/index.html`;
 export const SCREENSHOT_COMPONENTS = path.join(screenshotRoot, 'apps', 'components');
 export const TEST_DATA_FILE = path.join(__dirname, '.test-data.json');
 export const SNAPSHOTS_DIR = path.join(__dirname, 'snapshots');

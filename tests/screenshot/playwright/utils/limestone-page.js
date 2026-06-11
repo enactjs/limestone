@@ -1,4 +1,4 @@
-const VIEW = 'Limestone-View';
+import {SCREENSHOT_VIEW} from '../paths.js';
 
 function serializeParams (params) {
 	const searchParams = new URLSearchParams();
@@ -13,7 +13,7 @@ function serializeParams (params) {
 }
 
 function buildUrl (urlExtra = '?locale=en-US') {
-	return `/${VIEW}/${urlExtra}`;
+	return `/${SCREENSHOT_VIEW}/${urlExtra}`;
 }
 
 async function open (page, urlExtra = '?locale=en-US') {
