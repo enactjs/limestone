@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
