@@ -164,6 +164,10 @@ const useSpottable = (props, instances) => {
 		const index = getNumberValue(target.dataset.index);
 		const direction = getDirection(keyCode);
 		const allowAffordance = !(noAffordance || orientation === 'horizontal');
+		// When anchoring focus to the start slot, always scroll the newly focused item to that slot
+		// rather than leaving it in place when it happens to be already visible. `snapToCenter` is a
+		// more specific mode and keeps precedence.
+		const stickToStart = props.stickTo === 'start' && !snapToCenter;
 		const shouldMove = snapToCenter ? nextIndex > 0 && nextIndex < (dataSize - 1) && index > 0 : nextIndex >= 0 && index >= 0;
 
 		mutableRef.current.isScrolledBy5way = false;
@@ -180,7 +184,7 @@ const useSpottable = (props, instances) => {
 
 			mutableRef.current.lastFocusedIndex = nextIndex;
 
-			if (start >= startBoundary && end <= endBoundary) {
+			if (!stickToStart && start >= startBoundary && end <= endBoundary) {
 				// The next item could be still out of viewport. So we need to prevent scrolling into view with `isScrolledBy5way` flag.
 				mutableRef.current.isScrolledBy5way = true;
 				focusByIndex(nextIndex, direction);
@@ -190,6 +194,9 @@ const useSpottable = (props, instances) => {
 			} else if (!snapToCenter || !mutableRef.current.isScrollingBySnapToCenter) {
 				const itemNode = getItemNode(nextIndex);
 				let stickTo = Math.abs(endBoundary - end) < Math.abs(startBoundary - start) ? 'end' : 'start';
+				if (stickToStart) {
+					stickTo = 'start';
+				}
 				stickTo = snapToCenter ? 'center' : stickTo;
 
 				mutableRef.current.isScrolledBy5way = true;
@@ -269,6 +276,7 @@ const useSpottable = (props, instances) => {
 		const offsetToClientEnd = Math.max(0, primary.clientSize - (snapToCenter ? primary.gridSize : primary.itemSize) - (!allowAffordance ? 0 : ri.scale(affordanceSize)));
 		const focusedIndex = getNumberValue(item.getAttribute(dataIndexAttribute));
 		const offsetToCenter = snapToCenter ? (primary.clientSize / 2 - primary.gridSize / 2) : 0;
+		const stickToStart = props.stickTo === 'start' && !snapToCenter;
 
 		if (focusedIndex >= 0) {
 			let gridPosition = scrollContentHandle.current.getGridPosition(focusedIndex);
@@ -284,7 +292,14 @@ const useSpottable = (props, instances) => {
 			mutableRef.current.lastFocusedIndex = focusedIndex;
 
 			if (primary.clientSize >= primary.itemSize) {
-				if (gridPosition.primaryPosition > scrollPosition + offsetToClientEnd) { // forward over
+				if (stickToStart) { // anchor to the start slot
+					// Clamp to the scroll bounds so that at the end of the list, the list stops at its
+					// last position while keeping the focused item visible.
+					const maxPos = scrollContentHandle.current.isPrimaryDirectionVertical ?
+						scrollContentHandle.current.scrollBounds.maxTop :
+						scrollContentHandle.current.scrollBounds.maxLeft;
+					gridPosition.primaryPosition = Math.max(0, Math.min(gridPosition.primaryPosition, maxPos));
+				} else if (gridPosition.primaryPosition > scrollPosition + offsetToClientEnd) { // forward over
 					gridPosition.primaryPosition -= pageScroll ? 0 : offsetToClientEnd - offsetToCenter;
 				} else if (gridPosition.primaryPosition >= scrollPosition) { // inside of client
 					if (scrollMode === 'translate') {
@@ -426,6 +441,7 @@ const useThemeVirtualList = (props) => {
 	delete rest.scrollContentHandle;
 	delete rest.snapToCenter;
 	delete rest.spotlightId;
+	delete rest.stickTo;
 	delete rest.wrap;
 
 	return {

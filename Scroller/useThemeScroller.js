@@ -286,10 +286,10 @@ const useSpottable = (props, instances) => {
 		} = getFocusedItemBounds(item);
 
 		const
-			{rtl} = props,
+			{rtl, stickTo} = props,
 			// For Chrome 85+ or Safari that use negative coordinate system for RTL
 			coordinateCoefficient = rtl && !(platform.chrome < 85) ? -1 : 1,
-			{clientWidth} = scrollContentHandle.current.scrollBounds,
+			{clientWidth, maxLeft} = scrollContentHandle.current.scrollBounds,
 			rtlDirection = rtl ? -1 : 1,
 			{left: containerLeft} = scrollContentNode.getBoundingClientRect(),
 			scrollLastPosition = scrollPosition ? scrollPosition : scrollContentHandle.current.scrollPos.left,
@@ -297,6 +297,20 @@ const useSpottable = (props, instances) => {
 			// calculation based on client position
 			newItemLeft = coordinateCoefficient * scrollContentNode.scrollLeft + (itemLeft - containerLeft);
 		let nextScrollLeft = scrollContentHandle.current.scrollPos.left;
+
+		if (stickTo === 'start') {
+			// Anchor the focused item to a fixed "focus position" near the start edge so the focus
+			// indicator stays put while the list scrolls beneath it. The offset matches the in-view
+			// threshold (`affordanceSize`) used by `calculatePositionOnFocus`.
+			const affordanceLeft = ri.scale(affordanceSize);
+
+			// Position the item at the fixed slot, then clamp to the scroll bounds. Clamping handles
+			// the end of the list: the item can no longer reach the slot, so the list scrolls only to
+			// its last position while the focused item (including its full width) stays visible.
+			nextScrollLeft += rtlDirection * ((newItemLeft - currentScrollLeft) - affordanceLeft);
+
+			return Math.max(0, Math.min(nextScrollLeft, maxLeft));
+		}
 
 		if (newItemLeft + itemWidth > (clientWidth + currentScrollLeft) && itemWidth < clientWidth) {
 			// If focus is moved to an element outside of view area (to the right), scroller will move
@@ -332,7 +346,11 @@ const useSpottable = (props, instances) => {
 		const containerRect = getRect(containerNode);
 		const itemRect = getRect(item);
 
-		if (horizontal && !(itemRect.left >= (containerRect.left + ri.scale(affordanceSize)) && itemRect.right <= (containerRect.right - ri.scale(affordanceSize)))) {
+		// When anchoring focus to a fixed slot, always recompute the scroll position so each newly
+		// focused item is pulled to the slot rather than only when it falls outside the view.
+		const stickToStart = props.stickTo === 'start';
+
+		if (horizontal && (stickToStart || !(itemRect.left >= (containerRect.left + ri.scale(affordanceSize)) && itemRect.right <= (containerRect.right - ri.scale(affordanceSize))))) {
 			scrollContentHandle.current.scrollPos.left = calculateScrollLeft(item, scrollPosition);
 		}
 
@@ -368,6 +386,7 @@ const useThemeScroller = (props, scrollContentProps, contentId, isHorizontalScro
 	delete rest.scrollContentHandle;
 	delete rest.setThemeScrollContentHandle;
 	delete rest.spotlightId;
+	delete rest.stickTo;
 
 	// Hooks
 	const isScrollbarVisible = isHorizontalScrollbarVisible || isVerticalScrollbarVisible;
