@@ -15,7 +15,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 
 import {assertComponentSource, SCREENSHOT_VIEW_INDEX} from './paths.js';
-import {parseComponentArgs} from '../scripts/parse-component-args.mjs';
+import {parseComponentArgs} from '../scripts/parse-cli-args.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.join(__dirname, '..', '..', '..');
@@ -73,7 +73,7 @@ async function main () {
 	const playwright = await runCommand(
 		'Playwright',
 		'node',
-		['tests/screenshot/scripts/run-playwright-component.mjs', component, ...parallelArg],
+		['tests/screenshot/scripts/run-playwright.mjs', component, ...parallelArg],
 		skipBuild ? {PLAYWRIGHT_SKIP_BUILD: '1'} : {}
 	);
 

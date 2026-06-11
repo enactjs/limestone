@@ -11,9 +11,25 @@ import {recordShard} from './shard-registry.js';
 const forceUpdate = process.env.PLAYWRIGHT_FORCE_UPDATE === '1';
 const componentExactMatch = process.env.PLAYWRIGHT_COMPONENT_EXACT === '1';
 
-const testIdFilter = process.env.PLAYWRIGHT_TEST_ID != null ?
-	Number.parseInt(process.env.PLAYWRIGHT_TEST_ID) :
-	null;
+function parseTestIdFilter () {
+	const raw = process.env.PLAYWRIGHT_TEST_ID;
+
+	if (raw == null) {
+		return null;
+	}
+
+	const trimmed = raw.trim();
+
+	if (!/^\d+$/.test(trimmed)) {
+		throw new Error(
+			`Invalid PLAYWRIGHT_TEST_ID "${raw}": must be a non-negative integer (e.g. --test-id 3).`
+		);
+	}
+
+	return Number.parseInt(trimmed, 10);
+}
+
+const testIdFilter = parseTestIdFilter();
 const titleFilter = process.env.PLAYWRIGHT_TITLE;
 const maxInstances = process.env.PLAYWRIGHT_INSTANCES ?
 	Number.parseInt(process.env.PLAYWRIGHT_INSTANCES) :
@@ -25,6 +41,18 @@ function loadTestData () {
 
 function resolveComponentFilter (config) {
 	return config.component || process.env.PLAYWRIGHT_COMPONENT || null;
+}
+
+function matchesTitleFilter (title, filter) {
+	const terms = filter.trim().split(/\s+/).filter(Boolean);
+
+	return terms.every(term => {
+		try {
+			return new RegExp(term, 'i').test(title);
+		} catch {
+			return title.toLowerCase().includes(term.toLowerCase());
+		}
+	});
 }
 
 function shouldIncludeTest (component, testId, title, configComponent) {
@@ -42,7 +70,7 @@ function shouldIncludeTest (component, testId, title, configComponent) {
 	if (testIdFilter != null && testIdFilter !== testId) {
 		return false;
 	}
-	if (titleFilter && !title.match(new RegExp(titleFilter))) {
+	if (titleFilter && !matchesTitleFilter(title, titleFilter)) {
 		return false;
 	}
 	return true;

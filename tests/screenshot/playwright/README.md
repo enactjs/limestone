@@ -56,19 +56,20 @@ tests/screenshot/
   dist/                   ← buildApps('screenshot') output (shared)
   specs/                  ← WDIO *-specs.js
   scripts/
-    run-playwright.mjs
-    run-playwright-component.mjs
+    run-playwright.mjs      full suite + component (same entry; mode from argv)
+    parse-cli-args.mjs      shared CLI parsing
+    ensure-screenshot-dist.mjs
+    spawn-playwright.mjs
     run-component-wdio.mjs
-    parse-component-args.mjs
   playwright/             ← this folder
     specs/neutral|light/  *-spec.js (27 shards)
     utils/                registerScreenshotTests, limestone-page, screenshot-name, shard-registry
     snapshots/            PNG baselines (gitignored — generate with --update)
     .shard-registry.jsonl run-time shard log (gitignored; see shard-registry.js)
-    global-setup.js       build, dist check, .test-data.json, serve :4568 if needed
-    global-teardown.js    shard coverage check, stops serve when global-setup started it
+    global-setup.js       build, dist check, .test-data.json (serve :4568 only while fetching)
+    global-teardown.js    shard coverage check
     playwright.config.mjs
-    paths.js
+    paths.js              SCREENSHOT_VIEW, SCREENSHOT_HEALTH_URL, assertScreenshotDist()
     benchmark.mjs
 ```
 
@@ -102,7 +103,7 @@ Triggered from `global-setup.js` unless `PLAYWRIGHT_SKIP_BUILD=1`. Packs `Limest
 
 ### 4. Case index — `.test-data.json`
 
-`global-setup` loads `http://localhost:4568/Limestone-View/?request`. That sets `window.__TEST_DATA = testMetadata` without rendering a case. The JSON is cached at `playwright/.test-data.json`.
+When `.test-data.json` is missing or older than `dist/Limestone-View/index.html`, `global-setup` briefly starts `serve` on port **4568**, loads `…/Limestone-View/?request` (waits for `window.__TEST_DATA`), writes `playwright/.test-data.json`, then stops that server so Playwright’s `webServer` can bind the same port. Cached runs with `--skip-build` skip the fetch entirely.
 
 `registerScreenshotTests()` reads this file to register Playwright tests — it never parses `Chip.js` on disk.
 
@@ -155,7 +156,7 @@ npm run prepare-playwright   # optional on machines that already have Chrome (se
 
 `prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall`. Run it on **fresh machines and CI** (`build-scripts/enact-playwright-tests.sh`). On a machine where Chrome is already installed, Playwright prints *"chrome" is already installed on the system!"* — that is success; you can skip this step on later runs.
 
-`global-setup.js` calls `assertScreenshotDist()` after the build step. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error in global-setup (static server is started there after dist is verified).
+`global-setup.js` and `ensure-screenshot-dist.mjs` call `assertScreenshotDist()` from `paths.js` when a build is needed. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error (not a webServer timeout).
 
 ### Build screenshot dist
 
@@ -233,6 +234,9 @@ All commands run from the **repository root**.
 | `npm run test-playwright -- --component Button` | All specs; components whose name contains `Button` |
 | `npm run test-playwright -- --spec Light` | `Light*` specs only; all components |
 | `npm run test-playwright -- --component Button --spec Light` | Both filters combined |
+| `npm run test-playwright -- --title "Focused"` | Filter cases by title (regex per term; case-insensitive fallback) |
+| `npm run test-playwright -- --title Button Focused` | Shorthand: `Button` → `--component`, `Focused` → `--title` |
+| `npm run test-playwright -- --test-id <n>` | Single case index (invalid values fail fast) |
 | `npm run test-playwright -- --skip-build` | Skip `buildApps('screenshot')` when `dist/` already exists |
 | `npm run test-playwright:update` | Force-update all Playwright baselines (`--update`) |
 | `npm run test-playwright:report` | Open HTML report (`playwright/reports/html/`) |
@@ -261,36 +265,39 @@ npm run test-playwright:component -- Button --title "Focused"
 npm run test-playwright:component -- Button --spec Light
 ```
 
-Each run prints total wall-clock time when finished (e.g. `Playwright (Button) finished in 42.3s`).
+Each run prints total wall-clock time when finished (e.g. `Playwright (Button) finished in 1m 2.3s`).
 
-Component script sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component), `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**), and runs **all** matching spec shards unless `--spec` is set.
+`test-playwright` and `test-playwright:component` both invoke `scripts/run-playwright.mjs`. **Component mode** is selected when the first argument after `--` is a positional name (e.g. `Sprite`); **suite mode** uses flags only (`--component`, `--spec`, …).
 
-#### `scripts/parse-component-args.mjs` — why it exists
+Component mode sets `PLAYWRIGHT_INSTANCES=1` (all `testId`s for that component), `PLAYWRIGHT_WORKERS` from `--parallel` (default **1**), and runs **all** matching spec shards unless `--spec` is set.
+
+#### `scripts/parse-cli-args.mjs` — why it exists
 
 npm passes arguments after `--` to the Node script. A naive parser such as `args.find(a => !a.startsWith('--'))` treats **flag values** as the component name — e.g. `… --test-id 0 Sprite` would resolve component `"0"` instead of `"Sprite"`.
 
-`parseComponentArgs()` is a small shared parser used by:
+`parse-cli-args.mjs` exports `parsePlaywrightArgs()`, `parseComponentArgs()`, and `isComponentPlaywrightRun()` for:
 
-- `run-playwright.mjs` — `--component`, `--spec`, `--update`, `--skip-build`, `--parallel`
-- `run-playwright-component.mjs` — `--update`, `--skip-build`, `--spec`, `--test-id`, `--title`, `--parallel`
+- `run-playwright.mjs` — full suite and component entry (same file)
 - `benchmark.mjs` — `--build`, `--parallel`
 
 **Rules:**
 
-- The **component name** is the first positional token (non-flag argument).
-- Flags with values (`--test-id`, `--title`, `--parallel`) consume the next token as their value, not as the component.
+- **Component mode:** the component name is the first positional token (non-flag argument).
+- **Suite mode:** use `--component <Name>`; no positional component name.
+- Value flags (`--test-id`, `--title`, `--parallel`, `--spec`, `--component`) consume following tokens until the next `--flag` (multi-word values such as `--title Button Focused` are supported).
 - Boolean flags: `--update`, `--build`, `--skip-build`.
-- Value flags: `--spec` (component script and full suite via `run-playwright.mjs`).
 
 **Examples:**
 
-| Command | Component resolved |
-|---------|-------------------|
-| `npm run test-playwright:component -- Button --parallel 5` | `Button` |
-| `npm run test-playwright:component -- Button --test-id 0` | `Button` |
-| `npm run benchmark-screenshots -- Chip --build` | `Chip` |
+| Command | Mode / component resolved |
+|---------|---------------------------|
+| `npm run test-playwright:component -- Button --parallel 5` | component → `Button` |
+| `npm run test-playwright:component -- Button --test-id 0` | component → `Button` |
+| `npm run test-playwright -- --component Button --spec Light` | suite; component filter `Button` |
+| `npm run test-playwright -- --title Button Focused --spec Light` | suite; `Button` + title `Focused` |
+| `npm run benchmark-screenshots -- Chip --build` | component → `Chip` |
 
-Put the component name **first** after `--` (as in the examples above). `run-component-wdio.mjs` still uses the older parser — use the same name-first order there too.
+Put the component name **first** after `--` in component mode (as in the examples above). `run-component-wdio.mjs` still uses its own parser — use the same name-first order there too.
 
 ### Full suite
 
@@ -344,7 +351,7 @@ npm run test-playwright -- --skip-build
 | **Workers** | `PLAYWRIGHT_WORKERS` or `--parallel` on component script | How many tests run at once in one Playwright process |
 | **Component filter** | `PLAYWRIGHT_COMPONENT` | Only one component's cases |
 
-**Shard coverage:** `PLAYWRIGHT_INSTANCES` must match the shard files you actually run. If you set `PLAYWRIGHT_INSTANCES=9` but only invoke shards 1–5, cases with `testId % 9` in `{5,6,7,8}` are silently skipped. `global-teardown` fails the run when it detects this partial coverage (single-shard runs such as TV-style `Default-spec` only are exempt). Shards with `concurrency > PLAYWRIGHT_INSTANCES` are inert (empty) — expected when the default instances is **5** but nine shard files exist per skin.
+**Shard coverage:** `PLAYWRIGHT_INSTANCES` must match the shard files you actually run. If you set `PLAYWRIGHT_INSTANCES=9` but only invoke shards 1–5, cases with `testId % 9` in `{5,6,7,8}` are silently skipped. `global-teardown` fails the run when it detects partial coverage. The only exemption is a deliberate TV-style run where **only shard 1** ran (`Default-spec` alone). Running a single non-1 shard (e.g. only `Default3-spec`) still fails validation. Shards with `concurrency > PLAYWRIGHT_INSTANCES` are inert (empty) — expected when the default instances is **5** but nine shard files exist per skin.
 
 #### `utils/shard-registry.js` — why it exists
 
@@ -356,7 +363,7 @@ Each `*-spec.js` file is independent: it only knows its own `concurrency` value 
 |------|--------|------|
 | Reset | `global-setup.js` → `clearShardRegistry()` | Deletes `playwright/.shard-registry.jsonl` from any previous run |
 | Record | `registerScreenshotTests()` → `recordShard()` | Appends one JSON line per spec file: skin, highContrast, `concurrency`, `PLAYWRIGHT_INSTANCES` |
-| Validate | `global-teardown.js` → `validateShardCoverage()` | For each skin/HC group, ensures shards `1…PLAYWRIGHT_INSTANCES` all ran when more than one shard was invoked |
+| Validate | `global-teardown.js` → `validateShardCoverage()` | For each skin/HC group, ensures shards `1…PLAYWRIGHT_INSTANCES` all ran (exempt only when shard 1 alone ran) |
 
 **Skipped when** `PLAYWRIGHT_COMPONENT` is set (component script uses `PLAYWRIGHT_INSTANCES=1` and a single spec — no cross-shard risk).
 
@@ -448,8 +455,8 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | `PLAYWRIGHT_COMPONENT_EXACT=1` | Exact component name match (set by component script) |
 | `PLAYWRIGHT_COMPONENT` | Filter components (substring match from `--component`; exact when set by component script) |
 | `PLAYWRIGHT_REFRESH_TEST_DATA=1` | Force-regenerate `.test-data.json` |
-| `PLAYWRIGHT_TEST_ID` | Filter to one case index |
-| `PLAYWRIGHT_TITLE` | Filter cases by title regex |
+| `PLAYWRIGHT_TEST_ID` | Filter to one case index (must be a non-negative integer; invalid values throw) |
+| `PLAYWRIGHT_TITLE` | Filter cases by title (regex per whitespace-separated term; invalid regex falls back to substring; case-insensitive) |
 | `PLAYWRIGHT_INSTANCES` | Shard divisor (`testId % instances`); component script sets `1` |
 | `PLAYWRIGHT_WORKERS` | Parallel workers in `playwright.config.mjs` (default **5**) |
 | `PLAYWRIGHT_SPEC` | Limit which `*-spec.js` files run |
@@ -464,7 +471,10 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | Missing dist / build failed | Read the `assertScreenshotDist()` error (fail-fast in global-setup, not a webServer timeout); link `@enact/ui-test-utils` if build-apps fails |
 | Snapshot diff | Re-baseline with `--update`, or run failing `--test-id` alone |
 | Snapshot diff on focus cases in parallel | Re-baseline with `--parallel 1`, or run failing `--test-id` alone |
-| No tests found | Check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_SPEC`; delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
+| No tests found | Check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_SPEC`, `PLAYWRIGHT_TITLE`, `PLAYWRIGHT_TEST_ID` (case titles omit the component name — use `--component Button --title Focused` or `--title Button Focused`); delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
+| Invalid `PLAYWRIGHT_TEST_ID` | Use a non-negative integer for `--test-id` (e.g. `--test-id 3`) |
+| Stale `.test-data.json` (`undefined` parse error) | Delete `playwright/.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1`; rebuild dist if needed |
+| Port conflict on CI after setup | Ensure global-setup stopped its temporary `serve` (fresh `.test-data.json` + `--skip-build` should not leave an orphan on :4568) |
 | Missing images on build | Place assets under `tests/screenshot/images/`, `videos/` |
 | Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port; restart any stale `serve` on 4568 |
 | `build-apps` import error | Link or pin `@enact/ui-test-utils` with export `./build-apps` (see **Link local @enact/ui-test-utils** above) |
@@ -507,7 +517,7 @@ Add matching `playwright/specs/**/<Name>-spec.js` with the same `skin`, `highCon
 "test-playwright": "node tests/screenshot/scripts/run-playwright.mjs",
 "test-playwright:update": "node tests/screenshot/scripts/run-playwright.mjs -- --update",
 "test-playwright:report": "playwright show-report tests/screenshot/playwright/reports/html",
-"test-playwright:component": "node tests/screenshot/scripts/run-playwright-component.mjs",
+"test-playwright:component": "node tests/screenshot/scripts/run-playwright.mjs",
 "test-ss:component": "node tests/screenshot/scripts/run-component-wdio.mjs",
 "prepare-playwright": "playwright install chrome",
 "benchmark-screenshots": "node tests/screenshot/playwright/benchmark.mjs"

@@ -3,25 +3,10 @@ import fs from 'fs';
 
 import buildApps from '@enact/ui-test-utils/build-apps';
 
-import {SCREENSHOT_DIST, SCREENSHOT_VIEW_INDEX} from '../playwright/paths.js';
+import {SCREENSHOT_VIEW_INDEX, assertScreenshotDist} from '../playwright/paths.js';
 
 export function hasScreenshotDist () {
 	return fs.existsSync(SCREENSHOT_VIEW_INDEX);
-}
-
-function assertBuildOutput () {
-	if (hasScreenshotDist()) {
-		return;
-	}
-
-	const distHint = !fs.existsSync(SCREENSHOT_DIST) ?
-		`Directory ${SCREENSHOT_DIST} does not exist. ` :
-		'';
-
-	throw new Error(
-		`${distHint}Screenshot build did not produce ${SCREENSHOT_VIEW_INDEX}. ` +
-		'Run npm run bootstrap, link @enact/ui-test-utils if build-apps is missing from exports, then retry.'
-	);
 }
 
 /**
@@ -42,7 +27,7 @@ export async function ensureScreenshotDist ({skipBuild = false} = {}) {
 	}
 
 	await buildApps('screenshot');
-	assertBuildOutput();
+	assertScreenshotDist();
 
 	return {skipBuild: true};
 }

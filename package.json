@@ -25,7 +25,7 @@
     "test-playwright": "node tests/screenshot/scripts/run-playwright.mjs",
     "test-playwright:update": "node tests/screenshot/scripts/run-playwright.mjs -- --update",
     "test-playwright:report": "playwright show-report tests/screenshot/playwright/reports/html",
-    "test-playwright:component": "node tests/screenshot/scripts/run-playwright-component.mjs",
+    "test-playwright:component": "node tests/screenshot/scripts/run-playwright.mjs",
     "test-ss:component": "node tests/screenshot/scripts/run-component-wdio.mjs",
     "prepare-playwright": "playwright install chrome",
     "benchmark-screenshots": "node tests/screenshot/playwright/benchmark.mjs",
