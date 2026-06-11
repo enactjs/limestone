@@ -156,16 +156,6 @@ const AlertBase = kind({
 		overlayPosition: PropTypes.oneOf(['bottom left', 'bottom right', 'center', 'top left', 'top right']),
 
 		/**
-		 * The primary text displayed.
-		 *
-		 * Only shown when `type="fullscreen"`.
-		 *
-		 * @type {String}
-		 * @public
-		 */
-		title: PropTypes.string,
-
-		/**
 		 * Size of the Alert when `type="overlay"`.
 		 *
 		 * * `small` - narrow width
@@ -178,6 +168,16 @@ const AlertBase = kind({
 		 * @public
 		 */
 		size: PropTypes.oneOf(['small', 'medium', 'large']),
+
+		/**
+		 * The primary text displayed.
+		 *
+		 * Only shown when `type="fullscreen"`.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		title: PropTypes.string,
 
 		/**
 		 * Type of popup.
@@ -267,7 +267,7 @@ const AlertBase = kind({
 					style={popupStyle}
 				>
 					<Layout align="center center" orientation="vertical">
-						{showTitle && !fullscreen ? <Cell shrink align='stretch'><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
+						{showTitle && !fullscreen ? <Cell shrink align="stretch"><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						{resolvedImage || image ? <Cell shrink className={css.alertImage}>{resolvedImage || image}</Cell> : null}
 						{showTitle && fullscreen ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
