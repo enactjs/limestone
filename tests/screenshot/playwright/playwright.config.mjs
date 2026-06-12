@@ -3,26 +3,14 @@ import {fileURLToPath} from 'url';
 import {defineConfig, devices} from '@playwright/test';
 
 import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT, SCREENSHOT_HEALTH_URL} from './paths.js';
+import {resolveTestMatchGlob} from './utils/spec-match.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
 
-/** Jenkins: SPEC=Default → Default* shards; PLAYWRIGHT_SPEC=Default-spec → one file (TV). */
-function resolveTestMatch () {
-	const spec = process.env.PLAYWRIGHT_SPEC?.trim();
-	if (!spec) {
-		return '**/*-spec.js';
-	}
-	const base = spec.replace(/\.js$/, '');
-	if (base.endsWith('-spec')) {
-		return `**/${base}.js`;
-	}
-	return `**/*${base}*-spec.js`;
-}
-
 export default defineConfig({
 	testDir: path.join(__dirname, 'specs'),
-	testMatch: resolveTestMatch(),
+	testMatch: resolveTestMatchGlob(),
 	testIgnore: ['**/utils/**', '**/scripts/**'],
 	globalSetup: path.join(__dirname, 'global-setup.js'),
 	globalTeardown: path.join(__dirname, 'global-teardown.js'),

@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import {fileURLToPath} from 'url';
 
+import {getExpectedShardsByGroup} from './spec-match.js';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const registryPath = path.join(__dirname, '..', '.shard-registry.jsonl');
 
@@ -30,7 +32,7 @@ export function validateShardCoverage () {
 		return;
 	}
 
-	const groups = new Map();
+	const actualGroups = new Map();
 
 	for (const line of fs.readFileSync(registryPath, 'utf8').split('\n')) {
 		if (!line.trim()) {
@@ -39,27 +41,37 @@ export function validateShardCoverage () {
 
 		const {groupKey, concurrency, maxWorkers} = JSON.parse(line);
 
-		if (!groups.has(groupKey)) {
-			groups.set(groupKey, {maxWorkers, shards: new Set()});
+		if (!actualGroups.has(groupKey)) {
+			actualGroups.set(groupKey, {maxWorkers, shards: new Set()});
 		}
 
-		const group = groups.get(groupKey);
+		const group = actualGroups.get(groupKey);
 		group.maxWorkers = maxWorkers;
 		group.shards.add(concurrency);
 	}
 
-	for (const [groupKey, {maxWorkers, shards}] of groups) {
-		const covering = [...shards].filter(shard => shard <= maxWorkers).sort((a, b) => a - b);
-		const required = [...Array(maxWorkers)].map((_, index) => index + 1);
-		const missing = required.filter(shard => !covering.includes(shard));
-		const isShard1OnlyRun = covering.length === 1 && covering[0] === 1;
+	const maxWorkers = process.env.PLAYWRIGHT_INSTANCES ?
+		Number.parseInt(process.env.PLAYWRIGHT_INSTANCES) :
+		[...actualGroups.values()][0]?.maxWorkers ?? 5;
+	const expectedGroups = getExpectedShardsByGroup(maxWorkers);
+	const groupKeys = new Set([...expectedGroups.keys(), ...actualGroups.keys()]);
+	const specHint = process.env.PLAYWRIGHT_SPEC?.trim() ?
+		`PLAYWRIGHT_SPEC=${process.env.PLAYWRIGHT_SPEC.trim()}` :
+		'all *-spec.js files';
 
-		if (missing.length > 0 && !isShard1OnlyRun) {
+	for (const groupKey of groupKeys) {
+		const required = [...(expectedGroups.get(groupKey) || [])].sort((a, b) => a - b);
+		const covering = [...(actualGroups.get(groupKey)?.shards || [])]
+			.filter(shard => shard <= maxWorkers)
+			.sort((a, b) => a - b);
+		const missing = required.filter(shard => !covering.includes(shard));
+
+		if (missing.length > 0) {
 			throw new Error(
 				`Incomplete Playwright shard coverage for ${groupKey}: ` +
-				`PLAYWRIGHT_INSTANCES=${maxWorkers} requires shards ${required.join(', ')}, ` +
-				`but only ${covering.join(', ')} ran. ` +
-				`Cases with testId % ${maxWorkers} in {${missing.map(shard => shard - 1).join(', ')}} were never tested.`
+				`${specHint} requires shards ${required.join(', ')}, ` +
+				`but only ${covering.length ? covering.join(', ') : '(none)'} ran. ` +
+				`Missing: ${missing.join(', ')}.`
 			);
 		}
 	}
