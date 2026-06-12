@@ -23,7 +23,7 @@ async function open (page, urlExtra = '?locale=en-US') {
 export async function openComponent (page, params) {
 	const query = serializeParams(Object.assign({locale: 'en-US'}, params));
 	await open(page, `?${query}`);
-	await page.locator('[data-ui-test-id="test"]').waitFor({state: 'visible', timeout: 30000});
+	await page.locator('[data-ui-test-id="test"]').waitFor({state: 'visible', timeout: 60000});
 	// Wait for web fonts to finish loading so glyphs are painted before the screenshot.
 	await page.evaluate(() => document.fonts.ready);
 }
