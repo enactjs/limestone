@@ -49,11 +49,17 @@ export default {
 export const _Card = (args) => (
 	<Card
 		aria-label={args['aria-label']}
+		captionImageIconsSrc={[args['captionImageIconsSrc']]}
+		captionImageSize={args['captionImageSize']}
+		captionOverflow={args['captionOverflow']}
+		captionOverflowOnFocus={args['captionOverflowOnFocus']}
 		captionOverlay={args['captionOverlay']}
 		captionOverlayOnFocus={args['captionOverlayOnFocus']}
 		centered={args['centered']}
 		centeredTitle={args['centeredTitle']}
 		disabled={args['disabled']}
+		duration={args['duration']}
+		durationOverlay={args['durationOverlay']}
 		fitImage={args['fitImage']}
 		icon={args['icon']}
 		labelIcons={prop.icons[args['labelIcons']]}
@@ -66,12 +72,14 @@ export const _Card = (args) => (
 		orientation={args['orientation']}
 		primaryBadgeSrc={args['primaryBadgeSrc']}
 		progress={args['progress']}
+		progressBarOverlay={args['progressBarOverlay']}
 		roundedImage={args['roundedImage']}
 		secondaryBadgeSrc={args['secondaryBadgeSrc']}
 		// eslint-disable-next-line no-undefined
 		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
 		secondaryLabelIcons={prop.icons[args['secondaryLabelIcons']]}
 		selected={args['selected']}
+		showDuration={args['showDuration']}
 		showProgressBar={args['showProgressBar']}
 		splitCaption={args['splitCaption']}
 		src={args['src']}
@@ -82,12 +90,18 @@ export const _Card = (args) => (
 );
 
 text('aria-label', _Card, Config);
+object('captionImageIconsSrc', _Card, Config, generateImageSrc('0084ff'));
+object('captionImageSize', _Card, Config);
+boolean('captionOverflow', _Card, Config);
+boolean('captionOverflowOnFocus', _Card, Config);
 boolean('captionOverlay', _Card, Config);
 boolean('captionOverlayOnFocus', _Card, Config);
 boolean('centered', _Card, Config);
 boolean('centeredTitle', _Card, Config);
 text('children', _Card, Config, 'Card Caption');
 boolean('disabled', _Card, Config);
+number('duration', _Card, Config, 234);
+boolean('durationOverlay', _Card, Config);
 boolean('fitImage', _Card, Config);
 select('icon', _Card, iconsList, Config);
 object('imageIconSrc', _Card, Config, generateImageSrc('0084ff'));
@@ -98,11 +112,13 @@ select('labelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config
 select('orientation', _Card, prop.orientation, Config);
 object('primaryBadgeSrc', _Card, Config, generateImageSrc('ff6d78'));
 number('progress', _Card, Config, 0.5);
+boolean('progressBarOverlay', _Card, Config);
 boolean('roundedImage', _Card, Config);
 object('secondaryBadgeSrc', _Card, Config, generateImageSrc('ffc600'));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
 select('secondaryLabelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config, 'no icons');
 boolean('selected', _Card, Config);
+boolean('showDuration', _Card, Config);
 boolean('showProgressBar', _Card, Config);
 boolean('splitCaption', _Card, Config);
 object('src', _Card, Config, generateImageSrc('93d371'));

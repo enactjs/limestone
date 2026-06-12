@@ -46,6 +46,44 @@ const getDefaultImageSize = (orientation) => {
 	return sizes[orientation];
 };
 
+const getLabelIcons = (icons, key) => {
+	return mapAndFilterChildren(icons, (labelIcon, idx) => (
+		<Cell shrink key={`${key}${idx}`}>
+			{cloneElement(labelIcon, {className: componentCss.labelIcon})}
+		</Cell>
+	)) || null;
+};
+
+const getCaptionImageIcons = (imageSrc, key) => {
+	return imageSrc.map((src, idx) => (
+		<Cell
+			key={`${key}${idx}`}
+			className={componentCss.captionImageIcon}
+			component={Image}
+			shrink
+			src={src}
+		/>
+	)) || null;
+};
+
+const formatDuration = (duration) => {
+	if (duration < 0) return "00:00";
+
+	const hours = Math.floor(duration / 3600);
+	const minutes = Math.floor((duration % 3600) / 60);
+	const seconds = duration % 60;
+
+	const mm = String(minutes).padStart(2, '0');
+	const ss = String(seconds).padStart(2, '0');
+
+	if (hours > 0) {
+		const hh = String(hours).padStart(2, '0');
+		return `${hh}:${mm}:${ss}`;
+	}
+
+	return `${mm}:${ss}`;
+};
+
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -77,6 +115,51 @@ const CardBase = kind({
 		 * @public
 		 */
 		'aria-label': PropTypes.string,
+
+		/**
+		 * Source for the image icon.
+		 *
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		captionImageIconsSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the caption images.
+		 *
+		 * The following properties should be provided:
+		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+
+		 * @type {Object}
+		 * @default {height: 432, width: 768}
+		 * @public
+		 */
+		captionImageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
+
+		/**
+		 * Determines whether the caption will overflow the card container or not.
+		 * It only applies when `orientation` is `'vertical'` and `captionOverlay` and `captionOverlayOnFocus` is `false`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		captionOverflow: PropTypes.bool,
+
+		/**
+		 * Determines whether the caption will overflow the card container and show only on card focus.
+		 * It only applies when `orientation` is `'vertical'` and `captionOverlay` and `captionOverlayOnFocus` is `false`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		captionOverflowOnFocus: PropTypes.bool,
 
 		/**
 		 * Determines whether the caption will be placed over the image or not.
@@ -145,6 +228,22 @@ const CardBase = kind({
 		 * @public
 		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Media's entire duration in seconds.
+		 *
+		 * @type {Number}
+		 * @public
+		 */
+		duration: PropTypes.number,
+
+		/**
+		 * Determines whether the `Duration` will be placed over the image or not.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		durationOverlay: PropTypes.bool,
 
 		/**
 		 * Fits the image to its height and width and positions it on the center of the Card.
@@ -263,6 +362,14 @@ const CardBase = kind({
 		progress: PropTypes.number,
 
 		/**
+		 * Determines whether the `ProgressBar` will be placed over the image or not.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		progressBarOverlay: PropTypes.bool,
+
+		/**
 		 * Set to `true` to display the image with rounded corners.
 		 *
 		 * @type {Boolean}
@@ -306,6 +413,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		selected: PropTypes.bool,
+
+		/**
+		 * Activates the 'Duration'.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		showDuration: PropTypes.bool,
 
 		/**
 		 * Activates the 'ProgressBar'.
@@ -360,18 +475,12 @@ const CardBase = kind({
 			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, secondaryLabel, secondaryLabelIcons, showProgressBar, splitCaption, withoutMarquee}) => {
+		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, progressBarOverlay, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
 			const isCenteredTitle = (captionOverlay || captionOverlayOnFocus) && orientation === 'vertical' && centeredTitle;
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
+			const hasCaptionImageIcons = captionImageIconsSrc && orientation === 'vertical';
 			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
 			const CaptionsComponent = isCenteredTitle ? Column : Row;
-			const getLabelIcons = (icons, key) => {
-				return mapAndFilterChildren(icons, (labelIcon, idx) => (
-					<Cell shrink key={`${key}${idx}`}>
-						{cloneElement(labelIcon, {className: css.labelIcon})}
-					</Cell>
-				)) || null;
-			};
 
 			const captions = (
 				<CaptionsComponent className={css.captions}>
@@ -399,8 +508,16 @@ const CardBase = kind({
 										<div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div>
 									</Row>
 								) : null}
+								{hasCaptionImageIcons ? (
+									<Row className={css.captionImageIconsContainer}>
+										{getCaptionImageIcons(captionImageIconsSrc, 'captionImageIcons')}
+									</Row>
+								) : null}
 							</Column>
-							{showProgressBar ? <ProgressBar progress={progress} /> : null}
+							{(showProgressBar && !progressBarOverlay && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
+							{(showDuration && !durationOverlay && !showProgressBar) ? (
+								<div className={css.duration}>{formatDuration(duration)}</div>
+							) : null}
 						</Cell>
 					) : (
 						<Cell className={css.captionCell}>
@@ -418,8 +535,16 @@ const CardBase = kind({
 										<Cell align="center"><Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee></Cell>
 									</Row>
 								) : null}
+								{hasCaptionImageIcons ? (
+									<Row className={css.captionImageIconsContainer}>
+										{getCaptionImageIcons(captionImageIconsSrc, 'captionImageIcons')}
+									</Row>
+								) : null}
 							</Column>
-							{(showProgressBar && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
+							{(showProgressBar && !progressBarOverlay && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
+							{(showDuration && !durationOverlay && !showProgressBar) ? (
+								<div className={css.duration}>{formatDuration(duration)}</div>
+							) : null}
 						</Cell>
 					)}
 				</CaptionsComponent>
@@ -458,28 +583,36 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionOverlay, captionOverlayOnFocus, centeredTitle, icon, label, pressed, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
+		className: ({captionOverflow, captionOverflowOnFocus, captionOverlay, captionOverlayOnFocus, centeredTitle, durationOverlay, icon, label, pressed, progressBarOverlay, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
+			captionOverflow: captionOverflow && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
+			captionOverflowOnFocus: !captionOverflow && captionOverflowOnFocus && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
 			centeredTitle,
+			durationOverlay,
 			pressed,
 			roundedImage,
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay && !captionOverlayOnFocus),
 			hasLabel: (orientation === 'vertical') && (label && secondaryLabel),
-			isCheckIcon: icon === 'check'
+			isCheckIcon: icon === 'check',
+			progressBarOverlay
 		}),
+		showDuration: ({showDuration, showProgressBar, durationOverlay}) => showDuration && durationOverlay && !showProgressBar,
+		showProgressBar: ({showProgressBar, progressBarOverlay}) => showProgressBar && progressBarOverlay,
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, style, ...rest}) => {
+	render: ({captionImageSize, css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
+		delete rest.captionImageIconsSrc;
+		delete rest.captionOverflow;
+		delete rest.captionOverflowOnFocus;
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
+		delete rest.centeredTitle;
 		delete rest.label;
 		delete rest.labelIcons;
-		delete rest.progress;
 		delete rest.secondaryLabel;
 		delete rest.secondaryLabelIcons;
-		delete rest.showProgressBar;
 		delete rest.imageIconSrc;
 		delete rest.hasContainer;
 		delete rest.pressed;
@@ -506,12 +639,20 @@ const CardBase = kind({
 						<div className={css.selectionContainer}>
 							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>
+						{showDuration ? (
+							<div className={css.duration}>{formatDuration(duration)}</div>
+						) : null}
+						{showProgressBar ? (
+							<ProgressBar className={css.progress} progress={progress} />
+						) : null}
 					</Image>
 				}
 				style={{
 					...style,
 					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
-					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width)
+					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width),
+					...(captionImageSize?.height && {'--caption-image-height': ri.scaleToRem(captionImageSize.height)}),
+					...(captionImageSize?.width && {'--caption-image-width': ri.scaleToRem(captionImageSize.width)})
 				}}
 			/>
 		);
