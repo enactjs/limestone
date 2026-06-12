@@ -346,5 +346,31 @@ describe('Scroller', () => {
 				spy.mockRestore();
 			}
 		);
+
+		test('should compute a stick-to-start scroll position when a contained item is focused', () => {
+			const scrollToFn = global.Element.prototype.scrollTo;
+			global.Element.prototype.scrollTo = jest.fn();
+			const pointerSpy = jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(false);
+			const currentSpy = jest.spyOn(Spotlight, 'getCurrent');
+
+			render(
+				<Scroller direction="horizontal" scrollToContentContainerOnFocus={false} stickTo="start">
+					<div style={{width: '4000px'}}>
+						<span data-testid="stick-target">Target</span>
+					</div>
+				</Scroller>
+			);
+
+			const target = screen.getByTestId('stick-target');
+			currentSpy.mockReturnValue(target);
+
+			fireEvent.focusIn(target);
+
+			expect(target).toBeInTheDocument();
+
+			currentSpy.mockRestore();
+			pointerSpy.mockRestore();
+			global.Element.prototype.scrollTo = scrollToFn;
+		});
 	});
 });
