@@ -21,6 +21,8 @@ export default defineConfig({
 			pathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}')
 		}
 	},
+	// WDIO mocha timeout is 1h; default Playwright 30s is too low for CI (goto + hydrate + fonts).
+	timeout: 120000,
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
@@ -32,6 +34,8 @@ export default defineConfig({
 	outputDir: path.join(__dirname, 'test-results'),
 	use: {
 		baseURL: PLAYWRIGHT_BASE_URL,
+		navigationTimeout: 60000,
+		actionTimeout: 60000,
 		trace: 'on-first-retry',
 		viewport: {width: 1920, height: 1080},
 		launchOptions: {
