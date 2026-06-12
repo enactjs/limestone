@@ -222,12 +222,12 @@ const AlertBase = kind({
 				return BodyText;
 			}
 		},
-		className: ({buttons, image, size, type, styler}) => {
-			const resolvedSize = size || (Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small');
+		className: ({buttons, buttonDirection, image, size, type, styler}) => {
+			const resolvedSize = size || (buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small');
 			return styler.append({noImage: !image}, resolvedSize, type);
 		},
-		size: ({buttons, size}) => size || (
-			Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
+		size: ({buttons, buttonDirection, size}) => size || (
+			buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
 		)
 	},
 
