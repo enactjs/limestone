@@ -164,28 +164,6 @@
 				// event can't be fired by item, and he Picker will not become de-focused.
 				pointer-events: none;
 			}
-
-			.indicatorContainer {
-				margin: 0 auto;
-				line-height: 0;
-				white-space: nowrap;
-
-				.indicator {
-					display: inline-block;
-					width: @lime-picker-indicator-width;
-					height: @lime-picker-indicator-height;
-					margin: @lime-picker-indicator-margin;
-					border-radius: @lime-picker-indicator-border-radius;
-					transform: scale(@lime-picker-indicator-inactive-scale);
-					vertical-align: middle;
-					will-change: transform;
-					transition: transform @lime-picker-focus-duration ease-out;
-
-					&.active {
-						transform: scale(@lime-picker-indicator-active-scale);
-					}
-				}
-			}
 		}
 
 		&.horizontal.arrow, &.vertical {
@@ -241,13 +219,6 @@
 					height: @lime-picker-joined-value-height-large;
 					line-height: @lime-picker-joined-value-height-large;
 				}
-
-				.indicatorContainer {
-					.indicator {
-						width: @lime-picker-indicator-width-large;
-						height: @lime-picker-indicator-height-large;
-					}
-				}
 			}
 
 			&.vertical {
@@ -275,15 +246,6 @@
 				&::before {
 					.lime-spotlight-resting-bg-colors(1);
 					background-color: @lime-picker-container-color;
-				}
-
-				.indicator {
-					background-color: @lime-picker-indicator-color;
-					opacity: 0.4;
-
-					&.active {
-						opacity: 1;
-					}
 				}
 			}
 
@@ -330,12 +292,12 @@
 						color: @lime-picker-icon-focused-color;
 					}
 
-					.indicator {
+					.step {
 						background-color: @lime-picker-indicator-focused-color;
 						opacity: 0.4;
 
-						&.active {
-							opacity: 1;
+						&.current {
+							opacity: 1
 						}
 					}
 				}

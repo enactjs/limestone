@@ -26,11 +26,11 @@ import Skinnable from '../Skinnable';
 
 import componentCss from './Steps.module.less';
 
-const PageIndicator = ({className, css, ...rest}) => {
+const PageIndicator = ({className, css, highlightCurrentOnly, ...rest}) => {
 	delete rest.children;
 	delete rest.size;
 
-	const mergedClasses = classNames(css.pageIndicator, className);
+	const mergedClasses = classNames(css.pageIndicator, className, highlightCurrentOnly && highlightCurrentOnly);
 
 	return (<div className={mergedClasses} {...rest} />);
 };
@@ -239,7 +239,10 @@ const StepsBase = kind({
 					children
 				};
 			});
-		}
+		},
+		className: ({className, css, highlightCurrentOnly}) => classNames(className, {
+			[css.highlightCurrentOnly] : highlightCurrentOnly,
+		})
 	},
 
 	render: ({css, iconComponent, size, steps, ...rest}) => {
