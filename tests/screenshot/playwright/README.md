@@ -351,7 +351,7 @@ npm run test-playwright -- --skip-build
 | **Workers** | `PLAYWRIGHT_WORKERS` or `--parallel` on component script | How many tests run at once in one Playwright process |
 | **Component filter** | `PLAYWRIGHT_COMPONENT` | Only one component's cases |
 
-**Shard coverage:** `PLAYWRIGHT_INSTANCES` must match the shard files you actually run. If you set `PLAYWRIGHT_INSTANCES=9` but only invoke shards 1–5, cases with `testId % 9` in `{5,6,7,8}` are silently skipped. `global-teardown` fails the run when it detects partial coverage. The only exemption is a deliberate TV-style run where **only shard 1** ran (`Default-spec` alone). Running a single non-1 shard (e.g. only `Default3-spec`) still fails validation. Shards with `concurrency > PLAYWRIGHT_INSTANCES` are inert (empty) — expected when the default instances is **5** but nine shard files exist per skin.
+**Shard coverage:** `global-teardown` checks that every shard **you asked for** actually ran. It derives expected shards from `PLAYWRIGHT_SPEC` (same rules as `testMatch` in `playwright.config.mjs`) — e.g. `PLAYWRIGHT_SPEC=Default3` requires only shard 3; no `PLAYWRIGHT_SPEC` requires all active shards 1…`PLAYWRIGHT_INSTANCES` per skin/HC group. If you set `PLAYWRIGHT_INSTANCES=9` but only invoke shards 1–5, cases with `testId % 9` in `{5,6,7,8}` are silently skipped and teardown fails for the missing expected shards. Shards with `concurrency > PLAYWRIGHT_INSTANCES` are inert (empty) — expected when the default instances is **5** but nine shard files exist per skin.
 
 #### `utils/shard-registry.js` — why it exists
 
@@ -363,11 +363,11 @@ Each `*-spec.js` file is independent: it only knows its own `concurrency` value 
 |------|--------|------|
 | Reset | `global-setup.js` → `clearShardRegistry()` | Deletes `playwright/.shard-registry.jsonl` from any previous run |
 | Record | `registerScreenshotTests()` → `recordShard()` | Appends one JSON line per spec file: skin, highContrast, `concurrency`, `PLAYWRIGHT_INSTANCES` |
-| Validate | `global-teardown.js` → `validateShardCoverage()` | For each skin/HC group, ensures shards `1…PLAYWRIGHT_INSTANCES` all ran (exempt only when shard 1 alone ran) |
+| Validate | `global-teardown.js` → `validateShardCoverage()` | For each skin/HC group, ensures every shard in the current `PLAYWRIGHT_SPEC` filter ran (`utils/spec-match.js`) |
 
-**Skipped when** `PLAYWRIGHT_COMPONENT` is set (component script uses `PLAYWRIGHT_INSTANCES=1` and a single spec — no cross-shard risk).
+**Skipped when** `PLAYWRIGHT_COMPONENT` is set (component script — no cross-shard risk).
 
-**Example failure:** `PLAYWRIGHT_INSTANCES=9` but only `Default-spec.js` … `Default5-spec.js` are on the command line → teardown throws *Incomplete Playwright shard coverage* listing missing shards.
+**Example failure:** no `PLAYWRIGHT_SPEC` (full suite) but only `Default3-spec.js` loads → teardown throws *Incomplete Playwright shard coverage* because shards 1, 2, 4, 5 were expected for that skin/HC group.
 
 The registry file is **gitignored** (`.shard-registry.jsonl`); it is a run-time artifact only.
 
@@ -459,7 +459,7 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | `PLAYWRIGHT_TITLE` | Filter cases by title (regex per whitespace-separated term; invalid regex falls back to substring; case-insensitive) |
 | `PLAYWRIGHT_INSTANCES` | Shard divisor (`testId % instances`); component script sets `1` |
 | `PLAYWRIGHT_WORKERS` | Parallel workers in `playwright.config.mjs` (default **5**) |
-| `PLAYWRIGHT_SPEC` | Limit which `*-spec.js` files run |
+| `PLAYWRIGHT_SPEC` | Limit which `*-spec.js` files run; also defines which shards teardown expects |
 | `PLAYWRIGHT_BASE_URL` | Static server URL (default `http://localhost:4568`) |
 
 ---
@@ -478,7 +478,7 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | Missing images on build | Place assets under `tests/screenshot/images/`, `videos/` |
 | Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port; restart any stale `serve` on 4568 |
 | `build-apps` import error | Link or pin `@enact/ui-test-utils` with export `./build-apps` (see **Link local @enact/ui-test-utils** above) |
-| Incomplete shard coverage | Ensure `PLAYWRIGHT_INSTANCES` matches invoked shard files (see **Sharding vs workers**) |
+| Incomplete shard coverage | Ensure every spec file matched by `PLAYWRIGHT_SPEC` loaded and ran (see **Sharding vs workers**) |
 | WDIO `--parallel` ignored | Update `@enact/ui-test-utils` (see ui-test-utils PR for `--parallel` CLI) |
 
 ---
