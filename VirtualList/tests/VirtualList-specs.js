@@ -390,4 +390,28 @@ describe('VirtualList', () => {
 			expect(actual).toBe(expected);
 		});
 	});
+
+	describe('stickTo', () => {
+		test('should accept \'stickTo="start"\' without warnings and render items', () => {
+			const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					dataSize={dataSize}
+					direction="horizontal"
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					stickTo="start"
+				/>
+			);
+
+			expect(screen.getByRole('list').children.item(0).textContent).toBe('Account 0');
+			// No propType nor unknown-DOM-attribute warnings should be emitted, which would mean the
+			// `stickTo` prop leaked onto a DOM element.
+			expect(spy).not.toHaveBeenCalled();
+
+			spy.mockRestore();
+		});
+	});
 });

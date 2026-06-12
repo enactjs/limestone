@@ -325,4 +325,26 @@ describe('Scroller', () => {
 			}
 		);
 	});
+
+	describe('stickTo', () => {
+		test(
+			'should accept \'stickTo="start"\' without warnings and render content',
+			() => {
+				const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+				render(
+					<Scroller direction="horizontal" stickTo="start">
+						{contents}
+					</Scroller>
+				);
+
+				expect(screen.getByText(/Lorem ipsum/)).toBeInTheDocument();
+				// No propType warning, and no "unknown DOM attribute" warning, which would mean the
+				// `stickTo` prop leaked onto a DOM element.
+				expect(spy).not.toHaveBeenCalled();
+
+				spy.mockRestore();
+			}
+		);
+	});
 });
