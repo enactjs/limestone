@@ -23,7 +23,21 @@ async function open (page, urlExtra = '?locale=en-US') {
 export async function openComponent (page, params) {
 	const query = serializeParams(Object.assign({locale: 'en-US'}, params));
 	await open(page, `?${query}`);
-	await page.locator('[data-ui-test-id="test"]').waitFor({state: 'visible', timeout: 60000});
+	// Match WDIO Page.open: body ready + short settle (no wait on [data-ui-test-id]).
+	// That node can be attached but not Playwright-"visible" (e.g. Input open in FloatingLayer).
+	await page.locator('body').waitFor({state: 'visible', timeout: 10000});
+	await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 200)));
+	await page.waitForFunction(() => {
+		const root = document.querySelector('#root');
+
+		if (!root?.children.length) {
+			return false;
+		}
+
+		const text = root.textContent || '';
+
+		return !text.includes('INVALID COMPONENT') && !text.includes('ERROR IN');
+	}, {timeout: 60000});
 	// Wait for web fonts to finish loading so glyphs are painted before the screenshot.
 	await page.evaluate(() => document.fonts.ready);
 }
