@@ -94,22 +94,22 @@
 		font-weight: @lime-card-caption-font-weight;
 	}
 
+	.label {
+		font-size: @lime-card-label-font-size;
+		line-height: @lime-card-label-line-height;
+		font-weight: @lime-card-label-font-weight;
+	}
+
 	.labels {
-		gap: @lime-card-labels-spacing;
 		height: fit-content;
 
 		.labelContainer {
 			align-items: center;
 			gap: @lime-card-label-container-spacing;
 
-			.label {
-				font-size: @lime-card-label-font-size;
-				line-height: @lime-card-label-line-height;
-				font-weight: @lime-card-label-font-weight;
-			}
-
 			&:has(.labelIcon) {
 				height: @lime-icon-small-size;
+				margin-bottom: @lime-card-label-icon-margin;
 				will-change: transform;
 
 				.label {
@@ -118,6 +118,12 @@
 
 				.labelIcon {
 					margin: 0;
+				}
+
+				// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
+				// or if it's the last element in the list, to prevent excessive spacing.
+				&:has(+ .captionImageIconsContainer), &:is(:last-child) {
+					margin-bottom: 0;
 				}
 			}
 		}
@@ -293,18 +299,8 @@
 			padding: @lime-card-horizontal-captions-padding;
 		}
 
-		.duration {
-			transform: none;
-			transition: none;
-		}
-
 		.image {
 			width: var(--card-image-width);
-
-			.duration {
-				transform: none;
-				transition: none;
-			}
 		}
 	}
 

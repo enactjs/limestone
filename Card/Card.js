@@ -478,7 +478,7 @@ const CardBase = kind({
 		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, progressBarOverlay, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
 			const isCenteredTitle = (captionOverlay || captionOverlayOnFocus) && orientation === 'vertical' && centeredTitle;
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
-			const hasCaptionImageIcons = captionImageIconsSrc && orientation === 'vertical';
+			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical');
 			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
 			const CaptionsComponent = isCenteredTitle ? Column : Row;
 
