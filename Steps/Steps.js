@@ -241,7 +241,7 @@ const StepsBase = kind({
 			});
 		},
 		className: ({className, css, highlightCurrentOnly}) => classNames(className, {
-			[css.highlightCurrentOnly] : highlightCurrentOnly,
+			[css.highlightCurrentOnly] : highlightCurrentOnly
 		})
 	},
 
