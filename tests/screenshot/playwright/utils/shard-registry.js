@@ -39,14 +39,14 @@ export function validateShardCoverage () {
 			continue;
 		}
 
-		const {groupKey, concurrency, maxWorkers} = JSON.parse(line);
+		const {groupKey, concurrency, maxWorkers: recordedMaxWorkers} = JSON.parse(line);
 
 		if (!actualGroups.has(groupKey)) {
-			actualGroups.set(groupKey, {maxWorkers, shards: new Set()});
+			actualGroups.set(groupKey, {maxWorkers: recordedMaxWorkers, shards: new Set()});
 		}
 
 		const group = actualGroups.get(groupKey);
-		group.maxWorkers = maxWorkers;
+		group.maxWorkers = recordedMaxWorkers;
 		group.shards.add(concurrency);
 	}
 
