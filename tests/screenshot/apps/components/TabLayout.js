@@ -9,12 +9,6 @@ const SimpleTab = (props) => (
 	</Tab>
 );
 
-const SimpleTabLargeText = (props) => (
-	<Tab {...props}>
-		<div>{`Large Text View ${props.title}`}</div>
-	</Tab>
-);
-
 const tabs = [
 	SimpleTab({title: 'One'}),
 	SimpleTab({title: 'Two'}),
@@ -22,15 +16,6 @@ const tabs = [
 	SimpleTab({title: 'Four'}),
 	SimpleTab({title: 'Five'}),
 	SimpleTab({title: 'Six'})
-];
-
-const tabsLargeText = [
-	SimpleTabLargeText({title: 'One Large'}),
-	SimpleTabLargeText({title: 'Two Large'}),
-	SimpleTabLargeText({title: 'Three Large'}),
-	SimpleTabLargeText({title: 'Four Large'}),
-	SimpleTabLargeText({title: 'Five Large'}),
-	SimpleTabLargeText({title: 'Six Large'})
 ];
 
 const tabsForScroll = [
@@ -57,15 +42,6 @@ const tabsWithIcons = [
 	SimpleTab({title: 'Four', icon: 'lock'}),
 	SimpleTab({title: 'Five', icon: 'info'}),
 	SimpleTab({title: 'Six', icon: 'picture'})
-];
-
-const tabsWithIconsLargeText = [
-	SimpleTabLargeText({title: 'One Large', icon: 'star'}),
-	SimpleTabLargeText({title: 'Two Large', icon: 'home'}),
-	SimpleTabLargeText({title: 'Three Large', icon: 'plug'}),
-	SimpleTabLargeText({title: 'Four Large', icon: 'lock'}),
-	SimpleTabLargeText({title: 'Five Large', icon: 'info'}),
-	SimpleTabLargeText({title: 'Six Large', icon: 'picture'})
 ];
 
 const oneTabWithIcons = [
