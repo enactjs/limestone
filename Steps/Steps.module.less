@@ -54,6 +54,18 @@
 		}
 	}
 
+	.lime-custom-text({
+		.pageIndicator {
+			width: @lime-steps-pageindicator-size-large;
+			height: @lime-steps-pageindicator-size-large;
+
+			&.current {
+				width: @lime-steps-pageindicator-current-size-large;
+				height: @lime-steps-pageindicator-current-size-large;
+			}
+		}
+	});
+
 	.applySkins({
 		.step:not(.pageIndicator) {
 			&.past {
