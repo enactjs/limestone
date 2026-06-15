@@ -124,9 +124,13 @@ registerScreenshotTests({
 /Limestone-View/?locale=en-US&component=Chip&testId=3&skin=neutral&highContrast=false
 ```
 
-`Limestone-View` → `prepareTest('Chip', 3)` → renders `[data-ui-test-id="test"]`.
+`Limestone-View` → `prepareTest('Chip', 3)` → renders the case under `[data-ui-test-id="test"]` (see **Page ready** below — Playwright does not wait for that node to be visible).
 
-### 7. Screenshot
+### 7. Page ready — `utils/limestone-page.js`
+
+Matches WDIO `Page.open`: navigate, **200 ms** settle, then wait for fonts (capped at **10 s**). Playwright does **not** wait for `body` or `[data-ui-test-id="test"]` to be visible — Enact often leaves `body` non-visible to Playwright while the app is ready; popup content (e.g. Input `open`) lives in `FloatingLayer`.
+
+### 8. Screenshot
 
 `toHaveScreenshot(getScreenshotPathSegments('Chip', 'Limestone', <title>))` writes/compares under `playwright/snapshots/<Component>/<TestName>/<case>.png` — same folder layout as WDIO `dist/screenshots/reference/`.
 
@@ -154,7 +158,9 @@ npm run bootstrap
 npm run prepare-playwright   # optional on machines that already have Chrome (see below)
 ```
 
-`prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall`. Run it on **fresh machines and CI** (`build-scripts/enact-playwright-tests.sh`). On a machine where Chrome is already installed, Playwright prints *"chrome" is already installed on the system!"* — that is success; you can skip this step on later runs.
+`prepare-playwright` runs `playwright install chrome`. It is **not** hooked to `postinstall`. Use it on **local machines** without system Chrome.
+
+**Jenkins / CI** (`build-scripts/enact-playwright-tests.sh`) uses system Chrome from `installChrome` (same as WDIO) and skips `playwright install` to avoid broken apt GPG keys on agents. CI sets `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1`.
 
 `global-setup.js` and `ensure-screenshot-dist.mjs` call `assertScreenshotDist()` from `paths.js` when a build is needed. If `tests/screenshot/dist/Limestone-View/index.html` is missing, the run fails immediately with a clear error (not a webServer timeout).
 
@@ -326,17 +332,20 @@ npm run test-playwright -- --component Button --spec Light
 npm run test-playwright:report
 ```
 
-**Parallelism in full suite:** `playwright.config.mjs` defaults to **5 workers** (`PLAYWRIGHT_WORKERS`). Shards split cases by `testId % PLAYWRIGHT_INSTANCES` (default instances **5**).
+**Parallelism in full suite:** `playwright.config.mjs` defaults to **5 workers** (`PLAYWRIGHT_WORKERS`) and **120 s** per test (WDIO mocha uses 1 h). Navigation/action timeouts are **60 s**. Shards split cases by `testId % PLAYWRIGHT_INSTANCES` (default instances **5**).
 
-**Limit shards** (same idea as Jenkins `SPEC`):
+**Limit shards** (`utils/spec-match.js`):
 
 | `PLAYWRIGHT_SPEC` | Runs |
 |-------------------|------|
 | *(unset)* | All `*-spec.js` files |
-| `Default` | `Default-spec.js` … `Default9-spec.js` |
+| `Default` | All neutral default shards: `Default-spec.js` … `Default9-spec.js` |
+| `Default2` … `Default5` | Single shard file each (e.g. `Default3-spec.js`) |
+| `Default-spec` | Only `specs/neutral/Default-spec.js` (shard 1 — same file as WDIO `Default-specs.js`) |
 | `HighContrast` | `HighContrast-spec.js` … `HighContrast9-spec.js` |
 | `Light` | `Light-spec.js` … `Light9-spec.js` |
-| `Default-spec` | Only `specs/neutral/Default-spec.js` (TV-style) |
+
+**Jenkins `SPEC` (WDIO names)** is mapped in `build-scripts/enact-playwright-tests.sh` before export — e.g. `SPEC=Default` → `PLAYWRIGHT_SPEC=Default-spec` (shard 1 only), not the broad `Default` glob above. Matrix desktop: `Default`, `Default2` … `Default5`.
 
 ```powershell
 $env:PLAYWRIGHT_SPEC='Default'
@@ -461,6 +470,8 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | `PLAYWRIGHT_WORKERS` | Parallel workers in `playwright.config.mjs` (default **5**) |
 | `PLAYWRIGHT_SPEC` | Limit which `*-spec.js` files run; also defines which shards teardown expects |
 | `PLAYWRIGHT_BASE_URL` | Static server URL (default `http://localhost:4568`) |
+| `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` | Set to `1` on Jenkins agents (build-scripts); skips Playwright host-deps check |
+| `PLAYWRIGHT_CI_DEFAULT_SPEC` | Jenkins only: optional subset when `SPEC` is unset (e.g. `Default-spec` for smoke) |
 
 ---
 
@@ -471,9 +482,10 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 | Missing dist / build failed | Read the `assertScreenshotDist()` error (fail-fast in global-setup, not a webServer timeout); link `@enact/ui-test-utils` if build-apps fails |
 | Snapshot diff | Re-baseline with `--update`, or run failing `--test-id` alone |
 | Snapshot diff on focus cases in parallel | Re-baseline with `--parallel 1`, or run failing `--test-id` alone |
-| No tests found | Check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_SPEC`, `PLAYWRIGHT_TITLE`, `PLAYWRIGHT_TEST_ID` (case titles omit the component name — use `--component Button --title Focused` or `--title Button Focused`); delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
+| No tests found | Wrong `PLAYWRIGHT_SPEC` (shard 1 = `Default-spec`, not `Default1`); check `PLAYWRIGHT_COMPONENT`, `PLAYWRIGHT_TITLE`, `PLAYWRIGHT_TEST_ID`; delete stale `.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1` |
 | Invalid `PLAYWRIGHT_TEST_ID` | Use a non-negative integer for `--test-id` (e.g. `--test-id 3`) |
 | Stale `.test-data.json` (`undefined` parse error) | Delete `playwright/.test-data.json` or set `PLAYWRIGHT_REFRESH_TEST_DATA=1`; rebuild dist if needed |
+| `locator.waitFor` / page timeout on CI | Ensure `playwright.config.mjs` uses `timeout: 120000`; use current `limestone-page.js` (WDIO-style ready, no `visible` on `body` / `data-ui-test-id`) |
 | Port conflict on CI after setup | Ensure global-setup stopped its temporary `serve` (fresh `.test-data.json` + `--skip-build` should not leave an orphan on :4568) |
 | Missing images on build | Place assets under `tests/screenshot/images/`, `videos/` |
 | Port already in use | Set `PLAYWRIGHT_BASE_URL` to another port; restart any stale `serve` on 4568 |
@@ -483,16 +495,27 @@ Diminishing returns appear when too many Chrome instances contend for CPU/RAM (W
 
 ---
 
-## CI (planned)
+## CI
 
-Jenkins job via `build-scripts/enact-playwright-tests.sh`:
+Jenkins job **`enact-screenshot-tests`** runs WDIO (`npm run test-ss`) then Playwright via `build-scripts/enact-playwright-tests.sh` in the same workspace. Standalone job `enact-playwright-tests` is also supported. See `build-scripts/README.md` for full env var list.
 
-1. `npm run prepare-playwright`
-2. Optionally seed `playwright/snapshots/` from Nebula reference
-3. `npm run test-playwright` with `PLAYWRIGHT_SPEC`, `PLAYWRIGHT_WORKERS`, `PLAYWRIGHT_COMPONENT`
-4. Upload `playwright/reports/html`, `snapshots/`, `test-results/`
+1. **Chrome:** `installChrome` from build-scripts (same as WDIO); skips `npm run prepare-playwright` on agents
+2. **Reference:** optional Nebula `reference/${TARGET_TYPE}-playwright/` (separate from WDIO `reference/${TARGET_TYPE}/`)
+3. **`npm run test-playwright`** with Jenkins env (aligned with WDIO `wdio-screenshot-test-opts.sh`):
 
-On TV: typically `PLAYWRIGHT_SPEC=Default-spec` (single shard).
+| Jenkins param | Playwright | WDIO (same job) |
+|---------------|------------|-----------------|
+| *(no `SPEC`, desktop)* | Full suite (`PLAYWRIGHT_SPEC` unset) | `--instances 5 --parallel 5`, all `*-specs.js` |
+| `SPEC=Default` | `PLAYWRIGHT_SPEC=Default-spec` | `--spec Default` |
+| `SPEC=Default2` … `Default5` | `PLAYWRIGHT_SPEC=Default2-spec`, … | `--spec Default2`, … |
+| `COMPONENT` | `PLAYWRIGHT_COMPONENT`, `INSTANCES=1` | `--instances 1 --parallel …` |
+| `WDIO_PARALLEL` | `PLAYWRIGHT_WORKERS` (default **5**) | `--parallel` |
+| `PLAYWRIGHT_CI_DEFAULT_SPEC` | Optional smoke when no `SPEC` (e.g. `Default-spec`) | — |
+| `REFERENCE` | Nebula `limestone-playwright/` | Nebula `limestone/` |
+
+4. **Results:** `http://nebula.lge.com/results/playwright-results-<timestamp>/reports/html/index.html`
+
+On TV: `PLAYWRIGHT_SPEC=Default-spec`, `INSTANCES=1`, `WORKERS=1`.
 
 ---
 
