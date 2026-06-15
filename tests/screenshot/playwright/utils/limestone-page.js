@@ -23,11 +23,14 @@ async function open (page, urlExtra = '?locale=en-US') {
 export async function openComponent (page, params) {
 	const query = serializeParams(Object.assign({locale: 'en-US'}, params));
 	await open(page, `?${query}`);
-	// Match WDIO Page.open: body ready + short settle (no wait on [data-ui-test-id]).
-	// That node can be attached but not Playwright-"visible" (e.g. Input open in FloatingLayer).
-	await page.locator('body').waitFor({state: 'visible', timeout: 10000});
+	// WDIO Page.open: body.waitForDisplayed + delay(200). Playwright "visible" is stricter
+	// (body often stays non-visible while #root is ready); wait on app content instead.
 	await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 200)));
 	await page.waitForFunction(() => {
+		if (document.readyState !== 'complete') {
+			return false;
+		}
+
 		const root = document.querySelector('#root');
 
 		if (!root?.children.length) {
