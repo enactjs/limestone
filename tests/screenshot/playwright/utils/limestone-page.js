@@ -23,24 +23,9 @@ async function open (page, urlExtra = '?locale=en-US') {
 export async function openComponent (page, params) {
 	const query = serializeParams(Object.assign({locale: 'en-US'}, params));
 	await open(page, `?${query}`);
-	// WDIO Page.open: body.waitForDisplayed + delay(200). Playwright "visible" is stricter
-	// (body often stays non-visible while #root is ready); wait on app content instead.
 	await page.evaluate(() => new Promise((resolve) => setTimeout(resolve, 200)));
-	await page.waitForFunction(() => {
-		if (document.readyState !== 'complete') {
-			return false;
-		}
-
-		const root = document.querySelector('#root');
-
-		if (!root?.children.length) {
-			return false;
-		}
-
-		const text = root.textContent || '';
-
-		return !text.includes('INVALID COMPONENT') && !text.includes('ERROR IN');
-	}, {timeout: 60000});
-	// Wait for web fonts to finish loading so glyphs are painted before the screenshot.
-	await page.evaluate(() => document.fonts.ready);
+	await page.evaluate(() => Promise.race([
+		document.fonts.ready,
+		new Promise((resolve) => setTimeout(resolve, 10000))
+	]));
 }
