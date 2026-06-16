@@ -17,7 +17,6 @@
 
 import {forProp, forward, handle, not} from '@enact/core/handle';
 import kind from '@enact/core/kind';
-import {mapAndFilterChildren} from '@enact/core/util';
 import Spottable from '@enact/spotlight/Spottable';
 import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Column, Row} from '@enact/ui/Layout';
@@ -100,7 +99,7 @@ const getLabelIcons = (icons, key, className) => {
 			<Cell shrink key={`${key}${index}`}>
 				{cloneElement(labelIcon, {className})}
 			</Cell>
-		)
+		);
 	}) || null;
 };
 
