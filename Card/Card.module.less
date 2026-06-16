@@ -71,6 +71,10 @@
 	}
 
 	.primaryBadge, .secondaryBadge {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		text-align: center;
 		position: absolute;
 		width: @lime-card-badge-size;
 		height: @lime-card-badge-size;
@@ -100,31 +104,26 @@
 		font-weight: @lime-card-label-font-weight;
 	}
 
-	.labels {
-		height: fit-content;
+	.labelContainer {
+		align-items: center;
+		gap: @lime-card-label-container-spacing;
 
-		.labelContainer {
-			align-items: center;
-			gap: @lime-card-label-container-spacing;
+		&:has(.labelIcon) {
+			margin-bottom: @lime-card-label-icon-margin;
+			will-change: transform;
 
-			&:has(.labelIcon) {
-				height: @lime-icon-small-size;
-				margin-bottom: @lime-card-label-icon-margin;
-				will-change: transform;
+			.label {
+				margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
+			}
 
-				.label {
-					margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
-				}
+			.labelIcon {
+				margin: 0;
+			}
 
-				.labelIcon {
-					margin: 0;
-				}
-
-				// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
-				// or if it's the last element in the list, to prevent excessive spacing.
-				&:has(+ .captionImageIconsContainer), &:is(:last-child) {
-					margin-bottom: 0;
-				}
+			// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
+			// or if it's the last element in the list, to prevent excessive spacing.
+			&:has(+ .captionImageIconsContainer), &:is(:last-child) {
+				margin-bottom: 0;
 			}
 		}
 	}

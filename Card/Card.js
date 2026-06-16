@@ -23,7 +23,7 @@ import {Card as UiCard} from '@enact/ui/Card';
 import {Cell, Column, Row} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
 import ri from '@enact/ui/resolution';
-import {cloneElement} from 'react';
+import {cloneElement, isValidElement} from 'react';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
@@ -36,35 +36,6 @@ import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Card.module.less';
-
-const getDefaultImageSize = (orientation) => {
-	const sizes = {
-		vertical: {width: 768, height: 432},
-		horizontal: {width: 596, height: 336}
-	};
-
-	return sizes[orientation];
-};
-
-const getLabelIcons = (icons, key) => {
-	return mapAndFilterChildren(icons, (labelIcon, idx) => (
-		<Cell shrink key={`${key}${idx}`}>
-			{cloneElement(labelIcon, {className: componentCss.labelIcon})}
-		</Cell>
-	)) || null;
-};
-
-const getCaptionImageIcons = (imageSrc, key) => {
-	return imageSrc.map((src, idx) => (
-		<Cell
-			key={`${key}${idx}`}
-			className={componentCss.captionImageIcon}
-			component={Image}
-			shrink
-			src={src}
-		/>
-	)) || null;
-};
 
 const formatDuration = (duration) => {
 	if (duration < 0) return "00:00";
@@ -82,6 +53,55 @@ const formatDuration = (duration) => {
 	}
 
 	return `${mm}:${ss}`;
+};
+
+const getBadge = (badge, size, className) => {
+	let element = <div>{badge}</div>;
+	let elementSize = {};
+
+	if (isValidElement(badge)) element = badge;
+	if (size) {
+		elementSize = typeof size === 'object' ? {
+			width: ri.scaleToRem(size.width), height: ri.scaleToRem(size.height)
+		} : {
+			fontSize: ri.scaleToRem(size)
+		};
+	}
+
+	return cloneElement(element, {className: className, style: {...elementSize}});
+};
+
+const getCaptionImageIcons = (imageSrc, key) => {
+	return imageSrc.map((src, idx) => (
+		<Cell
+			key={`${key}${idx}`}
+			className={componentCss.captionImageIcon}
+			component={Image}
+			shrink
+			src={src}
+		/>
+	)) || null;
+};
+
+const getDefaultImageSize = (orientation) => {
+	const sizes = {
+		vertical: {width: 768, height: 432},
+		horizontal: {width: 596, height: 336}
+	};
+
+	return sizes[orientation];
+};
+
+const getLabelIcons = (icons, key, className) => {
+	if (!icons) return null;
+
+	return icons.map((labelIcon, index) => {
+		return (
+			<Cell shrink key={`${key}${index}`}>
+				{cloneElement(labelIcon, {className})}
+			</Cell>
+		)
+	}) || null;
 };
 
 /**
@@ -117,7 +137,7 @@ const CardBase = kind({
 		'aria-label': PropTypes.string,
 
 		/**
-		 * Source for the image icon.
+		 * Sources for the image icon.
 		 *
 		 * String value or Object of values used to determine which image will appear on
 		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
@@ -125,7 +145,9 @@ const CardBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		captionImageIconsSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		captionImageIconsSrc: PropTypes.arrayOf(
+			PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		),
 
 		/**
 		 * The size of the caption images.
@@ -346,12 +368,30 @@ const CardBase = kind({
 		pressed: PropTypes.bool,
 
 		/**
-		 * The primary badge image source.
+		 * The primary badge.
 		 *
-		 * @type {String|Object}
+		 * @type {Element|String}
 		 * @public
 		 */
-		primaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		primaryBadge: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+
+		/**
+		 * The size of the primary badge. Can be a number or an object with specific dimensions.
+		 * The following properties should be provided for the object:
+		 * * `height` - The height of the badge
+		 * * `width` - The width of the badge
+		 *
+		 * @type {Object|Number}
+		 * @default {width: 108, height: 108}
+		 * @public
+		 */
+		primaryBadgeSize: PropTypes.oneOfType([
+			PropTypes.number,
+			PropTypes.shape({
+				height: PropTypes.number,
+				width: PropTypes.number
+			})
+		]),
 
 		/**
 		 * The progress displayed inside the ProgressBar
@@ -378,12 +418,30 @@ const CardBase = kind({
 		roundedImage: PropTypes.bool,
 
 		/**
-		 * The secondary badge image source.
+		 * The secondary badge.
 		 *
-		 * @type {String|Object}
+		 * @type {Element|String}
 		 * @public
 		 */
-		secondaryBadgeSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		secondaryBadge: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+
+		/**
+		 * The size of the secondary badge. Can be a number or an object with specific dimensions.
+		 * The following properties should be provided for the object:
+		 * * `height` - The height of the badge
+		 * * `width` - The width of the badge
+		 *
+		 * @type {Object|Number}
+		 * @default {width: 108, height: 108}
+		 * @public
+		 */
+		secondaryBadgeSize: PropTypes.oneOfType([
+			PropTypes.number,
+			PropTypes.shape({
+				height: PropTypes.number,
+				width: PropTypes.number
+			})
+		]),
 
 		/**
 		 * A ternary caption displayed with the image.
@@ -498,14 +556,14 @@ const CardBase = kind({
 							<Column className={css.labels}>
 								{typeof label !== 'undefined' ? (
 									<Row className={css.labelContainer}>
-										{getLabelIcons(labelIcons, 'labelIcons')}
-										<div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div>
+										{getLabelIcons(labelIcons, 'labelIcons', css.labelIcon)}
+										<Cell><div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div></Cell>
 									</Row>
 								) : null}
 								{typeof secondaryLabel !== 'undefined' ? (
 									<Row className={css.labelContainer}>
-										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons')}
-										<div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div>
+										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons', css.labelIcon)}
+										<Cell><div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div></Cell>
 									</Row>
 								) : null}
 								{hasCaptionImageIcons ? (
@@ -525,14 +583,14 @@ const CardBase = kind({
 							<Column className={css.labels}>
 								{typeof label !== 'undefined' ? (
 									<Row className={css.labelContainer}>
-										{getLabelIcons(labelIcons, 'labelIcons')}
-										<Cell align="center"><Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee></Cell>
+										{getLabelIcons(labelIcons, 'labelIcons', css.labelIcon)}
+										<Cell><Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee></Cell>
 									</Row>
 								) : null}
 								{typeof secondaryLabel !== 'undefined' ? (
 									<Row className={css.labelContainer}>
-										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons')}
-										<Cell align="center"><Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee></Cell>
+										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons', css.labelIcon)}
+										<Cell><Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee></Cell>
 									</Row>
 								) : null}
 								{hasCaptionImageIcons ? (
@@ -602,21 +660,23 @@ const CardBase = kind({
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({captionImageSize, css, disabled, icon, imageSize, primaryBadgeSrc, secondaryBadgeSrc, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
+	render: ({captionImageSize, css, disabled, icon, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
 		delete rest.captionImageIconsSrc;
 		delete rest.captionOverflow;
 		delete rest.captionOverflowOnFocus;
 		delete rest.captionOverlayOnFocus;
 		delete rest.centered;
 		delete rest.centeredTitle;
+		delete rest.durationOverlay;
+		delete rest.hasContainer;
+		delete rest.imageIconSrc;
 		delete rest.label;
 		delete rest.labelIcons;
+		delete rest.pressed;
+		delete rest.progressBarOverlay;
+		delete rest.roundedImage;
 		delete rest.secondaryLabel;
 		delete rest.secondaryLabelIcons;
-		delete rest.imageIconSrc;
-		delete rest.hasContainer;
-		delete rest.pressed;
-		delete rest.roundedImage;
 		delete rest.withoutMarquee;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
@@ -630,11 +690,11 @@ const CardBase = kind({
 				disabled={disabled}
 				imageComponent={
 					<Image>
-						{primaryBadgeSrc ? (
-							<Image className={css.primaryBadge} src={primaryBadgeSrc} />
+						{primaryBadge ? (
+							getBadge(primaryBadge, primaryBadgeSize, css.primaryBadge)
 						) : null}
-						{secondaryBadgeSrc ? (
-							<Image className={css.secondaryBadge} src={secondaryBadgeSrc} />
+						{secondaryBadge ? (
+							getBadge(secondaryBadge, secondaryBadgeSize, css.secondaryBadge)
 						) : null}
 						<div className={css.selectionContainer}>
 							<Icon className={css.selectionIcon}>{icon}</Icon>
