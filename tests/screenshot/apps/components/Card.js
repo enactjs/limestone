@@ -68,8 +68,8 @@ const newTypeCardTests = [
 	<Card src={img} imageIconSrc={img} captionOverlay centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
 	<Card src={img} imageIconSrc={img} captionOverlayOnFocus centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
 	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} progressBarOverlay selected showProgressBar>Title</Card>,
-	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflow progressBarOverlay selected showProgressBar>Title</Card>,
-	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflowOnFocus progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflow progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflowOnFocus progressBarOverlay selected showProgressBar>Title</Card>,
 	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} duration={234} secondaryBadge={imageBadge} durationOverlay selected showDuration>Title</Card>,
 
 	// Horizontal
