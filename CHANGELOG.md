@@ -7,6 +7,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Scroller` prop `stickTo` to allow the scroller to stick to a specific element
+- `limestone/VirtualGridList` prop `stickTo` to allow the scroller to stick to a specific element
+- `limestone/VirtualList` prop `stickTo` to allow the scroller to stick to a specific element
 
 ### Changed
 

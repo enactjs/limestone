@@ -6,7 +6,7 @@ import Item from '../../Item';
 import VirtualList from '../VirtualList';
 
 // These tests exercise the `stickTo="start"` scroll behavior added to `useThemeVirtualList`. They
-// live in their own file because they depend on a clean Spotlight singleton.
+// live in their own file because they depend on a clean Spotlight instance.
 const focus = (elm) => fireEvent.focus(elm);
 
 const keyDownUp = (keyCode) => (elm) => {
