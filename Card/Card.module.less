@@ -104,26 +104,30 @@
 		font-weight: @lime-card-label-font-weight;
 	}
 
-	.labelContainer {
-		align-items: center;
-		gap: @lime-card-label-container-spacing;
+	.labels {
+		height: fit-content;
 
-		&:has(.labelIcon) {
-			margin-bottom: @lime-card-label-icon-margin;
-			will-change: transform;
+		.labelContainer {
+			align-items: center;
+			gap: @lime-card-label-container-spacing;
 
-			.label {
-				margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
-			}
+			&:has(.labelIcon) {
+				margin-bottom: @lime-card-label-icon-margin;
+				will-change: transform;
 
-			.labelIcon {
-				margin: 0;
-			}
+				.label {
+					margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
+				}
 
-			// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
-			// or if it's the last element in the list, to prevent excessive spacing.
-			&:has(+ .captionImageIconsContainer), &:is(:last-child) {
-				margin-bottom: 0;
+				.labelIcon {
+					margin: 0;
+				}
+
+				// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
+				// or if it's the last element in the list, to prevent excessive spacing.
+				&:has(+ .captionImageIconsContainer), &:is(:last-child) {
+					margin-bottom: 0;
+				}
 			}
 		}
 	}
