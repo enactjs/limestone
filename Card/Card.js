@@ -70,16 +70,31 @@ const getBadge = (badge, size, className) => {
 	return cloneElement(element, {className: className, style: {...elementSize}});
 };
 
-const getCaptionImageIcons = (imageSrc, key) => {
-	return imageSrc.map((src, idx) => (
-		<Cell
-			key={`${key}${idx}`}
-			className={componentCss.captionImageIcon}
-			component={Image}
-			shrink
-			src={src}
-		/>
-	)) || null;
+const getImageIcons = (images, key, className) => {
+	if (!images) return null;
+
+	const getCellElement = (src) => {
+		return (
+			<Cell
+				className={className}
+				component={Image}
+				shrink
+				src={src}
+			/>
+		);
+	};
+
+	if (Array.isArray(images)) {
+		return images.map((src, idx) => (
+			cloneElement(getCellElement(src), {key: `${key}${idx}`})
+		)) || null;
+	}
+
+	if (isValidElement(images)) {
+		return cloneElement(images, {className});
+	}
+
+	return getCellElement(images);
 };
 
 const getDefaultImageSize = (orientation) => {
@@ -541,18 +556,7 @@ const CardBase = kind({
 
 			const captions = (
 				<CaptionsComponent className={css.captions}>
-					{hasImageIcon ? (
-						isValidElement(imageIconSrc) ? (
-							cloneElement(imageIconSrc, {className: css.imageIcon})
-						) : (
-							<Cell
-								className={css.imageIcon}
-								component={Image}
-								shrink
-								src={imageIconSrc}
-							/>
-						)
-					) : null}
+					{hasImageIcon ? getImageIcons(imageIconSrc, null, css.imageIcon) : null}
 					{withoutMarquee ? (
 						<Cell className={css.captionCell}>
 							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
@@ -571,7 +575,7 @@ const CardBase = kind({
 								) : null}
 								{hasCaptionImageIcons ? (
 									<Row className={css.captionImageIconsContainer}>
-										{getCaptionImageIcons(captionImageIconsSrc, 'captionImageIcons')}
+										{getImageIcons(captionImageIconsSrc, 'captionImageIcons', css.captionImageIcon)}
 									</Row>
 								) : null}
 							</Column>
@@ -598,7 +602,7 @@ const CardBase = kind({
 								) : null}
 								{hasCaptionImageIcons ? (
 									<Row className={css.captionImageIconsContainer}>
-										{getCaptionImageIcons(captionImageIconsSrc, 'captionImageIcons')}
+										{getImageIcons(captionImageIconsSrc, 'captionImageIcons', css.captionImageIcon)}
 									</Row>
 								) : null}
 							</Column>

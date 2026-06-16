@@ -74,7 +74,7 @@ const newTypeCardTests = [
 
 	// Horizontal
 	<Card src={img} label="Secondary Text" labelIcons={labelIcons} orientation="horizontal" secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} selected>Title</Card>
-]
+];
 
 const CardTests = [
 	...defaultCardTests,
@@ -104,7 +104,8 @@ const CardTests = [
 	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests)),
 
 	// Large text
-	...withConfig({skinVariants: ['largeText']}, defaultCardTests)
+	...withConfig({skinVariants: ['largeText']}, defaultCardTests),
+	...withConfig({skinVariants: ['largeText']}, newTypeCardTests)
 ];
 
 export default CardTests;
