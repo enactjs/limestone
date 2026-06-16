@@ -295,13 +295,13 @@ const CardBase = kind({
 		/**
 		 * Source for the image icon.
 		 *
-		 * String value or Object of values used to determine which image will appear on
-		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
+		 * String value or element or Object of values used to determine which image will appear on
+		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'` or `centeredTitle` is `true`.
 		 *
-		 * @type {String|Object}
+		 * @type {String|Object|Element}
 		 * @public
 		 */
-		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.element]),
 
 		/**
 		 * The size of the image.
@@ -542,12 +542,16 @@ const CardBase = kind({
 			const captions = (
 				<CaptionsComponent className={css.captions}>
 					{hasImageIcon ? (
-						<Cell
-							className={css.imageIcon}
-							component={Image}
-							shrink
-							src={imageIconSrc}
-						/>
+						isValidElement(imageIconSrc) ? (
+							cloneElement(imageIconSrc, {className: css.imageIcon})
+						) : (
+							<Cell
+								className={css.imageIcon}
+								component={Image}
+								shrink
+								src={imageIconSrc}
+							/>
+						)
 					) : null}
 					{withoutMarquee ? (
 						<Cell className={css.captionCell}>
