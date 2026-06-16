@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Button` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/ProgressBar` styling to match the latest GUI
 - `limestone/Slider` styling to match the latest GUI
@@ -13,6 +14,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Bodytext` to properly display marquee when `noWrap` is true
 - `limestone/Card` styling when both `hasContainer` and `captionOverlayOnFocus` are true
 - `limestone/ContextualPopupDecorator` to remove global key listeners on unmount when popup is open
 - `limestone/VirtualList` focus jump and scroll freeze when scrolled by long press
