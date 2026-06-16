@@ -1,7 +1,7 @@
 import Chips, {Chip} from '../../../../Chips';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
-import {pick, withConfig} from './utils';
+import {withConfig} from './utils';
 
 const chipsSmokeTests = [
 	<Chips>
@@ -41,7 +41,18 @@ const chipsSmokeTests = [
 	</Chips>
 ];
 
-const chipsFocusTests = pick(chipsSmokeTests, 2, 1);
+const chipsFocusTests = [
+	<Chips>
+		<Chip deleteButton>Focused Chip 1</Chip>
+		<Chip deleteButton>Chip 2</Chip>
+		<Chip deleteButton>Chip 3</Chip>
+	</Chips>,
+	<Chips orientation="horizontal">
+		<Chip>Focused Chip 1</Chip>
+		<Chip>Chip 2</Chip>
+		<Chip>Chip 3</Chip>
+	</Chips>
+];
 
 const ChipsTests = [
 	...chipsSmokeTests,

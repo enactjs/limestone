@@ -87,7 +87,11 @@ const progressButtonTransparentTests = [
 
 const progressButtonRtlTests = pick(progressButtonSmokeTests, 2, 4);
 
-const progressButtonFocusTests = pick(progressButtonSmokeTests, 0, 2, 4);
+const progressButtonFocusTests = [
+	<ProgressButton>Focused Update</ProgressButton>,
+	<ProgressButton showProgress progress={0.5}>Focused Update</ProgressButton>,
+	<ProgressButton color="red">Focused Update</ProgressButton>
+];
 
 const progressButtonCommentedTests = [
 	...progressButtonSizeLargeTests,

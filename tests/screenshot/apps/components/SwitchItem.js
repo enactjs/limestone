@@ -20,16 +20,13 @@ const switchItemSmokeTests = [
 	<SwitchItem centered>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam dapibus imperdiet. Morbi diam ex, vulputate eget luctus eu, gravida at ligula. Sed tristique eros sit amet iaculis varius. Phasellus rutrum augue id nulla consectetur, a vulputate velit dictum. Vestibulum ultrices tellus ac cursus condimentum. Aliquam sit amet consectetur nulla, viverra bibendum metus.</SwitchItem>
 ];
 
-const switchItemQwtcTests = [
+const switchItemFocusTests = [
 	// [QWTC-2130]
 	<SwitchItem>Focused SwitchItem</SwitchItem>,
 	<SwitchItem selected>Focused SwitchItem</SwitchItem>,
 	<SwitchItem disabled>Focused SwitchItem</SwitchItem>,
 	// [QWTC-2130]
-	<SwitchItem disabled selected>Focused SwitchItem</SwitchItem>
-];
-
-const switchItemFocusTests = [
+	<SwitchItem disabled selected>Focused SwitchItem</SwitchItem>,
 	<SwitchItem inline>Focused SwitchItem</SwitchItem>,
 	<SwitchItem inline selected>Focused SwitchItem</SwitchItem>,
 	<SwitchItem centered>Focused Hello SwitchItem</SwitchItem>
@@ -41,7 +38,6 @@ const switchItemRtlTests = pick(switchItemSmokeTests, 0, 2, 5, 9);
 
 const SwitchItemTests = [
 	...switchItemSmokeTests,
-	...switchItemQwtcTests,
 	...withConfig({focus: true}, switchItemFocusTests),
 	...withConfig({textSize: 'large'}, switchItemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, switchItemRtlTests)

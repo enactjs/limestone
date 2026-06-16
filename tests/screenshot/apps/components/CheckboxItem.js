@@ -72,7 +72,9 @@ const checkboxItemLabelPositionTests = [
 ];
 
 const checkboxItemFocusTests = [
-	...pick(checkboxItemSmokeTests, 0, 2, 4),
+	<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem label="label">Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>,
 	// [QWTC-1861]
 	<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>,
 	// [QWTC-1861]
@@ -81,7 +83,10 @@ const checkboxItemFocusTests = [
 ];
 
 const checkboxItemLargeTextTests = [
-	...pick(checkboxItemSmokeTests, 0, 2, 4, 5),
+	<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem label="label">Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem indeterminate>Hello Focused CheckboxItem</CheckboxItem>,
 	// [QWTC-1861]
 	<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>
 ];

@@ -33,7 +33,11 @@ const chipSmokeTests = [
 	<Chip icon="home" deleteButton={{icon: 'closex', position: 'bottom'}} disabled>Disabled Chip with Icon and Delete Button (Bottom)</Chip>
 ];
 
-const chipFocusTests = pick(chipSmokeTests, 0, 4, 10, 20);
+const chipFocusTests = [
+	<Chip>Focused Default Chip</Chip>,
+	<Chip isImage icon={gameHomeIcon}>Focused Chip with Image</Chip>,
+	<Chip checked>Checked and Focused Chip</Chip>
+];
 
 const chipLargeTextTests = pick(chipSmokeTests, 0, 4, 10, 20);
 
