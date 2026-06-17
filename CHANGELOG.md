@@ -6,6 +6,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone/Card` press/release motion to match the latest motion guide
+- `limestone/IconItem` press/release motion to match the latest motion guide
+- `limestone/MediaOverlay` press/release motion to match the latest motion guide
+- `limestone/Slider` press/release motion to match the latest motion guide
+- `limestone/Button` press/release motion to match the latest motion guide
 - `limestone/Button` styling to match the latest GUI
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Picker` to use `Steps` instead of own indicator

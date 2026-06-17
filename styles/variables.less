@@ -1104,7 +1104,8 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-focusin-transform: scale(1.33);
+@lime-slider-focus-scale: 1.33;
+@lime-slider-focusin-transform: scale(@lime-slider-focus-scale);
 @lime-slider-focusout-transform: scale(1);
 @lime-slider-press-transform: scale(1.16);
 @lime-slider-release-transform: @lime-slider-focusin-transform;
@@ -1121,7 +1122,7 @@
 @lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
-@lime-slider-tooltip-offset-focused: (@lime-slider-knob-width * 1.33 / 2);
+@lime-slider-tooltip-offset-focused: (@lime-slider-knob-width * @lime-slider-focus-scale / 2);
 @lime-slider-min-max-margin-top: var(--primitive-spacing-24);
 @lime-slider-min-max-font-size: var(--primitive-font-size-48);
 @lime-slider-min-max-font-size-large: var(--primitive-font-size-60);
