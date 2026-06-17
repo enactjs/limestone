@@ -1,8 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
-const stylesDir = path.join(__dirname, '..');
-const repoRoot = path.join(stylesDir, '..');
+const repoRoot = process.cwd();
+const stylesDir = path.join(repoRoot, 'styles');
 
 const readStyleFile = (filename) => fs.readFileSync(path.join(stylesDir, filename), 'utf8');
 
