@@ -240,8 +240,10 @@
 		}
 
 		.title {
-			.lime-font-size(@lime-header-wizard-title-font-size, @lime-non-latin-header-wizard-title-font-size);
+			height: @lime-header-wizard-title-line-height;
+			line-height: @lime-header-wizard-title-line-height;
 			padding: @lime-header-wizard-title-padding;
+			.lime-font-size(@lime-header-wizard-title-font-size, @lime-non-latin-header-wizard-title-font-size);
 		}
 
 		.subtitle {
