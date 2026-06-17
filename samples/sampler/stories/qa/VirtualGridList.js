@@ -490,7 +490,7 @@ boolean('hoverToScroll', RestoreFocusInScroller, Config);
 number('minWidth', RestoreFocusInScroller, Config, 688);
 number('minHeight', RestoreFocusInScroller, Config, 570);
 boolean('noScrollByWheel', RestoreFocusInScroller, Config);
-number('spacing', RestoreFocusInScroller, Config, 0)
+number('spacing', RestoreFocusInScroller, Config, 0);
 select('stickTo', RestoreFocusInScroller, prop.stickToOption, Config);
 
 RestoreFocusInScroller.storyName = 'in Scroller with restoring focus';
