@@ -1,10 +1,6 @@
 const ScrollerPage = require('../ScrollerPage');
 const {expectFocusedItem} = require('../Scroller-utils');
 
-// Covers the scenario the `stickTo="start"` prop was created for: while moving focus through a
-// horizontal Scroller (a "shelf" of Cards), the focus indicator stays at a fixed slot near the
-// start (left) edge and the list scrolls beneath it, instead of the focused item drifting toward
-// the opposite edge.
 describe('Scroller with stickTo="start"', function () {
 	beforeEach(async function () {
 		await ScrollerPage.open('StickToStart');
