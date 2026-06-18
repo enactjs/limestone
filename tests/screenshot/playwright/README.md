@@ -345,7 +345,7 @@ npm run test-playwright:report
 | `HighContrast` | `HighContrast-spec.js` … `HighContrast9-spec.js` |
 | `Light` | `Light-spec.js` … `Light9-spec.js` |
 
-**Jenkins `SPEC` (WDIO names)** is mapped in `build-scripts/enact-playwright-tests.sh` before export — e.g. `SPEC=Default` → `PLAYWRIGHT_SPEC=Default-spec` (shard 1 only), not the broad `Default` glob above. Matrix desktop: `Default`, `Default2` … `Default5`.
+**Jenkins `SPEC` (WDIO names)** is normalized in `build-scripts/enact-playwright-tests.sh` (`Default-specs` → `Default`, etc.) so Playwright uses the same substring filter as WDIO `--spec`. E.g. `SPEC=Default` → `PLAYWRIGHT_SPEC=Default` → all neutral `*Default*-spec.js` shards active for `INSTANCES=5`. Matrix desktop: `Default`, `Default2` … `Default5`.
 
 ```powershell
 $env:PLAYWRIGHT_SPEC='Default'
@@ -506,16 +506,16 @@ Jenkins job **`enact-screenshot-tests`** runs WDIO (`npm run test-ss`) then Play
 | Jenkins param | Playwright | WDIO (same job) |
 |---------------|------------|-----------------|
 | *(no `SPEC`, desktop)* | Full suite (`PLAYWRIGHT_SPEC` unset) | `--instances 5 --parallel 5`, all `*-specs.js` |
-| `SPEC=Default` | `PLAYWRIGHT_SPEC=Default-spec` | `--spec Default` |
-| `SPEC=Default2` … `Default5` | `PLAYWRIGHT_SPEC=Default2-spec`, … | `--spec Default2`, … |
+| `SPEC=Default` | `PLAYWRIGHT_SPEC=Default` | `--spec Default` |
+| `SPEC=Default2` … `Default5` | `PLAYWRIGHT_SPEC=Default2`, … | `--spec Default2`, … |
 | `COMPONENT` | `PLAYWRIGHT_COMPONENT`, `INSTANCES=1` | `--instances 1 --parallel …` |
 | `WDIO_PARALLEL` | `PLAYWRIGHT_WORKERS` (default **5**) | `--parallel` |
-| `PLAYWRIGHT_CI_DEFAULT_SPEC` | Optional smoke when no `SPEC` (e.g. `Default-spec`) | — |
+| `PLAYWRIGHT_CI_DEFAULT_SPEC` | Optional smoke when no `SPEC` (e.g. `Default-spec` for shard 1 only) | — |
 | `REFERENCE` | Nebula `limestone-playwright/` | Nebula `limestone/` |
 
 4. **Results:** `http://nebula.lge.com/results/playwright-results-<timestamp>/reports/html/index.html`
 
-On TV: `PLAYWRIGHT_SPEC=Default-spec`, `INSTANCES=1`, `WORKERS=1`.
+On TV: `PLAYWRIGHT_SPEC=Default`, `INSTANCES=1`, `WORKERS=1`.
 
 ---
 
