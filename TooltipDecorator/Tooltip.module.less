@@ -74,6 +74,11 @@
 			text-align: right;
 		});
 
+		&.image {
+			display: flex;
+			flex-direction: column;
+		}
+
 		&.marquee {
 			max-width: var(--lime-tooltip-label-width, @lime-tooltip-marquee-width); // If using a marquee, use the preferred width, and if none is provided, fall back to our default variable.
 		}
@@ -145,7 +150,10 @@
 
 			.tooltipLabel {
 				text-align: right;
-				border-top-right-radius: 0;
+
+				&:not(.noArrow) {
+					border-top-right-radius: 0;
+				}
 			}
 		}
 
@@ -171,7 +179,9 @@
 			}
 
 			.tooltipLabel {
-				border-top-left-radius: 0;
+				&:not(.noArrow) {
+					border-top-left-radius: 0;
+				}
 			}
 		}
 	}
@@ -197,7 +207,9 @@
 
 			.tooltipLabel {
 				text-align: right;
-				border-bottom-right-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-right-radius: 0;
+				}
 			}
 		}
 
@@ -219,7 +231,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-left-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-left-radius: 0;
+				}
 			}
 		}
 	}
@@ -244,7 +258,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-right-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-right-radius: 0;
+				}
 			}
 		}
 
@@ -265,7 +281,9 @@
 			}
 
 			.tooltipLabel {
-				border-top-right-radius: 0;
+				&:not(.noArrow) {
+					border-top-right-radius: 0;
+				}
 			}
 		}
 	}
@@ -290,7 +308,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-left-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-left-radius: 0;
+				}
 			}
 		}
 
@@ -310,7 +330,9 @@
 				}
 			}
 			.tooltipLabel {
-				border-top-left-radius: 0;
+				&:not(.noArrow) {
+					border-top-left-radius: 0;
+				}
 			}
 		}
 	}

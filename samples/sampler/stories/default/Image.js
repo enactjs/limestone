@@ -21,37 +21,40 @@ export default {
 	component: 'Image'
 };
 
-export const _Image = (args) => (
-	<Image
-		src={args['src']}
-		sizing={args['sizing']}
-		onError={action('error')}
-		onLoad={action('loaded')}
-		style={{
-			border: '#ffa500 dashed 1px',
-			marginTop: ri.scaleToRem(96)
-		}}
-	>
-		<label
+export const _Image = (args) => {
+	console.log(args['src']);
+	return (
+		<Image
+			src={args['src']}
+			sizing={args['sizing']}
+			onError={action('error')}
+			onLoad={action('loaded')}
 			style={{
 				border: '#ffa500 dashed 1px',
-				borderBottomWidth: 0,
-				borderRadius: '12px 12px 0 0',
-				backgroundColor: 'rgba(255, 165, 0, 0.5)',
-				color: '#fff',
-				position: 'absolute',
-				transform: 'translateX(-1px) translateY(-100%)',
-				padding: '0.1em 1em',
-				fontWeight: 100,
-				fontStyle: 'italic',
-				fontSize: ri.scaleToRem(42),
-				width: ri.scaleToRem(636)
+				marginTop: ri.scaleToRem(96)
 			}}
 		>
-			Image Boundary
-		</label>
-	</Image>
-);
+			<label
+				style={{
+					border: '#ffa500 dashed 1px',
+					borderBottomWidth: 0,
+					borderRadius: '12px 12px 0 0',
+					backgroundColor: 'rgba(255, 165, 0, 0.5)',
+					color: '#fff',
+					position: 'absolute',
+					transform: 'translateX(-1px) translateY(-100%)',
+					padding: '0.1em 1em',
+					fontWeight: 100,
+					fontStyle: 'italic',
+					fontSize: ri.scaleToRem(42),
+					width: ri.scaleToRem(636)
+				}}
+			>
+				Image Boundary
+			</label>
+		</Image>
+	)
+};
 
 object('src', _Image, Config, src);
 select('sizing', _Image, ['fill', 'fit', 'none'], Config);

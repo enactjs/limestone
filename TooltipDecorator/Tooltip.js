@@ -105,6 +105,8 @@ const TooltipBase = kind({
 		 */
 		marquee: PropTypes.bool,
 
+		noArrow: PropTypes.bool,
+
 		/**
 		 * Style object for tooltip position.
 		 *
@@ -129,6 +131,8 @@ const TooltipBase = kind({
 		 * @public
 		 */
 		relative: PropTypes.bool,
+
+		tooltipCss: PropTypes.object,
 
 		/**
 		 * Called when the tooltip mounts/unmounts, giving a reference to the DOM.
@@ -188,7 +192,7 @@ const TooltipBase = kind({
 				return {transform: `translateX(${cappedPosition * 100}%)`};
 			}
 		},
-		className: ({direction, arrowAnchor, relative, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, {relative, absolute: !relative}, type),
+		className: ({direction, arrowAnchor, noArrow, relative, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, {relative, absolute: !relative, noArrow}, type),
 		style: ({position, style}) => {
 			return {
 				...style,
@@ -197,7 +201,7 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, tooltipRef, width, labelOffset, marquee, ...rest}) => {
+	render: ({arrowAnchor, children, css, image, noArrow, tooltipRef, width, labelOffset, marquee, ...rest}) => {
 		delete rest.labelOffset;
 		delete rest.direction;
 		delete rest.position;
@@ -207,8 +211,16 @@ const TooltipBase = kind({
 		return (
 			<div {...rest}>
 				<div className={css.tooltipAnchor} ref={tooltipRef} >
-					<div className={css.tooltipArrow} />
-					<TooltipLabel className={css.tooltipLabel} marquee={marquee} centered={arrowAnchor === 'center'} width={width} style={labelOffset}>
+					{!noArrow && <div className={css.tooltipArrow} />}
+					<TooltipLabel
+						className={css.tooltipLabel}
+						image={image}
+						marquee={marquee}
+						noArrow={noArrow}
+						centered={arrowAnchor === 'center'}
+						width={width}
+						style={labelOffset}
+					>
 						{children}
 					</TooltipLabel>
 				</div>

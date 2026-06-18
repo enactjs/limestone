@@ -3,6 +3,7 @@ import {isRtlText} from '@enact/i18n/util';
 import {scaleToRem} from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 
+import Image from '../Image';
 import Marquee from '../Marquee';
 
 import css from './Tooltip.module.less';
@@ -37,6 +38,8 @@ const TooltipLabel = kind({
 		 */
 		centered: PropTypes.bool,
 
+		image: PropTypes.object,
+
 		/**
 		 * Apply a marquee to support long text.
 		 *
@@ -47,6 +50,8 @@ const TooltipLabel = kind({
 		 * @public
 		 */
 		marquee: PropTypes.bool,
+
+		tooltipCss: PropTypes.object,
 
 		/**
 		 * The width of tooltip content.
@@ -66,14 +71,21 @@ const TooltipLabel = kind({
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 	},
 
+	defaultProps: {
+		width: 1200,
+	},
+
 	styles: {
 		css
 	},
 
 	computed: {
-		className: ({marquee, width, styler}) => styler.append({
+		className: ({image, marquee, noArrow, tooltipCss, width, styler}) => styler.append({
 			multi: (!marquee && !!width),
-			marquee
+			marquee,
+			noArrow: !!noArrow,
+			tooltipCss,
+			image: !!image
 		}),
 		style: ({children, width, style}) => {
 			return {
@@ -84,18 +96,25 @@ const TooltipLabel = kind({
 		}
 	},
 
-	render: ({centered, children, marquee, ...rest}) => {
+	render: ({centered, children, image, marquee, ...rest}) => {
 		delete rest.width;
+		delete rest.tooltipCss;
+
+		console.log(rest.noArrow)
 
 		if (marquee) {
 			return (
-				<Marquee {...rest} alignment={centered ? 'center' : null} marqueeOn="render">
-					{children}
-				</Marquee>
+				<div {...rest}>
+					{image && <Image src={image}/>}
+					<Marquee alignment={centered ? 'center' : null} marqueeOn="render">
+						{children}
+					</Marquee>
+				</div>
 			);
 		} else {
 			return (
 				<div {...rest}>
+					{image && <Image style={{margin: 0}} src={image}/>}
 					{children}
 				</div>
 			);

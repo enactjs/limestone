@@ -98,6 +98,8 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 */
 		disabled: PropTypes.bool,
 
+		noArrow: PropTypes.bool,
+
 		/**
 		 * Indicates the tooltip text direction is right-to-left.
 		 *
@@ -105,6 +107,10 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @private
 		 */
 		rtl: PropTypes.bool,
+
+		tooltipCss: PropTypes.object,
+
+		tooltipImage: PropTypes.object,
 
 		/**
 		 * Time to wait (in milliseconds) before showing tooltip on hover.

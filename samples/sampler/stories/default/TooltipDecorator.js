@@ -1,9 +1,16 @@
 import Button from '@enact/limestone/Button';
 import TooltipDecorator, {Tooltip, TooltipBase} from '@enact/limestone/TooltipDecorator';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, number, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 
 import iconNames from '../helper/icons';
+import {svgGenerator} from '../helper/svg';
+
+const src = {
+	hd: svgGenerator(200, 200, '7ed31d', 'ffffff', '200 X 200'),
+	fhd: svgGenerator(300, 300, '7ed31d', 'ffffff', '300 X 300'),
+	uhd: svgGenerator(600, 600, '7ed31d', 'ffffff', '600 X 600')
+};
 
 const Config = mergeComponentMetadata('TooltipDecorator', TooltipBase, Tooltip, TooltipDecorator);
 Config.defaultProps.tooltipType = 'balloon';
@@ -40,7 +47,9 @@ export const _TooltipDecorator = (args) => (
 		<TooltipButton
 			disabled={args['disabled']}
 			icon={args['icon']}
+			noArrow={args['noArrow']}
 			tooltipDelay={args['tooltipDelay']}
+			tooltipImage={args['hasImage'] && args['tooltipImage']}
 			tooltipMarquee={args['tooltipMarquee']}
 			tooltipPosition={args['tooltipPosition']}
 			tooltipRelative={args['tooltipRelative']}
@@ -54,7 +63,9 @@ export const _TooltipDecorator = (args) => (
 );
 
 boolean('disabled', _TooltipDecorator, Config);
+boolean('hasImage', _TooltipDecorator, Config);
 select('icon', _TooltipDecorator, prop.icons, Config);
+boolean('noArrow', _TooltipDecorator, Config);
 number('tooltipDelay', _TooltipDecorator, Config, 500);
 boolean('tooltipMarquee', _TooltipDecorator, Config);
 select('tooltipPosition', _TooltipDecorator, prop.tooltipPosition, Config, prop.tooltipPosition[0]);
@@ -63,6 +74,7 @@ text('tooltipText', _TooltipDecorator, Config, 'tooltip!');
 select('tooltipType', _TooltipDecorator, prop.tooltipType, Config);
 number('tooltipWidth', _TooltipDecorator, Config);
 text('children', _TooltipDecorator, Config, 'click me');
+object('tooltipImage', _TooltipDecorator, Config, src);
 
 _TooltipDecorator.storyName = 'TooltipDecorator';
 _TooltipDecorator.parameters = {

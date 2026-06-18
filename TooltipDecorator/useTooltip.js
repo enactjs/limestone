@@ -32,7 +32,9 @@ const getTooltipDirection = (tooltipPosition, tooltipType) => {
 const removeTooltipProps = ({...props}) => {
 	delete props.rtl;
 	delete props.screenEdgeKeepout;
+	delete props.tooltipCss;
 	delete props.tooltipDelay;
+	delete props.tooltipImage;
 	delete props.tooltipMarquee;
 	delete props.tooltipPosition;
 	delete props.tooltipProps;
@@ -57,10 +59,13 @@ const defaultScreenEdgeKeepout = (24 + 24);
 // A hook to show Limestone-styled tooltip components.
 const useTooltip = (props) => {
 	const {
+		noArrow,
 		screenEdgeKeepout = defaultScreenEdgeKeepout,
 		tooltipDelay = 500,
 		tooltipType = 'balloon',
 		tooltipUpdateDelay = 400,
+		tooltipCss,
+		tooltipImage,
 		tooltipMarquee,
 		tooltipPosition,
 		tooltipProps,
@@ -100,18 +105,18 @@ const useTooltip = (props) => {
 	}, [clientRef, tooltipDelay, tooltipText]);
 
 	const hideTooltip = useCallback(() => {
-		if (tooltipText) {
-			mutableRef.current.mutationObserver?.disconnect();
-			mutableRef.current.resizeObserver?.disconnect();
-
-			clientRef.current = null;
-			currentTooltip = null;
-
-			mutableRef.current.showTooltipJob?.stop();
-			mutableRef.current.setTooltipLayoutJob?.stop();
-
-			setShowing(false);
-		}
+		// if (tooltipText) {
+		// 	mutableRef.current.mutationObserver?.disconnect();
+		// 	mutableRef.current.resizeObserver?.disconnect();
+		//
+		// 	clientRef.current = null;
+		// 	currentTooltip = null;
+		//
+		// 	mutableRef.current.showTooltipJob?.stop();
+		// 	mutableRef.current.setTooltipLayoutJob?.stop();
+		//
+		// 	setShowing(false);
+		// }
 	}, [clientRef, tooltipText]);
 
 	const startTooltipLayoutJob = useCallback(() => {
@@ -240,16 +245,20 @@ const useTooltip = (props) => {
 			'--tooltip-position-left': tooltipRelative ? null : ri.unit(left, 'rem')
 		};
 
+		console.log(tooltipImage)
 		const renderedTooltip = (
 			<Tooltip
 				aria-hidden
 				labelOffset={layout.labelOffset}
 				{...tooltipProps}
 				arrowAnchor={layout.arrowAnchor}
+				noArrow={noArrow}
 				direction={layout.tooltipDirection}
+				image={tooltipImage}
 				marquee={tooltipMarquee}
 				relative={tooltipRelative}
 				style={tooltipStyle}
+				tooltipCss={tooltipCss}
 				tooltipRef={getTooltipRef}
 				type={tooltipType}
 				width={tooltipWidth}
@@ -269,7 +278,7 @@ const useTooltip = (props) => {
 		} else {
 			return null;
 		}
-	}, [getTooltipRef, hideTooltip, layout, showing, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
+	}, [getTooltipRef, hideTooltip, layout, noArrow, tooltipCss, tooltipImage, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
 
 	return {
 		tooltip: tooltipText ? renderTooltip() : null,
