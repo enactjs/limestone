@@ -3,8 +3,8 @@ name: CI
 on:
   push:
     branches:
-      - develop
-      - master
+      - release/1.9.x.develop
+      - release/1.9.x
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:

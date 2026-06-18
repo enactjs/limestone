@@ -1,6 +1,6 @@
 {
   "name": "@enact/limestone",
-  "version": "1.9.3",
+  "version": "1.9.4",
   "description": "Large-screen/TV support library for Enact, containing a variety of UI components.",
   "repository": {
     "type": "git",
@@ -47,12 +47,12 @@
     "@enovaui/core-tokens": "^0.14.0",
     "@enovaui/webos-tokens": "^0.14.0",
     "classnames": "^2.5.1",
-    "ilib": "^14.21.3",
+    "ilib": "^14.22.0",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.32.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "warning": "^4.0.3"
   },
   "peerDependencies": {

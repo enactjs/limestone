@@ -4,7 +4,7 @@ import img from '../../images/600x600.png';
 
 import {withConfig} from './utils';
 
-const videoSrc = "https://media.w3.org/2010/05/sintel/trailer.mp4";
+const videoSrc = "../../videos/movie_90.mp4";
 
 const MediaOverlayTests = [
 	// Base Tests
