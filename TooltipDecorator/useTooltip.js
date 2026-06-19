@@ -30,11 +30,13 @@ const getTooltipDirection = (tooltipPosition, tooltipType) => {
 };
 
 const removeTooltipProps = ({...props}) => {
+	delete props.noArrow;
 	delete props.rtl;
 	delete props.screenEdgeKeepout;
 	delete props.tooltipCss;
 	delete props.tooltipDelay;
 	delete props.tooltipImage;
+	delete props.tooltipImageSize;
 	delete props.tooltipMarquee;
 	delete props.tooltipPosition;
 	delete props.tooltipProps;
@@ -66,6 +68,7 @@ const useTooltip = (props) => {
 		tooltipUpdateDelay = 400,
 		tooltipCss,
 		tooltipImage,
+		tooltipImageSize,
 		tooltipMarquee,
 		tooltipPosition,
 		tooltipProps,
@@ -253,11 +256,12 @@ const useTooltip = (props) => {
 				arrowAnchor={layout.arrowAnchor}
 				noArrow={noArrow}
 				direction={layout.tooltipDirection}
-				image={tooltipImage}
 				marquee={tooltipMarquee}
 				relative={tooltipRelative}
 				style={tooltipStyle}
 				tooltipCss={tooltipCss}
+				tooltipImage={tooltipImage}
+				tooltipImageSize={tooltipImageSize}
 				tooltipRef={getTooltipRef}
 				type={tooltipType}
 				width={tooltipWidth}
@@ -277,7 +281,7 @@ const useTooltip = (props) => {
 		} else {
 			return null;
 		}
-	}, [getTooltipRef, hideTooltip, layout, noArrow, tooltipCss, tooltipImage, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
+	}, [getTooltipRef, hideTooltip, layout, noArrow, tooltipCss, tooltipImage, tooltipImageSize, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
 
 	return {
 		tooltip: tooltipText ? renderTooltip() : null,

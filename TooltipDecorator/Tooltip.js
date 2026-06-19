@@ -106,6 +106,12 @@ const TooltipBase = kind({
 		 */
 		marquee: PropTypes.bool,
 
+		/**
+		 * `Tooltip` without the arrow.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noArrow: PropTypes.bool,
 
 		/**
@@ -133,7 +139,43 @@ const TooltipBase = kind({
 		 */
 		relative: PropTypes.bool,
 
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `tooltip` - The root class name
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		tooltipCss: PropTypes.object,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the image.
+		 *
+		 * The following properties should be provided:
+		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		tooltipImageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
 
 		/**
 		 * Called when the tooltip mounts/unmounts, giving a reference to the DOM.
@@ -203,7 +245,7 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, image, noArrow, tooltipCss, tooltipRef, width, labelOffset, marquee, ...rest}) => {
+	render: ({arrowAnchor, children, css, tooltipImage, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}) => {
 		delete rest.labelOffset;
 		delete rest.direction;
 		delete rest.position;
@@ -218,12 +260,13 @@ const TooltipBase = kind({
 					{!noArrow && <div className={mergedCss.tooltipArrow} />}
 					<TooltipLabel
 						className={mergedCss.tooltipLabel}
-						image={image}
+						tooltipImage={tooltipImage}
 						marquee={marquee}
 						noArrow={noArrow}
 						centered={arrowAnchor === 'center'}
 						width={width}
 						style={labelOffset}
+						tooltipImageSize={tooltipImageSize}
 					>
 						{children}
 					</TooltipLabel>

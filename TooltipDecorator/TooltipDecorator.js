@@ -98,6 +98,12 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 */
 		disabled: PropTypes.bool,
 
+		/**
+		 * `Tooltip` without the arrow.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noArrow: PropTypes.bool,
 
 		/**
@@ -108,9 +114,43 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 */
 		rtl: PropTypes.bool,
 
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `tooltip` - The root class name
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		tooltipCss: PropTypes.object,
 
-		tooltipImage: PropTypes.object,
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the image.
+		 *
+		 * The following properties should be provided:
+		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		tooltipImageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
 
 		/**
 		 * Time to wait (in milliseconds) before showing tooltip on hover.

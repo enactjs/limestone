@@ -38,8 +38,6 @@ const TooltipLabel = kind({
 		 */
 		centered: PropTypes.bool,
 
-		image: PropTypes.object,
-
 		/**
 		 * Apply a marquee to support long text.
 		 *
@@ -50,6 +48,39 @@ const TooltipLabel = kind({
 		 * @public
 		 */
 		marquee: PropTypes.bool,
+
+		/**
+		 * `Tooltip` without the arrow.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noArrow: PropTypes.bool,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the image.
+		 *
+		 * The following properties should be provided:
+		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		tooltipImageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
 
 		/**
 		 * The width of tooltip content.
@@ -76,28 +107,35 @@ const TooltipLabel = kind({
 	},
 
 	computed: {
-		className: ({image, marquee, noArrow, styler}) => styler.append({
+		className: ({tooltipImage, marquee, noArrow, styler}) => styler.append({
 			multi: !marquee,
 			marquee,
 			noArrow: !!noArrow,
-			image: !!image
+			image: !!tooltipImage
 		}),
-		style: ({children, width, style}) => {
+		style: ({children, width, tooltipImageSize, style}) => {
 			return {
 				...style,
 				direction: isRtlText(children) ? 'rtl' : 'ltr',
-				'--lime-tooltip-label-width': (typeof width === 'number' ? scaleToRem(width) : width)
+				'--lime-tooltip-label-width': (tooltipImageSize?.width ? tooltipImageSize?.width + 'px' : typeof width === 'number' ? scaleToRem(width) : width),
 			};
 		}
 	},
 
-	render: ({centered, children, image, marquee, ...rest}) => {
+	render: ({centered, children, tooltipImage, marquee, tooltipImageSize, ...rest}) => {
 		delete rest.width;
+
+		const imageStyle = {
+			alignSelf: 'center',
+			margin: 0,
+			height: tooltipImageSize?.height + 'px',
+			width: tooltipImageSize?.width + 'px'
+		};
 
 		if (marquee) {
 			return (
 				<div {...rest}>
-					{image && <Image style={{margin: 0}} src={image} />}
+					{tooltipImage && <Image style={imageStyle} src={tooltipImage} />}
 					<Marquee alignment={centered ? 'center' : null} marqueeOn="render">
 						{children}
 					</Marquee>
@@ -106,7 +144,7 @@ const TooltipLabel = kind({
 		} else {
 			return (
 				<div {...rest}>
-					{image && <Image style={{margin: 0}} src={image} />}
+					{tooltipImage && <Image style={imageStyle} src={tooltipImage} />}
 					{children}
 				</div>
 			);

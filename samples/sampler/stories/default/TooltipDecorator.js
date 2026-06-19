@@ -36,6 +36,7 @@ const prop = {
 	],
 	tooltipType: ['balloon', 'transparent']
 };
+const size = {height: 100, width: 200};
 
 export default {
 	title: 'Limestone/TooltipDecorator',
@@ -50,6 +51,7 @@ export const _TooltipDecorator = (args) => (
 			noArrow={args['noArrow']}
 			tooltipDelay={args['tooltipDelay']}
 			tooltipImage={args['hasImage'] && args['tooltipImage']}
+			tooltipImageSize={args['hasImage'] && args['tooltipImageSize']}
 			tooltipMarquee={args['tooltipMarquee']}
 			tooltipPosition={args['tooltipPosition']}
 			tooltipRelative={args['tooltipRelative']}
@@ -75,6 +77,7 @@ select('tooltipType', _TooltipDecorator, prop.tooltipType, Config);
 number('tooltipWidth', _TooltipDecorator, Config);
 text('children', _TooltipDecorator, Config, 'click me');
 object('tooltipImage', _TooltipDecorator, Config, src);
+object('tooltipImageSize', _TooltipDecorator, Config, size);
 
 _TooltipDecorator.storyName = 'TooltipDecorator';
 _TooltipDecorator.parameters = {
