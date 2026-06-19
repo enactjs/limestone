@@ -103,4 +103,101 @@ describe('Card', () => {
 		fireEvent.mouseUp(card);
 		expect(card).not.toHaveClass('pressed');
 	});
+
+	test('should format a negative duration as "00:00" in the image overlay', () => {
+		render(<CardBase src={src} showDuration durationOverlay duration={-1} />);
+
+		expect(screen.getByText('00:00')).toBeInTheDocument();
+	});
+
+	test('should format a duration of one hour or more as MM:SS in the captions', () => {
+		render(<CardBase src={src} showDuration duration={200} />);
+
+		expect(screen.getByText('03:20')).toBeInTheDocument();
+	});
+
+	test('should format a duration of one hour or more as HH:MM:SS in the captions', () => {
+		render(<CardBase src={src} showDuration duration={3661} />);
+
+		expect(screen.getByText('01:01:01')).toBeInTheDocument();
+	});
+
+	test('should render an array of `captionImageIconsSrc` as Images in the captions', () => {
+		render(
+			<CardBase
+				src={src}
+				captionImageIconsSrc={[]}
+			/>
+		);
+
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
+	test('should render a React element passed as `imageIconSrc`', () => {
+		render(
+			<CardBase
+				src={src}
+				imageIconSrc={<div data-testid="custom-image-icon" />}
+			/>
+		);
+
+		expect(screen.getByTestId('custom-image-icon')).toBeInTheDocument();
+	});
+
+	test('should render `label` without icons when `labelIcons` is not provided', () => {
+		render(<CardBase src={src} label="Label text" />);
+
+		expect(screen.getByText('Label text')).toBeInTheDocument();
+	});
+
+	test('should render `labelIcons` alongside the `label`', () => {
+		render(
+			<CardBase
+				src={src}
+				label="Label text"
+				labelIcons={[
+					<div data-testid="label-icon-1" />,
+					<div data-testid="label-icon-2" />
+
+				]}
+				secondaryLabel="Secondary label"
+				secondaryLabelIcons={[<div data-testid="secondary-label-icon" />]}
+			/>
+		);
+
+		expect(screen.getByTestId('label-icon-1')).toBeInTheDocument();
+		expect(screen.getByTestId('label-icon-2')).toBeInTheDocument();
+		expect(screen.getByTestId('secondary-label-icon')).toBeInTheDocument();
+	});
+
+	test('should render `labelIcons` alongside the `label` in `withoutMarquee` mode', () => {
+		render(
+			<CardBase
+				src={src}
+				withoutMarquee
+				label="Label"
+				labelIcons={[<div key="icon1" data-testid="label-icon" />]}
+			/>
+		);
+
+		expect(screen.getByTestId('label-icon')).toBeInTheDocument();
+	});
+
+	test('should render `primaryBadge` string in the image overlay', () => {
+		render(<CardBase src={src} primaryBadge="Primary Badge" />);
+
+		expect(screen.getByText('Primary Badge')).toBeInTheDocument();
+	});
+
+	test('should render `secondaryBadge` string in the image overlay', () => {
+		render(<CardBase src={src} secondaryBadge="Secondary Badge" />);
+
+		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
+	});
+
+	test('should render `ProgressBar` in the image overlay when `progressBarOverlay` is true', () => {
+		render(<CardBase src={src} showProgressBar progressBarOverlay progress={0.5} />);
+
+		expect(screen.getByRole('progressbar')).toBeInTheDocument();
+	});
 });
