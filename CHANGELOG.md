@@ -13,9 +13,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/Button` styling to match the latest GUI
+- `limestone/IconItem` press/release motion to match the latest motion guide
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Picker` to use `Steps` instead of own indicator
 - `limestone/ProgressBar` styling to match the latest GUI
+- `limestone/Slider` press/release motion to match the latest motion guide
 - `limestone/Slider` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/TabLayout` styling to match the latest GUI
