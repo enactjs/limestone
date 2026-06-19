@@ -468,6 +468,22 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	scrollToContentContainerOnFocus: PropTypes.bool,
 
 	/**
+	 * Anchors the focused item to a fixed "focus position" while the content scrolls beneath it.
+	 *
+	 * When set to `'start'` and `direction` is `'horizontal'`, moving focus with 5-way keys keeps
+	 * the focus indicator at a fixed slot near the start (left in LTR, right in RTL) edge of the
+	 * scroller and scrolls the list so the newly focused item lands in that slot. At the end of the
+	 * list, when the item can no longer reach the fixed slot, the list scrolls only to its last
+	 * position so the focused item (including its full width) stays visible.
+	 *
+	 * By default (`undefined`), the scroller scrolls just enough to bring the focused item into view.
+	 *
+	 * @type {('start')}
+	 * @public
+	 */
+	stickTo: PropTypes.oneOf(['start']),
+
+	/**
 	 * Specifies how to show vertical scrollbar.
 	 *
 	 * @type {('auto'|'visible'|'hidden')}

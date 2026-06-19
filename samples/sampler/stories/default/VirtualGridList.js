@@ -14,6 +14,10 @@ const prop = {
 		direction: {horizontal: 'horizontal', vertical: 'vertical'},
 		scrollbarOption: ['auto', 'hidden', 'visible'],
 		scrollModeOption: ['native', 'translate'],
+		stickToOption: {
+			'(off)': '',
+			start: 'start'
+		},
 		wrapOption: {
 			false: false,
 			true: true,
@@ -93,6 +97,7 @@ export const _VirtualGridList = (args) => (
 		scrollMode={args['scrollMode']}
 		spacing={ri.scale(args['spacing'])}
 		spotlightDisabled={args['spotlightDisabled']}
+		stickTo={args['stickTo'] || null}
 		verticalScrollbar={args['verticalScrollbar']}
 		wrap={args['wrap']}
 	/>
@@ -109,6 +114,7 @@ boolean('noScrollByWheel', _VirtualGridList, VirtualGridListConfig);
 select('scrollMode', _VirtualGridList, prop.scrollModeOption, VirtualGridListConfig);
 number('spacing', _VirtualGridList, VirtualGridListConfig, 0);
 boolean('spotlightDisabled', _VirtualGridList, VirtualGridListConfig, false);
+select('stickTo', _VirtualGridList, prop.stickToOption, VirtualGridListConfig);
 select('verticalScrollbar', _VirtualGridList, prop.scrollbarOption, VirtualGridListConfig);
 select('wrap', _VirtualGridList, prop.wrapOption, VirtualGridListConfig);
 

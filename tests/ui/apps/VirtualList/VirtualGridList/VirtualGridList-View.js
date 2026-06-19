@@ -75,6 +75,7 @@ class app extends Component {
 			minWidth: 650,
 			spacing: 24,
 			spotlightDisabled: false,
+			stickTo: false,
 			translate: false,
 			wrap: false
 		};
@@ -131,7 +132,7 @@ class app extends Component {
 	render () {
 		const
 			inputStyle = {width: ri.scaleToRem(300)},
-			{hideScrollbar, horizontal, noLabel, numItems, minHeight, minWidth, spacing, spotlightDisabled, translate, wrap} = this.state;
+			{hideScrollbar, horizontal, noLabel, numItems, minHeight, minWidth, spacing, spotlightDisabled, stickTo, translate, wrap} = this.state;
 		return (
 			<div {...this.props} id="list" ref={this.rootRef}>
 				<Column>
@@ -142,6 +143,7 @@ class app extends Component {
 						<Button id="noLabel" onClick={this.onToggleLabel} selected={noLabel} size="small">Media item</Button>
 						<Button id="translate" onClick={this.onToggle} selected={translate} size="small">translate Mode</Button>
 						<Button id="spotlightDisabled" onClick={this.onToggle} selected={spotlightDisabled} size="small"> spotlightDisabled</Button>
+						<Button id="stickTo" onClick={this.onToggle} selected={stickTo} size="small">stickTo</Button>
 						<Button id="plus" icon="plus" onClick={this.onAddNumItem} size="small" />
 						<InputField id="numItems" type="number" onChange={this.onChangeNumItems} size="small" style={inputStyle} value={numItems} />
 						<InputField id="spacing" defaultValue={spacing} type="number" onChange={this.onChangeSpacing} size="small" style={inputStyle} />
@@ -173,6 +175,7 @@ class app extends Component {
 											scrollMode={(translate ? 'translate' : 'native')}
 											spacing={ri.scale(spacing)}
 											spotlightDisabled={spotlightDisabled}
+											stickTo={stickTo ? 'start' : null}
 											style={{height: ri.scaleToRem(500 * 3)}}
 											verticalScrollbar={getScrollbarVisibility(hideScrollbar)}
 											wrap={wrap}

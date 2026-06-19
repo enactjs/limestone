@@ -333,6 +333,7 @@ const useScroll = (props) => {
 			noAffordance,
 			scrollMode,
 			snapToCenter,
+			stickTo,
 			style,
 			verticalScrollThumbAriaLabel,
 			...rest
@@ -504,6 +505,7 @@ const useScroll = (props) => {
 		scrollContainerRef,
 		setThemeScrollContentHandle,
 		spotlightId,
+		stickTo,
 		scrollContainerHandle,
 		scrollContentHandle,
 		scrollContentRef

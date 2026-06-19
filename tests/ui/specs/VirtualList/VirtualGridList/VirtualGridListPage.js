@@ -53,6 +53,10 @@ class VirtualGridListPage extends Page {
 		return element('#plus', browser);
 	}
 
+	get buttonStickTo () {
+		return element('#stickTo', browser);
+	}
+
 	get inputNumItems () {
 		return element('#numItems', browser);
 	}
