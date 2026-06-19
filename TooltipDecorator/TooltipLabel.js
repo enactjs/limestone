@@ -69,10 +69,6 @@ const TooltipLabel = kind({
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 	},
 
-	defaultProps: {
-		width: 1200,
-	},
-
 	styles: {
 		css: componentCss,
 		name: 'tooltipLabel',
@@ -80,8 +76,8 @@ const TooltipLabel = kind({
 	},
 
 	computed: {
-		className: ({image, marquee, noArrow, width, styler}) => styler.append({
-			multi: (!marquee && !!width),
+		className: ({image, marquee, noArrow, styler}) => styler.append({
+			multi: !marquee,
 			marquee,
 			noArrow: !!noArrow,
 			image: !!image
@@ -101,7 +97,7 @@ const TooltipLabel = kind({
 		if (marquee) {
 			return (
 				<div {...rest}>
-					{image && <Image style={{margin: 0, width: '100%'}} src={image}/>}
+					{image && <Image style={{margin: 0}} src={image} />}
 					<Marquee alignment={centered ? 'center' : null} marqueeOn="render">
 						{children}
 					</Marquee>
@@ -110,7 +106,7 @@ const TooltipLabel = kind({
 		} else {
 			return (
 				<div {...rest}>
-					{image && <Image style={{margin: 0, width: '100%'}} src={image}/>}
+					{image && <Image style={{margin: 0}} src={image} />}
 					{children}
 				</div>
 			);

@@ -5,7 +5,6 @@ import {boolean, number, object, select, text} from '@enact/storybook-utils/addo
 
 import iconNames from '../helper/icons';
 import {svgGenerator} from '../helper/svg';
-import css from './Tooltip.module.less';
 
 const src = {
 	hd: svgGenerator(200, 200, '7ed31d', 'ffffff', '200 X 200'),
@@ -49,7 +48,6 @@ export const _TooltipDecorator = (args) => (
 			disabled={args['disabled']}
 			icon={args['icon']}
 			noArrow={args['noArrow']}
-			tooltipCss={css}
 			tooltipDelay={args['tooltipDelay']}
 			tooltipImage={args['hasImage'] && args['tooltipImage']}
 			tooltipMarquee={args['tooltipMarquee']}

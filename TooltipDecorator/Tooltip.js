@@ -1,7 +1,6 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Skinnable from '../Skinnable';
@@ -177,6 +176,7 @@ const TooltipBase = kind({
 	},
 
 	defaultProps: {
+		tooltipCss: {},
 		type: 'balloon',
 		labelOffset: 0
 	},
@@ -210,10 +210,7 @@ const TooltipBase = kind({
 		delete rest.relative;
 		delete rest.type;
 
-		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss, publicClassNames: true});
-		console.log(mergedCss)
-		console.log(css)
-		console.log(tooltipCss)
+		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss || {}, publicClassNames: true});
 
 		return (
 			<div {...rest}>
