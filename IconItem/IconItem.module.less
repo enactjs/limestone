@@ -76,7 +76,7 @@
 	}
 
 	.focus({
-		.lime-focus-in-motion();
+		.lime-iconitem-focus-in-motion();
 
 		&.labelOnFocus {
 			.label, .labelContainer {
@@ -93,10 +93,10 @@
 		.focus({
 			&.pressed,
 			&:active {
-				.lime-press-motion();
+				.lime-iconitem-press-motion();
 			}
-			&:not(:pressed) {
-				.lime-release-motion();
+			&:not(.pressed) {
+				.lime-iconitem-release-motion();
 			}
 		});
 	}

@@ -240,8 +240,13 @@
 		}
 
 		.title {
-			.lime-font-size(@lime-header-wizard-title-font-size, @lime-non-latin-header-wizard-title-font-size);
 			padding: @lime-header-wizard-title-padding;
+			min-height: @lime-header-wizard-title-line-height;
+
+			.lime-font-size(@lime-header-wizard-title-font-size, @lime-non-latin-header-wizard-title-font-size);
+			.enact-locale-tallglyph({
+				min-height: @lime-tallglyph-line-height;
+			});
 		}
 
 		.subtitle {

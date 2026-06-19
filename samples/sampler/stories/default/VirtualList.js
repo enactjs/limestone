@@ -9,6 +9,10 @@ import {VirtualListBasic as UiVirtualListBasic} from '@enact/ui/VirtualList';
 const prop = {
 		scrollbarOption: ['auto', 'hidden', 'visible'],
 		scrollModeOption: ['native', 'translate'],
+		stickToOption: {
+			'(off)': '',
+			start: 'start'
+		},
 		wrapOption: {
 			false: false,
 			true: true,
@@ -62,6 +66,7 @@ export const _VirtualList = (args) => (
 		scrollMode={args['scrollMode']}
 		spacing={ri.scale(args['spacing'])}
 		spotlightDisabled={args['spotlightDisabled']}
+		stickTo={args['stickTo'] || null}
 		verticalScrollbar={args['verticalScrollbar']}
 		wrap={args['wrap']}
 	/>
@@ -75,6 +80,7 @@ boolean('noScrollByWheel', _VirtualList, VirtualListConfig);
 select('scrollMode', _VirtualList, prop.scrollModeOption, VirtualListConfig);
 number('spacing', _VirtualList, VirtualListConfig);
 boolean('spotlightDisabled', _VirtualList, VirtualListConfig, false);
+select('stickTo', _VirtualList, prop.stickToOption, VirtualListConfig);
 select('verticalScrollbar', _VirtualList, prop.scrollbarOption, VirtualListConfig);
 select('wrap', _VirtualList, prop.wrapOption, VirtualListConfig);
 
