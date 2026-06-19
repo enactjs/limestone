@@ -20,6 +20,13 @@ const generateImageSrc = (color) => {
 	};
 };
 
+const generateImageSize = (width, height) => {
+	return {
+		width: width,
+		height: height
+	};
+};
+
 const iconsList = Object.keys(icons).sort();
 const randomIcon = () => iconsList[Math.floor(Math.random() * iconsList.length)];
 
@@ -99,7 +106,7 @@ export const _Card = (args) => (
 
 text('aria-label', _Card, Config);
 object('captionImageIconsSrc', _Card, Config, generateImageSrc('0084ff'));
-object('captionImageSize', _Card, Config);
+object('captionImageSize', _Card, Config, generateImageSize(96, 96));
 boolean('captionOverflow', _Card, Config);
 boolean('captionOverflowOnFocus', _Card, Config);
 boolean('captionOverlay', _Card, Config);
@@ -119,12 +126,12 @@ text('label', _Card, Config, 'Card label');
 select('labelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config, 'no icons');
 select('orientation', _Card, prop.orientation, Config);
 select('primaryBadge', _Card, ['image', 'icon', 'text'], Config, 'image');
-object('primaryBadgeSize', _Card, Config);
+object('primaryBadgeSize', _Card, Config, generateImageSize(108, 108));
 number('progress', _Card, Config, 0.5);
 boolean('progressBarOverlay', _Card, Config);
 boolean('roundedImage', _Card, Config);
 select('secondaryBadge', _Card, ['image', 'icon', 'text'], Config, 'image');
-object('secondaryBadgeSize', _Card, Config);
+object('secondaryBadgeSize', _Card, Config, generateImageSize(108, 108));
 text('secondaryLabel', _Card, Config, 'Card secondary label');
 select('secondaryLabelIcons', _Card, ['no icons', '1 icon', '2 icons', '3 icons'], Config, 'no icons');
 boolean('selected', _Card, Config);

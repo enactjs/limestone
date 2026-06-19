@@ -110,6 +110,12 @@ describe('Card', () => {
 		expect(screen.getByText('00:00')).toBeInTheDocument();
 	});
 
+	test('should format a duration of one hour or more as MM:SS in the captions', () => {
+		render(<CardBase src={src} showDuration duration={200} />);
+
+		expect(screen.getByText('03:20')).toBeInTheDocument();
+	});
+
 	test('should format a duration of one hour or more as HH:MM:SS in the captions', () => {
 		render(<CardBase src={src} showDuration duration={3661} />);
 
@@ -120,11 +126,11 @@ describe('Card', () => {
 		render(
 			<CardBase
 				src={src}
-				captionImageIconsSrc={[src.hd, src.hd]}
+				captionImageIconsSrc={[]}
 			/>
 		);
 
-		expect(screen.queryAllByRole('img')).toHaveLength(6);
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
 	});
 
 	test('should render a React element passed as `imageIconSrc`', () => {

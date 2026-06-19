@@ -37,7 +37,7 @@ import Skinnable from '../Skinnable';
 import componentCss from './Card.module.less';
 
 const formatDuration = (duration) => {
-	if (duration < 0) return "00:00";
+	if (!duration || duration < 0) return '00:00';
 
 	const hours = Math.floor(duration / 3600);
 	const minutes = Math.floor((duration % 3600) / 60);
@@ -87,7 +87,7 @@ const getImageIcons = (images, key, className) => {
 	if (Array.isArray(images)) {
 		return images.map((src, idx) => (
 			cloneElement(getCellElement(src), {key: `${key}${idx}`})
-		)) || null;
+		));
 	}
 
 	if (isValidElement(images)) {
@@ -153,10 +153,10 @@ const CardBase = kind({
 		/**
 		 * Sources for the image icon.
 		 *
-		 * String value or Object of values used to determine which image will appear on
+		 * An array of String values or Objects of values used to determine which image will appear on
 		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
 		 *
-		 * @type {String|Object}
+		 * @type {String[]|Object[]}
 		 * @public
 		 */
 		captionImageIconsSrc: PropTypes.arrayOf(
@@ -169,9 +169,9 @@ const CardBase = kind({
 		 * The following properties should be provided:
 		 * * `height` - The height of the image
 		 * * `width` - The width of the image
-
+		 *
 		 * @type {Object}
-		 * @default {height: 432, width: 768}
+		 * @default {height: 96, width: 96}
 		 * @public
 		 */
 		captionImageSize: PropTypes.shape({
@@ -324,7 +324,7 @@ const CardBase = kind({
 		 * The following properties should be provided:
  		 * * `height` - The height of the image
 		 * * `width` - The width of the image
-
+		 *
   		 * @type {Object}
 		 * @default {height: 432, width: 768}
 		 * @public
@@ -552,66 +552,39 @@ const CardBase = kind({
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical');
 			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
+			const labelsProps = withoutMarquee ? {style: {textAlign: alignment?.alignment}} : {...alignment};
 			const CaptionsComponent = isCenteredTitle ? Column : Row;
+			const LabelsComponent = withoutMarquee ? 'div' : Marquee;
 
 			const captions = (
 				<CaptionsComponent className={css.captions}>
 					{hasImageIcon ? getImageIcons(imageIconSrc, null, css.imageIcon) : null}
-					{withoutMarquee ? (
-						<Cell className={css.captionCell}>
-							<div style={{textAlign: alignment?.alignment}} className={css.caption}>{children}</div>
-							<Column className={css.labels}>
-								{typeof label !== 'undefined' ? (
-									<Row className={css.labelContainer}>
-										{getLabelIcons(labelIcons, 'labelIcons', css.labelIcon)}
-										<Cell><div style={{textAlign: alignment?.alignment}} className={css.label}>{label}</div></Cell>
-									</Row>
-								) : null}
-								{typeof secondaryLabel !== 'undefined' ? (
-									<Row className={css.labelContainer}>
-										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons', css.labelIcon)}
-										<Cell><div style={{textAlign: alignment?.alignment}} className={css.label}>{secondaryLabel}</div></Cell>
-									</Row>
-								) : null}
-								{hasCaptionImageIcons ? (
-									<Row className={css.captionImageIconsContainer}>
-										{getImageIcons(captionImageIconsSrc, 'captionImageIcons', css.captionImageIcon)}
-									</Row>
-								) : null}
-							</Column>
-							{(showProgressBar && !progressBarOverlay && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
-							{(showDuration && !durationOverlay && !showProgressBar) ? (
-								<div className={css.duration}>{formatDuration(duration)}</div>
+					<Cell className={css.captionCell}>
+						<LabelsComponent {...labelsProps} className={css.caption}>{children}</LabelsComponent>
+						<Column className={css.labels}>
+							{typeof label !== 'undefined' ? (
+								<Row className={css.labelContainer}>
+									{getLabelIcons(labelIcons, 'labelIcons', css.labelIcon)}
+									<Cell><LabelsComponent {...labelsProps} className={css.label}>{label}</LabelsComponent></Cell>
+								</Row>
 							) : null}
-						</Cell>
-					) : (
-						<Cell className={css.captionCell}>
-							<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
-							<Column className={css.labels}>
-								{typeof label !== 'undefined' ? (
-									<Row className={css.labelContainer}>
-										{getLabelIcons(labelIcons, 'labelIcons', css.labelIcon)}
-										<Cell><Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee></Cell>
-									</Row>
-								) : null}
-								{typeof secondaryLabel !== 'undefined' ? (
-									<Row className={css.labelContainer}>
-										{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons', css.labelIcon)}
-										<Cell><Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee></Cell>
-									</Row>
-								) : null}
-								{hasCaptionImageIcons ? (
-									<Row className={css.captionImageIconsContainer}>
-										{getImageIcons(captionImageIconsSrc, 'captionImageIcons', css.captionImageIcon)}
-									</Row>
-								) : null}
-							</Column>
-							{(showProgressBar && !progressBarOverlay && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
-							{(showDuration && !durationOverlay && !showProgressBar) ? (
-								<div className={css.duration}>{formatDuration(duration)}</div>
+							{typeof secondaryLabel !== 'undefined' ? (
+								<Row className={css.labelContainer}>
+									{getLabelIcons(secondaryLabelIcons, 'secondaryLabelIcons', css.labelIcon)}
+									<Cell><LabelsComponent {...labelsProps} className={css.label}>{secondaryLabel}</LabelsComponent></Cell>
+								</Row>
 							) : null}
-						</Cell>
-					)}
+							{hasCaptionImageIcons ? (
+								<Row className={css.captionImageIconsContainer}>
+									{getImageIcons(captionImageIconsSrc, 'captionImageIcons', css.captionImageIcon)}
+								</Row>
+							) : null}
+						</Column>
+						{(showProgressBar && !progressBarOverlay && !isCenteredTitle) ? <ProgressBar progress={progress} /> : null}
+						{(showDuration && !durationOverlay && !showProgressBar) ? (
+							<div className={css.duration}>{formatDuration(duration)}</div>
+						) : null}
+					</Cell>
 				</CaptionsComponent>
 			);
 
