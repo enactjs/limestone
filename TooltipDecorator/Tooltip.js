@@ -210,7 +210,7 @@ const TooltipBase = kind({
 		delete rest.relative;
 		delete rest.type;
 
-		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss || {}, publicClassNames: true});
+		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss, publicClassNames: true});
 
 		return (
 			<div {...rest}>
