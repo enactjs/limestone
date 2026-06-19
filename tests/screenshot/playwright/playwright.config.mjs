@@ -4,6 +4,7 @@ import {defineConfig, devices} from '@playwright/test';
 
 import {PLAYWRIGHT_BASE_URL, PLAYWRIGHT_PORT, SCREENSHOT_HEALTH_URL} from './paths.js';
 import {resolveTestMatchGlob} from './utils/spec-match.js';
+import {SCREENSHOT_COMPARE_OPTIONS, SCREENSHOT_VIEWPORT} from './utils/screenshot-options.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, '..', 'dist');
@@ -18,7 +19,8 @@ export default defineConfig({
 	snapshotPathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}'),
 	expect: {
 		toHaveScreenshot: {
-			pathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}')
+			pathTemplate: path.join(__dirname, 'snapshots/{arg}{ext}'),
+			...SCREENSHOT_COMPARE_OPTIONS
 		}
 	},
 	// WDIO mocha timeout is 1h; default Playwright 30s is too low for CI (goto + hydrate + fonts).
@@ -37,7 +39,7 @@ export default defineConfig({
 		navigationTimeout: 60000,
 		actionTimeout: 60000,
 		trace: 'on-first-retry',
-		viewport: {width: 1920, height: 1080},
+		viewport: SCREENSHOT_VIEWPORT,
 		launchOptions: {
 			args: [
 				'--disable-infobars',
@@ -47,7 +49,7 @@ export default defineConfig({
 				'--disable-lcd-text',
 				'--force-device-scale-factor=1',
 				'--disable-gpu',
-				'--window-size=1920,1080'
+				`--window-size=${SCREENSHOT_VIEWPORT.width},${SCREENSHOT_VIEWPORT.height}`
 			]
 		}
 	},
