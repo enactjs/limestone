@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import fs from 'fs';
 
-import buildApps from '@enact/ui-test-utils/build-apps';
-
 import {SCREENSHOT_VIEW_INDEX, assertScreenshotDist} from '../playwright/paths.js';
 
 export function hasScreenshotDist () {
@@ -26,6 +24,7 @@ export async function ensureScreenshotDist ({skipBuild = false} = {}) {
 		console.log('Building tests/screenshot/dist...');
 	}
 
+	const {default: buildApps} = await import('@enact/ui-test-utils/build-apps');
 	await buildApps('screenshot');
 	assertScreenshotDist();
 

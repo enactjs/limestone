@@ -26,10 +26,14 @@ async function open (page, urlExtra = '?locale=en-US') {
 }
 
 async function waitForPageReady (page) {
-	await page.locator('body').waitFor({state: 'visible', timeout: BODY_WAIT_MS});
-
+	// Enact screenshot app may keep <body> hidden; WDIO waitForDisplayed still passes once #root
+	// has content. Wait for attached + rendered root instead of body visibility.
+	await page.locator('body').waitFor({state: 'attached', timeout: BODY_WAIT_MS});
 	await page.waitForFunction(
-		() => document.readyState === 'complete',
+		() => {
+			const root = document.getElementById('root');
+			return document.readyState === 'complete' && root != null && root.childElementCount > 0;
+		},
 		{timeout: READY_STATE_WAIT_MS}
 	);
 
