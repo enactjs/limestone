@@ -107,8 +107,8 @@ const TooltipLabel = kind({
 	},
 
 	computed: {
-		className: ({tooltipImage, marquee, noArrow, styler}) => styler.append({
-			multi: !marquee,
+		className: ({tooltipImage, marquee, noArrow, styler, width}) => styler.append({
+			multi: (!marquee && (!!width || !!tooltipImage)),
 			marquee,
 			noArrow: !!noArrow,
 			image: !!tooltipImage
