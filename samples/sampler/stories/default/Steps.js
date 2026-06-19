@@ -1,6 +1,6 @@
 import Steps, {StepsBase} from '@enact/limestone/Steps';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {range, select} from '@enact/storybook-utils/addons/controls';
+import {boolean, range, select} from '@enact/storybook-utils/addons/controls';
 
 import iconNames from '../helper/icons';
 
@@ -24,6 +24,7 @@ export default {
 
 export const _Steps = (args) => (
 	<Steps
+		highlightCurrentOnly={args['highlightCurrentOnly']}
 		current={args['current']}
 		total={args['total']}
 		pastIcon={args['pastIcon']}
@@ -35,6 +36,7 @@ export const _Steps = (args) => (
 	/>
 );
 
+boolean('highlightCurrentOnly', _Steps, Config, false);
 range('current', _Steps, Config, {min: 1, max: 10}, 3);
 range('total', _Steps, Config, {min: 2, max: 10}, 5);
 select('pastIcon', _Steps, prop.icons, Config);

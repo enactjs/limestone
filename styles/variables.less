@@ -998,14 +998,6 @@
 @lime-picker-large-value-width: 468px;
 @lime-picker-incrementer-margin: var(--primitive-spacing-36);
 @lime-picker-incrementer-width: 120px;
-@lime-picker-indicator-width: 24px;
-@lime-picker-indicator-width-large: calc(@lime-picker-indicator-width * 1.2);
-@lime-picker-indicator-height: 24px;
-@lime-picker-indicator-height-large: calc(@lime-picker-indicator-height * 1.2);
-@lime-picker-indicator-border-radius: @lime-picker-indicator-width;
-@lime-picker-indicator-inactive-scale: 0.75;
-@lime-picker-indicator-active-scale: 1;
-@lime-picker-indicator-margin: var(--primitive-spacing-30) var(--primitive-spacing-12) 0;
 
 // Popup
 // ---------------------------------------
@@ -1162,10 +1154,12 @@
 @lime-steps-step-future-opacity: 1;
 @lime-steps-step-highlight-current-only-future-opacity: 1;
 @lime-steps-pageindicator-size: 18px;
-@lime-steps-pageindicator-margin: 0 var(--primitive-spacing-12);
+@lime-steps-pageindicator-size-large: calc(@lime-steps-pageindicator-size * 1.2);
 @lime-steps-pageindicator-border-radius: var(--semantic-radius-full);
 @lime-steps-pageindicator-current-size: 24px;
-@lime-steps-pageindicator-current-margin: 0 var(--primitive-spacing-6);
+@lime-steps-pageindicator-current-size-large: calc(@lime-steps-pageindicator-current-size * 1.2);
+@lime-steps-highlight-current-only-gap: var(--primitive-spacing-24);
+@lime-steps-highlight-current-only-margin-top: var(--primitive-spacing-30);
 
 // Switch
 // ---------------------------------------

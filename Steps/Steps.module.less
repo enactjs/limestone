@@ -32,18 +32,37 @@
 		}
 	}
 
+	&.highlightCurrentOnly {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: @lime-steps-highlight-current-only-gap;
+		margin-top: @lime-steps-highlight-current-only-margin-top;
+	}
+
 	.pageIndicator {
 		width: @lime-steps-pageindicator-size;
 		height: @lime-steps-pageindicator-size;
-		margin: @lime-steps-pageindicator-margin;
+		margin: 0;
 		border-radius: @lime-steps-pageindicator-border-radius;
 
 		&.current {
 			width: @lime-steps-pageindicator-current-size;
 			height: @lime-steps-pageindicator-current-size;
-			margin: @lime-steps-pageindicator-current-margin;
 		}
 	}
+
+	.lime-custom-text({
+		.pageIndicator {
+			width: @lime-steps-pageindicator-size-large;
+			height: @lime-steps-pageindicator-size-large;
+
+			&.current {
+				width: @lime-steps-pageindicator-current-size-large;
+				height: @lime-steps-pageindicator-current-size-large;
+			}
+		}
+	});
 
 	.applySkins({
 		.step:not(.pageIndicator) {
