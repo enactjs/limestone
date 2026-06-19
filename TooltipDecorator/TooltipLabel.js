@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Image from '../Image';
 import Marquee from '../Marquee';
 
-import css from './Tooltip.module.less';
+import componentCss from './Tooltip.module.less';
 
 
 /**
@@ -51,8 +51,6 @@ const TooltipLabel = kind({
 		 */
 		marquee: PropTypes.bool,
 
-		tooltipCss: PropTypes.object,
-
 		/**
 		 * The width of tooltip content.
 		 *
@@ -76,15 +74,16 @@ const TooltipLabel = kind({
 	},
 
 	styles: {
-		css
+		css: componentCss,
+		name: 'tooltipLabel',
+		publicClassNames: true
 	},
 
 	computed: {
-		className: ({image, marquee, noArrow, tooltipCss, width, styler}) => styler.append({
+		className: ({image, marquee, noArrow, width, styler}) => styler.append({
 			multi: (!marquee && !!width),
 			marquee,
 			noArrow: !!noArrow,
-			tooltipCss,
 			image: !!image
 		}),
 		style: ({children, width, style}) => {
@@ -98,14 +97,11 @@ const TooltipLabel = kind({
 
 	render: ({centered, children, image, marquee, ...rest}) => {
 		delete rest.width;
-		delete rest.tooltipCss;
-
-		console.log(rest.noArrow)
 
 		if (marquee) {
 			return (
 				<div {...rest}>
-					{image && <Image src={image}/>}
+					{image && <Image style={{margin: 0, width: '100%'}} src={image}/>}
 					<Marquee alignment={centered ? 'center' : null} marqueeOn="render">
 						{children}
 					</Marquee>
@@ -114,7 +110,7 @@ const TooltipLabel = kind({
 		} else {
 			return (
 				<div {...rest}>
-					{image && <Image style={{margin: 0}} src={image}/>}
+					{image && <Image style={{margin: 0, width: '100%'}} src={image}/>}
 					{children}
 				</div>
 			);

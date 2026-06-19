@@ -1,5 +1,7 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {usePublicClassNames} from '@enact/core/usePublicClassNames';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Skinnable from '../Skinnable';
@@ -192,7 +194,7 @@ const TooltipBase = kind({
 				return {transform: `translateX(${cappedPosition * 100}%)`};
 			}
 		},
-		className: ({direction, arrowAnchor, noArrow, relative, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, {relative, absolute: !relative, noArrow}, type),
+		className: ({direction, arrowAnchor, noArrow, relative, tooltipCss, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, tooltipCss, {relative, absolute: !relative, noArrow}, type),
 		style: ({position, style}) => {
 			return {
 				...style,
@@ -201,19 +203,24 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, image, noArrow, tooltipRef, width, labelOffset, marquee, ...rest}) => {
+	render: ({arrowAnchor, children, css, image, noArrow, tooltipCss, tooltipRef, width, labelOffset, marquee, ...rest}) => {
 		delete rest.labelOffset;
 		delete rest.direction;
 		delete rest.position;
 		delete rest.relative;
 		delete rest.type;
 
+		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss, publicClassNames: true});
+		console.log(mergedCss)
+		console.log(css)
+		console.log(tooltipCss)
+
 		return (
 			<div {...rest}>
-				<div className={css.tooltipAnchor} ref={tooltipRef} >
-					{!noArrow && <div className={css.tooltipArrow} />}
+				<div className={mergedCss.tooltipAnchor} ref={tooltipRef} >
+					{!noArrow && <div className={mergedCss.tooltipArrow} />}
 					<TooltipLabel
-						className={css.tooltipLabel}
+						className={mergedCss.tooltipLabel}
 						image={image}
 						marquee={marquee}
 						noArrow={noArrow}

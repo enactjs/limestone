@@ -245,7 +245,7 @@ const useTooltip = (props) => {
 			'--tooltip-position-left': tooltipRelative ? null : ri.unit(left, 'rem')
 		};
 
-		console.log(tooltipImage)
+		console.log(tooltipCss)
 		const renderedTooltip = (
 			<Tooltip
 				aria-hidden
