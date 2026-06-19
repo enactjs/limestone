@@ -119,7 +119,7 @@ const TooltipLabel = kind({
 			return {
 				...style,
 				direction: isRtlText(children) ? 'rtl' : 'ltr',
-				'--lime-tooltip-label-width': (tooltipImageSize?.width ? tooltipImageSize?.width + 'px' : enforcedWidth)
+				'--lime-tooltip-label-width': (tooltipImageSize?.width ? scaleToRem(tooltipImageSize?.width) : enforcedWidth)
 			};
 		}
 	},
@@ -131,8 +131,8 @@ const TooltipLabel = kind({
 		const imageStyle = {
 			alignSelf: 'center',
 			margin: 0,
-			height: tooltipImageSize?.height + 'px',
-			width: tooltipImageSize?.width + 'px'
+			height: scaleToRem(tooltipImageSize?.height),
+			width: scaleToRem(tooltipImageSize?.width)
 		};
 
 		if (marquee) {
