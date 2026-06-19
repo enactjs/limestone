@@ -125,6 +125,7 @@ const TooltipLabel = kind({
 	},
 
 	render: ({centered, children, tooltipImage, marquee, tooltipImageSize, ...rest}) => {
+		delete rest.noArrow;
 		delete rest.width;
 
 		const imageStyle = {
