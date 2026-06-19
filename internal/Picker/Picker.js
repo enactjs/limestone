@@ -15,6 +15,7 @@ import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import Skinnable from '../../Skinnable';
+import Steps from '../../Steps';
 
 import $L from '../$L';
 import {validateRange, validateStepped} from '../validators';
@@ -626,14 +627,7 @@ const PickerBase = (props) => {
 					{children}
 				</PickerViewManager>
 				{showIndicators && (
-					<div className={css.indicatorContainer} {...voiceProps}>
-						{children.map((c, indicator) => (
-							<div
-								key={`indicator${indicator}`}
-								className={classnames(css.indicator, {[css.active]: (index === indicator)})}
-							/>
-						))}
-					</div>
+					<Steps {...voiceProps} css={css} highlightCurrentOnly current={index + 1} total={children.length} />
 				)}
 			</Cell>
 			{isHorizontalJoinedEnter ?
