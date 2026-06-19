@@ -10,6 +10,12 @@ import TooltipLabel from '../TooltipLabel';
 const FloatingLayerController = FloatingLayerDecorator('div');
 const TooltipButton = TooltipDecorator(Button);
 
+const src = {
+	hd: 'https://placehold.co/200x200',
+	fhd: 'https://placehold.co/300x300',
+	uhd: 'https://placehold.co/600x600'
+};
+
 describe('TooltipDecorator', () => {
 	describe('TooltipLabel', () => {
 		test('should apply alignment when `centered` and `marquee`', () => {
@@ -207,6 +213,45 @@ describe('TooltipDecorator', () => {
 					const expected = 'tooltip right middleArrow';
 
 					expect(tooltipArrow).toHaveClass(expected);
+				});
+			});
+
+			test('should have \'noArrow\' className when the prop is given', async () => {
+				const tooltipText = 'Tooltip';
+				render(
+					<FloatingLayerController>
+						<TooltipButton tooltipDelay={0} noArrow tooltipText={tooltipText}>Label</TooltipButton>
+					</FloatingLayerController>
+				);
+
+				const button = screen.getByRole('button');
+				act(() => button.focus());
+				fireEvent.mouseOver(button);
+
+				await waitFor(() => {
+					const tooltipNoArrow = screen.getByText('Tooltip').parentElement.parentElement;
+					const expected = 'tooltip noArrow';
+
+					expect(tooltipNoArrow).toHaveClass(expected);
+				});
+			});
+
+			test('should have properly display Image', async () => {
+				const tooltipText = 'Tooltip';
+				render(
+					<FloatingLayerController>
+						<TooltipButton tooltipDelay={0} tooltipImage={src} tooltipText={tooltipText}>Label</TooltipButton>
+					</FloatingLayerController>
+				);
+
+				const button = screen.getByRole('button');
+				act(() => button.focus());
+				fireEvent.mouseOver(button);
+
+				await waitFor(() => {
+					const tooltipImage = screen.getByText('Tooltip').children[0].children[0].tagName;
+
+					expect(tooltipImage).toBe('IMG');
 				});
 			});
 		});
