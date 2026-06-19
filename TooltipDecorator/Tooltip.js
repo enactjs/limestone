@@ -252,6 +252,7 @@ const TooltipBase = kind({
 		delete rest.relative;
 		delete rest.type;
 
+		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss, publicClassNames: true});
 
 		return (

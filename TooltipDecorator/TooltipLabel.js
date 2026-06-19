@@ -114,10 +114,12 @@ const TooltipLabel = kind({
 			image: !!tooltipImage
 		}),
 		style: ({children, width, tooltipImageSize, style}) => {
+			const enforcedWidth = typeof width === 'number' ? scaleToRem(width) : width;
+
 			return {
 				...style,
 				direction: isRtlText(children) ? 'rtl' : 'ltr',
-				'--lime-tooltip-label-width': (tooltipImageSize?.width ? tooltipImageSize?.width + 'px' : typeof width === 'number' ? scaleToRem(width) : width),
+				'--lime-tooltip-label-width': (tooltipImageSize?.width ? tooltipImageSize?.width + 'px' : enforcedWidth)
 			};
 		}
 	},

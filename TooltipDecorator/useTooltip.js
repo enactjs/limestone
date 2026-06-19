@@ -108,18 +108,18 @@ const useTooltip = (props) => {
 	}, [clientRef, tooltipDelay, tooltipText]);
 
 	const hideTooltip = useCallback(() => {
-		// if (tooltipText) {
-		// 	mutableRef.current.mutationObserver?.disconnect();
-		// 	mutableRef.current.resizeObserver?.disconnect();
-		//
-		// 	clientRef.current = null;
-		// 	currentTooltip = null;
-		//
-		// 	mutableRef.current.showTooltipJob?.stop();
-		// 	mutableRef.current.setTooltipLayoutJob?.stop();
-		//
-		// 	setShowing(false);
-		// }
+		if (tooltipText) {
+			mutableRef.current.mutationObserver?.disconnect();
+			mutableRef.current.resizeObserver?.disconnect();
+
+			clientRef.current = null;
+			currentTooltip = null;
+
+			mutableRef.current.showTooltipJob?.stop();
+			mutableRef.current.setTooltipLayoutJob?.stop();
+
+			setShowing(false);
+		}
 	}, [clientRef, tooltipText]);
 
 	const startTooltipLayoutJob = useCallback(() => {
@@ -281,7 +281,7 @@ const useTooltip = (props) => {
 		} else {
 			return null;
 		}
-	}, [getTooltipRef, hideTooltip, layout, noArrow, tooltipCss, tooltipImage, tooltipImageSize, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
+	}, [getTooltipRef, hideTooltip, layout, noArrow, showing, tooltipCss, tooltipImage, tooltipImageSize, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
 
 	return {
 		tooltip: tooltipText ? renderTooltip() : null,

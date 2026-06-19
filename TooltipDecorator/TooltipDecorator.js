@@ -128,6 +128,15 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		tooltipCss: PropTypes.object,
 
 		/**
+		 * Time to wait (in milliseconds) before showing tooltip on hover.
+		 *
+		 * @type {Number}
+		 * @default 500
+		 * @public
+		 */
+		tooltipDelay: PropTypes.number,
+
+		/**
 		 * Source for the image.
 		 * String value or Object of values used to determine which image will appear on
 		 * a specific screenSize.
@@ -151,15 +160,6 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			height: PropTypes.number,
 			width: PropTypes.number
 		}),
-
-		/**
-		 * Time to wait (in milliseconds) before showing tooltip on hover.
-		 *
-		 * @type {Number}
-		 * @default 500
-		 * @public
-		 */
-		tooltipDelay: PropTypes.number,
 
 		/**
 		 * Allows the tooltip to marquee.
