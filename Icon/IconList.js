@@ -248,6 +248,7 @@ export default {
 	deviceconnect     : 0x0F01B3, // deviceconnect
 	move              : 0x0F01B4, // move
 	voiced            : 0x0F01B5, // voiced
+	auracast          : 0x0F01B6, // auracast
 	jumpbackward10    : 0x0F01B7, // jumpbackward_10
 	jumpforward10     : 0x0F01B8, // jumpforward_10
 	logout            : 0x0F01B9, // logout
@@ -335,5 +336,5 @@ export default {
 	filter            : 0x0F020B, // filter
 	ezsetting         : 0x0F020C, // ez_setting
 	fitness           : 0x0F020D, // Fitness
-	auracast          : 0x0F020E  // Auracast
+	auracast2         : 0x0F020E  // Auracast
 };

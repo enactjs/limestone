@@ -510,7 +510,7 @@ const IconBase = kind({
  * filter
  * ezsetting
  * fitness
- * auracast
+ * auracast2
 };
  * ```
  *
