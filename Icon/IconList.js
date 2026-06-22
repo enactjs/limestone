@@ -335,5 +335,5 @@ export default {
 	filter            : 0x0F020B, // filter
 	ezsetting         : 0x0F020C, // ez_setting
 	fitness           : 0x0F020D, // Fitness
-	auracast          : 0x0F020E, // Auracast
+	auracast          : 0x0F020E  // Auracast
 };
