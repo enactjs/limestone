@@ -248,7 +248,6 @@ export default {
 	deviceconnect     : 0x0F01B3, // deviceconnect
 	move              : 0x0F01B4, // move
 	voiced            : 0x0F01B5, // voiced
-	auracast          : 0x0F01B6, // auracast
 	jumpbackward10    : 0x0F01B7, // jumpbackward_10
 	jumpforward10     : 0x0F01B8, // jumpforward_10
 	logout            : 0x0F01B9, // logout

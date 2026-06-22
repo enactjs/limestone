@@ -6,7 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/Icon` supported icon list, adding new icons smartmode `databackup`, `deleteviewinginfo`, `lgmembers`, `manage`, `pay`, `paymentmethod`, `productregistration`, `purchased`, `rate`, `report`, `security`, `subscriptions`, `terminatemyaccount`, `update`, `usagecare`, `voucher`, `filter`, `ezsetting`, `fitness`, and `auracast`
+- `limestone/Icon` supported icon list, adding new icons smartmode `databackup`, `deleteviewinginfo`, `lgmembers`, `manage`, `pay`, `paymentmethod`, `productregistration`, `purchased`, `rate`, `report`, `security`, `subscriptions`, `terminatemyaccount`, `update`, `usagecare`, `voucher`, `filter`, `ezsetting`, and `fitness`
 - `limestone/Scroller` prop `stickTo` to allow the scroller to stick to a specific element
 - `limestone/VirtualGridList` prop `stickTo` to allow the scroller to stick to a specific element
 - `limestone/VirtualList` prop `stickTo` to allow the scroller to stick to a specific element
@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Button` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
+- `limestone/Icon` icon `auracast` to new style
 - `limestone/IconItem` press/release motion to match the latest motion guide
 - `limestone/ImageItem` styling to match the latest GUI
 - `limestone/Picker` to use `Steps` instead of own indicator
