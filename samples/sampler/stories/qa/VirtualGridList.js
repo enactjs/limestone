@@ -24,6 +24,10 @@ const defaultDataSize = 1000;
 const prop = {
 	scrollbarOption: ['auto', 'hidden', 'visible'],
 	scrollModeOption: ['native', 'translate'],
+	stickToOption: {
+		'(off)': '',
+		start: 'start'
+	},
 	wrapOption: {
 		false: false,
 		true: true,
@@ -215,6 +219,7 @@ export const HorizontalVirtualGridList = (args) => (
 		scrollMode={args['scrollMode']}
 		spacing={ri.scale(args['spacing'])}
 		spotlightDisabled={args['spotlightDisabled']}
+		stickTo={args['stickTo'] || null}
 		style={{paddingBottom: ri.unit(ri.scale(36) + 'px', 'rem')}}
 		verticalScrollbar={args['verticalScrollbar']}
 		wrap={args['wrap']}
@@ -230,6 +235,7 @@ select('scrollMode', HorizontalVirtualGridList, prop.scrollModeOption, Config);
 boolean('noScrollByWheel', HorizontalVirtualGridList, Config);
 number('spacing', HorizontalVirtualGridList, Config, 0);
 boolean('spotlightDisabled', HorizontalVirtualGridList, Config, false);
+select('stickTo', HorizontalVirtualGridList, prop.stickToOption, Config);
 select('verticalScrollbar', HorizontalVirtualGridList, prop.scrollbarOption, Config);
 select('wrap', HorizontalVirtualGridList, prop.wrapOption, Config);
 
@@ -415,6 +421,7 @@ const VirtualGridListInScroller = (props) => {
 				key={id}
 				noScrollByWheel={args['noScrollByWheel']}
 				spotlightId={id}
+				stickTo={args['stickTo'] || null}
 			/>
 		);
 	}
@@ -484,5 +491,6 @@ number('minWidth', RestoreFocusInScroller, Config, 688);
 number('minHeight', RestoreFocusInScroller, Config, 570);
 boolean('noScrollByWheel', RestoreFocusInScroller, Config);
 number('spacing', RestoreFocusInScroller, Config, 0);
+select('stickTo', RestoreFocusInScroller, prop.stickToOption, Config);
 
 RestoreFocusInScroller.storyName = 'in Scroller with restoring focus';

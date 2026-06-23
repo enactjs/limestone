@@ -486,6 +486,22 @@ VirtualList.propTypes = /** @lends limestone/VirtualList.VirtualList.prototype *
 	spotlightId: PropTypes.string,
 
 	/**
+	 * Anchors the focused item to a fixed "focus position" at the start edge while the list scrolls
+	 * beneath it.
+	 *
+	 * When set to `'start'`, moving focus with 5-way keys keeps the focus indicator at a fixed slot
+	 * at the start of the list (top for vertical, leading edge for horizontal) and scrolls so the
+	 * newly focused item lands in that slot. At the end of the list, the list scrolls only to its
+	 * last position so the focused item stays visible.
+	 *
+	 * This is ignored when `snapToCenter` is set.
+	 *
+	 * @type {('start')}
+	 * @public
+	 */
+	stickTo: PropTypes.oneOf(['start']),
+
+	/**
 	 * Specifies how to show vertical scrollbar.
 	 *
 	 * Valid values are:
@@ -989,6 +1005,22 @@ VirtualGridList.propTypes = /** @lends limestone/VirtualList.VirtualGridList.pro
 	 * @public
 	 */
 	spotlightId: PropTypes.string,
+
+	/**
+	 * Anchors the focused item to a fixed "focus position" at the start edge while the list scrolls
+	 * beneath it.
+	 *
+	 * When set to `'start'`, moving focus with 5-way keys keeps the focus indicator at a fixed slot
+	 * at the start of the list (top for vertical, leading edge for horizontal) and scrolls so the
+	 * newly focused item lands in that slot. At the end of the list, the list scrolls only to its
+	 * last position so the focused item stays visible.
+	 *
+	 * This is ignored when `snapToCenter` is set.
+	 *
+	 * @type {('start')}
+	 * @public
+	 */
+	stickTo: PropTypes.oneOf(['start']),
 
 	/**
 	 * Specifies how to show vertical scrollbar.

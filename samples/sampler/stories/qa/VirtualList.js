@@ -37,6 +37,10 @@ const defaultMinItemSize = 200;
 const prop = {
 	scrollbarOption: ['auto', 'hidden', 'visible'],
 	scrollModeOption: ['native', 'translate'],
+	stickToOption: {
+		'(off)': '',
+		start: 'start'
+	},
 	wrapOption: {
 		false: false,
 		true: true,
@@ -234,6 +238,7 @@ export const HorizontalScrollInScroller = (args) => {
 		onScrollStop: action('onScrollStop'),
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
+		stickTo: args['stickTo'] || null,
 		style: listStyle,
 		verticalScrollbar: args['verticalScrollbar'],
 		wrap: args['wrap']
@@ -254,6 +259,7 @@ number('itemSize', HorizontalScrollInScroller, Config, 156);
 select('scrollMode', HorizontalScrollInScroller, prop.scrollModeOption, Config);
 boolean('noScrollByWheel', HorizontalScrollInScroller, Config);
 number('spacing', HorizontalScrollInScroller, Config);
+select('stickTo', HorizontalScrollInScroller, prop.stickToOption, Config);
 select('verticalScrollbar', HorizontalScrollInScroller, prop.scrollbarOption, Config);
 select('wrap', HorizontalScrollInScroller, prop.wrapOption, Config);
 

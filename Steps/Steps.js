@@ -239,7 +239,10 @@ const StepsBase = kind({
 					children
 				};
 			});
-		}
+		},
+		className: ({className, css, highlightCurrentOnly}) => classNames(className, {
+			[css.highlightCurrentOnly] : highlightCurrentOnly
+		})
 	},
 
 	render: ({css, iconComponent, size, steps, ...rest}) => {
