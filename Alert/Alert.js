@@ -223,8 +223,14 @@ const AlertBase = kind({
 			}
 		},
 		className: ({buttons, buttonDirection, image, size, type, styler}) => {
-			const resolvedSize = size || (buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small');
-			return styler.append({noImage: !image}, resolvedSize, type);
+			const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+			const resolvedSize = size || (buttonDirection !== 'vertical' && buttonCount === 2 ? 'medium' : 'small');
+			let resolvedButtonDirection = buttonDirection;
+			if (buttonDirection === 'auto') {
+				const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
+				resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
+			}
+			return styler.append({noImage: !image}, resolvedSize, type, resolvedButtonDirection);
 		},
 		size: ({buttons, buttonDirection, size}) => size || (
 			buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
