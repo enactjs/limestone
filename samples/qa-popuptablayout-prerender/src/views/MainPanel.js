@@ -1,4 +1,4 @@
-import BodyText from '@enact/limestone/BodyText';
+
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
 import Item from '@enact/limestone/Item';
@@ -20,10 +20,6 @@ const MainPanel = () => {
 	return (
 		<div>
 			<Heading showLine>PopupTabLayout prerender sample</Heading>
-			<BodyText>
-				The PopupTabLayout below opens on launch and uses the `prerender` prop, so its tab
-				content is captured in the prerendered HTML (view source / disable JS to verify).
-			</BodyText>
 			<Button onClick={handleOpen}>Open PopupTabLayout</Button>
 
 			<PopupTabLayout open={open} prerender onClose={handleClose}>
