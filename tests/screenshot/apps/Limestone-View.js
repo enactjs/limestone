@@ -178,6 +178,11 @@ const ExportedApp = (props) => {
 		}
 	}
 
+	const isFocusTest = props.testId >= 0 && Boolean(components[props.component]?.[props.testId]?.focus);
+	// Set synchronously so WDIO can read the flag before React effects run
+	window.__CURRENT_TEST_FOCUS = isFocusTest;
+	spotlight.setPointerMode(!isFocusTest);
+
 	const WrappedApp = ThemeDecorator({noAutoFocus}, App);
 
 	useEffect(() => {
@@ -186,10 +191,18 @@ const ExportedApp = (props) => {
 
 	useEffect(() => {
 		const isFocusTest = props.testId >= 0 && Boolean(components[props.component]?.[props.testId]?.focus);
-		window.__CURRENT_TEST_FOCUS = isFocusTest;
 
 		if (!isFocusTest) {
-			return;
+			let frameId = window.requestAnimationFrame(() => {
+				const test = document.querySelector('[data-ui-test-id="test"]');
+				const current = spotlight.getCurrent();
+
+				if (test && current && (test === current || test.contains(current))) {
+					current.blur();
+				}
+			});
+
+			return () => window.cancelAnimationFrame(frameId);
 		}
 
 		let frameId = window.requestAnimationFrame(() => {
