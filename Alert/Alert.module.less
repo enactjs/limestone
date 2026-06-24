@@ -87,24 +87,10 @@
 			}
 		}
 
-		&.medium {
-			.alertImage,
-			.buttonContainer,
-			.content {
-				padding: @lime-alert-overlay-medium-body-padding;
-			}
-		}
-
 		&.large {
-			.alertImage,
-			.buttonContainer,
-			.content {
-				padding: @lime-alert-overlay-large-body-padding;
-			}
-
 			.title {
 				margin: 0 0 @lime-alert-overlay-large-title-margin-bottom 0;
-				padding: @lime-alert-overlay-large-body-padding;
+				padding: @lime-alert-overlay-body-padding;
 				.lime-font-size(@lime-alert-overlay-large-title-font-size, @lime-tallglyph-alert-title-font-size);
 			}
 		}
@@ -133,22 +119,12 @@
 
 		&.medium {
 			--alert-overlay-width: ~"max(@{lime-alert-overlay-medium-width}, var(--alert-overlay-horizontal-buttons-total-width))";
-			--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-medium-body-padding, right)[];
 			min-width: @lime-alert-overlay-medium-width;
-
-			.body {
-				padding: @lime-alert-overlay-medium-padding;
-			}
 		}
 
 		&.large {
 			--alert-overlay-width: ~"max(@{lime-alert-overlay-large-width}, var(--alert-overlay-horizontal-buttons-total-width))";
-			--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-large-body-padding, right)[];
 			min-width: @lime-alert-overlay-large-width;
-
-			.body {
-				padding: @lime-alert-overlay-large-padding;
-			}
 		}
 	}
 
