@@ -92,6 +92,14 @@ class PopupTabLayoutPage extends Page {
 			return document.activeElement.getAttribute('aria-label');
 		});
 	}
+
+	async isContentInFloatingLayer (id = 'tabLayout') {
+		return await browser.execute(function (componentId) {
+			const floatLayer = document.getElementById('floatLayer');
+			const content = document.getElementById(componentId);
+			return Boolean(floatLayer && content && floatLayer.contains(content));
+		}, id);
+	}
 }
 
 module.exports = new PopupTabLayoutPage();
