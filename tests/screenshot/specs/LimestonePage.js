@@ -33,13 +33,13 @@ class LimestonePage extends Page {
 	async waitForNoSpotlightFocus ({timeout = 3000, interval = 100} = {}) {
 		await browser.waitUntil(async () => {
 			return browser.execute(() => {
-				const test = document.querySelector('[data-ui-test-id="test"]');
-				if (!test) {
+				const testNode = document.querySelector('[data-ui-test-id="test"]');
+				if (!testNode) {
 					return false;
 				}
 
-				return !test.hasAttribute('data-spotlight-focused') &&
-					!test.querySelector('[data-spotlight-focused]');
+				return !testNode.hasAttribute('data-spotlight-focused') &&
+					!testNode.querySelector('[data-spotlight-focused]');
 			});
 		}, {
 			timeout,
@@ -51,21 +51,21 @@ class LimestonePage extends Page {
 	async waitForSpotlightFocus ({timeout = 3000, interval = 100} = {}) {
 		await browser.waitUntil(async () => {
 			return browser.execute(() => {
-				const test = document.querySelector('[data-ui-test-id="test"]');
-				if (!test) {
+				const testNode = document.querySelector('[data-ui-test-id="test"]');
+				if (!testNode) {
 					return false;
 				}
 
-				if (test.hasAttribute('data-spotlight-focused')) {
+				if (testNode.hasAttribute('data-spotlight-focused')) {
 					return true;
 				}
 
-				if (test.querySelector('[data-spotlight-focused]')) {
+				if (testNode.querySelector('[data-spotlight-focused]')) {
 					return true;
 				}
 
 				const active = document.activeElement;
-				return test === active || test.contains(active);
+				return testNode === active || testNode.contains(active);
 			});
 		}, {
 			timeout,

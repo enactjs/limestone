@@ -79,7 +79,7 @@ const newTypeCardTests = [
 const cardSmokeTests = [
 	...defaultCardTests.slice(0, 15),
 	...defaultCardTests.slice(36, 41),
-	...newTypeCardTests,
+	...newTypeCardTests
 ];
 
 const cardCommentedTests = [
