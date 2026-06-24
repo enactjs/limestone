@@ -39,6 +39,8 @@ npm run benchmark-screenshots -- Chip
 | Baselines | `dist/screenshots/reference/` | `playwright/snapshots/` |
 | Compare API | `@wdio/visual-service` | `expect(page).toHaveScreenshot()` |
 | Viewport | 1920×**1167** (WDIO window) | 1920×**1080** (FHD) |
+| Page ready | `body` visible + 200 ms + fonts | Same (`limestone-page.js`) |
+| Compare tolerance | `ignoreAntialiasing: true` | `threshold: 0.2` (Playwright equivalent) |
 
 Playwright does **not** read `apps/components/*.js` at test time. It serves the **built** app from `dist/` and selects cases with URL query parameters (`component`, `testId`, `skin`, …).
 

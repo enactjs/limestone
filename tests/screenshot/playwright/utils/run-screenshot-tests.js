@@ -7,6 +7,11 @@ import {assertComponentSource, TEST_DATA_FILE} from '../paths.js';
 import {getScreenshotPathSegments} from './screenshot-name.js';
 import {openComponent} from './limestone-page.js';
 import {recordShard} from './shard-registry.js';
+import {
+	PAGE_SCREENSHOT_OPTIONS,
+	SCREENSHOT_COMPARE_OPTIONS,
+	SCREENSHOT_VIEWPORT
+} from './screenshot-options.js';
 
 const forceUpdate = process.env.PLAYWRIGHT_FORCE_UPDATE === '1';
 const componentExactMatch = process.env.PLAYWRIGHT_COMPONENT_EXACT === '1';
@@ -90,12 +95,7 @@ async function assertPageScreenshot (page, testInfo, segments, options) {
 
 	if (forceUpdate || !fs.existsSync(filePath)) {
 		fs.mkdirSync(path.dirname(filePath), {recursive: true});
-		await page.screenshot({
-			animations: 'disabled',
-			caret: 'hide',
-			type: 'png',
-			path: filePath
-		});
+		await page.screenshot({...PAGE_SCREENSHOT_OPTIONS, path: filePath});
 		return;
 	}
 
@@ -150,7 +150,7 @@ export function registerScreenshotTests (config) {
 
 	baseTest.describe(suiteName, () => {
 		baseTest.beforeEach(async ({page}) => {
-			await page.setViewportSize({width: 1920, height: 1080});
+			await page.setViewportSize(SCREENSHOT_VIEWPORT);
 		});
 
 		for (const screenshotTest of cases) {
@@ -164,11 +164,7 @@ export function registerScreenshotTests (config) {
 						config.testName,
 						screenshotTest.params.caseTitle
 					),
-					{
-						animations: 'disabled',
-						caret: 'hide',
-						maxDiffPixelRatio: 0
-					}
+					SCREENSHOT_COMPARE_OPTIONS
 				);
 			});
 		}

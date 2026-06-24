@@ -315,5 +315,26 @@ export default {
 	filexls           : 0x0F01F6, // file_xls
 	subtitleru        : 0x10017F, // subtitleru
 	f1                : 0x0F01F8, // f1
-	mypageru          : 0x0F01F7  // mypageru
+	mypageru          : 0x0F01F7, // mypageru
+	smartmode         : 0x0F01FA, // smartmode
+	databackup        : 0x0F01FB, // data_backup
+	deleteviewinginfo : 0x0F01FC, // delete_viewing_info
+	lgmembers         : 0x0F01FD, // LG_Members
+	manage            : 0x0F01FE, // manage
+	pay               : 0x0F01FF, // pay
+	paymentmethod     : 0x0F0200, // payment_method
+	productregistration : 0x0F0201, // product_registration
+	purchased         : 0x0F0202, // purchased
+	rate              : 0x0F0203, // rate
+	report            : 0x0F0204, // report
+	security          : 0x0F0205, // security
+	subscriptions     : 0x0F0206, // subscriptions
+	terminatemyaccount : 0x0F0207, // terminate_my_account
+	update            : 0x0F0208, // update
+	usagecare         : 0x0F0209, // usage_care
+	voucher           : 0x0F020A, // voucher
+	filter            : 0x0F020B, // filter
+	ezsetting         : 0x0F020C, // ez_setting
+	fitness           : 0x0F020D, // Fitness
+	auracast2         : 0x0F020E  // Auracast
 };

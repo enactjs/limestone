@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-import buildApps from '@enact/ui-test-utils/build-apps';
 import {chromium} from '@playwright/test';
 
 import {PLAYWRIGHT_BASE_URL, SCREENSHOT_VIEW_INDEX, TEST_DATA_FILE, assertScreenshotDist} from './paths.js';
@@ -28,6 +27,7 @@ export default async function globalSetup () {
 	clearShardRegistry();
 
 	if (!process.env.PLAYWRIGHT_SKIP_BUILD) {
+		const {default: buildApps} = await import('@enact/ui-test-utils/build-apps');
 		await buildApps('screenshot');
 	}
 
