@@ -1,10 +1,14 @@
 
+import spotlight from '@enact/spotlight';
 import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
 import Item from '@enact/limestone/Item';
 import {Header} from '@enact/limestone/Panels';
 import PopupTabLayout, {Tab, TabPanel, TabPanels} from '@enact/limestone/PopupTabLayout';
 import {useCallback, useState} from 'react';
+
+// Force pointer mode off so spotlight 5-way focus behaves like a TV (mirrors the wdio test setup).
+spotlight.setPointerMode(false);
 
 // A 4-tab PopupTabLayout that opens on launch. With `prerender`, FloatingLayer renders the
 // content inline during the prerender pass (and the initial client render), then relocates it

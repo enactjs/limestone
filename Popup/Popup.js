@@ -511,9 +511,12 @@ const Popup = (props) => {
 			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
 			// while the popup is rendering.
 			pausedRef.current.pause();
-			if (getContainerNode(containerIdRef.current)) {
+			// With `prerender`, the content is first rendered inline and then relocated into the portal, remounting the subtree.
+			// Focusing now would spot the wrong element because the content's spotlight config isn't established yet,
+			// and that selection is restored after the relocation.
+			// Skip the early spot and let the post-relocation `onOpen` focus run.
+			if (!prerender && getContainerNode(containerIdRef.current)) {
 				spotPopupContent();
-
 			}
 		}
 
