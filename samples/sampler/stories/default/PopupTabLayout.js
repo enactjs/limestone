@@ -94,6 +94,7 @@ const PopupTabLayoutSamplesBase = (props) => {
 				scrimType={args['scrimType']}
 				spotlightRestrict={args['spotlightRestrict']}
 				optimized={args['optimized']}
+				prerendered={args['prerendered']}
 			>
 				<Tab
 					icon={includeIcons ? 'picture' : null}
@@ -221,6 +222,7 @@ export const _PopupTabLayout = (args) => <PopupTabLayoutSamples args={args} />;
 
 boolean('include icons', _PopupTabLayout, Config, true);
 boolean('optimized', _PopupTabLayout, Config);
+boolean('prerendered', _PopupTabLayout, Config);
 boolean('noAnimation', _PopupTabLayout, Config);
 boolean('noAutoDismiss', _PopupTabLayout, Config);
 select(
