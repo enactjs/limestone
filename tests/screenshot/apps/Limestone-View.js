@@ -190,32 +190,30 @@ const ExportedApp = (props) => {
 	}, []);
 
 	useEffect(() => {
-		const isFocusTest = props.testId >= 0 && Boolean(components[props.component]?.[props.testId]?.focus);
-
 		if (!isFocusTest) {
-			let frameId = window.requestAnimationFrame(() => {
-				const test = document.querySelector('[data-ui-test-id="test"]');
+			const blurFrameId = window.requestAnimationFrame(() => {
+				const testNode = document.querySelector('[data-ui-test-id="test"]');
 				const current = spotlight.getCurrent();
 
-				if (test && current && (test === current || test.contains(current))) {
+				if (testNode && current && (testNode === current || testNode.contains(current))) {
 					current.blur();
 				}
 			});
 
-			return () => window.cancelAnimationFrame(frameId);
+			return () => window.cancelAnimationFrame(blurFrameId);
 		}
 
-		let frameId = window.requestAnimationFrame(() => {
-			frameId = window.requestAnimationFrame(() => {
-				const test = document.querySelector('[data-ui-test-id="test"]');
-				if (test) {
-					spotlight.focus(test);
+		let focusFrameId = window.requestAnimationFrame(() => {
+			focusFrameId = window.requestAnimationFrame(() => {
+				const testNode = document.querySelector('[data-ui-test-id="test"]');
+				if (testNode) {
+					spotlight.focus(testNode);
 				}
 			});
 		});
 
-		return () => window.cancelAnimationFrame(frameId);
-	}, [props.component, props.testId]);
+		return () => window.cancelAnimationFrame(focusFrameId);
+	}, [props.component, props.testId, isFocusTest]);
 
 	return (
 		<WrappedApp {...props} skin={skin} highContrast={highContrast} locale={locale} textSize={textSize} focusRing={focusRing} />
