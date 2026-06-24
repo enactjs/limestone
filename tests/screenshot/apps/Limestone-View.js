@@ -184,6 +184,26 @@ const ExportedApp = (props) => {
 		document.querySelector('#root').classList.add('spotlight-input-key');
 	}, []);
 
+	useEffect(() => {
+		const isFocusTest = props.testId >= 0 && Boolean(components[props.component]?.[props.testId]?.focus);
+		window.__CURRENT_TEST_FOCUS = isFocusTest;
+
+		if (!isFocusTest) {
+			return;
+		}
+
+		let frameId = window.requestAnimationFrame(() => {
+			frameId = window.requestAnimationFrame(() => {
+				const test = document.querySelector('[data-ui-test-id="test"]');
+				if (test) {
+					spotlight.focus(test);
+				}
+			});
+		});
+
+		return () => window.cancelAnimationFrame(frameId);
+	}, [props.component, props.testId]);
+
 	return (
 		<WrappedApp {...props} skin={skin} highContrast={highContrast} locale={locale} textSize={textSize} focusRing={focusRing} />
 	);
