@@ -491,6 +491,7 @@ const IconBase = kind({
  * subtitleru
  * f1
  * mypageru
+ * smartmode
  * databackup
  * deleteviewinginfo
  * lgmembers
