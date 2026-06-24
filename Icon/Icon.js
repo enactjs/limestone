@@ -491,6 +491,27 @@ const IconBase = kind({
  * subtitleru
  * f1
  * mypageru
+ * smartmode
+ * databackup
+ * deleteviewinginfo
+ * lgmembers
+ * manage
+ * pay
+ * paymentmethod
+ * productregistration
+ * purchased
+ * rate
+ * report
+ * security
+ * subscriptions
+ * terminatemyaccount
+ * update
+ * usagecare
+ * voucher
+ * filter
+ * ezsetting
+ * fitness
+ * auracast2
 };
  * ```
  *
