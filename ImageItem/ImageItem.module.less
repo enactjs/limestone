@@ -84,6 +84,10 @@
 			--icon-size: @lime-imageitem-vertical-selection-icon-size-large;
 		}
 
+		&.vertical.showSelection:not(.selected) {
+			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width-large;
+		}
+
 		&.vertical .imageIcon {
 			width: @lime-imageitem-vertical-image-icon-size-large;
 			height: @lime-imageitem-vertical-image-icon-size-large;
@@ -94,6 +98,10 @@
 			height: @lime-imageitem-horizontal-selection-icon-size-large;
 			line-height: @lime-imageitem-horizontal-selection-icon-size-large;
 			--icon-size: @lime-imageitem-horizontal-selection-icon-size-large;
+		}
+
+		&.horizontal.showSelection:not(.selected) {
+			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width-large;
 		}
 	});
 
@@ -127,6 +135,10 @@
 			margin: @lime-imageitem-margin;
 		}
 
+		&.showSelection:not(.selected) {
+			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width;
+		}
+
 		.captions {
 			align-items: center;
 			margin-top: @lime-imageitem-vertical-captions-margin-top;
@@ -156,10 +168,6 @@
 			line-height: @lime-imageitem-vertical-selection-icon-size;
 			--icon-size: @lime-imageitem-vertical-selection-icon-size;
 		}
-
-		&.showSelection:not(.selected) .selectionIcon {
-			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width;
-		}
 	}
 
 	&.horizontal {
@@ -183,15 +191,15 @@
 			}
 		}
 
+		&.showSelection:not(.selected) {
+			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width;
+		}
+
 		.selectionIcon {
 			width: @lime-imageitem-horizontal-selection-icon-size;
 			height: @lime-imageitem-horizontal-selection-icon-size;
 			line-height: @lime-imageitem-horizontal-selection-icon-size;
 			--icon-size: @lime-imageitem-horizontal-selection-icon-size;
-		}
-
-		&.showSelection:not(.selected) .selectionIcon {
-			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width;
 		}
 	}
 
@@ -206,7 +214,7 @@
 		}
 
 		.selectionIcon {
-			box-shadow: 0 0 0 var(--box-shadow-width) @lime-imageitem-selection-icon-border-color;
+			box-shadow: inset 0 0 0 var(--box-shadow-width) @lime-imageitem-selection-icon-border-color;
 			background-color: @lime-imageitem-selection-container-color;
 			color: @lime-imageitem-selection-icon-color;
 		}
