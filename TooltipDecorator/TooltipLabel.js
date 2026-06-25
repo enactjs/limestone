@@ -128,12 +128,6 @@ const TooltipLabel = kind({
 		delete rest.noArrow;
 		delete rest.width;
 
-		const imageStyle = {
-			alignSelf: 'center',
-			margin: 0,
-			height: scaleToRem(tooltipImageSize?.height),
-			width: scaleToRem(tooltipImageSize?.width)
-		};
 
 		if (marquee) {
 			return (
