@@ -76,15 +76,15 @@
 		
 		.tooltipImage {
 			margin: 0;
-			border-radius: 36px;
-			width: var(--lime-tooltip-image-width, 960px);
-			height: var(--lime-tooltip-image-height, 540px);
+			border-radius: @lime-tooltip-image-border-radius;
+			width: var(--lime-tooltip-image-width, @lime-tooltip-image-width);
+			height: var(--lime-tooltip-image-height, @lime-tooltip-image-height);
 		}
 
 		&.image {
 			display: flex;
 			flex-direction: column;
-			border-radius: @lime-tooltip-image-border-radius;
+			border-radius: @lime-tooltip-image-container-border-radius;
 			gap: @lime-tooltip-image-gap;
 			padding: @lime-tooltip-image-padding;
 		}

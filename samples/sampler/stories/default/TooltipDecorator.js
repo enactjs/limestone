@@ -36,7 +36,7 @@ const prop = {
 	],
 	tooltipType: ['balloon', 'transparent']
 };
-const size = {height: 300, width: 500};
+const size = {height: 540, width: 960};
 
 export default {
 	title: 'Limestone/TooltipDecorator',
