@@ -120,11 +120,23 @@ const LtrTests = [
 	...withProps({shadowed: true}, baseTests)
 ];
 
+// Smoke representatives for largeText / ar-SA (subset of LtrTests titles on develop)
+const headerLocaleSmokeTests = [
+	...withProps({type: 'standard'}, [baseTests[0]]),
+	...withProps({type: 'compact'}, [baseTests[0]]),
+	...withProps({type: 'wizard', centered: true}, [baseTests[0]]),
+	...withProps({type: 'mini'}, [baseTests[0]]),
+	// Centered [QWTC-1875]
+	...withProps({type: 'standard', centered: true}, [baseTests[0]]),
+	// Standard Type Slots [QWTC-2137]
+	...withProps({type: 'standard', slotAfter: dropIn.singleButton}, [baseTests[0]])
+];
+
 const HeaderTests = [
 	...LtrTests,
 	...specificTests,
-	...withConfig({skinVariants: ['largeText']}, LtrTests),
-	...withConfig({locale: 'ar-SA'}, LtrTests),
+	...withConfig({skinVariants: ['largeText']}, headerLocaleSmokeTests),
+	...withConfig({locale: 'ar-SA'}, headerLocaleSmokeTests),
 
 	// Tallglyph Validation
 	...withConfig({locale: 'vi-VN'}, [

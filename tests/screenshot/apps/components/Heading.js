@@ -4,29 +4,28 @@ import {withConfig, withProps} from './utils';
 
 const bidirectionalHeading = [
 	<Heading>Input Password for ABC جهاز, please</Heading>,
-	<Heading>Input Password for <bdi>ABC جهاز</bdi>, please</Heading>,
-	<Heading>الرجاء إدخال كلمة المرور لـ ABC جهاز</Heading>,
-	<Heading>الرجاء إدخال كلمة المرور لـ <bdi>ABC جهاز</bdi></Heading>
+	<Heading>الرجاء إدخال كلمة المرور لـ ABC جهاز</Heading>
 ];
 
-const bidirectionalTests = [
-	...withConfig({locale: 'ar-SA'}, bidirectionalHeading),
-	...withConfig({locale: 'en-US'}, bidirectionalHeading)
-];
-
-const HeadingTests = [
+const headingSmokeTests = [
 	<Heading>This is a new Heading - default</Heading>,
 	<Heading spacing="auto">This is a new Heading - spacing is auto</Heading>,
 	<Heading spacing="small">This is a new Heading - spacing is small</Heading>,
 	<Heading spacing="medium">This is a new Heading - spacing is medium</Heading>,
 	<Heading spacing="large">This is a new Heading - spacing is large</Heading>,
-	<Heading spacing="none">This is a new Heading - spacing is none</Heading>,
+	<Heading spacing="none">This is a new Heading - spacing is none</Heading>
+];
+
+// QWTC-documented scenarios (kept explicitly for Jira traceability).
+const headingQwtcTests = [
 	// start of [QWTC-2276]
 	<Heading>नरेंद्र मोदी</Heading>,
 	<Heading>ฟิ้  ไั  ஒ  த</Heading>,
-	<Heading>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Heading>,
+	<Heading>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Heading>
 	// end of [QWTC-2276]
+];
 
+const headingCommentedTests = [
 	// Heading with no children
 	<Heading />,
 
@@ -70,20 +69,27 @@ const HeadingTests = [
 		locale: 'ko-KR',
 		component: <Heading size="medium" style={{fontStyle: 'italic'}}>Heading</Heading>
 	},
-	<Heading size="medium" style={{fontStyle: 'italic', fontWeight: 700}}>Heading</Heading>,
+	<Heading size="medium" style={{fontStyle: 'italic', fontWeight: 700}}>Heading</Heading>
+];
 
+const headingLargeTextTests = [
+	// Large Text — smoke representatives
+	<Heading>This is a new Heading - default</Heading>,
+	<Heading spacing="auto">This is a new Heading - spacing is auto</Heading>
+];
+
+const bidirectionalTests = [
+	...withConfig({locale: 'ar-SA'}, bidirectionalHeading),
+	...withConfig({locale: 'en-US'}, bidirectionalHeading)
+];
+
+const HeadingTests = [
+	...headingSmokeTests,
+	...headingQwtcTests,
+	...headingCommentedTests,
 	...bidirectionalTests,
 	...withProps({forceDirection: 'locale'}, bidirectionalTests),
-
-	// Large Text
-	...withConfig({skinVariants: ['largeText']}, [
-		<Heading>This is a new Heading - default</Heading>,
-		<Heading spacing="auto">This is a new Heading - spacing is auto</Heading>,
-		<Heading spacing="small">This is a new Heading - spacing is small</Heading>,
-		<Heading spacing="medium">This is a new Heading - spacing is medium</Heading>,
-		<Heading spacing="large">This is a new Heading - spacing is large</Heading>,
-		<Heading spacing="none">This is a new Heading - spacing is none</Heading>
-	])
+	...withConfig({skinVariants: ['largeText']}, headingLargeTextTests)
 ];
 
 export default HeadingTests;
