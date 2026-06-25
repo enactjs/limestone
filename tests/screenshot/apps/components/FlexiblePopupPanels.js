@@ -68,89 +68,100 @@ function FlexPopupPanels (props) {
 	);
 }
 
-const EachPanel = withConfig(
-	{wrapper: {full: true}},
-	[
-		// [QWTC-2424]
-		{
-			title: 'with standard Panel Components',
-			component: <FlexPopupPanels open />
-		},
-		{
-			title: 'with transparent scrim',
-			component: <FlexPopupPanels open scrimType="transparent" />
-		},
-		{
-			title: 'with standard Panel Components index 1',
-			component: <FlexPopupPanels open index={1} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 3'
-		{
-			title: 'with standard Panel Components index 2',
-			component: <FlexPopupPanels open index={2} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 4'
-		{
-			title: 'with standard Panel Components index 3',
-			component: <FlexPopupPanels open index={3} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 5'
-		{
-			title: 'with standard Panel Components index 4',
-			component: <FlexPopupPanels open index={4} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 6'
-		{
-			title: 'with standard Panel Components index 5',
-			component: <FlexPopupPanels open index={5} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 7'
-		{
-			title: 'with standard Panel Components index 6',
-			component: <FlexPopupPanels open index={6} />,
-			wrapper: {full: true}
-		},
-		// Display 'Panel 8'
-		{
-			title: 'with standard Panel Components index 7',
-			component: <FlexPopupPanels open index={7} />,
-			wrapper: {full: true}
-		}
-	]
-);
+const flexiblePopupPanelsQwtcTests = [
+	// [QWTC-2424]
+	{
+		wrapper: {full: true},
+		title: 'with standard Panel Components',
+		component: <FlexPopupPanels open />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with transparent scrim',
+		component: <FlexPopupPanels open scrimType="transparent" />
+	},
+	{
+		title: 'with standard Panel Components index 1',
+		component: <FlexPopupPanels open index={1} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 3'
+	{
+		title: 'with standard Panel Components index 2',
+		component: <FlexPopupPanels open index={2} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 4'
+	{
+		title: 'with standard Panel Components index 3',
+		component: <FlexPopupPanels open index={3} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 5'
+	{
+		title: 'with standard Panel Components index 4',
+		component: <FlexPopupPanels open index={4} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 6'
+	{
+		title: 'with standard Panel Components index 5',
+		component: <FlexPopupPanels open index={5} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 7'
+	{
+		title: 'with standard Panel Components index 6',
+		component: <FlexPopupPanels open index={6} />,
+		wrapper: {full: true}
+	},
+	// Display 'Panel 8'
+	{
+		title: 'with standard Panel Components index 7',
+		component: <FlexPopupPanels open index={7} />,
+		wrapper: {full: true}
+	}
+];
 
-const FlexiblePopupPanelsTests = [
+const flexiblePopupPanelsSmokeTests = [
 	{
 		component: <FlexPopupPanels open>{null}</FlexPopupPanels>,
 		wrapper: {full: true}
-	},
-	...EachPanel,
+	}
+];
+
+const flexiblePopupPanelsCommentedTests = [
 	...withProps(
 		{fullHeight: true},
-		EachPanel.map(o => ({...o, title: `${o.title} fullHeight`}))
+		flexiblePopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} fullHeight`}))
 	),
 	...withProps(
 		{nextButtonVisibility: false},
-		EachPanel.map(o => ({...o, title: `${o.title} nextButtonVisibility`}))
+		flexiblePopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} nextButtonVisibility`}))
 	),
 	...withProps(
 		{noCloseButton: true},
-		EachPanel.map(o => ({...o, title: `${o.title} noCloseButton`}))
+		flexiblePopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} noCloseButton`}))
 	),
 	...withProps(
 		{prevButtonVisibility: false},
-		EachPanel.map(o => ({...o, title: `${o.title} prevButtonVisibility`}))
-	),
-	// [QWTC-2424]
+		flexiblePopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} prevButtonVisibility`}))
+	)
+];
+
+const flexiblePopupPanelsRtlTests = [
+	// [QWTC-2424] — smoke representatives
 	...withConfig(
 		{locale: 'ar-SA'},
-		EachPanel.map(o => ({...o, title: `locale = ar-SA, ${o.title}`}))
+		flexiblePopupPanelsQwtcTests.slice(0, 3).map(o => ({...o, title: `locale = ar-SA, ${o.title}`}))
 	)
+];
+
+const FlexiblePopupPanelsTests = [
+	...flexiblePopupPanelsSmokeTests,
+	...flexiblePopupPanelsQwtcTests,
+	...flexiblePopupPanelsCommentedTests,
+	...flexiblePopupPanelsRtlTests
 ];
 
 export default FlexiblePopupPanelsTests;

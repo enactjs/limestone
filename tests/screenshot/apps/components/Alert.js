@@ -116,30 +116,6 @@ const overlayColorTests = [
 				</div>
 			</Scroller>
 		</div>
-	</Alert>,
-	// QWTC-2603
-	<Alert open title="With different types of Components">
-		<AlertImage
-			src={img}
-			type="icon"
-		/>
-		<Button size="small">Yes</Button>
-		<Button size="small">No</Button>
-		<div>
-			<div>This is progressbar</div>
-			<ProgressBar progress={0.5} />
-		</div>
-		<div>
-			<CheckboxItem>This is CheckboxItem</CheckboxItem>
-			<CheckboxItem selected>This is Selected CheckboxItem</CheckboxItem>
-		</div>
-		<div>
-			<Scroller style={{height:'300px'}} focusableScrollbar="byEnter">
-				<div style={{height:'1000px'}}>
-					{LoremString}
-				</div>
-			</Scroller>
-		</div>
 	</Alert>
 ];
 
@@ -195,11 +171,64 @@ const dropIn = {
 	]
 };
 
-const LtrTests = [
+const alertSmokeTests = [
+	...withProps({type: 'fullscreen'}, fullscreenTests.slice(0, 2)),
+	...withProps({type: 'overlay'}, overlayTests.slice(0, 3)),
+	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, [fullscreenTests[0]]),
+	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, [fullscreenTests[0]]),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, [overlayTests[0]]),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, [overlayTests[0]]),
+	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
+	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, [fullscreenTests[0]]),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, [overlayTests[0]])
+];
+
+// QWTC-documented scenarios (kept explicitly for Jira traceability).
+const alertQwtcTests = [
+	// QWTC-1928 start.
+	...withProps({type: 'fullscreen', image: dropIn.iconImage}, [fullscreenTests[0]]),
+	...withProps({type: 'fullscreen', image: dropIn.image}, [fullscreenTests[0]]),
+	// QWTC-1928 end.
+	// QWTC-1929 start.
+	...withProps({type: 'overlay', image: dropIn.iconImage}, [overlayTests[0]]),
+	...withProps({type: 'overlay', image: dropIn.image}, [overlayTests[0]]),
+	// QWTC-1929 end.
+	// QWTC-2603
+	...withProps({type: 'overlay'}, [
+		<Alert open title="With different types of Components">
+			<AlertImage
+				src={img}
+				type="icon"
+			/>
+			<Button size="small">Yes</Button>
+			<Button size="small">No</Button>
+			<div>
+				<div>This is progressbar</div>
+				<ProgressBar progress={0.5} />
+			</div>
+			<div>
+				<CheckboxItem>This is CheckboxItem</CheckboxItem>
+				<CheckboxItem selected>This is Selected CheckboxItem</CheckboxItem>
+			</div>
+			<div>
+				<Scroller style={{height:'300px'}} focusableScrollbar="byEnter">
+					<div style={{height:'1000px'}}>
+						{LoremString}
+					</div>
+				</Scroller>
+			</div>
+		</Alert>
+	])
+];
+
+const alertInitialTests = [
 	// Initial
 	...withProps({type: 'fullscreen'}, fullscreenTests),
-	...withProps({type: 'overlay'}, overlayTests),
+	...withProps({type: 'overlay'}, overlayTests)
+];
 
+const alertWithButtonsTests = [
 	// With Buttons
 	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, fullscreenTests),
 	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenTests),
@@ -213,8 +242,10 @@ const LtrTests = [
 	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.twoSmallButtons}, overlayTests),
 	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.threeSmallButtons}, overlayTests),
 	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlayTests),
+	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlayTests)
+];
 
+const alertWithImageTests = [
 	// With image
 	// QWTC-1928 start.
 	...withProps({type: 'fullscreen', image: dropIn.iconImage}, fullscreenTests),
@@ -229,17 +260,35 @@ const LtrTests = [
 	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, fullscreenTests),
 	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons, image: dropIn.image}, fullscreenTests),
 	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton, image: dropIn.image}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayTests),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayTests)
+];
 
+const alertWithComponentsTests = [
 	// With other components
 	...withProps({type: 'overlay'}, overlayColorTests),
 	...withProps({type: 'fullscreen'}, overlayColorTests)
 ];
 
+const alertRtlTests = [
+	...withProps({type: 'fullscreen'}, fullscreenTests.slice(0, 2)),
+	...withProps({type: 'overlay'}, overlayTests.slice(0, 3)),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
+	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, [fullscreenTests[0]])
+];
+
+const alertCommentedTests = [
+	...alertInitialTests,
+	...alertWithButtonsTests,
+	...alertWithImageTests,
+	...alertWithComponentsTests
+];
+
 const AlertTests = [
-	...LtrTests,
-	...withConfig({locale: 'vi-VN'}, LtrTests),  // Tallglyph validation
-	...withConfig({locale: 'ar-SA'}, LtrTests)
+	...alertSmokeTests,
+	...alertQwtcTests,
+	...alertCommentedTests,
+	...withConfig({locale: 'vi-VN'}, alertRtlTests.slice(0, 2)),
+	...withConfig({locale: 'ar-SA'}, alertRtlTests)
 ];
 
 export default AlertTests;

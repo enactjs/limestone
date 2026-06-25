@@ -16,6 +16,11 @@ const commonItemTests = [
 	<Item inline label="Item label">Inline Item with label</Item>,
 	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>
 ];
+
+const itemSmokeTests = [
+	...commonItemTests
+];
+
 // Long text
 const longTextItemTests = [
 	<Item>Long Default Item to invoke a marquee</Item>,
@@ -36,7 +41,6 @@ for (const lang in rtlStrings) {
 		<Item label={rtlStrings[lang]}>{rtlStrings[lang]}</Item>
 	);
 }
-
 
 const tallglyphStrings = {
 	// hi: 'नरेंद्र मोदी',
@@ -65,126 +69,134 @@ const tallglyphItemTests = [
 	...withProps({inline: true, disabled: true}, tallglyphTextCases)
 ];
 
-const ItemTests = [
+const itemQwtcTests = [
+	// With tall characters and disabled [QWTC-1826]
+	...tallglyphItemTests
+];
+
+const itemFocusTests = [
+	// Focused
+	<Item>Focused Item</Item>,
+	<Item slotBefore={<Icon>star</Icon>}>Focused Item</Item>,
+	<Item slotAfter={<Icon>star</Icon>}>Focused Item</Item>,
+	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Focused Item</Item>
+];
+
+const itemFocusedLightWrapperTests = [
+	// Focused with light wrapper
+	<Item>Focused Item</Item>
+];
+
+const itemCenteredTests = [
+	// Centered
+	<Item>Centered Item</Item>,
+	<Item>{LoremString}</Item>,
+	// Just slotBefore
+	<Item slotBefore={<Icon>star</Icon>}>Centered Item</Item>,
+	<Item slotBefore={<Icon>star</Icon>}>{LoremString}</Item>,
+	// Just slotAfter
+	<Item slotAfter={<Icon>star</Icon>}>Centered Item</Item>,
+	<Item slotAfter={<Icon>star</Icon>}>{LoremString}</Item>,
+	// Both slotBefore and slotAfter
+	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Centered Item</Item>,
+	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>{LoremString}</Item>,
+
+	...rtlItemTests
+];
+
+const itemSmallTests = [
+	// Small
 	...commonItemTests,
+	...rtlItemTests
+];
+
+const itemCustomStyleTests = [
+	// Customized Item Style
+	<Item label="label">Customized Item</Item>,
+	<Item label="label" slotBefore={<Icon>star</Icon>}>Customized Item</Item>,
+	<Item label="label" slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
+	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
+
+	...withConfig({focus: true}, [
+		<Item>Customized Focused Item</Item>,
+		<Item label='"label"' slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Focused Item</Item>
+	])
+];
+
+const itemCommentedTests = [
+	// Long text
 	...longTextItemTests,
 	...rtlItemTests,
+	...withProps({centered: true}, itemCenteredTests),
+	...withProps({size: 'small'}, itemSmallTests),
+	...withProps({css: css}, itemCustomStyleTests)
+];
 
-	// Focused
-	...withConfig({focus: true}, [
-		<Item>Focused Item</Item>,
-		<Item slotBefore={<Icon>star</Icon>}>Focused Item</Item>,
-		<Item slotAfter={<Icon>star</Icon>}>Focused Item</Item>,
-		<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Focused Item</Item>
-	]),
-
-	// Focused with light wrapper
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		<Item>Focused Item</Item>
-	]),
-
-	// Centered
-	...withProps({centered: true}, [
-		<Item>Centered Item</Item>,
-		<Item>{LoremString}</Item>,
-		// Just slotBefore
-		<Item slotBefore={<Icon>star</Icon>}>Centered Item</Item>,
-		<Item slotBefore={<Icon>star</Icon>}>{LoremString}</Item>,
-		// Just slotAfter
-		<Item slotAfter={<Icon>star</Icon>}>Centered Item</Item>,
-		<Item slotAfter={<Icon>star</Icon>}>{LoremString}</Item>,
-		// Both slotBefore and slotAfter
-		<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Centered Item</Item>,
-		<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>{LoremString}</Item>,
-
-		...rtlItemTests
-	]),
-
-	// Small
-	...withProps({size: 'small'}, [
-		...commonItemTests,
-		...rtlItemTests
-	]),
-
-	// With tall characters and disabled [QWTC-1826]
-	...tallglyphItemTests,
-
-	// LargeText mode
-	...withConfig({
-		textSize: 'large'
-	}, [
-		...commonItemTests,
-		...rtlItemTests,
-		...tallglyphItemTests,
-		...withProps({size: 'small'}, [
-			...commonItemTests
-		])
-	]),
-
-	// Customized Item Style
-	...withProps({css: css}, [
-		<Item label="label">Customized Item</Item>,
-		<Item label="label" slotBefore={<Icon>star</Icon>}>Customized Item</Item>,
-		<Item label="label" slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
-		<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
-
-		...withConfig({focus: true}, [
-			<Item>Customized Focused Item</Item>,
-			<Item label='"label"' slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Focused Item</Item>
-		])
-	]),
-
-
+const itemRtlTests = [
 	// *************************************************************
 	// locale = 'ar-SA'
 	// Item Functionality RTL [QWTC-3487]
-	...withConfig({locale: 'ar-SA'}, [
-		...commonItemTests,
-		...rtlItemTests,
+	...commonItemTests.slice(0, 2),
+	...rtlItemTests,
 
-		// Centered
-		...withProps({centered: true}, [
-			<Item>Hello Item</Item>,
-			<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Hello Item</Item>
-		]),
-
-		// Small
-		...withProps({size: 'small'}, commonItemTests),
-
-		// With tall characters and disabled [QWTC-1826]
-		...tallglyphItemTests
+	// Centered
+	...withProps({centered: true}, [
+		<Item>Hello Item</Item>
 	]),
 
-	// RTL and LargeText mode
-	...withConfig({
-		locale: 'ar-SA',
-		textSize: 'large'
-	}, [
-		...commonItemTests,
-		...rtlItemTests,
-		...tallglyphItemTests
-	]),
+	// Small
+	...withProps({size: 'small'}, [commonItemTests[0]]),
 
+	// With tall characters and disabled [QWTC-1826]
+	...tallglyphTextCases,
+	...withProps({disabled: true}, tallglyphTextCases)
+];
 
+const itemRtlLargeTextTests = [
+	// RTL and LargeText mode — smoke representatives
+	<Item>Default Item</Item>,
+	<Item disabled>Disabled Item</Item>,
+	...rtlItemTests,
+	...tallglyphTextCases
+];
+
+const itemTallglyphValidationTests = [
 	// *************************************************************
 	// Tallglyph Validation
 	// locale = 'vi-VN'
-	...withConfig({
-		locale: 'vi-VN'
-	}, [
-		...commonItemTests,
-		...tallglyphItemTests,
-		...withProps({size: 'small'}, commonItemTests)
-	]),
+	...commonItemTests.slice(0, 2),
+	...tallglyphTextCases,
+	...withProps({disabled: true}, tallglyphTextCases),
+	...withProps({size: 'small'}, [commonItemTests[0]])
+];
 
-	...withConfig({
-		locale: 'vi-VN',
-		textSize: 'large'
-	}, [
-		...commonItemTests,
-		...tallglyphItemTests,
-		...withProps({size: 'small'}, commonItemTests)
-	])
+const itemTallglyphValidationLargeTextTests = [
+	<Item>Default Item</Item>,
+	<Item disabled>Disabled Item</Item>,
+	...tallglyphTextCases,
+	...withProps({size: 'small'}, [commonItemTests[0]])
+];
+
+const itemLargeTextTests = [
+	// LargeText mode — smoke representatives
+	<Item>Default Item</Item>,
+	<Item disabled>Disabled Item</Item>,
+	...rtlItemTests,
+	...tallglyphTextCases,
+	...withProps({size: 'small'}, [commonItemTests[0]])
+];
+
+const ItemTests = [
+	...itemSmokeTests,
+	...itemQwtcTests,
+	...itemCommentedTests,
+	...withConfig({focus: true}, itemFocusTests),
+	...withConfig({focus: true, wrapper: {light: true, padded: true}}, itemFocusedLightWrapperTests),
+	...withConfig({textSize: 'large'}, itemLargeTextTests),
+	...withConfig({locale: 'ar-SA'}, itemRtlTests),
+	...withConfig({locale: 'ar-SA', textSize: 'large'}, itemRtlLargeTextTests),
+	...withConfig({locale: 'vi-VN'}, itemTallglyphValidationTests),
+	...withConfig({locale: 'vi-VN', textSize: 'large'}, itemTallglyphValidationLargeTextTests)
 ];
 
 export default ItemTests;

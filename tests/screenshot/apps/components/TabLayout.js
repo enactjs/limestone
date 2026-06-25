@@ -1,6 +1,8 @@
 import Button from '../../../../Button';
 import {TabLayout, Tab} from '../../../../TabLayout';
 
+import {withConfig} from './utils';
+
 const SimpleTab = (props) => (
 	<Tab {...props}>
 		<div>{`View ${props.title}`}</div>
@@ -93,135 +95,66 @@ const tabsWithIconsDisabled = [
 	SimpleTab({title: 'Six', icon: 'picture'})
 ];
 
+const wrapperFull = {wrapper: {full: true}};
 
-
-const TabLayoutTests = [
+const tabLayoutSmokeTests = [
 	{
 		component: <TabLayout>{tabs}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout selected={0}>{tabs}</TabLayout>,
-		wrapper: {full: true},
+		...wrapperFull,
 		focus: true
 	},
 	{
 		component: <TabLayout>{tabsWithIcons}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout selected={0}>{tabsWithIcons}</TabLayout>,
-		wrapper: {full: true},
-		focus: true
+		...wrapperFull
 	},
 	{
 		component: <TabLayout>{someTabsWithIcons}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout>{oneTabWithIcons}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout collapsed>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout collapsed selected={0}>{tabs}</TabLayout>,
-		wrapper: {full: true},
-		focus: true
-	},
-	{
-		component: <TabLayout collapsed>{tabsWithIcons}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout collapsed>{someTabsWithIcons}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout collapsed>{oneTabWithIcons}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout collapsed>{tabsWithIconsDisabled}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout collapsed selected={0}>{tabsWithIconsDisabled}</TabLayout>,
-		wrapper: {full: true},
+		...wrapperFull,
 		focus: true
 	},
 	{
-		component: <TabLayout orientation="horizontal">{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
 		component: <TabLayout orientation="horizontal" selected={3}>{tabs}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout anchorTo="left">{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout anchorTo="right">{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout anchorTo="start">{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout anchorTo="end">{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout
-			dimensions={{
-				tabs: {
-					collapsed: 300,
-					normal: 900
-				},
-				content: {
-					expanded: null,
-					normal: null
-				}
-			}}
-		>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout
-			dimensions={{
-				tabs: {
-					collapsed: 300,
-					normal: 800
-				},
-				content: {
-					expanded: null,
-					normal: null
-				}
-			}}
-		>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		component: <TabLayout tabSize={500}>{tabs}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout type="popup">{tabs}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
+	},
+	{
+		component: <TabLayout tabSize={500}>{tabs}</TabLayout>,
+		...wrapperFull
 	},
 	{
 		component: <TabLayout index={13}>{tabsForScroll}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
 		component: <TabLayout index={13} orientation="horizontal">{tabsForScroll}</TabLayout>,
-		wrapper: {full: true}
-	},
+		...wrapperFull
+	}
+];
+
+const tabLayoutQwtcTests = [
 	// start of [QWTC-2616]
 	<TabLayout orientation="vertical">
 		{Array.from({length: 20}, (v, i) => (
@@ -246,46 +179,27 @@ const TabLayoutTests = [
 				<Button>Tab {i} Top</Button>
 			</TabLayout.Tab>
 		))}
-	</TabLayout>,
+	</TabLayout>
 	// end of [QWTC-2616]
-	// *************************************************************
-	// RTL
-	// locale = 'ar-SA'
-	// *************************************************************
+];
+
+const tabLayoutRtlTests = [
+	// locale = 'ar-SA' — smoke representatives
 	{
-		locale: 'ar-SA',
 		component: <TabLayout selected={1}>{tabs}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
-		locale: 'ar-SA',
 		component: <TabLayout selected={1}>{tabsWithIcons}</TabLayout>,
-		wrapper: {full: true}
+		...wrapperFull
 	},
 	{
-		locale: 'ar-SA',
 		component: <TabLayout collapsed selected={1}>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		locale: 'ar-SA',
-		component: <TabLayout orientation="horizontal" selected={1}>{tabs}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		locale: 'ar-SA',
-		component: <TabLayout index={9}>{tabsForScroll}</TabLayout>,
-		wrapper: {full: true}
-	},
-	{
-		locale: 'ar-SA',
-		component: <TabLayout index={9} orientation="horizontal" tabSize={900}>{tabsForScroll}</TabLayout>,
-		wrapper: {full: true}
-	},
-	// *************************************************************
-	// Large Text
-	// textSize: 'large'
-	// *************************************************************
+		...wrapperFull
+	}
+];
+
+const tabLayoutLargeTextTests = [
 	{
 		textSize: 'large',
 		component: <TabLayout selected={1}>{tabsLargeText}</TabLayout>,
@@ -302,4 +216,12 @@ const TabLayoutTests = [
 		wrapper: {full: true}
 	}
 ];
+
+const TabLayoutTests = [
+	...tabLayoutSmokeTests,
+	...tabLayoutQwtcTests,
+	...tabLayoutLargeTextTests,
+	...withConfig({locale: 'ar-SA'}, tabLayoutRtlTests)
+];
+
 export default TabLayoutTests;
