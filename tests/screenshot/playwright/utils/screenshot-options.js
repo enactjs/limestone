@@ -9,7 +9,7 @@ export const SCREENSHOT_VIEWPORT = {
 };
 
 /** Playwright per-pixel color tolerance; mirrors WDIO ignoreAntialiasing. */
-export const SCREENSHOT_THRESHOLD = 0.2;
+export const SCREENSHOT_THRESHOLD = 0;
 
 export const SCREENSHOT_COMPARE_OPTIONS = {
 	animations: 'disabled',
