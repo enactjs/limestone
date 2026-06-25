@@ -30,9 +30,13 @@ const getTooltipDirection = (tooltipPosition, tooltipType) => {
 };
 
 const removeTooltipProps = ({...props}) => {
+	delete props.noArrow;
 	delete props.rtl;
 	delete props.screenEdgeKeepout;
+	delete props.tooltipCss;
 	delete props.tooltipDelay;
+	delete props.tooltipImage;
+	delete props.tooltipImageSize;
 	delete props.tooltipMarquee;
 	delete props.tooltipPosition;
 	delete props.tooltipProps;
@@ -57,10 +61,14 @@ const defaultScreenEdgeKeepout = (24 + 24);
 // A hook to show Limestone-styled tooltip components.
 const useTooltip = (props) => {
 	const {
+		noArrow,
 		screenEdgeKeepout = defaultScreenEdgeKeepout,
 		tooltipDelay = 500,
 		tooltipType = 'balloon',
 		tooltipUpdateDelay = 400,
+		tooltipCss,
+		tooltipImage,
+		tooltipImageSize,
 		tooltipMarquee,
 		tooltipPosition,
 		tooltipProps,
@@ -246,10 +254,14 @@ const useTooltip = (props) => {
 				labelOffset={layout.labelOffset}
 				{...tooltipProps}
 				arrowAnchor={layout.arrowAnchor}
+				noArrow={noArrow}
 				direction={layout.tooltipDirection}
 				marquee={tooltipMarquee}
 				relative={tooltipRelative}
 				style={tooltipStyle}
+				tooltipCss={tooltipCss}
+				tooltipImage={tooltipImage}
+				tooltipImageSize={tooltipImageSize}
 				tooltipRef={getTooltipRef}
 				type={tooltipType}
 				width={tooltipWidth}
@@ -269,7 +281,7 @@ const useTooltip = (props) => {
 		} else {
 			return null;
 		}
-	}, [getTooltipRef, hideTooltip, layout, showing, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
+	}, [getTooltipRef, hideTooltip, layout, noArrow, showing, tooltipCss, tooltipImage, tooltipImageSize, tooltipMarquee, tooltipProps, tooltipRelative, tooltipText, tooltipType, tooltipWidth]);
 
 	return {
 		tooltip: tooltipText ? renderTooltip() : null,
