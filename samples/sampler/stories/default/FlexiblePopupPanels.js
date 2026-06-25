@@ -64,7 +64,7 @@ export const FlexiblePopupPanels_ = (args) => {
 		<div>
 			<FlexiblePopupPanels
 				index={index}
-				open={open}
+				open={args['open']}
 				onBack={handleNavigation('onBack')}
 				onChange={handleNavigation('onChange')}
 				onClose={handleClose}
@@ -122,6 +122,7 @@ select('nextButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibilit
 boolean('noAnimation', FlexiblePopupPanels_, Config);
 boolean('noAutoDismiss', FlexiblePopupPanels_, Config);
 boolean('noCloseButton', FlexiblePopupPanels_, Config);
+boolean('open', FlexiblePopupPanels_, Config, false);
 select('prevButtonVisibility', FlexiblePopupPanels_, propOptions.buttonVisibility, Config);
 select('scrimType', FlexiblePopupPanels_, ['none', 'translucent', 'transparent'], Config);
 select(
