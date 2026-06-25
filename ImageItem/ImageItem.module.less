@@ -45,6 +45,7 @@
 			display: block;
 			border-radius: @lime-checkbox-border-radius;
 			margin: 0;
+			transition: box-shadow 100ms ease-in-out;
 		}
 	}
 
@@ -155,6 +156,10 @@
 			line-height: @lime-imageitem-vertical-selection-icon-size;
 			--icon-size: @lime-imageitem-vertical-selection-icon-size;
 		}
+
+		&.showSelection:not(.selected) .selectionIcon {
+			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width;
+		}
 	}
 
 	&.horizontal {
@@ -184,6 +189,10 @@
 			line-height: @lime-imageitem-horizontal-selection-icon-size;
 			--icon-size: @lime-imageitem-horizontal-selection-icon-size;
 		}
+
+		&.showSelection:not(.selected) .selectionIcon {
+			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width;
+		}
 	}
 
 	// Skin colors
@@ -197,6 +206,7 @@
 		}
 
 		.selectionIcon {
+			box-shadow: 0 0 0 var(--box-shadow-width) @lime-imageitem-selection-icon-border-color;
 			background-color: @lime-imageitem-selection-container-color;
 			color: @lime-imageitem-selection-icon-color;
 		}
