@@ -20,6 +20,14 @@ const cx = classnames.bind(css);
 // NOTE: Forcing pointer mode on to prevent spotlight focusing of components, which leads to marquee
 spotlight.setPointerMode(true);
 
+window.__SPOTLIGHT = spotlight;
+window.__TEST_FOCUS = Object.fromEntries(
+	Object.entries(components).map(([name, tests]) => [
+		name,
+		tests.map((testCase) => Boolean(testCase.focus))
+	])
+);
+
 const parsed = urlParamsToObject();
 
 function getWrapperClasses ({wrapper}) {
@@ -188,32 +196,6 @@ const ExportedApp = (props) => {
 	useEffect(() => {
 		document.querySelector('#root').classList.add('spotlight-input-key');
 	}, []);
-
-	useEffect(() => {
-		if (!isFocusTest) {
-			const blurFrameId = window.requestAnimationFrame(() => {
-				const testNode = document.querySelector('[data-ui-test-id="test"]');
-				const current = spotlight.getCurrent();
-
-				if (testNode && current && (testNode === current || testNode.contains(current))) {
-					current.blur();
-				}
-			});
-
-			return () => window.cancelAnimationFrame(blurFrameId);
-		}
-
-		let focusFrameId = window.requestAnimationFrame(() => {
-			focusFrameId = window.requestAnimationFrame(() => {
-				const testNode = document.querySelector('[data-ui-test-id="test"]');
-				if (testNode) {
-					spotlight.focus(testNode);
-				}
-			});
-		});
-
-		return () => window.cancelAnimationFrame(focusFrameId);
-	}, [props.component, props.testId, isFocusTest]);
 
 	return (
 		<WrappedApp {...props} skin={skin} highContrast={highContrast} locale={locale} textSize={textSize} focusRing={focusRing} />
