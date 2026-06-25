@@ -348,7 +348,7 @@ describe('Input specs', () => {
 					<Input type="number" open length={10} invalid invalidMessage="Invalid" />
 				</FloatingLayerController>
 			);
-			const invalidTextField = screen.getByText('Invalid').parentElement.parentElement;
+			const invalidTextField = screen.getByText('Invalid').parentElement.parentElement.parentElement;
 
 			const expected = 'tooltipLabel';
 
@@ -373,7 +373,7 @@ describe('Input specs', () => {
 					<Input type="number" open length={10} invalid />
 				</FloatingLayerController>
 			);
-			const invalidTextField = screen.getByText('Please enter a valid value.').parentElement.parentElement;
+			const invalidTextField = screen.getByText('Please enter a valid value.').parentElement.parentElement.parentElement;
 
 			const expected = 'tooltipLabel';
 

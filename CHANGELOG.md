@@ -25,6 +25,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Slider` styling to match the latest GUI
 - `limestone/Steps` styling to match the latest GUI
 - `limestone/TabLayout` styling to match the latest GUI
+- `limestone/Tooltip` styling to match the latest GUI
 
 ### Fixed
 
