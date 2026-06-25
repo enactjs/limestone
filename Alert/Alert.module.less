@@ -12,6 +12,23 @@
 
 	&.noImage { /* Needed to prevent global class being added in the DOM */ }
 
+	&.horizontal {
+		.button {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	&.vertical {
+		.buttonCell:first-child .button {
+			margin-top: 0;
+		}
+
+		.buttonCell:last-child .button {
+			margin-bottom: 0;
+		}
+	}
+
 	&.fullscreen {
 		.alertImage {
 			margin-bottom: @lime-alert-fullscreen-image-spacing;
@@ -69,6 +86,14 @@
 				word-break: normal;
 			}
 		}
+
+		&.large {
+			.title {
+				margin: 0 0 @lime-alert-overlay-large-title-margin-bottom 0;
+				padding: @lime-alert-overlay-body-padding;
+				.lime-font-size(@lime-alert-overlay-large-title-font-size, @lime-tallglyph-alert-title-font-size);
+			}
+		}
 	}
 }
 
@@ -90,6 +115,16 @@
 		.body {
 			padding: @lime-alert-overlay-padding;
 			max-height: @lime-alert-overlay-max-height;
+		}
+
+		&.medium {
+			--alert-overlay-width: ~"max(@{lime-alert-overlay-medium-width}, var(--alert-overlay-horizontal-buttons-total-width))";
+			min-width: @lime-alert-overlay-medium-width;
+		}
+
+		&.large {
+			--alert-overlay-width: ~"max(@{lime-alert-overlay-large-width}, var(--alert-overlay-horizontal-buttons-total-width))";
+			min-width: @lime-alert-overlay-large-width;
 		}
 	}
 
