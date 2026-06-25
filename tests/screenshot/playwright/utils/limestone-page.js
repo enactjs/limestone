@@ -1,3 +1,5 @@
+/* global MutationObserver */
+
 import {SCREENSHOT_VIEW} from '../paths.js';
 
 const BODY_WAIT_MS = 10000;
@@ -22,7 +24,7 @@ function buildUrl (urlExtra = '?locale=en-US') {
 }
 
 // Chrome's native spellcheck draws wavy underlines on editable fields with "misspelled" content
-// That overlay is environment-dependent. Force spellcheck off on every editable element
+// Force spellcheck off on every editable element
 // before navigation, so the markers never render regardless of the browser environment.
 async function disableSpellcheck (page) {
 	await page.addInitScript(() => {
@@ -42,7 +44,9 @@ async function disableSpellcheck (page) {
 
 		const apply = () => {
 			// Set a non-spellchecked default that descendants inherit, then sweep existing fields.
-			document.documentElement && document.documentElement.setAttribute('spellcheck', 'false');
+			if (document.documentElement) {
+				document.documentElement.setAttribute('spellcheck', 'false');
+			}
 			disableWithin(document.documentElement || document);
 		};
 
