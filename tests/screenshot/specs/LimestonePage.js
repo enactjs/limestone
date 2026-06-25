@@ -35,7 +35,7 @@ class LimestonePage extends Page {
 		const needsFocus = await browser.execute((params) => {
 			const search = new URLSearchParams(params);
 			const component = search.get('component');
-			const testId = Number.parseInt(search.get('testId'), 10);
+			const testId = Number.parseInt(search.get('testId'));
 			const fromMap = Boolean(window.__TEST_FOCUS?.[component]?.[testId]);
 
 			return fromMap || window.__CURRENT_TEST_FOCUS === true;
