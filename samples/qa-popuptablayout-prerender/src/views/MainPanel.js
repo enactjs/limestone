@@ -46,7 +46,7 @@ const MainPanel = () => {
 						</TabPanel>
 					</TabPanels>
 				</Tab>
-				<Tab icon="bluetoothoff" title="Channels">
+				<Tab icon="bluetooth" title="Channels">
 					<TabPanels>
 						<TabPanel>
 							<Header title="Channels" type="compact" />
