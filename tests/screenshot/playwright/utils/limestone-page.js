@@ -1,3 +1,5 @@
+/* global MutationObserver */
+
 import {SCREENSHOT_VIEW} from '../paths.js';
 
 const BODY_WAIT_MS = 10000;
@@ -42,7 +44,9 @@ async function disableSpellcheck (page) {
 
 		const apply = () => {
 			// Set a non-spellchecked default that descendants inherit, then sweep existing fields.
-			document.documentElement && document.documentElement.setAttribute('spellcheck', 'false');
+			if (document.documentElement) {
+				document.documentElement.setAttribute('spellcheck', 'false');
+			}
 			disableWithin(document.documentElement || document);
 		};
 
