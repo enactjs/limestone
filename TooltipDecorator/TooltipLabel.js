@@ -119,20 +119,23 @@ const TooltipLabel = kind({
 			return {
 				...style,
 				direction: isRtlText(children) ? 'rtl' : 'ltr',
-				'--lime-tooltip-label-width': (tooltipImageSize?.width ? scaleToRem(tooltipImageSize?.width) : enforcedWidth)
+				'--lime-tooltip-label-width': (tooltipImageSize?.width ? scaleToRem(tooltipImageSize?.width) : enforcedWidth),
+				'--lime-tooltip-image-width': tooltipImageSize?.width && scaleToRem(tooltipImageSize?.width),
+				'--lime-tooltip-image-height': tooltipImageSize?.width && scaleToRem(tooltipImageSize?.height)
 			};
 		}
 	},
 
-	render: ({centered, children, tooltipImage, marquee, tooltipImageSize, ...rest}) => {
+	render: ({centered, children, css, tooltipImage, marquee, tooltipImageSize, ...rest}) => {
 		delete rest.noArrow;
+		delete rest.tooltipImageSize;
 		delete rest.width;
 
 
 		if (marquee) {
 			return (
 				<div {...rest}>
-					{tooltipImage && <Image style={imageStyle} src={tooltipImage} />}
+					{tooltipImage && <Image className={css.tooltipImage} src={tooltipImage} />}
 					<Marquee alignment={centered ? 'center' : null} marqueeOn="render">
 						{children}
 					</Marquee>
@@ -141,7 +144,7 @@ const TooltipLabel = kind({
 		} else {
 			return (
 				<div {...rest}>
-					{tooltipImage && <Image style={imageStyle} src={tooltipImage} />}
+					{tooltipImage && <Image className={css.tooltipImage} src={tooltipImage} />}
 					{children}
 				</div>
 			);
