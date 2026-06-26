@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import $L from '../internal/$L';
-import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
@@ -32,9 +31,6 @@ import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './ImageItem.module.less';
-
-const Checkbox = Skinnable(CheckboxBase);
-Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
@@ -289,7 +285,7 @@ const ImageItemBase = kind({
 			if (SelectionComponent) {
 				return <SelectionComponent />;
 			} else {
-				return <Icon className={css.selectionIcon} >checkmark</Icon>;
+				return <Icon className={css.selectionIcon}>checkmark</Icon>;
 			}
 		}
 	},
