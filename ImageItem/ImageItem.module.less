@@ -45,7 +45,6 @@
 			display: block;
 			border-radius: @lime-checkbox-border-radius;
 			margin: 0;
-			transition: box-shadow 100ms ease-in-out;
 		}
 	}
 
@@ -84,10 +83,6 @@
 			--icon-size: @lime-imageitem-vertical-selection-icon-size-large;
 		}
 
-		&.vertical.showSelection:not(.selected) {
-			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width-large;
-		}
-
 		&.vertical .imageIcon {
 			width: @lime-imageitem-vertical-image-icon-size-large;
 			height: @lime-imageitem-vertical-image-icon-size-large;
@@ -98,10 +93,6 @@
 			height: @lime-imageitem-horizontal-selection-icon-size-large;
 			line-height: @lime-imageitem-horizontal-selection-icon-size-large;
 			--icon-size: @lime-imageitem-horizontal-selection-icon-size-large;
-		}
-
-		&.horizontal.showSelection:not(.selected) {
-			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width-large;
 		}
 	});
 
@@ -133,10 +124,6 @@
 		&:not(.fullImage) {
 			padding: @lime-imageitem-vertical-padding;
 			margin: @lime-imageitem-margin;
-		}
-
-		&.showSelection:not(.selected) {
-			--box-shadow-width: @lime-imageitem-vertical-selection-icon-border-width;
 		}
 
 		.captions {
@@ -191,10 +178,6 @@
 			}
 		}
 
-		&.showSelection:not(.selected) {
-			--box-shadow-width: @lime-imageitem-horizontal-selection-icon-border-width;
-		}
-
 		.selectionIcon {
 			width: @lime-imageitem-horizontal-selection-icon-size;
 			height: @lime-imageitem-horizontal-selection-icon-size;
@@ -214,7 +197,6 @@
 		}
 
 		.selectionIcon {
-			box-shadow: inset 0 0 0 var(--box-shadow-width) @lime-imageitem-selection-icon-border-color;
 			background-color: @lime-imageitem-selection-container-color;
 			color: @lime-imageitem-selection-icon-color;
 		}

@@ -277,9 +277,8 @@ const ImageItemBase = kind({
 					captions
 			);
 		},
-		className: ({children, imageIconSrc, label, orientation, showSelection, styler, wideImage}) => styler.append({
+		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
-			showSelection,
 			wideImage: orientation === 'horizontal' && wideImage
 		}),
 		selectionComponent: ({css, selectionComponent : SelectionComponent}) => {
