@@ -27,6 +27,12 @@
 @font-system-src-limestone-number-600:  local("LG Smart UI NUMBER SemiBold"), local("LGSmartUINUMBER-SemiBold");
 @font-system-src-limestone-number-700:  local("LG Smart UI NUMBER Bold"), local("LGSmartUINUMBER-Bold");
 
+// LG Smart UI 3.0 Title
+@font-system-src-limestone-title-300:  local("LGSmart UI 3.0 Title Light"), local("LGSmartUI3.0Title-Light"), local("Museo Sans"), url("../../fonts/MuseoSans/MuseoSans-Thin.ttf") format("truetype");
+@font-system-src-limestone-title-400:  local("LGSmart UI 3.0 Title Regular"), local("LGSmartUI3.0Title-Regular"), local("LGSmart UI 3.0 Title"), local("Museo Sans"), url("../../fonts/MuseoSans/MuseoSans-Thin.ttf") format("truetype");
+@font-system-src-limestone-title-600:  local("LGSmart UI 3.0 Title SemiBold"), local("LGSmartUI3.0Title-SemiBold"), local("Museo Sans"), url("../../fonts/MuseoSans/MuseoSans-Thin.ttf") format("truetype");
+@font-system-src-limestone-title-700:  local("LGSmart UI 3.0 Title Bold"), local("LGSmartUI3.0Title-Bold"), local("Museo Sans"), url("../../fonts/MuseoSans/MuseoSans-Thin.ttf") format("truetype");
+
 @font-web-src-th-locale: url(https://fonts.gstatic.com/s/notosansthai/v13/iJWQBXeUZi_OHPqn4wq6hQ2_hbJ1xyN9wd43SofNWcdfKI2h.woff2) format('woff2');
 
 @font-system-src-non-latin-300:  local("LG Smart UI AR HE TH Regular"), local("LGSmartUIARHETH-Regular"), @font-web-src-th-locale;
@@ -110,11 +116,20 @@
 .buildFontFace(@font-family-base-name; @font-system-src-limestone-condensed-700; { font-stretch: condensed; font-weight: 700; });
 
 /* ----- Limestone Number ------ */
-// This incorporates a fallback font (condensed) to catch any glyphs that are not present in the number fontp
+// This incorporates a fallback font (condensed) to catch any glyphs that are not present in the number font
 .buildFontFamily("@{font-family-base-name} Number"; @font-system-src-limestone-number-400; @font-system-src-limestone-condensed-400);
 .buildFontFamily("@{font-family-base-name} Number"; @font-system-src-limestone-number-300; @font-system-src-limestone-condensed-300; 300);
 .buildFontFamily("@{font-family-base-name} Number"; @font-system-src-limestone-number-600; @font-system-src-limestone-condensed-600; 600);
 .buildFontFamily("@{font-family-base-name} Number"; @font-system-src-limestone-number-700; @font-system-src-limestone-condensed-700; 700);
+
+/* -----  Limestone Title ------ */
+// The Title font only supports a subset of locales. Any glyph it lacks falls through to the
+// base "Limestone" family,
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-400);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-300; 300);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-400; 400);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-600; 600);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-700; 700);
 
 /* ----- Manual Limestone Locale Fonts (Stacking onto "Limestone") ------ */
 .buildFontFace(@font-family-base-name; @font-system-src-non-latin-400);

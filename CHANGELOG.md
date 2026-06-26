@@ -8,7 +8,9 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` `size` prop for overlay type
 - `limestone/Alert` styling to match the latest GUI
+- `limestone/Input` `title` to use the `LGSmart UI 3.0 Title` font,
 - `limestone/Icon` supported icon list, adding new icons `smartmode`, `databackup`, `deleteviewinginfo`, `lgmembers`, `manage`, `pay`, `paymentmethod`, `productregistration`, `purchased`, `rate`, `report`, `security`, `subscriptions`, `terminatemyaccount`, `update`, `usagecare`, `voucher`, `filter`, `ezsetting`, `fitness`, and `auracast2`
+- `limestone/Panels.Header` `title` to use the `LGSmart UI 3.0 Title` font 
 - `limestone/Scroller` prop `stickTo` to allow the scroller to stick to a specific element
 - `limestone/VirtualGridList` prop `stickTo` to allow the scroller to stick to a specific element
 - `limestone/VirtualList` prop `stickTo` to allow the scroller to stick to a specific element
