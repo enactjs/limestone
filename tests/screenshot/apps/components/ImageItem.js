@@ -67,55 +67,33 @@ const imageItemFocusTests = [
 	<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
 ];
 
-const defaultImageItemCases = [
+const defaultImageItemTests = [
 	...imageItemBaseCases,
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests)
 ];
 
-const imageItemSmokeTests = [
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
-	<ImageItem src={img} orientation="horizontal" />,
-	<ImageItem src={img} orientation="horizontal" wideImage />
-];
-
-const imageItemCommentedTests = [
-	...imageItemBaseCases.slice(1, 9),
-	...imageItemBaseCases.slice(10, 17),
-	...imageItemBaseCases.slice(18),
-
+const imageItemExtendedTests = [
 	// Centered
-	...withProps({centered: true}, defaultImageItemCases),
+	...withProps({centered: true}, defaultImageItemTests),
 
-	// Disabled
-	...withProps({disabled: true}, defaultImageItemCases),
+	// Disabled (includes focus + disabled via defaultImageItemTests focus block)
+	...withProps({disabled: true}, defaultImageItemTests),
 
 	// Centered and disabled.
-	...withProps({centered: true, disabled: true}, defaultImageItemCases)
-];
-
-const imageItemLocaleSmokeTests = [
-	...imageItemSmokeTests,
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		imageItemFocusTests[0],
-		imageItemFocusTests[9]
-	])
+	...withProps({centered: true, disabled: true}, defaultImageItemTests)
 ];
 
 const ImageItemTests = [
-	...imageItemSmokeTests,
-	...imageItemCommentedTests,
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		imageItemFocusTests[0],
-		imageItemFocusTests[9]
-	]),
-	...withConfig({skinVariants: ['largeText']}, imageItemLocaleSmokeTests),
+	...defaultImageItemTests,
+	...imageItemExtendedTests,
+	...withConfig({skinVariants: ['largeText']}, defaultImageItemTests),
 	...withConfig({
 		focusRing: true,
 		focus: true
 	}, [
 		<ImageItem src={img} style={{height: ri.scale(360), width: ri.scale(480)}} orientation="vertical" />
 	]),
-	...withConfig({locale: 'ar-SA'}, imageItemLocaleSmokeTests)
+	...withConfig({locale: 'ar-SA'}, defaultImageItemTests)
 ];
 
 export default ImageItemTests;

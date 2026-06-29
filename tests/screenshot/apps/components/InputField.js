@@ -98,6 +98,44 @@ const inputFieldRtlTests = [
 		locale: 'ar-SA',
 		component: <InputField placeholder="Placeholder InputField" />
 	},
+	{
+		locale: 'ar-SA',
+		component: <InputField placeholder="Placeholder InputField" disabled />
+	},
+
+	// InputField field of type 'number' should be empty with letters as input
+	{
+		locale: 'ar-SA',
+		component: <InputField value="Simple value" type="number" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="Simple value" type="number" disabled />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="1234567890" type="number" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="1234567890" type="number" disabled />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="Simple value" type="password" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="Simple value" type="password" disabled />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="https://enactjs.com" type="url" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="https://enactjs.com" type="url" disabled />
+	},
 
 	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
 	{
@@ -142,11 +180,35 @@ const inputFieldRtlTests = [
 		locale: 'ar-SA',
 		component: <InputField value="नरेंद्र मोदी" size="large" />
 	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value=" ฟิ้  ไั  ஒ  து" size="large" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" size="large" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="តន្ត្រី" size="large" />
+	},
 
 	// Testing default size 'large'
 	{
 		locale: 'ar-SA',
 		component: <InputField value="नरेंद्र मोदी" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value=" ฟิ้  ไั  ஒ  து" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />
+	},
+	{
+		locale: 'ar-SA',
+		component: <InputField value="តន្ត្រី" />
 	},
 
 	// Change 'size' dynamically to 'small' - [QWTC-1971]

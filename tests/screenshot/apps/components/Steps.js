@@ -47,7 +47,9 @@ const stepsCommentedTests = [
 	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} total={10} />,
 	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="numbers" total={10} />,
 	<Steps currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />,
-	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />
+	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />,
+	<Steps highlightCurrentOnly total={3} />,
+	<Steps highlightCurrentOnly total={25} />
 ];
 
 const StepsTests = [

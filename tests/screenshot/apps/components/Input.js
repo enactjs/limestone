@@ -63,12 +63,9 @@ const inputRtlLargeTests = [
 ];
 
 const inputRtlOverlayTests = [
-	// RTL overlay number input tests — smoke representatives
-	...withProps({popupType: 'overlay'}, [
-		inputSmokeTests[5],
-		inputSmokeTests[10]
-	]),
-	...withProps({popupType: 'overlay'}, [overlayTestsNoTitleNoSubtitle[0]])
+	// RTL overlay number input tests
+	...withProps({popupType: 'overlay'}, inputSmokeTests.slice(5)),
+	...withProps({popupType: 'overlay'}, overlayTestsNoTitleNoSubtitle)
 ];
 
 const inputLargeTextTests = [

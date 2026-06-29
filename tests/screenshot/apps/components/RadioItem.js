@@ -81,6 +81,15 @@ const radioItemFocusTests = [
 const radioItemLargeTextTests = [
 	// [QWTC-2231]
 	<RadioItem disabled>Focused RadioItem</RadioItem>,
+	<RadioItem selected disabled icon="arrowup">Focused RadioItem Checked</RadioItem>,
+	<RadioItem selected disabled inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
+	<RadioItem selected inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
+	<RadioItem selected icon="arrowup">Focused RadioItem Checked</RadioItem>,
+	// Icon slotBefore
+	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
+	<RadioItem inline><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
+	<RadioItem selected><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
+	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
 	// [QWTC-1851]
 	<RadioItem disabled>مساء الخير</RadioItem>,
 	// [QWTC-1851]

@@ -1,8 +1,14 @@
 import Card from '../../../../Card';
+import Icon from '../../../../Icon';
+import Image from '../../../../Image';
 
 import {withConfig, withProps} from './utils';
 
 import img from '../../images/600x600.png';
+
+const iconBadge = <Icon>ai</Icon>;
+const imageBadge = <Image src={img} />;
+const labelIcons = [<Icon>ai</Icon>, <Icon>ai</Icon>];
 
 const defaultCardTests = [
 	// Vertical
@@ -55,6 +61,21 @@ const defaultCardTests = [
 	<Card src={img} orientation="horizontal" label="Short" roundedImage selected>Short</Card>
 ];
 
+const newTypeCardTests = [
+	// Vertical
+	<Card src={img} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} captionOverlay roundedImage selected showProgressBar>Title</Card>,
+	<Card src={img} imageIconSrc={img} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} secondaryBadge={imageBadge} secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} roundedImage selected>Title</Card>,
+	<Card src={img} imageIconSrc={img} captionOverlay centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
+	<Card src={img} imageIconSrc={img} captionOverlayOnFocus centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflow progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflowOnFocus progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} duration={234} secondaryBadge={imageBadge} durationOverlay selected showDuration>Title</Card>,
+
+	// Horizontal
+	<Card src={img} label="Secondary Text" labelIcons={labelIcons} orientation="horizontal" secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} selected>Title</Card>
+];
+
 const cardSmokeTests = [
 	...defaultCardTests.slice(0, 15),
 	...defaultCardTests.slice(36, 41)
@@ -62,19 +83,19 @@ const cardSmokeTests = [
 
 const cardCommentedTests = [
 	// Disabled
-	...withProps({disabled: true}, cardSmokeTests),
+	...withProps({disabled: true}, defaultCardTests),
 
 	// Centered
-	...withProps({centered: true}, cardSmokeTests),
+	...withProps({centered: true}, defaultCardTests),
 
 	// Icon
-	...withProps({icon: 'trash'}, cardSmokeTests),
+	...withProps({icon: 'trash'}, defaultCardTests),
 
 	// Show ProgressBar
-	...withProps({progress: 0.5, showProgressBar: true}, cardSmokeTests),
+	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
 
 	// Split Caption
-	...withProps({splitCaption: true}, cardSmokeTests)
+	...withProps({splitCaption: true}, defaultCardTests)
 ];
 
 const cardFocusTests = [
@@ -91,7 +112,8 @@ const cardLargeTextTests = [
 ];
 
 const CardTests = [
-	...cardSmokeTests,
+	...defaultCardTests,
+	...newTypeCardTests,
 	...cardCommentedTests,
 	...cardFocusTests,
 	...cardLargeTextTests

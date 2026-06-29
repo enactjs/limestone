@@ -25,13 +25,23 @@ const wrapper = {
 	padded
 };
 
-const contextualPopupSmokeTests = [
+const contextualPopupDirectionTests = [
 	<ContextualPopupButton direction="above center" />,
 	<ContextualPopupButton direction="above left" />,
+	<ContextualPopupButton direction="above right" />,
 	<ContextualPopupButton direction="below center" />,
+	<ContextualPopupButton direction="below left" />,
 	<ContextualPopupButton direction="below right" />,
 	<ContextualPopupButton direction="left middle" />,
+	<ContextualPopupButton direction="left top" />,
+	<ContextualPopupButton direction="left bottom" />,
 	<ContextualPopupButton direction="right middle" />,
+	<ContextualPopupButton direction="right top" />,
+	<ContextualPopupButton direction="right bottom" />
+];
+
+const contextualPopupSmokeTests = [
+	...contextualPopupDirectionTests,
 
 	// *************************************************************
 	// ContextualPopupButton with no arrow

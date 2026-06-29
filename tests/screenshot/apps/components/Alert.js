@@ -277,25 +277,22 @@ const alertWithComponentsTests = [
 	...withProps({type: 'fullscreen'}, overlayColorTests)
 ];
 
-const alertRtlTests = [
-	...withProps({type: 'fullscreen'}, fullscreenTests.slice(0, 2)),
-	...withProps({type: 'overlay'}, overlayTests.slice(0, 3)),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, [fullscreenTests[0]])
-];
-
-const alertCommentedTests = [
+const alertExtendedTests = [
 	...alertInitialTests,
 	...alertWithButtonsTests,
 	...alertWithImageTests,
 	...alertWithComponentsTests
 ];
 
+const alertRtlTests = [
+	...alertExtendedTests
+];
+
 const AlertTests = [
 	...alertSmokeTests,
 	...alertQwtcTests,
-	...alertCommentedTests,
-	...withConfig({locale: 'vi-VN'}, alertRtlTests.slice(0, 2)),
+	...alertExtendedTests,
+	...withConfig({locale: 'vi-VN'}, alertRtlTests),
 	...withConfig({locale: 'ar-SA'}, alertRtlTests)
 ];
 

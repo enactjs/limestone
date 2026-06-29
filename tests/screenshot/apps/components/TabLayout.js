@@ -124,6 +124,10 @@ const tabLayoutSmokeTests = [
 		...wrapperFull
 	},
 	{
+		component: <TabLayout collapsed>{tabsWithIcons}</TabLayout>,
+		...wrapperFull
+	},
+	{
 		component: <TabLayout collapsed selected={0}>{tabsWithIconsDisabled}</TabLayout>,
 		...wrapperFull,
 		focus: true
@@ -134,6 +138,48 @@ const tabLayoutSmokeTests = [
 	},
 	{
 		component: <TabLayout anchorTo="left">{tabs}</TabLayout>,
+		...wrapperFull
+	},
+	{
+		component: <TabLayout anchorTo="right">{tabs}</TabLayout>,
+		...wrapperFull
+	},
+	{
+		component: <TabLayout anchorTo="start">{tabs}</TabLayout>,
+		...wrapperFull
+	},
+	{
+		component: <TabLayout anchorTo="end">{tabs}</TabLayout>,
+		...wrapperFull
+	},
+	{
+		component: <TabLayout
+			dimensions={{
+				tabs: {
+					collapsed: 300,
+					normal: 900
+				},
+				content: {
+					expanded: null,
+					normal: null
+				}
+			}}
+		>{tabs}</TabLayout>,
+		...wrapperFull
+	},
+	{
+		component: <TabLayout
+			dimensions={{
+				tabs: {
+					collapsed: 300,
+					normal: 800
+				},
+				content: {
+					expanded: null,
+					normal: null
+				}
+			}}
+		>{tabs}</TabLayout>,
 		...wrapperFull
 	},
 	{

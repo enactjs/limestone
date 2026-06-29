@@ -4,7 +4,9 @@ import {withConfig, withProps} from './utils';
 
 const bidirectionalHeading = [
 	<Heading>Input Password for ABC جهاز, please</Heading>,
-	<Heading>الرجاء إدخال كلمة المرور لـ ABC جهاز</Heading>
+	<Heading>Input Password for <bdi>ABC جهاز</bdi>, please</Heading>,
+	<Heading>الرجاء إدخال كلمة المرور لـ ABC جهاز</Heading>,
+	<Heading>الرجاء إدخال كلمة المرور لـ <bdi>ABC جهاز</bdi></Heading>
 ];
 
 const headingSmokeTests = [

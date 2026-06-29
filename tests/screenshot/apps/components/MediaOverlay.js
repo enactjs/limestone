@@ -31,11 +31,27 @@ const mediaOverlaySmokeTests = [
 ];
 
 const mediaOverlayFocusTests = [
-	// Focused — smoke representatives
 	<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
 	<MediaOverlay imageOverlay={img} caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM" />,
+	<MediaOverlay imageOverlay={img} caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM" disabled><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay imageOverlay={img} caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM" disabled />,
+
+	// Caption / Title / Subtitle combinations
 	<MediaOverlay caption="Focused DTV 7-1"><source src={videoSrc} /></MediaOverlay>,
-	<MediaOverlay text="Focused The quick brown fox jumped over the lazy dog. The bean bird flies at sundown." textAlign="start"><source src={videoSrc} /></MediaOverlay>
+	<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay caption="Focused DTV 7-1" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay caption="Focused DTV 7-1" title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay title="Focused Program Name"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay subtitle="Focused 07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>,
+
+	<MediaOverlay text="Focused The quick brown fox jumped over the lazy dog. The bean bird flies at sundown." textAlign="start"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay text="Focused The quick brown fox jumped over the lazy dog. The bean bird flies at sundown." textAlign="center"><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay text="Focused The quick brown fox jumped over the lazy dog. The bean bird flies at sundown." textAlign="end"><source src={videoSrc} /></MediaOverlay>,
+
+	<MediaOverlay caption="Focused DTV 7-1" progress={0.5} showProgress><source src={videoSrc} /></MediaOverlay>,
+	<MediaOverlay caption="Focused DTV 7-1" progress={0.5} showProgress title="Focused Program Name" subtitle="07:00 AM - 08:00 AM"><source src={videoSrc} /></MediaOverlay>
 ];
 
 const mediaOverlayLargeTextTests = [

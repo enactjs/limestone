@@ -119,8 +119,10 @@ const layoutSmokeTests = [
 	...rowTestCases,
 	...columnTestCases,
 	...layoutTestCases,
-	...withProps({wrap: 'wrap'}, [rowTestCases[0], layoutTestCases[1]]),
-	...withProps({wrap: 'reverse'}, [rowTestCases[0], layoutTestCases[1]])
+	...withProps({wrap: 'wrap'}, rowTestCases),
+	...withProps({wrap: 'wrap'}, layoutTestCases),
+	...withProps({wrap: 'reverse'}, rowTestCases),
+	...withProps({wrap: 'reverse'}, layoutTestCases)
 ];
 
 const layoutRtlTests = [

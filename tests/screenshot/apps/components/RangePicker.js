@@ -131,6 +131,15 @@ const rangePickerFocusTests = [
 	<RangePicker width="medium" joined min={10} max={15} value={12} />
 ];
 
+const rangePickerRtlNegativeTests = [
+	<RangePicker min={-5} max={5} value={-5} width="medium" wrap />,
+	<RangePicker min={-5} max={5} value={-5} width="large" wrap />,
+	<RangePicker min={-5} max={5} orientation="vertical" value={-5} width="medium" wrap />,
+	<RangePicker min={-5} max={5} orientation="vertical" value={-5} width="large" wrap />,
+	<RangePicker min={-5} max={5} value={-5} joined changedBy="arrow" />,
+	<RangePicker min={-5} max={5} orientation="vertical" value={-5} wrap joined />
+];
+
 const rangePickerRtlTests = [
 	// *************************************************************
 	// locale = 'ar-SA'
@@ -143,8 +152,15 @@ const rangePickerRtlTests = [
 
 	// Start of [QWTC-2143] - 'orientation' changed to 'vertical' and 'width' changed to 'large'
 	<RangePicker orientation="vertical" min={0} max={100} value={0} />,
-	<RangePicker orientation="vertical" width="large" min={0} max={100} value={0} />
+	<RangePicker orientation="vertical" width="large" min={0} max={100} value={0} />,
 	// End of [QWTC-2143]
+
+	...rangePickerDisabledTests,
+	...rangePickerWrapTests,
+	...rangePickerRtlNegativeTests,
+	...rangePickerJoinedTests,
+	...rangePickerChangedByTests,
+	...rangePickerIconTests
 ];
 
 const rangePickerLargeTextTests = [

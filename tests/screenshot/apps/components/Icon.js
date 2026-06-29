@@ -4,7 +4,10 @@ import buttonstate from '../../images/button-state.svg';
 
 const iconSmokeTests = [
 	<Icon>minus</Icon>, // default `size` prop is "small"
+	<Icon size="tiny">minus</Icon>,
+	<Icon size="medium">minus</Icon>,
 	<Icon size="large">minus</Icon>,
+	<Icon size={120}>minus</Icon>,
 	<Icon>💣</Icon>, // [QWTC-2251] testing 'custom-icon' using Unicode character
 	<Icon>{buttonstate}</Icon>,  // [QWTC-2251]
 	<Icon flip="vertical">transponder</Icon>,
@@ -17,6 +20,14 @@ const iconLargeTextTests = [
 	{
 		textSize: 'large',
 		component: <Icon>plus</Icon>
+	},
+	{
+		textSize: 'large',
+		component: <Icon size="tiny">plus</Icon>
+	},
+	{
+		textSize: 'large',
+		component: <Icon size="medium">plus</Icon>
 	},
 	{
 		textSize: 'large',

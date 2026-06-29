@@ -11,6 +11,7 @@ const sliderSmokeTests = [
 	<Slider showMinMax />,
 	<Slider disabled />,
 	<Slider value={50} />,
+	<Slider value={50} noFill />,
 	<Slider value={50} showAnchor />,
 	<Slider backgroundProgress={0.5} value={25} />,
 	<Slider disabled backgroundProgress={0.25} value={50} />,
@@ -125,6 +126,7 @@ const sliderVerticalTooltipTests = [
 
 const sliderRtlTests = [
 	<Slider value={60} />,
+	<Slider value={60} noFill />,
 	<Slider backgroundProgress={0.5} value={40} />
 ];
 
