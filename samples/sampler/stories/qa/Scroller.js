@@ -2,6 +2,7 @@ import {add, is} from '@enact/core/keymap';
 import {checkPropTypes} from '@enact/core/util';
 import Button from '@enact/limestone/Button';
 import BodyText from '@enact/limestone/BodyText';
+import Card from '@enact/limestone/Card';
 import {FixedPopupPanels, Panel} from '@enact/limestone/FixedPopupPanels';
 import {Heading} from '@enact/limestone/Heading';
 import ImageItem from '@enact/limestone/ImageItem';
@@ -44,8 +45,14 @@ const prop = {
 		byEnter: 'byEnter'
 	},
 	scrollbarOption: ['auto', 'hidden', 'visible'],
-	scrollModeOption: ['native', 'translate']
+	scrollModeOption: ['native', 'translate'],
+	stickToOption: {
+		'(off)': '',
+		start: 'start'
+	}
 };
+
+const cardColors = ['9037ab', '3478ab', 'ab3737', '37ab51', 'ab8137', '5e37ab'];
 
 class ScrollerResizableItem extends Component {
 	static propTypes = {
@@ -687,6 +694,56 @@ boolean('spotlightDisabled', HorizontalScroll, Config, false);
 select('verticalScrollbar', HorizontalScroll, prop.scrollbarOption, Config);
 
 HorizontalScroll.storyName = 'Horizontal scroll';
+
+export const StickFocusToStart = (args) => {
+	const dataSize = args['dataSize'];
+
+	return (
+		<div style={{padding: ri.scaleToRem(48)}}>
+			<Scroller
+				direction="horizontal"
+				focusableScrollbar={args['focusableScrollbar']}
+				horizontalScrollbar={args['horizontalScrollbar']}
+				hoverToScroll={args['hoverToScroll']}
+				key={`${args['scrollMode']}-${args['stickTo']}`}
+				noScrollByWheel={args['noScrollByWheel']}
+				onKeyDown={action('onKeyDown')}
+				onScrollStart={action('onScrollStart')}
+				onScrollStop={action('onScrollStop')}
+				scrollMode={args['scrollMode']}
+				spotlightDisabled={args['spotlightDisabled']}
+				stickTo={args['stickTo'] || null}
+				style={{height: 'fit-content'}}
+				verticalScrollbar={args['verticalScrollbar']}
+			>
+				<div style={{display: 'flex', minWidth: 'fit-content', padding: '6px'}}>
+					{[...Array(dataSize)].map((x, i) => (
+						<Card
+							key={i + 1}
+							label={`Description Description Description Description Description ${i + 1}`}
+							src={svgGenerator(768, 432, cardColors[i % cardColors.length], 'ffffff', `Image ${i + 1}`)}
+							style={{marginInlineEnd: ri.scaleToRem(48)}}
+						>
+							{`Content Title Content Title ${i + 1}`}
+						</Card>
+					))}
+				</div>
+			</Scroller>
+		</div>
+	);
+};
+
+number('dataSize', StickFocusToStart, 20);
+select('focusableScrollbar', StickFocusToStart, prop.focusableScrollbarOption, Config);
+select('horizontalScrollbar', StickFocusToStart, prop.scrollbarOption, Config);
+boolean('hoverToScroll', StickFocusToStart, Config);
+boolean('noScrollByWheel', StickFocusToStart, Config);
+select('scrollMode', StickFocusToStart, prop.scrollModeOption, Config);
+boolean('spotlightDisabled', StickFocusToStart, Config, false);
+select('stickTo', StickFocusToStart, prop.stickToOption, Config, 'start');
+select('verticalScrollbar', StickFocusToStart, prop.scrollbarOption, Config);
+
+StickFocusToStart.storyName = 'Stick focused item to start';
 
 export const WithSpottableComponents = (args) => (
 	<Scroller

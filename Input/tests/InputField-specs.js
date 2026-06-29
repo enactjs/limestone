@@ -268,7 +268,7 @@ describe('InputField Specs', () => {
 
 	test('should display invalid message if it invalid and invalid message exists', () => {
 		render(<InputField invalid invalidMessage="invalid message" />);
-		const invalidText = screen.getByText('invalid message').parentElement.parentElement;
+		const invalidText = screen.getByText('invalid message').parentElement.parentElement.parentElement;
 
 		const expected = 'tooltipLabel';
 

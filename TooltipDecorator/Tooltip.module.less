@@ -66,13 +66,28 @@
 		line-height: @lime-tooltip-label-line-height;
 		white-space: nowrap;
 		width: var(--lime-tooltip-label-width); // assign a width if necessary, but without a width, "auto" is just fine.
-		max-width: @lime-tooltip-max-width;
+		max-width: var(--lime-tooltip-label-width, @lime-tooltip-max-width);
 		padding: @lime-tooltip-padding;
 		border-radius: @lime-tooltip-border-radius;
 
 		.enact-locale-rtl({
 			text-align: right;
 		});
+		
+		.tooltipImage {
+			margin: 0;
+			border-radius: @lime-tooltip-image-border-radius;
+			width: var(--lime-tooltip-image-width, @lime-tooltip-image-width);
+			height: var(--lime-tooltip-image-height, @lime-tooltip-image-height);
+		}
+
+		&.image {
+			display: flex;
+			flex-direction: column;
+			border-radius: @lime-tooltip-image-container-border-radius;
+			gap: @lime-tooltip-image-gap;
+			padding: @lime-tooltip-image-padding;
+		}
 
 		&.marquee {
 			max-width: var(--lime-tooltip-label-width, @lime-tooltip-marquee-width); // If using a marquee, use the preferred width, and if none is provided, fall back to our default variable.
@@ -145,7 +160,10 @@
 
 			.tooltipLabel {
 				text-align: right;
-				border-top-right-radius: 0;
+
+				&:not(.noArrow) {
+					border-top-right-radius: 0;
+				}
 			}
 		}
 
@@ -171,7 +189,9 @@
 			}
 
 			.tooltipLabel {
-				border-top-left-radius: 0;
+				&:not(.noArrow) {
+					border-top-left-radius: 0;
+				}
 			}
 		}
 	}
@@ -197,7 +217,9 @@
 
 			.tooltipLabel {
 				text-align: right;
-				border-bottom-right-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-right-radius: 0;
+				}
 			}
 		}
 
@@ -219,7 +241,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-left-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-left-radius: 0;
+				}
 			}
 		}
 	}
@@ -244,7 +268,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-right-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-right-radius: 0;
+				}
 			}
 		}
 
@@ -265,7 +291,9 @@
 			}
 
 			.tooltipLabel {
-				border-top-right-radius: 0;
+				&:not(.noArrow) {
+					border-top-right-radius: 0;
+				}
 			}
 		}
 	}
@@ -290,7 +318,9 @@
 			}
 
 			.tooltipLabel {
-				border-bottom-left-radius: 0;
+				&:not(.noArrow) {
+					border-bottom-left-radius: 0;
+				}
 			}
 		}
 
@@ -310,7 +340,9 @@
 				}
 			}
 			.tooltipLabel {
-				border-top-left-radius: 0;
+				&:not(.noArrow) {
+					border-top-left-radius: 0;
+				}
 			}
 		}
 	}
