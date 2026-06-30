@@ -179,29 +179,10 @@ const dropIn = {
 	]
 };
 
-const alertSmokeTests = [
-	...withProps({type: 'fullscreen'}, fullscreenTests.slice(0, 2)),
-	...withProps({type: 'overlay'}, overlayTests.slice(0, 3)),
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, [fullscreenTests[0]]),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, [fullscreenTests[0]]),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
-	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, [overlayTests[0]]),
-	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, [overlayTests[0]]),
-	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, [overlayTests[0]]),
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, [fullscreenTests[0]]),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, [overlayTests[0]])
-];
-
-// QWTC-documented scenarios (kept explicitly for Jira traceability).
+// QWTC-2603 is unique to this group. The former smoke representatives and QWTC-1928/1929
+// cases are already covered by alertExtendedTests below (the full matrix is run, and
+// alertWithImageTests carries the same QWTC-1928/1929 Jira markers).
 const alertQwtcTests = [
-	// QWTC-1928 start.
-	...withProps({type: 'fullscreen', image: dropIn.iconImage}, [fullscreenTests[0]]),
-	...withProps({type: 'fullscreen', image: dropIn.image}, [fullscreenTests[0]]),
-	// QWTC-1928 end.
-	// QWTC-1929 start.
-	...withProps({type: 'overlay', image: dropIn.iconImage}, [overlayTests[0]]),
-	...withProps({type: 'overlay', image: dropIn.image}, [overlayTests[0]]),
-	// QWTC-1929 end.
 	// QWTC-2603
 	...withProps({type: 'overlay'}, [
 		<Alert open title="With different types of Components">
@@ -289,7 +270,6 @@ const alertRtlTests = [
 ];
 
 const AlertTests = [
-	...alertSmokeTests,
 	...alertQwtcTests,
 	...alertExtendedTests,
 	...withConfig({locale: 'vi-VN'}, alertRtlTests),

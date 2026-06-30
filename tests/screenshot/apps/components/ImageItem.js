@@ -67,33 +67,44 @@ const imageItemFocusTests = [
 	<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
 ];
 
-const defaultImageItemTests = [
-	...imageItemBaseCases,
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests)
-];
+const imageItemFocusCases = withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests);
 
-const imageItemExtendedTests = [
-	// Centered
-	...withProps({centered: true}, defaultImageItemTests),
-
-	// Disabled (includes focus + disabled via defaultImageItemTests focus block)
-	...withProps({disabled: true}, defaultImageItemTests),
-
-	// Centered and disabled.
-	...withProps({centered: true, disabled: true}, defaultImageItemTests)
-];
+// Focus representatives (one vertical + one horizontal) for axes where the focus overlay
+// barely interacts with the variant
+const imageItemFocusReps = withConfig({focus: true, wrapper: {light: true, padded: true}}, [
+	imageItemFocusTests[0],
+	imageItemFocusTests[9]
+]);
 
 const ImageItemTests = [
-	...defaultImageItemTests,
-	...imageItemExtendedTests,
-	...withConfig({skinVariants: ['largeText']}, defaultImageItemTests),
+	// base layout permutations + full focus coverage.
+	...imageItemBaseCases,
+	...imageItemFocusCases,
+
+	// Layout variations, applied to the layout-bearing base cases only. Focus is an overlay
+	// state covered above/below, so it isn't re-mirrored across every variation.
+	...withProps({centered: true}, imageItemBaseCases),
+	...withProps({disabled: true}, imageItemBaseCases),
+	...withProps({centered: true, disabled: true}, imageItemBaseCases),
+
+	// focus + disabled is a distinct state; keep representatives.
+	...withProps({disabled: true}, imageItemFocusReps),
+
+	// Large text — base permutations + focus representatives.
+	...withConfig({skinVariants: ['largeText']}, imageItemBaseCases),
+	...withConfig({skinVariants: ['largeText']}, imageItemFocusReps),
+
+	// FocusRing
 	...withConfig({
 		focusRing: true,
 		focus: true
 	}, [
 		<ImageItem src={img} style={{height: ri.scale(360), width: ri.scale(480)}} orientation="vertical" />
 	]),
-	...withConfig({locale: 'ar-SA'}, defaultImageItemTests)
+
+	// RTL — base permutations + focus representatives.
+	...withConfig({locale: 'ar-SA'}, imageItemBaseCases),
+	...withConfig({locale: 'ar-SA'}, imageItemFocusReps)
 ];
 
 export default ImageItemTests;

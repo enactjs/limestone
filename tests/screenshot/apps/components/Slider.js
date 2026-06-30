@@ -16,6 +16,9 @@ const sliderSmokeTests = [
 	<Slider backgroundProgress={0.5} value={25} />,
 	<Slider disabled backgroundProgress={0.25} value={50} />,
 	<Slider value={25} progressAnchor={0.5} showAnchor />,
+	<Slider value={75} progressAnchor={0.5} />, // value above anchor. fill direction complement to value={25}
+	<Slider backgroundProgress={0.25} value={75} progressAnchor={0.5} />, // anchor vs backgroundProgress interplay
+	<Slider min={0} max={20} progressAnchor={0.4} />, // anchor with custom range, no value
 	<Slider orientation="vertical" value={50} />,
 	<Slider orientation="vertical" backgroundProgress={0.5} value={25} />,
 	<Slider css={css} value={50} />,
@@ -127,7 +130,9 @@ const sliderVerticalTooltipTests = [
 const sliderRtlTests = [
 	<Slider value={60} />,
 	<Slider value={60} noFill />,
-	<Slider backgroundProgress={0.5} value={40} />
+	<Slider backgroundProgress={0.5} value={40} />,
+	<Slider progressAnchor={0.7} value={60} />,
+	<Slider progressAnchor={0.4} value={60} />
 ];
 
 const sliderCommentedTests = [

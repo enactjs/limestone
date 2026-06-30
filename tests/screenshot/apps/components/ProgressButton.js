@@ -5,6 +5,7 @@ import {withConfig} from './utils';
 const progressButtonSmokeTests = [
 	<ProgressButton>Update</ProgressButton>,
 	<ProgressButton disabled>Update</ProgressButton>,
+	<ProgressButton showProgress progress={0.5} />,
 	<ProgressButton showProgress progress={0.5}>Update</ProgressButton>,
 	<ProgressButton icon="pause" showProgress progress={0.5}>Update</ProgressButton>,
 	<ProgressButton color="red">Update</ProgressButton>,

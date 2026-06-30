@@ -248,11 +248,21 @@ const pickerRtlQwtcVerticalTests = [
 	// end of [QWTC-2213]
 ];
 
+const pickerRtlVegetablesTests = [
+	<Picker decrementIcon incrementIcon>hello</Picker>,
+	<Picker value={2} width="medium" joined changedBy="arrow">{pickerList.vegetables}</Picker>,
+	<Picker value={2} width="medium" incrementIcon="minus">{pickerList.vegetables}</Picker>,
+	<Picker value={2} width="medium" decrementIcon="play">{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined>{pickerList.vegetables}</Picker>,
+	<Picker value={2} width="medium" disabled>{pickerList.vegetables}</Picker>
+];
+
 const pickerRtlAllTests = [
 	...pickerRtlQwtc2198Tests,
 	<Picker>hello</Picker>,
 	<Picker disabled>hello</Picker>,
 	<Picker orientation="vertical">{pickerList.vegetables}</Picker>,
+	...pickerRtlVegetablesTests,
 	...pickerRtlQwtc2215Tests,
 	...pickerRtlQwtcVerticalTests
 ];

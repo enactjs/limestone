@@ -201,6 +201,7 @@ const RangePickerTests = [
 	...rangePickerCommentedTests,
 	...withConfig({focus: true}, rangePickerFocusTests),
 	...rangePickerLargeTextTests,
+	...withConfig({locale: 'ar-SA'}, rangePickerLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, rangePickerRtlTests),
 	...withConfig({focus: true, locale: 'ar-SA'}, rangePickerRtlFocusTests)
 ];
