@@ -42,7 +42,12 @@ const BodyTextTests = [
 	]),
 
 	...withConfig({locale: 'ar-SA'}, bodyTextLocaleSmokeTests),
-	...withConfig({skinVariants: ['largeText']}, bodyTextLocaleSmokeTests)
+	...withConfig({skinVariants: ['largeText']}, bodyTextLocaleSmokeTests),
+
+	// Portrait
+	...withConfig({portrait: true}, [
+		<BodyText>This is portrait text</BodyText>,
+	])
 ];
 
 export default BodyTextTests;

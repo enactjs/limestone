@@ -108,6 +108,14 @@ const WizardPanelsTests = [
 		...wizardQwtcTests,
 		...wizardCommentedTests,
 		...wizardRtlTests
+	]),
+
+	// Portrait
+	...withConfig({portrait: true}, [
+		<WizardPanels index={0} title="WizardPanel Portrait">
+			<Panel>First Portrait View</Panel>
+			<Panel>Second Portrait View</Panel>
+		</WizardPanels>
 	])
 ];
 
