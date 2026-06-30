@@ -54,11 +54,7 @@ const progressButtonOpaqueTests = [
 	<ProgressButton backgroundOpacity="opaque" color="red">Update</ProgressButton>,
 	<ProgressButton backgroundOpacity="opaque" color="green">Update</ProgressButton>,
 	<ProgressButton backgroundOpacity="opaque" color="yellow">Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="opaque" color="blue">Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="opaque" color="red" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="opaque" color="green" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="opaque" color="yellow" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="opaque" color="blue" minWidth={false}>Update</ProgressButton>
+	<ProgressButton backgroundOpacity="opaque" color="blue">Update</ProgressButton>
 ];
 
 const progressButtonTransparentTests = [
@@ -79,11 +75,7 @@ const progressButtonTransparentTests = [
 	<ProgressButton backgroundOpacity="transparent" color="red">Update</ProgressButton>,
 	<ProgressButton backgroundOpacity="transparent" color="green">Update</ProgressButton>,
 	<ProgressButton backgroundOpacity="transparent" color="yellow">Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="transparent" color="blue">Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="transparent" color="red" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="transparent" color="green" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="transparent" color="yellow" minWidth={false}>Update</ProgressButton>,
-	<ProgressButton backgroundOpacity="transparent" color="blue" minWidth={false}>Update</ProgressButton>
+	<ProgressButton backgroundOpacity="transparent" color="blue">Update</ProgressButton>
 ];
 
 const progressButtonRtlTests = [

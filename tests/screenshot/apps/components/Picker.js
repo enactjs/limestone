@@ -134,22 +134,19 @@ const pickerVegetablesTests = [
 	<Picker value={1} width="medium" joined>{pickerList.vegetables}</Picker>,
 	<Picker value={2} width="medium" joined changedBy="arrow">{pickerList.vegetables}</Picker>,
 	<Picker value={1} width="medium" joined changedBy="arrow">{pickerList.vegetables}</Picker>,
-	<Picker value={2} width="medium" noAnimation>{pickerList.vegetables}</Picker>,
 	<Picker value={2} width="medium" disabled>{pickerList.vegetables}</Picker>,
 	<Picker value={2} width="medium" incrementIcon="minus">{pickerList.vegetables}</Picker>,
 	<Picker value={2} width="medium" decrementIcon="play">{pickerList.vegetables}</Picker>,
 
 	<Picker width="medium" wrap joined>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined noAnimation>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined noAnimation disabled>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined noAnimation disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined noAnimation disabled decrementIcon="play">{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined disabled>{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined disabled decrementIcon="play">{pickerList.vegetables}</Picker>,
 
 	<Picker width="medium" wrap joined changedBy="arrow">{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined changedBy="arrow" noAnimation>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined changedBy="arrow" noAnimation disabled>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined changedBy="arrow" noAnimation disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
-	<Picker width="medium" wrap joined changedBy="arrow" noAnimation disabled decrementIcon="play">{pickerList.vegetables}</Picker>
+	<Picker width="medium" wrap joined changedBy="arrow" disabled>{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined changedBy="arrow" disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
+	<Picker width="medium" wrap joined changedBy="arrow" disabled decrementIcon="play">{pickerList.vegetables}</Picker>
 ];
 
 const pickerVerticalTests = [
@@ -165,10 +162,9 @@ const pickerVerticalTests = [
 
 	<Picker value={1} width="medium" orientation="vertical" joined>{pickerList.vegetables}</Picker>,
 	<Picker width="medium" orientation="vertical" wrap joined>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" orientation="vertical" wrap joined noAnimation>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" orientation="vertical" wrap joined noAnimation disabled>{pickerList.vegetables}</Picker>,
-	<Picker width="medium" orientation="vertical" wrap joined noAnimation disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
-	<Picker width="medium" orientation="vertical" wrap joined noAnimation disabled decrementIcon="play">{pickerList.vegetables}</Picker>
+	<Picker width="medium" orientation="vertical" wrap joined disabled>{pickerList.vegetables}</Picker>,
+	<Picker width="medium" orientation="vertical" wrap joined disabled incrementIcon="minus">{pickerList.vegetables}</Picker>,
+	<Picker width="medium" orientation="vertical" wrap joined disabled decrementIcon="play">{pickerList.vegetables}</Picker>
 ];
 
 const pickerFocusTests = [

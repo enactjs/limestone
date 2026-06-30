@@ -32,11 +32,8 @@ const dropdownQwtcTests = [
 	<Dropdown placeholder="Dropdown" size="large" />,
 
 	// Change 'width' dynamically [QWTC-2174]
-	// width - 'medium' is default
+	// width - 'large' is default
 	...Widths,
-
-	// size="large"
-	...withProps({size: 'large'}, Widths),
 
 	// size="small"
 	...withProps({size: 'small'}, Widths)
