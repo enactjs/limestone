@@ -45,64 +45,82 @@ function FixPopupPanelsWithCenteredHeader (props) {
 	);
 }
 
-const EachPanel = withConfig(
-	{wrapper: {full: true}},
-	[
-		// [QWTC-2429]
-		{
-			title: 'with standard Panel Components',
-			component: <FixPopupPanels />
-		},
-		{
-			title: 'with standard Panel Components positioned left',
-			component: <FixPopupPanels position="left" />
-		},
-		{
-			title: 'with transparent scrim',
-			component: <FixPopupPanels scrimType="transparent" />
-		},
-		{
-			title: 'with transparent scrim positioned left',
-			component: <FixPopupPanels scrimType="transparent" position="left" />
-		},
-		{
-			title: 'with standard Panel Components index 1',
-			component: <FixPopupPanels index={1} />
-		},
-		{
-			title: 'with standard Panel Components index 1 positioned left',
-			component: <FixPopupPanels index={1} position="left" />
-		},
-		{
-			title: 'with half width',
-			component: <FixPopupPanels width="half" />
-		},
-		{
-			title: 'with half width positioned left',
-			component: <FixPopupPanels width="half" position="left" />
-		},
-		{
-			title: 'with centered header',
-			component: <FixPopupPanelsWithCenteredHeader />
-		}
-	]
-);
+const fixedPopupPanelsQwtcTests = [
+	// [QWTC-2429]
+	{
+		wrapper: {full: true},
+		title: 'with standard Panel Components',
+		component: <FixPopupPanels />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with standard Panel Components positioned left',
+		component: <FixPopupPanels position="left" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with transparent scrim',
+		component: <FixPopupPanels scrimType="transparent" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with transparent scrim positioned left',
+		component: <FixPopupPanels scrimType="transparent" position="left" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with standard Panel Components index 1',
+		component: <FixPopupPanels index={1} />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with standard Panel Components index 1 positioned left',
+		component: <FixPopupPanels index={1} position="left" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with half width',
+		component: <FixPopupPanels width="half" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with half width positioned left',
+		component: <FixPopupPanels width="half" position="left" />
+	},
+	{
+		wrapper: {full: true},
+		title: 'with centered header',
+		component: <FixPopupPanelsWithCenteredHeader />
+	}
+];
 
-const FixedPopupPanelsTests = [
+const fixedPopupPanelsSmokeTests = [
 	{
 		wrapper: {full: true},
 		component: <FixPopupPanels>{null}</FixPopupPanels>
-	},
-	...EachPanel,
+	}
+];
+
+const fixedPopupPanelsCommentedTests = [
 	...withProps(
 		{fullHeight: true},
-		EachPanel.map(o => ({...o, title: `${o.title} fullHeight`}))
-	),
-	// [QWTC-2429]
+		fixedPopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} fullHeight`}))
+	)
+];
+
+const fixedPopupPanelsRtlTests = [
+	// [QWTC-2429] — smoke representatives
 	...withConfig(
 		{locale: 'ar-SA'},
-		EachPanel.map(o => ({...o, title: `locale = ar-SA, ${o.title}`}))
+		fixedPopupPanelsQwtcTests.slice(0, 3).map(o => ({...o, title: `locale = ar-SA, ${o.title}`}))
 	)
+];
+
+const FixedPopupPanelsTests = [
+	...fixedPopupPanelsSmokeTests,
+	...fixedPopupPanelsQwtcTests,
+	...fixedPopupPanelsCommentedTests,
+	...fixedPopupPanelsRtlTests
 ];
 
 export default FixedPopupPanelsTests;

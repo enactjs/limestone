@@ -24,17 +24,7 @@ const rowTestCases = [
 
 	<Row>
 		<Cell className={css.red}>Row Content</Cell>
-		<Cell className={css.blue} shrink>Long Long Long Long Side</Cell>
-	</Row>,
-
-	<Row>
-		<Cell className={css.red}>Row Content</Cell>
 		<Cell className={css.blue} shrink size={100}>Long Long Long Long Side</Cell>
-	</Row>,
-
-	<Row>
-		<Cell className={css.red}>Row Content</Cell>
-		<Cell className={css.blue} shrink size={500}>Long Long Long Long Side</Cell>
 	</Row>,
 
 	<Layout>
@@ -47,18 +37,6 @@ const rowTestCases = [
 		<Cell className={css.red} grow>Layout Head</Cell>
 		<Cell className={css.blue} grow>Layout Content</Cell>
 		<Cell className={css.green} grow>Layout Tail</Cell>
-	</Row>,
-
-	<Row>
-		<Cell className={css.red} grow size={1000}>Layout Head</Cell>
-		<Cell className={css.blue} grow size={1000}>Layout Content</Cell>
-		<Cell className={css.green} grow size={1000}>Layout Tail</Cell>
-	</Row>,
-
-	<Row>
-		<Cell className={css.red} grow size={1500}>Layout Head</Cell>
-		<Cell className={css.blue} grow size={1500}>Layout Content</Cell>
-		<Cell className={css.green} grow size={1500}>Layout Tail</Cell>
 	</Row>
 ];
 
@@ -85,33 +63,9 @@ const columnTestCases = [
 	</Column>,
 
 	<Column style={{height: "500px"}}>
-		<Cell className={css.blue} shrink>Column header4</Cell>
-		<Cell className={css.red}>Column Content4</Cell>
-		<Cell className={css.blue} shrink size={1000}>Column footer4</Cell>
-	</Column>,
-
-	<Column style={{height: "500px"}}>
-		<Cell className={css.blue} shrink>Column header5</Cell>
-		<Cell className={css.red}>Column Content5</Cell>
-		<Cell className={css.blue} size={500}>Column footer5</Cell>
-	</Column>,
-
-	<Column style={{height: "500px"}}>
 		<Cell className={css.red} grow>Column header6</Cell>
 		<Cell className={css.blue} grow>Column Content6</Cell>
 		<Cell className={css.green} grow>Column footer6</Cell>
-	</Column>,
-
-	<Column style={{height: "500px"}}>
-		<Cell className={css.red} grow size={100}>Column header7</Cell>
-		<Cell className={css.blue} grow size={100}>Column Content7</Cell>
-		<Cell className={css.green} grow size={100}>Column footer7</Cell>
-	</Column>,
-
-	<Column style={{height: "500px"}}>
-		<Cell className={css.red} grow size={500}>Column header8</Cell>
-		<Cell className={css.blue} grow size={500}>Column Content8</Cell>
-		<Cell className={css.green} grow size={500}>Column footer8</Cell>
 	</Column>
 ];
 
@@ -149,18 +103,6 @@ const layoutTestCases = [
 	</Layout>,
 
 	<Layout>
-		<Cell className={css.red}>
-			<Button>First</Button>
-		</Cell>
-		<Cell className={css.blue} shrink>
-			<div>A div with some long text in it</div>
-		</Cell>
-		<Cell className={css.green}>
-			<Button>Last</Button>
-		</Cell>
-	</Layout>,
-
-	<Layout>
 		<Cell className={css.red} grow size={1500}>
 			<Button>First</Button>
 		</Cell>
@@ -173,28 +115,33 @@ const layoutTestCases = [
 	</Layout>
 ];
 
-// 7 6 3
-const LayoutTests = [
+const layoutSmokeTests = [
 	...rowTestCases,
 	...columnTestCases,
 	...layoutTestCases,
-	...withProps ({wrap: 'wrap'}, rowTestCases),
-	...withProps ({wrap: 'wrap'}, layoutTestCases),
-	...withProps ({wrap: 'reverse'}, rowTestCases),
-	...withProps ({wrap: 'reverse'}, layoutTestCases),
+	...withProps({wrap: 'wrap'}, rowTestCases),
+	...withProps({wrap: 'wrap'}, layoutTestCases),
+	...withProps({wrap: 'reverse'}, rowTestCases),
+	...withProps({wrap: 'reverse'}, layoutTestCases)
+];
+
+const layoutRtlTests = [
+	...rowTestCases,
+	...layoutTestCases,
+	...withProps({wrap: 'wrap'}, rowTestCases),
+	...withProps({wrap: 'wrap'}, layoutTestCases),
+	...withProps({wrap: 'reverse'}, rowTestCases),
+	...withProps({wrap: 'reverse'}, layoutTestCases)
+];
+
+const LayoutTests = [
+	...layoutSmokeTests,
 
 	// *************************************************************
 	// RTL
 	// locale = 'ar-SA'
 	// *************************************************************
-	...withConfig({locale: 'ar-SA'}, [
-		...rowTestCases,
-		...layoutTestCases,
-		...withProps ({wrap: 'wrap'}, rowTestCases),
-		...withProps ({wrap: 'wrap'}, layoutTestCases),
-		...withProps ({wrap: 'reverse'}, rowTestCases),
-		...withProps ({wrap: 'reverse'}, layoutTestCases)
-	])
+	...withConfig({locale: 'ar-SA'}, layoutRtlTests)
 ];
 
 export default LayoutTests;

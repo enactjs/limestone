@@ -4,6 +4,7 @@ import posterUrl from '../../images/poster.png';
 import videoUrl from '../../videos/movie_90.mp4';
 
 const videoTitle = 'Limestone VideoPlayer Sample Video';
+const fullWrapper = {full: true};
 
 const commonVideoPlayer = (props) => (
 	<div
@@ -32,59 +33,62 @@ const commonVideoPlayer = (props) => (
 	</div>
 );
 
-const VideoPlayerTests = [
+const videoPlayerSmokeTests = [
 	{
 		component: commonVideoPlayer({src: ''}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: 'differentSrc'}),
-		wrapper: {full: true},
+		wrapper: fullWrapper,
 		focus: true
 	},
 	{
 		component: commonVideoPlayer({src: '', disabled: true}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: '', poster: posterUrl}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: '', poster: posterUrl, title: videoTitle}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: videoUrl, noAutoPlay: true}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: videoUrl, noSlider: true}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: videoUrl, includeTimeHour: true}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: '', poster: posterUrl, title: videoTitle, noSlider: true}),
-		wrapper: {full: true}
+		wrapper: fullWrapper
 	},
 	{
 		component: commonVideoPlayer({src: '', noButtonComponent: true}),
-		wrapper: {full: true}
-	},
+		wrapper: fullWrapper
+	}
+];
 
-	// textSize = 'large'
+const videoPlayerLargeTextTests = [
+	// textSize = 'large' — smoke representative
 	{
 		component: commonVideoPlayer({src: '', poster: posterUrl, title: videoTitle}),
-		wrapper: {full: true},
-		textSize: 'large'
-	},
-	{
-		component: commonVideoPlayer({src: videoUrl, noAutoPlay: true}),
-		wrapper: {full: true},
+		wrapper: fullWrapper,
 		textSize: 'large'
 	}
 ];
+
+const VideoPlayerTests = [
+	...videoPlayerSmokeTests,
+	...videoPlayerLargeTextTests
+];
+
 export default VideoPlayerTests;

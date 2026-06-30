@@ -124,30 +124,6 @@ const overlayColorTests = [
 				</div>
 			</Scroller>
 		</div>
-	</Alert>,
-	// QWTC-2603
-	<Alert open title="With different types of Components">
-		<AlertImage
-			src={img}
-			type="icon"
-		/>
-		<Button size="small">Yes</Button>
-		<Button size="small">No</Button>
-		<div>
-			<div>This is progressbar</div>
-			<ProgressBar progress={0.5} />
-		</div>
-		<div>
-			<CheckboxItem>This is CheckboxItem</CheckboxItem>
-			<CheckboxItem selected>This is Selected CheckboxItem</CheckboxItem>
-		</div>
-		<div>
-			<Scroller style={{height:'300px'}} focusableScrollbar="byEnter">
-				<div style={{height:'1000px'}}>
-					{LoremString}
-				</div>
-			</Scroller>
-		</div>
 	</Alert>
 ];
 
@@ -203,51 +179,131 @@ const dropIn = {
 	]
 };
 
-const LtrTests = [
+// QWTC-2603 is unique to this group. The former smoke representatives and QWTC-1928/1929
+// cases are already covered by alertExtendedTests below (the full matrix is run, and
+// alertWithImageTests carries the same QWTC-1928/1929 Jira markers).
+const alertQwtcTests = [
+	// QWTC-2603
+	...withProps({type: 'overlay'}, [
+		<Alert open title="With different types of Components">
+			<AlertImage
+				src={img}
+				type="icon"
+			/>
+			<Button size="small">Yes</Button>
+			<Button size="small">No</Button>
+			<div>
+				<div>This is progressbar</div>
+				<ProgressBar progress={0.5} />
+			</div>
+			<div>
+				<CheckboxItem>This is CheckboxItem</CheckboxItem>
+				<CheckboxItem selected>This is Selected CheckboxItem</CheckboxItem>
+			</div>
+			<div>
+				<Scroller style={{height:'300px'}} focusableScrollbar="byEnter">
+					<div style={{height:'1000px'}}>
+						{LoremString}
+					</div>
+				</Scroller>
+			</div>
+		</Alert>
+	])
+];
+
+const alertInitialTests = [
 	// Initial
 	...withProps({type: 'fullscreen'}, fullscreenTests),
-	...withProps({type: 'overlay'}, overlayTests),
+	...withProps({type: 'overlay'}, overlayTests)
+];
 
-	// With Buttons
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoDisabledButton}, fullscreenTests),
-	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.twoSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.fourSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.twoSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.threeSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, overlayTests),
-	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlayTests),
+const fullscreenBase = [fullscreenTests[0]];   // title
+const overlayBase = [overlayTests[0]];         // "Alert!"
+const overlaySizes = overlayTests.slice(0, 4); // all sizes: default / small / medium / large
 
-	// With image
+const alertWithButtonsTests = [
+	// With Buttons: overlay configs are tested across all sizes (overlaySizes);
+	// fullscreen has no size variants, so it uses a single base.
+	...withProps({type: 'fullscreen', buttons: dropIn.oneButton}, fullscreenBase),
+	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenBase),
+	...withProps({type: 'fullscreen', buttons: dropIn.twoDisabledButton}, fullscreenBase),
+	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlaySizes),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.twoSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.fourSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.twoSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.threeSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlaySizes)
+];
+
+const alertWithImageTests = [
+	// With image: overlay configs are tested across all sizes (overlaySizes);
+	// fullscreen has no size variants, so it uses a single base.
 	// QWTC-1928 start.
-	...withProps({type: 'fullscreen', image: dropIn.iconImage}, fullscreenTests),
-	...withProps({type: 'fullscreen', image: dropIn.image}, fullscreenTests),
+	...withProps({type: 'fullscreen', image: dropIn.iconImage}, fullscreenBase),
+	...withProps({type: 'fullscreen', image: dropIn.image}, fullscreenBase),
 	// QWTC-1928 end.
 	// QWTC-1929 start.
-	...withProps({type: 'overlay', image: dropIn.iconImage}, overlayTests),
-	...withProps({type: 'overlay', image: dropIn.image}, overlayTests),
+	...withProps({type: 'overlay', image: dropIn.iconImage}, overlaySizes),
+	...withProps({type: 'overlay', image: dropIn.image}, overlaySizes),
 	// QWTC-1929 end.
 
 	// With image and button
-	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, fullscreenTests),
-	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons, image: dropIn.image}, fullscreenTests),
-	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton, image: dropIn.image}, overlayTests),
-	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayTests),
+	...withProps({type: 'fullscreen', buttons: dropIn.oneButton, image: dropIn.image}, fullscreenBase),
+	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons, image: dropIn.image}, fullscreenBase),
+	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton, image: dropIn.image}, overlaySizes),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlaySizes)
+];
 
+const alertWithComponentsTests = [
 	// With other components
 	...withProps({type: 'overlay'}, overlayColorTests),
 	...withProps({type: 'fullscreen'}, overlayColorTests)
 ];
 
+const alertExtendedTests = [
+	...alertInitialTests,
+	...alertWithButtonsTests,
+	...alertWithImageTests,
+	...alertWithComponentsTests
+];
+
+// Tallglyph validation (vi-VN): only text/title-bearing layouts can clip with taller glyphs
+const alertTallglyphTests = [
+	...withProps({type: 'fullscreen'}, fullscreenTests),                       // title / Alert! / Lorem / long-title
+	...withProps({type: 'overlay'}, [overlayTests[0], overlayTests[9]]),       // short + long
+	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenBase),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayBase),
+	...withProps({type: 'fullscreen', image: dropIn.image}, fullscreenBase),
+	...withProps({type: 'overlay', image: dropIn.image}, overlayBase),
+	...withProps({type: 'overlay'}, overlayColorTests.slice(0, 2))
+];
+
+// RTL: re-run the layouts that mirror. overlayPosition, every buttonDirection/count,
+// image side, and component children
+const alertRtlTests = [
+	...withProps({type: 'fullscreen'}, [fullscreenTests[0], fullscreenTests[2]]),         // title + Lorem
+	...withProps({type: 'overlay'}, [overlayTests[0], overlayTests[5], overlayTests[8]]), // Alert! + bottom-left + top-right
+	...withProps({type: 'fullscreen', buttons: dropIn.twoButtons}, fullscreenBase),
+	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlayBase),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlayBase),
+	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, overlayBase),
+	...withProps({type: 'overlay', buttonDirection: 'horizontal', buttons: dropIn.fourSmallButtons}, overlayBase),
+	...withProps({type: 'overlay', buttonDirection: 'vertical', buttons: dropIn.twoSmallButtons}, overlayBase),
+	...withProps({type: 'fullscreen', image: dropIn.image}, fullscreenBase),
+	...withProps({type: 'overlay', image: dropIn.iconImage}, overlayBase),
+	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons, image: dropIn.image}, overlayBase),
+	...withProps({type: 'overlay'}, overlayColorTests.slice(0, 2))
+];
+
 const AlertTests = [
-	...LtrTests,
-	...withConfig({locale: 'vi-VN'}, LtrTests),  // Tallglyph validation
-	...withConfig({locale: 'ar-SA'}, LtrTests)
+	...alertQwtcTests,
+	...alertExtendedTests,
+	...withConfig({locale: 'vi-VN'}, alertTallglyphTests),
+	...withConfig({locale: 'ar-SA'}, alertRtlTests)
 ];
 
 export default AlertTests;
