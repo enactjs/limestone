@@ -64,10 +64,6 @@ function buildSuiteEnv () {
 
 	if (update) {
 		playwrightEnv.PLAYWRIGHT_FORCE_UPDATE = '1';
-		// Serial capture avoids focus/spotlight drift between reference and compare runs.
-		if (parallel == null) {
-			playwrightEnv.PLAYWRIGHT_WORKERS = '1';
-		}
 	}
 
 	if (parallel != null) {
