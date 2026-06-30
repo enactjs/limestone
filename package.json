@@ -22,6 +22,13 @@
     "test-ss": "start-tests tests/screenshot/config/wdio.conf.js",
     "test-ss-docker": "start-tests tests/screenshot/config/wdio.docker.conf.js",
     "test-ss-tv": "start-tests tests/screenshot/config/wdio.tv.conf.js",
+    "test-playwright": "node tests/screenshot/scripts/run-playwright.mjs",
+    "test-playwright:update": "node tests/screenshot/scripts/run-playwright.mjs -- --update",
+    "test-playwright:report": "playwright show-report tests/screenshot/playwright/reports/html",
+    "test-playwright:component": "node tests/screenshot/scripts/run-playwright.mjs",
+    "test-ss:component": "node tests/screenshot/scripts/run-component-wdio.mjs",
+    "prepare-playwright": "playwright install chrome",
+    "benchmark-screenshots": "node tests/screenshot/playwright/benchmark.mjs",
     "test-json": "enact test --json",
     "test-watch": "enact test --watch",
     "transpile": "enact transpile",
@@ -64,6 +71,7 @@
   },
   "devDependencies": {
     "@enact/docs-utils": "^0.4.17",
-    "@enact/ui-test-utils": "^4.0.2"
+    "@enact/ui-test-utils": "^4.0.2",
+    "@playwright/test": "^1.57.0"
   }
 }
