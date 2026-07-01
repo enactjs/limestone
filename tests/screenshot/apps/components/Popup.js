@@ -50,7 +50,8 @@ const PopupTests = [
 	...popupSmokeTests,
 	...popupQwtcTests,
 	...popupCommentedTests,
-	...withConfig({locale: 'ar-SA'}, popupRtlTests)
+	...withConfig({locale: 'ar-SA'}, popupRtlTests),
+	...withConfig({textSize: 'large'}, popupBaseTests)
 ];
 
 export default withConfig({wrapper: {full: true}}, PopupTests);
