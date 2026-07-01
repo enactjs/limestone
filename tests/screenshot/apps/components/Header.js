@@ -3,7 +3,7 @@ import Button from '../../../../Button';
 import Steps from '../../../../Steps';
 import {Fragment} from 'react';
 
-import {withConfig, withProps} from './utils';
+import {LoremString, withConfig, withProps} from './utils';
 
 const baseTests = [
 	<Header type="standard" title="Title" />,
@@ -132,6 +132,15 @@ const headerLocaleSmokeTests = [
 	...withProps({type: 'standard', slotAfter: dropIn.singleButton}, [baseTests[0]])
 ];
 
+const headerPortraitTests = [
+	...withConfig({centered: true}, [
+		<Header title="Portrait Header Title">{LoremString}</Header>,
+		<Header title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
+			{LoremString}
+		</Header>
+	])
+];
+
 const HeaderTests = [
 	...LtrTests,
 	...specificTests,
@@ -144,7 +153,8 @@ const HeaderTests = [
 		...withProps({type: 'standard'}, baseTests),
 		...withProps({type: 'compact'}, baseTests),
 		...withProps({type: 'wizard', centered: true}, baseTests)
-	])
+	]),
+	...withConfig({portrait: true}, headerPortraitTests)
 ];
 
 export default HeaderTests;

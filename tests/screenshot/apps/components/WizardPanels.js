@@ -102,6 +102,14 @@ const wizardRtlTests = [
 	}
 ];
 
+const wizardPortraitTests = [
+	<WizardPanels index={1} title="WizardPanel Portrait">
+		<Panel>Portrait View 1</Panel>
+		<Panel>Portrait View 2</Panel>
+		<Panel>Portrait View 3</Panel>
+	</WizardPanels>
+]
+
 const WizardPanelsTests = [
 	...withConfig({wrapper}, [
 		...wizardSmokeTests,
@@ -111,12 +119,7 @@ const WizardPanelsTests = [
 	]),
 
 	// Portrait
-	...withConfig({portrait: true}, [
-		<WizardPanels index={0} title="WizardPanel Portrait">
-			<Panel>First Portrait View</Panel>
-			<Panel>Second Portrait View</Panel>
-		</WizardPanels>
-	])
+	...withConfig({portrait: true}, wizardPortraitTests)
 ];
 
 export default WizardPanelsTests;
