@@ -131,8 +131,6 @@
 
 		:global(.enact-orientation-portrait) & {
 			&.standard .title {
-				// TODO: Remove before merge
-				color: red !important;
 				margin-top: ~'calc(abs(@{button-offset}) / -2)';
 			}
 		}
@@ -264,7 +262,7 @@
 		:global(.enact-orientation-portrait) & {
 			&.slotBefore .slotBefore,
 			&.slotAfter .slotAfter {
-				margin-top: ~'calc((@{lime-button-height} + @{button-offset}) * -1)';
+				margin-top: ~'calc((@{lime-button-height} + @{button-offset}) * -1.5)';
 			}
 		}
 	}
