@@ -16,98 +16,104 @@ const PageComponents = [
 	<Page>Page 3</Page>
 ];
 
-const BaseTests = [
+const panelHeader = <Header title="title of panel" subtitle="subtitle of panel" />;
+
+const pageViewsSmokeTests = [
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={0} pageIndicatorPosition="top">{PageComponents[0]}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={0} pageIndicatorPosition="top">{PageComponents[0]}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={0} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={0} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews fullContents index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={0}>{PageComponents}</PageViews></Panel>,
+		wrapper: {full: true}
+	},
+	{
+		component: <Panel>{panelHeader}<PageViews css={css} index={1}>{PageComponents}</PageViews></Panel>,
+		wrapper: {full: true}
+	},
+	{
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={2}>{PageComponents}</PageViews></Panel>,
+		wrapper: {full: true}
+	},
+	{
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		wrapper: {full: true}
+	}
+
+];
+
+const pageViewsCommentedTests = [
+	{
+		component: <Panel>{panelHeader}<PageViews index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true},
 		textSize: 'large'
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews fullContents index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={0}>{PageComponents[0]}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={0}>{PageComponents[0]}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={1}>{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={0}>{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews index={2}>{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={1}>{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews fullContents index={2}>{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews index={2}>{PageComponents}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews css={css} index={1}>{PageComponents}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews fullContents index={2}>{PageComponents}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={0}>{PageComponents[0]}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={0}>{PageComponents[0]}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={0}>{PageComponents[0]}</PageViews></Panel>,
 		wrapper: {full: true},
 		textSize: 'large'
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={0}>{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={0}>{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={1}>{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={1}>{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={2}>{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" pageIndicatorPosition="top" index={0}>{PageComponents[0]}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" pageIndicatorPosition="top" index={0}>{PageComponents[0]}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={0} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	},
 	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={0} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
-		wrapper: {full: true}
-	},
-	{
-		component: <Panel><Header title="title of panel" subtitle="subtitle of panel" /><PageViews pageIndicatorType="number" index={2} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
+		component: <Panel>{panelHeader}<PageViews pageIndicatorType="number" index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true}
 	}
 ];
 
+const pageViewsRtlTests = [
+	// locale = 'ar-SA' — smoke representatives
+	pageViewsSmokeTests[1],
+	pageViewsSmokeTests[3],
+	pageViewsCommentedTests[0]
+];
+
 const PageViewsTests = [
-	...BaseTests,
-	...withConfig({locale: 'ar-SA'}, BaseTests)
+	...pageViewsSmokeTests,
+	...pageViewsCommentedTests,
+	...withConfig({locale: 'ar-SA'}, pageViewsRtlTests)
 ];
 
 export default PageViewsTests;

@@ -2,7 +2,7 @@ import QuickGuidePanels, {Panel as QuickGuidePanel} from '../../../../QuickGuide
 
 import {withConfig} from './utils';
 
-const defaultQuickGuidePanelsTests = [
+const quickGuideSmokeTests = [
 	<QuickGuidePanels>
 		<QuickGuidePanel>View 1</QuickGuidePanel>
 		<QuickGuidePanel>View 2</QuickGuidePanel>
@@ -24,9 +24,11 @@ const defaultQuickGuidePanelsTests = [
 ];
 
 const QuickGuidePanelsTests = [
-	...withConfig({wrapper: {full: true}}, defaultQuickGuidePanelsTests),
-	...withConfig({wrapper: {full: true}, locale: 'vi-VN'}, defaultQuickGuidePanelsTests), // Tallglyph validation
-	...withConfig({wrapper: {full: true}, locale: 'ar-SA'}, defaultQuickGuidePanelsTests)  // RTL validation
+	...withConfig({wrapper: {full: true}}, quickGuideSmokeTests),
+	// Tallglyph validation
+	...withConfig({wrapper: {full: true}, locale: 'vi-VN'}, quickGuideSmokeTests),
+	// RTL validation
+	...withConfig({wrapper: {full: true}, locale: 'ar-SA'}, quickGuideSmokeTests)
 ];
 
 export default QuickGuidePanelsTests;

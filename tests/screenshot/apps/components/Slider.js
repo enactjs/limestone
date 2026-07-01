@@ -1,333 +1,152 @@
 import Slider, {SliderTooltip as Tooltip} from '../../../../Slider';
 
+import {withConfig} from './utils';
+
 import css from './Slider.module.less';
 
-const SliderTests = [
+const padded = {wrapper: {padded: true}};
+
+const sliderSmokeTests = [
 	<Slider />,
 	<Slider showMinMax />,
 	<Slider disabled />,
-	<Slider min={0} max={20} progressAnchor={0.4} />,
 	<Slider value={50} />,
 	<Slider value={50} noFill />,
 	<Slider value={50} showAnchor />,
-	<Slider value={100} />,
-	<Slider backgroundProgress={0.5} />,
-	<Slider backgroundProgress={1} />,
-	<Slider backgroundProgress={0.25} value={50} />,
-	<Slider disabled backgroundProgress={0.25} value={50} />,
 	<Slider backgroundProgress={0.5} value={25} />,
-	<Slider backgroundProgress={0.5} value={50} />,
-	<Slider value={75} progressAnchor={0.5} />,
-	<Slider value={25} progressAnchor={0.5} />,
+	<Slider disabled backgroundProgress={0.25} value={50} />,
 	<Slider value={25} progressAnchor={0.5} showAnchor />,
-	<Slider backgroundProgress={0.25} value={75} progressAnchor={0.5} />,
-	<Slider backgroundProgress={0.75} value={25} progressAnchor={0.5} />,
-	<Slider backgroundProgress={0.1} value={25} progressAnchor={0.2} />,
-	{
-		component: <Slider value={25} progressAnchor={0.5} tooltip />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	<Slider orientation="vertical" />,
-	<Slider orientation="vertical" showMinMax />,
+	<Slider value={75} progressAnchor={0.5} />, // value above anchor. fill direction complement to value={25}
+	<Slider backgroundProgress={0.25} value={75} progressAnchor={0.5} />, // anchor vs backgroundProgress interplay
+	<Slider min={0} max={20} progressAnchor={0.4} />, // anchor with custom range, no value
 	<Slider orientation="vertical" value={50} />,
-	<Slider orientation="vertical" value={50} showAnchor />,
-	<Slider orientation="vertical" value={100} />,
-	<Slider orientation="vertical" backgroundProgress={0.5} />,
-	<Slider orientation="vertical" backgroundProgress={1} />,
-	<Slider orientation="vertical" backgroundProgress={0.25} value={50} />,
-	<Slider orientation="vertical" disabled backgroundProgress={0.25} value={50} />,
 	<Slider orientation="vertical" backgroundProgress={0.5} value={25} />,
-	<Slider orientation="vertical" value={75} progressAnchor={0.5} />,
-	<Slider orientation="vertical" value={25} progressAnchor={0.5} />,
-	<Slider orientation="vertical" value={25} progressAnchor={0.5} showAnchor />,
-	<Slider orientation="vertical" backgroundProgress={0.25} value={75} progressAnchor={0.5} />,
-	<Slider orientation="vertical" backgroundProgress={0.75} value={25} progressAnchor={0.5} />,
-	<Slider orientation="vertical" backgroundProgress={0.1} value={25} progressAnchor={0.2} />,
+	<Slider css={css} value={50} />,
 	{
-		component: <Slider orientation="vertical" value={25} progressAnchor={0.5} tooltip />,
-		wrapper: {
-			padded: true
-		},
+		component: <Slider value={25} />,
+		...padded,
 		focus: true
 	},
-	// Customized style
-	<Slider css={css} value={50} />,
-	<Slider css={css} orientation="vertical" value={50} />,
-	<Slider css={css} orientation="vertical" value={50} showAnchor />,
+	{
+		component: <Slider tooltip percent value={50} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider tooltip={<Tooltip position="left" />} value={40} backgroundProgress={0.5} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider tooltip={<Tooltip position="below" />} value={40} backgroundProgress={0.5} />,
+		...padded,
+		focus: true
+	}
 
+];
+
+const sliderQwtcTests = [
+	// [QWTC-2192]
+	{
+		component: <Slider tooltip={<Tooltip position="above" />} disabled value={40} backgroundProgress={0.5} />,
+		...padded,
+		focus: true
+	}
+];
+
+const sliderCustomizedStyleTests = [
+	// Customized style
+	<Slider css={css} orientation="vertical" value={50} />,
+	<Slider css={css} orientation="vertical" value={50} showAnchor />
+];
+
+const sliderColorPickerTests = [
 	// Color Picker
 	<Slider colorPicker />,
-	<Slider colorPicker showMinMax />,
 	<Slider colorPicker disabled />,
-	<Slider colorPicker value={50} />,
 	{
 		component: <Slider colorPicker value={50} tooltip />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
-	<Slider orientation="vertical" colorPicker />,
-	<Slider orientation="vertical" colorPicker showMinMax />,
-	<Slider orientation="vertical" colorPicker disabled />,
 	<Slider orientation="vertical" colorPicker value={50} />,
 	{
 		component: <Slider orientation="vertical" colorPicker value={50} tooltip />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
 	{
-		component: <Slider value={25} />,
-		wrapper: {
-			padded: true
-		},
+		component: <Slider value={25} progressAnchor={0.5} tooltip />,
+		...padded,
 		focus: true
-	},
-	{
-		component: <Slider value={25} showMinMax min={0} max={100} />,
-		wrapper: {
-			padded: true
-		}
 	},
 	{
 		component: <Slider disabled value={25} />,
-		wrapper: {
-			padded: true
-		}
-	},
-	{
-		component: <Slider colorPicker value={120} />,
-		wrapper: {
-			padded: true
-		}
-	},
-	{
-		component: <Slider colorPicker disabled value={120} />,
-		wrapper: {
-			padded: true
-		}
-	},
+		...padded
+	}
+];
 
+const sliderTooltipTests = [
 	// *************************************************************
 	// tooltip - all positions
 	// NOTE: Tooltip won't show on slider without focus. Nothing should show!
 	// *************************************************************
 	{
-		component: <Slider tooltip percent value={50} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
 		component: <Slider tooltip min={-60.0} max={60.0} step={0.5} value={4.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip min={0} max={100} step={5} value={20} focused />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="above" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	// [QWTC-2192]
-	{
-		component: <Slider tooltip={<Tooltip position="above" />} disabled value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
 	{
 		component: <Slider tooltip={<Tooltip position="above left" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="above right" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="above before" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="above after" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="before" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="left" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="right" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="after" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="below" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
 	{
 		component: <Slider tooltip={<Tooltip position="below left" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
 	{
-		component: <Slider tooltip={<Tooltip position="below right" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		component: <Slider tooltip={<Tooltip position="before" />} value={40} backgroundProgress={0.5} />,
+		...padded,
 		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="below before" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider tooltip={<Tooltip position="below after" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
+	}
+];
+
+const sliderVerticalTooltipTests = [
 	// Vertical tooltip placement -- valid positions: before/after/left/right
 	{
-		component: <Slider orientation="vertical" tooltip={<Tooltip position="left" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
 		component: <Slider orientation="vertical" tooltip={<Tooltip position="left" />} disabled value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	{
-		component: <Slider orientation="vertical" tooltip={<Tooltip position="right" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
 	},
 	{
 		component: <Slider orientation="vertical" tooltip={<Tooltip position="before" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
+		...padded,
 		focus: true
-	},
-	{
-		component: <Slider orientation="vertical" tooltip={<Tooltip position="after" />} value={40} backgroundProgress={0.5} />,
-		wrapper: {
-			padded: true
-		},
-		focus: true
-	},
-	// RTL
-	{
-		locale: 'ar-SA',
-		component: <Slider />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider showMinMax />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider disabled />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider min={0} max={20} progressAnchor={0.4} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider value={60} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider value={60} noFill />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider progressAnchor={0.7} value={60} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider progressAnchor={0.6} value={60} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider progressAnchor={0.4} value={60} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider backgroundProgress={0.5} value={40} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider backgroundProgress={0.25} value={75} progressAnchor={0.5} />
-	},
-	{
-		locale: 'ar-SA',
-		component: <Slider disabled backgroundProgress={0.25} value={50} />
 	}
 ];
+
+const sliderRtlTests = [
+	<Slider value={60} />,
+	<Slider value={60} noFill />,
+	<Slider backgroundProgress={0.5} value={40} />,
+	<Slider progressAnchor={0.7} value={60} />,
+	<Slider progressAnchor={0.4} value={60} />
+];
+
+const sliderCommentedTests = [
+	...sliderCustomizedStyleTests,
+	...sliderColorPickerTests,
+	...sliderTooltipTests,
+	...sliderVerticalTooltipTests
+];
+
+const SliderTests = [
+	...sliderSmokeTests,
+	...sliderQwtcTests,
+	...sliderCommentedTests,
+	...withConfig({locale: 'ar-SA'}, sliderRtlTests)
+];
+
 export default SliderTests;

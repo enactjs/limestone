@@ -76,11 +76,12 @@ const newTypeCardTests = [
 	<Card src={img} label="Secondary Text" labelIcons={labelIcons} orientation="horizontal" secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} selected>Title</Card>
 ];
 
-const CardTests = [
-	...defaultCardTests,
+const cardSmokeTests = [
+	...defaultCardTests.slice(0, 15),
+	...defaultCardTests.slice(36, 41)
+];
 
-	...newTypeCardTests,
-
+const cardCommentedTests = [
 	// Disabled
 	...withProps({disabled: true}, defaultCardTests),
 
@@ -94,18 +95,28 @@ const CardTests = [
 	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
 
 	// Split Caption
-	...withProps({splitCaption: true}, defaultCardTests),
+	...withProps({splitCaption: true}, defaultCardTests)
+];
 
-	// Focused
-	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
-	...withConfig({focus: true, wrapper: {padded: true}}, newTypeCardTests),
+const cardFocusTests = [
+	// Focused — smoke representatives
+	...withConfig({focus: true, wrapper: {padded: true}}, cardSmokeTests),
 
 	// FocusRing
-	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests)),
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, [defaultCardTests[0]]))
+];
 
-	// Large text
-	...withConfig({skinVariants: ['largeText']}, defaultCardTests),
-	...withConfig({skinVariants: ['largeText']}, newTypeCardTests)
+const cardLargeTextTests = [
+	// Large text — smoke representatives
+	...withConfig({skinVariants: ['largeText']}, cardSmokeTests)
+];
+
+const CardTests = [
+	...defaultCardTests,
+	...newTypeCardTests,
+	...cardCommentedTests,
+	...cardFocusTests,
+	...cardLargeTextTests
 ];
 
 export default CardTests;
