@@ -107,8 +107,7 @@ const cardFocusTests = [
 ];
 
 const cardLargeTextTests = [
-	// Large text — smoke representatives
-	...withConfig({skinVariants: ['largeText']}, cardSmokeTests)
+	...withConfig({skinVariants: ['largeText']}, defaultCardTests)
 ];
 
 const CardTests = [
