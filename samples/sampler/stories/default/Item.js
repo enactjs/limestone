@@ -49,5 +49,12 @@ _Item.storyName = 'Item';
 _Item.parameters = {
 	info: {
 		text: 'Basic usage of Item'
+	},
+	pseudo: {
+		// `rootSelector: 'body'` is required because Enact's focus rules are scoped under
+		// `.spotlight-input-*` on `#storybook-root`, so the addon's forcing class must sit on a
+		// strict ancestor of that element.
+		focus: true,
+		rootSelector: 'body'
 	}
 };

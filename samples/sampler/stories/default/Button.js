@@ -96,5 +96,12 @@ _Button.storyName = 'Button';
 _Button.parameters = {
 	info: {
 		text: 'The basic Button'
+	},
+	pseudo: {
+		// Limestone styles `:focus`, not `:hover` (10-foot UI). `rootSelector: 'body'` is required because
+		// Enact's focus rules are scoped under `.spotlight-input-*` on `#storybook-root`, so the addon's
+		// forcing class must sit on a strict ancestor of that element.
+		focus: true,
+		rootSelector: 'body'
 	}
 };
