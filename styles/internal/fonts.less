@@ -123,11 +123,11 @@
 .buildFontFamily("@{font-family-base-name} Number"; @font-system-src-limestone-number-700; @font-system-src-limestone-condensed-700; 700);
 
 /* -----  Limestone Title ------ */
-// This incorporates a fallback font (condensed) to catch any glyphs that are not present in the title font
-.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-400; @font-system-src-limestone-condensed-400);
-.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-300; @font-system-src-limestone-condensed-300; 300);
-.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-600; @font-system-src-limestone-condensed-600; 600);
-.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-700; @font-system-src-limestone-condensed-700; 700);
+// No fallback here since Limestone font is used as fallback in variables.less
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-400);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-300);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-600);
+.buildFontFace("@{font-family-base-name} Title"; @font-system-src-limestone-title-700);
 
 /* ----- Manual Limestone Locale Fonts (Stacking onto "Limestone") ------ */
 .buildFontFace(@font-family-base-name; @font-system-src-non-latin-400);
