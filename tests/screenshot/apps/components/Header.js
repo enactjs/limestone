@@ -154,7 +154,7 @@ const HeaderTests = [
 		...withProps({type: 'compact'}, baseTests),
 		...withProps({type: 'wizard', centered: true}, baseTests)
 	]),
-	...withConfig({portrait: true}, headerPortraitTests)
+	...withConfig({portrait: true, wrapper: {full: true}}, headerPortraitTests)
 ];
 
 export default HeaderTests;
