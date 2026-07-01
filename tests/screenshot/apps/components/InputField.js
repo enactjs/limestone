@@ -11,7 +11,7 @@ const SelectionInput = props => {
 	return <InputField {...props} />;
 };
 
-const InputFieldTests = [
+const inputFieldSmokeTests = [
 	<InputField />,
 	<InputField placeholder="Placeholder InputField" />,
 	<InputField marqueeContent placeholder="Placeholder InputField" />,
@@ -27,8 +27,10 @@ const InputFieldTests = [
 	<InputField value="Simple value" type="password" />,
 	<InputField value="Simple value" type="password" disabled />,
 	<InputField value="https://enactjs.com" type="url" />,
-	<InputField value="https://enactjs.com" type="url" disabled />,
+	<InputField value="https://enactjs.com" type="url" disabled />
+];
 
+const inputFieldQwtcTests = [
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]
 	<InputField value={LoremString} />,
 	<InputField value="!@#$%^&()_+-=[]\;',./{}|:?" />,
@@ -65,49 +67,33 @@ const InputFieldTests = [
 	// Disabled Characters Displays in the Disabled InputField - [QWTC-1969]
 	// This will also test: Transparent Disabled InputField Displays with Background - [QWTC-1965]
 	<InputField value="I am value" />,
-	<InputField value="I am a disabled value" disabled />,
+	<InputField value="I am a disabled value" disabled />
+];
 
+const inputFieldCommentedTests = [
 	// Selection color
-	<SelectionInput value="Selection value" />,
+	<SelectionInput value="Selection value" />
+];
 
-	// Focused
-	...withProps({focus: true}, [
-		<InputField />,
-		<InputField placeholder="Focused Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Focused Placeholder InputField" />,
-		<InputField placeholder="Focused Placeholder InputField" disabled />,
+const inputFieldFocusTests = withProps({focus: true}, [
+	<InputField />,
+	<InputField placeholder="Focused Placeholder InputField" />,
+	<InputField value="Focused Simple value" type="number" />,
+	<InputField value="https://enactjs.com" type="url" />
+]);
 
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" />,
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" disabled />,
+const inputFieldLargeTextTests = [
+	// Large text — smoke representatives
+	<InputField />,
+	<InputField placeholder="Placeholder InputField" />,
+	<InputField value={LoremString} invalid />
+];
 
-		<InputField value="Focused Simple value" type="password" />,
-		<InputField value="Focused Simple value" type="password" disabled />,
-		<InputField value="https://enactjs.com" type="url" />,
-		<InputField value="https://enactjs.com" type="url" disabled />
-	]),
-
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
+const inputFieldRtlTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField />
 	},
-
-	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
-	{
-		locale: 'ar-SA',
-		component: <InputField value={LoremString} invalid />
-	},
-
-	// Text Vertically Center Aligns in InputField Field - RTL - [QWTC-1966]
-	{
-		locale: 'ar-SA',
-		component: <InputField value="HHHHHH" />
-	},
-
 	{
 		locale: 'ar-SA',
 		component: <InputField placeholder="Placeholder InputField" />
@@ -122,13 +108,10 @@ const InputFieldTests = [
 		locale: 'ar-SA',
 		component: <InputField value="Simple value" type="number" />
 	},
-
-	// InputField field of type 'number' should be empty with letters as input
 	{
 		locale: 'ar-SA',
 		component: <InputField value="Simple value" type="number" disabled />
 	},
-
 	{
 		locale: 'ar-SA',
 		component: <InputField value="1234567890" type="number" />
@@ -152,6 +135,18 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField value="https://enactjs.com" type="url" disabled />
+	},
+
+	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
+	{
+		locale: 'ar-SA',
+		component: <InputField value={LoremString} invalid />
+	},
+
+	// Text Vertically Center Aligns in InputField Field - RTL - [QWTC-1966]
+	{
+		locale: 'ar-SA',
+		component: <InputField value="HHHHHH" />
 	},
 
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]
@@ -216,7 +211,6 @@ const InputFieldTests = [
 		component: <InputField value="តន្ត្រី" />
 	},
 
-
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
 	{
 		locale: 'ar-SA',
@@ -237,16 +231,16 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <SelectionInput value="Selection value" />
-	},
-
-	// Large text mode
-	...withConfig({textSize: 'large'}, [
-		<InputField />,
-		<InputField placeholder="Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Placeholder InputField" />,
-		<InputField placeholder="Placeholder InputField" disabled />,
-		<InputField value={LoremString} invalid />,
-		<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
-	])
+	}
 ];
+
+const InputFieldTests = [
+	...inputFieldSmokeTests,
+	...inputFieldQwtcTests,
+	...inputFieldCommentedTests,
+	...inputFieldFocusTests,
+	...withConfig({textSize: 'large'}, inputFieldLargeTextTests),
+	...inputFieldRtlTests
+];
+
 export default InputFieldTests;
