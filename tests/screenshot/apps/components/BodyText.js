@@ -45,9 +45,10 @@ const BodyTextTests = [
 	...withConfig({skinVariants: ['largeText']}, bodyTextLocaleSmokeTests),
 
 	// Portrait
-	...withConfig({portrait: true}, [
-		<BodyText>This is portrait text</BodyText>,
-	])
+	{
+		portrait: true,
+		component: <BodyText>This is portrait text</BodyText>
+	}
 ];
 
 export default BodyTextTests;
