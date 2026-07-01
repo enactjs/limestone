@@ -300,8 +300,9 @@ const alertRtlTests = [
 ];
 
 const alertPortraitTests = [
-	...withConfig({type: 'fullscreen'}, [
-		<Alert open buttons={dropIn.twoButtons} title="This is an Alert with a very long title for portrait orientation">
+	...withProps({type: 'fullscreen', open: true}, [
+		<Alert title="This is an Alert with a very long title for portrait orientation" />,
+		<Alert title="This is an Alert with a very long title for portrait orientation">
 			{LoremString}
 		</Alert>
 	])
