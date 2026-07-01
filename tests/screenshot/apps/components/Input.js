@@ -87,9 +87,9 @@ const inputCommentedTests = [
 ];
 
 const inputPortraitTests = [
-	...withConfig({open: true, popupType: 'fullscreen'}, [
-		<Input title="Portrait Input Test" subtitle="Portrait Additional text" />,
-		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
+	...withConfig({popupType: 'fullscreen'}, [
+		<Input open title="Portrait Input Test" subtitle="Portrait Additional text" />,
+		<Input open title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
 	])
 ];
 

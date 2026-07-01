@@ -133,12 +133,10 @@ const headerLocaleSmokeTests = [
 ];
 
 const headerPortraitTests = [
-	...withConfig({centered: true}, [
-		<Header title="Portrait Header Title">{LoremString}</Header>,
-		<Header title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
-			{LoremString}
-		</Header>
-	])
+	<Header centered title="Portrait Header Title">{LoremString}</Header>,
+	<Header centered title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
+		{LoremString}
+	</Header>
 ];
 
 const HeaderTests = [
