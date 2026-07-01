@@ -9,6 +9,11 @@
 	padding: @lime-bodytext-padding;
 	white-space: normal;
 
+	:global(.enact-orientation-portrait) & {
+		// TODO: Remove before merge
+		color: red !important;
+	}
+
 	&.large { /* Needed to prevent global class being added in the DOM */ }
 
 	&.small {
