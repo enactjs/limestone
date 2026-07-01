@@ -108,7 +108,7 @@ const wizardPortraitTests = [
 		<Panel>Portrait View 2</Panel>
 		<Panel>Portrait View 3</Panel>
 	</WizardPanels>
-]
+];
 
 const WizardPanelsTests = [
 	...withConfig({wrapper}, [

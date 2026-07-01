@@ -89,7 +89,7 @@ const inputCommentedTests = [
 const inputPortraitTests = [
 	...withConfig({open: true, popupType: 'fullscreen'}, [
 		<Input title="Portrait Input Test" subtitle="Portrait Additional text" />,
-		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />,
+		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
 	])
 ];
 
@@ -100,7 +100,7 @@ const InputTests = [
 	...withConfig({locale: 'ar-SA'}, inputRtlLargeTests),
 	...withConfig({locale: 'ar-SA'}, inputRtlOverlayTests),
 	...withConfig({textSize: 'large'}, inputLargeTextTests),
-	...withConfig({portrait: true}, inputPortraitTests),
+	...withConfig({portrait: true}, inputPortraitTests)
 ];
 
 export default InputTests;
