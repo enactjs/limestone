@@ -299,11 +299,20 @@ const alertRtlTests = [
 	...withProps({type: 'overlay'}, overlayColorTests.slice(0, 2))
 ];
 
+const alertPortraitTests = [
+	...withConfig({open: true, type: 'fullscreen'}, [
+		<Alert buttons={dropIn.twoButtons} title="This is an Alert with a very long title for portrait orientation">
+			{LoremString}
+		</Alert>
+	])
+];
+
 const AlertTests = [
 	...alertQwtcTests,
 	...alertExtendedTests,
 	...withConfig({locale: 'vi-VN'}, alertTallglyphTests),
-	...withConfig({locale: 'ar-SA'}, alertRtlTests)
+	...withConfig({locale: 'ar-SA'}, alertRtlTests),
+	...withConfig({portrait: true}, alertPortraitTests)
 ];
 
 export default AlertTests;
