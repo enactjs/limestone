@@ -133,8 +133,8 @@ const headerLocaleSmokeTests = [
 ];
 
 const headerPortraitTests = [
-	<Header centered title="Portrait Header Title">{LoremString}</Header>,
-	<Header centered title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
+	<Header type="standard" centered title="Portrait Header Title">{LoremString}</Header>,
+	<Header type="standard" centered title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
 		{LoremString}
 	</Header>
 ];
