@@ -1,9 +1,9 @@
 import Button, {ButtonBase} from '@enact/limestone/Button';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import UIButton, {ButtonBase as UIButtonBase} from '@enact/ui/Button';
 import {Fragment} from 'react';
+import {expect, fn, userEvent, within} from 'storybook/test';
 
 import iconNames from '../helper/icons';
 
@@ -51,8 +51,8 @@ export default {
 export const _Button = (args) => (
 	<Fragment>
 		<Button
-			onClick={action('onClick')}
-			onTap={action('onTap')}
+			onClick={args['onClick']}
+			onTap={args['onTap']}
 			backgroundOpacity={args['backgroundOpacity']}
 			bordered={args['bordered']}
 			centered={args['centered']}
@@ -97,4 +97,25 @@ _Button.parameters = {
 	info: {
 		text: 'The basic Button'
 	}
+};
+
+_Button.args = {
+	..._Button.args,
+	onClick: fn(),
+	onTap: fn()
+};
+// Interaction test
+_Button.play = async ({args, canvasElement, step}) => {
+	const canvas = within(canvasElement);
+	const button = canvas.getByRole('button', {name: args.children});
+
+	await step('Button renders with its label', async () => {
+		await expect(button).toBeInTheDocument();
+	});
+
+	await step('Clicking the button fires onClick and onTap', async () => {
+		await userEvent.click(button);
+		await expect(args.onClick).toHaveBeenCalled();
+		await expect(args.onTap).toHaveBeenCalled();
+	});
 };
