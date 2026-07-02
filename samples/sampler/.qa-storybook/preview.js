@@ -1,3 +1,5 @@
+/* global FocusEvent, MutationObserver, cancelAnimationFrame, requestAnimationFrame */
+
 import {configureActions} from '@enact/storybook-utils/addons/actions';
 import {getBooleanType, getObjectType} from '@enact/storybook-utils/addons/controls';
 import {useEffect} from 'react';
