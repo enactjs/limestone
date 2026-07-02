@@ -86,13 +86,21 @@ const inputCommentedTests = [
 	...inputDisabledTests
 ];
 
+const inputPortraitTests = [
+	...withProps({popupType: 'fullscreen', open: true}, [
+		<Input title="Portrait Input Test" subtitle="Portrait Additional text" />,
+		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
+	])
+];
+
 const InputTests = [
 	...inputSmokeTests,
 	...inputCommentedTests,
 	...withProps({popupType: 'overlay'}, inputSmokeTests),
 	...withConfig({locale: 'ar-SA'}, inputRtlLargeTests),
 	...withConfig({locale: 'ar-SA'}, inputRtlOverlayTests),
-	...withConfig({textSize: 'large'}, inputLargeTextTests)
+	...withConfig({textSize: 'large'}, inputLargeTextTests),
+	...withConfig({portrait: true}, inputPortraitTests)
 ];
 
 export default InputTests;

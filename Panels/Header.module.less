@@ -9,6 +9,7 @@
 @header-compact-padding-left: .extract(@lime-header-compact-padding, left)[];
 @header-compact-padding-right: .extract(@lime-header-compact-padding, right)[];
 @button-offset: .lime-taparea(@lime-button-height)[@_tap-offset];
+@button-offset-abs: abs(@button-offset);
 
 .header {
 	position: relative;
@@ -126,12 +127,12 @@
 		}
 
 		&.mini .title {
-			margin-top: ~'calc(abs(@{button-offset}) / 2)';
+			margin-top: ~'calc(@{button-offset-abs} / 2)';
 		}
 
 		:global(.enact-orientation-portrait) & {
 			&.standard .title {
-				margin-top: ~'calc(abs(@{button-offset}) / -2)';
+				margin-top: ~'calc(@{button-offset-abs} / -2)';
 			}
 		}
 	}
