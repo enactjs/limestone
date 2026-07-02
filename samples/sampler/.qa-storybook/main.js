@@ -16,9 +16,9 @@ export default {
 	},
 	features: {
 		backgrounds: false,
-		interactions: false,
+		interactions: true,
 		postcss: false,
-		viewport: false,
+		viewport: true,
 		warnOnLegacyHierarchySeparator: false
 	},
 	framework: {
@@ -44,6 +44,7 @@ export default {
 	addons: [
 		'@enact/storybook-utils/addons/actions',
 		'@enact/storybook-utils/addons/controls',
+		'storybook-addon-pseudo-states',
 		...(process.env.PERF_PANEL === 'true' ? ['@github-ui/storybook-addon-performance-panel'] : [])
 	],
 	webpackFinal: async (config, {configType}) => {
