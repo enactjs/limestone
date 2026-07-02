@@ -120,6 +120,7 @@
 @lime-actionguide-label-font-size-large:  var(--primitive-font-size-60);
 @lime-actionguide-label-font-weight: var(--primitive-font-weight-regular);
 @lime-alert-overlay-font-size:      var(--primitive-font-size-60);
+@lime-alert-overlay-font-size-large: var(--primitive-font-size-72);
 @lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
 @lime-alert-title-font-size:        var(--primitive-font-size-108);
 @lime-alert-overlay-large-title-font-size: var(--primitive-font-size-90);
@@ -251,13 +252,13 @@
 @lime-non-latin-font-weight-light: var(--primitive-font-weight-light);
 @lime-non-latin-font-weight-bold: var(--primitive-font-weight-bold);
 @lime-spottable-font-weight: var(--primitive-font-weight-semibold);
-@lime-common-line-height: 1.4em;
+@lime-common-line-height: 1.34em;
 @lime-tallglyph-line-height: 1.5em;
 
 // Alert
 @lime-alert-font-family: @lime-font-family;
 @lime-alert-font-weight: var(--primitive-font-weight-semibold);
-@lime-alert-line-height: 84px;
+@lime-alert-line-height: @lime-common-line-height;
 
 // Body
 @lime-body-font-family: @lime-font-family;
@@ -1028,6 +1029,7 @@
 
 // Popup
 // ---------------------------------------
+@lime-popup-body-font-size-large: var(--primitive-font-size-72);
 @lime-popup-padding: var(--primitive-spacing-48) var(--primitive-spacing-72);
 @lime-popup-border-radius: var(--primitive-radius-24);
 // Remove the margin on the leading edge so we're not wasting some of our transition frames on animating empty space, but also account for the shadow.
