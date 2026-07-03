@@ -16,7 +16,7 @@ export default {
 	},
 	features: {
 		backgrounds: false,
-		interactions: true,
+		interactions: false,
 		postcss: false,
 		viewport: true,
 		warnOnLegacyHierarchySeparator: false
