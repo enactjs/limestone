@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/TabLayout` isomorphic build
+
 ## [1.9.4] - 2026-06-18
 
 ### Fixed
