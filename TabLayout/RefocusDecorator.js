@@ -1,5 +1,4 @@
 import {isWindowReady} from '@enact/core/snapshot';
-import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
@@ -45,7 +44,6 @@ function useScreenOrientation () {
 const RefocusDecorator = Wrapped => {
 	// eslint-disable-next-line no-shadow
 	function RefocusDecorator (props) {
-		checkPropTypes(RefocusDecorator, props);
 		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, ...rest} = props;
 		let {spotlightId} = props;
 		const {generateId} = useId({prefix: 'lime-tablayout-'});
