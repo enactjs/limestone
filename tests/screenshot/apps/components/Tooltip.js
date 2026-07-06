@@ -1,10 +1,10 @@
 import {Tooltip} from '../../../../TooltipDecorator/TooltipDecorator';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const TooltipDisplay = (props) => (
 	<div {...props}>
-		<Tooltip type={props.type} direction={props.direction} arrowAnchor={props.arrowAnchor} style={{top: '50%', left: '50%'}} marquee={props.marquee} width={props.tooltipWidth}>{`View ${props.type} ${props.direction} ${props.arrowAnchor}`}</Tooltip>
+		<Tooltip type={props.type} direction={props.direction} arrowAnchor={props.arrowAnchor} style={{top: '50%', left: '50%'}} marquee={props.marquee} width={props.tooltipWidth}>{props.children || `View ${props.type} ${props.direction} ${props.arrowAnchor}`}</Tooltip>
 	</div>
 );
 
@@ -18,7 +18,7 @@ const tooltipSmokeTests = [
 	TooltipDisplay({type: 'transparent', direction: 'left', arrowAnchor: 'middle'})
 ];
 
-const tooltipCommentedTests = [
+const tooltipExtendedTests = [
 	// Custom width — smoke representatives
 	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipWidth: 200}),
 	TooltipDisplay({type: 'balloon', direction: 'left', arrowAnchor: 'middle', tooltipWidth: 200}),
@@ -34,6 +34,11 @@ const tooltipLargeTextTests = [
 	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center'})}
 ];
 
+const tooltipTallglyphTests = [
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', children: TallglyphMultiScript}),
+	TooltipDisplay({type: 'transparent', direction: 'below', arrowAnchor: 'center', children: TallglyphLatin})
+];
+
 const TooltipTests = [
 	...withConfig({
 		wrapper: {
@@ -41,9 +46,10 @@ const TooltipTests = [
 		}
 	}, [
 		...tooltipSmokeTests,
-		...tooltipCommentedTests,
+		...tooltipExtendedTests,
 		...tooltipLargeTextTests
-	])
+	]),
+	...withTallglyphLocale(tooltipTallglyphTests, {wrapper: {full: true}})
 ];
 
 export default TooltipTests;

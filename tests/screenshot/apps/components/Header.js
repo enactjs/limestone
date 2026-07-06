@@ -3,7 +3,7 @@ import Button from '../../../../Button';
 import Steps from '../../../../Steps';
 import {Fragment} from 'react';
 
-import {LoremString, withConfig, withProps} from './utils';
+import {LoremString, withConfig, withProps, withTallglyphLocale} from './utils';
 
 const baseTests = [
 	<Header type="standard" title="Title" />,
@@ -141,6 +141,12 @@ const headerPortraitTests = [
 	])
 ];
 
+const headerTallglyphValidationTests = [
+	...withProps({type: 'standard'}, baseTests),
+	...withProps({type: 'compact'}, baseTests),
+	...withProps({type: 'wizard', centered: true}, baseTests)
+];
+
 const HeaderTests = [
 	...LtrTests,
 	...specificTests,
@@ -148,12 +154,7 @@ const HeaderTests = [
 	...withConfig({locale: 'ar-SA'}, headerLocaleSmokeTests),
 
 	// Tallglyph Validation
-	...withConfig({locale: 'vi-VN'}, [
-		// Initial
-		...withProps({type: 'standard'}, baseTests),
-		...withProps({type: 'compact'}, baseTests),
-		...withProps({type: 'wizard', centered: true}, baseTests)
-	]),
+	...withTallglyphLocale(headerTallglyphValidationTests),
 	...withConfig({portrait: true, wrapper: {full: true}}, headerPortraitTests)
 ];
 

@@ -1,6 +1,6 @@
 import ProgressButton from '../../../../ProgressButton';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const progressButtonSmokeTests = [
 	<ProgressButton>Update</ProgressButton>,
@@ -92,17 +92,23 @@ const progressButtonFocusTests = [
 	<ProgressButton size="large" showProgress progress={0.5}>Focused Update</ProgressButton>
 ];
 
-const progressButtonCommentedTests = [
+const progressButtonExtendedTests = [
 	...progressButtonSizeLargeTests,
 	...progressButtonOpaqueTests,
 	...progressButtonTransparentTests
 ];
 
+const progressButtonTallglyphTests = [
+	<ProgressButton>{TallglyphMultiScript}</ProgressButton>,
+	<ProgressButton showProgress progress={0.5}>{TallglyphLatin}</ProgressButton>
+];
+
 const ProgressButtonTests = [
 	...progressButtonSmokeTests,
-	...progressButtonCommentedTests,
+	...progressButtonExtendedTests,
 	...withConfig({focus: true}, progressButtonFocusTests),
-	...withConfig({locale: 'ar-SA'}, progressButtonRtlTests)
+	...withConfig({locale: 'ar-SA'}, progressButtonRtlTests),
+	...withTallglyphLocale(progressButtonTallglyphTests)
 ];
 
 export default ProgressButtonTests;

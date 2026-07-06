@@ -1,7 +1,7 @@
 import Button from '../../../../Button';
 import {TabLayout, Tab} from '../../../../TabLayout';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const SimpleTab = (props) => (
 	<Tab {...props}>
@@ -263,11 +263,25 @@ const tabLayoutLargeTextTests = [
 	}
 ];
 
+const tabsTallglyph = [
+	SimpleTab({title: TallglyphMultiScript}),
+	SimpleTab({title: TallglyphLatin}),
+	SimpleTab({title: 'Three'})
+];
+
+const tabLayoutTallglyphTests = [
+	{
+		component: <TabLayout selected={0}>{tabsTallglyph}</TabLayout>,
+		wrapper: {full: true}
+	}
+];
+
 const TabLayoutTests = [
 	...tabLayoutSmokeTests,
 	...tabLayoutQwtcTests,
 	...tabLayoutLargeTextTests,
-	...withConfig({locale: 'ar-SA'}, tabLayoutRtlTests)
+	...withConfig({locale: 'ar-SA'}, tabLayoutRtlTests),
+	...withTallglyphLocale(tabLayoutTallglyphTests)
 ];
 
 export default TabLayoutTests;

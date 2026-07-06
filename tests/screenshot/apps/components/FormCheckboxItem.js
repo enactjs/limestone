@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import FormCheckboxItem from '../../../../FormCheckboxItem';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const basicFormCheckboxItemTests = (prefix) => {
 	const normalName = prefix + 'FormCheckboxItem';
@@ -67,7 +67,7 @@ const formCheckboxItemCenteredTests = [
 	])
 ];
 
-const formCheckboxItemCommentedTests = [
+const formCheckboxItemExtendedTests = [
 	...formCheckboxItemSlotBeforeTests,
 	...formCheckboxItemCenteredTests
 ];
@@ -99,11 +99,17 @@ const formCheckboxItemRtlTests = [
 	}
 ];
 
+const formCheckboxItemTallglyphTests = [
+	<FormCheckboxItem>{TallglyphMultiScript}</FormCheckboxItem>,
+	<FormCheckboxItem selected>{TallglyphLatin}</FormCheckboxItem>
+];
+
 const FormCheckboxItemTests = [
 	...formCheckboxItemSmokeTests,
 	...formCheckboxItemQwtcTests,
-	...formCheckboxItemCommentedTests,
-	...formCheckboxItemRtlTests
+	...formCheckboxItemExtendedTests,
+	...formCheckboxItemRtlTests,
+	...withTallglyphLocale(formCheckboxItemTallglyphTests)
 ];
 
 export default FormCheckboxItemTests;

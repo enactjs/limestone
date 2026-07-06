@@ -2,7 +2,7 @@ import Card from '../../../../Card';
 import Icon from '../../../../Icon';
 import Image from '../../../../Image';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -81,7 +81,7 @@ const cardSmokeTests = [
 	...defaultCardTests.slice(36, 41)
 ];
 
-const cardCommentedTests = [
+const cardExtendedTests = [
 	// Disabled
 	...withProps({disabled: true}, defaultCardTests),
 
@@ -110,12 +110,18 @@ const cardLargeTextTests = [
 	...withConfig({skinVariants: ['largeText']}, defaultCardTests)
 ];
 
+const cardTallglyphTests = [
+	<Card src={img} label={TallglyphMultiScript}>{TallglyphMultiScript}</Card>,
+	<Card src={img} orientation="horizontal" label={TallglyphLatin}>{TallglyphLatin}</Card>
+];
+
 const CardTests = [
 	...defaultCardTests,
 	...newTypeCardTests,
-	...cardCommentedTests,
+	...cardExtendedTests,
 	...cardFocusTests,
-	...cardLargeTextTests
+	...cardLargeTextTests,
+	...withTallglyphLocale(cardTallglyphTests)
 ];
 
 export default CardTests;

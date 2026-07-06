@@ -26,7 +26,7 @@ const spinnerSmokeTests = [
 	spinnerWrapper(<Spinner />)
 ];
 
-const spinnerCommentedTests = [
+const spinnerExtendedTests = [
 	spinnerWrapper(<Spinner centered />),
 	spinnerWrapper(<Spinner size="small" />),
 	spinnerWrapper(<Spinner>Loading content</Spinner>),
@@ -36,7 +36,7 @@ const spinnerCommentedTests = [
 
 const SpinnerTests = [
 	...spinnerSmokeTests,
-	...spinnerCommentedTests
+	...spinnerExtendedTests
 ];
 
 export default SpinnerTests;

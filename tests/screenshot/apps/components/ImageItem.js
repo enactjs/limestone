@@ -2,7 +2,7 @@ import ri from '@enact/ui/resolution';
 
 import ImageItem from '../../../../ImageItem';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -76,6 +76,11 @@ const imageItemFocusReps = withConfig({focus: true, wrapper: {light: true, padde
 	imageItemFocusTests[9]
 ]);
 
+const imageItemTallglyphTests = [
+	<ImageItem src={img} orientation="horizontal" label="Short">Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label=" ฟิ้  ไั  ஒ  து"> ฟิ้  ไั  ஒ  து</ImageItem>
+];
+
 const ImageItemTests = [
 	// base layout permutations + full focus coverage.
 	...imageItemBaseCases,
@@ -104,7 +109,9 @@ const ImageItemTests = [
 
 	// RTL — base permutations + focus representatives.
 	...withConfig({locale: 'ar-SA'}, imageItemBaseCases),
-	...withConfig({locale: 'ar-SA'}, imageItemFocusReps)
+	...withConfig({locale: 'ar-SA'}, imageItemFocusReps),
+
+	...withTallglyphLocale(imageItemTallglyphTests)
 ];
 
 export default ImageItemTests;

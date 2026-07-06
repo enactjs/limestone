@@ -9,7 +9,7 @@ import Scroller from '../../../../Scroller';
 
 import img from '../../images/300x300.png';
 
-import {withConfig, withProps, LoremString} from './utils';
+import {withConfig, withProps, withTallglyphLocale, LoremString} from './utils';
 
 import css from './Alert.module.less';
 
@@ -311,7 +311,7 @@ const alertPortraitTests = [
 const AlertTests = [
 	...alertQwtcTests,
 	...alertExtendedTests,
-	...withConfig({locale: 'vi-VN'}, alertTallglyphTests),
+	...withTallglyphLocale(alertTallglyphTests),
 	...withConfig({locale: 'ar-SA'}, alertRtlTests),
 	...withConfig({portrait: true}, alertPortraitTests)
 ];

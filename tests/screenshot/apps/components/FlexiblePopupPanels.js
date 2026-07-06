@@ -130,7 +130,7 @@ const flexiblePopupPanelsSmokeTests = [
 	}
 ];
 
-const flexiblePopupPanelsCommentedTests = [
+const flexiblePopupPanelsExtendedTests = [
 	...withProps(
 		{fullHeight: true},
 		flexiblePopupPanelsQwtcTests.map(o => ({...o, title: `${o.title} fullHeight`}))
@@ -160,7 +160,7 @@ const flexiblePopupPanelsRtlTests = [
 const FlexiblePopupPanelsTests = [
 	...flexiblePopupPanelsSmokeTests,
 	...flexiblePopupPanelsQwtcTests,
-	...flexiblePopupPanelsCommentedTests,
+	...flexiblePopupPanelsExtendedTests,
 	...flexiblePopupPanelsRtlTests
 ];
 

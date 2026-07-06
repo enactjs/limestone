@@ -50,7 +50,7 @@ const pageViewsSmokeTests = [
 
 ];
 
-const pageViewsCommentedTests = [
+const pageViewsExtendedTests = [
 	{
 		component: <Panel>{panelHeader}<PageViews index={1} pageIndicatorPosition="top">{PageComponents}</PageViews></Panel>,
 		wrapper: {full: true},
@@ -107,12 +107,12 @@ const pageViewsRtlTests = [
 	// locale = 'ar-SA' — smoke representatives
 	pageViewsSmokeTests[1],
 	pageViewsSmokeTests[3],
-	pageViewsCommentedTests[0]
+	pageViewsExtendedTests[0]
 ];
 
 const PageViewsTests = [
 	...pageViewsSmokeTests,
-	...pageViewsCommentedTests,
+	...pageViewsExtendedTests,
 	...withConfig({locale: 'ar-SA'}, pageViewsRtlTests)
 ];
 

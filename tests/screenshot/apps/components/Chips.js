@@ -1,7 +1,7 @@
 import Chips, {Chip} from '../../../../Chips';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const chipsSmokeTests = [
 	<Chips>
@@ -54,9 +54,17 @@ const chipsFocusTests = [
 	</Chips>
 ];
 
+const chipsTallglyphTests = [
+	<Chips>
+		<Chip>{TallglyphMultiScript}</Chip>
+		<Chip>{TallglyphLatin}</Chip>
+	</Chips>
+];
+
 const ChipsTests = [
 	...chipsSmokeTests,
-	...withConfig({focus: true}, chipsFocusTests)
+	...withConfig({focus: true}, chipsFocusTests),
+	...withTallglyphLocale(chipsTallglyphTests)
 ];
 
 export default ChipsTests;

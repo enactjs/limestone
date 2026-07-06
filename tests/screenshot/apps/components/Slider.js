@@ -135,7 +135,7 @@ const sliderRtlTests = [
 	<Slider progressAnchor={0.4} value={60} />
 ];
 
-const sliderCommentedTests = [
+const sliderExtendedTests = [
 	...sliderCustomizedStyleTests,
 	...sliderColorPickerTests,
 	...sliderTooltipTests,
@@ -145,7 +145,7 @@ const sliderCommentedTests = [
 const SliderTests = [
 	...sliderSmokeTests,
 	...sliderQwtcTests,
-	...sliderCommentedTests,
+	...sliderExtendedTests,
 	...withConfig({locale: 'ar-SA'}, sliderRtlTests)
 ];
 

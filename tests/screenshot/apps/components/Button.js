@@ -1,6 +1,6 @@
 import Button from '../../../../Button';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale} from './utils';
 
 import css from './Button.module.less';
 
@@ -32,7 +32,7 @@ const buttonSmokeTests = [
 
 ];
 
-const buttonCommentedTests = [
+const buttonExtendedTests = [
 	// iconPosition = before (Default) + small (default) + large
 	// Leaving size small here as example, but it is not required since it is the default.
 	<Button size="large">click me</Button>,
@@ -228,33 +228,29 @@ const buttonRtlTests = [
 	<Button icon="arrowhookright" iconFlip="auto">click me</Button>
 ];
 
+const buttonTallglyphViTests = [
+	<Button>Vietnamese Text</Button>,
+	<Button icon="star">Vietnamese Text</Button>,
+	<Button> ฟิ้  ไั  ஒ  து</Button>,
+	<Button>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Button>
+];
+
+const buttonTallglyphKmTests = [
+	<Button>Cambodian Text</Button>,
+	<Button icon="star">Cambodian Text</Button>,
+	<Button size="small">តន្ត្រី</Button>
+];
+
 const ButtonTests = [
 	...buttonSmokeTests,
 	...buttonQwtcTests,
-	...buttonCommentedTests,
+	...buttonExtendedTests,
 
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, buttonFocusTests),
 
-	// *************************************************************
 	// Tallglyph validation
-	// locale = 'vi-VN'
-	// *************************************************************
-	...withConfig({locale: 'vi-VN'}, [
-		<Button>Vietnamese Text</Button>,
-		<Button icon="star">Vietnamese Text</Button>,
-		<Button> ฟิ้  ไั  ஒ  து</Button>,
-		<Button>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Button>
-	]),
-
-	// *************************************************************
-	// Tallglyph validation
-	// locale = 'km-KH'
-	// *************************************************************
-	...withConfig({locale: 'km-KH'}, [
-		<Button>Cambodian Text</Button>,
-		<Button icon="star">Cambodian Text</Button>,
-		<Button size="small">តន្ត្រី</Button>
-	]),
+	...withTallglyphLocale(buttonTallglyphViTests),
+	...withConfig({locale: 'km-KH'}, buttonTallglyphKmTests),
 
 	// *************************************************************
 	// RTL

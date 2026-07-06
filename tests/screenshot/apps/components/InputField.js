@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withConfig, withProps} from './utils';
+import {LoremString, withConfig, withProps, withTallglyphLocale} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -70,7 +70,7 @@ const inputFieldQwtcTests = [
 	<InputField value="I am a disabled value" disabled />
 ];
 
-const inputFieldCommentedTests = [
+const inputFieldExtendedTests = [
 	// Selection color
 	<SelectionInput value="Selection value" />
 ];
@@ -234,13 +234,20 @@ const inputFieldRtlTests = [
 	}
 ];
 
+const inputFieldTallglyphTests = [
+	<InputField value=" ฟิ้  ไั  ஒ  து" />,
+	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />,
+	<InputField value="តន្ត្រី" />
+];
+
 const InputFieldTests = [
 	...inputFieldSmokeTests,
 	...inputFieldQwtcTests,
-	...inputFieldCommentedTests,
+	...inputFieldExtendedTests,
 	...inputFieldFocusTests,
 	...withConfig({textSize: 'large'}, inputFieldLargeTextTests),
-	...inputFieldRtlTests
+	...inputFieldRtlTests,
+	...withTallglyphLocale(inputFieldTallglyphTests)
 ];
 
 export default InputFieldTests;

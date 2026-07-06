@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import CheckboxItem from '../../../../CheckboxItem';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const checkboxItemSmokeTests = [
 	<CheckboxItem />,
@@ -110,21 +110,27 @@ const checkboxItemRtlTests = [
 	<CheckboxItem indeterminate>CheckboxItem Checked</CheckboxItem>
 ];
 
-const checkboxItemCommentedTests = [
+const checkboxItemExtendedTests = [
 	...checkboxItemFormCheckboxTests,
 	...checkboxItemIconSlotBeforeTests,
 	...checkboxItemCenteredTests,
 	...checkboxItemLabelPositionTests
 ];
 
+const checkboxItemTallglyphTests = [
+	<CheckboxItem>{TallglyphMultiScript}</CheckboxItem>,
+	<CheckboxItem label={TallglyphLatin}>{TallglyphLatin}</CheckboxItem>
+];
+
 const CheckboxItemTests = [
 	...checkboxItemSmokeTests,
 	...checkboxItemQwtcTests,
-	...checkboxItemCommentedTests,
+	...checkboxItemExtendedTests,
 	...withConfig({focus: true}, checkboxItemFocusTests),
 	...withConfig({textSize: 'large'}, checkboxItemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, checkboxItemRtlTests),
-	...withConfig({locale: 'ar-SA'}, checkboxItemCenteredRtlTests)
+	...withConfig({locale: 'ar-SA'}, checkboxItemCenteredRtlTests),
+	...withTallglyphLocale(checkboxItemTallglyphTests)
 ];
 
 export default CheckboxItemTests;

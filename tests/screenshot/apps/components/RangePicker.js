@@ -1,6 +1,6 @@
 import RangePicker from '../../../../RangePicker';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import css from './Picker.module.less';
 
@@ -186,7 +186,7 @@ const rangePickerRtlFocusTests = [
 	<RangePicker width="medium" joined min={10} max={15} value={12} />
 ];
 
-const rangePickerCommentedTests = [
+const rangePickerExtendedTests = [
 	...rangePickerDisabledTests,
 	...rangePickerWrapTests,
 	...rangePickerJoinedTests,
@@ -195,15 +195,21 @@ const rangePickerCommentedTests = [
 	...rangePickerTitleTests
 ];
 
+const rangePickerTallglyphTests = [
+	<RangePicker min={0} max={100} value={5} title={TallglyphMultiScript} />,
+	<RangePicker min={0} max={100} value={5} inlineTitle title={TallglyphLatin} />
+];
+
 const RangePickerTests = [
 	...rangePickerSmokeTests,
 	...rangePickerQwtcTests,
-	...rangePickerCommentedTests,
+	...rangePickerExtendedTests,
 	...withConfig({focus: true}, rangePickerFocusTests),
 	...rangePickerLargeTextTests,
 	...withConfig({locale: 'ar-SA'}, rangePickerLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, rangePickerRtlTests),
-	...withConfig({focus: true, locale: 'ar-SA'}, rangePickerRtlFocusTests)
+	...withConfig({focus: true, locale: 'ar-SA'}, rangePickerRtlFocusTests),
+	...withTallglyphLocale(rangePickerTallglyphTests)
 ];
 
 export default RangePickerTests;

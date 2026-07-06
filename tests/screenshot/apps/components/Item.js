@@ -1,7 +1,7 @@
 import Item from '../../../../Item';
 import Icon from '../../../../Icon';
 
-import {withConfig, withProps, LoremString} from './utils';
+import {withConfig, withProps, withTallglyphLocale, LoremString} from './utils';
 
 import css from './Item.module.less';
 
@@ -123,7 +123,7 @@ const itemCustomStyleTests = [
 	])
 ];
 
-const itemCommentedTests = [
+const itemExtendedTests = [
 	// Long text
 	...longTextItemTests,
 	...rtlItemTests,
@@ -189,14 +189,14 @@ const itemLargeTextTests = [
 const ItemTests = [
 	...itemSmokeTests,
 	...itemQwtcTests,
-	...itemCommentedTests,
+	...itemExtendedTests,
 	...withConfig({focus: true}, itemFocusTests),
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, itemFocusedLightWrapperTests),
 	...withConfig({textSize: 'large'}, itemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, itemRtlTests),
 	...withConfig({locale: 'ar-SA', textSize: 'large'}, itemRtlLargeTextTests),
-	...withConfig({locale: 'vi-VN'}, itemTallglyphValidationTests),
-	...withConfig({locale: 'vi-VN', textSize: 'large'}, itemTallglyphValidationLargeTextTests)
+	...withTallglyphLocale(itemTallglyphValidationTests),
+	...withTallglyphLocale(itemTallglyphValidationLargeTextTests, {textSize: 'large'})
 ];
 
 export default ItemTests;

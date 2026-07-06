@@ -1,6 +1,6 @@
 import Heading from '../../../../Heading';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale} from './utils';
 
 const bidirectionalHeading = [
 	<Heading>Input Password for ABC جهاز, please</Heading>,
@@ -27,7 +27,7 @@ const headingQwtcTests = [
 	// end of [QWTC-2276]
 ];
 
-const headingCommentedTests = [
+const headingExtendedTests = [
 	// Heading with no children
 	<Heading />,
 
@@ -88,10 +88,11 @@ const bidirectionalTests = [
 const HeadingTests = [
 	...headingSmokeTests,
 	...headingQwtcTests,
-	...headingCommentedTests,
+	...headingExtendedTests,
 	...bidirectionalTests,
 	...withProps({forceDirection: 'locale'}, bidirectionalTests),
-	...withConfig({skinVariants: ['largeText']}, headingLargeTextTests)
+	...withConfig({skinVariants: ['largeText']}, headingLargeTextTests),
+	...withTallglyphLocale(headingQwtcTests)
 ];
 
 export default HeadingTests;

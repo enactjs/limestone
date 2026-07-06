@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import RadioItem from '../../../../RadioItem';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const radioItemSmokeTests = [
 	<RadioItem>RadioItem</RadioItem>,
@@ -149,17 +149,23 @@ const radioItemRtlTests = [
 	<RadioItem selected icon="arrowup">-Lorem</RadioItem>
 ];
 
-const radioItemCommentedTests = [
+const radioItemExtendedTests = [
 	...radioItemSlotBeforeTests
+];
+
+const radioItemTallglyphTests = [
+	<RadioItem>{TallglyphMultiScript}</RadioItem>,
+	<RadioItem selected>{TallglyphLatin}</RadioItem>
 ];
 
 const RadioItemTests = [
 	...radioItemSmokeTests,
 	...radioItemQwtcTests,
-	...radioItemCommentedTests,
+	...radioItemExtendedTests,
 	...withConfig({focus: true}, radioItemFocusTests),
 	...withConfig({textSize: 'large'}, radioItemLargeTextTests),
-	...withConfig({locale: 'ar-SA'}, radioItemRtlTests)
+	...withConfig({locale: 'ar-SA'}, radioItemRtlTests),
+	...withTallglyphLocale(radioItemTallglyphTests)
 ];
 
 export default RadioItemTests;
