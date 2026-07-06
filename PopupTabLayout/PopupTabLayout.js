@@ -36,7 +36,7 @@ import componentCss from './PopupTabLayout.module.less';
 
 // List all the props from PopupTabLayout that we want to move from this component's root onto PopupTabLayout.
 const popupPropList = ['noAutoDismiss', 'onHide', 'onKeyDown', 'onShow', 'open',
-	'position', 'scrimType', 'spotlightId', 'spotlightRestrict', 'id', 'className',
+	'position', 'prerender', 'scrimType', 'spotlightId', 'spotlightRestrict', 'id', 'className',
 	'style', 'noAnimation', 'onClose'];
 
 const OptimizedContainer = SpotlightContainerDecorator(
@@ -198,7 +198,7 @@ const PopupTabLayoutBase = kind({
 		 * Optimizes PopupTabLayout without Popup when true.
 		 *
 		 * @type {Boolean}
-		 * @private
+		 * @public
 		 */
 		optimized: PropTypes.bool,
 
@@ -218,6 +218,20 @@ const PopupTabLayoutBase = kind({
 		 * @private
 		 */
 		position: PropTypes.oneOf(['left']),
+
+		/**
+		 * Enables prerendering support.
+		 *
+		 * When `true`, the popup content is rendered inline on the first render and relocated into
+		 * the floating layer via a portal once mounted, so the `PopupTabLayout` can be captured in
+		 * prerendered HTML and hydrate without a mismatch. Unlike `optimized`, this keeps the full
+		 * {@link limestone/Popup.Popup|Popup}/`FloatingLayer` behavior.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		prerender: PropTypes.bool,
 
 		/**
 		 * Scrim type.
@@ -302,6 +316,7 @@ const PopupTabLayoutBase = kind({
 			delete popupProps.noAutoDismiss;
 			delete popupProps.onHide;
 			delete popupProps.onShow;
+			delete popupProps.prerender;
 			delete popupProps.scrimType;
 		}
 

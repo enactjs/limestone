@@ -1,3 +1,4 @@
+import {isWindowReady} from '@enact/core/snapshot';
 import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
@@ -22,8 +23,10 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 );
 
 function useScreenOrientation () {
+	// Guard against a prerender/SSR pass where `window` is unavailable. The orientation defaults to
+	// 'landscape' until a window is ready; the resize effect keeps it current on the client.
 	const getOrientation = () =>
-		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+		(isWindowReady() && window.innerWidth <= window.innerHeight) ? 'portrait' : 'landscape';
 
 	const [orientation, setOrientation] = useState(getOrientation());
 

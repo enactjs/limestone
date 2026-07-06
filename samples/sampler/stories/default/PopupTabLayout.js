@@ -93,6 +93,8 @@ const PopupTabLayoutSamplesBase = (props) => {
 				onShow={action('onShow')}
 				scrimType={args['scrimType']}
 				spotlightRestrict={args['spotlightRestrict']}
+				optimized={args['optimized']}
+				prerender={args['prerender']}
 			>
 				<Tab
 					icon={includeIcons ? 'picture' : null}
@@ -219,6 +221,8 @@ const PopupTabLayoutSamples = I18nContextDecorator(
 export const _PopupTabLayout = (args) => <PopupTabLayoutSamples args={args} />;
 
 boolean('include icons', _PopupTabLayout, Config, true);
+boolean('optimized', _PopupTabLayout, Config);
+boolean('prerender', _PopupTabLayout, Config);
 boolean('noAnimation', _PopupTabLayout, Config);
 boolean('noAutoDismiss', _PopupTabLayout, Config);
 select(
