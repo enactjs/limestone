@@ -1,7 +1,7 @@
 import Item from '../../../../Item';
 import Icon from '../../../../Icon';
 
-import {withConfig, withProps, withTallglyphLocale, LoremString, TallglyphLatin, TallglyphHindi, TallglyphMultiScript} from './utils';
+import {withConfig, withProps, withTallglyphLocale, LoremString, TallglyphLatin} from './utils';
 
 import css from './Item.module.less';
 
