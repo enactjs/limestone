@@ -68,7 +68,7 @@ const contextualPopupRtlTests = [
 	<ContextualPopupButtonNoArrow offset="none" />
 ];
 
-const contextualPopupCommentedTests = [
+const contextualPopupExtendedTests = [
 	// *************************************************************
 	// Test auto swapping side at boundaries
 	// *************************************************************
@@ -97,7 +97,7 @@ const contextualPopupCommentedTests = [
 const ContextualPopupDecoratorTests = [
 	<ContextualPopupButton open={false} />,
 	...withConfig({wrapper}, contextualPopupSmokeTests),
-	...contextualPopupCommentedTests,
+	...contextualPopupExtendedTests,
 	...withConfig({wrapper, locale: 'ar-SA'}, contextualPopupRtlTests)
 ];
 

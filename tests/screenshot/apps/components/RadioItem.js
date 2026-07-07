@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import RadioItem from '../../../../RadioItem';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const radioItemSmokeTests = [
 	<RadioItem>RadioItem</RadioItem>,
@@ -18,23 +18,23 @@ const radioItemQwtcTests = [
 	// [QWTC-1851]
 	<RadioItem inline>مساء الخير</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem disabled>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem disabled>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem inline>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem disabled>តន្ត្រី</RadioItem>,
+	<RadioItem disabled>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>តន្ត្រី</RadioItem>,
+	<RadioItem inline>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem inline>{TallglyphMultiScript}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem>{TallglyphMultiScript}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem selected>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>តន្ត្រី</RadioItem>,
+	<RadioItem selected>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem selected>{TallglyphMultiScript}</RadioItem>,
 	// Selected - disabled
 	// [QWTC-1843]
 	<RadioItem selected disabled>RadioItem Checked</RadioItem>,
@@ -46,9 +46,9 @@ const radioItemQwtcTests = [
 	// Long text selected - LTR [QWTC-1849]
 	<RadioItem selected>-Lorem</RadioItem>,
 
-	<RadioItem selected icon="arrowup">ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
-	<RadioItem selected icon="arrowup">តន្ត្រី</RadioItem>,
-	<RadioItem selected icon="arrowup">ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem selected icon="arrowup">{TallglyphLatin}</RadioItem>,
+	<RadioItem selected icon="arrowup">{TallglyphKhmer}</RadioItem>,
+	<RadioItem selected icon="arrowup">{TallglyphMultiScript}</RadioItem>,
 	// Selected - disabled
 	<RadioItem selected disabled icon="arrowup">RadioItem Checked</RadioItem>,
 	// Selected - disabled - inline
@@ -95,23 +95,23 @@ const radioItemLargeTextTests = [
 	// [QWTC-1851]
 	<RadioItem inline>مساء الخير</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem disabled>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem disabled>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem inline>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem disabled>តន្ត្រី</RadioItem>,
+	<RadioItem disabled>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>តន្ត្រី</RadioItem>,
+	<RadioItem inline>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1855]
-	<RadioItem inline>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem inline>{TallglyphMultiScript}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem>{TallglyphMultiScript}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem selected>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>តន្ត្រី</RadioItem>,
+	<RadioItem selected>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ฟิ้  ไั  ஒ  து</RadioItem>
+	<RadioItem selected>{TallglyphMultiScript}</RadioItem>
 ];
 
 const radioItemRtlTests = [
@@ -122,17 +122,17 @@ const radioItemRtlTests = [
 	// [QWTC-1851]
 	<RadioItem disabled>مساء الخير</RadioItem>,
 	// [QWTC-1851]
-	<RadioItem inline>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem inline>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1851]
-	<RadioItem inline>តន្ត្រី</RadioItem>,
+	<RadioItem inline>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem>{TallglyphMultiScript}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</RadioItem>,
+	<RadioItem selected>{TallglyphLatin}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>តន្ត្រី</RadioItem>,
+	<RadioItem selected>{TallglyphKhmer}</RadioItem>,
 	// [QWTC-1852]
-	<RadioItem selected>ฟิ้  ไั  ஒ  து</RadioItem>,
+	<RadioItem selected>{TallglyphMultiScript}</RadioItem>,
 	// RadioItem* is selected - RTL [QWTC-1854]
 	<RadioItem selected>RadioItem Checked</RadioItem>,
 	// Selected - disabled
@@ -149,17 +149,23 @@ const radioItemRtlTests = [
 	<RadioItem selected icon="arrowup">-Lorem</RadioItem>
 ];
 
-const radioItemCommentedTests = [
+const radioItemExtendedTests = [
 	...radioItemSlotBeforeTests
+];
+
+const radioItemTallglyphTests = [
+	<RadioItem>{TallglyphMultiScript}</RadioItem>,
+	<RadioItem selected>{TallglyphLatin}</RadioItem>
 ];
 
 const RadioItemTests = [
 	...radioItemSmokeTests,
 	...radioItemQwtcTests,
-	...radioItemCommentedTests,
+	...radioItemExtendedTests,
 	...withConfig({focus: true}, radioItemFocusTests),
 	...withConfig({textSize: 'large'}, radioItemLargeTextTests),
-	...withConfig({locale: 'ar-SA'}, radioItemRtlTests)
+	...withConfig({locale: 'ar-SA'}, radioItemRtlTests),
+	...withTallglyphLocale(radioItemTallglyphTests)
 ];
 
 export default RadioItemTests;

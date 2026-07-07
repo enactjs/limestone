@@ -1,7 +1,7 @@
 import {Chip} from '../../../../Chips';
 import gameHomeIcon from '../../images/icon_app_game.png';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const chipSmokeTests = [
 	<Chip>Default Chip</Chip>,
@@ -49,10 +49,16 @@ const chipLargeTextTests = [
 	<Chip deleteButton={{icon: 'closex', position: 'right'}}>Chip with Delete Button (Right)</Chip>
 ];
 
+const chipTallglyphTests = [
+	<Chip>{TallglyphMultiScript}</Chip>,
+	<Chip icon="home">{TallglyphLatin}</Chip>
+];
+
 const ChipTests = [
 	...chipSmokeTests,
 	...withConfig({focus: true}, chipFocusTests),
-	...withConfig({skinVariants: ['largeText']}, chipLargeTextTests)
+	...withConfig({skinVariants: ['largeText']}, chipLargeTextTests),
+	...withTallglyphLocale(chipTallglyphTests)
 ];
 
 export default ChipTests;

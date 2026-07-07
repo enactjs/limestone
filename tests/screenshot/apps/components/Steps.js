@@ -14,7 +14,7 @@ const stepsSmokeTests = [
 
 ];
 
-const stepsCommentedTests = [
+const stepsExtendedTests = [
 	<Steps size="tiny" total={25} />,
 	<Steps size="medium" total={25} />,
 	<Steps size="large" total={25} />,
@@ -54,7 +54,7 @@ const stepsCommentedTests = [
 
 const StepsTests = [
 	...stepsSmokeTests,
-	...stepsCommentedTests
+	...stepsExtendedTests
 ];
 
 export default StepsTests;

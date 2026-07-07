@@ -1,15 +1,15 @@
 import Picker from '../../../../Picker';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import css from './Picker.module.less';
 
 const pickerList = {
 	tall: [
-		'नरेंद्र मोदी',
-		' ฟิ้  ไั  ஒ  து',
-		'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ',
-		'តន្ត្រី'
+		TallglyphHindi,
+		TallglyphMultiScript,
+		TallglyphLatin,
+		TallglyphKhmer
 	],
 	vegetables: [
 		'Celery',
@@ -52,10 +52,12 @@ const pickerSmokeTests = [
 const pickerQwtcTests = [
 	// Locale Font Displays on Picker - [QWTC-2214]
 	<Picker value={0}>{pickerList.tall}</Picker>,
-	{
-		locale: 'th-TH',
-		component: <Picker value={0}>{pickerList.tall}</Picker>
-	},
+	...withConfig({locale: 'th-TH'}, [
+		<Picker value={0}>{pickerList.tall}</Picker>
+	]),
+	...withTallglyphLocale([
+		<Picker value={0}>{pickerList.tall}</Picker>
+	]),
 	// end of [QWTC-2214]
 
 	// tallCharacters: Change 'width', 'wrap', 'joined', 'changedBy', 'noAnimation', 'disabled', 'incrementIcon', 'decrementIcon' dynamically - [QWTC-2215]
@@ -265,7 +267,7 @@ const pickerRtlAllTests = [
 
 const pickerRtlFocusTests = pickerFocusTests;
 
-const pickerCommentedTests = [
+const pickerExtendedTests = [
 	...pickerVegetablesTests,
 	...pickerVerticalTests
 ];
@@ -273,7 +275,7 @@ const pickerCommentedTests = [
 const PickerTests = [
 	...pickerSmokeTests,
 	...pickerQwtcTests,
-	...pickerCommentedTests,
+	...pickerExtendedTests,
 	...withConfig({focus: true}, pickerFocusTests),
 	...withConfig({locale: 'ar-SA'}, pickerRtlAllTests),
 	...withConfig({focus: true, locale: 'ar-SA'}, pickerRtlFocusTests),

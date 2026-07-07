@@ -2,7 +2,7 @@ import BodyText from '../../../../BodyText';
 import Button from '../../../../Button';
 import WizardPanels, {Panel} from '../../../../WizardPanels';
 
-import {LongerLoremString, withConfig} from './utils';
+import {LongerLoremString, withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const customPrevButton = (<Button>Previous</Button>);
 const customNextButton = (<Button>Next</Button>);
@@ -34,7 +34,7 @@ const wizardQwtcTests = [
 	</WizardPanels>
 ];
 
-const wizardCommentedTests = [
+const wizardExtendedTests = [
 	// Test to never show next/prev button on all the panels
 	<WizardPanels index={0} prevButtonVisibility="never" nextButtonVisibility="never" title="WizardPanel">
 		<Panel>View 1</Panel>
@@ -110,13 +110,22 @@ const wizardPortraitTests = [
 	</WizardPanels>
 ];
 
+const wizardTallglyphTests = [
+	<WizardPanels index={0} title={TallglyphMultiScript}>
+		<Panel>{TallglyphMultiScript}</Panel>
+		<Panel>{TallglyphLatin}</Panel>
+	</WizardPanels>
+];
+
 const WizardPanelsTests = [
 	...withConfig({wrapper}, [
 		...wizardSmokeTests,
 		...wizardQwtcTests,
-		...wizardCommentedTests,
+		...wizardExtendedTests,
 		...wizardRtlTests
 	]),
+
+	...withConfig({wrapper}, withTallglyphLocale(wizardTallglyphTests)),
 
 	// Portrait
 	...withConfig({portrait: true}, wizardPortraitTests)

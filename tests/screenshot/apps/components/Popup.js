@@ -1,5 +1,5 @@
 import Popup from '../../../../Popup';
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const popupPositionTests = [
 	// [QWTC-1904]
@@ -28,7 +28,7 @@ const popupQwtcTests = [
 	...withProps({scrimType: 'translucent'}, popupPositionTests)
 ];
 
-const popupCommentedTests = [
+const popupExtendedTests = [
 	...withProps({scrimType: 'transparent'}, popupBaseTests),
 	...withProps({scrimType: 'none'}, popupBaseTests)
 ];
@@ -46,12 +46,18 @@ const popupRtlTests = [
 	...withProps({scrimType: 'none'}, [<Popup open>Popup!</Popup>])
 ];
 
+const popupTallglyphTests = [
+	<Popup open>{TallglyphMultiScript}</Popup>,
+	<Popup open position="center">{TallglyphLatin}</Popup>
+];
+
 const PopupTests = [
 	...popupSmokeTests,
 	...popupQwtcTests,
-	...popupCommentedTests,
+	...popupExtendedTests,
 	...withConfig({locale: 'ar-SA'}, popupRtlTests),
-	...withConfig({textSize: 'large'}, popupBaseTests)
+	...withConfig({textSize: 'large'}, popupBaseTests),
+	...withTallglyphLocale(popupTallglyphTests)
 ];
 
 export default withConfig({wrapper: {full: true}}, PopupTests);

@@ -1,6 +1,6 @@
 import IconItem from '../../../../IconItem';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import img from '../../images/200x200.png';
 
@@ -48,7 +48,7 @@ const iconItemSmokeTests = [
 	defaultIconItemTests[22]
 ];
 
-const iconItemCommentedTests = [
+const iconItemExtendedTests = [
 	// Bordered
 	...withProps({bordered: true}, iconItemSmokeTests),
 
@@ -64,9 +64,14 @@ const iconItemFocusTests = [
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, iconItemSmokeTests)
 ];
 
+const iconItemTallglyphTests = [
+	<IconItem background="#000000" icon="usb" label={TallglyphMultiScript} />,
+	<IconItem background="#ffffff" image={imageProp} label={TallglyphLatin} labelColor="dark" />
+];
+
 const IconItemTests = [
 	...iconItemSmokeTests,
-	...iconItemCommentedTests,
+	...iconItemExtendedTests,
 	...iconItemFocusTests,
 	...withConfig({
 		focusRing: true,
@@ -75,7 +80,8 @@ const IconItemTests = [
 		<IconItem background="#1b1b1b" icon="usb" />,
 		<IconItem background="#1b1b1b" icon="usb" label="Label" />
 	]),
-	...withConfig({skinVariants: ['largeText']}, iconItemSmokeTests)
+	...withConfig({skinVariants: ['largeText']}, iconItemSmokeTests),
+	...withTallglyphLocale(iconItemTallglyphTests)
 ];
 
 export default IconItemTests;

@@ -1,7 +1,7 @@
 import Icon from '../../../../Icon';
 import SwitchItem from '../../../../SwitchItem';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const switchItemSmokeTests = [
 	<SwitchItem />,
@@ -53,11 +53,17 @@ const switchItemRtlTests = [
 	<SwitchItem>SwitchItem<Icon slot="slotAfter">home</Icon></SwitchItem>
 ];
 
+const switchItemTallglyphTests = [
+	<SwitchItem>{TallglyphMultiScript}</SwitchItem>,
+	<SwitchItem selected>{TallglyphLatin}</SwitchItem>
+];
+
 const SwitchItemTests = [
 	...switchItemSmokeTests,
 	...withConfig({focus: true}, switchItemFocusTests),
 	...withConfig({textSize: 'large'}, switchItemLargeTextTests),
-	...withConfig({locale: 'ar-SA'}, switchItemRtlTests)
+	...withConfig({locale: 'ar-SA'}, switchItemRtlTests),
+	...withTallglyphLocale(switchItemTallglyphTests)
 ];
 
 export default SwitchItemTests;

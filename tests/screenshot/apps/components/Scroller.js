@@ -76,7 +76,7 @@ const scrollerQwtcTests = [
 	</Scroller>
 ];
 
-const scrollerCommentedTests = [
+const scrollerExtendedTests = [
 	{
 		wrapper: {
 			tall: true
@@ -117,7 +117,7 @@ const scrollerFocusTests = [
 const ScrollerTests = [
 	...scrollerSmokeTests,
 	...scrollerQwtcTests,
-	...scrollerCommentedTests,
+	...scrollerExtendedTests,
 	...withConfig({focus: true}, scrollerFocusTests)
 ];
 

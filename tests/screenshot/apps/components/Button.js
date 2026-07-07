@@ -1,6 +1,6 @@
 import Button from '../../../../Button';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import css from './Button.module.less';
 
@@ -32,7 +32,7 @@ const buttonSmokeTests = [
 
 ];
 
-const buttonCommentedTests = [
+const buttonExtendedTests = [
 	// iconPosition = before (Default) + small (default) + large
 	// Leaving size small here as example, but it is not required since it is the default.
 	<Button size="large">click me</Button>,
@@ -162,10 +162,10 @@ const buttonQwtcTests = [
 	<Button color="red" disabled>plus</Button>,
 
 	// [QWTC-1837]
-	<Button> ฟิ้  ไั  ஒ  து</Button>,
-	<Button>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Button>,
+	<Button>{TallglyphMultiScript}</Button>,
+	<Button>{TallglyphLatin}</Button>,
 	<Button>Bản văn</Button>,
-	<Button>តន្ត្រី</Button>,
+	<Button>{TallglyphKhmer}</Button>,
 	// end [QWTC-1837]
 
 	<Button selected backgroundOpacity="transparent">click me</Button>, // [QWTC-1828]
@@ -228,33 +228,29 @@ const buttonRtlTests = [
 	<Button icon="arrowhookright" iconFlip="auto">click me</Button>
 ];
 
+const buttonTallglyphViTests = [
+	<Button>Vietnamese Text</Button>,
+	<Button icon="star">Vietnamese Text</Button>,
+	<Button>{TallglyphMultiScript}</Button>,
+	<Button>{TallglyphLatin}</Button>
+];
+
+const buttonTallglyphKmTests = [
+	<Button>Cambodian Text</Button>,
+	<Button icon="star">Cambodian Text</Button>,
+	<Button size="small">{TallglyphKhmer}</Button>
+];
+
 const ButtonTests = [
 	...buttonSmokeTests,
 	...buttonQwtcTests,
-	...buttonCommentedTests,
+	...buttonExtendedTests,
 
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, buttonFocusTests),
 
-	// *************************************************************
 	// Tallglyph validation
-	// locale = 'vi-VN'
-	// *************************************************************
-	...withConfig({locale: 'vi-VN'}, [
-		<Button>Vietnamese Text</Button>,
-		<Button icon="star">Vietnamese Text</Button>,
-		<Button> ฟิ้  ไั  ஒ  து</Button>,
-		<Button>ÃÑÕÂÊÎÔÛÄËÏÖÜŸ</Button>
-	]),
-
-	// *************************************************************
-	// Tallglyph validation
-	// locale = 'km-KH'
-	// *************************************************************
-	...withConfig({locale: 'km-KH'}, [
-		<Button>Cambodian Text</Button>,
-		<Button icon="star">Cambodian Text</Button>,
-		<Button size="small">តន្ត្រី</Button>
-	]),
+	...withTallglyphLocale(buttonTallglyphViTests),
+	...withConfig({locale: 'km-KH'}, buttonTallglyphKmTests),
 
 	// *************************************************************
 	// RTL

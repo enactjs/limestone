@@ -2,7 +2,7 @@ import {scaleToRem} from '@enact/ui/resolution';
 
 import Dropdown from '../../../../Dropdown';
 
-import {withProps} from './utils';
+import {withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const children = (itemCount) => (new Array(itemCount)).fill().map((i, index) => `Option ${index + 1}`);
 
@@ -39,7 +39,7 @@ const dropdownQwtcTests = [
 	...withProps({size: 'small'}, Widths)
 ];
 
-const dropdownCommentedTests = [
+const dropdownExtendedTests = [
 	// open with number type width
 	<Dropdown open width={360} title="Number type width">
 		{children(5)}
@@ -81,12 +81,18 @@ const dropdownRtlTests = [
 	}
 ];
 
+const dropdownTallglyphTests = [
+	<Dropdown placeholder={TallglyphMultiScript} />,
+	<Dropdown title={TallglyphLatin} placeholder={TallglyphMultiScript} />
+];
+
 const DropdownTests = [
 	...dropdownSmokeTests,
 	...dropdownQwtcTests,
-	...dropdownCommentedTests,
+	...dropdownExtendedTests,
 	...dropdownFocusTests,
-	...dropdownRtlTests
+	...dropdownRtlTests,
+	...withTallglyphLocale(dropdownTallglyphTests)
 ];
 
 export default DropdownTests;

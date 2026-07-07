@@ -1,6 +1,6 @@
 import BodyText from '../../../../BodyText';
 
-import {withConfig, LoremString} from './utils';
+import {withConfig, withTallglyphLocale, LoremString} from './utils';
 
 const bodyTextSmokeTests = [
 	<BodyText>This is some text</BodyText>, // [QWTC - 2022]
@@ -31,15 +31,17 @@ const bodyTextLocaleSmokeTests = [
 	<BodyText centered size="small">This is some text</BodyText> // [QWTC - 2026]
 ];
 
+const bodyTextTallglyphTests = [
+	<BodyText>RTL sample</BodyText>,  // [QWTC - 2022]
+	<BodyText size="small">RTL sample small</BodyText>  // [QWTC - 2023]
+];
+
 const BodyTextTests = [
 	...bodyTextSmokeTests,
 	...bodyTextQwtcTests,
 
 	// Tallglyph validation
-	...withConfig({locale: 'vi-VN'}, [
-		<BodyText>RTL sample</BodyText>,  // [QWTC - 2022]
-		<BodyText size="small">RTL sample small</BodyText>  // [QWTC - 2023]
-	]),
+	...withTallglyphLocale(bodyTextTallglyphTests),
 
 	...withConfig({locale: 'ar-SA'}, bodyTextLocaleSmokeTests),
 	...withConfig({skinVariants: ['largeText']}, bodyTextLocaleSmokeTests)

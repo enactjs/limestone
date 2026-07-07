@@ -1,6 +1,6 @@
 import QuickGuidePanels, {Panel as QuickGuidePanel} from '../../../../QuickGuidePanels';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale} from './utils';
 
 const quickGuideSmokeTests = [
 	<QuickGuidePanels>
@@ -25,9 +25,7 @@ const quickGuideSmokeTests = [
 
 const QuickGuidePanelsTests = [
 	...withConfig({wrapper: {full: true}}, quickGuideSmokeTests),
-	// Tallglyph validation
-	...withConfig({wrapper: {full: true}, locale: 'vi-VN'}, quickGuideSmokeTests),
-	// RTL validation
+	...withTallglyphLocale(quickGuideSmokeTests, {wrapper: {full: true}}),
 	...withConfig({wrapper: {full: true}, locale: 'ar-SA'}, quickGuideSmokeTests)
 ];
 

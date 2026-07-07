@@ -4,7 +4,7 @@ import img from '../../images/600x600.png';
 
 import css from './KeyGuide.module.less';
 
-import {withConfig} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const keyGuideSmokeTests = [
 	<KeyGuide open>{[{icon: 'red', children: 'red', key: 'a'}]}</KeyGuide>,
@@ -42,10 +42,16 @@ const keyGuideLargeTextTests = [
 	<KeyGuide arrowPosition="left" css={css} open>{{children: 'guide', imageSrc: img}}</KeyGuide>
 ];
 
+const keyGuideTallglyphTests = [
+	<KeyGuide open>{[{icon: 'plus', children: TallglyphMultiScript, key: 'a'}]}</KeyGuide>,
+	<KeyGuide arrowPosition="top" css={css} open>{{children: TallglyphLatin, imageSrc: img}}</KeyGuide>
+];
+
 const KeyGuideTests = [
 	...keyGuideSmokeTests,
 	...withConfig({locale: 'ar-SA'}, keyGuideRtlTests),
-	...withConfig({skinVariants: ['largeText']}, keyGuideLargeTextTests)
+	...withConfig({skinVariants: ['largeText']}, keyGuideLargeTextTests),
+	...withTallglyphLocale(keyGuideTallglyphTests)
 ];
 
 export default KeyGuideTests;
