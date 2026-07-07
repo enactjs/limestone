@@ -1,4 +1,3 @@
-import {isWindowReady} from '@enact/core/snapshot';
 import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import {useId} from '@enact/ui/internal/IdProvider';
@@ -24,7 +23,7 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 
 function useScreenOrientation () {
 	const getOrientation = () =>
-		(isWindowReady() && window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
+		(typeof window === 'object' && window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
 
 	const [orientation, setOrientation] = useState(getOrientation());
 
