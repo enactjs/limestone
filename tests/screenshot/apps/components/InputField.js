@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withConfig, withProps, withTallglyphLocale} from './utils';
+import {LoremString, withConfig, withProps, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -51,15 +51,15 @@ const inputFieldQwtcTests = [
 
 	// tallCharacters: Change 'size' dynamically - [QWTC-2164]
 	// Note: text stays the same size, the InputField field becomes smaller
-	<InputField value="नरेंद्र मोदी" size="large" />,
-	<InputField value=" ฟิ้  ไั  ஒ  து" size="large" />,
-	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" size="large" />,
-	<InputField value="តន្ត្រី" size="large" />,
+	<InputField value={TallglyphHindi} size="large" />,
+	<InputField value={TallglyphMultiScript} size="large" />,
+	<InputField value={TallglyphLatin} size="large" />,
+	<InputField value={TallglyphKhmer} size="large" />,
 	// Testing default size 'large'
-	<InputField value="नरेंद्र मोदी" />,
-	<InputField value=" ฟิ้  ไั  ஒ  து" />,
-	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />,
-	<InputField value="តន្ត្រី" />,
+	<InputField value={TallglyphHindi} />,
+	<InputField value={TallglyphMultiScript} />,
+	<InputField value={TallglyphLatin} />,
+	<InputField value={TallglyphKhmer} />,
 
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
 	<InputField value="small InputField" size="large" />,
@@ -178,37 +178,37 @@ const inputFieldRtlTests = [
 	// Note: text stays the same size, the InputField field becomes smaller
 	{
 		locale: 'ar-SA',
-		component: <InputField value="नरेंद्र मोदी" size="large" />
+		component: <InputField value={TallglyphHindi} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value=" ฟิ้  ไั  ஒ  து" size="large" />
+		component: <InputField value={TallglyphMultiScript} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" size="large" />
+		component: <InputField value={TallglyphLatin} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="តន្ត្រី" size="large" />
+		component: <InputField value={TallglyphKhmer} size="large" />
 	},
 
 	// Testing default size 'large'
 	{
 		locale: 'ar-SA',
-		component: <InputField value="नरेंद्र मोदी" />
+		component: <InputField value={TallglyphHindi} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value=" ฟิ้  ไั  ஒ  து" />
+		component: <InputField value={TallglyphMultiScript} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />
+		component: <InputField value={TallglyphLatin} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="តន្ត្រី" />
+		component: <InputField value={TallglyphKhmer} />
 	},
 
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
@@ -235,9 +235,9 @@ const inputFieldRtlTests = [
 ];
 
 const inputFieldTallglyphTests = [
-	<InputField value=" ฟิ้  ไั  ஒ  து" />,
-	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />,
-	<InputField value="តន្ត្រី" />
+	<InputField value={TallglyphMultiScript} />,
+	<InputField value={TallglyphLatin} />,
+	<InputField value={TallglyphKhmer} />
 ];
 
 const InputFieldTests = [

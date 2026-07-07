@@ -3,7 +3,7 @@ import Button from '../../../../Button';
 import Steps from '../../../../Steps';
 import {Fragment} from 'react';
 
-import {LoremString, withConfig, withProps, withTallglyphLocale} from './utils';
+import {LoremString, withConfig, withProps, withTallglyphLocale, TallglyphMultiScriptQwtc} from './utils';
 
 const baseTests = [
 	<Header type="standard" title="Title" />,
@@ -52,9 +52,9 @@ const specificTests = [
 	// end of [QWTC-1887]
 
 	// [QWTC-1879]
-	<Header type="standard" title="ฟิ้  ไั  ஒ  த" slotAfter={dropIn.singleButton} subtitle="ฟิ้  ไั  ஒ  த" />,
+	<Header type="standard" title={TallglyphMultiScriptQwtc} slotAfter={dropIn.singleButton} subtitle={TallglyphMultiScriptQwtc} />,
 	// [QWTC-1878]
-	<Header type="compact" title="ฟิ้  ไั  ஒ  த" slotAfter={dropIn.singleButton} subtitle="ฟิ้  ไั  ஒ  த" />,
+	<Header type="compact" title={TallglyphMultiScriptQwtc} slotAfter={dropIn.singleButton} subtitle={TallglyphMultiScriptQwtc} />,
 	// [QWTC-2224]
 	<Header type="mini" title="Enact" slotBefore={dropIn.singleButton} />,
 	// [QWTC-2225]

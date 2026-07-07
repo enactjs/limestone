@@ -2,7 +2,7 @@ import ri from '@enact/ui/resolution';
 
 import ImageItem from '../../../../ImageItem';
 
-import {withConfig, withProps, withTallglyphLocale} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphMultiScript} from './utils';
 
 import img from '../../images/600x600.png';
 
@@ -78,7 +78,7 @@ const imageItemFocusReps = withConfig({focus: true, wrapper: {light: true, padde
 
 const imageItemTallglyphTests = [
 	<ImageItem src={img} orientation="horizontal" label="Short">Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label=" ฟิ้  ไั  ஒ  து"> ฟิ้  ไั  ஒ  து</ImageItem>
+	<ImageItem src={img} orientation="horizontal" label={TallglyphMultiScript}>{TallglyphMultiScript}</ImageItem>
 ];
 
 const ImageItemTests = [

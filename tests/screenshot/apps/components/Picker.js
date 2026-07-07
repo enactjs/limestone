@@ -1,15 +1,15 @@
 import Picker from '../../../../Picker';
 
-import {withConfig, withTallglyphLocale} from './utils';
+import {withConfig, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import css from './Picker.module.less';
 
 const pickerList = {
 	tall: [
-		'नरेंद्र मोदी',
-		' ฟิ้  ไั  ஒ  து',
-		'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ',
-		'តន្ត្រី'
+		TallglyphHindi,
+		TallglyphMultiScript,
+		TallglyphLatin,
+		TallglyphKhmer
 	],
 	vegetables: [
 		'Celery',

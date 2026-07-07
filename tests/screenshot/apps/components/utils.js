@@ -61,7 +61,16 @@ const withTallglyphLocale = (tests, config = {}) =>
  * Used with {@link withTallglyphLocale} to stress clipping/overflow; locale selects
  * which `.enact-locale-*` CSS applies, not which characters appear in the string.
  */
-const TallglyphMultiScript = ' ฟิ้  ไั  ஒ  து';
+const TallglyphMultiScript = 'ฟิ้  ไั  ஒ  து';
+
+/** QWTC sample: multi-script string with truncated Tamil ending (Heading, Header). */
+const TallglyphMultiScriptQwtc = 'ฟิ้  ไั  ஒ  த';
+
+/** Devanagari sample for tallglyph QWTC scenarios. */
+const TallglyphHindi = 'नरेंद्र मोदी';
+
+/** Khmer sample for tallglyph QWTC scenarios and km-KH locale tests. */
+const TallglyphKhmer = 'តន្ត្រី';
 
 /** Latin extended sample for vi tallglyph typography. */
 const TallglyphLatin = 'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ';
@@ -74,8 +83,11 @@ const LongerLoremString = `Longer ${LoremString} ${LoremString} ${LoremString} $
 export {
 	LongerLoremString,
 	LoremString,
+	TallglyphHindi,
+	TallglyphKhmer,
 	TallglyphLatin,
 	TallglyphMultiScript,
+	TallglyphMultiScriptQwtc,
 	withConfig,
 	withProps,
 	withTallglyphLocale

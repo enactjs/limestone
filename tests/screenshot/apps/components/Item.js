@@ -1,7 +1,7 @@
 import Item from '../../../../Item';
 import Icon from '../../../../Icon';
 
-import {withConfig, withProps, withTallglyphLocale, LoremString} from './utils';
+import {withConfig, withProps, withTallglyphLocale, LoremString, TallglyphLatin, TallglyphHindi, TallglyphMultiScript} from './utils';
 
 import css from './Item.module.less';
 
@@ -43,9 +43,9 @@ for (const lang in rtlStrings) {
 }
 
 const tallglyphStrings = {
-	// hi: 'नरेंद्र मोदी',
-	// th: ' ฟิ้  ไั  ஒ  து',
-	vi: 'ÃÑÕÂÊÎÔÛÄËÏÖÜŸ'
+	// hi: TallglyphHindi,
+	// th: TallglyphMultiScript,
+	vi: TallglyphLatin
 };
 
 // Define cases where the text could be affected by tallglyph languages
