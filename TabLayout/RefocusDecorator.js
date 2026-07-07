@@ -23,7 +23,7 @@ const getNavigableFilter = (spotlightId, collapsed) => (elem) => (
 
 function useScreenOrientation () {
 	const getOrientation = () =>
-		window.innerWidth > window.innerHeight ? 'landscape' : 'portrait';
+		(typeof window === 'object' && window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
 
 	const [orientation, setOrientation] = useState(getOrientation());
 

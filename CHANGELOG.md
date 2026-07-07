@@ -37,6 +37,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Bodytext` to properly display marquee when `noWrap` is true
 - `limestone/Card` styling when both `hasContainer` and `captionOverlayOnFocus` are true
 - `limestone/ContextualPopupDecorator` to remove global key listeners on unmount when popup is open
+- `limestone/TabLayout` isomorphic build
 - `limestone/VirtualList` focus jump and scroll freeze when scrolled by long press
 - `limestone/WizardPanels` header to maintain the same height when there is no title
 
