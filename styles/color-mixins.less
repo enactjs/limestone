@@ -10,64 +10,16 @@
 // Focus Shadow and background setup
 // ---------------------------------------
 .lime-bg-colors (@bg) {
-	//// Relocate the bg styling to a pseudo-element
-	// &::after {
-		@bg();
-	// }
+	@bg();
 }
-// .lime-shadow-colors (@shadow) {
-// 	// &::before {
-// 		@shadow();
-// 	// }
-// }
 
 // Establish rules assignment for before focus has happened
 .lime-spotlight-resting-bg-colors (@opacity: 0, @bg: {}, @shadow: {}) {
-	// These lines are really long, and occasionally repeated. Defining here as shorthand.
-	// @transition-opacity: opacity @lime-spotlight-focus-animation-duration ease-out;
-	// @transition-transform: transform @lime-spotlight-focus-animation-duration ease-out;
-	// @transition-filter: filter @lime-spotlight-focus-animation-duration ease-out;
-
 	opacity: @opacity;
-	// transition+: @transition-opacity;
-	// will-change+: opacity;
-
-	// Prep common aspects
-	// @pseudo-element-setup: {
-	// 	content: "";
-	// 	position: absolute;
-	// 	.position(0);
-	// 	border-radius: inherit;
-	// };
-
-	// // Shadow
-	// .lime-shadow-colors({
-	// 	@pseudo-element-setup();
-	// 	background-color: @lime-spotlight-bg-color;
-	// 	opacity: 0;
-
-	// 	// filter+: drop-shadow(@lime-spotlight-focus-shadow);
-	// 	box-shadow: @lime-spotlight-focus-shadow;
-
-	// 	//// Include a transform on the shadow for a better effect
-	// 	// transform+_: scale(0.9, 0.5); // Hard-coded values, not part of the design. This transform is responsible for tucking the shadow up inside the background so it can transition out.
-	// 	// transition+: @transition-opacity, @transition-transform;
-	// 	// will-change+: opacity, transition;
-
-	// 	//// Simple opacity change to the shadow (fade-in)
-	// 	transition+: @transition-opacity;
-	// 	will-change+: opacity;
-	// 	will-change+: box-shadow;
-
-	// 	@shadow();
-	// });
 
 	// Background coloration
 	.lime-bg-colors({
-		// @pseudo-element-setup();
-
 		background-color: @lime-spotlight-bg-color;
-		// transition+: @transition-filter;
 		will-change+: box-shadow;
 
 		@bg();
@@ -78,26 +30,18 @@
 // Establish rules assignment for after focus has happened
 .lime-spotlight-focus-bg-colors (@bg: {}, @shadow: {}) {
 	opacity: 1;
+
+	// Background coloration
 	.lime-bg-colors({
 		background-color: @lime-spotlight-bg-color;
 		box-shadow: @lime-spotlight-focus-shadow;
+
 		@bg();
 		@shadow();
 	});
 }
 
-// // Just the spotlight shadow (merge-safe)
-// .lime-spotlight-focus-shadow-colors (@shadow: {}) {
-// 	.lime-shadow-colors({
-// 		transform: scale(1);
-// 		opacity: 1;
-// 		box-shadow: @lime-spotlight-focus-shadow;
-// 		@shadow();
-// 	});
-// }
-
 .lime-spotlight-focus-text-colors () {
-	// font-weight: @lime-spotlight-font-weight;
 	color: @lime-spotlight-text-color;
 }
 
