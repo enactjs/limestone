@@ -312,14 +312,17 @@ const Popup = (props) => {
 		return {...reducerState, ...action};
 	};
 
-	const [state, dispatch] = useReducer(reducer, {
-		activator: null,
-		addKeyDownListener: false,
-		floatLayerOpen: open,
-		popupOpen: open ? OpenState.OPEN : OpenState.CLOSED,
-		prevOpen: open
-	});
+	const createInitialState = () => {
+		return {
+			activator: null,
+			addKeyDownListener: false,
+			floatLayerOpen: open,
+			popupOpen: open ? OpenState.OPEN : OpenState.CLOSED,
+			prevOpen: open
+		}
+	}
 
+	const [state, dispatch] = useReducer(reducer, null, createInitialState);
 	const {activator, addKeyDownListener, floatLayerOpen, popupOpen, prevOpen} = state;
 
 	const [containerId] = useState(() => Spotlight.add());
@@ -407,7 +410,6 @@ const Popup = (props) => {
 		const containerNode = getContainerNode(containerId);
 		const lastContainerId = getLastContainer();
 
-		// setAddKeyDownListener(false);
 		dispatch({addKeyDownListener: false});
 
 		// if there is no currently-spotted control, or it is wrapped by the popup's container, we
@@ -434,7 +436,6 @@ const Popup = (props) => {
 		// only spot the activator if the popup is open
 		if (!open) return;
 
-		// setAddKeyDownListener(true);
 		dispatch({addKeyDownListener: true});
 
 		if (!Spotlight.isPaused() && !Spotlight.focus(containerId)) {
