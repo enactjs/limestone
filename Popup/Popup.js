@@ -311,15 +311,15 @@ const Popup = (props) => {
 	const reducer = (reducerState, action) => {
 		return {...reducerState, ...action};
 	};
-	const initialState = {
+
+	const [state, dispatch] = useReducer(reducer, {
 		activator: null,
 		addKeyDownListener: false,
 		floatLayerOpen: open,
 		popupOpen: open ? OpenState.OPEN : OpenState.CLOSED,
 		prevOpen: open
-	}
+	});
 
-	const [state, dispatch] = useReducer(reducer, initialState);
 	const {activator, addKeyDownListener, floatLayerOpen, popupOpen, prevOpen} = state;
 
 	const [containerId] = useState(() => Spotlight.add());
