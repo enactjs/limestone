@@ -2,7 +2,7 @@ import Checkbox from '../../../../Checkbox';
 
 import {withConfig} from './utils';
 
-const CheckboxTests = [
+const checkboxSmokeTests = [
 	<Checkbox />,
 	<Checkbox selected />,
 	<Checkbox>star</Checkbox>,
@@ -10,13 +10,19 @@ const CheckboxTests = [
 	<Checkbox selected>star</Checkbox>,
 	<Checkbox indeterminate />,
 	<Checkbox indeterminate indeterminateIcon="star" />,
-	<Checkbox indeterminate disabled />,
-
-	// Focused
-	...withConfig({focus: true}, [
-		<Checkbox>home</Checkbox>,
-		<Checkbox selected>home</Checkbox>,
-		<Checkbox indeterminate indeterminateIcon="home" />
-	])
+	<Checkbox indeterminate disabled />
 ];
+
+const checkboxFocusTests = [
+	// Focused
+	<Checkbox>home</Checkbox>,
+	<Checkbox selected>home</Checkbox>,
+	<Checkbox indeterminate indeterminateIcon="home" />
+];
+
+const CheckboxTests = [
+	...checkboxSmokeTests,
+	...withConfig({focus: true}, checkboxFocusTests)
+];
+
 export default CheckboxTests;

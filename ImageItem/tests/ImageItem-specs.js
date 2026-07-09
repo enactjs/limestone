@@ -182,19 +182,20 @@ describe('ImageItem', () => {
 		expect(actual).not.toHaveClass(expected);
 	});
 
-	test('should be `checked` when `showSelection` and `selected` props are true with horizontal layout', () => {
+	test('should apply `selected` class when `showSelection` and `selected` props are true with horizontal layout', () => {
 		render(<ImageItemBase orientation="horizontal" showSelection selected />);
 
-		const actual = screen.getAllByRole('checkbox')[0];
+		const expected = 'selected';
+		const actual = screen.getAllByRole('img')[0].parentElement;
 
-		expect(actual).toBeChecked();
+		expect(actual).toHaveClass(expected);
 	});
 
 	test('should support `selectionComponent` prop with horizontal layout', () => {
 		render(<ImageItemBase orientation="horizontal" selectionComponent={SelectionComponent} showSelection />);
 
-		const expected = 'slotBefore';
-		const actual = screen.getAllByRole('img')[0].previousElementSibling;
+		const expected = 'selectionContainer';
+		const actual = screen.getAllByRole('img')[0].children.item(0);
 
 		expect(actual).toHaveClass(expected);
 	});

@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withConfig, withProps} from './utils';
+import {LoremString, withConfig, withProps, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -11,7 +11,7 @@ const SelectionInput = props => {
 	return <InputField {...props} />;
 };
 
-const InputFieldTests = [
+const inputFieldSmokeTests = [
 	<InputField />,
 	<InputField placeholder="Placeholder InputField" />,
 	<InputField marqueeContent placeholder="Placeholder InputField" />,
@@ -27,8 +27,10 @@ const InputFieldTests = [
 	<InputField value="Simple value" type="password" />,
 	<InputField value="Simple value" type="password" disabled />,
 	<InputField value="https://enactjs.com" type="url" />,
-	<InputField value="https://enactjs.com" type="url" disabled />,
+	<InputField value="https://enactjs.com" type="url" disabled />
+];
 
+const inputFieldQwtcTests = [
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]
 	<InputField value={LoremString} />,
 	<InputField value="!@#$%^&()_+-=[]\;',./{}|:?" />,
@@ -49,15 +51,15 @@ const InputFieldTests = [
 
 	// tallCharacters: Change 'size' dynamically - [QWTC-2164]
 	// Note: text stays the same size, the InputField field becomes smaller
-	<InputField value="नरेंद्र मोदी" size="large" />,
-	<InputField value=" ฟิ้  ไั  ஒ  து" size="large" />,
-	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" size="large" />,
-	<InputField value="តន្ត្រី" size="large" />,
+	<InputField value={TallglyphHindi} size="large" />,
+	<InputField value={TallglyphMultiScript} size="large" />,
+	<InputField value={TallglyphLatin} size="large" />,
+	<InputField value={TallglyphKhmer} size="large" />,
 	// Testing default size 'large'
-	<InputField value="नरेंद्र मोदी" />,
-	<InputField value=" ฟิ้  ไั  ஒ  து" />,
-	<InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />,
-	<InputField value="តន្ត្រី" />,
+	<InputField value={TallglyphHindi} />,
+	<InputField value={TallglyphMultiScript} />,
+	<InputField value={TallglyphLatin} />,
+	<InputField value={TallglyphKhmer} />,
 
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
 	<InputField value="small InputField" size="large" />,
@@ -65,49 +67,33 @@ const InputFieldTests = [
 	// Disabled Characters Displays in the Disabled InputField - [QWTC-1969]
 	// This will also test: Transparent Disabled InputField Displays with Background - [QWTC-1965]
 	<InputField value="I am value" />,
-	<InputField value="I am a disabled value" disabled />,
+	<InputField value="I am a disabled value" disabled />
+];
 
+const inputFieldExtendedTests = [
 	// Selection color
-	<SelectionInput value="Selection value" />,
+	<SelectionInput value="Selection value" />
+];
 
-	// Focused
-	...withProps({focus: true}, [
-		<InputField />,
-		<InputField placeholder="Focused Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Focused Placeholder InputField" />,
-		<InputField placeholder="Focused Placeholder InputField" disabled />,
+const inputFieldFocusTests = withProps({focus: true}, [
+	<InputField />,
+	<InputField placeholder="Focused Placeholder InputField" />,
+	<InputField value="Focused Simple value" type="number" />,
+	<InputField value="https://enactjs.com" type="url" />
+]);
 
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" />,
-		// InputField field of type 'number' should be empty with letters as input
-		<InputField value="Focused Simple value" type="number" disabled />,
+const inputFieldLargeTextTests = [
+	// Large text — smoke representatives
+	<InputField />,
+	<InputField placeholder="Placeholder InputField" />,
+	<InputField value={LoremString} invalid />
+];
 
-		<InputField value="Focused Simple value" type="password" />,
-		<InputField value="Focused Simple value" type="password" disabled />,
-		<InputField value="https://enactjs.com" type="url" />,
-		<InputField value="https://enactjs.com" type="url" disabled />
-	]),
-
-	// *************************************************************
-	// locale = 'ar-SA'
-	// *************************************************************
+const inputFieldRtlTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField />
 	},
-
-	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
-	{
-		locale: 'ar-SA',
-		component: <InputField value={LoremString} invalid />
-	},
-
-	// Text Vertically Center Aligns in InputField Field - RTL - [QWTC-1966]
-	{
-		locale: 'ar-SA',
-		component: <InputField value="HHHHHH" />
-	},
-
 	{
 		locale: 'ar-SA',
 		component: <InputField placeholder="Placeholder InputField" />
@@ -122,13 +108,10 @@ const InputFieldTests = [
 		locale: 'ar-SA',
 		component: <InputField value="Simple value" type="number" />
 	},
-
-	// InputField field of type 'number' should be empty with letters as input
 	{
 		locale: 'ar-SA',
 		component: <InputField value="Simple value" type="number" disabled />
 	},
-
 	{
 		locale: 'ar-SA',
 		component: <InputField value="1234567890" type="number" />
@@ -152,6 +135,18 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <InputField value="https://enactjs.com" type="url" disabled />
+	},
+
+	// 'invalid' Knob - Tooltip is on the Left and Aligns with InputField in RTL Layout - [QWTC-2166]
+	{
+		locale: 'ar-SA',
+		component: <InputField value={LoremString} invalid />
+	},
+
+	// Text Vertically Center Aligns in InputField Field - RTL - [QWTC-1966]
+	{
+		locale: 'ar-SA',
+		component: <InputField value="HHHHHH" />
 	},
 
 	// Long Text: Ellipses display with Letters, Numbers, Special Characters - [QWTC-2165]
@@ -183,39 +178,38 @@ const InputFieldTests = [
 	// Note: text stays the same size, the InputField field becomes smaller
 	{
 		locale: 'ar-SA',
-		component: <InputField value="नरेंद्र मोदी" size="large" />
+		component: <InputField value={TallglyphHindi} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value=" ฟิ้  ไั  ஒ  து" size="large" />
+		component: <InputField value={TallglyphMultiScript} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" size="large" />
+		component: <InputField value={TallglyphLatin} size="large" />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="តន្ត្រី" size="large" />
+		component: <InputField value={TallglyphKhmer} size="large" />
 	},
 
 	// Testing default size 'large'
 	{
 		locale: 'ar-SA',
-		component: <InputField value="नरेंद्र मोदी" />
+		component: <InputField value={TallglyphHindi} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value=" ฟิ้  ไั  ஒ  து" />
+		component: <InputField value={TallglyphMultiScript} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="ÃÑÕÂÊÎÔÛÄËÏÖÜŸ" />
+		component: <InputField value={TallglyphLatin} />
 	},
 	{
 		locale: 'ar-SA',
-		component: <InputField value="តន្ត្រី" />
+		component: <InputField value={TallglyphKhmer} />
 	},
-
 
 	// Change 'size' dynamically to 'small' - [QWTC-1971]
 	{
@@ -237,16 +231,23 @@ const InputFieldTests = [
 	{
 		locale: 'ar-SA',
 		component: <SelectionInput value="Selection value" />
-	},
-
-	// Large text mode
-	...withConfig({textSize: 'large'}, [
-		<InputField />,
-		<InputField placeholder="Placeholder InputField" />,
-		<InputField marqueeContent placeholder="Placeholder InputField" />,
-		<InputField placeholder="Placeholder InputField" disabled />,
-		<InputField value={LoremString} invalid />,
-		<InputField value={LoremString} invalid invalidMessage="Changed invalid Message " />
-	])
+	}
 ];
+
+const inputFieldTallglyphTests = [
+	<InputField value={TallglyphMultiScript} />,
+	<InputField value={TallglyphLatin} />,
+	<InputField value={TallglyphKhmer} />
+];
+
+const InputFieldTests = [
+	...inputFieldSmokeTests,
+	...inputFieldQwtcTests,
+	...inputFieldExtendedTests,
+	...inputFieldFocusTests,
+	...withConfig({textSize: 'large'}, inputFieldLargeTextTests),
+	...inputFieldRtlTests,
+	...withTallglyphLocale(inputFieldTallglyphTests)
+];
+
 export default InputFieldTests;

@@ -1,5 +1,6 @@
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
+import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import PropTypes from 'prop-types';
 
 import Skinnable from '../Skinnable';
@@ -106,6 +107,14 @@ const TooltipBase = kind({
 		marquee: PropTypes.bool,
 
 		/**
+		 * `Tooltip` without the arrow.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noArrow: PropTypes.bool,
+
+		/**
 		 * Style object for tooltip position.
 		 *
 		 * @type {Object}
@@ -129,6 +138,44 @@ const TooltipBase = kind({
 		 * @public
 		 */
 		relative: PropTypes.bool,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `tooltip` - The root class name
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		tooltipCss: PropTypes.object,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		 * The size of the image.
+		 *
+		 * The following properties should be provided:
+		 * * `height` - The height of the image
+		 * * `width` - The width of the image
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		tooltipImageSize: PropTypes.shape({
+			height: PropTypes.number,
+			width: PropTypes.number
+		}),
 
 		/**
 		 * Called when the tooltip mounts/unmounts, giving a reference to the DOM.
@@ -171,6 +218,7 @@ const TooltipBase = kind({
 	},
 
 	defaultProps: {
+		tooltipCss: {},
 		type: 'balloon',
 		labelOffset: 0
 	},
@@ -188,7 +236,7 @@ const TooltipBase = kind({
 				return {transform: `translateX(${cappedPosition * 100}%)`};
 			}
 		},
-		className: ({direction, arrowAnchor, relative, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, {relative, absolute: !relative}, type),
+		className: ({direction, arrowAnchor, noArrow, relative, tooltipCss, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, tooltipCss.tooltip, {relative, absolute: !relative, noArrow}, type),
 		style: ({position, style}) => {
 			return {
 				...style,
@@ -197,18 +245,30 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, tooltipRef, width, labelOffset, marquee, ...rest}) => {
+	render: ({arrowAnchor, children, css, tooltipImage, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}) => {
 		delete rest.labelOffset;
 		delete rest.direction;
 		delete rest.position;
 		delete rest.relative;
 		delete rest.type;
 
+		// eslint-disable-next-line react-hooks/rules-of-hooks
+		const mergedCss = usePublicClassNames({componentCss: css, customCss: tooltipCss, publicClassNames: true});
+
 		return (
 			<div {...rest}>
-				<div className={css.tooltipAnchor} ref={tooltipRef} >
-					<div className={css.tooltipArrow} />
-					<TooltipLabel className={css.tooltipLabel} marquee={marquee} centered={arrowAnchor === 'center'} width={width} style={labelOffset}>
+				<div className={mergedCss.tooltipAnchor} ref={tooltipRef} >
+					{!noArrow && <div className={mergedCss.tooltipArrow} />}
+					<TooltipLabel
+						className={mergedCss.tooltipLabel}
+						tooltipImage={tooltipImage}
+						marquee={marquee}
+						noArrow={noArrow}
+						centered={arrowAnchor === 'center'}
+						width={width}
+						style={labelOffset}
+						tooltipImageSize={tooltipImageSize}
+					>
 						{children}
 					</TooltipLabel>
 				</div>

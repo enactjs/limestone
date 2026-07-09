@@ -156,6 +156,20 @@ const AlertBase = kind({
 		overlayPosition: PropTypes.oneOf(['bottom left', 'bottom right', 'center', 'top left', 'top right']),
 
 		/**
+		 * Size of the Alert when `type="overlay"`.
+		 *
+		 * * `small` - narrow width
+		 * * `medium` - medium width
+		 * * `large` - wide width, supports title
+		 *
+		 * When omitted, defaults to `medium` when there are exactly 2 buttons, otherwise `small`.
+		 *
+		 * @type {('small'|'medium'|'large')}
+		 * @public
+		 */
+		size: PropTypes.oneOf(['small', 'medium', 'large']),
+
+		/**
 		 * The primary text displayed.
 		 *
 		 * Only shown when `type="fullscreen"`.
@@ -208,22 +222,29 @@ const AlertBase = kind({
 				return BodyText;
 			}
 		},
-		className: ({image, type, styler}) => styler.append(
-			{
-				noImage: !image
-			},
-			type
+		className: ({buttons, buttonDirection, image, size, type, styler}) => {
+			const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+			const resolvedSize = size || (buttonDirection !== 'vertical' && buttonCount === 2 ? 'medium' : 'small');
+			let resolvedButtonDirection = buttonDirection;
+			if (buttonDirection === 'auto') {
+				const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
+				resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
+			}
+			return styler.append({noImage: !image}, resolvedSize, type, resolvedButtonDirection);
+		},
+		size: ({buttons, buttonDirection, size}) => size || (
+			buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
 		)
 	},
 
-	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, title, type, style, ...rest}) => {
+	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, size, title, type, style, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
 		const position = (type === 'overlay' ? overlayPosition : type);
-		const showTitle = (fullscreen && title);
 		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+		const showTitle = ((fullscreen || size === 'large') && title);
 		let resolvedButtonDirection = buttonDirection;
 		if (buttonDirection === 'auto') {
-			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 3);
+			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
 			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
 		}
 		const overlayHorizontalButtons = (
@@ -239,7 +260,7 @@ const AlertBase = kind({
 			};
 		}
 		const ariaLabelledBy = (showTitle ? `${id}_title ` : '') + `${id}_content ${id}_buttons`;
-
+		const resolvedImage = image?.props.type === "thumbnail" ? cloneElement(image, {iconSize:  !fullscreen && size === 'large' ? 'large' : 'small'}) : null;
 		return (
 			<div aria-owns={id} className={css.alertWrapper}>
 				<Popup
@@ -252,8 +273,9 @@ const AlertBase = kind({
 					style={popupStyle}
 				>
 					<Layout align="center center" orientation="vertical">
-						{image ? <Cell shrink className={css.alertImage}>{image}</Cell> : null}
-						{showTitle ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
+						{showTitle && !fullscreen ? <Cell shrink align="stretch"><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
+						{resolvedImage || image ? <Cell shrink className={css.alertImage}>{resolvedImage || image}</Cell> : null}
+						{showTitle && fullscreen ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
 							{children}
 						</Cell>

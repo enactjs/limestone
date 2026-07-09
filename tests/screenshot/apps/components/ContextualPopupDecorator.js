@@ -25,63 +25,50 @@ const wrapper = {
 	padded
 };
 
-const ContextualPopupDecoratorTests = [
-	// Sanity test to ensure an activator with a closed ContextualPopup renders consistently
-	<ContextualPopupButton open={false} />,
-	...withConfig({wrapper}, [
-		<ContextualPopupButton direction="above center" />,
-		<ContextualPopupButton direction="above left" />,
-		<ContextualPopupButton direction="above right" />,
-		<ContextualPopupButton direction="below center" />,
-		<ContextualPopupButton direction="below left" />,
-		<ContextualPopupButton direction="below right" />,
-		<ContextualPopupButton direction="left middle" />,
-		<ContextualPopupButton direction="left top" />,
-		<ContextualPopupButton direction="left bottom" />,
-		<ContextualPopupButton direction="right middle" />,
-		<ContextualPopupButton direction="right top" />,
-		<ContextualPopupButton direction="right bottom" />,
-		// *************************************************************
-		// ContextualPopupButton with no arrow
-		// *************************************************************
-		<ContextualPopupButtonNoArrow offset="none" />,
-		<ContextualPopupButtonNoArrow direction="above center" offset="none" />,
-		<ContextualPopupButtonNoArrow direction="below center" offset="none" />,
-		<ContextualPopupButtonNoArrow direction="left middle" offset="none" />,
-		<ContextualPopupButtonNoArrow direction="right middle" offset="none" />,
-		<ContextualPopupButtonNoArrow offset="overlap" />,
-		<ContextualPopupButtonNoArrow direction="above center" offset="overlap" />,
-		<ContextualPopupButtonNoArrow direction="below center" offset="overlap" />,
-		<ContextualPopupButtonNoArrow direction="left middle" offset="overlap" />,
-		<ContextualPopupButtonNoArrow direction="right middle" offset="overlap" />,
-		<ContextualPopupButtonNoArrow offset="small" />,
-		<ContextualPopupButtonNoArrow direction="above center" offset="small" />,
-		<ContextualPopupButtonNoArrow direction="below center" offset="small" />,
-		<ContextualPopupButtonNoArrow direction="left middle" offset="small" />,
-		<ContextualPopupButtonNoArrow direction="right middle" offset="small" />,
-		<ContextualPopupButtonNoArrow offset="large" />,
-		<ContextualPopupButtonNoArrow direction="above center" offset="large" />,
-		<ContextualPopupButtonNoArrow direction="below center" offset="large" />,
-		<ContextualPopupButtonNoArrow direction="left middle" offset="large" />,
-		<ContextualPopupButtonNoArrow direction="right middle" offset="large" />,
-		// *************************************************************
-		// locale = 'ar-SA'
-		// *************************************************************
-		...withConfig({locale: 'ar-SA'}, [
-			<ContextualPopupButton />,
-			<ContextualPopupButton direction="above center" />,
-			<ContextualPopupButton direction="below center" />,
-			<ContextualPopupButton direction="left middle" />,
-			<ContextualPopupButton direction="right middle" />,
-			// *************************************************************
-			// ContextualPopupButton with no arrow
-			// *************************************************************
-			<ContextualPopupButtonNoArrow offset="none" />,
-			<ContextualPopupButtonNoArrow offset="overlap" />,
-			<ContextualPopupButtonNoArrow offset="small" />,
-			<ContextualPopupButtonNoArrow offset="large" />
-		])
-	]),
+const contextualPopupDirectionTests = [
+	<ContextualPopupButton direction="above center" />,
+	<ContextualPopupButton direction="above left" />,
+	<ContextualPopupButton direction="above right" />,
+	<ContextualPopupButton direction="below center" />,
+	<ContextualPopupButton direction="below left" />,
+	<ContextualPopupButton direction="below right" />,
+	<ContextualPopupButton direction="left middle" />,
+	<ContextualPopupButton direction="left top" />,
+	<ContextualPopupButton direction="left bottom" />,
+	<ContextualPopupButton direction="right middle" />,
+	<ContextualPopupButton direction="right top" />,
+	<ContextualPopupButton direction="right bottom" />
+];
+
+const contextualPopupSmokeTests = [
+	...contextualPopupDirectionTests,
+
+	// *************************************************************
+	// ContextualPopupButton with no arrow
+	// *************************************************************
+	<ContextualPopupButtonNoArrow offset="none" />,
+	<ContextualPopupButtonNoArrow direction="above center" offset="none" />,
+	<ContextualPopupButtonNoArrow offset="overlap" />,
+	<ContextualPopupButtonNoArrow direction="above center" offset="small" />,
+	<ContextualPopupButtonNoArrow offset="large" />
+];
+
+const contextualPopupRtlTests = [
+	// *************************************************************
+	// locale = 'ar-SA'
+	// *************************************************************
+	<ContextualPopupButton />,
+	<ContextualPopupButton direction="above center" />,
+	<ContextualPopupButton direction="below center" />,
+	<ContextualPopupButton direction="left middle" />,
+
+	// *************************************************************
+	// ContextualPopupButton with no arrow
+	// *************************************************************
+	<ContextualPopupButtonNoArrow offset="none" />
+];
+
+const contextualPopupExtendedTests = [
 	// *************************************************************
 	// Test auto swapping side at boundaries
 	// *************************************************************
@@ -105,6 +92,13 @@ const ContextualPopupDecoratorTests = [
 		},
 		component: <ContextualPopupButton direction="left middle" />
 	}
+];
+
+const ContextualPopupDecoratorTests = [
+	<ContextualPopupButton open={false} />,
+	...withConfig({wrapper}, contextualPopupSmokeTests),
+	...contextualPopupExtendedTests,
+	...withConfig({wrapper, locale: 'ar-SA'}, contextualPopupRtlTests)
 ];
 
 export default ContextualPopupDecoratorTests;

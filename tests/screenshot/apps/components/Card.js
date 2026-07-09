@@ -1,8 +1,14 @@
 import Card from '../../../../Card';
+import Icon from '../../../../Icon';
+import Image from '../../../../Image';
 
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 import img from '../../images/600x600.png';
+
+const iconBadge = <Icon>ai</Icon>;
+const imageBadge = <Image src={img} />;
+const labelIcons = [<Icon>ai</Icon>, <Icon>ai</Icon>];
 
 const defaultCardTests = [
 	// Vertical
@@ -30,6 +36,10 @@ const defaultCardTests = [
 	<Card src={img} label="Short" imageIconSrc={img} hasContainer selected>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlayOnFocus>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlay captionOverlayOnFocus>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlay hasContainer>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlayOnFocus hasContainer>Short</Card>,
+	<Card src={img} label="Short" imageIconSrc={img} captionOverlay captionOverlayOnFocus hasContainer>Short</Card>,
 	<Card src={img} label="Label" secondaryLabel="Secondary label" imageIconSrc={img} captionOverlay>Short</Card>,
 	<Card src={img} label="Short" imageIconSrc={img} captionOverlay selected>Short</Card>,
 	<Card src={img} label="This is very very very very long label. This is very very long label." captionOverlay>This is very very very very long caption. This is very very long caption.</Card>,
@@ -51,9 +61,27 @@ const defaultCardTests = [
 	<Card src={img} orientation="horizontal" label="Short" roundedImage selected>Short</Card>
 ];
 
-const CardTests = [
-	...defaultCardTests,
+const newTypeCardTests = [
+	// Vertical
+	<Card src={img} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} captionOverlay roundedImage selected showProgressBar>Title</Card>,
+	<Card src={img} imageIconSrc={img} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} secondaryBadge={imageBadge} secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} roundedImage selected>Title</Card>,
+	<Card src={img} imageIconSrc={img} captionOverlay centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
+	<Card src={img} imageIconSrc={img} captionOverlayOnFocus centeredTitle withoutMarquee>Title Title Title Title Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflow progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflowOnFocus progressBarOverlay selected showProgressBar>Title</Card>,
+	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} duration={234} secondaryBadge={imageBadge} durationOverlay selected showDuration>Title</Card>,
 
+	// Horizontal
+	<Card src={img} label="Secondary Text" labelIcons={labelIcons} orientation="horizontal" secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} selected>Title</Card>
+];
+
+const cardSmokeTests = [
+	...defaultCardTests.slice(0, 15),
+	...defaultCardTests.slice(36, 41)
+];
+
+const cardExtendedTests = [
 	// Disabled
 	...withProps({disabled: true}, defaultCardTests),
 
@@ -67,16 +95,33 @@ const CardTests = [
 	...withProps({progress: 0.5, showProgressBar: true}, defaultCardTests),
 
 	// Split Caption
-	...withProps({splitCaption: true}, defaultCardTests),
+	...withProps({splitCaption: true}, defaultCardTests)
+];
 
-	// Focused
-	...withConfig({focus: true, wrapper: {padded: true}}, defaultCardTests),
+const cardFocusTests = [
+	// Focused — smoke representatives
+	...withConfig({focus: true, wrapper: {padded: true}}, cardSmokeTests),
 
 	// FocusRing
-	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, defaultCardTests)),
+	...withConfig({focusRing: true, focus: true, wrapper: {padded: true}}, withProps({label: 'focusRing'}, [defaultCardTests[0]]))
+];
 
-	// Large text
+const cardLargeTextTests = [
 	...withConfig({skinVariants: ['largeText']}, defaultCardTests)
+];
+
+const cardTallglyphTests = [
+	<Card src={img} label={TallglyphMultiScript}>{TallglyphMultiScript}</Card>,
+	<Card src={img} orientation="horizontal" label={TallglyphLatin}>{TallglyphLatin}</Card>
+];
+
+const CardTests = [
+	...defaultCardTests,
+	...newTypeCardTests,
+	...cardExtendedTests,
+	...cardFocusTests,
+	...cardLargeTextTests,
+	...withTallglyphLocale(cardTallglyphTests)
 ];
 
 export default CardTests;

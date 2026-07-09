@@ -1,27 +1,31 @@
 import Steps from '../../../../Steps';
 
-const StepsTests = [
-	<Steps />, // default `size` is "small"
+const stepsSmokeTests = [
+	<Steps />,
 	<Steps size="tiny" />,
 	<Steps size="medium" />,
 	<Steps size="large" />,
 	<Steps total={0} />,
 	<Steps total={25} />,
+	<Steps size="large" total={250} />,
+	<Steps current={196} total={250} />,
+	<Steps skip={[4, 5, 9]} total={10} />,
+	<Steps current={3} skip={[4, 5, 9]} total={10} />
+
+];
+
+const stepsExtendedTests = [
 	<Steps size="tiny" total={25} />,
 	<Steps size="medium" total={25} />,
 	<Steps size="large" total={25} />,
 	<Steps total={250} />,
 	<Steps size="tiny" total={250} />,
 	<Steps size="medium" total={250} />,
-	<Steps size="large" total={250} />,
-	<Steps current={196} total={250} />,
 	<Steps skip={1} total={1} />,
 	<Steps skip={[1]} total={1} />,
 	<Steps skip={10} total={10} />,
-	<Steps skip={[4, 5, 9]} total={10} />,
 	<Steps skip={[4, null, 9]} total={10} />,
 	<Steps skip={[9, 5, 4]} total={10} />,
-	<Steps current={3} skip={[4, 5, 9]} total={10} />,
 	<Steps current={4} skip={[4, 5, 9]} total={10} />,
 	<Steps current={5} skip={[4, 5, 9]} total={10} />,
 	<Steps skip={[]} />,
@@ -43,6 +47,14 @@ const StepsTests = [
 	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} total={10} />,
 	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="numbers" total={10} />,
 	<Steps currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />,
-	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />
+	<Steps current={3} currentIcon="arrowlargeup" futureIcon="arrowlargeright" pastIcon="arrowlargeleft" skip={[1, 5, 10]} skipIcon="closex" total={10} />,
+	<Steps highlightCurrentOnly total={3} />,
+	<Steps highlightCurrentOnly total={25} />
 ];
+
+const StepsTests = [
+	...stepsSmokeTests,
+	...stepsExtendedTests
+];
+
 export default StepsTests;

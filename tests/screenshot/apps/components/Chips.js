@@ -1,8 +1,9 @@
 import Chips, {Chip} from '../../../../Chips';
 import gameHomeIcon from '../../images/icon_app_game.png';
-import {withConfig} from './utils';
 
-const ChipsTests = [
+import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
+
+const chipsSmokeTests = [
 	<Chips>
 		<Chip>Chip 1</Chip>
 		<Chip>Chip 2</Chip>
@@ -37,21 +38,33 @@ const ChipsTests = [
 		<Chip disabled>Chip 1</Chip>
 		<Chip disabled>Chip 2</Chip>
 		<Chip disabled>Chip 3</Chip>
-	</Chips>,
+	</Chips>
+];
 
-	// When Chips get focus, the focus goes to the Chip
-	...withConfig({focus: true}, [
-		<Chips>
-			<Chip deleteButton>Focused Chip 1</Chip>
-			<Chip deleteButton>Chip 2</Chip>
-			<Chip deleteButton>Chip 3</Chip>
-		</Chips>,
-		<Chips orientation="horizontal">
-			<Chip>Focused Chip 1</Chip>
-			<Chip>Chip 2</Chip>
-			<Chip>Chip 3</Chip>
-		</Chips>
-	])
+const chipsFocusTests = [
+	<Chips>
+		<Chip deleteButton>Focused Chip 1</Chip>
+		<Chip deleteButton>Chip 2</Chip>
+		<Chip deleteButton>Chip 3</Chip>
+	</Chips>,
+	<Chips orientation="horizontal">
+		<Chip>Focused Chip 1</Chip>
+		<Chip>Chip 2</Chip>
+		<Chip>Chip 3</Chip>
+	</Chips>
+];
+
+const chipsTallglyphTests = [
+	<Chips>
+		<Chip>{TallglyphMultiScript}</Chip>
+		<Chip>{TallglyphLatin}</Chip>
+	</Chips>
+];
+
+const ChipsTests = [
+	...chipsSmokeTests,
+	...withConfig({focus: true}, chipsFocusTests),
+	...withTallglyphLocale(chipsTallglyphTests)
 ];
 
 export default ChipsTests;

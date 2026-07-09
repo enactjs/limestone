@@ -18,7 +18,7 @@ export default {
 		backgrounds: false,
 		interactions: false,
 		postcss: false,
-		viewport: false,
+		viewport: true,
 		warnOnLegacyHierarchySeparator: false
 	},
 	framework: {
@@ -44,6 +44,7 @@ export default {
 	addons: [
 		'@enact/storybook-utils/addons/actions',
 		'@enact/storybook-utils/addons/controls',
+		'storybook-addon-pseudo-states',
 		...(process.env.PERF_PANEL === 'true' ? ['@github-ui/storybook-addon-performance-panel'] : [])
 	],
 	webpackFinal: async (config, {configType}) => {
@@ -53,11 +54,13 @@ export default {
 		// which causes "Cannot read properties of null (reading 'useEffect')"
 		const reactDir = dirname(moduleRequire.resolve('react/package.json'));
 		const reactDomDir = dirname(moduleRequire.resolve('react-dom/package.json'));
+		const reactIsDir = dirname(moduleRequire.resolve('react-is/package.json'));
 		webpackFinalConfig.resolve = webpackFinalConfig.resolve || {};
 		webpackFinalConfig.resolve.alias = {
 			...(webpackFinalConfig.resolve.alias || {}),
 			react: reactDir,
-			'react-dom': reactDomDir
+			'react-dom': reactDomDir,
+			'react-is': reactIsDir
 		};
 
 		return webpackFinalConfig;

@@ -2,16 +2,14 @@ import BodyText from '../../../../BodyText';
 import Button from '../../../../Button';
 import WizardPanels, {Panel} from '../../../../WizardPanels';
 
-import {LongerLoremString, withConfig} from './utils';
+import {LongerLoremString, withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const customPrevButton = (<Button>Previous</Button>);
 const customNextButton = (<Button>Next</Button>);
 
-const WizardPanelTests = withConfig({
-	wrapper: {
-		full: true
-	}
-}, [
+const wrapper = {full: true};
+
+const wizardSmokeTests = [
 	<WizardPanels>
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
@@ -24,13 +22,19 @@ const WizardPanelTests = withConfig({
 	<WizardPanels index={1}>
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
-	</WizardPanels>,
+	</WizardPanels>
+];
+
+const wizardQwtcTests = [
 	// [QWTC-1908] - 'nextButton' and 'prevButton' to show on all the panels
 	<WizardPanels index={1} prevButtonVisibility="always" nextButtonVisibility="always" title="WizardPanel">
 		<Panel>View 1</Panel>
 		<Panel>View 2</Panel>
 		<Panel>View 3</Panel>
-	</WizardPanels>,
+	</WizardPanels>
+];
+
+const wizardExtendedTests = [
 	// Test to never show next/prev button on all the panels
 	<WizardPanels index={0} prevButtonVisibility="never" nextButtonVisibility="never" title="WizardPanel">
 		<Panel>View 1</Panel>
@@ -58,15 +62,6 @@ const WizardPanelTests = withConfig({
 		<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
 		<Panel>View 2</Panel>
 	</WizardPanels>,
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels noSteps>
-				<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
-				<Panel>View 2</Panel>
-			</WizardPanels>
-		)
-	},
 	// Test no buttons
 	<WizardPanels index={0}>
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
@@ -76,30 +71,25 @@ const WizardPanelTests = withConfig({
 		<Panel nextButton={false} title="First Panel Title">View 1</Panel>
 		<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
 	</WizardPanels>,
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels index={0}>
-				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
-				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
-			</WizardPanels>
-		)
-	},
-	{
-		locale: 'ar-SA',
-		component: (
-			<WizardPanels index={1}>
-				<Panel nextButton={false} title="First Panel Title">View 1</Panel>
-				<Panel prevButton={false} title="Second Panel Title">View 2</Panel>
-			</WizardPanels>
-		)
-	},
 	// Test custom buttons
 	<WizardPanels index={1} title="WizardPanel">
 		<Panel>View 1</Panel>
 		<Panel prevButton={customPrevButton} nextButton={customNextButton}>View 2</Panel>
 		<Panel>View 3</Panel>
-	</WizardPanels>,
+	</WizardPanels>
+];
+
+const wizardRtlTests = [
+	// locale = 'ar-SA' — smoke representatives
+	{
+		locale: 'ar-SA',
+		component: (
+			<WizardPanels noSteps>
+				<Panel title="My Title" subtitle={LongerLoremString}>View 1</Panel>
+				<Panel>View 2</Panel>
+			</WizardPanels>
+		)
+	},
 	{
 		locale: 'ar-SA',
 		component: (
@@ -109,19 +99,36 @@ const WizardPanelTests = withConfig({
 				<Panel>View 3</Panel>
 			</WizardPanels>
 		)
-	},
-
-	// RTL
-	{
-		component: (
-			<WizardPanels index={1} title="WizardPanel">
-				<Panel>View 1</Panel>
-				<Panel>View 2</Panel>
-				<Panel>View 3</Panel>
-			</WizardPanels>
-		),
-		locale: 'ar-SA'
 	}
-]);
+];
 
-export default WizardPanelTests;
+const wizardPortraitTests = [
+	<WizardPanels index={1} title="WizardPanel Portrait">
+		<Panel>Portrait View 1</Panel>
+		<Panel>Portrait View 2</Panel>
+		<Panel>Portrait View 3</Panel>
+	</WizardPanels>
+];
+
+const wizardTallglyphTests = [
+	<WizardPanels index={0} title={TallglyphMultiScript}>
+		<Panel>{TallglyphMultiScript}</Panel>
+		<Panel>{TallglyphLatin}</Panel>
+	</WizardPanels>
+];
+
+const WizardPanelsTests = [
+	...withConfig({wrapper}, [
+		...wizardSmokeTests,
+		...wizardQwtcTests,
+		...wizardExtendedTests,
+		...wizardRtlTests
+	]),
+
+	...withConfig({wrapper}, withTallglyphLocale(wizardTallglyphTests)),
+
+	// Portrait
+	...withConfig({portrait: true}, wizardPortraitTests)
+];
+
+export default WizardPanelsTests;

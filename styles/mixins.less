@@ -38,13 +38,6 @@
 	}
 }
 
-.lime-item-icon-tap-area-adjust() {
-	&.small > .small-icon-tap-area {
-		left: -@lime-spotlight-outset;
-		right: -@lime-spotlight-outset;
-	}
-}
-
 .lime-word-break() {
 	overflow-wrap: break-word;
 	word-break: keep-all;
@@ -179,23 +172,6 @@
 //
 // Custom Text Size Mixins
 //
-// 1 arg: Shorthand for just setting the font size in custom-text mode
-.lime-custom-text-size(@latin-size) {
-	.lime-custom-text({
-		font-size: @latin-size;
-	});
-}
-// 2 args: Shorthand for just setting the font size of both latin and non-latin in custom-text mode
-.lime-custom-text-size(@latin-size; @non-latin-size) {
-	.lime-custom-text(
-	{
-		font-size: @latin-size;
-	};
-	{
-		font-size: @non-latin-size;
-	});
-}
-
 // 1 arg: Generic rule applicator, accepts an entire rule-set to add for large text mode
 .lime-custom-text(@lrules) when (isruleset(@lrules)) {
 	&:global(.largeText) {
@@ -219,20 +195,6 @@
 //
 // Text definitions
 //
-
-.lime-alert-title() {
-	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
-	.enact-locale-line-height(@lime-alert-line-height; @lime-tallglyph-body-line-height);
-	font-size: @lime-alert-title-font-size;
-	font-weight: @lime-alert-font-weight;
-}
-
-.lime-alert-subtitle() {
-	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
-	.enact-locale-line-height(@lime-alert-line-height);
-	font-size: @lime-alert-subtitle-font-size;
-	font-weight: @lime-alert-font-weight;
-}
 
 .lime-alert-overlay-content() {
 	.lime-font(@lime-alert-font-family; @lime-non-latin-font-family-light);
@@ -290,14 +252,6 @@
 	font-style: @lime-button-small-font-style;
 	font-weight: @lime-button-small-font-weight;
 	.font-kerning();
-}
-
-// Uses Webkit specific styles to have multi-line ellipsis
-.lime-multi-line-ellipsis(@lines) {
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: @lines;
-	-webkit-box-orient: vertical;
 }
 
 // Add an extension to the .enact-locale-line-height mixin defined in ~@ui which has defaults specific to limestone.

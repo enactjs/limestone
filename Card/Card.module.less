@@ -71,6 +71,10 @@
 	}
 
 	.primaryBadge, .secondaryBadge {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		text-align: center;
 		position: absolute;
 		width: @lime-card-badge-size;
 		height: @lime-card-badge-size;
@@ -98,6 +102,34 @@
 		font-size: @lime-card-label-font-size;
 		line-height: @lime-card-label-line-height;
 		font-weight: @lime-card-label-font-weight;
+	}
+
+	.labels {
+		height: fit-content;
+
+		.labelContainer {
+			align-items: center;
+			gap: @lime-card-label-container-spacing;
+
+			&:has(.labelIcon) {
+				margin-bottom: @lime-card-label-icon-margin;
+				will-change: transform;
+
+				.label {
+					margin-top: ~"calc(@{lime-icon-small-size} - @{lime-card-label-line-height})";
+				}
+
+				.labelIcon {
+					margin: 0;
+				}
+
+				// Removes the margin-bottom if the label is directly followed by icons (.captionImageIconsContainer)
+				// or if it's the last element in the list, to prevent excessive spacing.
+				&:has(+ .captionImageIconsContainer), &:is(:last-child) {
+					margin-bottom: 0;
+				}
+			}
+		}
 	}
 
 	&.selected {
@@ -155,6 +187,17 @@
 		height: auto;
 		.lime-focus-out-motion();
 
+		.captionImageIconsContainer {
+			margin-top: @lime-card-caption-image-icon-margin;
+			gap: @lime-card-caption-image-icon-spacing;
+
+			.captionImageIcon {
+				height: var(--caption-image-height, @lime-card-caption-image-icon-size);
+				width: var(--caption-image-width, @lime-card-caption-image-icon-size);
+				margin: 0;
+			}
+		}
+
 		.captions {
 			padding: @lime-card-vertical-captions-padding;
 			display: flex;
@@ -168,13 +211,43 @@
 		}
 
 		.imageIcon {
+			font-size: @lime-card-vertical-image-icon-size;
+			line-height: @lime-card-vertical-image-icon-size;
 			height: @lime-card-vertical-image-icon-size;
 			width: @lime-card-vertical-image-icon-size;
 			margin: @lime-card-vertical-image-icon-margin;
 		}
 
-		&.captionOverlay .captions {
-			padding: @lime-card-vertical-caption-overlay-captions-padding;
+		&.captionOverlay {
+			.captions {
+				padding: @lime-card-vertical-caption-overlay-captions-padding;
+			}
+		}
+
+		&.captionOverlay.centeredTitle {
+			.captions {
+				gap: @lime-card-vertical-captions-centered-title-gap;
+				justify-content: center;
+			}
+
+			.captionCell {
+				max-height: fit-content;
+			}
+
+			.children {
+				height: 100%;
+			}
+
+			.labels {
+				display: none;
+			}
+
+			.imageIcon {
+				font-size: @lime-card-selection-icon-size;
+				line-height: @lime-card-selection-icon-size;
+				width: @lime-card-selection-icon-size;
+				height: @lime-card-selection-icon-size;
+			}
 		}
 
 		&.captionOverlay {
@@ -203,8 +276,20 @@
 			padding: @lime-card-vertical-has-container-captions-padding;
 		}
 
-		&:not(.hasContainer) .image {
-			z-index: 1;
+		&:not(.hasContainer) {
+			.image {
+				z-index: 1;
+			}
+
+			&.captionOverflow, &.captionOverflowOnFocus {
+				.captions {
+					width: @lime-card-vertical-captions-overflow-width;
+				}
+			}
+
+			&.captionOverflowOnFocus .captions {
+				display: none;
+			}
 		}
 
 		&.selected:not(.hasContainer) .selectionContainer {
@@ -226,6 +311,34 @@
 		}
 	}
 
+	&.vertical,
+	&.horizontal {
+		.duration {
+			font-size: @lime-card-duration-font-size;
+			line-height: @lime-card-duration-line-height;
+			font-weight: @lime-card-duration-font-weight;
+			padding: @lime-card-duration-padding;
+			border-radius: @lime-card-duration-border-radius;
+			width: fit-content;
+
+			.margin-start-end(auto, 0);
+		}
+
+		&.durationOverlay .duration {
+			position: absolute;
+			bottom: @lime-card-vertical-duration-spacing;
+			right: @lime-card-vertical-duration-spacing;
+		}
+
+		&.progressBarOverlay .progress {
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: ~"calc(100% - @{lime-card-vertical-progress-spacing} * 2)";
+		}
+	}
+
 	.focus({
 		&.hasContainer {
 			.lime-focus-in-motion();
@@ -240,8 +353,14 @@
 				visibility: visible;
 			}
 
-			&:not(.hasContainer) .selectionContainer {
-				z-index: 5;
+			&:not(.hasContainer) {
+				.selectionContainer {
+					z-index: 5;
+				}
+
+				&.captionOverflowOnFocus .captions {
+					display: flex;
+				}
 			}
 		}
 	});
@@ -300,6 +419,11 @@
 			line-height: @lime-card-caption-line-height-large;
 		}
 
+		.duration {
+			font-size: @lime-card-duration-font-size-large;
+			line-height: @lime-card-duration-line-height-large;
+		}
+
 		.label {
 			font-size: @lime-card-label-font-size-large;
 			line-height: @lime-card-label-line-height-large;
@@ -323,18 +447,17 @@
 			height: @lime-card-selection-check-icon-container-large;
 			line-height: @lime-card-selection-check-icon-line-height-large;
 		}
-
-		&.vertical {
-			&:not(.captionOverlay):not(.captionOverlayOnFocus):is(.hasLabel) .image {
-				height:~"calc(var(--card-image-height) - 36px)";
-			}
-		}
 	});
 
 	// Skin colors
 	.applySkins({
+		.duration {
+			background-color: ~"color(from" var(--semantic-color-surface-overlay-default) ~"srgb r g b / 0.5)";
+		}
+
 		.selectionContainer {
 			border-color: transparent;
+
 			.selectionIcon {
 				color: transparent;
 			}
@@ -374,6 +497,10 @@
 			&.captionOverlay {
 				.captions {
 					background: @lime-card-captions-gradient-color;
+				}
+
+				&.centeredTitle .captions {
+					background: transparent;
 				}
 
 				&.roundedImage .captions {
@@ -430,7 +557,8 @@
 					color: @lime-card-label-main-focused-color;
 				}
 
-				.label {
+				.label,
+				.labelIcon {
 					color: @lime-card-label-sub-focused-color;
 				}
 			}

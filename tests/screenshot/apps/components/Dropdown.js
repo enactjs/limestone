@@ -2,7 +2,7 @@ import {scaleToRem} from '@enact/ui/resolution';
 
 import Dropdown from '../../../../Dropdown';
 
-import {withProps} from './utils';
+import {withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const children = (itemCount) => (new Array(itemCount)).fill().map((i, index) => `Option ${index + 1}`);
 
@@ -14,39 +14,32 @@ const Widths = [
 	<Dropdown placeholder="Dropdown" width="huge" />
 ];
 
-const DropdownTests = [
+const dropdownSmokeTests = [
 	<Dropdown />,  // default size is 'small'
-	// Change 'size' dynamically [QWTC-2173]
-	<Dropdown size="small" />,
 	<Dropdown placeholder="Dropdown" />,
-	<Dropdown size="large" />,
-	<Dropdown placeholder="Dropdown" size="large" />,
 	<Dropdown placeholder="Dropdown" width="tiny" disabled />,
 
 	// With title
 	<Dropdown title="Select an option below" />,
 	<Dropdown title="Select an option below" placeholder="Dropdown" />,
-	<Dropdown title="Select an option below" placeholder="Dropdown" disabled />,
+	<Dropdown title="Select an option below" placeholder="Dropdown" disabled />
+];
+
+const dropdownQwtcTests = [
+	// Change 'size' dynamically [QWTC-2173]
+	<Dropdown size="small" />,
+	<Dropdown size="large" />,
+	<Dropdown placeholder="Dropdown" size="large" />,
 
 	// Change 'width' dynamically [QWTC-2174]
-	// width - 'medium' is default
+	// width - 'large' is default
 	...Widths,
 
-	// size="large"
-	...withProps({
-		size: 'large'
-	}, Widths),
-
 	// size="small"
-	...withProps({
-		size: 'small'
-	}, Widths),
+	...withProps({size: 'small'}, Widths)
+];
 
-	// size="large"
-	...withProps({
-		focus: true
-	}, Widths),
-
+const dropdownExtendedTests = [
 	// open with number type width
 	<Dropdown open width={360} title="Number type width">
 		{children(5)}
@@ -69,12 +62,37 @@ const DropdownTests = [
 	</Dropdown>,
 	<Dropdown title="Select an option below">
 		{children(3)}
-	</Dropdown>,
+	</Dropdown>
+];
 
+const dropdownFocusTests = [
+	// size="large" — smoke representatives
+	...withProps({focus: true}, [
+		Widths[0],
+		Widths[2]
+	])
+];
+
+const dropdownRtlTests = [
 	// locale = 'ar-SA'
 	{
 		locale: 'ar-SA',
 		component: <Dropdown title="حدد أحد الخيارات أدناه">{children(5)}</Dropdown>
 	}
 ];
+
+const dropdownTallglyphTests = [
+	<Dropdown placeholder={TallglyphMultiScript} />,
+	<Dropdown title={TallglyphLatin} placeholder={TallglyphMultiScript} />
+];
+
+const DropdownTests = [
+	...dropdownSmokeTests,
+	...dropdownQwtcTests,
+	...dropdownExtendedTests,
+	...dropdownFocusTests,
+	...dropdownRtlTests,
+	...withTallglyphLocale(dropdownTallglyphTests)
+];
+
 export default DropdownTests;

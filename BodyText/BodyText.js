@@ -96,6 +96,7 @@ const BodyTextBase = kind({
 	},
 
 	computed: {
+		children: ({children, noWrap}) => noWrap ? children?.replaceAll('\n', ' ') : children,
 		className: ({noWrap, size, styler}) => styler.append(size, {noWrap})
 	},
 

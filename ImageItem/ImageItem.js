@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 
 import $L from '../internal/$L';
-import {CheckboxBase} from '../Checkbox';
 import Icon from '../Icon';
 import Image from '../Image';
 import AsyncRenderChildren from '../internal/AsyncRenderChildren';
@@ -32,9 +31,6 @@ import {Marquee, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
 
 import componentCss from './ImageItem.module.less';
-
-const Checkbox = Skinnable(CheckboxBase);
-Checkbox.displayName = 'Checkbox';
 
 const
 	defaultPlaceholder =
@@ -285,20 +281,16 @@ const ImageItemBase = kind({
 			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
 			wideImage: orientation === 'horizontal' && wideImage
 		}),
-		selectionComponent: ({css, orientation, selected, selectionComponent : SelectionComponent}) => {
+		selectionComponent: ({css, selectionComponent : SelectionComponent}) => {
 			if (SelectionComponent) {
 				return <SelectionComponent />;
-			} else if (orientation === 'vertical') {
-				return <Icon className={css.selectionIcon} >checkmark</Icon>;
 			} else {
-				return <Checkbox className={css.selectionIcon} selected={selected} size="tiny" />;
+				return <Icon className={css.selectionIcon}>checkmark</Icon>;
 			}
 		}
 	},
 
 	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
-		const isSlotBefore = orientation === 'horizontal' && showSelection;
-
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
@@ -314,14 +306,13 @@ const ImageItemBase = kind({
 				orientation={orientation}
 				imageComponent={
 					<Image>
-						{orientation === 'vertical' && showSelection ? (
+						{showSelection ? (
 							<div className={css.selectionContainer}>
 								{SelectionComponent}
 							</div>
 						) : null}
 					</Image>
 				}
-				slotBefore={isSlotBefore && SelectionComponent}
 			/>
 		);
 	}

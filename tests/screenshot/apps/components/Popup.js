@@ -1,9 +1,7 @@
 import Popup from '../../../../Popup';
-import {withConfig, withProps} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
-const PopupBaseTests = [
-	<Popup open>Popup!</Popup>,
-
+const popupPositionTests = [
 	// [QWTC-1904]
 	<Popup open position="fullscreen">Fullscreen Popup!</Popup>,
 	<Popup open position="center">Center Popup!</Popup>,
@@ -17,20 +15,49 @@ const PopupBaseTests = [
 	// End of [QWTC-1904]
 ];
 
-const PopupTests = [
-	...withProps({scrimType: 'translucent'}, PopupBaseTests),
-	...withProps({scrimType: 'transparent'}, PopupBaseTests),
-	...withProps({scrimType: 'none'}, PopupBaseTests),
+const popupBaseTests = [
+	<Popup open>Popup!</Popup>,
+	...popupPositionTests
+];
 
+const popupSmokeTests = [
+	...withProps({scrimType: 'translucent'}, [<Popup open>Popup!</Popup>])
+];
+
+const popupQwtcTests = [
+	...withProps({scrimType: 'translucent'}, popupPositionTests)
+];
+
+const popupExtendedTests = [
+	...withProps({scrimType: 'transparent'}, popupBaseTests),
+	...withProps({scrimType: 'none'}, popupBaseTests)
+];
+
+const popupRtlTests = [
 	// *************************************************************
 	// locale = 'ar-SA'
 	// *************************************************************
-	// [QWTC-1897]
-	...withConfig({locale: 'ar-SA'}, [
-		...withProps({scrimType: 'translucent'}, PopupBaseTests),
-		...withProps({scrimType: 'transparent'}, PopupBaseTests),
-		...withProps({scrimType: 'none'}, PopupBaseTests)
-	])
+	// [QWTC-1897] — smoke representatives
+	...withProps({scrimType: 'translucent'}, [
+		<Popup open>Popup!</Popup>,
+		<Popup open position="center">Center Popup!</Popup>
+	]),
+	...withProps({scrimType: 'transparent'}, [<Popup open>Popup!</Popup>]),
+	...withProps({scrimType: 'none'}, [<Popup open>Popup!</Popup>])
+];
+
+const popupTallglyphTests = [
+	<Popup open>{TallglyphMultiScript}</Popup>,
+	<Popup open position="center">{TallglyphLatin}</Popup>
+];
+
+const PopupTests = [
+	...popupSmokeTests,
+	...popupQwtcTests,
+	...popupExtendedTests,
+	...withConfig({locale: 'ar-SA'}, popupRtlTests),
+	...withConfig({textSize: 'large'}, popupBaseTests),
+	...withTallglyphLocale(popupTallglyphTests)
 ];
 
 export default withConfig({wrapper: {full: true}}, PopupTests);

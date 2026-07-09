@@ -1,9 +1,10 @@
 // Image.module.less
 //
+@import "../styles/mixins.less";
 @import "../styles/variables.less";
 
 .image {
-	margin: 0 @lime-spotlight-outset;
 	width: 720px;
 	height: 480px;
+	.lime-spotlight-margin(0);
 }

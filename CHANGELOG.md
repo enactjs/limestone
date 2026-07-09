@@ -2,7 +2,54 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [1.10.1] - 2026-06-01 
+## [1.10.2] - 2026-07-09
+
+### Added
+
+- `limestone/Alert` `size` prop for overlay type
+- `limestone/Alert` styling to match the latest GUI
+- `limestone/Input` `title` to use the `LGSmart UI 3.0 Title` font,
+- `limestone/Icon` supported icon list, adding new icons `smartmode`, `databackup`, `deleteviewinginfo`, `lgmembers`, `manage`, `pay`, `paymentmethod`, `productregistration`, `purchased`, `rate`, `report`, `security`, `subscriptions`, `terminatemyaccount`, `update`, `usagecare`, `voucher`, `filter`, `ezsetting`, `fitness`, and `auracast2`
+- `limestone/Panels.Header` `title` to use the `LGSmart UI 3.0 Title` font 
+- `limestone/Scroller` prop `stickTo` to allow the scroller to stick to a specific element
+- `limestone/VirtualGridList` prop `stickTo` to allow the scroller to stick to a specific element
+- `limestone/VirtualList` prop `stickTo` to allow the scroller to stick to a specific element
+
+### Changed
+
+- `limestone/Alert` styling to match the latest GUI
+- `limestone/Button` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
+- `limestone/IconItem` press/release motion to match the latest motion guide
+- `limestone/ImageItem` styling to match the latest GUI
+- `limestone/Item` styling to match the latest GUI
+- `limestone/Picker` to use `Steps` instead of own indicator
+- `limestone/Popup` styling to match the latest GUI
+- `limestone/ProgressBar` styling to match the latest GUI
+- `limestone/Slider` press/release motion to match the latest motion guide
+- `limestone/Slider` styling to match the latest GUI
+- `limestone/Steps` styling to match the latest GUI
+- `limestone/TabLayout` styling to match the latest GUI
+- `limestone/Tooltip` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Bodytext` to properly display marquee when `noWrap` is true
+- `limestone/Card` styling when both `hasContainer` and `captionOverlayOnFocus` are true
+- `limestone/ContextualPopupDecorator` to remove global key listeners on unmount when popup is open
+- `limestone/TabLayout` isomorphic build
+- `limestone/VirtualList` focus jump and scroll freeze when scrolled by long press
+- `limestone/WizardPanels` header to maintain the same height when there is no title
+
+## [1.10.1] - 2026-06-01
+
+### Deprecated
+
+- `limestone/FormCheckboxItem` to be removed in 2.0.0
+
+### Added
+
+- `limestone/CheckboxItem` `formCheckbox` prop to mirror the behaviour of `FormCheckboxItem`
 
 ### Changed
 

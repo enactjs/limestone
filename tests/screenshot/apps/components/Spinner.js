@@ -1,7 +1,7 @@
 import ri from '@enact/ui/resolution';
 import Spinner from '../../../../Spinner';
 
-const SpinnerTests = [
+const spinnerWrapper = (children) => (
 	<div
 		style={{
 			outline: 'teal dashed 1px',
@@ -17,99 +17,26 @@ const SpinnerTests = [
 				height: ri.unit(180, 'rem')
 			}}
 		>
-			<Spinner />
-		</div>
-	</div>,
-	<div
-		style={{
-			outline: 'teal dashed 1px',
-			position: 'relative',
-			padding: ri.unit(90, 'rem'),
-			backgroundColor: 'rgba(0, 187, 187, 0.5)'
-		}}
-	>
-		<div
-			style={{
-				outline: 'teal dashed 1px',
-				position: 'relative',
-				height: ri.unit(180, 'rem')
-			}}
-		>
-			<Spinner centered />
-		</div>
-	</div>,
-	<div
-		style={{
-			outline: 'teal dashed 1px',
-			position: 'relative',
-			padding: ri.unit(90, 'rem'),
-			backgroundColor: 'rgba(0, 187, 187, 0.5)'
-		}}
-	>
-		<div
-			style={{
-				outline: 'teal dashed 1px',
-				position: 'relative',
-				height: ri.unit(180, 'rem')
-			}}
-		>
-			<Spinner size="small" />
-		</div>
-	</div>,
-	<div
-		style={{
-			outline: 'teal dashed 1px',
-			position: 'relative',
-			padding: ri.unit(90, 'rem'),
-			backgroundColor: 'rgba(0, 187, 187, 0.5)'
-		}}
-	>
-		<div
-			style={{
-				outline: 'teal dashed 1px',
-				position: 'relative',
-				height: ri.unit(180, 'rem')
-			}}
-		>
-			<Spinner>Loading content</Spinner>
-		</div>
-	</div>,
-	<div
-		style={{
-			outline: 'teal dashed 1px',
-			position: 'relative',
-			padding: ri.unit(90, 'rem'),
-			backgroundColor: 'rgba(0, 187, 187, 0.5)'
-		}}
-	>
-		<div
-			style={{
-				outline: 'teal dashed 1px',
-				position: 'relative',
-				height: ri.unit(180, 'rem')
-			}}
-		>
-			<Spinner transparent />
-		</div>
-	</div>,
-	<div
-		style={{
-			outline: 'teal dashed 1px',
-			position: 'relative',
-			padding: ri.unit(90, 'rem'),
-			backgroundColor: 'rgba(0, 187, 187, 0.5)'
-		}}
-	>
-		<div
-			style={{
-				outline: 'teal dashed 1px',
-				position: 'relative',
-				height: ri.unit(180, 'rem')
-			}}
-		>
-			<Spinner paused>Loading content</Spinner>
+			{children}
 		</div>
 	</div>
+);
+
+const spinnerSmokeTests = [
+	spinnerWrapper(<Spinner />)
+];
+
+const spinnerExtendedTests = [
+	spinnerWrapper(<Spinner centered />),
+	spinnerWrapper(<Spinner size="small" />),
+	spinnerWrapper(<Spinner>Loading content</Spinner>),
+	spinnerWrapper(<Spinner transparent />),
+	spinnerWrapper(<Spinner paused>Loading content</Spinner>)
+];
+
+const SpinnerTests = [
+	...spinnerSmokeTests,
+	...spinnerExtendedTests
 ];
 
 export default SpinnerTests;

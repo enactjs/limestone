@@ -1,11 +1,19 @@
+// AlertImage.module.less
+//
 @import "../styles/variables.less";
 
 .alertImage {
 	margin: 0;
 
 	&.thumbnail {
-		width: @lime-alert-image-thumbnail-width;
-		height: @lime-alert-image-thumbnail-height;
+		&.large {
+			width: @lime-alert-image-thumbnail-large-width;
+			height: @lime-alert-image-thumbnail-large-height;
+		}
+		&.small {
+			width: @lime-alert-image-thumbnail-width;
+			height: @lime-alert-image-thumbnail-height;
+		}
 	}
 
 	&.icon {
