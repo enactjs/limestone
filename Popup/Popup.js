@@ -21,7 +21,7 @@ import {getLastContainer} from '@enact/spotlight/src/container';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
 import warning from 'warning';
 
 import Skinnable from '../Skinnable';
@@ -308,55 +308,63 @@ const Popup = (props) => {
 	// Assign the needed props to the rest object for the child component
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
 
-	const [activator, setActivator] = useState(null);
-	const [addKeyDownListener, setAddKeyDownListener] = useState(false);
-	const [floatLayerOpen, setFloatLayerOpen] = useState(open);
-	const [popupOpen, setPopupOpen] = useState(open ? OpenState.OPEN : OpenState.CLOSED);
-	const [prevOpen, setPrevOpen] = useState(open);
-
-	const containerIdRef = useRef(null);
-	const pausedRef = useRef(new Pause('Popup'));
-
-	if (!containerIdRef.current) {
-		containerIdRef.current = Spotlight.add();
+	const reducer = (reducerState, action) => {
+		return {...reducerState, ...action};
+	};
+	const initialState = {
+		activator: null,
+		addKeyDownListener: false,
+		floatLayerOpen: open,
+		popupOpen: open ? OpenState.OPEN : OpenState.CLOSED,
+		prevOpen: open
 	}
+
+	const [state, dispatch] = useReducer(reducer, initialState);
+	const {activator, addKeyDownListener, floatLayerOpen, popupOpen, prevOpen} = state;
+
+	const [containerId] = useState(() => Spotlight.add());
+	const pausedRef = useRef(new Pause('Popup'));
 
 	const getDerivedStateFromProps = useCallback(() => {
 		if (open !== prevOpen) {
 			if (open) {
-				setPopupOpen(noAnimation || floatLayerOpen ? OpenState.OPEN : OpenState.CLOSED);
-				setFloatLayerOpen(true);
-				setActivator(Spotlight.getCurrent());
-				setPrevOpen(open);
+				dispatch({
+					activator: Spotlight.getCurrent(),
+					floatLayerOpen: true,
+					popupOpen: noAnimation || floatLayerOpen ? OpenState.OPEN : OpenState.CLOSED,
+					prevOpen: open
+				});
 			} else {
 				// Disables the spotlight container of popup when `noAnimation` set
 				if (noAnimation) {
-					const node = getContainerNode(containerIdRef.current);
+					const node = getContainerNode(containerId);
 					if (node) {
 						node.dataset['spotlightContainerDisabled'] = true;
 					}
 				}
 
-				setPopupOpen(OpenState.CLOSED);
-				setFloatLayerOpen(popupOpen === OpenState.OPEN ? !noAnimation : false);
-				setActivator(noAnimation ? null : activator);
-				setPrevOpen(open);
+				dispatch({
+					activator: noAnimation ? null : activator,
+					floatLayerOpen: popupOpen === OpenState.OPEN ? !noAnimation : false,
+					popupOpen: OpenState.CLOSED,
+					prevOpen: open
+				});
 			}
 		}
 		return null;
-	}, [activator, floatLayerOpen, noAnimation, open, popupOpen, prevOpen]);
+	}, [activator, containerId, floatLayerOpen, noAnimation, open, popupOpen, prevOpen]);
 
 	const handleKeyDown = useCallback((ev) => {
 		if (no5WayClose) return;
 
 		const keyCode = ev.keyCode;
 		const direction = getDirection(keyCode);
-		const spottables = Spotlight.getSpottableDescendants(containerIdRef.current).length;
+		const spottables = Spotlight.getSpottableDescendants(containerId).length;
 		const current = Spotlight.getCurrent();
 
-		if (direction && (!spottables || current && getContainerNode(containerIdRef.current).contains(current))) {
+		if (direction && (!spottables || current && getContainerNode(containerId).contains(current))) {
 			// explicitly restrict navigation in order to manage focus state when attempting to leave the popup
-			Spotlight.set(containerIdRef.current, {restrict: 'self-only'});
+			Spotlight.set(containerId, {restrict: 'self-only'});
 
 			if (onClose) {
 				let focusChanged;
@@ -387,7 +395,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [componentProps, no5WayClose, onClose, position, spotlightRestrict]);
+	}, [componentProps, containerId, no5WayClose, onClose, position, spotlightRestrict]);
 
 	const spotActivator = useCallback(() => {
 		pausedRef.current.resume();
@@ -396,10 +404,11 @@ const Popup = (props) => {
 		if (open) return;
 
 		const current = Spotlight.getCurrent();
-		const containerNode = getContainerNode(containerIdRef.current);
+		const containerNode = getContainerNode(containerId);
 		const lastContainerId = getLastContainer();
 
-		setAddKeyDownListener(false);
+		// setAddKeyDownListener(false);
+		dispatch({addKeyDownListener: false});
 
 		// if there is no currently-spotted control, or it is wrapped by the popup's container, we
 		// know it's safe to change focus
@@ -417,7 +426,7 @@ const Popup = (props) => {
 				}
 			}
 		}
-	}, [activator, open]);
+	}, [activator, containerId, open]);
 
 	const spotPopupContent = useCallback(() => {
 		pausedRef.current.resume();
@@ -425,9 +434,10 @@ const Popup = (props) => {
 		// only spot the activator if the popup is open
 		if (!open) return;
 
-		setAddKeyDownListener(true);
+		// setAddKeyDownListener(true);
+		dispatch({addKeyDownListener: true});
 
-		if (!Spotlight.isPaused() && !Spotlight.focus(containerIdRef.current)) {
+		if (!Spotlight.isPaused() && !Spotlight.focus(containerId)) {
 			const current = Spotlight.getCurrent();
 
 			// In cases where the container contains no spottable controls, or we're in pointer-mode, focus
@@ -436,13 +446,13 @@ const Popup = (props) => {
 			if (current) {
 				current.blur();
 			}
-			Spotlight.setActiveContainer(containerIdRef.current);
+			Spotlight.setActiveContainer(containerId);
 		}
-	}, [open]);
+	}, [containerId, open]);
 
 	const handleFloatingLayerOpen = useCallback(() => {
 		if (!noAnimation && popupOpen !== OpenState.OPEN) {
-			setPopupOpen(OpenState.OPENING);
+			dispatch({popupOpen: OpenState.OPENING});
 		} else if (popupOpen === OpenState.OPEN && open) {
 			spotPopupContent();
 		}
@@ -455,25 +465,24 @@ const Popup = (props) => {
 	const handlePopupHide = useCallback((ev) => {
 		forwardHide(ev, componentProps);
 
-		setFloatLayerOpen(() => {
-			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
+		dispatch(() => {
+			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
 				spotActivator();
 			}
-			setActivator(null);
 
-			return false;
+			return {activator: null, floatLayerOpen: false};
 		});
-	}, [componentProps, spotActivator]);
+	}, [componentProps, containerId, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
 		forwardShow(ev, componentProps);
 
-		setPopupOpen(OpenState.OPEN);
+		dispatch({popupOpen: OpenState.OPEN});
 
-		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerIdRef.current) {
+		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
 			spotPopupContent();
 		}
-	}, [componentProps, spotPopupContent]);
+	}, [componentProps, containerId, spotPopupContent]);
 
 	useLayoutEffect(() => {
 		getDerivedStateFromProps();
@@ -511,7 +520,7 @@ const Popup = (props) => {
 			// If the popup is open on mount, we need to pause spotlight so nothing steals focus
 			// while the popup is rendering.
 			pausedRef.current.pause();
-			if (getContainerNode(containerIdRef.current)) {
+			if (getContainerNode(containerId)) {
 				spotPopupContent();
 
 			}
@@ -521,7 +530,7 @@ const Popup = (props) => {
 			if (open) {
 				off('keydown', handleKeyDown);
 			}
-			Spotlight.remove(containerIdRef.current);
+			Spotlight.remove(containerId);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -552,7 +561,7 @@ const Popup = (props) => {
 				onHide={handlePopupHide}
 				onShow={handlePopupShow}
 				open={popupOpen >= OpenState.OPENING}
-				spotlightId={containerIdRef.current}
+				spotlightId={containerId}
 			/>
 		</FloatingLayer>
 	);

@@ -24,7 +24,7 @@ import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 
 import BodyText from '../BodyText';
 import Button, {ButtonBase} from '../Button';
@@ -52,17 +52,18 @@ const PopupContent = (props) => {
 	checkPropTypes(PopupContent, props);
 
 	const {color, colorHandler, css, presetColors} = props;
-	const [hue, setHue] = useState(0);
-	const [saturation, setSaturation] = useState(0);
-	const [lightness, setLightness] = useState(0);
+	const {h, s, l} = useMemo(() => hexToHSL(color), [color]);
+	const [prevColor, setPrevColor] = useState(color);
+	const [hue, setHue] = useState(h);
+	const [saturation, setSaturation] = useState(s);
+	const [lightness, setLightness] = useState(l);
 
-	useEffect(() => {
-		let {h, s, l} = hexToHSL(color);
-
+	if (color !== prevColor) {
+		setPrevColor(color);
 		setHue(h);
 		setSaturation(s);
 		setLightness(l);
-	}, [color]);
+	}
 
 	const changeHue = useCallback((ev) => {
 		setHue(ev.value);

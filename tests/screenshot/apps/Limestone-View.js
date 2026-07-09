@@ -135,6 +135,8 @@ class App extends ReactComponent {
 	}
 }
 
+const WrappedApp = ThemeDecorator(App);
+
 const ExportedApp = (props) => {
 	// Common test parameters
 	let skin = url.searchParams.get('skin');
@@ -178,14 +180,20 @@ const ExportedApp = (props) => {
 		}
 	}
 
-	const WrappedApp = ThemeDecorator({noAutoFocus}, App);
-
 	useEffect(() => {
 		document.querySelector('#root').classList.add('spotlight-input-key');
 	}, []);
 
 	return (
-		<WrappedApp {...props} skin={skin} highContrast={highContrast} locale={locale} textSize={textSize} focusRing={focusRing} />
+		<WrappedApp
+			{...props}
+			focusRing={focusRing}
+			highContrast={highContrast}
+			locale={locale}
+			noAutoFocus={noAutoFocus}
+			skin={skin}
+			textSize={textSize}
+		/>
 	);
 };
 
