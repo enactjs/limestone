@@ -465,11 +465,11 @@ const Popup = (props) => {
 	const handlePopupHide = useCallback((ev) => {
 		forwardHide(ev, componentProps);
 
-		dispatch(() => {
-			if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
-				spotActivator();
-			}
+		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
+			spotActivator();
+		}
 
+		dispatch(() => {
 			return {activator: null, floatLayerOpen: false};
 		});
 	}, [componentProps, containerId, spotActivator]);
