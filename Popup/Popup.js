@@ -469,9 +469,7 @@ const Popup = (props) => {
 			spotActivator();
 		}
 
-		dispatch(() => {
-			return {activator: null, floatLayerOpen: false};
-		});
+		dispatch({activator: null, floatLayerOpen: false});
 	}, [componentProps, containerId, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
