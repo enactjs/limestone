@@ -53,8 +53,8 @@ const PopupContent = (props) => {
 
 	const {color, colorHandler, css, presetColors} = props;
 
-	const reducer = (reducerState, action) => {
-		return {...reducerState, ...action};
+	const reducer = (reducerState, payload) => {
+		return {...reducerState, ...payload};
 	};
 
 	const createInitialState = () => {
