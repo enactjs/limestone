@@ -319,8 +319,8 @@ const Popup = (props) => {
 			floatLayerOpen: open,
 			popupOpen: open ? OpenState.OPEN : OpenState.CLOSED,
 			prevOpen: open
-		}
-	}
+		};
+	};
 
 	const [state, dispatch] = useReducer(reducer, null, createInitialState);
 	const {activator, addKeyDownListener, floatLayerOpen, popupOpen, prevOpen} = state;

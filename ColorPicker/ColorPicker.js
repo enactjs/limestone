@@ -24,7 +24,7 @@ import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useMemo, useReducer, useState} from 'react';
+import {useCallback, useEffect, useReducer} from 'react';
 
 import BodyText from '../BodyText';
 import Button, {ButtonBase} from '../Button';
@@ -62,8 +62,8 @@ const PopupContent = (props) => {
 			hue: 0,
 			saturation: 0,
 			lightness: 0
-		}
-	}
+		};
+	};
 
 	const [state, dispatch] = useReducer(reducer, null, createInitialState);
 	const {hue, saturation, lightness} = state;
