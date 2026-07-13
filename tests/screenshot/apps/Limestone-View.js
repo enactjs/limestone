@@ -182,7 +182,7 @@ const ExportedApp = (props) => {
 
 	useEffect(() => {
 		WrappedApp = ThemeDecorator({noAutoFocus}, App);
-	});
+	}, [noAutoFocus]);
 
 	useEffect(() => {
 		document.querySelector('#root').classList.add('spotlight-input-key');
