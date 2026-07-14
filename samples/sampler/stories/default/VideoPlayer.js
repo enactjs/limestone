@@ -37,19 +37,22 @@ updateDataSize(size);
 // Set up some defaults for info and controls
 const prop = {
 	moreButtonColor: ['', 'red', 'green', 'yellow', 'blue'],
-	videoTitles: ['Sintel', 'Cosmos Laundromat', 'VideoTest', 'Bad Video Source'],
+	videoTitles: ['Big Buck Bunny', 'Cosmos Laundromat', 'Elephants Dream', 'Bad Video Source'],
 	videos: {
-		Sintel: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+		// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+		'Big Buck Bunny': 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
+		// Cosmos Laundromat (CC BY 4.0) - Blender Foundation, https://www.blender.org
 		'Cosmos Laundromat': 'https://media.xiph.org/cosmoslaundromat/Pilot_Trailer_Cosmos_Laundromat.mp4',
-		VideoTest: 'https://media.w3.org/2010/05/video/movie_300.mp4',
+		// Elephants Dream (CC BY 3.0) - Blender Foundation, https://www.blender.org
+		'Elephants Dream': 'https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4',
 		// Purposefully not a video to demonstrate source error state
 		'Bad Video Source': 'https://github.com/mderrick/react-html5video'
 	},
 	posters: {
-		Sintel: 'https://media.w3.org/2010/05/sintel/poster.png',
+		'Big Buck Bunny': 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Big_buck_bunny_poster_big.jpg',
 		'Cosmos Laundromat': 'https://media.xiph.org/cosmoslaundromat/Cosmos_Laundromat_1-2k-png/07580.png',
-		VideoTest: 'https://media.w3.org/2010/05/video/poster.png',
-		'Bad Video Source': 'https://media.w3.org/2010/05/video/poster.png'
+		'Elephants Dream': 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Elephants_Dream_s5_both.jpg',
+		'Bad Video Source': ''
 	},
 	events: [
 		'onAbort',
@@ -213,7 +216,7 @@ export const _VideoPlayer = (args) => {
 	);
 };
 
-select('source', _VideoPlayer, prop.videoTitles, Config, 'Sintel');
+select('source', _VideoPlayer, prop.videoTitles, Config, 'Big Buck Bunny');
 range('video scale', _VideoPlayer, Config, {min: 0.05, max: 1, step: 0.01}, 1);
 number('autoCloseTimeout', _VideoPlayer, Config, 7000);
 text('backButtonAriaLabel', _VideoPlayer, Config, 'go to previous');
