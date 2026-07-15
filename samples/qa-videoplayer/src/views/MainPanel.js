@@ -68,7 +68,10 @@ const SelectableVideoPlayer = (props) => {
 			<MediaControls>
 				<Button onClick={handleToggleSelection} selected={selecting}>{selecting ? 'Play Loop' : 'Set End Time'}</Button>
 			</MediaControls>
-			<source src="https://media.w3.org/2010/05/video/movie_300.mp4" />
+			<source
+				// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+				src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+			/>
 		</VideoPlayer>
 	);
 

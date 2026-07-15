@@ -9,9 +9,12 @@ const prop = {
 	marqueeOn: ['focus', 'hover', 'render'],
 	textAlign: ['start', 'center', 'end'],
 	videos: {
-		Sintel: 'https://media.w3.org/2010/05/sintel/trailer.mp4',
+		// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+		'Big Buck Bunny': 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
+		// Cosmos Laundromat (CC BY 4.0) - Blender Foundation, https://www.blender.org
 		'Cosmos Laundromat': 'https://media.xiph.org/cosmoslaundromat/Pilot_Trailer_Cosmos_Laundromat.mp4',
-		VideoTest: 'https://media.w3.org/2010/05/video/movie_300.mp4',
+		// Elephants Dream (CC BY 3.0) - Blender Foundation, https://www.blender.org
+		'Elephants Dream': 'https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4',
 		// Purposefully not a video to demonstrate source error state
 		'Bad Video Source': 'https://github.com/mderrick/react-html5video'
 	},
@@ -85,7 +88,7 @@ text('subtitle', _MediaOverlay, Config, '07:00 AM - 08:00 AM');
 select('text', _MediaOverlay, prop.strings, Config);
 select('textAlign', _MediaOverlay, prop.textAlign, Config);
 text('title', _MediaOverlay, Config, 'Program Name');
-select('source', _MediaOverlay, prop.videos, Config, prop.videos.Sintel);
+select('source', _MediaOverlay, prop.videos, Config, prop.videos['Big Buck Bunny']);
 
 _MediaOverlay.storyName = 'MediaOverlay';
 _MediaOverlay.parameters = {
