@@ -24,7 +24,7 @@ import {Cell, Column, Row} from '@enact/ui/Layout';
 import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useReducer} from 'react';
 
 import BodyText from '../BodyText';
 import Button, {ButtonBase} from '../Button';
@@ -52,28 +52,38 @@ const PopupContent = (props) => {
 	checkPropTypes(PopupContent, props);
 
 	const {color, colorHandler, css, presetColors} = props;
-	const [hue, setHue] = useState(0);
-	const [saturation, setSaturation] = useState(0);
-	const [lightness, setLightness] = useState(0);
+
+	const reducer = (reducerState, payload) => {
+		return {...reducerState, ...payload};
+	};
+
+	const createInitialState = () => {
+		return {
+			hue: 0,
+			saturation: 0,
+			lightness: 0
+		};
+	};
+
+	const [state, dispatch] = useReducer(reducer, null, createInitialState);
+	const {hue, saturation, lightness} = state;
 
 	useEffect(() => {
-		let {h, s, l} = hexToHSL(color);
+		const {h, s, l} = hexToHSL(color);
 
-		setHue(h);
-		setSaturation(s);
-		setLightness(l);
+		dispatch({hue: h, saturation: s, lightness: l});
 	}, [color]);
 
 	const changeHue = useCallback((ev) => {
-		setHue(ev.value);
+		dispatch({hue: ev.value});
 	}, []);
 
 	const changeLightness = useCallback((ev) => {
-		setLightness(ev.value);
+		dispatch({lightness: ev.value});
 	}, []);
 
 	const changeSaturation = useCallback((ev) => {
-		setSaturation(ev.value);
+		dispatch({saturation: ev.value});
 	}, []);
 
 	const handleClick = useCallback((ev) => {

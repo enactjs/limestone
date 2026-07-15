@@ -344,7 +344,7 @@ const EditableWrapper = (props) => {
 	// Add rearranged items
 	const addRearrangedItems = useCallback(({currentMoveDirection, toIndex}) => {
 		// Set the currentMoveDirection to css variable
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 		wrapperRef.current.style.setProperty('--move-direction', currentMoveDirection * (rtl ? -1 : 1));
 
 		const {fromIndex, rearrangedItems, selectedItem} = mutableRef.current;
@@ -392,7 +392,7 @@ const EditableWrapper = (props) => {
 	// Move items
 	const moveItems = useCallback((toIndex) => {
 		const {selectedItem} = mutableRef.current;
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 
 		if (selectedItem && !selectedItem.hasAttribute('data-is-hiding')) {
 			// Bail out when index is out of scope
@@ -433,7 +433,7 @@ const EditableWrapper = (props) => {
 		const {keyCode} = ev;
 		const container = scrollContentRef.current;
 		const {itemWidth, prevToIndex} = mutableRef.current;
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 
 		const toIndex = (!rtl ^ !is('left', keyCode)) ? prevToIndex - 1 : prevToIndex + 1;
 		const scrollLeft = container.scrollLeft * (rtl ? -1 : 1);
@@ -538,7 +538,7 @@ const EditableWrapper = (props) => {
 
 	const getNextIndexFromPosition = useCallback((x, tolerance) => {
 		const {centeredOffset, itemWidth, prevToIndex} = mutableRef.current;
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 		const bodyWidth = document.body.getBoundingClientRect().width;
 
 		// Determine toIndex with mouse client x position
@@ -575,7 +575,7 @@ const EditableWrapper = (props) => {
 
 	const handleMouseLeave = useCallback(() => {
 		const {focusedItem, itemWidth, lastInputType, lastMouseClientX, selectedItem} = mutableRef.current;
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 		const scrollContentNode = scrollContentRef.current;
 		const scrollContentCenter = scrollContentNode.getBoundingClientRect().width / 2;
 
@@ -788,7 +788,7 @@ const EditableWrapper = (props) => {
 
 	const handleTouchEnd = useCallback((ev) => {
 		const {itemWidth, lastInputType, lastMouseClientX, selectedItem} = mutableRef.current;
-		const {rtl} = scrollContainerHandle.current;
+		const {current: {rtl}} = scrollContainerHandle;
 		const scrollContentNode = scrollContentRef.current;
 		const scrollContentCenter = scrollContentNode.getBoundingClientRect().width / 2;
 
