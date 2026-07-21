@@ -13,7 +13,29 @@ import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
-import {Children, cloneElement} from 'react';
+import {Children, cloneElement, useLayoutEffect} from 'react';
+
+const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
+	useLayoutEffect(() => {
+		const contentElement = document.getElementById(id);
+		if (!contentElement) return;
+
+		contentElement.style.width = '';
+		const range = document.createRange();
+		range.selectNodeContents(contentElement);
+		const rects = Array.from(range.getClientRects());
+		if (rects.length === 0) return;
+
+		const maxLineWidth = Math.max(...rects.map(r => r.width));
+		contentElement.style.width = Math.ceil(maxLineWidth) + 'px';
+	});
+
+	return (
+		<Cell shrink align={component || fullscreen ? 'center' : 'stretch'} component={component} id={id} {...rest}>
+			{children}
+		</Cell>
+	);
+};
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -276,9 +298,9 @@ const AlertBase = kind({
 						{showTitle && !fullscreen ? <Cell shrink align="stretch"><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						{resolvedImage || image ? <Cell shrink className={css.alertImage}>{resolvedImage || image}</Cell> : null}
 						{showTitle && fullscreen ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
-						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
+						<FittedContentCell component={contentComponent} fullscreen={fullscreen} className={css.content} id={`${id}_content`}>
 							{children}
-						</Cell>
+						</FittedContentCell>
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>
 								<Layout

@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Changed
+
+- `limestone/Alert` text container to fit the width of its text and center-align
+
 ## [1.10.2] - 2026-07-09
 
 ### Added
