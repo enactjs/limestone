@@ -155,7 +155,7 @@ const HeaderTests = [
 
 	// Tallglyph Validation
 	...withTallglyphLocale(headerTallglyphValidationTests),
-	...withConfig({portrait: true, wrapper: {full: true}}, headerPortraitTests)
+	...withConfig({portrait: true, wrapper: {full: true}}, LtrTests)
 ];
 
 export default HeaderTests;

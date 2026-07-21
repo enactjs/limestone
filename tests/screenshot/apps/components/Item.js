@@ -117,10 +117,7 @@ const itemCustomStyleTests = [
 	<Item label="label" slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
 	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
 
-	...withConfig({focus: true}, [
-		<Item>Customized Focused Item</Item>,
-		<Item label='"label"' slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Focused Item</Item>
-	])
+	...withConfig({focus: true}, commonItemTests)
 ];
 
 const itemExtendedTests = [
@@ -190,7 +187,7 @@ const ItemTests = [
 	...itemSmokeTests,
 	...itemQwtcTests,
 	...itemExtendedTests,
-	...withConfig({focus: true}, itemFocusTests),
+	...withConfig({focus: true}, itemSmokeTests),
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, itemFocusedLightWrapperTests),
 	...withConfig({textSize: 'large'}, itemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, itemRtlTests),

@@ -246,7 +246,7 @@ const ButtonTests = [
 	...buttonQwtcTests,
 	...buttonExtendedTests,
 
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, buttonFocusTests),
+	...withConfig({focus: true}, buttonSmokeTests),
 
 	// Tallglyph validation
 	...withTallglyphLocale(buttonTallglyphViTests),

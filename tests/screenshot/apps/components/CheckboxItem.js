@@ -126,7 +126,7 @@ const CheckboxItemTests = [
 	...checkboxItemSmokeTests,
 	...checkboxItemQwtcTests,
 	...checkboxItemExtendedTests,
-	...withConfig({focus: true}, checkboxItemFocusTests),
+	...withConfig({focus: true}, checkboxItemSmokeTests),
 	...withConfig({textSize: 'large'}, checkboxItemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, checkboxItemRtlTests),
 	...withConfig({locale: 'ar-SA'}, checkboxItemCenteredRtlTests),

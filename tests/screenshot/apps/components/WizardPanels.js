@@ -128,7 +128,7 @@ const WizardPanelsTests = [
 	...withConfig({wrapper}, withTallglyphLocale(wizardTallglyphTests)),
 
 	// Portrait
-	...withConfig({portrait: true}, wizardPortraitTests)
+	...withConfig({portrait: true}, wizardSmokeTests)
 ];
 
 export default WizardPanelsTests;

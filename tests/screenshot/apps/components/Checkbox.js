@@ -22,7 +22,7 @@ const checkboxFocusTests = [
 
 const CheckboxTests = [
 	...checkboxSmokeTests,
-	...withConfig({focus: true}, checkboxFocusTests)
+	...withConfig({focus: true}, checkboxSmokeTests)
 ];
 
 export default CheckboxTests;

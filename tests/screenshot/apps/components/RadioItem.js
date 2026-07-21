@@ -162,7 +162,7 @@ const RadioItemTests = [
 	...radioItemSmokeTests,
 	...radioItemQwtcTests,
 	...radioItemExtendedTests,
-	...withConfig({focus: true}, radioItemFocusTests),
+	...withConfig({focus: true}, radioItemSmokeTests),
 	...withConfig({textSize: 'large'}, radioItemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, radioItemRtlTests),
 	...withTallglyphLocale(radioItemTallglyphTests)

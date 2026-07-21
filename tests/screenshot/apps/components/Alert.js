@@ -313,7 +313,7 @@ const AlertTests = [
 	...alertExtendedTests,
 	...withTallglyphLocale(alertTallglyphTests),
 	...withConfig({locale: 'ar-SA'}, alertRtlTests),
-	...withConfig({portrait: true}, alertPortraitTests)
+	...withConfig({portrait: true}, alertExtendedTests)
 ];
 
 export default AlertTests;

@@ -56,7 +56,7 @@ const chipTallglyphTests = [
 
 const ChipTests = [
 	...chipSmokeTests,
-	...withConfig({focus: true}, chipFocusTests),
+	...withConfig({focus: true}, chipSmokeTests),
 	...withConfig({skinVariants: ['largeText']}, chipLargeTextTests),
 	...withTallglyphLocale(chipTallglyphTests)
 ];

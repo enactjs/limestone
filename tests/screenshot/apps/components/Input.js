@@ -105,7 +105,7 @@ const InputTests = [
 	...withConfig({locale: 'ar-SA'}, inputRtlLargeTests),
 	...withConfig({locale: 'ar-SA'}, inputRtlOverlayTests),
 	...withConfig({textSize: 'large'}, inputLargeTextTests),
-	...withConfig({portrait: true}, inputPortraitTests),
+	...withConfig({portrait: true}, inputSmokeTests),
 	...withTallglyphLocale(inputTallglyphTests)
 ];
 

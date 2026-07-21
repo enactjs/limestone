@@ -276,7 +276,7 @@ const PickerTests = [
 	...pickerSmokeTests,
 	...pickerQwtcTests,
 	...pickerExtendedTests,
-	...withConfig({focus: true}, pickerFocusTests),
+	...withConfig({focus: true}, pickerSmokeTests),
 	...withConfig({locale: 'ar-SA'}, pickerRtlAllTests),
 	...withConfig({focus: true, locale: 'ar-SA'}, pickerRtlFocusTests),
 	{
