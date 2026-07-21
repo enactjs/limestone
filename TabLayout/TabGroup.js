@@ -35,6 +35,7 @@ const TabBase = kind({
 		onTabClick: PropTypes.func,
 		orientation: PropTypes.string,
 		selected: PropTypes.bool,
+		selectOnFocus: PropTypes.bool,
 		sprite: PropTypes.object,
 		stopped: PropTypes.bool
 	},
@@ -58,7 +59,7 @@ const TabBase = kind({
 		onFocus: handle(
 			forward('onFocus'),
 			not(forProp('disabled', true)),
-			() => !Spotlight.getPointerMode(),
+			(ev, {selectOnFocus}) => (!Spotlight.getPointerMode() || selectOnFocus),
 			forwardCustom('onFocusTab', (ev, {index}) => ({selected: index}))
 		)
 	},
@@ -76,6 +77,7 @@ const TabBase = kind({
 		delete rest.noIcons;
 		delete rest.onFocusTab;
 		delete rest.onTabClick;
+		delete rest.selectOnFocus;
 		delete rest.stopped;
 		delete rest.sprite;
 
@@ -173,6 +175,7 @@ const TabGroupBase = kind({
 		orientation: PropTypes.string,
 		scrollPosition: PropTypes.object,
 		selectedIndex: PropTypes.number,
+		selectOnFocus: PropTypes.bool,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
 		spotlightId: PropTypes.string
@@ -192,7 +195,7 @@ const TabGroupBase = kind({
 		tabsSpotlightDisabled: ({spotlightDisabled, tabs}) => spotlightDisabled || tabs.find(tab => tab && !tab.spotlightDisabled) == null
 	},
 
-	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollPosition, selectedIndex, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
+	render: ({css, collapsed, scrollable, id, noIcons, onBlur, onBlurList, onFocus, onFocusTab, onScrollStop, onSelect, orientation, primaryIndex, scrollPosition, selectedIndex, selectOnFocus, size, spotlightId, spotlightDisabled, tabs, tabsDisabled, tabsSpotlightDisabled, ...rest}) => {
 		delete rest.children;
 
 		const primaryTabSpotlightId = `${spotlightId}-primary-tab`;
@@ -203,8 +206,9 @@ const TabGroupBase = kind({
 			collapsed,
 			orientation,
 			primaryIndex: collapsed ? null : primaryIndex,
-			primaryTabSpotlightId
-		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, size]);
+			primaryTabSpotlightId,
+			selectOnFocus
+		}), [css, collapsed, orientation, primaryIndex, primaryTabSpotlightId, selectOnFocus, size]);
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map(tab => {
 			if (tab) {
