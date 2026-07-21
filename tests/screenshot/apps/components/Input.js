@@ -86,12 +86,12 @@ const inputExtendedTests = [
 	...inputDisabledTests
 ];
 
-const inputPortraitTests = [
-	...withProps({popupType: 'fullscreen', open: true}, [
-		<Input title="Portrait Input Test" subtitle="Portrait Additional text" />,
-		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
-	])
-];
+// const inputPortraitTests = [
+// 	...withProps({popupType: 'fullscreen', open: true}, [
+// 		<Input title="Portrait Input Test" subtitle="Portrait Additional text" />,
+// 		<Input title="Portrait Input Test" subtitle="Portrait Additional text" type="number" />
+// 	])
+// ];
 
 const inputTallglyphTests = [
 	<Input open title={TallglyphMultiScript} subtitle="Additional text" value={TallglyphLatin} />,

@@ -68,15 +68,15 @@ const radioItemSlotBeforeTests = [
 	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>RadioItem Checked</RadioItem>
 ];
 
-const radioItemFocusTests = [
-	// Focused — smoke representatives
-	<RadioItem>Focused RadioItem</RadioItem>,
-	// [QWTC-2231]
-	<RadioItem disabled>Focused RadioItem</RadioItem>,
-	<RadioItem inline>Focused Inline RadioItem</RadioItem>,
-	<RadioItem selected>Focused RadioItem Checked</RadioItem>,
-	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>
-];
+// const radioItemFocusTests = [
+// 	// Focused — smoke representatives
+// 	<RadioItem>Focused RadioItem</RadioItem>,
+// 	// [QWTC-2231]
+// 	<RadioItem disabled>Focused RadioItem</RadioItem>,
+// 	<RadioItem inline>Focused Inline RadioItem</RadioItem>,
+// 	<RadioItem selected>Focused RadioItem Checked</RadioItem>,
+// 	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>
+// ];
 
 const radioItemLargeTextTests = [
 	// [QWTC-2231]

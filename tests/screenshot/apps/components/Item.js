@@ -74,13 +74,13 @@ const itemQwtcTests = [
 	...tallglyphItemTests
 ];
 
-const itemFocusTests = [
-	// Focused
-	<Item>Focused Item</Item>,
-	<Item slotBefore={<Icon>star</Icon>}>Focused Item</Item>,
-	<Item slotAfter={<Icon>star</Icon>}>Focused Item</Item>,
-	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Focused Item</Item>
-];
+// const itemFocusTests = [
+// 	// Focused
+// 	<Item>Focused Item</Item>,
+// 	<Item slotBefore={<Icon>star</Icon>}>Focused Item</Item>,
+// 	<Item slotAfter={<Icon>star</Icon>}>Focused Item</Item>,
+// 	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Focused Item</Item>
+// ];
 
 const itemFocusedLightWrapperTests = [
 	// Focused with light wrapper

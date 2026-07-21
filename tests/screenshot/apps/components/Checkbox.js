@@ -13,12 +13,12 @@ const checkboxSmokeTests = [
 	<Checkbox indeterminate disabled />
 ];
 
-const checkboxFocusTests = [
-	// Focused
-	<Checkbox>home</Checkbox>,
-	<Checkbox selected>home</Checkbox>,
-	<Checkbox indeterminate indeterminateIcon="home" />
-];
+// const checkboxFocusTests = [
+// 	// Focused
+// 	<Checkbox>home</Checkbox>,
+// 	<Checkbox selected>home</Checkbox>,
+// 	<Checkbox indeterminate indeterminateIcon="home" />
+// ];
 
 const CheckboxTests = [
 	...checkboxSmokeTests,

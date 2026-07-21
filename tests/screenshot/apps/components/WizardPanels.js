@@ -102,13 +102,13 @@ const wizardRtlTests = [
 	}
 ];
 
-const wizardPortraitTests = [
-	<WizardPanels index={1} title="WizardPanel Portrait">
-		<Panel>Portrait View 1</Panel>
-		<Panel>Portrait View 2</Panel>
-		<Panel>Portrait View 3</Panel>
-	</WizardPanels>
-];
+// const wizardPortraitTests = [
+// 	<WizardPanels index={1} title="WizardPanel Portrait">
+// 		<Panel>Portrait View 1</Panel>
+// 		<Panel>Portrait View 2</Panel>
+// 		<Panel>Portrait View 3</Panel>
+// 	</WizardPanels>
+// ];
 
 const wizardTallglyphTests = [
 	<WizardPanels index={0} title={TallglyphMultiScript}>

@@ -186,25 +186,25 @@ const buttonQwtcTests = [
 ];
 
 // Focused with light wrapper — smoke representatives + QWTC focus cases
-const buttonFocusTests = [
-	// [QWTC-2232]
-	<Button>Focused button</Button>,
-	<Button disabled>Focused button</Button>,
-	// [QWTC-2232] end
-	<Button icon="plus" iconPosition="before">Focused button</Button>,
-	<Button icon="minus" iconPosition="after">Focused button</Button>,
-	<Button selected>Focused button</Button>,
-	<Button color="red">Focused button</Button>,
-	<Button roundBorder>Focused button</Button>,
-	<Button selected backgroundOpacity="transparent">Focused button</Button>, 	// [QWTC-1828]
-	<Button selected backgroundOpacity="opaque">Focused button</Button>,
-	// [QWTC-1831]
-	<Button icon="rotate">Focused button</Button>,
-	// [QWTC-2531]
-	<Button disabled icon="forward" size="samll" tooltipText="tooltip" tooltipType="transparent">Focused button</Button>,
-	<Button shadowed icon="minus" minWidth={false} />,
-	<Button shadowed backgroundOpacity="transparent" minWidth={false}>Focused button</Button>
-];
+// const buttonFocusTests = [
+// 	// [QWTC-2232]
+// 	<Button>Focused button</Button>,
+// 	<Button disabled>Focused button</Button>,
+// 	// [QWTC-2232] end
+// 	<Button icon="plus" iconPosition="before">Focused button</Button>,
+// 	<Button icon="minus" iconPosition="after">Focused button</Button>,
+// 	<Button selected>Focused button</Button>,
+// 	<Button color="red">Focused button</Button>,
+// 	<Button roundBorder>Focused button</Button>,
+// 	<Button selected backgroundOpacity="transparent">Focused button</Button>, 	// [QWTC-1828]
+// 	<Button selected backgroundOpacity="opaque">Focused button</Button>,
+// 	// [QWTC-1831]
+// 	<Button icon="rotate">Focused button</Button>,
+// 	// [QWTC-2531]
+// 	<Button disabled icon="forward" size="samll" tooltipText="tooltip" tooltipType="transparent">Focused button</Button>,
+// 	<Button shadowed icon="minus" minWidth={false} />,
+// 	<Button shadowed backgroundOpacity="transparent" minWidth={false}>Focused button</Button>
+// ];
 
 // RTL: smoke representatives + QWTC RTL cases (not a full LTR mirror).
 const buttonRtlTests = [

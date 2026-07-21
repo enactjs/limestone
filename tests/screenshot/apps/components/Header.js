@@ -132,14 +132,14 @@ const headerLocaleSmokeTests = [
 	...withProps({type: 'standard', slotAfter: dropIn.singleButton}, [baseTests[0]])
 ];
 
-const headerPortraitTests = [
-	...withProps({type: 'standard', centered: true}, [
-		<Header title="Portrait Header Title">{LoremString}</Header>,
-		<Header title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
-			{LoremString}
-		</Header>
-	])
-];
+// const headerPortraitTests = [
+// 	...withProps({type: 'standard', centered: true}, [
+// 		<Header title="Portrait Header Title">{LoremString}</Header>,
+// 		<Header title="Portrait Header Title" subtitle="Subtitle Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut nunc dolor">
+// 			{LoremString}
+// 		</Header>
+// 	])
+// ];
 
 const headerTallglyphValidationTests = [
 	...withProps({type: 'standard'}, baseTests),

@@ -76,20 +76,20 @@ const checkboxItemLabelPositionTests = [
 	<CheckboxItem inline label="label" labelPosition="after">CheckboxItem</CheckboxItem>
 ];
 
-const checkboxItemFocusTests = [
-	// Focused — smoke representatives
-	<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
-	<CheckboxItem selected>Hello Focused CheckboxItem</CheckboxItem>,
-	// [QWTC-1861]
-	<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>,
-	<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>,
-	<CheckboxItem label="label"><Icon slot="slotBefore">home</Icon>Hello Focused CheckboxItem</CheckboxItem>,
-
-	// FormCheckbox
-	// [QWTC-1861]
-	<CheckboxItem formCheckbox selected>Focused CheckboxItem Checked</CheckboxItem>,
-	<CheckboxItem formCheckbox selected label="label">Focused CheckboxItem Checked</CheckboxItem>
-];
+// const checkboxItemFocusTests = [
+// 	// Focused — smoke representatives
+// 	<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
+// 	<CheckboxItem selected>Hello Focused CheckboxItem</CheckboxItem>,
+// 	// [QWTC-1861]
+// 	<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>,
+// 	<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>,
+// 	<CheckboxItem label="label"><Icon slot="slotBefore">home</Icon>Hello Focused CheckboxItem</CheckboxItem>,
+//
+// 	// FormCheckbox
+// 	// [QWTC-1861]
+// 	<CheckboxItem formCheckbox selected>Focused CheckboxItem Checked</CheckboxItem>,
+// 	<CheckboxItem formCheckbox selected label="label">Focused CheckboxItem Checked</CheckboxItem>
+// ];
 
 const checkboxItemLargeTextTests = [
 	// Large text — smoke representatives

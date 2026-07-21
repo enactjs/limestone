@@ -299,14 +299,14 @@ const alertRtlTests = [
 	...withProps({type: 'overlay'}, overlayColorTests.slice(0, 2))
 ];
 
-const alertPortraitTests = [
-	...withProps({type: 'fullscreen', open: true}, [
-		<Alert title="This is an Alert with a very long title for portrait orientation" />,
-		<Alert title="This is an Alert with a very long title for portrait orientation">
-			{LoremString}
-		</Alert>
-	])
-];
+// const alertPortraitTests = [
+// 	...withProps({type: 'fullscreen', open: true}, [
+// 		<Alert title="This is an Alert with a very long title for portrait orientation" />,
+// 		<Alert title="This is an Alert with a very long title for portrait orientation">
+// 			{LoremString}
+// 		</Alert>
+// 	])
+// ];
 
 const AlertTests = [
 	...alertQwtcTests,
