@@ -2,6 +2,8 @@ import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 
+window.Range.prototype.getClientRects = () => ({length: 0, [Symbol.iterator]: Array.prototype[Symbol.iterator]});
+
 import {Alert, AlertBase, AlertImage} from '../Alert';
 import Button from '../../Button';
 
