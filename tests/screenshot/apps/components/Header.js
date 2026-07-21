@@ -3,7 +3,7 @@ import Button from '../../../../Button';
 import Steps from '../../../../Steps';
 import {Fragment} from 'react';
 
-import {LoremString, withConfig, withProps, withTallglyphLocale, TallglyphMultiScriptQwtc} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphMultiScriptQwtc} from './utils';
 
 const baseTests = [
 	<Header type="standard" title="Title" />,
