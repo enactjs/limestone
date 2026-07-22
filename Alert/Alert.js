@@ -26,8 +26,9 @@ const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
 		const rects = Array.from(range.getClientRects());
 		if (rects.length === 0) return;
 
-		const maxLineWidth = Math.max(...rects.map(r => r.width));
-		contentElement.style.width = Math.ceil(maxLineWidth) + 'px';
+		const minLeft = Math.min(...rects.map(r => r.left));
+		const maxRight = Math.max(...rects.map(r => r.right));
+		contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
 	});
 
 	return (
