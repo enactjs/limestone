@@ -44,11 +44,15 @@ JustTitle.storyName = 'just title';
 JustTitle.parameters = headerStoryConfig;
 
 export const ShortTitles = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle']
+	};
+
 	return (
 		<Fragment>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
+				{...controls}
 				{...commonProps(args)}
 			/>
 		</Fragment>
@@ -72,11 +76,15 @@ ShortTitles.storyName = 'short titles';
 ShortTitles.parameters = headerStoryConfig;
 
 export const LongTitles = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle']
+	};
+
 	return (
 		<Fragment>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
+				{...controls}
 				{...commonProps(args)}
 			/>
 		</Fragment>

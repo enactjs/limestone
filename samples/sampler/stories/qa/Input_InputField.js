@@ -15,16 +15,22 @@ export default {
 	component: 'InputField'
 };
 
-export const WithLongText = (args) => (
-	<InputField
-		disabled={args['disabled']}
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		size={args['size']}
-		type={args['type']}
-		defaultValue={inputData.longText}
-	/>
-);
+export const WithLongText = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<InputField
+			{...controls}
+			defaultValue={inputData.longText}
+		/>
+	);
+};
 
 boolean('disabled', WithLongText, FieldConfig);
 select('iconAfter', WithLongText, iconNames, FieldConfig);
@@ -34,16 +40,22 @@ select('type', WithLongText, propOptions.fieldTypes, FieldConfig);
 
 WithLongText.storyName = 'with long text';
 
-export const WithLongPlaceholder = (args) => (
-	<InputField
-		disabled={args['disabled']}
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		placeholder={args['placeholder']}
-		type={args['type']}
-		size={args['size']}
-	/>
-);
+export const WithLongPlaceholder = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		placeholder: args['placeholder'],
+		type: args['type'],
+		size: args['size']
+	};
+
+	return (
+		<InputField
+			{...controls}
+		/>
+	);
+};
 
 boolean('disabled', WithLongPlaceholder, FieldConfig);
 select('iconAfter', WithLongPlaceholder, iconNames, FieldConfig);
@@ -54,18 +66,24 @@ select('size', WithLongPlaceholder, propOptions.size, FieldConfig);
 
 WithLongPlaceholder.storyName = 'with long placeholder';
 
-export const MarkedInvalid = (args) => (
-	<InputField
-		disabled={args['disabled']}
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		invalid={args['invalid']}
-		invalidMessage={args['invalidMessage']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		defaultValue={inputData.longText}
-	/>
-);
+export const MarkedInvalid = (args) => {
+	const controls = {
+		disabled:args['disabled'],
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		invalid: args['invalid'],
+		invalidMessage: args['invalidMessage'],
+		placeholder: args['placeholder'],
+		size: args['size']
+	};
+
+	return (
+		<InputField
+			{...controls}
+			defaultValue={inputData.longText}
+		/>
+	);
+};
 
 boolean('disabled', MarkedInvalid, FieldConfig);
 select('iconAfter', MarkedInvalid, iconNames, FieldConfig);
@@ -116,14 +134,20 @@ WithTallCharacters.parameters = {
 	}
 };
 
-export const WithRtlAndLtrTextTogether = (args) => (
-	<InputField
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		size={args['size']}
-		defaultValue={inputData.rtlAndLtr}
-	/>
-);
+export const WithRtlAndLtrTextTogether = (args) => {
+	const controls = {
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		size: args['size']
+	};
+
+	return (
+		<InputField
+			{...controls}
+			defaultValue={inputData.rtlAndLtr}
+		/>
+	);
+};
 
 select('iconAfter', WithRtlAndLtrTextTogether, iconNames, FieldConfig);
 select('iconBefore', WithRtlAndLtrTextTogether, iconNames, FieldConfig);
@@ -136,39 +160,41 @@ export const _5WayTest = (args) => {
 	const disable2 = args['disable field two'];
 	const disable3 = args['disable field three'];
 	const disable4 = args['disable field four'];
+
+	const controls = {
+		autoFocus: args['autoFocus'],
+		size: args['size']
+	};
+
 	return (
 		<div>
 			<div style={divMargin}>
 				<InputField
+					{...controls}
 					style={divMargin}
-					autoFocus={args['autoFocus']}
 					disabled={disable1}
 					onChange={action('onChange')}
-					size={args['size']}
 					defaultValue={inputData.initialValue + ' one'}
 				/>
 				<InputField
-					autoFocus={args['autoFocus']}
+					{...controls}
 					disabled={disable2}
 					onChange={action('onChange')}
-					size={args['size']}
 					defaultValue={inputData.initialValue + ' two'}
 				/>
 			</div>
 			<div style={divMargin}>
 				<InputField
+					{...controls}
 					style={divMargin}
-					autoFocus={args['autoFocus']}
 					disabled={disable3}
 					onChange={action('onChange')}
-					size={args['size']}
 					defaultValue={inputData.initialValue + ' three'}
 				/>
 				<InputField
-					autoFocus={args['autoFocus']}
+					{...controls}
 					disabled={disable4}
 					onChange={action('onChange')}
-					size={args['size']}
 					defaultValue={inputData.initialValue + ' four'}
 				/>
 			</div>

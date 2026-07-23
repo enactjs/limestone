@@ -46,23 +46,27 @@ export const PanelsHeader = (args) => {
 	const childrenSelection = args['children'];
 	const children = prop.buttons[childrenSelection];
 
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle'],
+		type: args['type'],
+		backButtonBackgroundOpacity: args['backButtonBackgroundOpacity'],
+		centered: args['centered'],
+		closeButtonBackgroundOpacity: args['closeButtonBackgroundOpacity'],
+		marqueeOn: args['marqueeOn'],
+		noCloseButton: args['noCloseButton'],
+		noSubtitle: args['noSubtitle'],
+		shadowed: args['shadowed']
+	};
+
 	// Panel is used here to circumvent a quirk of Storybook that inserts an unwanted DOM
 	// node between the story and the "Environment", which in this case, prevents Header
 	// from landing on the correct slot in Panel.
 	const story = (
 		<Panel>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
-				type={args['type']}
-				backButtonBackgroundOpacity={args['backButtonBackgroundOpacity']}
-				centered={args['centered']}
-				closeButtonBackgroundOpacity={args['closeButtonBackgroundOpacity']}
-				marqueeOn={args['marqueeOn']}
-				noCloseButton={args['noCloseButton']}
-				noSubtitle={args['noSubtitle']}
+				{...controls}
 				onClose={action('onClose')}
-				shadowed={args['shadowed']}
 				slotAbove={slotAbove}
 				slotBefore={slotBefore}
 				slotAfter={slotAfter}

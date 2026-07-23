@@ -412,23 +412,27 @@ NestedContainers.parameters = {
 	}
 };
 
-export const DirectionalEvents = () => (
-	<div>
-		<p>
-			The item below will emit onSpotlight[Direction] events when attempting to 5-way navigate from
-			the item. Highlight the item below and press any of the 5-way directional keys to verify a
-			matching directional event in the action logger.
-		</p>
-		<Item
-			onSpotlightDown={action('onSpotlightDown')}
-			onSpotlightLeft={action('onSpotlightLeft')}
-			onSpotlightRight={action('onSpotlightRight')}
-			onSpotlightUp={action('onSpotlightUp')}
-		>
-			Item
-		</Item>
-	</div>
-);
+export const DirectionalEvents = () => {
+	const actions = {
+		onSpotlightDown: action('onSpotlightDown'),
+		onSpotlightLeft: action('onSpotlightLeft'),
+		onSpotlightRight: action('onSpotlightRight'),
+		onSpotlightUp: action('onSpotlightUp')
+	};
+
+	return (
+		<div>
+			<p>
+				The item below will emit onSpotlight[Direction] events when attempting to 5-way navigate from
+				the item. Highlight the item below and press any of the 5-way directional keys to verify a
+				matching directional event in the action logger.
+			</p>
+			<Item {...actions}>
+				Item
+			</Item>
+		</div>
+	);
+};
 
 DirectionalEvents.parameters = {
 	controls: {
@@ -463,14 +467,18 @@ DisabledWithPause.parameters = {
 	}
 };
 
-export const PopupNavigation = (args) => (
-	<PopupFocusTest
-		noAnimation={args['noAnimation']}
-		noAutoDismiss={args['noAutoDismiss']}
-		scrimType={args['scrimType']}
-		spotlightRestrict={args['spotlightRestrict']}
-	/>
-);
+export const PopupNavigation = (args) => {
+	const controls = {
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
+	return (
+		<PopupFocusTest {...controls} />
+	);
+};
 
 boolean('noAnimation', PopupNavigation, Popup, false);
 boolean('noAutoDismiss', PopupNavigation, Popup, false);

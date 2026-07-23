@@ -22,15 +22,15 @@ export default {
 };
 
 export const _Input = (args) => {
-	const propOptions = {
-		// Actions
+	const actions = {
 		onBeforeChange: action('onBeforeChange'),
 		onChange: action('onChange'),
 		onClose: action('onClose'),
 		onComplete: action('onComplete'),
-		onOpenPopup: action('onOpenPopup'),
+		onOpenPopup: action('onOpenPopup')
+	};
 
-		// Controls
+	const controls = {
 		type: args['type'],
 		popupType: args['popupType'],
 		size: args['size'],
@@ -49,28 +49,28 @@ export const _Input = (args) => {
 	};
 
 	// Numeric specific props
-	if (propOptions.type === 'number' || propOptions.type === 'passwordnumber') {
-		propOptions.numberInputField = args['numberInputField'];
+	if (controls.type === 'number' || controls.type === 'passwordnumber') {
+		controls.numberInputField = args['numberInputField'];
 
 		const minMax = args['customize min/max'];
 		if (minMax) {
-			propOptions.maxLength = args['maxLength'];
-			propOptions.minLength = args['minLength'];
+			controls.maxLength = args['maxLength'];
+			controls.minLength = args['minLength'];
 		} else {
-			propOptions.length = args['length'];
+			controls.length = args['length'];
 		}
 	}
 
 	// Modify a11y null strings
-	if (!propOptions['aria-label']) {
-		delete propOptions['aria-label'];
-	} else if (!propOptions.popupAriaLabel) {
-		delete propOptions.popupAriaLabel;
+	if (!controls['aria-label']) {
+		delete controls['aria-label'];
+	} else if (!controls.popupAriaLabel) {
+		delete controls.popupAriaLabel;
 	}
 
 	return (
 		<div>
-			<Input {...propOptions} />
+			<Input {...actions} {...controls} />
 		</div>
 	);
 };

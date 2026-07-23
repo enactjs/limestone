@@ -35,28 +35,38 @@ export const _Scroller = (args) => {
 			],
 		horizontalScrollbar = args['horizontalScrollbar'],
 		verticalScrollbar = args['verticalScrollbar'];
+	const className = classnames({
+		[css.verticalPadding]:
+			(direction !== 'horizontal' && verticalScrollbar !== 'hidden') ||
+			verticalScrollbar === 'visible',
+		[css.horizontalPadding]:
+			(direction !== 'vertical' && horizontalScrollbar !== 'hidden') ||
+			horizontalScrollbar === 'visible',
+		[css.bodyText]: focusableScrollbar || null
+	});
+
+	const actions = {
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		fadeOut: args['fadeOut'],
+		hoverToScroll: args['hoverToScroll'],
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spotlightDisabled: args['spotlightDisabled']
+	};
+
 	return (
 		<Scroller
-			className={classnames({
-				[css.verticalPadding]:
-					(direction !== 'horizontal' && verticalScrollbar !== 'hidden') ||
-					verticalScrollbar === 'visible',
-				[css.horizontalPadding]:
-					(direction !== 'vertical' && horizontalScrollbar !== 'hidden') ||
-					horizontalScrollbar === 'visible',
-				[css.bodyText]: focusableScrollbar || null
-			})}
+			{...actions}
+			{...controls}
+			className={className}
 			direction={direction}
-			fadeOut={args['fadeOut']}
 			focusableScrollbar={focusableScrollbar}
 			horizontalScrollbar={horizontalScrollbar}
-			hoverToScroll={args['hoverToScroll']}
-			key={args['scrollMode']}
-			noScrollByWheel={args['noScrollByWheel']}
-			onScrollStart={action('onScrollStart')}
-			onScrollStop={action('onScrollStop')}
-			scrollMode={args['scrollMode']}
-			spotlightDisabled={args['spotlightDisabled']}
 			verticalScrollbar={verticalScrollbar}
 		>
 			<div

@@ -59,50 +59,56 @@ export default {
 	component: 'Card'
 };
 
-export const _Card = (args) => (
-	<Card
-		aria-label={args['aria-label']}
-		captionImageIconsSrc={[args['captionImageIconsSrc']]}
-		captionImageSize={args['captionImageSize']}
-		captionOverflow={args['captionOverflow']}
-		captionOverflowOnFocus={args['captionOverflowOnFocus']}
-		captionOverlay={args['captionOverlay']}
-		captionOverlayOnFocus={args['captionOverlayOnFocus']}
-		centered={args['centered']}
-		centeredTitle={args['centeredTitle']}
-		disabled={args['disabled']}
-		duration={args['duration']}
-		durationOverlay={args['durationOverlay']}
-		fitImage={args['fitImage']}
-		icon={args['icon']}
-		labelIcons={prop.icons[args['labelIcons']]}
-		imageIconSrc={args['imageIconSrc']}
-		imageSize={args['imageSize']}
-		hasContainer={args['hasContainer']}
+export const _Card = (args) => {
+	const controls = {
+		'aria-label': args['aria-label'],
+		captionImageIconsSrc: [args['captionImageIconsSrc']],
+		captionImageSize: args['captionImageSize'],
+		captionOverflow: args['captionOverflow'],
+		captionOverflowOnFocus: args['captionOverflowOnFocus'],
+		captionOverlay: args['captionOverlay'],
+		captionOverlayOnFocus: args['captionOverlayOnFocus'],
+		centered: args['centered'],
+		centeredTitle: args['centeredTitle'],
+		disabled: args['disabled'],
+		duration: args['duration'],
+		durationOverlay: args['durationOverlay'],
+		fitImage: args['fitImage'],
+		icon: args['icon'],
+		labelIcons: prop.icons[args['labelIcons']],
+		imageIconSrc: args['imageIconSrc'],
+		imageSize: args['imageSize'],
+		hasContainer: args['hasContainer'],
 		// eslint-disable-next-line no-undefined
-		label={args['label'] ? args['label'] : undefined}
-		onClick={action('onClick')}
-		orientation={args['orientation']}
-		primaryBadge={prop.badges[args['primaryBadge']]}
-		primaryBadgeSize={args['primaryBadgeSize']}
-		progress={args['progress']}
-		progressBarOverlay={args['progressBarOverlay']}
-		roundedImage={args['roundedImage']}
-		secondaryBadge={prop.badges[args['secondaryBadge']]}
-		secondaryBadgeSize={args['secondaryBadgeSize']}
+		label: args['label'] ? args['label'] : undefined,
+		orientation: args['orientation'],
+		primaryBadge: prop.badges[args['primaryBadge']],
+		primaryBadgeSize: args['primaryBadgeSize'],
+		progress: args['progress'],
+		progressBarOverlay: args['progressBarOverlay'],
+		roundedImage: args['roundedImage'],
+		secondaryBadge: prop.badges[args['secondaryBadge']],
+		secondaryBadgeSize: args['secondaryBadgeSize'],
 		// eslint-disable-next-line no-undefined
-		secondaryLabel={args['secondaryLabel'] ? args['secondaryLabel'] : undefined}
-		secondaryLabelIcons={prop.icons[args['secondaryLabelIcons']]}
-		selected={args['selected']}
-		showDuration={args['showDuration']}
-		showProgressBar={args['showProgressBar']}
-		splitCaption={args['splitCaption']}
-		src={args['src']}
-		withoutMarquee={args['withoutMarquee']}
-	>
-		{args['children']}
-	</Card>
-);
+		secondaryLabel: args['secondaryLabel'] ? args['secondaryLabel'] : undefined,
+		secondaryLabelIcons: prop.icons[args['secondaryLabelIcons']],
+		selected: args['selected'],
+		showDuration: args['showDuration'],
+		showProgressBar: args['showProgressBar'],
+		splitCaption: args['splitCaption'],
+		src: args['src'],
+		withoutMarquee: args['withoutMarquee']
+	};
+
+	return (
+		<Card
+			{...controls}
+			onClick={action('onClick')}
+		>
+			{args['children']}
+		</Card>
+	);
+};
 
 text('aria-label', _Card, Config);
 object('captionImageIconsSrc', _Card, Config, generateImageSrc('0084ff'));

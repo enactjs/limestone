@@ -18,17 +18,21 @@ export default {
 };
 
 export const _Chip = (args) => {
+	const controls = {
+		checked: args['checked'],
+		deleteButton: args['deleteButton'],
+		disabled: args['disabled'],
+		imageSize: args['imageSize']
+	};
+
 	const isImage = args['isImage'];
 	const icon = isImage ? gameHomeIcon : args['icon'];
 	return (
 		<div style={{marginTop: ri.scaleToRem(100), marginLeft: ri.scaleToRem(36)}}>
 			<Chip
-				checked={args['checked']}
-				deleteButton={args['deleteButton']}
-				disabled={args['disabled']}
+				{...controls}
 				icon={icon}
 				id="chip"
-				imageSize={args['imageSize']}
 				isImage={isImage}
 				onClick={action('onClick')}
 			>

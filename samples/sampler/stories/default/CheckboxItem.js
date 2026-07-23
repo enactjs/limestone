@@ -26,6 +26,18 @@ export default {
 };
 
 export const _CheckboxItem = (args) => {
+	const controls = {
+		// disabled and inline have problems when set to `null` from the internal nullify...
+		disabled: args['disabled'],
+		formCheckbox: args['formCheckbox'],
+		icon: args['icon'],
+		indeterminate: args['indeterminate'],
+		indeterminateIcon: args['indeterminateIcon'],
+		inline: args['inline'],
+		label: args['label'],
+		labelPosition: args['labelPosition']
+	};
+
 	const slotBeforeSelection = args['slotBefore'];
 	const slotBefore = slotBeforeSelection ? (
 		<Icon slot="slotBefore">{slotBeforeSelection}</Icon>
@@ -33,15 +45,7 @@ export const _CheckboxItem = (args) => {
 
 	return (
 		<CheckboxItem
-			// disabled and inline have problems when set to `null` from the internal nullify...
-			disabled={args['disabled']}
-			formCheckbox={args['formCheckbox']}
-			icon={args['icon']}
-			indeterminate={args['indeterminate']}
-			indeterminateIcon={args['indeterminateIcon']}
-			inline={args['inline']}
-			label={args['label']}
-			labelPosition={args['labelPosition']}
+			{...controls}
 			onToggle={action('onToggle')}
 		>
 			{slotBefore}

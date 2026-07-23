@@ -20,24 +20,34 @@ export default {
 	component: 'InputField'
 };
 
-export const _InputField = (args) => (
-	<InputField
-		autoFocus={args['autoFocus']}
-		caretToEndOnFocus={args['caretToEndOnFocus']}
-		disabled={args['disabled']}
-		dismissOnEnter={args['dismissOnEnter']}
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		invalid={args['invalid']}
-		invalidMessage={args['invalidMessage']}
-		marqueeContent={args['marqueeContent']}
-		onBeforeChange={action('onBeforeChange')}
-		onChange={action('onChange')}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		type={args['type']}
-	/>
-);
+export const _InputField = (args) => {
+	const actions = {
+		onBeforeChange: action('onBeforeChange'),
+		onChange: action('onChange')
+	};
+
+	const controls = {
+		autoFocus: args['autoFocus'],
+		caretToEndOnFocus: args['caretToEndOnFocus'],
+		disabled: args['disabled'],
+		dismissOnEnter: args['dismissOnEnter'],
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		invalid: args['invalid'],
+		invalidMessage: args['invalidMessage'],
+		marqueeContent: args['marqueeContent'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<InputField
+			{...actions}
+			{...controls}
+		/>
+	);
+};
 
 boolean('autoFocus', _InputField, Config);
 boolean('caretToEndOnFocus', _InputField, Config);

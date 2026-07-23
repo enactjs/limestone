@@ -12,24 +12,30 @@ export default {
 	component: 'InputField'
 };
 
-export const Basic = (args) => (
-	<Input
-		title={args['title']}
-		subtitle={args['subtitle']}
-		popupType={args['popupType']}
-		type={args['type']}
-		disabled={args['disabled']}
-		iconAfter={args['iconAfter']}
-		iconBefore={args['iconBefore']}
-		invalid={args['invalid']}
-		invalidMessage={args['invalidMessage']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		defaultValue={inputData.shortText}
-	>
-		{buttons[args['buttons']]}
-	</Input>
-);
+export const Basic = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle'],
+		popupType: args['popupType'],
+		type: args['type'],
+		disabled: args['disabled'],
+		iconAfter: args['iconAfter'],
+		iconBefore: args['iconBefore'],
+		invalid: args['invalid'],
+		invalidMessage: args['invalidMessage'],
+		placeholder: args['placeholder'],
+		size: args['size']
+	};
+
+	return (
+		<Input
+			{...controls}
+			defaultValue={inputData.shortText}
+		>
+			{buttons[args['buttons']]}
+		</Input>
+	);
+};
 
 text('title', Basic, Config, 'Title');
 text('subtitle', Basic, Config, 'Subtitle');

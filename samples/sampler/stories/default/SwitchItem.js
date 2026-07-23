@@ -19,10 +19,14 @@ export const _SwitchItem = (args) => {
 	const slotAfterSelection = args['slotAfter'];
 	const slotAfter = slotAfterSelection ? <Icon slot="slotAfter">{slotAfterSelection}</Icon> : null;
 
+	const controls = {
+		disabled: args['disabled'],
+		inline: args['inline']
+	};
+
 	return (
 		<SwitchItem
-			disabled={args['disabled']}
-			inline={args['inline']}
+			{...controls}
 			onToggle={action('onToggle')}
 		>
 			{args['children']}

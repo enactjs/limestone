@@ -74,34 +74,45 @@ export default {
 	component: 'VirtualGridList'
 };
 
-export const _VirtualGridList = (args) => (
-	<VirtualGridList
-		className={
-			args['direction'] === 'vertical' ?
-				css.verticalPadding :
-				css.horizontalPadding
-		}
-		dataSize={updateDataSize(args['dataSize'])}
-		direction={args['direction']}
-		horizontalScrollbar={args['horizontalScrollbar']}
-		hoverToScroll={args['hoverToScroll']}
-		itemRenderer={renderItem}
-		itemSize={{
-			minWidth: ri.scale(args['itemSize.minWidth']),
-			minHeight: ri.scale(args['itemSize.minHeight'])
-		}}
-		key={args['scrollMode']}
-		noScrollByWheel={args['noScrollByWheel']}
-		onScrollStart={action('onScrollStart')}
-		onScrollStop={action('onScrollStop')}
-		scrollMode={args['scrollMode']}
-		spacing={ri.scale(args['spacing'])}
-		spotlightDisabled={args['spotlightDisabled']}
-		stickTo={args['stickTo'] || null}
-		verticalScrollbar={args['verticalScrollbar']}
-		wrap={args['wrap']}
-	/>
-);
+export const _VirtualGridList = (args) => {
+	const className = args['direction'] === 'vertical' ?
+		css.verticalPadding :
+		css.horizontalPadding;
+	const itemSize = {
+		minWidth: ri.scale(args['itemSize.minWidth']),
+		minHeight: ri.scale(args['itemSize.minHeight'])
+	};
+
+	const actions = {
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		direction: args['direction'],
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		stickTo: args['stickTo'] || null,
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
+	return (
+		<VirtualGridList
+			{...actions}
+			{...controls}
+			className={className}
+			itemSize={itemSize}
+			itemRenderer={renderItem}
+		/>
+	);
+};
 
 select('direction', _VirtualGridList, prop.direction, VirtualGridListConfig);
 number('dataSize', _VirtualGridList, VirtualGridListConfig, defaultDataSize);

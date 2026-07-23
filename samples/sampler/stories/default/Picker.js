@@ -37,29 +37,35 @@ export default {
 	component: 'Picker'
 };
 
-export const _Picker = (args) => (
-	<Picker
-		aria-label={args['aria-label']}
-		changedBy={args['changedBy']}
-		decrementAriaLabel={args['decrementAriaLabel']}
-		decrementIcon={args['decrementIcon']}
-		disabled={args['disabled']}
-		incrementAriaLabel={args['incrementAriaLabel']}
-		incrementIcon={args['incrementIcon']}
-		inlineTitle={args['inlineTitle']}
-		joined={args['joined']}
-		noAnimation={args['noAnimation']}
-		onChange={action('onChange')}
-		orientation={args['orientation']}
-		reverse={prop.reverse[args['reverse']]}
-		title={args['title']}
-		type={args['type']}
-		width={args['width']}
-		wrap={args['wrap']}
-	>
-		{airports}
-	</Picker>
-);
+export const _Picker = (args) => {
+	const controls = {
+		'aria-label': args['aria-label'],
+		changedBy: args['changedBy'],
+		decrementAriaLabel: args['decrementAriaLabel'],
+		decrementIcon: args['decrementIcon'],
+		disabled: args['disabled'],
+		incrementAriaLabel: args['incrementAriaLabel'],
+		incrementIcon: args['incrementIcon'],
+		inlineTitle: args['inlineTitle'],
+		joined: args['joined'],
+		noAnimation: args['noAnimation'],
+		orientation: args['orientation'],
+		reverse: prop.reverse[args['reverse']],
+		title: args['title'],
+		type: args['type'],
+		width: args['width'],
+		wrap: args['wrap']
+	};
+
+	return (
+		<Picker
+			{...controls}
+			onChange={action('onChange')}
+		>
+			{airports}
+		</Picker>
+	);
+};
 
 text('aria-label', _Picker, Config, '');
 select('changedBy', _Picker, prop.changedBy, Config, 'enter');

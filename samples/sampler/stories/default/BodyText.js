@@ -17,15 +17,21 @@ export default {
 	component: 'BodyText'
 };
 
-export const _BodyText = (args) => (
-	<BodyText
-		centered={args['centered']}
-		noWrap={args['noWrap']}
-		size={args['size']}
-	>
-		{args['children']}
-	</BodyText>
-);
+export const _BodyText = (args) => {
+	const controls = {
+		centered:args['centered'],
+		noWrap:args['noWrap'],
+		size: args['size']
+	};
+
+	return (
+		<BodyText
+			{...controls}
+		>
+			{args['children']}
+		</BodyText>
+	);
+};
 
 boolean('centered', _BodyText, Config);
 boolean('noWrap', _BodyText, Config);
