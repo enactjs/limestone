@@ -15,29 +15,6 @@ import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
 import {Children, cloneElement, useLayoutEffect} from 'react';
 
-const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
-	useLayoutEffect(() => {
-		const contentElement = document.getElementById(id);
-		if (!contentElement) return;
-
-		contentElement.style.width = '';
-		const range = document.createRange();
-		range.selectNodeContents(contentElement);
-		const rects = Array.from(range.getClientRects());
-		if (rects.length === 0) return;
-
-		const minLeft = Math.min(...rects.map(r => r.left));
-		const maxRight = Math.max(...rects.map(r => r.right));
-		contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
-	});
-
-	return (
-		<Cell shrink align={component || fullscreen ? 'center' : 'stretch'} component={component} id={id} {...rest}>
-			{children}
-		</Cell>
-	);
-};
-
 import BodyText from '../BodyText';
 import Heading from '../Heading';
 import Popup from '../Popup';
@@ -45,6 +22,43 @@ import Popup from '../Popup';
 import AlertImage from './AlertImage';
 
 import componentCss from './Alert.module.less';
+
+const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
+	const contentId = id ? `${id}_content` : null;
+	const fitted = component || fullscreen;
+
+	useLayoutEffect(() => {
+		if (!contentId || !fitted) return;
+
+		const measure = () => {
+			const contentElement = document.getElementById(contentId);
+			if (!contentElement) return;
+
+			contentElement.style.width = '';
+			const range = document.createRange();
+			range.selectNodeContents(contentElement);
+			if (typeof range.getClientRects !== 'function') return;
+
+			const rects = Array.from(range.getClientRects());
+			if (rects.length === 0) return;
+
+			const minLeft = Math.min(...rects.map(r => r.left));
+			const maxRight = Math.max(...rects.map(r => r.right));
+			contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
+		};
+
+		measure();
+		window.addEventListener('resize', measure);
+
+		return () => window.removeEventListener('resize', measure);
+	});
+
+	return (
+		<Cell shrink align={fitted ? 'center' : 'stretch'} component={component} id={contentId} {...rest}>
+			{children}
+		</Cell>
+	);
+};
 
 /**
  * A modal Alert component.
@@ -299,7 +313,7 @@ const AlertBase = kind({
 						{showTitle && !fullscreen ? <Cell shrink align="stretch"><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						{resolvedImage || image ? <Cell shrink className={css.alertImage}>{resolvedImage || image}</Cell> : null}
 						{showTitle && fullscreen ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
-						<FittedContentCell component={contentComponent} fullscreen={fullscreen} className={css.content} id={`${id}_content`}>
+						<FittedContentCell component={contentComponent} fullscreen={fullscreen} className={css.content} id={id}>
 							{children}
 						</FittedContentCell>
 						{buttons ?

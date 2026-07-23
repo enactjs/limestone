@@ -2,8 +2,6 @@ import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 
-window.Range.prototype.getClientRects = () => ({length: 0, [Symbol.iterator]: Array.prototype[Symbol.iterator]});
-
 import {Alert, AlertBase, AlertImage} from '../Alert';
 import Button from '../../Button';
 
@@ -72,7 +70,7 @@ describe('Alert', () => {
 		);
 		const alert = screen.getByRole('alert');
 
-		const actual = alert.querySelector('#undefined_content').hasChildNodes();
+		const actual = alert.querySelector('.content').hasChildNodes();
 
 		expect(actual).toBeFalsy();
 	});
@@ -229,7 +227,7 @@ describe('AlertOverlay specs', () => {
 		);
 		const alert = screen.getByRole('alert');
 
-		const actual = alert.querySelector('#undefined_content').hasChildNodes();
+		const actual = alert.querySelector('.content').hasChildNodes();
 
 		expect(actual).toBeFalsy();
 	});
