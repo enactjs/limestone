@@ -111,22 +111,30 @@ const WithVirtualListSamplesBase = (props) => {
 	const itemHeight = 156;
 	const itemSize = ri.scale(itemHeight);
 
+	const actions = {
+		onHide: action('onHide'),
+		onShow: action('onShow')
+	};
+
+	const controls = {
+		position: args['position'],
+		fullHeight: args['fullHeight'],
+		width: args['width'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
 	return (
 		<div>
 			<FixedPopupPanels
+				{...actions}
+				{...controls}
 				index={index}
 				open={open}
-				position={args['position']}
-				fullHeight={args['fullHeight']}
-				width={args['width']}
-				noAnimation={args['noAnimation']}
-				noAutoDismiss={args['noAutoDismiss']}
 				onBack={handleBack}
 				onClose={handleClose}
-				onHide={action('onHide')}
-				onShow={action('onShow')}
-				scrimType={args['scrimType']}
-				spotlightRestrict={args['spotlightRestrict']}
 			>
 				<Panel>
 					<Header>
@@ -275,6 +283,16 @@ export const WithDropdown = (args) => {
 		setOpen(false);
 	}, []);
 
+	const controls = {
+		position: args['position'],
+		fullHeight: args['fullHeight'],
+		width: args['width'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
 	return (
 		<>
 			<Dropdown
@@ -285,14 +303,8 @@ export const WithDropdown = (args) => {
 			</Dropdown>
 			<Button onClick={handleOpen}>Open</Button>
 			<FixedPopupPanels
+				{...controls}
 				open={open}
-				position={args['position']}
-				fullHeight={args['fullHeight']}
-				width={args['width']}
-				noAnimation={args['noAnimation']}
-				noAutoDismiss={args['noAutoDismiss']}
-				scrimType={args['scrimType']}
-				spotlightRestrict={args['spotlightRestrict']}
 			>
 				<Panel>
 					<Header>
@@ -341,21 +353,25 @@ export const WithScroller = (args) => {
 	const prevPanel = () => setPanelIndexState(Math.max(index - 1, 0));
 	const toggleOpen = () => setOpenState(!open);
 
+	const controls = {
+		fullHeight: args['fullHeight'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		position: args['position'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict'],
+		width: args['width']
+	};
+
 	return (
 		<>
 			<Button onClick={toggleOpen}>Open</Button>
 			<FixedPopupPanels
+				{...controls}
 				index={index}
 				open={open}
-				fullHeight={args['fullHeight']}
-				noAnimation={args['noAnimation']}
-				noAutoDismiss={args['noAutoDismiss']}
 				onBack={prevPanel}
 				onClose={toggleOpen}
-				position={args['position']}
-				scrimType={args['scrimType']}
-				spotlightRestrict={args['spotlightRestrict']}
-				width={args['width']}
 			>
 				<Panel>
 					<Header>
@@ -464,22 +480,30 @@ const WithVariousItemsSamplesBase = (props) => {
 		}
 	}, [popupOpen, setPopupOpenState]);
 
+	const actions = {
+		onHide: action('onHide'),
+		onShow: action('onShow')
+	};
+
+	const controls = {
+		position: args['position'],
+		fullHeight: args['fullHeight'],
+		width: args['width'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
 	return (
 		<div>
 			<FixedPopupPanels
+				{...actions}
+				{...controls}
 				index={index}
 				open={open}
-				position={args['position']}
-				fullHeight={args['fullHeight']}
-				width={args['width']}
-				noAnimation={args['noAnimation']}
-				noAutoDismiss={args['noAutoDismiss']}
 				onBack={handleBack}
 				onClose={handleClose}
-				onHide={action('onHide')}
-				onShow={action('onShow')}
-				scrimType={args['scrimType']}
-				spotlightRestrict={args['spotlightRestrict']}
 			>
 				<Panel>
 					<Header>

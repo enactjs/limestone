@@ -200,31 +200,43 @@ export default {
 	component: 'VirtualGridList'
 };
 
-export const HorizontalVirtualGridList = (args) => (
-	<VirtualGridList
-		dataSize={updateDataSize(args['dataSize'])}
-		direction="horizontal"
-		horizontalScrollbar={args['horizontalScrollbar']}
-		hoverToScroll={args['hoverToScroll']}
-		itemRenderer={renderItem}
-		itemSize={{
+export const HorizontalVirtualGridList = (args) => {
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		itemSize: {
 			minWidth: ri.scale(args['minWidth']),
 			minHeight: ri.scale(args['minHeight'])
-		}}
-		key={args['scrollMode']}
-		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
-		onScrollStart={action('onScrollStart')}
-		onScrollStop={action('onScrollStop')}
-		scrollMode={args['scrollMode']}
-		spacing={ri.scale(args['spacing'])}
-		spotlightDisabled={args['spotlightDisabled']}
-		stickTo={args['stickTo'] || null}
-		style={{paddingBottom: ri.unit(ri.scale(36) + 'px', 'rem')}}
-		verticalScrollbar={args['verticalScrollbar']}
-		wrap={args['wrap']}
-	/>
-);
+		},
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		stickTo: args['stickTo'] || null,
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
+	const style = {paddingBottom: ri.unit(ri.scale(36) + 'px', 'rem')};
+
+	return (
+		<VirtualGridList
+			{...actions}
+			{...controls}
+			direction="horizontal"
+			itemRenderer={renderItem}
+			style={style}
+		/>
+	);
+};
 
 number('dataSize', HorizontalVirtualGridList, Config, defaultDataSize);
 select('horizontalScrollbar', HorizontalVirtualGridList, prop.scrollbarOption, Config);
@@ -255,32 +267,44 @@ WithButtonSpotlightGoesToCorrectTarget.parameters = {
 	}
 };
 
-export const HorizontalSquaredVirtualGridList = (args) => (
-	<VirtualGridList
-		dataSize={updateDataSize(args['dataSize'])}
-		direction="horizontal"
-		horizontalScrollbar="hidden"
-		itemRenderer={renderItemWithoutLabels}
-		itemSize={{
+export const HorizontalSquaredVirtualGridList = (args) => {
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		itemSize: {
 			minWidth: ri.scale(args['minSize']),
 			minHeight: ri.scale(args['minSize'])
-		}}
-		key={args['scrollMode']}
-		noScrollByWheel={args['noScrollByWheel']}
-		onKeyDown={action('onKeyDown')}
-		onScrollStart={action('onScrollStart')}
-		onScrollStop={action('onScrollStop')}
-		scrollMode={args['scrollMode']}
-		spacing={ri.scale(args['spacing'])}
-		spotlightDisabled={args['spotlightDisabled']}
-		style={{
-			width: ri.scaleToRem(804),
-			height: ri.scaleToRem(804),
-			backgroundColor: 'white'
-		}}
-		wrap={args['wrap']}
-	/>
-);
+		},
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		wrap: args['wrap']
+	};
+
+	const style = {
+		width: ri.scaleToRem(804),
+		height: ri.scaleToRem(804),
+		backgroundColor: 'white'
+	};
+
+	return (
+		<VirtualGridList
+			{...actions}
+			{...controls}
+			direction="horizontal"
+			horizontalScrollbar="hidden"
+			itemRenderer={renderItemWithoutLabels}
+			style={style}
+		/>
+	);
+};
 
 number('dataSize', HorizontalSquaredVirtualGridList, Config, defaultDataSize);
 number('minSize', HorizontalSquaredVirtualGridList, Config, 804);
@@ -340,24 +364,33 @@ class SnapToCenterVGL extends Component {
 
 	render () {
 		const args = this.props.args;
+
+		const actions = {
+			onKeyDown: action('onKeyDown'),
+			onScrollStart: action('onScrollStart'),
+			onScrollStop: action('onScrollStop')
+		};
+
+		const controls = {
+			dataSize: updateDataSize(args['dataSize']),
+			itemSize: {
+				minWidth: ri.scale(args['minWidth']),
+				minHeight: ri.scale(args['minHeight'])
+			},
+			spacing: ri.scale(args['spacing']),
+			spotlightDisabled: args['spotlightDisabled']
+		};
+
+		const style = {width: ri.scaleToRem(2400)};
+
 		return (
 			<VirtualGridList
+				{...actions}
+				{...controls}
 				cbScrollTo={this.getScrollTo}
-				dataSize={updateDataSize(args['dataSize'])}
 				itemRenderer={this.renderItem}
-				itemSize={{
-					minWidth: ri.scale(args['minWidth']),
-					minHeight: ri.scale(args['minHeight'])
-				}}
-				onKeyDown={action('onKeyDown')}
-				onScrollStart={action('onScrollStart')}
-				onScrollStop={action('onScrollStop')}
 				snapToCenter
-				spacing={ri.scale(args['spacing'])}
-				spotlightDisabled={args['spotlightDisabled']}
-				style={{
-					width: ri.scaleToRem(2400)
-				}}
+				style={style}
 				verticalScrollbar="hidden"
 			/>
 		);

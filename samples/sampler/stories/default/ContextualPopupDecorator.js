@@ -30,17 +30,25 @@ export const _ContextualPopupDecorator = (args) => {
 		<div>{args['popup string']}</div>
 	);
 
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		noAutoDismiss: args['noAutoDismiss'],
+		offset: args['offset'],
+		open: args['open'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
 	return (
 		<div style={{textAlign: 'center', marginTop: ri.scaleToRem(198)}}>
 			<ContextualButton
-				direction={args['direction']}
-				noAutoDismiss={args['noAutoDismiss']}
-				offset={args['offset']}
-				onClose={action('onClose')}
-				onOpen={action('onOpen')}
-				open={args['open']}
+				{...actions}
+				{...controls}
 				popupComponent={renderPopup} // eslint-disable-line react/jsx-no-bind
-				spotlightRestrict={args['spotlightRestrict']}
 			>
 				{args['button string']}
 			</ContextualButton>

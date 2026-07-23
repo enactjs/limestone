@@ -115,6 +115,31 @@ export const _VideoPlayer = (args) => {
 	const videoSource = prop.videos[videoTitle];
 	const poster = prop.posters[videoTitle];
 
+	const controls = {
+		autoCloseTimeout: args['autoCloseTimeout'],
+		backButtonAriaLabel: args['backButtonAriaLabel'],
+		disabled: args['disabled'],
+		feedbackHideDelay: args['feedbackHideDelay'],
+		includeTimeHour: args['includeTimeHour'],
+		initialJumpDelay: args['initialJumpDelay'],
+		jumpDelay: args['jumpDelay'],
+		loop: args['loop'],
+		miniFeedbackHideDelay: args['miniFeedbackHideDelay'],
+		muted: args['muted'],
+		no5WayJump: args['no5WayJump'],
+		noAutoPlay: args['noAutoPlay'],
+		noAutoShowMediaControls: args['noAutoShowMediaControls'],
+		noMediaSliderFeedback: args['noMediaSliderFeedback'],
+		noMiniFeedback: args['noMiniFeedback'],
+		noSlider: args['noSlider'],
+		pauseAtEnd: args['pauseAtEnd'],
+		seekDisabled: args['seekDisabled'],
+		spotlightDisabled: args['spotlightDisabled'],
+		thumbnailUnavailable: args['thumbnailUnavailable'],
+		title: args['title'],
+		titleHideDelay: args['titleHideDelay']
+	};
+
 	return (
 		<div
 			style={{
@@ -145,30 +170,9 @@ export const _VideoPlayer = (args) => {
 				VideoPlayer Edge
 			</label>
 			<VideoPlayer
-				autoCloseTimeout={args['autoCloseTimeout']}
-				backButtonAriaLabel={args['backButtonAriaLabel']}
-				disabled={args['disabled']}
-				feedbackHideDelay={args['feedbackHideDelay']}
-				includeTimeHour={args['includeTimeHour']}
-				initialJumpDelay={args['initialJumpDelay']}
-				jumpDelay={args['jumpDelay']}
-				loop={args['loop']}
-				miniFeedbackHideDelay={args['miniFeedbackHideDelay']}
-				muted={args['muted']}
-				no5WayJump={args['no5WayJump']}
-				noAutoPlay={args['noAutoPlay']}
-				noAutoShowMediaControls={args['noAutoShowMediaControls']}
-				noMediaSliderFeedback={args['noMediaSliderFeedback']}
-				noMiniFeedback={args['noMiniFeedback']}
-				noSlider={args['noSlider']}
-				pauseAtEnd={args['pauseAtEnd']}
+				{...controls}
 				poster={poster}
-				seekDisabled={args['seekDisabled']}
-				spotlightDisabled={args['spotlightDisabled']}
 				thumbnailSrc={poster}
-				thumbnailUnavailable={args['thumbnailUnavailable']}
-				title={args['title']}
-				titleHideDelay={args['titleHideDelay']}
 				{...prop.eventActions}
 			>
 				<source src={videoSource} type="video/mp4" />

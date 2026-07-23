@@ -70,20 +70,26 @@ select('value', WithLongText, prop.longText, Config, 'A Looooooooooooooooooooooo
 
 WithLongText.storyName = 'with long text';
 
-export const WithTallCharacters = (args) => (
-	<Button
-		onClick={action('onClick')}
-		backgroundOpacity={args['backgroundOpacity']}
-		disabled={args['disabled']}
-		focusEffect={args['focusEffect']}
-		icon={args['icon']}
-		minWidth={args['minWidth'] ? void 0 : false}
-		selected={args['selected']}
-		size={args['size']}
-	>
-		{args['value']}
-	</Button>
-);
+export const WithTallCharacters = (args) => {
+	const controls = {
+		backgroundOpacity: args['backgroundOpacity'],
+		disabled: args['disabled'],
+		focusEffect: args['focusEffect'],
+		icon: args['icon'],
+		minWidth: args['minWidth'] ? void 0 : false,
+		selected: args['selected'],
+		size: args['size']
+	};
+
+	return (
+		<Button
+			{...controls}
+			onClick={action('onClick')}
+		>
+			{args['value']}
+		</Button>
+	);
+};
 
 select('backgroundOpacity', WithTallCharacters, prop.backgroundOpacity, Config);
 boolean('disabled', WithTallCharacters, Config);
@@ -96,20 +102,26 @@ select('value', WithTallCharacters, prop.tallText, Config, 'ฟิ้ ไั ஒ
 
 WithTallCharacters.storyName = 'with tall characters';
 
-export const ToValidateMinWidthWithASingleCharacter = (args) => (
-	<Button
-		onClick={action('onClick')}
-		backgroundOpacity={args['backgroundOpacity']}
-		disabled={args['disabled']}
-		focusEffect={args['focusEffect']}
-		icon={args['icon']}
-		minWidth={args['minWidth'] ? void 0 : false}
-		selected={args['selected']}
-		size={args['size']}
-	>
-		{args['value']}
-	</Button>
-);
+export const ToValidateMinWidthWithASingleCharacter = (args) => {
+	const controls = {
+		backgroundOpacity: args['backgroundOpacity'],
+		disabled: args['disabled'],
+		focusEffect: args['focusEffect'],
+		icon: args['icon'],
+		minWidth: args['minWidth'] ? void 0 : false,
+		selected: args['selected'],
+		size: args['size']
+	};
+
+	return (
+		<Button
+			{...controls}
+			onClick={action('onClick')}
+		>
+			{args['value']}
+		</Button>
+	);
+};
 
 select('backgroundOpacity', ToValidateMinWidthWithASingleCharacter, prop.backgroundOpacity, Config);
 boolean('disabled', ToValidateMinWidthWithASingleCharacter, Config);
@@ -122,22 +134,28 @@ text('value', ToValidateMinWidthWithASingleCharacter, Config, 'A');
 
 ToValidateMinWidthWithASingleCharacter.storyName = 'to validate minWidth with a single character';
 
-export const ToTestIfTheParentElementsBackgroundCausesOcclusion = (args) => (
-	<div className={css.bgColor}>
-		<Button
-			onClick={action('onClick')}
-			backgroundOpacity={args['backgroundOpacity']}
-			disabled={args['disabled']}
-			focusEffect={args['focusEffect']}
-			icon={args['icon']}
-			minWidth={args['minWidth'] ? void 0 : false}
-			selected={args['selected']}
-			size={args['size']}
-		>
-			Normal Button
-		</Button>
-	</div>
-);
+export const ToTestIfTheParentElementsBackgroundCausesOcclusion = (args) => {
+	const controls = {
+		backgroundOpacity: args['backgroundOpacity'],
+		disabled: args['disabled'],
+		focusEffect: args['focusEffect'],
+		icon: args['icon'],
+		minWidth: args['minWidth'] ? void 0 : false,
+		selected: args['selected'],
+		size: args['size']
+	};
+
+	return (
+		<div className={css.bgColor}>
+			<Button
+				{...controls}
+				onClick={action('onClick')}
+			>
+				Normal Button
+			</Button>
+		</div>
+	);
+};
 
 select('backgroundOpacity', ToTestIfTheParentElementsBackgroundCausesOcclusion, prop.backgroundOpacity, Config);
 boolean('disabled', ToTestIfTheParentElementsBackgroundCausesOcclusion, Config);

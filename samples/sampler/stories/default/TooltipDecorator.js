@@ -43,26 +43,32 @@ export default {
 	component: 'TooltipDecorator'
 };
 
-export const _TooltipDecorator = (args) => (
-	<div style={{textAlign: 'center'}}>
-		<TooltipButton
-			disabled={args['disabled']}
-			icon={args['icon']}
-			noArrow={args['noArrow']}
-			tooltipDelay={args['tooltipDelay']}
-			tooltipImage={args['hasImage'] && args['tooltipImage']}
-			tooltipImageSize={args['hasImage'] && args['tooltipImageSize']}
-			tooltipMarquee={args['tooltipMarquee']}
-			tooltipPosition={args['tooltipPosition']}
-			tooltipRelative={args['tooltipRelative']}
-			tooltipText={args['tooltipText']}
-			tooltipType={args['tooltipType']}
-			tooltipWidth={args['tooltipWidth']}
-		>
-			{args['children']}
-		</TooltipButton>
-	</div>
-);
+export const _TooltipDecorator = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		icon: args['icon'],
+		noArrow: args['noArrow'],
+		tooltipDelay: args['tooltipDelay'],
+		tooltipImage: args['hasImage'] && args['tooltipImage'],
+		tooltipImageSize: args['hasImage'] && args['tooltipImageSize'],
+		tooltipMarquee: args['tooltipMarquee'],
+		tooltipPosition: args['tooltipPosition'],
+		tooltipRelative: args['tooltipRelative'],
+		tooltipText: args['tooltipText'],
+		tooltipType: args['tooltipType'],
+		tooltipWidth: args['tooltipWidth']
+	};
+
+	return (
+		<div style={{textAlign: 'center'}}>
+			<TooltipButton
+				{...controls}
+			>
+				{args['children']}
+			</TooltipButton>
+		</div>
+	);
+};
 
 boolean('disabled', _TooltipDecorator, Config);
 boolean('hasImage', _TooltipDecorator, Config);

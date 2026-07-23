@@ -30,23 +30,29 @@ export default {
 export const WithDataIndex = (args) => {
 	const dataIndex = args['data-index'];
 
+	const controls = {
+		label: args['label'],
+		orientation: args['orientation'],
+		selected: args['selected'],
+		showSelection: args['showSelection'],
+		src: args['src']
+	};
+
+	const style = {
+		width: ri.scale(
+			args['orientation'] === 'vertical' ? 768 : 1020
+		),
+		height: ri.scale(
+			args['orientation'] === 'vertical' ? 588 : 240
+		)
+	};
+
 	return (
 		<ImageItem
+			{...controls}
 			{...(dataIndex ? {...dataIndexProp} : null)}
 			key={!!dataIndex + ''}
-			label={args['label']}
-			orientation={args['orientation']}
-			selected={args['selected']}
-			showSelection={args['showSelection']}
-			src={args['src']}
-			style={{
-				width: ri.scale(
-					args['orientation'] === 'vertical' ? 768 : 1020
-				),
-				height: ri.scale(
-					args['orientation'] === 'vertical' ? 588 : 240
-				)
-			}}
+			style={style}
 		>
 			{args['children']}
 		</ImageItem>

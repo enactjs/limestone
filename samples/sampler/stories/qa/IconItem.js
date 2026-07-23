@@ -239,38 +239,48 @@ export const EditableIcon = (args) => {
 		});
 	}, [handleGlobalKeyUp]);
 
+	const actions = {
+		onClick: action('onClickScroller'),
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		focusableScrollbar: args['focusableScrollbar'],
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spotlightDisabled: args['spotlightDisabled'],
+		verticalScrollbar: args['verticalScrollbar']
+	};
+
+	const editable = {
+		centered: args['editableCentered'],
+		css,
+		hideIndex: scrollerHideIndex,
+		onComplete: handleComplete,
+		removeItemFuncRef: removeItem,
+		hideItemFuncRef: hideItem,
+		showItemFuncRef: showItem,
+		blurItemFuncRef: blurItem,
+		focusItemFuncRef: focusItem,
+		initialSelected: initialSelected,
+		selectItemBy: 'press'
+	};
+
 	return (
 		<div ref={divRef}>
 			<Container>
 				{editMode ? <Button style={{marginLeft: '36px'}} onClick={onClickModeButton} icon="arrowhookleft" /> : <Button style={{marginLeft: '36px'}} onClick={onClickModeButton} icon="edit" />}
 				{editMode ?
 					<Scroller
+						{...actions}
+						{...controls}
 						direction="horizontal"
-						editable={{
-							centered: args['editableCentered'],
-							css,
-							hideIndex: scrollerHideIndex,
-							onComplete: handleComplete,
-							removeItemFuncRef: removeItem,
-							hideItemFuncRef: hideItem,
-							showItemFuncRef: showItem,
-							blurItemFuncRef: blurItem,
-							focusItemFuncRef: focusItem,
-							initialSelected: initialSelected,
-							selectItemBy: 'press'
-						}}
-						focusableScrollbar={args['focusableScrollbar']}
-						horizontalScrollbar={args['horizontalScrollbar']}
-						hoverToScroll={args['hoverToScroll']}
-						key={args['scrollMode']}
-						noScrollByWheel={args['noScrollByWheel']}
-						onClick={action('onClickScroller')}
-						onKeyDown={action('onKeyDown')}
-						onScrollStart={action('onScrollStart')}
-						onScrollStop={action('onScrollStop')}
-						scrollMode={args['scrollMode']}
-						spotlightDisabled={args['spotlightDisabled']}
-						verticalScrollbar={args['verticalScrollbar']}
+						editable={editable}
 					>
 						{
 							items.map((item, index) => {
@@ -311,12 +321,9 @@ export const EditableIcon = (args) => {
 						onKeyUp={handleKeyUp}
 					>
 						<Scroller
+							{...actions}
 							direction="horizontal"
-							onClick={action('onClickScroller')}
-							onKeyDown={action('onKeyDown')}
 							onScroll={handleScroll}
-							onScrollStart={action('onScrollStart')}
-							onScrollStop={action('onScrollStop')}
 						>
 							<div className={classNames(css.scrollerWrapper, css.wrapper, {[css.centered]: args['editableCentered']})}> {
 								items.map((item, index) => {
@@ -393,27 +400,37 @@ export const EditableIconWithLongPress = (args) => {
 		setItems(newItems);
 	}, [items]);
 
+	const actions = {
+		onClick: action('onClickScroller'),
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		focusableScrollbar: args['focusableScrollbar'],
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		key: args['scrollMode'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spotlightDisabled: args['spotlightDisabled'],
+		verticalScrollbar: args['verticalScrollbar']
+	};
+
+	const editable = {
+		centered: args['editableCentered'],
+		css,
+		onComplete: handleComplete,
+		removeItemFuncRef: removeItem
+	};
+
 	return (
 		<Scroller
+			{...actions}
+			{...controls}
 			direction="horizontal"
-			editable={{
-				centered: args['editableCentered'],
-				css,
-				onComplete: handleComplete,
-				removeItemFuncRef: removeItem
-			}}
-			focusableScrollbar={args['focusableScrollbar']}
-			horizontalScrollbar={args['horizontalScrollbar']}
-			hoverToScroll={args['hoverToScroll']}
-			key={args['scrollMode']}
-			noScrollByWheel={args['noScrollByWheel']}
-			onClick={action('onClickScroller')}
-			onKeyDown={action('onKeyDown')}
-			onScrollStart={action('onScrollStart')}
-			onScrollStop={action('onScrollStop')}
-			scrollMode={args['scrollMode']}
-			spotlightDisabled={args['spotlightDisabled']}
-			verticalScrollbar={args['verticalScrollbar']}
+			editable={editable}
 		>
 			{
 				items.map((item, index) => {
