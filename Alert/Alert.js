@@ -23,35 +23,39 @@ import AlertImage from './AlertImage';
 
 import componentCss from './Alert.module.less';
 
+const measure = (contentId) => {
+	const contentElement = document.getElementById(contentId);
+	if (!contentElement) return;
+
+	contentElement.style.width = '';
+	const range = document.createRange();
+	range.selectNodeContents(contentElement);
+	if (typeof range.getClientRects !== 'function') return;
+
+	const rects = Array.from(range.getClientRects());
+	if (rects.length === 0) return;
+
+	const minLeft = Math.min(...rects.map(r => r.left));
+	const maxRight = Math.max(...rects.map(r => r.right));
+	contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
+};
+
 const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
 	const contentId = id ? `${id}_content` : null;
 	const fitted = component || fullscreen;
 
 	useLayoutEffect(() => {
+		if (contentId && fitted) measure(contentId);
+	});
+
+	useLayoutEffect(() => {
 		if (!contentId || !fitted) return;
 
-		const measure = () => {
-			const contentElement = document.getElementById(contentId);
-			if (!contentElement) return;
+		const handleResize = () => measure(contentId);
+		window.addEventListener('resize', handleResize);
 
-			contentElement.style.width = '';
-			const range = document.createRange();
-			range.selectNodeContents(contentElement);
-			if (typeof range.getClientRects !== 'function') return;
-
-			const rects = Array.from(range.getClientRects());
-			if (rects.length === 0) return;
-
-			const minLeft = Math.min(...rects.map(r => r.left));
-			const maxRight = Math.max(...rects.map(r => r.right));
-			contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
-		};
-
-		measure();
-		window.addEventListener('resize', measure);
-
-		return () => window.removeEventListener('resize', measure);
-	});
+		return () => window.removeEventListener('resize', handleResize);
+	}, [contentId, fitted]);
 
 	return (
 		<Cell shrink align={fitted ? 'center' : 'stretch'} component={component} id={contentId} {...rest}>
