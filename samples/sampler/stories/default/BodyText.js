@@ -19,8 +19,8 @@ export default {
 
 export const _BodyText = (args) => {
 	const controls = {
-		centered:args['centered'],
-		noWrap:args['noWrap'],
+		centered: args['centered'],
+		noWrap: args['noWrap'],
 		size: args['size']
 	};
 

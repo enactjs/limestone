@@ -215,7 +215,6 @@ export const HorizontalVirtualGridList = (args) => {
 			minWidth: ri.scale(args['minWidth']),
 			minHeight: ri.scale(args['minHeight'])
 		},
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -233,6 +232,7 @@ export const HorizontalVirtualGridList = (args) => {
 			{...controls}
 			direction="horizontal"
 			itemRenderer={renderItem}
+			key={args['scrollMode']}
 			style={style}
 		/>
 	);
@@ -280,7 +280,6 @@ export const HorizontalSquaredVirtualGridList = (args) => {
 			minWidth: ri.scale(args['minSize']),
 			minHeight: ri.scale(args['minSize'])
 		},
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -301,6 +300,7 @@ export const HorizontalSquaredVirtualGridList = (args) => {
 			direction="horizontal"
 			horizontalScrollbar="hidden"
 			itemRenderer={renderItemWithoutLabels}
+			key={args['scrollMode']}
 			style={style}
 		/>
 	);

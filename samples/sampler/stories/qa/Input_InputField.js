@@ -68,7 +68,7 @@ WithLongPlaceholder.storyName = 'with long placeholder';
 
 export const MarkedInvalid = (args) => {
 	const controls = {
-		disabled:args['disabled'],
+		disabled: args['disabled'],
 		iconAfter: args['iconAfter'],
 		iconBefore: args['iconBefore'],
 		invalid: args['invalid'],

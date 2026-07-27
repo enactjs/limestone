@@ -231,7 +231,6 @@ export const HorizontalScrollInScroller = (args) => {
 		horizontalScrollbar: args['horizontalScrollbar'],
 		itemRenderer: renderItem(Item, args['itemSize'], false),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		onKeyDown: action('onKeyDown'),
 		onScrollStart: action('onScrollStart'),
@@ -279,7 +278,6 @@ export const WithMoreItems = (args) => {
 		dataSize: updateDataSize(args['dataSize']),
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -294,6 +292,7 @@ export const WithMoreItems = (args) => {
 			{...controls}
 			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 			itemSize={ri.scale(args['itemSize'])}
+			key={args['scrollMode']}
 		/>
 	);
 };
@@ -319,7 +318,6 @@ export const WithSmallItemMinSizeAndLargeItemSize = (args) => {
 		dataSize: updateDataSize(args['dataSize']),
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing'])
 	};
@@ -334,6 +332,7 @@ export const WithSmallItemMinSizeAndLargeItemSize = (args) => {
 				dataSize: args['dataSize'],
 				size: ri.scale(args['size'])
 			})}
+			key={args['scrollMode']}
 		/>
 	);
 };
@@ -365,7 +364,6 @@ export const _InPanels = (args) => {
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
 		itemSize: args['itemSize'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -378,6 +376,7 @@ export const _InPanels = (args) => {
 		<InPanels
 			{...actions}
 			{...controls}
+			key={args['scrollMode']}
 			title={title}
 		/>
 	);
@@ -413,7 +412,6 @@ export const InFixedPopupPanels = (args) => {
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -433,6 +431,7 @@ export const InFixedPopupPanels = (args) => {
 					{...actions}
 					{...controls}
 					itemRenderer={renderItem(Item, args['itemSize'], true)}
+					key={args['scrollMode']}
 				/>
 			</FixedPopupPanel>
 		</FixedPopupPanels>
@@ -459,7 +458,6 @@ export const ScrollingTo0WheneverDataSizeChanges = (args) => {
 	const controls = {
 		dataSize: updateDataSize(args['dataSize']),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -467,6 +465,7 @@ export const ScrollingTo0WheneverDataSizeChanges = (args) => {
 		<VirtualListWithCBScrollTo
 			{...controls}
 			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
+			key={args['scrollMode']}
 		/>
 	);
 };
@@ -484,7 +483,6 @@ export const OverscrollEffectOnWherePageKeyIsTrue = (args) => {
 	const controls = {
 		dataSize: updateDataSize(args['dataSize']),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -499,6 +497,7 @@ export const OverscrollEffectOnWherePageKeyIsTrue = (args) => {
 	return (
 		<VirtualList
 			{...controls}
+			key={args['scrollMode']}
 			overscrollEffectOn={overscroll}
 			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 		/>
@@ -537,7 +536,6 @@ export const WithExtraItems = (args) => {
 	const controls = {
 		dataSize: updateDataSize(args['dataSize']),
 		horizontalScrollbar: args['horizontalScrollbar'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -555,7 +553,7 @@ export const WithExtraItems = (args) => {
 				direction="vertical"
 				itemRenderer={renderItem(Item, itemSize, true)}
 				itemSize={itemSize}
-
+				key={args['scrollMode']}
 			/>
 			<Cell shrink component={Item}>
 				extra item1
@@ -589,7 +587,6 @@ export const WithContainerItemsHaveSpottableControls = (args) => {
 	const controls = {
 		dataSize: updateDataSize(args['dataSize']),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode'],
 		wrap: args['wrap']
 	};
@@ -605,6 +602,7 @@ export const WithContainerItemsHaveSpottableControls = (args) => {
 	return (
 		<VirtualList
 			{...controls}
+			key={args['scrollMode']}
 			overscrollEffectOn={overscroll}
 			itemRenderer={renderItem(ContainerItemWithControls, args['itemSize'], true)}
 		/>

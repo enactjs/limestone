@@ -53,7 +53,6 @@ export const _Scroller = (args) => {
 	const controls = {
 		fadeOut: args['fadeOut'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled']
@@ -66,6 +65,7 @@ export const _Scroller = (args) => {
 			className={className}
 			direction={direction}
 			focusableScrollbar={focusableScrollbar}
+			key={args['scrollMode']}
 			horizontalScrollbar={horizontalScrollbar}
 			verticalScrollbar={verticalScrollbar}
 		>

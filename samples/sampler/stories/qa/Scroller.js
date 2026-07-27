@@ -113,12 +113,11 @@ class ScrollerWithLongItem extends Component {
 
 		const controls = {
 			focusableScrollbar: args['focusableScrollbar'],
-			key: args['scrollMode'],
 			scrollMode: args['scrollMode']
 		};
 
 		return (
-			<Scroller {...actions} {...controls}>
+			<Scroller {...actions} {...controls} key={args['scrollMode']}>
 				<Item>
 					Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long
 					Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long Long Text
@@ -157,12 +156,11 @@ class ScrollerWithResizable extends Component {
 		};
 
 		const controls = {
-			key: args['scrollMode'],
 			scrollMode: args['scrollMode']
 		};
 
 		return (
-			<Scroller {...actions} {...controls} verticalScrollbar="visible">
+			<Scroller {...actions} {...controls} key={args['scrollMode']} verticalScrollbar="visible">
 				<Item>Item</Item>
 				<Item>Item</Item>
 				<ScrollerResizableItem more={this.state.more} toggleMore={this.handleClick} />
@@ -200,7 +198,6 @@ class ScrollerWithLargeContainer extends Component {
 
 		const controls = {
 			focusableScrollbar: args['focusableScrollbar'],
-			key: args['scrollMode'],
 			scrollMode: args['scrollMode']
 		};
 
@@ -208,6 +205,7 @@ class ScrollerWithLargeContainer extends Component {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={args['scrollMode']}
 				spotlightId="scroller"
 				style={{height: ri.scaleToRem(600)}}
 			>
@@ -243,7 +241,6 @@ export const ListOfThings = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -251,7 +248,7 @@ export const ListOfThings = (args) => {
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<Group childComponent={Item}>{itemData}</Group>
 		</Scroller>
 	);
@@ -386,7 +383,6 @@ export const EditableList = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -416,6 +412,7 @@ export const EditableList = (args) => {
 						{...controls}
 						direction="horizontal"
 						editable={editable}
+						key={args['scrollMode']}
 					>
 						{
 							items.map((item, index) => {
@@ -530,7 +527,6 @@ export const EditableListWithLongPress = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -550,6 +546,7 @@ export const EditableListWithLongPress = (args) => {
 			{...controls}
 			direction="horizontal"
 			editable={editable}
+			key={args['scrollMode']}
 		>
 			{
 				items.map((item, index) => {
@@ -597,7 +594,6 @@ export const ListOfThingsInFixedPopupPanels = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -611,7 +607,7 @@ export const ListOfThingsInFixedPopupPanels = (args) => {
 		>
 			<Panel>
 				<Header title="Panel1" />
-				<Scroller {...actions} {...controls}>
+				<Scroller {...actions} {...controls} key={args['scrollMode']}>
 					<Group childComponent={Item}>{itemData}</Group>
 				</Scroller>
 			</Panel>
@@ -680,12 +676,10 @@ export const CenteredListOfImageItems = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
 		verticalScrollbar: args['verticalScrollbar']
-
 	};
 
 	return (
@@ -693,6 +687,7 @@ export const CenteredListOfImageItems = (args) => {
 			{...actions}
 			{...controls}
 			direction="horizontal"
+			key={args['scrollMode']}
 			style={{height: 'fit-content'}}
 		>
 			<div style={{display: 'flex', justifyContent: 'center', minWidth: 'fit-content'}}>
@@ -725,7 +720,6 @@ export const HorizontalScroll = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -733,7 +727,7 @@ export const HorizontalScroll = (args) => {
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<div
 				style={{
 					width: ri.scaleToRem(14400),
@@ -772,7 +766,6 @@ export const StickFocusToStart = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: `${args['scrollMode']}-${args['stickTo']}`,
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -785,6 +778,7 @@ export const StickFocusToStart = (args) => {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={`${args['scrollMode']}-${args['stickTo']}`}
 				direction="horizontal"
 				style={{height: 'fit-content'}}
 			>
@@ -829,7 +823,6 @@ export const WithSpottableComponents = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -837,7 +830,7 @@ export const WithSpottableComponents = (args) => {
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<div
 				style={{
 					width: ri.scaleToRem(8802),
@@ -888,7 +881,6 @@ export const WithShortContents = (args) => {
 		direction: args['direction'],
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -900,6 +892,7 @@ export const WithShortContents = (args) => {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={args['scrollMode']}
 				style={{height: ri.scaleToRem(600)}}
 			>
 				Text
@@ -981,7 +974,6 @@ export const WithFocusOutsideContainer = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -991,6 +983,7 @@ export const WithFocusOutsideContainer = (args) => {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={args['scrollMode']}
 				style={{height: ri.scaleToRem(840), width: ri.scaleToRem(600), display: 'inline-block'}}
 			>
 				<Item>Item 1</Item>
@@ -1002,7 +995,7 @@ export const WithFocusOutsideContainer = (args) => {
 				<Item>Item 7</Item>
 				<Item>Item 8</Item>
 				<Item>Item 9</Item>
-				<div>Test Test Test Test Test Test</div>
+				<div>Test Test Test Test Test Test </div>
 			</Scroller>
 		</div>
 	);
@@ -1023,7 +1016,6 @@ export const TestScrollingToBoundaryWithSmallOverflow = (args) => {
 	};
 
 	const controls = {
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -1031,6 +1023,7 @@ export const TestScrollingToBoundaryWithSmallOverflow = (args) => {
 		<Scroller
 			{...actions}
 			{...controls}
+			key={args['scrollMode']}
 			style={{height: ri.scaleToRem(480)}}
 		>
 			<Item>1</Item>
@@ -1058,7 +1051,6 @@ export const TestScrollingToBoundaryWithLongOverflow = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -1066,6 +1058,7 @@ export const TestScrollingToBoundaryWithLongOverflow = (args) => {
 		<Scroller
 			{...actions}
 			{...controls}
+			key={args['scrollMode']}
 			style={{height: ri.scaleToRem(402)}}
 		>
 			<div style={{height: ri.scaleToRem(size), paddingLeft: ri.scaleToRem(80)}}>
@@ -1098,7 +1091,6 @@ export const WithSpotlightTargetCalculation = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -1108,6 +1100,7 @@ export const WithSpotlightTargetCalculation = (args) => {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={args['scrollMode']}
 				style={{height: ri.scaleToRem(804)}}
 			>
 				<Group childComponent={Item}>{itemData}</Group>
@@ -1140,12 +1133,11 @@ export const WithOneLongHeightItem = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<div style={{height: ri.scaleToRem(2442)}}>
 				<Item style={{height: ri.scaleToRem(2400)}}>Long Height Item</Item>
 			</div>
@@ -1409,7 +1401,6 @@ export const WithCustomizedStyle = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
@@ -1418,6 +1409,7 @@ export const WithCustomizedStyle = (args) => {
 			<Scroller
 				{...actions}
 				{...controls}
+				key={args['scrollMode']}
 				scrollbarTrackCss={css}
 				style={{height: ri.scaleToRem(804)}}
 			>
@@ -1457,12 +1449,11 @@ export const WithLongContents = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode']
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<BodyText style={{whiteSpace: 'pre-line'}}>
 				{longContents}
 			</BodyText>

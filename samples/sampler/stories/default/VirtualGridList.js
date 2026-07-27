@@ -93,7 +93,6 @@ export const _VirtualGridList = (args) => {
 		direction: args['direction'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -110,6 +109,7 @@ export const _VirtualGridList = (args) => {
 			className={className}
 			itemSize={itemSize}
 			itemRenderer={renderItem}
+			key={args['scrollMode']}
 		/>
 	);
 };

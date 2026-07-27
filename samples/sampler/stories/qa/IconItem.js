@@ -250,7 +250,6 @@ export const EditableIcon = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -281,6 +280,7 @@ export const EditableIcon = (args) => {
 						{...controls}
 						direction="horizontal"
 						editable={editable}
+						key={args['scrollMode']}
 					>
 						{
 							items.map((item, index) => {
@@ -411,7 +411,6 @@ export const EditableIconWithLongPress = (args) => {
 		focusableScrollbar: args['focusableScrollbar'],
 		horizontalScrollbar: args['horizontalScrollbar'],
 		hoverToScroll: args['hoverToScroll'],
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled'],
@@ -431,6 +430,7 @@ export const EditableIconWithLongPress = (args) => {
 			{...controls}
 			direction="horizontal"
 			editable={editable}
+			key={args['scrollMode']}
 		>
 			{
 				items.map((item, index) => {
