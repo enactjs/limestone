@@ -10,7 +10,7 @@ import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, use, useEffect, useRef, useState} from 'react';
+import {Children, useContext, useEffect, useRef, useState} from 'react';
 
 import Button from '../Button';
 import Heading from '../Heading';
@@ -528,8 +528,8 @@ const ContextAsDefaultsHeader = (Wrapped) => {
 		checkPropTypes(ContextAsDefaultsHeader, props);
 
 		const {contextProps, provideContextAsDefaults} = useContextAsDefaults(props);
-		const {type: panelsType} = use(PanelsStateContext);
-		const {type: tabLayoutType} = use(PopupTabLayoutStateContext);
+		const {type: panelsType} = useContext(PanelsStateContext);
+		const {type: tabLayoutType} = useContext(PopupTabLayoutStateContext);
 		const {'data-index': index} = props;
 		const backButtonAvailable = (index > 0 && panelsType !== 'wizard' || panelsType === 'flexiblePopup');
 		const isPopupHeader = (panelsType || tabLayoutType)?.toLowerCase().includes('popup');
