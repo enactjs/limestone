@@ -51,8 +51,8 @@ export default {
 
 		// Force a single React copy. Limestone and other enact packages might have different patch versions of React,
 		// which causes "Cannot read properties of null (reading 'useEffect')"
-		const reactDir = dirname(moduleRequire.resolve('react/package.json'));
-		const reactDomDir = dirname(moduleRequire.resolve('react-dom/package.json'));
+		const reactDir = dirname(moduleRequire.resolve('preact/compat/package.json'));
+		const reactDomDir = dirname(moduleRequire.resolve('preact/compat/package.json'));
 		const reactIsDir = dirname(moduleRequire.resolve('react-is/package.json'));
 		webpackFinalConfig.resolve = webpackFinalConfig.resolve || {};
 		webpackFinalConfig.resolve.alias = {

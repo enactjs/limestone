@@ -4,7 +4,7 @@ import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {use, useCallback, useEffect, useRef} from 'react';
+import {useContext, useCallback, useEffect, useRef} from 'react';
 
 import Button from '../Button';
 import Icon from '../Icon';
@@ -60,7 +60,7 @@ const ChipDefaultProps = {
  * @public
  */
 const ChipBase = (props) => {
-	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
+	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = useContext(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;

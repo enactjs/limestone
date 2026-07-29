@@ -243,7 +243,8 @@ const PickerBase = (props) => {
 	}, [emulateMouseUp, hasReachedBound, props, setPressedState, step, throttleWheelDec, throttleWheelInc]);
 
 	useEffect(() => {
-		const currentPicker = containerRef.current;
+		const currentRef = containerRef.current;
+		const currentPicker = currentRef.base;
 		if (platform.type === 'webos') currentPicker.addEventListener('webOSVoice', handleVoice);
 
 		if (joined) {

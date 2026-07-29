@@ -1,4 +1,5 @@
 // Theme Environment
+if (__DEV__) import('preact/debug'); // Prop Types check for DEV mode
 
 import classnames from 'classnames';
 import kind from '@enact/core/kind';
