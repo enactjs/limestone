@@ -53,6 +53,32 @@ const ImageItemBase = kind({
 
 	propTypes: /** @lends limestone/ImageItem.ImageItemBase.prototype */ {
 		/**
+		 * A color (or any valid CSS `background-color` value, including gradients) to render
+		 * behind the image.
+		 *
+		 * This is useful when `src` (or `backgroundSrc`) points to an image with transparent
+		 * areas — set this to change what shows through those transparent regions. Changing
+		 * this value dynamically (e.g. via state) will update what's visible behind the image
+		 * without affecting the image itself.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		backgroundColor: PropTypes.string,
+
+		/**
+		 * A second image to render behind the main `src` image.
+		 *
+		 * This is useful when `src` points to an image with transparent areas — this image
+		 * will show through those transparent regions, layered above `backgroundColor` (if
+		 * both are set). Accepts the same string or screen-size-keyed object format as `src`.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		backgroundSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
 		 * Centers the primary caption and label in vertical orientation.
 		 *
 		 * @type {Boolean}
@@ -290,7 +316,7 @@ const ImageItemBase = kind({
 		}
 	},
 
-	render: ({css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
+	render: ({backgroundColor, backgroundSrc, css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
 		delete rest.centered;
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
@@ -305,7 +331,7 @@ const ImageItemBase = kind({
 				disabled={disabled}
 				orientation={orientation}
 				imageComponent={
-					<Image>
+					<Image backgroundColor={backgroundColor} backgroundSrc={backgroundSrc}>
 						{showSelection ? (
 							<div className={css.selectionContainer}>
 								{SelectionComponent}

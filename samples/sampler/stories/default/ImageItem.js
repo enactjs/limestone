@@ -5,6 +5,7 @@ import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
 import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
+import transparentImage from '../../images/sprite-gear-4k.png';
 
 const Config = mergeComponentMetadata('ImageItem', UiImageItem, ImageItemBase, ImageItem);
 ImageItem.displayName = 'ImageItem';
@@ -35,15 +36,20 @@ export const _ImageItem = (args) => {
 		style = {width: ri.scaleToRem(1464), height: wideHeight};
 	}
 
+	const src = args['transparentImage'] ? transparentImage : args['src'];
+	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+
 	return (
 		<ImageItem
+			backgroundColor={args['backgroundColor']}
+			backgroundSrc={backgroundSrc}
 			centered={args['centered']}
 			disabled={args['disabled']}
 			label={args['label']}
 			orientation={args['orientation']}
 			selected={args['selected']}
 			showSelection={args['showSelection']}
-			src={args['src']}
+			src={src}
 			style={{
 				position: 'absolute',
 				...style
@@ -64,6 +70,11 @@ boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
 text('children', _ImageItem, Config, 'ImageItem Caption');
+
+text('backgroundColor', _ImageItem, Config, '#4c5059');
+object('backgroundSrc', _ImageItem, Config, src);
+boolean('hasBackgroundSrc', _ImageItem, Config);
+boolean('transparentImage', _ImageItem, Config);
 
 _ImageItem.storyName = 'ImageItem';
 _ImageItem.parameters = {
