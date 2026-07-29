@@ -13,7 +13,7 @@ import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
-import {Children, cloneElement} from 'react';
+import {Children, cloneElement, useLayoutEffect} from 'react';
 
 import BodyText from '../BodyText';
 import Heading from '../Heading';
@@ -22,6 +22,47 @@ import Popup from '../Popup';
 import AlertImage from './AlertImage';
 
 import componentCss from './Alert.module.less';
+
+const measure = (contentId) => {
+	const contentElement = document.getElementById(contentId);
+	if (!contentElement) return;
+
+	contentElement.style.width = '';
+	const range = document.createRange();
+	range.selectNodeContents(contentElement);
+	if (typeof range.getClientRects !== 'function') return;
+
+	const rects = Array.from(range.getClientRects());
+	if (rects.length === 0) return;
+
+	const minLeft = Math.min(...rects.map(r => r.left));
+	const maxRight = Math.max(...rects.map(r => r.right));
+	contentElement.style.width = Math.ceil(maxRight - minLeft) + 'px';
+};
+
+const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
+	const contentId = id ? `${id}_content` : null;
+	const fitted = component || fullscreen;
+
+	useLayoutEffect(() => {
+		if (contentId && fitted) measure(contentId);
+	});
+
+	useLayoutEffect(() => {
+		if (!contentId || !fitted) return;
+
+		const handleResize = () => measure(contentId);
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+	}, [contentId, fitted]);
+
+	return (
+		<Cell shrink align={fitted ? 'center' : 'stretch'} component={component} id={contentId} {...rest}>
+			{children}
+		</Cell>
+	);
+};
 
 /**
  * A modal Alert component.
@@ -276,9 +317,9 @@ const AlertBase = kind({
 						{showTitle && !fullscreen ? <Cell shrink align="stretch"><Heading size="title" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
 						{resolvedImage || image ? <Cell shrink className={css.alertImage}>{resolvedImage || image}</Cell> : null}
 						{showTitle && fullscreen ? <Cell shrink><Heading size="title" alignment="center" className={css.title} id={`${id}_title`}>{title}</Heading></Cell> : null}
-						<Cell shrink align={fullscreen ? 'center' : ''} component={contentComponent} className={css.content} id={`${id}_content`}>
+						<FittedContentCell component={contentComponent} fullscreen={fullscreen} className={css.content} id={id}>
 							{children}
-						</Cell>
+						</FittedContentCell>
 						{buttons ?
 							<Cell shrink className={css.buttonContainer}>
 								<Layout
