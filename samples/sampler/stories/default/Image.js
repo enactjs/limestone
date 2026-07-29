@@ -24,18 +24,18 @@ export default {
 
 export const _Image = (args) => {
 	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
-	const src = args['transparentImage'] ? transparentImage : args['src'];
+	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
 
 	return (
 		<Image
 			backgroundColor={args['backgroundColor']}
 			backgroundSrc={backgroundSrc}
-			src={src}
+			src={componentSrc}
 			sizing={args['sizing']}
 			onError={action('error')}
 			onLoad={action('loaded')}
 			style={{
-				// border: '#ffa500 dashed 1px',
+				border: '#ffa500 dashed 1px',
 				marginTop: ri.scaleToRem(96)
 			}}
 		>
@@ -59,7 +59,7 @@ export const _Image = (args) => {
 			</label>
 		</Image>
 	);
-}
+};
 
 object('src', _Image, Config, src);
 object('backgroundSrc', _Image, Config, src);

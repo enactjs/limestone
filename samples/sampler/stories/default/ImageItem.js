@@ -36,8 +36,8 @@ export const _ImageItem = (args) => {
 		style = {width: ri.scaleToRem(1464), height: wideHeight};
 	}
 
-	const src = args['transparentImage'] ? transparentImage : args['src'];
 	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
 
 	return (
 		<ImageItem
@@ -49,7 +49,7 @@ export const _ImageItem = (args) => {
 			orientation={args['orientation']}
 			selected={args['selected']}
 			showSelection={args['showSelection']}
-			src={src}
+			src={componentSrc}
 			style={{
 				position: 'absolute',
 				...style
