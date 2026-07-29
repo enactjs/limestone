@@ -1475,13 +1475,12 @@ export const WithInputFields = (args) => {
 
 	const controls = {
 		focusableScrollbar: args['focusableScrollbar'],
-		key: args['scrollMode'],
 		scrollMode: args['scrollMode'],
 		spotlightDisabled: args['spotlightDisabled']
 	};
 
 	return (
-		<Scroller {...actions} {...controls}>
+		<Scroller {...actions} {...controls} key={args['scrollMode']}>
 			<div
 				style={{
 					height: ri.scaleToRem(2004),

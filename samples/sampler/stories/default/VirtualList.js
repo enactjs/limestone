@@ -64,7 +64,6 @@ export const _VirtualList = (args) => {
 		hoverToScroll: args['hoverToScroll'],
 		itemRenderer: renderItem(args['itemSize']),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		scrollMode: args['scrollMode'],
 		spacing: ri.scale(args['spacing']),
@@ -75,7 +74,7 @@ export const _VirtualList = (args) => {
 	};
 
 	return (
-		<VirtualList {...actions} {...controls} />
+		<VirtualList {...actions} {...controls} key={args['scrollMode']} />
 	);
 };
 
