@@ -23,17 +23,25 @@ export default {
 };
 
 export const _Image = (args) => {
-	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
-	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+    const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+    const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+
+    const actions = {
+		onError: action('error'),
+		onLoad: action('loaded')
+	};
+
+	const controls = {
+        backgroundColor: args['backgroundColor'],
+        backgroundSrc: backgroundSrc,
+        src: componentSrc,
+		sizing: args['sizing']
+	};
 
 	return (
 		<Image
-			backgroundColor={args['backgroundColor']}
-			backgroundSrc={backgroundSrc}
-			src={componentSrc}
-			sizing={args['sizing']}
-			onError={action('error')}
-			onLoad={action('loaded')}
+			{...actions}
+			{...controls}
 			style={{
 				border: '#ffa500 dashed 1px',
 				marginTop: ri.scaleToRem(96)

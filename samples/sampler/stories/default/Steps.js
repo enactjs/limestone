@@ -22,19 +22,23 @@ export default {
 	component: 'Steps'
 };
 
-export const _Steps = (args) => (
-	<Steps
-		highlightCurrentOnly={args['highlightCurrentOnly']}
-		current={args['current']}
-		total={args['total']}
-		pastIcon={args['pastIcon']}
-		currentIcon={args['currentIcon']}
-		futureIcon={args['futureIcon']}
-		size={args['size']}
-		skip={args['skip']}
-		skipIcon={args['skipIcon']}
-	/>
-);
+export const _Steps = (args) => {
+	const controls = {
+		highlightCurrentOnly: args['highlightCurrentOnly'],
+		current: args['current'],
+		total: args['total'],
+		pastIcon: args['pastIcon'],
+		currentIcon: args['currentIcon'],
+		futureIcon: args['futureIcon'],
+		size: args['size'],
+		skip: args['skip'],
+		skipIcon: args['skipIcon']
+	};
+
+	return (
+		<Steps {...controls} />
+	);
+};
 
 boolean('highlightCurrentOnly', _Steps, Config, false);
 range('current', _Steps, Config, {min: 1, max: 10}, 3);

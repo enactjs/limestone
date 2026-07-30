@@ -48,32 +48,42 @@ export default {
 	component: 'Button'
 };
 
-export const _Button = (args) => (
-	<Fragment>
-		<Button
-			onClick={action('onClick')}
-			onTap={action('onTap')}
-			backgroundOpacity={args['backgroundOpacity']}
-			bordered={args['bordered']}
-			centered={args['centered']}
-			color={args['color']}
-			disabled={args['disabled']}
-			focusEffect={args['focusEffect']}
-			icon={args['icon']}
-			iconFlip={args['iconFlip']}
-			iconPosition={args['iconPosition']}
-			minWidth={threeWayBoolean(args['minWidth'])}
-			roundBorder={args['roundBorder']}
-			selected={args['selected']}
-			shadowed={args['shadowed']}
-			size={args['size']}
-			tooltipText={args['tooltipText']}
-			tooltipType={args['tooltipType']}
-		>
-			{args['children']}
-		</Button>
-	</Fragment>
-);
+export const _Button = (args) => {
+	const actions = {
+		onClick: action('onClick'),
+		onTap: action('onTap')
+	};
+
+	const controls = {
+		backgroundOpacity: args['backgroundOpacity'],
+		bordered: args['bordered'],
+		centered: args['centered'],
+		color: args['color'],
+		disabled: args['disabled'],
+		focusEffect: args['focusEffect'],
+		icon: args['icon'],
+		iconFlip: args['iconFlip'],
+		iconPosition: args['iconPosition'],
+		minWidth: threeWayBoolean(args['minWidth']),
+		roundBorder: args['roundBorder'],
+		selected: args['selected'],
+		shadowed: args['shadowed'],
+		size: args['size'],
+		tooltipText: args['tooltipText'],
+		tooltipType: args['tooltipType']
+	};
+
+	return (
+		<Fragment>
+			<Button
+				{...actions}
+				{...controls}
+			>
+				{args['children']}
+			</Button>
+		</Fragment>
+	);
+};
 
 select('backgroundOpacity', _Button, prop.backgroundOpacity, Config);
 boolean('bordered', _Button, Config);

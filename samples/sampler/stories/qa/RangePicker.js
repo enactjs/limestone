@@ -28,25 +28,31 @@ export default {
 	component: 'RangePicker'
 };
 
-export const WithCustomizedTitleStyle = (args) => (
-	<RangePicker
-		css={css}
-		max={args['max']}
-		min={args['min']}
-		changedBy={args['changedBy']}
-		defaultValue={0}
-		disabled={args['disabled']}
-		inlineTitle={args['inlineTitle']}
-		joined={args['joined']}
-		noAnimation={args['noAnimation']}
-		onChange={action('onChange')}
-		orientation={args['orientation']}
-		step={args['step']}
-		title={args['title']}
-		width={parseIntOrNullify(args['width'])}
-		wrap={args['wrap']}
-	/>
-);
+export const WithCustomizedTitleStyle = (args) => {
+	const controls = {
+		max: args['max'],
+		min: args['min'],
+		changedBy: args['changedBy'],
+		disabled: args['disabled'],
+		inlineTitle: args['inlineTitle'],
+		joined: args['joined'],
+		noAnimation: args['noAnimation'],
+		orientation: args['orientation'],
+		step: args['step'],
+		title: args['title'],
+		width: parseIntOrNullify(args['width']),
+		wrap: args['wrap']
+	};
+
+	return (
+		<RangePicker
+			{...controls}
+			css={css}
+			defaultValue={0}
+			onChange={action('onChange')}
+		/>
+	);
+};
 
 number('max', WithCustomizedTitleStyle, Config, 100);
 number('min', WithCustomizedTitleStyle, Config, 0);

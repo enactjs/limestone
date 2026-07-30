@@ -12,28 +12,34 @@ export default {
 	component: 'Item'
 };
 
-export const _Item = (args) => (
-	<Item
-		centered={args['centered']}
-		disabled={args['disabled']}
-		inline={args['inline']}
-		label={args['label']}
-		labelPosition={args['labelPosition']}
-		size={args['size']}
-		slotBefore={
-			args['slotBefore'] ? (
-				<Icon size="small">speaker</Icon>
-			) : null
-		}
-		slotAfter={
-			args['slotAfter'] ? (
-				<Icon size="small">arrowlargeright</Icon>
-			) : null
-		}
-	>
-		{args['children']}
-	</Item>
-);
+export const _Item = (args) => {
+	const controls = {
+		centered: args['centered'],
+		disabled: args['disabled'],
+		inline: args['inline'],
+		label: args['label'],
+		labelPosition: args['labelPosition'],
+		size: args['size']
+	};
+
+	const slotBefore = args['slotBefore'] ? (
+		<Icon size="small">speaker</Icon>
+	) : null;
+
+	const slotAfter = args['slotAfter'] ? (
+		<Icon size="small">arrowlargeright</Icon>
+	) : null;
+
+	return (
+		<Item
+			{...controls}
+			slotBefore={slotBefore}
+			slotAfter={slotAfter}
+		>
+			{args['children']}
+		</Item>
+	);
+};
 
 boolean('centered', _Item, Config);
 boolean('disabled', _Item, Config);

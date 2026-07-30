@@ -32,34 +32,40 @@ export default {
 	component: 'Popup'
 };
 
-export const UsingSpotlightRestrict = (args) => (
-	<div>
-		<p>
-			The contents of the popup below should contain the only controls that can be navigated to
-			using 5-way. This is because the popup is using a `spotlightRestrict` value of `self-only`. If
-			the value changes to `self-first`, the other panel controls can receive focus, but priority
-			will be given to controls within the popup first.
-		</p>
-		<Button>Button</Button>
-		<Popup
-			open={args['open']}
-			noAnimation={args['noAnimation']}
-			noAutoDismiss={args['noAutoDismiss']}
-			onClose={action('onClose')}
-			position={args['position']}
-			scrimType={args['scrimType']}
-			spotlightRestrict={args['spotlightRestrict']}
-		>
-			<div>{args['children']}</div>
-			<br />
-			<Container>
-				<Button>Button</Button>
-				<Button>Button</Button>
-				<Button>Button</Button>
-			</Container>
-		</Popup>
-	</div>
-);
+export const UsingSpotlightRestrict = (args) => {
+	const controls = {
+		open: args['open'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		position: args['position'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
+	return (
+		<div>
+			<p>
+				The contents of the popup below should contain the only controls that can be navigated to
+				using 5-way. This is because the popup is using a `spotlightRestrict` value of `self-only`. If
+				the value changes to `self-first`, the other panel controls can receive focus, but priority
+				will be given to controls within the popup first.
+			</p>
+			<Button>Button</Button>
+			<Popup
+				{...controls}
+				onClose={action('onClose')}
+			>
+				<div>{args['children']}</div>
+				<br />
+				<Container>
+					<Button>Button</Button>
+					<Button>Button</Button>
+					<Button>Button</Button>
+				</Container>
+			</Popup>
+		</div>
+	);
+};
 
 boolean('open', UsingSpotlightRestrict, Popup, true);
 boolean('noAnimation', UsingSpotlightRestrict, Popup, false);

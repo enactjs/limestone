@@ -35,23 +35,29 @@ export const _IconItem = (args) => {
 			}
 		});
 
+	const controls = {
+		background: args['background'],
+		bordered: args['bordered'],
+		disabled: args['disabled'],
+		icon: args['icon'],
+		label: args['label'],
+		labelColor: args['labelColor'],
+		labelOn: args['labelOn'],
+		title: args['title'],
+		titleOn: args['titleOn']
+	};
+
+	const style = {
+		position: 'absolute',
+		height: args['height'] && ri.scale(args['height']),
+		width: args['width'] && ri.scale(args['width'])
+	};
+
 	return (
 		<IconItem
-			background={args['background']}
-			bordered={args['bordered']}
-			disabled={args['disabled']}
-			icon={args['icon']}
+			{...controls}
 			image={image}
-			label={args['label']}
-			labelColor={args['labelColor']}
-			labelOn={args['labelOn']}
-			style={{
-				position: 'absolute',
-				height: args['height'] && ri.scale(args['height']),
-				width: args['width'] && ri.scale(args['width'])
-			}}
-			title={args['title']}
-			titleOn={args['titleOn']}
+			style={style}
 		/>
 	);
 };

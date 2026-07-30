@@ -31,15 +31,19 @@ export const _FormCheckboxItem = (args) => {
 		<Icon slot="slotBefore">{slotBeforeSelection}</Icon>
 	) : null;
 
+	const controls = {
+		disabled: args['disabled'],
+		icon: args['icon'],
+		indeterminate: args['indeterminate'],
+		indeterminateIcon: args['indeterminateIcon'],
+		inline: args['inline'],
+		label: args['label'],
+		labelPosition: args['labelPosition']
+	};
+
 	return (
 		<FormCheckboxItem
-			disabled={args['disabled']}
-			icon={args['icon']}
-			indeterminate={args['indeterminate']}
-			indeterminateIcon={args['indeterminateIcon']}
-			inline={args['inline']}
-			label={args['label']}
-			labelPosition={args['labelPosition']}
+			{...controls}
 			onToggle={action('onToggle')}
 		>
 			{slotBefore}

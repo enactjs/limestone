@@ -57,32 +57,36 @@ export default {
 	component: 'Spinner'
 };
 
-export const WithLongContent = (args) => (
-	<div>
-		<div
-			style={{
-				height: 'fit-content',
-				border: ri.scaleToRem(6) + ' dotted red'
-			}}
-		>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-				ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-				laboris nisi ut aliquip ex ea commodo consequat.
-			</p>
-			<Button onClick={action('Inside Button events')}>Button</Button>
-			<Spinner
-				transparent={args['transparent']}
-				centered={args['centered']}
-				blockClickOn={args['blockClickOn']}
-				scrim={args['scrim']}
+export const WithLongContent = (args) => {
+	const controls = {
+		transparent: args['transparent'],
+		centered: args['centered'],
+		blockClickOn: args['blockClickOn'],
+		scrim: args['scrim']
+	};
+
+	return (
+		<div>
+			<div
+				style={{
+					height: 'fit-content',
+					border: ri.scaleToRem(6) + ' dotted red'
+				}}
 			>
-				{args['content']}
-			</Spinner>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+					ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+					laboris nisi ut aliquip ex ea commodo consequat.
+				</p>
+				<Button onClick={action('Inside Button events')}>Button</Button>
+				<Spinner {...controls}>
+					{args['content']}
+				</Spinner>
+			</div>
+			<Button onClick={action('Outside Button events')}>Button</Button>
 		</div>
-		<Button onClick={action('Outside Button events')}>Button</Button>
-	</div>
-);
+	);
+};
 
 boolean('transparent', WithLongContent, Config, false);
 boolean('centered', WithLongContent, Config, false);
@@ -92,32 +96,36 @@ text('content', WithLongContent, Config, prop.longText);
 
 WithLongContent.storyName = 'with long content';
 
-export const BlockingClickEvents = (args) => (
-	<div>
-		<div
-			style={{
-				height: 'fit-content',
-				border: ri.scaleToRem(6) + ' dotted red'
-			}}
-		>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-				ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-				laboris nisi ut aliquip ex ea commodo consequat.
-			</p>
-			<Button onClick={action('Inside Button events')}>Button</Button>
-			<Spinner
-				transparent={args['transparent']}
-				centered={args['centered']}
-				blockClickOn={args['blockClickOn']}
-				scrim={args['scrim']}
+export const BlockingClickEvents = (args) => {
+	const controls = {
+		transparent: args['transparent'],
+		centered: args['centered'],
+		blockClickOn: args['blockClickOn'],
+		scrim: args['scrim']
+	};
+
+	return (
+		<div>
+			<div
+				style={{
+					height: 'fit-content',
+					border: ri.scaleToRem(6) + ' dotted red'
+				}}
 			>
-				{args['content']}
-			</Spinner>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+					ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+					laboris nisi ut aliquip ex ea commodo consequat.
+				</p>
+				<Button onClick={action('Inside Button events')}>Button</Button>
+				<Spinner {...controls}>
+					{args['content']}
+				</Spinner>
+			</div>
+			<Button onClick={action('Outside Button events')}>Button</Button>
 		</div>
-		<Button onClick={action('Outside Button events')}>Button</Button>
-	</div>
-);
+	);
+};
 
 boolean('transparent', BlockingClickEvents, Config, false);
 boolean('centered', BlockingClickEvents, Config, false);

@@ -11,18 +11,28 @@ export default {
 	component: 'TimePicker'
 };
 
-export const _TimePicker = (args) => (
-	<TimePicker
-		disabled={args['disabled']}
-		spotlightDisabled={args['spotlightDisabled']}
-		noLabel={args['noLabel']}
-		hourAriaLabel={args['hourAriaLabel']}
-		minuteAriaLabel={args['minuteAriaLabel']}
-		meridiemAriaLabel={args['meridiemAriaLabel']}
-		onChange={action('onChange')}
-		onComplete={action('onComplete')}
-	/>
-);
+export const _TimePicker = (args) => {
+	const actions = {
+		onChange: action('onChange'),
+		onComplete: action('onComplete')
+	};
+
+	const controls = {
+		disabled: args['disabled'],
+		spotlightDisabled: args['spotlightDisabled'],
+		noLabel: args['noLabel'],
+		hourAriaLabel: args['hourAriaLabel'],
+		minuteAriaLabel: args['minuteAriaLabel'],
+		meridiemAriaLabel: args['meridiemAriaLabel']
+	};
+
+	return (
+		<TimePicker
+			{...actions}
+			{...controls}
+		/>
+	);
+};
 
 boolean('disabled', _TimePicker, Config);
 boolean('spotlightDisabled', _TimePicker, Config);

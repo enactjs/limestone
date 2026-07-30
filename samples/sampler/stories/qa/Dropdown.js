@@ -115,22 +115,30 @@ export default {
 	component: 'Dropdown'
 };
 
-export const With2OptionsForTestingDirection = (args) => (
-	<Dropdown
-		direction={args['direction']}
-		disabled={args['disabled']}
-		onClose={action('onClose')}
-		onOpen={action('onOpen')}
-		onSelect={action('onSelect')}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		style={{position: 'absolute', top: 'calc(50% - 4rem)'}}
-		title={args['title']}
-		width={args['width']}
-	>
-		{['Option 1', 'Option 2']}
-	</Dropdown>
-);
+export const With2OptionsForTestingDirection = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title'],
+		width: args['width']
+	};
+
+	const style = {position: 'absolute', top: 'calc(50% - 4rem)'};
+
+	return (
+		<Dropdown {...actions} {...controls} style={style}>
+			{['Option 1', 'Option 2']}
+		</Dropdown>
+	);
+};
 
 select('direction', With2OptionsForTestingDirection, ['above', 'below'], Config);
 boolean('disabled', With2OptionsForTestingDirection, Config);
@@ -141,22 +149,28 @@ select('width', With2OptionsForTestingDirection, ['tiny', 'small', 'medium', 'la
 
 With2OptionsForTestingDirection.storyName = 'with 2 options for testing direction';
 
-export const WithDefaultSelectedIn20Options = (args) => (
-	<Dropdown
-		defaultSelected={10}
-		direction={args['direction']}
-		disabled={args['disabled']}
-		onClose={action('onClose')}
-		onOpen={action('onOpen')}
-		onSelect={action('onSelect')}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		title={args['title']}
-		width={args['width']}
-	>
-		{items(30)}
-	</Dropdown>
-);
+export const WithDefaultSelectedIn20Options = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title'],
+		width: args['width']
+	};
+
+	return (
+		<Dropdown {...actions} {...controls} defaultSelected={10}>
+			{items(30)}
+		</Dropdown>
+	);
+};
 
 select('direction', WithDefaultSelectedIn20Options, ['above', 'below'], Config);
 boolean('disabled', WithDefaultSelectedIn20Options, Config);
@@ -167,21 +181,28 @@ select('width', WithDefaultSelectedIn20Options, ['tiny', 'small', 'medium', 'lar
 
 WithDefaultSelectedIn20Options.storyName = 'with defaultSelected in 20 options';
 
-export const WithLongText = (args) => (
-	<Dropdown
-		direction={args['direction']}
-		disabled={args['disabled']}
-		onClose={action('onClose')}
-		onOpen={action('onOpen')}
-		onSelect={action('onSelect')}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		title={args['title']}
-		width={args['width']}
-	>
-		{items(10, 'Looooooooooooooooooooooong')}
-	</Dropdown>
-);
+export const WithLongText = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title'],
+		width: args['width']
+	};
+
+	return (
+		<Dropdown {...actions} {...controls}>
+			{items(10, 'Looooooooooooooooooooooong')}
+		</Dropdown>
+	);
+};
 
 select('direction', WithLongText, ['above', 'below'], Config);
 boolean('disabled', WithLongText, Config);
@@ -192,36 +213,33 @@ select('width', WithLongText, ['tiny', 'small', 'medium', 'large', 'x-large', 'h
 
 WithLongText.storyName = 'with long text';
 
-export const WithMultipleDropdowns = (args) => (
-	<div>
-		<Dropdown
-			direction={args['direction']}
-			disabled={args['disabled']}
-			onClose={action('onClose')}
-			onOpen={action('onOpen')}
-			onSelect={action('onSelect')}
-			placeholder={args['placeholder']}
-			size={args['size']}
-			title={args['title']}
-			width={args['width']}
-		>
-			{items(5)}
-		</Dropdown>
-		<Dropdown
-			direction={args['direction']}
-			disabled={args['disabled']}
-			onClose={action('onClose')}
-			onOpen={action('onOpen')}
-			onSelect={action('onSelect')}
-			placeholder={args['placeholder']}
-			size={args['size']}
-			title={args['title']}
-			width={args['width']}
-		>
-			{items(5)}
-		</Dropdown>
-	</div>
-);
+export const WithMultipleDropdowns = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title'],
+		width: args['width']
+	};
+
+	return (
+		<div>
+			<Dropdown {...actions} {...controls}>
+				{items(5)}
+			</Dropdown>
+			<Dropdown {...actions} {...controls}>
+				{items(5)}
+			</Dropdown>
+		</div>
+	);
+};
 
 select('direction', WithMultipleDropdowns, ['above', 'below'], Config);
 boolean('disabled', WithMultipleDropdowns, Config);
@@ -232,24 +250,32 @@ select('width', WithMultipleDropdowns, ['tiny', 'small', 'medium', 'large', 'x-l
 
 WithMultipleDropdowns.storyName = 'with multiple dropdowns';
 
-export const WithArrayOfChildrenObjects = (args) => (
-	<div>
-		<Dropdown
-			direction={args['direction']}
-			disabled={args['disabled']}
-			onClose={action('onClose')}
-			onOpen={action('onOpen')}
-			onSelect={action('onSelect')}
-			placeholder={args['placeholder']}
-			size={args['size']}
-			style={{position: 'absolute', top: 'calc(50% - 4rem)'}}
-			title={args['title']}
-			width={args['width']}
-		>
-			{list}
-		</Dropdown>
-	</div>
-);
+export const WithArrayOfChildrenObjects = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title'],
+		width: args['width']
+	};
+
+	const style = {position: 'absolute', top: 'calc(50% - 4rem)'};
+
+	return (
+		<div>
+			<Dropdown {...actions} {...controls} style={style}>
+				{list}
+			</Dropdown>
+		</div>
+	);
+};
 
 select('direction', WithArrayOfChildrenObjects, ['above', 'below'], Config);
 boolean('disabled', WithArrayOfChildrenObjects, Config);

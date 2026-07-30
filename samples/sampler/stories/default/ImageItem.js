@@ -27,34 +27,34 @@ export default {
 
 export const _ImageItem = (args) => {
 	let style;
-	const isVertical = args['orientation'] === 'vertical';
+    const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+    const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+    const isVertical = args['orientation'] === 'vertical';
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
 
 	if (isVertical) {
-		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588)};
+		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588), position: 'absolute'};
 	} else {
-		style = {width: ri.scaleToRem(1464), height: wideHeight};
+		style = {width: ri.scaleToRem(1464), height: wideHeight, position: 'absolute'};
 	}
 
-	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
-	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+	const controls = {
+        backgroundColor: args['backgroundColor'],
+        backgroundSrc: backgroundSrc,
+		centered: args['centered'],
+		disabled: args['disabled'],
+		label: args['label'],
+		orientation: args['orientation'],
+		selected: args['selected'],
+		showSelection: args['showSelection'],
+		src: componentSrc,
+		wideImage: args['wideImage']
+	};
 
 	return (
 		<ImageItem
-			backgroundColor={args['backgroundColor']}
-			backgroundSrc={backgroundSrc}
-			centered={args['centered']}
-			disabled={args['disabled']}
-			label={args['label']}
-			orientation={args['orientation']}
-			selected={args['selected']}
-			showSelection={args['showSelection']}
-			src={componentSrc}
-			style={{
-				position: 'absolute',
-				...style
-			}}
-			wideImage={args['wideImage']}
+			{...controls}
+			style={style}
 		>
 			{args['children']}
 		</ImageItem>
@@ -70,7 +70,6 @@ boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
 text('children', _ImageItem, Config, 'ImageItem Caption');
-
 text('backgroundColor', _ImageItem, Config, '#4c5059');
 object('backgroundSrc', _ImageItem, Config, src);
 boolean('hasBackgroundSrc', _ImageItem, Config);

@@ -637,13 +637,15 @@ export const WithRestoredFocus = (args) => {
 		});
 	};
 
+	const controls = {
+		orientation: args['orientation'],
+		tabSize: args['tabSize']
+	};
+
 	return (
 		<Panel>
 			<Header title="TabLayout" subtitle="With restored focus" />
-			<TabLayout
-				orientation={args['orientation']}
-				tabSize={args['tabSize']}
-			>
+			<TabLayout {...controls}>
 				{tabList()}
 			</TabLayout>
 		</Panel>

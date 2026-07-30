@@ -23,15 +23,18 @@ export default {
 
 export const WithPresetColors = (args) => {
 	const [color, setColor] = useState('#FF00FF');
+	const controls = {
+		disabled: args['disabled'],
+		text: args['text']
+	};
 
 	return (
 		<Fragment>
 			<ColorPicker
+				{...controls}
 				color={color}
 				colorHandler={setColor}
-				disabled={args.disabled}
 				presetColors={presetColors}
-				text={args.text}
 			/>
 		</Fragment>
 	);
