@@ -31,16 +31,24 @@ export const _Dropdown = (args) => {
 		case 'preset': width = args['width']; break;
 	}
 
+	const actions = {
+		onClose: action('onClose'),
+		onOpen: action('onOpen'),
+		onSelect: action('onSelect')
+	};
+
+	const controls = {
+		direction: args['direction'],
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		title: args['title']
+	};
+
 	return (
 		<Dropdown
-			direction={args['direction']}
-			disabled={args['disabled']}
-			onClose={action('onClose')}
-			onOpen={action('onOpen')}
-			onSelect={action('onSelect')}
-			placeholder={args['placeholder']}
-			size={args['size']}
-			title={args['title']}
+			{...actions}
+			{...controls}
 			width={width}
 		>
 			{items}

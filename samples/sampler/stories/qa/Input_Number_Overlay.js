@@ -12,22 +12,28 @@ export default {
 	component: 'InputField'
 };
 
-export const Length4 = (args) => (
-	<Input
-		title="Overlay Input (4)"
-		subtitle={inputData.numberSubtitle}
-		disabled={args['disabled']}
-		invalid={args['invalid']}
-		invalidMessage={args['invalidMessage']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		type={args['type']}
-		popupType="overlay"
-		length={4}
-	>
-		{buttons[args['buttons']]}
-	</Input>
-);
+export const Length4 = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		invalid: args['invalid'],
+		invalidMessage: args['invalidMessage'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<Input
+			{...controls}
+			title="Overlay Input (4)"
+			subtitle={inputData.numberSubtitle}
+			popupType="overlay"
+			length={4}
+		>
+			{buttons[args['buttons']]}
+		</Input>
+	);
+};
 
 boolean('disabled', Length4, Config);
 boolean('invalid', Length4, Config);
@@ -44,22 +50,28 @@ Length4.parameters = {
 	}
 };
 
-export const Length10 = (args) => (
-	<Input
-		title="Overlay Input (10)"
-		subtitle={inputData.numberSubtitle}
-		disabled={args['disabled']}
-		invalid={args['invalid']}
-		invalidMessage={args['invalidMessage']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		type={args['type']}
-		popupType="overlay"
-		length={10}
-	>
-		{buttons[args['buttons']]}
-	</Input>
-);
+export const Length10 = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		invalid: args['invalid'],
+		invalidMessage: args['invalidMessage'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<Input
+			{...controls}
+			title="Overlay Input (10)"
+			subtitle={inputData.numberSubtitle}
+			popupType="overlay"
+			length={10}
+		>
+			{buttons[args['buttons']]}
+		</Input>
+	);
+};
 
 boolean('disabled', Length10, Config);
 boolean('invalid', Length10, Config);

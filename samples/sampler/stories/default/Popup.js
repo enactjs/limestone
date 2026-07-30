@@ -11,24 +11,34 @@ export default {
 	component: 'Popup'
 };
 
-export const _Popup = (args) => (
-	<div>
-		<Popup
-			open={args['open']}
-			position={args['position']}
-			noAnimation={args['noAnimation']}
-			noAutoDismiss={args['noAutoDismiss']}
-			onClose={action('onClose')}
-			onHide={action('onHide')}
-			onShow={action('onShow')}
-			scrimType={args['scrimType']}
-			spotlightRestrict={args['spotlightRestrict']}
-		>
-			<div>{args['children']}</div>
-		</Popup>
-		<BodyText centered>Use CONTROLS to interact with Popup.</BodyText>
-	</div>
-);
+export const _Popup = (args) => {
+	const actions = {
+		onClose: action('onClose'),
+		onHide: action('onHide'),
+		onShow: action('onShow')
+	};
+
+	const controls = {
+		open: args['open'],
+		position: args['position'],
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
+	return (
+		<div>
+			<Popup
+				{...actions}
+				{...controls}
+			>
+				<div>{args['children']}</div>
+			</Popup>
+			<BodyText centered>Use CONTROLS to interact with Popup.</BodyText>
+		</div>
+	);
+};
 
 boolean('open', _Popup, Config);
 select(

@@ -207,18 +207,23 @@ export default {
 
 export const Ltr = (args) => {
 	const disabled = args['disabled'];
+
+	const controls = {
+		forceDirection: args['forceDirection'],
+		marqueeDelay: args['marqueeDelay'],
+		marqueeDisabled: args['marqueeDisabled'],
+		marqueeOn: args['marqueeOn'],
+		marqueeOnRenderDelay: args['marqueeOnRenderDelay'],
+		marqueeResetDelay: args['marqueeResetDelay'],
+		marqueeSpeed: args['marqueeSpeed']
+	};
+
 	return (
 		<section>
 			<Marquee
+				{...controls}
 				style={{width: ri.scaleToRem(798)}}
 				disabled={disabled}
-				forceDirection={args['forceDirection']}
-				marqueeDelay={args['marqueeDelay']}
-				marqueeDisabled={args['marqueeDisabled']}
-				marqueeOn={args['marqueeOn']}
-				marqueeOnRenderDelay={args['marqueeOnRenderDelay']}
-				marqueeResetDelay={args['marqueeResetDelay']}
-				marqueeSpeed={args['marqueeSpeed']}
 			>
 				{args['children']}
 			</Marquee>
@@ -241,18 +246,23 @@ Ltr.storyName = 'LTR';
 
 export const Rtl = (args) => {
 	const disabled = args['disabled'];
+
+	const controls = {
+		forceDirection: args['forceDirection'],
+		marqueeDelay: args['marqueeDelay'],
+		marqueeDisabled: args['marqueeDisabled'],
+		marqueeOn: args['marqueeOn'],
+		marqueeOnRenderDelay: args['marqueeOnRenderDelay'],
+		marqueeResetDelay: args['marqueeResetDelay'],
+		marqueeSpeed: args['marqueeSpeed']
+	};
+
 	return (
 		<section>
 			<Marquee
+				{...controls}
 				style={{width: ri.scaleToRem(798)}}
 				disabled={disabled}
-				forceDirection={args['forceDirection']}
-				marqueeDelay={args['marqueeDelay']}
-				marqueeDisabled={args['marqueeDisabled']}
-				marqueeOn={args['marqueeOn']}
-				marqueeOnRenderDelay={args['marqueeOnRenderDelay']}
-				marqueeResetDelay={args['marqueeResetDelay']}
-				marqueeSpeed={args['marqueeSpeed']}
 			>
 				{args['children']}
 			</Marquee>
@@ -275,19 +285,24 @@ Rtl.storyName = 'RTL';
 
 export const Synchronized = (args) => {
 	const disabled = args['disabled'];
+
+	const controls = {
+		forceDirection: args['forceDirection'],
+		marqueeDelay: args['marqueeDelay'],
+		marqueeDisabled: args['marqueeDisabled'],
+		marqueeOn: args['marqueeOn'],
+		marqueeOnRenderDelay: args['marqueeOnRenderDelay'],
+		marqueeResetDelay: args['marqueeResetDelay'],
+		marqueeSpeed: args['marqueeSpeed']
+	};
+
 	return (
 		<Controller style={{width: ri.scaleToRem(798)}}>
 			{LTR.map((children, index) => (
 				<Marquee
+					{...controls}
 					disabled={disabled}
-					forceDirection={args['forceDirection']}
 					key={index}
-					marqueeDelay={args['marqueeDelay']}
-					marqueeDisabled={args['marqueeDisabled']}
-					marqueeOn={args['marqueeOn']}
-					marqueeOnRenderDelay={args['marqueeOnRenderDelay']}
-					marqueeResetDelay={args['marqueeResetDelay']}
-					marqueeSpeed={args['marqueeSpeed']}
 				>
 					{children}
 				</Marquee>
@@ -436,17 +451,18 @@ WithTextCentered.parameters = {
 };
 
 export const WithScaledItem = (args) => {
+	const controls = {
+		alignment: args['alignment'],
+		forceDirection: args['forceDirection'],
+		marqueeDelay: args['marqueeDelay'],
+		marqueeDisabled: args['marqueeDisabled'],
+		marqueeResetDelay: args['marqueeResetDelay'],
+		marqueeSpeed: args['marqueeSpeed']
+	};
+
 	return (
 		<MarqueeItem className={css.scaledItem}>
-			<Marquee
-				alignment={args['alignment']}
-				className={css.textArea}
-				forceDirection={args['forceDirection']}
-				marqueeDelay={args['marqueeDelay']}
-				marqueeDisabled={args['marqueeDisabled']}
-				marqueeResetDelay={args['marqueeResetDelay']}
-				marqueeSpeed={args['marqueeSpeed']}
-			>
+			<Marquee {...controls} className={css.textArea}>
 				{args['children']}
 			</Marquee>
 		</MarqueeItem>
