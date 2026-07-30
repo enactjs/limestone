@@ -23,18 +23,18 @@ export default {
 };
 
 export const _Image = (args) => {
-    const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
-    const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
 
-    const actions = {
+	const actions = {
 		onError: action('error'),
 		onLoad: action('loaded')
 	};
 
 	const controls = {
-        backgroundColor: args['backgroundColor'],
-        backgroundSrc: backgroundSrc,
-        src: componentSrc,
+		backgroundColor: args['backgroundColor'],
+		backgroundSrc: backgroundSrc,
+		src: componentSrc,
 		sizing: args['sizing']
 	};
 

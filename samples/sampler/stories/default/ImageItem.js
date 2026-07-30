@@ -27,9 +27,9 @@ export default {
 
 export const _ImageItem = (args) => {
 	let style;
-    const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
-    const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
-    const isVertical = args['orientation'] === 'vertical';
+	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
+	const isVertical = args['orientation'] === 'vertical';
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
 
 	if (isVertical) {
@@ -39,8 +39,8 @@ export const _ImageItem = (args) => {
 	}
 
 	const controls = {
-        backgroundColor: args['backgroundColor'],
-        backgroundSrc: backgroundSrc,
+		backgroundColor: args['backgroundColor'],
+		backgroundSrc: backgroundSrc,
 		centered: args['centered'],
 		disabled: args['disabled'],
 		label: args['label'],
