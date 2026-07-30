@@ -53,11 +53,10 @@ const ImageItemBase = kind({
 
 	propTypes: /** @lends limestone/ImageItem.ImageItemBase.prototype */ {
 		/**
-A color to render behind the image.
-
-Accepts any valid CSS `background-color` value (named color, hex, `rgb()`, etc.).
-Gradients are not supported here. They are CSS images, not colors; use
-`backgroundSrc` for an image background instead.
+		 * A color to render behind the image.
+		 * Accepts any valid CSS `background-color` value (named color, hex, `rgb()`, etc.).
+		 * Gradients are not supported here. They are CSS images, not colors; use
+		 * `backgroundSrc` for an image background instead.
 		 *
 		 * This is useful when `src` (or `backgroundSrc`) points to an image with transparent
 		 * areas — set this to change what shows through those transparent regions. Changing
