@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+- `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
+- `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
+
 ### Changed
 
 - `limestone/Alert` text container to fit the width of its text and center-align
