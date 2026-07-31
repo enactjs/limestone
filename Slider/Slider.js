@@ -171,7 +171,7 @@ const SliderBase = (props) => {
 	}, [keyFrequency]);
 
 	useLayoutEffect(() => {
-		const sliderRef = ref.current;
+		const sliderRef = ref.current?.base || ref.current;
 
 		if (sliderRef) {
 			sliderRef.addEventListener('wheel', nativeEventHandlers.onWheel, {passive: false});
