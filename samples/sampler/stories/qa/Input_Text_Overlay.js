@@ -12,18 +12,24 @@ export default {
 	component: 'InputField'
 };
 
-export const LongText = (args) => (
-	<Input
-		title="Overlay Input"
-		subtitle={inputData.textSubtitle}
-		disabled={args['disabled']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		type={args['type']}
-		popupType="overlay"
-		defaultValue={inputData.longText}
-	/>
-);
+export const LongText = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<Input
+			{...controls}
+			title="Overlay Input"
+			subtitle={inputData.textSubtitle}
+			popupType="overlay"
+			defaultValue={inputData.longText}
+		/>
+	);
+};
 
 boolean('disabled', LongText, Config);
 text('placeholder', LongText, Config);

@@ -15,11 +15,15 @@ export default {
 };
 
 export const RtlText = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle']
+	};
+
 	return (
 		<Fragment>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
+				{...controls}
 				{...commonProps(args)}
 			/>
 		</Fragment>
@@ -43,11 +47,15 @@ RtlText.storyName = 'RTL text';
 RtlText.parameters = headerStoryConfig;
 
 export const RtlTextLongTitle = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle']
+	};
+
 	return (
 		<Fragment>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
+				{...controls}
 				{...commonProps(args)}
 			/>
 		</Fragment>
@@ -71,11 +79,15 @@ RtlTextLongTitle.storyName = 'RTL text, long title';
 RtlTextLongTitle.parameters = headerStoryConfig;
 
 export const TallGlyphs = (args) => {
+	const controls = {
+		title: args['title'],
+		subtitle: args['subtitle']
+	};
+
 	return (
 		<Fragment>
 			<Header
-				title={args['title']}
-				subtitle={args['subtitle']}
+				{...controls}
 				{...commonProps(args)}
 			/>
 		</Fragment>

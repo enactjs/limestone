@@ -60,18 +60,26 @@ export const Panels_ = (args) => {
 
 	const handleBack = compose(backward, action('onBack'));
 
+	const actions = {
+		onClose: action('onClose'),
+		onTransition: action('onTransition'),
+		onWillTransition: action('onWillTransition')
+	};
+
+	const controls = {
+		backButtonBackgroundOpacity: args['backButtonBackgroundOpacity'],
+		closeButtonBackgroundOpacity: args['closeButtonBackgroundOpacity'],
+		noAnimation: args['noAnimation'],
+		noBackButton: args['noBackButton'],
+		noCloseButton: args['noCloseButton']
+	};
+
 	const story = (
 		<Panels
-			backButtonBackgroundOpacity={args['backButtonBackgroundOpacity']}
-			closeButtonBackgroundOpacity={args['closeButtonBackgroundOpacity']}
+			{...actions}
+			{...controls}
 			index={panelIndex}
-			noAnimation={args['noAnimation']}
-			noBackButton={args['noBackButton']}
-			noCloseButton={args['noCloseButton']}
 			onBack={handleBack}
-			onClose={action('onClose')}
-			onTransition={action('onTransition')}
-			onWillTransition={action('onWillTransition')}
 		>
 			<Panel>
 				<Header

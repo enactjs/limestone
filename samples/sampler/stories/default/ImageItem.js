@@ -30,25 +30,26 @@ export const _ImageItem = (args) => {
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
 
 	if (isVertical) {
-		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588)};
+		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588), position: 'absolute'};
 	} else {
-		style = {width: ri.scaleToRem(1464), height: wideHeight};
+		style = {width: ri.scaleToRem(1464), height: wideHeight, position: 'absolute'};
 	}
+
+	const controls = {
+		centered: args['centered'],
+		disabled: args['disabled'],
+		label: args['label'],
+		orientation: args['orientation'],
+		selected: args['selected'],
+		showSelection: args['showSelection'],
+		src: args['src'],
+		wideImage: args['wideImage']
+	};
 
 	return (
 		<ImageItem
-			centered={args['centered']}
-			disabled={args['disabled']}
-			label={args['label']}
-			orientation={args['orientation']}
-			selected={args['selected']}
-			showSelection={args['showSelection']}
-			src={args['src']}
-			style={{
-				position: 'absolute',
-				...style
-			}}
-			wideImage={args['wideImage']}
+			{...controls}
+			style={style}
 		>
 			{args['children']}
 		</ImageItem>
