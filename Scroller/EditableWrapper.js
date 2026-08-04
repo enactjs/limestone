@@ -149,8 +149,6 @@ const EditableWrapper = (props) => {
 	const handlersRef = useRef({});
 	const [spotlightFocusRequest, setSpotlightFocusRequest] = useState(0);
 
-	editableRef.current = editable;
-
 	// Functions
 
 	// Reset values
@@ -672,8 +670,8 @@ const EditableWrapper = (props) => {
 					startEditing(targetItemNode);
 					mutableRef.current.needToPreventEvent = true;
 				}
-			} else if (repeat && targetItemNode && !mutableRef.current.timer && selectItemBy === 'longPress') {
-				mutableRef.current.timer = setTimeout(() => {
+			} else if (repeat && targetItemNode && !mutableRef.current.keyHoldTimerId && selectItemBy === 'longPress') {
+				mutableRef.current.keyHoldTimerId = setTimeout(() => {
 					startEditing(targetItemNode);
 				}, holdDuration - 300);
 			}
@@ -725,8 +723,8 @@ const EditableWrapper = (props) => {
 			return;
 		}
 
-		clearTimeout(mutableRef.current.timer);
-		mutableRef.current.timer = null;
+		clearTimeout(mutableRef.current.keyHoldTimerId);
+		mutableRef.current.keyHoldTimerId = null;
 		if (mutableRef.current.needToPreventEvent || mutableRef.current.selectedItem) {
 			ev.preventDefault();
 			mutableRef.current.needToPreventEvent = false;
@@ -855,13 +853,16 @@ const EditableWrapper = (props) => {
 	}, [getNextIndexFromPosition]);
 
 	// Keep latest effect-bound handlers on a ref so listeners subscribe once.
-	handlersRef.current = {
-		getNextIndexFromPosition,
-		handleGlobalKeyDownCapture,
-		handleMouseLeave,
-		handleTouchMove,
-		moveItems
-	};
+	useLayoutEffect(() => {
+		editableRef.current = editable;
+		handlersRef.current = {
+			getNextIndexFromPosition,
+			handleGlobalKeyDownCapture,
+			handleMouseLeave,
+			handleTouchMove,
+			moveItems
+		};
+	});
 
 	const onGlobalKeyDownCapture = useCallback((ev) => {
 		handlersRef.current.handleGlobalKeyDownCapture(ev);
