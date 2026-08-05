@@ -364,13 +364,33 @@ describe('Input specs', () => {
 			expect(buttonSubmit).not.toBeNull();
 		});
 
-		test('should call onComplete when max length is reached for separated number input', async () => {
+		test('should not call onComplete when max length is reached for separated number input with submit button', async () => {
 			jest.useFakeTimers();
 			const spy = jest.fn();
 			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
 			render(
 				<FloatingLayerController>
 					<Input type="number" length={1} open numberInputField="separated" onComplete={spy} />
+				</FloatingLayerController>
+			);
+			const numberButton = screen.getByText('2');
+
+			await user.click(numberButton);
+
+			act(() => jest.advanceTimersByTime(300));
+
+			expect(spy).not.toHaveBeenCalled();
+
+			jest.useRealTimers();
+		});
+
+		test('should call onComplete when max length is reached for separated number input with noSubmitButton', async () => {
+			jest.useFakeTimers();
+			const spy = jest.fn();
+			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={1} open numberInputField="separated" noSubmitButton onComplete={spy} />
 				</FloatingLayerController>
 			);
 			const numberButton = screen.getByText('2');
