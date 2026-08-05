@@ -364,7 +364,7 @@ describe('Input specs', () => {
 			expect(buttonSubmit).not.toBeNull();
 		});
 
-		test('should not call onComplete when max length is reached for separated number input with submit button', async () => {
+		test('should call onComplete when max length is reached for separated number input', async () => {
 			jest.useFakeTimers();
 			const spy = jest.fn();
 			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
@@ -379,7 +379,7 @@ describe('Input specs', () => {
 
 			act(() => jest.advanceTimersByTime(300));
 
-			expect(spy).not.toHaveBeenCalled();
+			expect(spy).toHaveBeenCalled();
 
 			jest.useRealTimers();
 		});
@@ -565,25 +565,6 @@ describe('Input specs', () => {
 			expect(buttonSubmit).toBeNull();
 		});
 
-		test('should call onComplete when max length is reached for separated number input with noSubmitButton', async () => {
-			jest.useFakeTimers();
-			const spy = jest.fn();
-			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
-			render(
-				<FloatingLayerController>
-					<Input type="number" length={1} open numberInputField="separated" noSubmitButton onComplete={spy} />
-				</FloatingLayerController>
-			);
-			const numberButton = screen.getByText('2');
-
-			await user.click(numberButton);
-
-			act(() => jest.advanceTimersByTime(300));
-
-			expect(spy).toHaveBeenCalled();
-
-			jest.useRealTimers();
-		});
 	});
 
 	describe('marqueeInputField', () => {

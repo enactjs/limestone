@@ -111,10 +111,10 @@ const NumberFieldBase = kind({
 					forwardCustomWithPrevent('onBeforeChange', ({value}) => ({value})),
 					forwardCustom('onChange', (ev) => (ev)),
 					// Check the length of the new value and return true (pass/proceed) if it is at or above max-length
-					({value: updatedValue}, {maxLength, minLength, noSubmitButton, numberInputField}) => {
+					({value: updatedValue}, {maxLength, minLength, numberInputField}) => {
 						const
 							updatedLength = normalizeValue(updatedValue, maxLength).length,
-							autoSubmit = noSubmitButton && getSeparated(numberInputField, maxLength) && minLength === maxLength;
+							autoSubmit = getSeparated(numberInputField, maxLength) && minLength === maxLength;
 						return autoSubmit && updatedLength >= maxLength;
 					},
 					forwardCustom('onComplete', (ev) => (ev))
