@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` text container to fit the width of its text and center-align
 - `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/Input` to show the submit button for separated number inputs by default
 
 ## [1.10.2] - 2026-07-09
 
