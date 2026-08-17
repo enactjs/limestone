@@ -3,7 +3,6 @@ import Icon from '@enact/limestone/Icon';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import UiItem, {ItemBase as UiItemBase} from '@enact/ui/Item';
-import {_ImageItem} from "./ImageItem";
 
 const Config = mergeComponentMetadata('Item', UiItemBase, UiItem, ItemBase, Item);
 Item.displayName = 'Item';
