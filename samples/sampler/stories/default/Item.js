@@ -3,6 +3,7 @@ import Icon from '@enact/limestone/Icon';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import UiItem, {ItemBase as UiItemBase} from '@enact/ui/Item';
+import {_ImageItem} from "./ImageItem";
 
 const Config = mergeComponentMetadata('Item', UiItemBase, UiItem, ItemBase, Item);
 Item.displayName = 'Item';
@@ -19,6 +20,7 @@ export const _Item = (args) => {
 		inline: args['inline'],
 		label: args['label'],
 		labelPosition: args['labelPosition'],
+		selected: args['selected'],
 		size: args['size']
 	};
 
@@ -46,6 +48,7 @@ boolean('disabled', _Item, Config);
 boolean('inline', _Item, Config);
 text('label', _Item, Config);
 select('labelPosition', _Item, ['above', 'below', 'before', 'after'], Config);
+boolean('selected', _Item, Config);
 select('size', _Item, ['small', 'large'], Config);
 select('slotBefore', _Item, {'': '', '<Icon />': 'icon'}, Config);
 select('slotAfter', _Item, {'': '', '<Icon />': 'icon'}, Config);
