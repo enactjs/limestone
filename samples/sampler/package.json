@@ -13,7 +13,8 @@
     "pack": "storybook build -c .storybook -o dist",
     "pack-qa": "storybook build -c .qa-storybook -o dist",
     "serve": "storybook dev -p 8080 -c .storybook --ci",
-    "serve-qa": "storybook dev -p 8080 -c .qa-storybook --ci"
+    "serve-qa": "storybook dev -p 8080 -c .qa-storybook --ci",
+    "postinstall": "patch-package"
   },
   "license": "Apache-2.0",
   "enact": {
@@ -36,5 +37,8 @@
     "react-is": "^19.2.7",
     "storybook": "^10.4.6",
     "storybook-addon-pseudo-states": "^10.4.6"
+  },
+  "devDependencies": {
+    "patch-package": "^8.0.1"
   }
 }
