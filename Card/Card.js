@@ -626,7 +626,7 @@ const CardBase = kind({
 			captionOverflowOnFocus: !captionOverflow && captionOverflowOnFocus && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
-			noCaption: orientation === 'vertical' && (!label && !secondaryLabel) && !captionImageIconsSrc.some(element => element !== null) && !imageIconSrc,
+			noCaption: orientation === 'vertical' && (!label && !secondaryLabel) && !captionImageIconsSrc?.some(element => element !== null) && !imageIconSrc,
 			centeredTitle,
 			durationOverlay,
 			pressed,
