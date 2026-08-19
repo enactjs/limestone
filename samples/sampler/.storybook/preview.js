@@ -73,6 +73,9 @@ if (process.env.STORYBOOK_APPLY_GA_COOKIEBANNER) {
 }
 
 export const parameters = {
+	controls: {
+		disableSaveFromUI: true,
+	},
 	options: {
 		storySort: {
 			method: 'alphabetical'

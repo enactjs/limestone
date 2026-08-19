@@ -1,5 +1,5 @@
 diff --git a/node_modules/storybook/dist/manager/globals-runtime.js b/node_modules/storybook/dist/manager/globals-runtime.js
-index 7b4f48e..bbd0097 100644
+index 7b4f48e..b334371 100644
 --- a/node_modules/storybook/dist/manager/globals-runtime.js
 +++ b/node_modules/storybook/dist/manager/globals-runtime.js
 @@ -59182,7 +59182,7 @@ var splitPathRegex = /\/([^/]+)\/(?:(.*)_)?([^/]+)?/, parsePath2 = (0, import_me
@@ -11,3 +11,12 @@ index 7b4f48e..bbd0097 100644
    (acc, [key, val]) => Object.assign(acc, { [key]: encodeSpecialValues(val) }),
    {}
  ) : value, decodeKnownQueryChar = (chr) => {
+@@ -60926,7 +60926,7 @@ var parseBoolean = (value) => {
+   provider.channel?.on(SET_CURRENT_STORY, () => updateArgsParam());
+   let handleOrId;
+   return provider.channel?.on(STORY_ARGS_UPDATED, () => {
+-    "requestIdleCallback" in scope.window ? (handleOrId && scope.window.cancelIdleCallback(handleOrId), handleOrId = scope.window.requestIdleCallback(updateArgsParam, { timeout: 1e3 })) : (handleOrId && clearTimeout(handleOrId), setTimeout(updateArgsParam, 100));
++    "requestIdleCallback" in scope.window ? (handleOrId && scope.window.cancelIdleCallback(handleOrId), handleOrId = scope.window.requestIdleCallback(updateArgsParam, { timeout: 100 })) : (handleOrId && clearTimeout(handleOrId), setTimeout(updateArgsParam, 100));
+   }), provider.channel?.on(GLOBALS_UPDATED, ({ userGlobals, initialGlobals: initialGlobals5 }) => {
+     let { path, hash: hash4 = "", queryParams } = api.getUrlState(), globalsString = buildArgsParam(initialGlobals5, merge_default(initialGlobals5, userGlobals));
+     navigateTo(
