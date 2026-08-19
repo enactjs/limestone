@@ -74,7 +74,7 @@ if (process.env.STORYBOOK_APPLY_GA_COOKIEBANNER) {
 
 export const parameters = {
 	controls: {
-		disableSaveFromUI: true,
+		disableSaveFromUI: true
 	},
 	options: {
 		storySort: {
