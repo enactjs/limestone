@@ -621,12 +621,12 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionImageIconsSrc, captionOverflow, captionOverflowOnFocus, captionOverlay, captionOverlayOnFocus, centeredTitle, durationOverlay, icon, imageIconSrc, label, pressed, progressBarOverlay, roundedImage, hasContainer, orientation, secondaryLabel, styler}) => styler.append({
+		className: ({captionImageIconsSrc, captionOverflow, captionOverflowOnFocus, captionOverlay, captionOverlayOnFocus, centeredTitle, children, durationOverlay, icon, imageIconSrc, label, pressed, progressBarOverlay, roundedImage, hasContainer, orientation, secondaryLabel, showProgressBar, styler}) => styler.append({
 			captionOverflow: captionOverflow && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverflowOnFocus: !captionOverflow && captionOverflowOnFocus && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverlay: captionOverlay && orientation === 'vertical',
 			captionOverlayOnFocus: !captionOverlay && captionOverlayOnFocus && orientation === 'vertical',
-			noCaption: orientation === 'vertical' && (!label && !secondaryLabel) && !captionImageIconsSrc?.some(element => element !== null) && !imageIconSrc,
+			noCaption: orientation === 'vertical' && !children && (!label && !secondaryLabel) && !captionImageIconsSrc?.some(element => element !== null) && !imageIconSrc && !showProgressBar,
 			centeredTitle,
 			durationOverlay,
 			pressed,
