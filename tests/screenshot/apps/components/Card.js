@@ -51,6 +51,7 @@ const defaultCardTests = [
 	<Card src={img} label="Label" secondaryLabel="This is very very very very long label. This is very very long label." captionOverlay withoutMarquee>This is very very very very long caption. This is very very long caption.</Card>,
 
 	// Horizontal
+	<Card src={img} orientation="horizontal" />,
 	<Card src={img} orientation="horizontal">Short</Card>,
 	<Card src={img} orientation="horizontal" selected>Short</Card>,
 	<Card src={img} orientation="horizontal" label="Short">Short</Card>,
