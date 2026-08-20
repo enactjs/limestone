@@ -12,6 +12,7 @@ const labelIcons = [<Icon>ai</Icon>, <Icon>ai</Icon>];
 
 const defaultCardTests = [
 	// Vertical
+	<Card src={img} orientation="vertical" />,
 	<Card src={img} orientation="vertical">Short</Card>,
 	<Card src={img} selected>Short</Card>,
 	<Card src={img} label="Short">Short</Card>,
