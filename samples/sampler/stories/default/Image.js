@@ -1,7 +1,7 @@
 import Image, {ImageBase, ImageDecorator} from '@enact/limestone/Image';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, color, object, select} from '@enact/storybook-utils/addons/controls';
 import {ImageBase as UiImageBase} from '@enact/ui/Image';
 import ri from '@enact/ui/resolution';
 
@@ -73,7 +73,7 @@ object('src', _Image, Config, src);
 object('backgroundSrc', _Image, Config, src);
 boolean('hasBackgroundSrc', _Image, Config);
 boolean('transparentImage', _Image, Config);
-text('backgroundColor', _Image, Config, '#4c5059');
+color('backgroundColor', _Image, Config, '#4c5059');
 select('sizing', _Image, ['fill', 'fit', 'none'], Config);
 
 _Image.storyName = 'Image';
