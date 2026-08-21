@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/ImageItem` prop `secondaryLabel`
 
 ### Changed
 
@@ -24,10 +25,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 - `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
-- `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
-- `limestone/Slider` hover halo on tick marks at a lower opacity than the selected knob
-- `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
-- `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
 
 ### Changed
 
