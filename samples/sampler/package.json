@@ -13,8 +13,7 @@
     "pack": "storybook build -c .storybook -o dist",
     "pack-qa": "storybook build -c .qa-storybook -o dist",
     "serve": "storybook dev -p 8080 -c .storybook --ci",
-    "serve-qa": "storybook dev -p 8080 -c .qa-storybook --ci",
-    "postinstall": "patch-package"
+    "serve-qa": "storybook dev -p 8080 -c .qa-storybook --ci"
   },
   "license": "Apache-2.0",
   "enact": {
@@ -25,13 +24,12 @@
     "@enact/i18n": "^5.5.2",
     "@enact/limestone": "../../",
     "@enact/spotlight": "^5.5.2",
-    "@enact/storybook-utils": "github:enactjs/storybook-utils#feature/NXT-19371",
+    "@enact/storybook-utils": "^8.0.3",
     "@enact/ui": "^5.5.2",
     "@github-ui/storybook-addon-performance-panel": "^1.1.4",
     "@storybook/react-webpack5": "^10.5.10",
     "classnames": "^2.5.1",
     "ilib": "^14.22.0",
-    "patch-package": "^8.0.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-ga4": "^2.1.0",
