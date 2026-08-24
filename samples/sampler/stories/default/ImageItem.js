@@ -32,7 +32,7 @@ export const _ImageItem = (args) => {
 	const isVertical = args['orientation'] === 'vertical';
 	const hasSecondaryLabel = Boolean(args['secondaryLabel']);
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
-	const verticalHeight = ri.scaleToRem(hasSecondaryLabel ? 648 : 588);
+	const verticalHeight = ri.scaleToRem(hasSecondaryLabel ? 656 : 592);
 
 	if (isVertical) {
 		style = {width: ri.scaleToRem(768), height: verticalHeight, position: 'absolute'};
@@ -47,8 +47,7 @@ export const _ImageItem = (args) => {
 		disabled: args['disabled'],
 		label: args['label'],
 		orientation: args['orientation'],
-		// eslint-disable-next-line no-undefined
-		secondaryLabel: args['secondaryLabel'] ? args['secondaryLabel'] : undefined,
+		secondaryLabel: args['secondaryLabel'],
 		selected: args['selected'],
 		showSelection: args['showSelection'],
 		src: componentSrc,
