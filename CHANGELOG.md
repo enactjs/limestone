@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 - `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
+- `limestone/Item` `secondaryLabel` prop
 
 ### Changed
 
@@ -23,7 +24,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Input` `title` to use the `LGSmart UI 3.0 Title` font,
 - `limestone/Icon` supported icon list, adding new icons `smartmode`, `databackup`, `deleteviewinginfo`, `lgmembers`, `manage`, `pay`, `paymentmethod`, `productregistration`, `purchased`, `rate`, `report`, `security`, `subscriptions`, `terminatemyaccount`, `update`, `usagecare`, `voucher`, `filter`, `ezsetting`, `fitness`, and `auracast2`
-- `limestone/Item` `secondaryLabel` prop
 - `limestone/Panels.Header` `title` to use the `LGSmart UI 3.0 Title` font 
 - `limestone/Scroller` prop `stickTo` to allow the scroller to stick to a specific element
 - `limestone/VirtualGridList` prop `stickTo` to allow the scroller to stick to a specific element
