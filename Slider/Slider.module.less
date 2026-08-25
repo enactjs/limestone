@@ -30,6 +30,7 @@
 		--lime-tooltip-offset: @lime-slider-tooltip-offset;
 
 		position: absolute;
+		z-index: 1;
 		will-change: transform;
 
 		&::before {
@@ -90,10 +91,65 @@
 		line-height: @lime-slider-min-max-line-height;
 	}
 
+	.extras {
+		display: contents;
+	}
+
+	.ticks {
+		position: absolute;
+		pointer-events: none;
+		z-index: 0;
+	}
+
+	.tick {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: ~"calc(100% / (var(--lime-slider-tick-count, 2) - 1))";
+	}
+
+	.tickMark {
+		position: absolute;
+		display: block;
+		flex-shrink: 0;
+		border-radius: @lime-slider-tick-border-radius;
+	}
+
+	.tickLabel,
+	.startLabel,
+	.endLabel {
+		font-size: @lime-slider-tick-label-font-size;
+		font-weight: @lime-slider-tick-label-font-weight;
+		line-height: @lime-slider-tick-label-line-height;
+		letter-spacing: @lime-slider-tick-label-letter-spacing;
+		max-width: 100%;
+		pointer-events: auto;
+	}
+
+	.tickLabel {
+		position: absolute;
+		top: 100%;
+		margin-top: @lime-slider-tick-label-offset;
+		width: 100%;
+	}
+
+	.startLabel,
+	.endLabel {
+		max-width: @lime-slider-side-label-width;
+	}
+
 	.lime-custom-text({
 		.minMax {
 			font-size: @lime-slider-min-max-font-size-large;
 			line-height: @lime-slider-min-max-line-height-large;
+		}
+
+		.tickLabel,
+		.startLabel,
+		.endLabel {
+			font-size: @lime-slider-tick-label-font-size-large;
+			line-height: @lime-slider-tick-label-line-height-large;
 		}
 	});
 
@@ -114,6 +170,56 @@
 
 		&.hasMinMax {
 			padding-bottom: @lime-slider-bar-min-max-padding-bottom;
+		}
+
+		&.hasTickLabels {
+			padding-bottom: @lime-slider-bar-tick-labels-padding-bottom;
+		}
+
+		&.hasTickLabels.hasMinMax {
+			padding-bottom: ~"calc("@lime-slider-bar-tick-labels-padding-bottom ~"+" @lime-slider-bar-min-max-padding-bottom ~")";
+		}
+
+		.ticks {
+			top: @v-gap;
+			left: @h-gap;
+			right: @h-gap;
+			height: @lime-slider-bar-height;
+		}
+
+		&.hasSideLabels {
+			padding-left: ~"calc("@h-gap ~"+" @lime-slider-side-label-width ~"+" @lime-slider-side-label-gap ~")";
+			padding-right: ~"calc("@h-gap ~"+" @lime-slider-side-label-width ~"+" @lime-slider-side-label-gap ~")";
+
+			.startLabel,
+			.endLabel {
+				position: absolute;
+				width: @lime-slider-side-label-width;
+				top: ~"calc("@v-gap ~"+" (@lime-slider-bar-height / 2) ~")";
+				transform: translateY(-50%);
+			}
+
+			.startLabel {
+				left: 0;
+			}
+
+			.endLabel {
+				right: 0;
+			}
+		}
+
+		.tick {
+			top: 0;
+			height: 100%;
+			transform: translateX(-50%);
+		}
+
+		.tickMark {
+			top: 50%;
+			left: 50%;
+			width: @lime-slider-tick-width;
+			height: @lime-slider-tick-height;
+			transform: translate(-50%, -50%);
 		}
 
 		.minMax {
@@ -148,6 +254,65 @@
 				width: @lime-slider-bar-height;
 				flex-shrink: 0;
 			}
+		}
+
+		&.hasTickLabels {
+			padding-right: @lime-slider-bar-tick-labels-padding-bottom;
+		}
+
+		&.hasSideLabels {
+			padding-top: ~"calc("@v-gap ~"+" @lime-slider-side-label-width ~"+" @lime-slider-side-label-gap ~")";
+			padding-bottom: ~"calc("@v-gap ~"+" @lime-slider-side-label-width ~"+" @lime-slider-side-label-gap ~")";
+
+			.startLabel,
+			.endLabel {
+				position: absolute;
+				width: @lime-slider-side-label-width;
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.startLabel {
+				bottom: 100%;
+				margin-bottom: @lime-slider-side-label-gap;
+			}
+
+			.endLabel {
+				top: 100%;
+				margin-top: @lime-slider-side-label-gap;
+			}
+		}
+
+		.ticks {
+			top: @v-gap;
+			bottom: @v-gap;
+			left: @h-gap;
+			width: @lime-slider-bar-height;
+			height: auto;
+		}
+
+		.tick {
+			left: 50%;
+			transform: translate(-50%, 50%);
+			width: @lime-slider-bar-height;
+			height: ~"calc(100% / (var(--lime-slider-tick-count, 2) - 1))";
+			flex-direction: row;
+		}
+
+		.tickMark {
+			top: 50%;
+			left: 50%;
+			width: @lime-slider-tick-height;
+			height: @lime-slider-tick-width;
+			transform: translate(-50%, -50%);
+		}
+
+		.tickLabel {
+			top: auto;
+			left: 100%;
+			margin-top: 0;
+			margin-left: @lime-slider-tick-label-offset;
+			width: auto;
 		}
 
 		.minMax {
@@ -398,6 +563,16 @@
 
 		.minMax {
 			color: @lime-slider-min-max-color;
+		}
+
+		.tickMark {
+			background-color: @lime-slider-tick-color;
+		}
+
+		.tickLabel,
+		.startLabel,
+		.endLabel {
+			color: @lime-slider-tick-label-color;
 		}
 	});
 }

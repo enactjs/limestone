@@ -9,6 +9,10 @@ const padded = {wrapper: {padded: true}};
 const sliderSmokeTests = [
 	<Slider />,
 	<Slider showMinMax />,
+	<Slider ticks={5} />,
+	<Slider ticks={5} labels={['Short Text', 'Long Text Long']} />,
+	<Slider ticks={5} labels={['Long Text Long', 'Short Text', 'Long Text Long', 'Short Text', 'Long Text Long']} />,
+	<Slider ticks={5} disabled />,
 	<Slider disabled />,
 	<Slider value={50} />,
 	<Slider value={50} noFill />,
@@ -29,6 +33,11 @@ const sliderSmokeTests = [
 	},
 	{
 		component: <Slider tooltip percent value={50} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider ticks={5} tooltip value={50} />,
 		...padded,
 		focus: true
 	},

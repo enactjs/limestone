@@ -6,7 +6,9 @@
  *   defaultValue={-30}
  *   max={100}
  *   min={-100}
- *   step={10}
+ *   ticks={5}
+ *   alignStepsWithTicks
+ *   labels={['Low', 'Medium', 'High', 'Very High', 'Max']}
  *   tooltip
  * />
  *
@@ -38,22 +40,26 @@ import {useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import {ProgressBarTooltip} from '../ProgressBar';
 import Skinnable from '../Skinnable';
-import {validateSteppedOnce} from '../internal/validators';
+import {validateSteppedOnce, warning} from '../internal/validators';
 
 import SliderBehaviorDecorator from './SliderBehaviorDecorator';
 import {
+	getTickAlignedStep,
+	getTickConfig,
 	handleDecrement,
-	handleIncrement,
 	handleDecrementByWheel,
+	handleIncrement,
 	handleIncrementByWheel,
 	hueGradient
 } from './utils';
+import {SliderExtras} from './Ticks';
 
 import componentCss from './Slider.module.less';
 
 const sliderDefaultProps = {
 	activateOnSelect: false,
 	active: false,
+	alignStepsWithTicks: false,
 	colorPicker: false,
 	disabled: false,
 	keyFrequency: [1],
@@ -81,17 +87,20 @@ const SliderBase = (props) => {
 
 	const {
 		active,
+		alignStepsWithTicks,
 		className,
 		colorPicker,
 		css,
 		disabled,
 		focused,
 		keyFrequency,
+		labels,
 		max,
 		min,
 		pressed,
 		showAnchor,
 		showMinMax,
+		ticks,
 		...rest
 	} = sliderProps;
 
@@ -101,10 +110,27 @@ const SliderBase = (props) => {
 		valueName: 'max'
 	})(sliderProps);
 
-	const step = validateSteppedOnce(p => p.step, {
+	const providedStep = validateSteppedOnce(p => p.step, {
 		component: 'Slider',
 		valueName: 'max'
 	})(sliderProps);
+
+	const tickConfig = getTickConfig(ticks, labels, {
+		alignStepsWithTicks,
+		max,
+		min,
+		step: providedStep
+	});
+
+	if (alignStepsWithTicks && !colorPicker && tickConfig.count < 3) {
+		warning(true, 'Slider alignStepsWithTicks requires ticks or at least 3 labels.');
+	}
+
+	const alignedStep = !colorPicker && alignStepsWithTicks ?
+		getTickAlignedStep(min, max, tickConfig.count) :
+		null;
+	const step = alignedStep == null ? providedStep : alignedStep;
+	const handlerProps = alignedStep == null ? sliderProps : {...sliderProps, knobStep: null, step};
 
 	const tooltip = sliderProps.tooltip === true ? ProgressBarTooltip : sliderProps.tooltip;
 
@@ -136,7 +162,7 @@ const SliderBase = (props) => {
 			forKey('enter'),
 			forward('onActivate')
 		)
-	}, sliderProps, spotlightAccelerator);
+	}, handlerProps, spotlightAccelerator);
 
 	const nativeEventHandlers = useHandlers({
 		onWheel: handle(
@@ -148,10 +174,15 @@ const SliderBase = (props) => {
 				handleDecrementByWheel
 			])
 		)
-	}, sliderProps, context);
+	}, handlerProps, context);
 
 	// if the props includes a css map, merge them together
 	let mergedCss = usePublicClassNames({componentCss, customCss: css, publicClassNames: true});
+
+	const hasTicks = !colorPicker && tickConfig.count >= 3;
+	const hasTickLabels = hasTicks && tickConfig.tickLabels != null;
+	const hasSideLabels = !colorPicker && (tickConfig.startLabel != null || tickConfig.endLabel != null);
+	const displayMinMax = Boolean(showMinMax) && !hasTickLabels && !hasSideLabels;
 
 	const componentClassName = classnames(
 		componentCss.slider,
@@ -159,7 +190,10 @@ const SliderBase = (props) => {
 		{
 			[mergedCss.active]: active,
 			[mergedCss.colorPicker]: colorPicker,
-			[mergedCss.hasMinMax]: showMinMax,
+			[mergedCss.hasMinMax]: displayMinMax,
+			[mergedCss.hasSideLabels]: hasSideLabels,
+			[mergedCss.hasTickLabels]: hasTickLabels,
+			[mergedCss.hasTicks]: hasTicks,
 			[mergedCss.pressed]: pressed,
 			[mergedCss.showAnchor]: showAnchor
 		},
@@ -225,11 +259,16 @@ const SliderBase = (props) => {
 					visible={focused}
 				/>
 			}
-			minMaxComponent={showMinMax ?
-				<div className={mergedCss.minMax}>
-					<div>{sliderMin}</div>
-					<div>{sliderMax}</div>
-				</div> : null
+			minMaxComponent={hasTicks || hasSideLabels || displayMinMax ?
+				<SliderExtras
+					count={hasTicks ? tickConfig.count : 0}
+					css={mergedCss}
+					endLabel={hasSideLabels ? tickConfig.endLabel : null}
+					focused={focused}
+					labels={hasTickLabels ? tickConfig.tickLabels : null}
+					showMinMax={displayMinMax}
+					startLabel={hasSideLabels ? tickConfig.startLabel : null}
+				/> : null
 			}
 		/>
 	);
@@ -256,6 +295,18 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	active: PropTypes.bool,
 
 	/**
+	 * Ignores `step` and snaps the knob to each tick mark.
+	 *
+	 * The increment becomes `(max - min) / (tickCount - 1)`. Requires `ticks` or at least three
+	 * `labels`.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @public
+	 */
+	alignStepsWithTicks: PropTypes.bool,
+
+	/**
 	 * Indicates if this component will be used as a colorPicker.
 	 *
 	 * @type {Boolean}
@@ -271,6 +322,8 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * The following classes are supported:
 	 *
 	 * * `slider` - The root component class
+	 * * `ticks` - The tick marks container
+	 * * `tickLabel` - A label displayed with a tick mark
 	 *
 	 * @type {Object}
 	 * @public
@@ -317,12 +370,27 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * The amount to increment or decrement the position of the knob via 5-way controls.
 	 *
 	 * It must evenly divide into the range designated by `min` and `max`. If not specified,
-	 * `step` is used for the default value.
+	 * `step` is used for the default value. Ignored when
+	 * {@link limestone/Slider.SliderBase.alignStepsWithTicks|alignStepsWithTicks} is set.
 	 *
 	 * @type {Number}
 	 * @public
 	 */
 	knobStep: PropTypes.number,
+
+	/**
+	 * Labels displayed with the slider.
+	 *
+	 * When two labels are provided, they are shown at the start and end of the track.
+	 * When three or more labels are provided, each label is shown beneath its corresponding
+	 * tick mark. If `ticks` is not set, tick marks are created to match the number of labels.
+	 *
+	 * Labels are displayed on a single line. Overflowing text is marqueed.
+	 *
+	 * @type {Array<Node>}
+	 * @public
+	 */
+	labels: PropTypes.arrayOf(PropTypes.node),
 
 	/**
 	 * The maximum value of the slider.
@@ -410,6 +478,9 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	/**
 	 * Displays the min and max values at the edges of the slider.
 	 *
+	 * Ignored when {@link limestone/Slider.SliderBase.labels|labels} are provided, so the values
+	 * do not overlap the tick labels.
+	 *
 	 * @type {Boolean}
 	 * @public
 	 */
@@ -418,13 +489,32 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	/**
 	 * The amount to increment or decrement the value.
 	 *
-	 * It must evenly divide into the range designated by `min` and `max`.
+	 * It must evenly divide into the range designated by `min` and `max`. Ignored when
+	 * {@link limestone/Slider.SliderBase.alignStepsWithTicks|alignStepsWithTicks} is set.
 	 *
 	 * @type {Number}
 	 * @default 1
 	 * @public
 	 */
 	step: PropTypes.number,
+
+	/**
+	 * Displays equally spaced tick marks along the slider track.
+	 *
+	 * Tick marks overlay the track and indicate selectable points. The knob can rest on a tick when
+	 * that position is a valid `step` value. A slider with tick marks must display at least
+	 * three ticks, and the interval between every tick must be the same.
+	 *
+	 * * `true` - Displays one tick per `step` when there are 3-11 steps, otherwise five ticks
+	 *   (or one per label when `labels` has three or more items)
+	 * * `Number` - Displays that many tick marks (minimum 3). Use
+	 *   {@link limestone/Slider.SliderBase.alignStepsWithTicks|alignStepsWithTicks} so the knob
+	 *   snaps to every mark.
+	 *
+	 * @type {Boolean|Number}
+	 * @public
+	 */
+	ticks: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 
 	/**
 	 * Enables the built-in tooltip
