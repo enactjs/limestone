@@ -274,10 +274,7 @@ const AlertBase = kind({
 				resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
 			}
 			return styler.append({noImage: !image}, resolvedSize, type, resolvedButtonDirection);
-		},
-		size: ({buttons, buttonDirection, size}) => size || (
-			buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
-		)
+		}
 	},
 
 	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, size, title, type, style, ...rest}) => {
