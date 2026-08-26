@@ -36,6 +36,7 @@ export const _Slider = (args) => {
 		showMinMax: args['showMinMax'],
 		step: args['step'],
 		alignStepsWithTicks: args['alignStepsWithTicks'],
+		automaticLabels: args['automaticLabels'],
 		ticks: args['ticks'],
 		labels: args['labels'],
 		wheelInterval: args['wheelInterval']
@@ -104,6 +105,7 @@ boolean('showAnchor', _Slider, SliderConfig);
 boolean('showMinMax', _Slider, SliderConfig);
 number('step', _Slider, SliderConfig, 1);
 boolean('alignStepsWithTicks', _Slider, SliderConfig);
+boolean('automaticLabels', _Slider, SliderConfig);
 number('ticks', _Slider, SliderConfig);
 object('labels', _Slider, SliderConfig, []);
 number('wheelInterval', _Slider, SliderConfig);

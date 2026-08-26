@@ -664,6 +664,25 @@ describe('Slider', () => {
 		expect(slider.querySelector('.minMax')).toBeNull();
 	});
 
+	test('should generate tick labels from min and max when automaticLabels is set', () => {
+		render(<Slider automaticLabels max={100} min={0} ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+		const tickLabels = [...slider.querySelectorAll('.tickLabel')].map((node) => node.textContent);
+
+		expect(slider).toHaveClass('hasTickLabels');
+		expect(tickLabels).toEqual(['0', '25', '50', '75', '100']);
+	});
+
+	test('should ignore labels when automaticLabels is set', () => {
+		render(<Slider automaticLabels labels={['Low', 'Medium', 'High']} max={10} min={0} ticks={3} />);
+
+		const slider = screen.getByRole('slider');
+		const tickLabels = [...slider.querySelectorAll('.tickLabel')].map((node) => node.textContent);
+
+		expect(tickLabels).toEqual(['0', '5', '10']);
+	});
+
 	test('should not render ticks when colorPicker is set', () => {
 		render(<Slider colorPicker ticks={5} labels={['A', 'B', 'C']} />);
 

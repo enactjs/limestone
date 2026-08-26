@@ -26,6 +26,41 @@ const getStepStopCount = (min = 0, max = 100, step = 1) => {
 };
 
 /**
+ * Formats a tick value for display, trimming float noise.
+ *
+ * @private
+ */
+const formatTickLabel = (value) => {
+	if (!Number.isFinite(value)) {
+		return '';
+	}
+
+	return String(Math.round(value * 1e6) / 1e6);
+};
+
+/**
+ * Labels at each tick, equally spaced between `min` and `max`.
+ *
+ * @private
+ */
+const getAutomaticTickLabels = (min, max, count) => {
+	if (count < MIN_TICK_COUNT) {
+		return null;
+	}
+
+	const range = max - min;
+	const intervals = count - 1;
+
+	if (intervals <= 0 || !Number.isFinite(range)) {
+		return null;
+	}
+
+	return Array.from({length: count}, (_, i) => (
+		formatTickLabel(min + (range * i) / intervals)
+	));
+};
+
+/**
  * Resolves tick count and label placement from the `ticks` and `labels` props.
  *
  * Tick marks require at least three equally spaced points. Two labels are treated as start/end
@@ -34,11 +69,14 @@ const getStepStopCount = (min = 0, max = 100, step = 1) => {
  * When `ticks` is `true` and there is no per-tick label list, the tick count follows the number of
  * `step` stops so the knob can rest on each mark (capped so dense ranges still use five ticks).
  * If `alignStepsWithTicks` is set, `ticks={true}` uses five ticks instead of deriving from `step`.
+ * If `automaticLabels` is set, `labels` is ignored and values are generated from `min`, `max`, and
+ * the tick count.
  *
  * @param {Boolean|Number} ticks  `true` for the default count, or an explicit tick count
  * @param {Array}          labels Label values for start/end or per-tick display
  * @param {Object}         [range] Slider range used to match ticks to `step`
  * @param {Boolean}        [range.alignStepsWithTicks]
+ * @param {Boolean}        [range.automaticLabels]
  * @param {Number}         [range.min]
  * @param {Number}         [range.max]
  * @param {Number}         [range.step]
@@ -46,8 +84,14 @@ const getStepStopCount = (min = 0, max = 100, step = 1) => {
  * @returns {Object} Tick render configuration
  * @private
  */
-const getTickConfig = (ticks, labels, {alignStepsWithTicks, min = 0, max = 100, step = 1} = {}) => {
-	const labelList = Array.isArray(labels) ? labels : [];
+const getTickConfig = (ticks, labels, {
+	alignStepsWithTicks,
+	automaticLabels,
+	min = 0,
+	max = 100,
+	step = 1
+} = {}) => {
+	const labelList = !automaticLabels && Array.isArray(labels) ? labels : [];
 	const labelCount = labelList.length;
 	const useTickLabels = labelCount >= MIN_TICK_COUNT;
 	const useSideLabels = labelCount === 2;
@@ -73,6 +117,15 @@ const getTickConfig = (ticks, labels, {alignStepsWithTicks, min = 0, max = 100, 
 	if (count > 0 && count < MIN_TICK_COUNT) {
 		warning(true, `Slider ticks must be 3 or more. Received ${count}.`);
 		count = 0;
+	}
+
+	if (automaticLabels && count >= MIN_TICK_COUNT) {
+		return {
+			count,
+			tickLabels: getAutomaticTickLabels(min, max, count),
+			startLabel: null,
+			endLabel: null
+		};
 	}
 
 	return {

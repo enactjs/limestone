@@ -60,6 +60,7 @@ const sliderDefaultProps = {
 	activateOnSelect: false,
 	active: false,
 	alignStepsWithTicks: false,
+	automaticLabels: false,
 	colorPicker: false,
 	disabled: false,
 	keyFrequency: [1],
@@ -88,6 +89,7 @@ const SliderBase = (props) => {
 	const {
 		active,
 		alignStepsWithTicks,
+		automaticLabels,
 		className,
 		colorPicker,
 		css,
@@ -117,6 +119,7 @@ const SliderBase = (props) => {
 
 	const tickConfig = getTickConfig(ticks, labels, {
 		alignStepsWithTicks,
+		automaticLabels,
 		max,
 		min,
 		step: providedStep
@@ -124,6 +127,10 @@ const SliderBase = (props) => {
 
 	if (alignStepsWithTicks && !colorPicker && tickConfig.count < 3) {
 		warning(true, 'Slider alignStepsWithTicks requires ticks or at least 3 labels.');
+	}
+
+	if (automaticLabels && !colorPicker && tickConfig.count < 3) {
+		warning(true, 'Slider automaticLabels requires ticks.');
 	}
 
 	const alignedStep = !colorPicker && alignStepsWithTicks ?
@@ -307,6 +314,18 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	alignStepsWithTicks: PropTypes.bool,
 
 	/**
+	 * Generates a numeric label for each tick from `min`, `max`, and the tick count.
+	 *
+	 * When set, {@link limestone/Slider.SliderBase.labels|labels} is ignored. When `false` or
+	 * unset, `labels` is used as provided.
+	 *
+	 * @type {Boolean}
+	 * @default false
+	 * @public
+	 */
+	automaticLabels: PropTypes.bool,
+
+	/**
 	 * Indicates if this component will be used as a colorPicker.
 	 *
 	 * @type {Boolean}
@@ -384,6 +403,8 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * When two labels are provided, they are shown at the start and end of the track.
 	 * When three or more labels are provided, each label is shown beneath its corresponding
 	 * tick mark. If `ticks` is not set, tick marks are created to match the number of labels.
+	 *
+	 * Ignored when {@link limestone/Slider.SliderBase.automaticLabels|automaticLabels} is set.
 	 *
 	 * Labels are displayed on a single line. Overflowing text is marqueed.
 	 *
