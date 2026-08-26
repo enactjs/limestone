@@ -186,12 +186,16 @@ const alertQwtcTests = [
 	// QWTC-2603
 	...withProps({type: 'overlay'}, [
 		<Alert open title="With different types of Components">
-			<AlertImage
-				src={img}
-				type="icon"
-			/>
-			<Button size="small">Yes</Button>
-			<Button size="small">No</Button>
+			<image>
+				<AlertImage
+					src={img}
+					type="icon"
+				/>
+			</image>
+			<buttons>
+				<Button size="small">Yes</Button>
+				<Button size="small">No</Button>
+			</buttons>
 			<div>
 				<div>This is progressbar</div>
 				<ProgressBar progress={0.5} />

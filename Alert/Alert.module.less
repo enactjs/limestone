@@ -22,11 +22,11 @@
 		}
 
 		.buttonCell:first-child .button {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 
 		.buttonCell:last-child .button {
-			margin-right: 0;
+			margin-inline-end: 0;
 		}
 	}
 
@@ -88,7 +88,7 @@
 			.lime-alert-overlay-content();
 			padding: @lime-alert-overlay-body-padding;
 			margin: 0;
-			width: ~"calc(@{lime-alert-overlay-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
+			max-width: ~"calc(@{lime-alert-overlay-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
@@ -131,7 +131,7 @@
 			width: @lime-alert-overlay-medium-width;
 
 			.content {
-				width: ~"calc(@{lime-alert-overlay-medium-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
+				max-width: ~"calc(@{lime-alert-overlay-medium-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
 			}
 		}
 
@@ -139,7 +139,7 @@
 			width: @lime-alert-overlay-large-width;
 
 			.content {
-				width: ~"calc(@{lime-alert-overlay-large-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
+				max-width: ~"calc(@{lime-alert-overlay-large-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
 			}
 		}
 	}

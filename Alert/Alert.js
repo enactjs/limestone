@@ -58,7 +58,7 @@ const FittedContentCell = ({children, component, fullscreen, id, ...rest}) => {
 	}, [contentId, fitted]);
 
 	return (
-		<Cell shrink align={fitted ? 'center' : 'stretch'} component={component} id={contentId} {...rest}>
+		<Cell shrink align='center' component={component} id={contentId} {...rest}>
 			{children}
 		</Cell>
 	);
