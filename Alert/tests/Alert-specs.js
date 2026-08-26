@@ -306,6 +306,41 @@ describe('AlertOverlay specs', () => {
 
 		expect(buttonsLayout).toHaveClass('vertical');
 	});
+
+	test('should resolve size to `medium` when size is omitted', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay">
+					<buttons>
+						<Button size="small">yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+
+		expect(alert).toHaveClass('medium');
+		expect(alert).not.toHaveClass('small');
+	});
+
+	test('should align buttons vertically when size is `small` and buttonDirection is `auto` even with 2 buttons', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay" size="small">
+					<buttons>
+						<Button size="small">yes</Button>
+						<Button size="small">no</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('vertical');
+	});
 });
 
 describe('FittedContentCell', () => {
