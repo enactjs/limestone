@@ -20,6 +20,14 @@
 			margin-top: 0;
 			margin-bottom: 0;
 		}
+
+		.buttonCell:first-child .button {
+			margin-inline-start: 0;
+		}
+
+		.buttonCell:last-child .button {
+			margin-inline-end: 0;
+		}
 	}
 
 	&.vertical {
@@ -80,7 +88,7 @@
 			.lime-alert-overlay-content();
 			padding: @lime-alert-overlay-body-padding;
 			margin: 0;
-			max-width: var(--alert-overlay-content-max-width, @lime-alert-overlay-width);
+			max-width: ~"calc(@{lime-alert-overlay-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
 
 			:global(.enact-locale-ja) &,
 			:global(.enact-locale-zh) & {
@@ -109,14 +117,8 @@
 	&.overlay {
 		box-sizing: border-box;
 		--alert-overlay-horizontal-button-count: 1;
-		--alert-overlay-horizontal-button-width: ~"calc(@{lime-button-min-width-default} + (2 * @{lime-button-margin}))";
-		--alert-overlay-horizontal-buttons-total-width: ~"calc(var(--alert-overlay-horizontal-button-width) * var(--alert-overlay-horizontal-button-count))";
-		--alert-overlay-width: ~"max(@{lime-alert-overlay-width}, var(--alert-overlay-horizontal-buttons-total-width))";
 		--alert-overlay-content-horizontal-padding: .extract(@lime-alert-overlay-body-padding, right)[];
-		--alert-overlay-content-max-width: ~"calc(var(--alert-overlay-width) - (2 * var(--alert-overlay-content-horizontal-padding)))";
-		width: var(--alert-overlay-width);
-		min-width: @lime-alert-overlay-width;
-		max-width: @lime-alert-overlay-max-width;
+		width: @lime-alert-overlay-width;
 		margin-left: auto;
 		margin-right: auto;
 
@@ -126,13 +128,19 @@
 		}
 
 		&.medium {
-			--alert-overlay-width: ~"max(@{lime-alert-overlay-medium-width}, var(--alert-overlay-horizontal-buttons-total-width))";
-			min-width: @lime-alert-overlay-medium-width;
+			width: @lime-alert-overlay-medium-width;
+
+			.content {
+				max-width: ~"calc(@{lime-alert-overlay-medium-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
+			}
 		}
 
 		&.large {
-			--alert-overlay-width: ~"max(@{lime-alert-overlay-large-width}, var(--alert-overlay-horizontal-buttons-total-width))";
-			min-width: @lime-alert-overlay-large-width;
+			width: @lime-alert-overlay-large-width;
+
+			.content {
+				max-width: ~"calc(@{lime-alert-overlay-large-width} - (2 * var(--alert-overlay-content-horizontal-padding)))";
+			}
 		}
 	}
 
