@@ -51,10 +51,6 @@ const getAutomaticTickLabels = (min, max, count) => {
 	const range = max - min;
 	const intervals = count - 1;
 
-	if (intervals <= 0 || !Number.isFinite(range)) {
-		return null;
-	}
-
 	return Array.from({length: count}, (_, i) => (
 		formatTickLabel(min + (range * i) / intervals)
 	));
@@ -147,18 +143,11 @@ const getTickConfig = (ticks, labels, {
  * @private
  */
 const getTickAlignedStep = (min, max, tickCount) => {
-	if (tickCount < MIN_TICK_COUNT) {
+	if (tickCount < MIN_TICK_COUNT || !(max > min)) {
 		return null;
 	}
 
-	const range = max - min;
-	const intervals = tickCount - 1;
-
-	if (!(range > 0) || intervals <= 0) {
-		return null;
-	}
-
-	return range / intervals;
+	return (max - min) / (tickCount - 1);
 };
 
 const hueGradient = (orientation) =>  `linear-gradient(${orientation === 'horizontal' ? 'to right' : 'to top'}, 
@@ -361,6 +350,7 @@ export {
 	DEFAULT_TICK_COUNT,
 	forwardSpotlightEvents,
 	emitChange,
+	getAutomaticTickLabels,
 	getTickAlignedStep,
 	getTickConfig,
 	handleDecrement,

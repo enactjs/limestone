@@ -268,11 +268,15 @@ const SliderBase = (props) => {
 			}
 			minMaxComponent={hasTicks || hasSideLabels || displayMinMax ?
 				<SliderExtras
+					className={mergedCss.minMax}
 					count={hasTicks ? tickConfig.count : 0}
 					css={mergedCss}
 					endLabel={hasSideLabels ? tickConfig.endLabel : null}
 					focused={focused}
 					labels={hasTickLabels ? tickConfig.tickLabels : null}
+					max={sliderMax}
+					min={sliderMin}
+					orientation={rest.orientation}
 					showMinMax={displayMinMax}
 					startLabel={hasSideLabels ? tickConfig.startLabel : null}
 				/> : null
