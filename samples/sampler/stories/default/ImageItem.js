@@ -30,10 +30,12 @@ export const _ImageItem = (args) => {
 	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
 	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
 	const isVertical = args['orientation'] === 'vertical';
+	const hasSecondaryLabel = Boolean(args['secondaryLabel']);
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
+	const verticalHeight = ri.scaleToRem(hasSecondaryLabel ? 656 : 592);
 
 	if (isVertical) {
-		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588), position: 'absolute'};
+		style = {width: ri.scaleToRem(768), height: verticalHeight, position: 'absolute'};
 	} else {
 		style = {width: ri.scaleToRem(1464), height: wideHeight, position: 'absolute'};
 	}
@@ -45,6 +47,7 @@ export const _ImageItem = (args) => {
 		disabled: args['disabled'],
 		label: args['label'],
 		orientation: args['orientation'],
+		secondaryLabel: args['secondaryLabel'],
 		selected: args['selected'],
 		showSelection: args['showSelection'],
 		src: componentSrc,
@@ -64,6 +67,7 @@ export const _ImageItem = (args) => {
 boolean('centered', _ImageItem, Config);
 boolean('disabled', _ImageItem, Config);
 text('label', _ImageItem, Config, 'ImageItem label');
+text('secondaryLabel', _ImageItem, Config, '');
 select('orientation', _ImageItem, prop.orientation, Config);
 boolean('selected', _ImageItem, Config);
 boolean('showSelection', _ImageItem, Config);

@@ -10,6 +10,7 @@ import css from './ImageItem.module.less';
 
 // vertical ImageItem doesn't render well without defined styles right now.
 const verticalStyle = {height: ri.scale(540), width: ri.scale(640)};
+const verticalSecondaryLabelStyle = {height: ri.scale(604), width: ri.scale(640)};
 
 const imageItemBaseCases = [
 	// Vertical
@@ -42,6 +43,17 @@ const imageItemBaseCases = [
 	<ImageItem src={img} orientation="horizontal" label="Short" imageIconSrc={img} wideImage >Short</ImageItem>,
 	<ImageItem src={img} orientation="horizontal" label="Short" showSelection wideImage >Short</ImageItem>,
 	<ImageItem src={img} orientation="horizontal" label="Short" selected showSelection wideImage >Short</ImageItem>
+];
+
+const imageItemSecondaryLabelCases = [
+	<ImageItem src={img} style={verticalSecondaryLabelStyle} orientation="vertical" label="Short" secondaryLabel="Short" />,
+	<ImageItem src={img} style={verticalSecondaryLabelStyle} orientation="vertical" label="Short" secondaryLabel="Short">Short</ImageItem>,
+	<ImageItem src={img} style={verticalSecondaryLabelStyle} orientation="vertical" label="Short" secondaryLabel="Short" imageIconSrc={img}>Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short" />,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short">Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="This is very very very very long secondary label.">Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short" wideImage />,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short" wideImage>Short</ImageItem>
 ];
 
 const imageItemFocusTests = [
@@ -78,19 +90,23 @@ const imageItemFocusReps = withConfig({focus: true, wrapper: {light: true, padde
 
 const imageItemTallglyphTests = [
 	<ImageItem src={img} orientation="horizontal" label="Short">Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label={TallglyphMultiScript}>{TallglyphMultiScript}</ImageItem>
+	<ImageItem src={img} orientation="horizontal" label={TallglyphMultiScript}>{TallglyphMultiScript}</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short">Short</ImageItem>,
+	<ImageItem src={img} orientation="horizontal" label={TallglyphMultiScript} secondaryLabel={TallglyphMultiScript}>{TallglyphMultiScript}</ImageItem>
 ];
 
 const ImageItemTests = [
 	// base layout permutations + full focus coverage.
 	...imageItemBaseCases,
 	...imageItemFocusCases,
+	...imageItemSecondaryLabelCases,
 
 	// Layout variations, applied to the layout-bearing base cases only. Focus is an overlay
 	// state covered above/below, so it isn't re-mirrored across every variation.
 	...withProps({centered: true}, imageItemBaseCases),
 	...withProps({disabled: true}, imageItemBaseCases),
 	...withProps({centered: true, disabled: true}, imageItemBaseCases),
+	...withProps({centered: true}, imageItemSecondaryLabelCases),
 
 	// focus + disabled is a distinct state; keep representatives.
 	...withProps({disabled: true}, imageItemFocusReps),
@@ -98,6 +114,7 @@ const ImageItemTests = [
 	// Large text — base permutations + focus representatives.
 	...withConfig({skinVariants: ['largeText']}, imageItemBaseCases),
 	...withConfig({skinVariants: ['largeText']}, imageItemFocusReps),
+	...withConfig({skinVariants: ['largeText']}, imageItemSecondaryLabelCases),
 
 	// FocusRing
 	...withConfig({
@@ -110,6 +127,12 @@ const ImageItemTests = [
 	// RTL — base permutations + focus representatives.
 	...withConfig({locale: 'ar-SA'}, imageItemBaseCases),
 	...withConfig({locale: 'ar-SA'}, imageItemFocusReps),
+	...withConfig({locale: 'ar-SA'}, imageItemSecondaryLabelCases),
+
+	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
+		<ImageItem src={img} style={verticalSecondaryLabelStyle} orientation="vertical" label="Focused Short" secondaryLabel="Focused Short">Focused Short</ImageItem>,
+		<ImageItem src={img} orientation="horizontal" label="Focused Short" secondaryLabel="Focused Short">Focused Short</ImageItem>
+	]),
 
 	...withTallglyphLocale(imageItemTallglyphTests)
 ];
