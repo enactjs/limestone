@@ -14,7 +14,9 @@ const commonItemTests = [
 	<Item label="Item label">Default Item with label</Item>,
 	<Item disabled label="Item label">Disabled Item with label</Item>,
 	<Item inline label="Item label">Inline Item with label</Item>,
-	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>
+	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>,
+	<Item label="Item label" secondaryLabel="Secondary Item label">Item with label and secondary label</Item>,
+	<Item inline label="Item label" secondaryLabel="Secondary Item label">Item Inline with label and secondary label</Item>
 ];
 
 const itemSmokeTests = [
