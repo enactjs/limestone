@@ -198,6 +198,12 @@ const CrossFadeArranger = {
 	}
 };
 
+/**
+ * Arranger that fade between panels.
+ *
+ * @type {Arranger}
+ * @private
+ */
 const FadeArranger = {
 	enter: (config) => arrange(config, [
 		{opacity: 0, offset: 0},
@@ -209,7 +215,7 @@ const FadeArranger = {
 		{opacity: 0, offset: 0.5},
 		{opacity: 0, offset: 1}
 	], {duration: 250, easing: 'ease-in-out'})
-}
+};
 
 export {
 	BasicArranger,
