@@ -198,8 +198,22 @@ const CrossFadeArranger = {
 	}
 };
 
+const FadeArranger = {
+	enter: (config) => arrange(config, [
+		{opacity: 0, offset: 0},
+		{opacity: 0, offset: 0.5},
+		{opacity: 1, offset: 1}
+	], {duration: 250, easing: 'ease-in-out'}),
+	leave: (config) => arrange(config, [
+		{opacity: 1, offset: 0},
+		{opacity: 0, offset: 0.5},
+		{opacity: 0, offset: 1}
+	], {duration: 250, easing: 'ease-in-out'})
+}
+
 export {
 	BasicArranger,
 	CrossFadeArranger,
-	FadeAndSlideArranger
+	FadeAndSlideArranger,
+	FadeArranger
 };
