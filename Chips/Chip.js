@@ -63,11 +63,11 @@ const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
-	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;
+	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, multiline, onClick, ref, ...rest} = chipProps;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipClassName = classnames(className, deleteButton?.position);
+	const chipClassName = classnames(className, deleteButton?.position, {[css.multilineButton]: multiline});
 	const chipRef = useRef(null);
 	const containerRef = useRef(null);
 	const deleteButtonRef = useRef(null);
@@ -189,6 +189,7 @@ const ChipBase = (props) => {
 				focusEffect="static"
 				icon={icon ? icon : ''}
 				iconComponent={iconComponent}
+				marqueeDisabled={multiline}
 				size="small"
 				onFocus={handleFocus}
 				onClick={onClick}
@@ -196,7 +197,7 @@ const ChipBase = (props) => {
 				role="checkbox"
 				roundBorder
 			>
-				{children}
+				{multiline ? <div className={css.multiline}>{children}</div> : children}
 			</Button>
 			{deleteButton &&
 				<div className={buttonClassName} ref={deleteButtonRef}>
@@ -287,7 +288,17 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @type {Boolean}
 	 * @public
 	 */
-	isImage: PropTypes.bool
+	isImage: PropTypes.bool,
+
+	/**
+	 * A boolean prop that determines whether the associated component or behavior
+	 * should support multiline functionality.
+	 * Typically used to enable or disable multiline input, display, or processing.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	multiline: PropTypes.bool
 };
 
 ChipBase.displayName = 'Chip';
