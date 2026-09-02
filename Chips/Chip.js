@@ -67,7 +67,7 @@ const ChipBase = (props) => {
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipClassName = classnames(className, deleteButton?.position, {[css.multilineButton]: multiline});
+	const chipClassName = classnames(className, deleteButton?.position, css.content);
 	const chipRef = useRef(null);
 	const containerRef = useRef(null);
 	const deleteButtonRef = useRef(null);
@@ -132,10 +132,10 @@ const ChipBase = (props) => {
 	}, []);
 
 	const handleFocus = useCallback((ev) => {
-		if (ev.target === chipRef.current) {
+		if (ev.target === chipRef.current && !disabled) {
 			deleteButtonRef.current?.classList.add(css.focused);
 		}
-	}, [chipRef]);
+	}, [chipRef, disabled]);
 
 	const handleBlur = useCallback(() => {
 		if (Spotlight.getPointerMode() && !isHovering.current) {

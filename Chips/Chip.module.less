@@ -12,32 +12,32 @@
 		min-width: @lime-chip-min-width;
 	}
 
-	.multiline {
-		display: -webkit-box;
-		overflow: hidden;
-		text-align: left;
-		white-space: normal;
-		-webkit-box-orient: vertical;
-		-webkit-line-clamp: 3;
-	}
+	.content {
+		font-size: @lime-chip-font-size;
+		line-height: @lime-chip-line-height;
 
-	.multilineButton {
 		.bg {
 			border-radius: @lime-chip-border-radius;
 		}
 
-		&:has(.multiline) {
-			height: auto;
-			max-width: @lime-chip-multiline-max-width;
-
-			.icon {
-				margin-block: 0;
-			}
+		.icon {
+			margin-block: 0;
 		}
 
 		&:has(.icon) {
 			.padding-start-end(@lime-chip-padding-icon-left, @lime-button-small-h-padding);
 		}
+
+		&:has(.multiline) {
+			height: auto;
+			max-width: @lime-chip-multiline-max-width;
+		}
+	}
+
+	.multiline {
+		text-align: left;
+		white-space: wrap;
+		padding-block: @lime-chip-multiline-padding;
 	}
 
 	.deleteButtonContainer {
@@ -51,7 +51,7 @@
 		}
 
 		&.bottom {
-			bottom: ~"calc("@lime-chip-button-spacing ~"* -1)";
+			bottom: ~"calc(" @lime-chip-button-spacing ~" * -1)";
 			left: 50%;
 			transform: translate(-50%, 100%);
 		}
