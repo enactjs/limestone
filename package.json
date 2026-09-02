@@ -1,6 +1,6 @@
 {
   "name": "@enact/limestone",
-  "version": "1.10.2",
+  "version": "1.11.0",
   "description": "Large-screen/TV support library for Enact, containing a variety of UI components.",
   "repository": {
     "type": "git",
@@ -39,20 +39,20 @@
     "screenTypes": "ThemeDecorator/screenTypes.json"
   },
   "dependencies": {
-    "@enact/core": "^5.5.2",
-    "@enact/i18n": "^5.5.2",
-    "@enact/spotlight": "^5.5.2",
-    "@enact/ui": "^5.5.2",
-    "@enact/webos": "^5.5.2",
+    "@enact/core": "^5.6.0",
+    "@enact/i18n": "^5.6.0",
+    "@enact/spotlight": "^5.6.0",
+    "@enact/ui": "^5.6.0",
+    "@enact/webos": "^5.6.0",
     "@enovaui/core-tokens": "^2.0.0",
     "@enovaui/webos-tokens": "^2.0.0",
     "classnames": "^2.5.1",
-    "ilib": "^14.22.0",
+    "ilib": "^14.21.0 || ^14.21.0-webos1",
     "invariant": "^2.2.4",
     "prop-types": "^15.8.1",
     "ramda": "^0.32.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "warning": "^4.0.3"
   },
   "peerDependencies": {
@@ -64,6 +64,6 @@
   },
   "devDependencies": {
     "@enact/docs-utils": "^0.5.0",
-    "@enact/ui-test-utils": "^4.0.4"
+    "@enact/ui-test-utils": "^4.0.5"
   }
 }
