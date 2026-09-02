@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
 - `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 - `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 
@@ -15,6 +16,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
 - `limestone/Input` to show the submit button for separated number inputs by default
 
 ### Fixed
