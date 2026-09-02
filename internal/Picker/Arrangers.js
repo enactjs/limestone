@@ -102,12 +102,12 @@ const animateCarouselStay = ({node}, isHorizontal) => {
 	const position = node.animate([
 		{transform: `${translate}(0)`},
 		{transform: `${translate}(0)`}
-	]);
+	], {fill: 'both'});
 
 	const opacity = node.animate([
 		{opacity: 1},
 		{opacity: 1}
-	]);
+	], {fill: 'both'});
 
 	return combineCarouselAnimations(position, opacity);
 };
