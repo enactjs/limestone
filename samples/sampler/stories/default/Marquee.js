@@ -29,19 +29,24 @@ export const _Marquee = (args) => {
 	};
 
 	const disabled = args['disabled'];
+
+	const controls = {
+		alignment: args['alignment'],
+		forceDirection: args['forceDirection'],
+		marqueeDelay: args['marqueeDelay'],
+		marqueeDisabled: args['marqueeDisabled'],
+		marqueeOn: args['marqueeOn'],
+		marqueeResetDelay: args['marqueeResetDelay'],
+		marqueeSpeed: args['marqueeSpeed']
+	};
+
 	return (
 		<section>
 			<Marquee
-				alignment={args['alignment']}
+				{...controls}
 				disabled={disabled}
-				forceDirection={args['forceDirection']}
-				marqueeDelay={args['marqueeDelay']}
-				marqueeDisabled={args['marqueeDisabled']}
-				marqueeOn={args['marqueeOn']}
 				marqueeOnRenderDelay={1000}
-				marqueeResetDelay={args['marqueeResetDelay']}
 				marqueeSpacing={spacing()}
-				marqueeSpeed={args['marqueeSpeed']}
 				style={{width: ri.scaleToRem(800)}}
 			>
 				{args['children']}

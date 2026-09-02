@@ -1,6 +1,7 @@
 import {VideoPlayer} from '@enact/limestone/VideoPlayer';
 
-const src = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
+// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+const src = 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4';
 
 const UseCaseVideoPlayer = () => {
 	return (

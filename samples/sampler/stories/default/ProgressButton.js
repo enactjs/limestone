@@ -50,21 +50,27 @@ export default {
 	component: 'ProgressButton'
 };
 
-export const _ProgressButton = (args) => (
-	<ProgressButton
-		showProgress={args['showProgress']}
-		backgroundOpacity={args['backgroundOpacity']}
-		color={args['color']}
-		disabled={args['disabled']}
-		icon={args['icon']}
-		minWidth={threeWayBoolean(args['minWidth'])}
-		onClick={action('onClick')}
-		progress={args['progress']}
-		size={args['size']}
-	>
-		{args['children']}
-	</ProgressButton>
-);
+export const _ProgressButton = (args) => {
+	const controls = {
+		showProgress: args['showProgress'],
+		backgroundOpacity: args['backgroundOpacity'],
+		color: args['color'],
+		disabled: args['disabled'],
+		icon: args['icon'],
+		minWidth: threeWayBoolean(args['minWidth']),
+		progress: args['progress'],
+		size: args['size']
+	};
+
+	return (
+		<ProgressButton
+			{...controls}
+			onClick={action('onClick')}
+		>
+			{args['children']}
+		</ProgressButton>
+	);
+};
 
 boolean('disabled', _ProgressButton, Config);
 boolean('showProgress', _ProgressButton, Config);

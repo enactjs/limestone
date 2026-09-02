@@ -22,15 +22,15 @@ export default {
 };
 
 export const _Input = (args) => {
-	const propOptions = {
-		// Actions
+	const actions = {
 		onBeforeChange: action('onBeforeChange'),
 		onChange: action('onChange'),
 		onClose: action('onClose'),
 		onComplete: action('onComplete'),
-		onOpenPopup: action('onOpenPopup'),
+		onOpenPopup: action('onOpenPopup')
+	};
 
-		// Controls
+	const controls = {
 		type: args['type'],
 		popupType: args['popupType'],
 		size: args['size'],
@@ -49,28 +49,28 @@ export const _Input = (args) => {
 	};
 
 	// Numeric specific props
-	if (propOptions.type === 'number' || propOptions.type === 'passwordnumber') {
-		propOptions.numberInputField = args['numberInputField'];
+	if (controls.type === 'number' || controls.type === 'passwordnumber') {
+		controls.numberInputField = args['numberInputField'];
 
-		const minMax = args['customize min/max'];
+		const minMax = args['customizeMinMax'];
 		if (minMax) {
-			propOptions.maxLength = args['maxLength'];
-			propOptions.minLength = args['minLength'];
+			controls.maxLength = args['maxLength'];
+			controls.minLength = args['minLength'];
 		} else {
-			propOptions.length = args['length'];
+			controls.length = args['length'];
 		}
 	}
 
 	// Modify a11y null strings
-	if (!propOptions['aria-label']) {
-		delete propOptions['aria-label'];
-	} else if (!propOptions.popupAriaLabel) {
-		delete propOptions.popupAriaLabel;
+	if (!controls['aria-label']) {
+		delete controls['aria-label'];
+	} else if (!controls.popupAriaLabel) {
+		delete controls.popupAriaLabel;
 	}
 
 	return (
 		<div>
-			<Input {...propOptions} />
+			<Input {...actions} {...controls} />
 		</div>
 	);
 };
@@ -88,10 +88,10 @@ boolean('noBackButton', _Input, ConfigPopup);
 boolean('noSubmitButton', _Input, ConfigPopup);
 select('backButtonAriaLabel', _Input, prop.backButtonAriaLabel, ConfigPopup);
 select('numberInputField', _Input, prop.numericKind, ConfigNumberPopup);
-boolean('customize min/max', _Input, ConfigNumberPopup, false);
-range('maxLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 4, {if: {arg:'customize min/max', truthy: true}});
-range('minLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 0, {if: {arg:'customize min/max', truthy: true}});
-range('length', _Input, ConfigNumberPopup, {min: 1, max: 20}, 4, {if: {arg:'customize min/max', truthy: false}});
+boolean('customizeMinMax', _Input, ConfigNumberPopup, false);
+range('maxLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 4, {if: {arg:'customizeMinMax', truthy: true}});
+range('minLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 0, {if: {arg:'customizeMinMax', truthy: true}});
+range('length', _Input, ConfigNumberPopup, {min: 1, max: 20}, 4, {if: {arg:'customizeMinMax', truthy: false}});
 select('size', _Input, prop.size, Config);
 text('placeholder', _Input, Config, 'placeholder string');
 boolean('disabled', _Input, Config);

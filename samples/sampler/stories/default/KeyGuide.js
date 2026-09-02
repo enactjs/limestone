@@ -29,7 +29,12 @@ export const _KeyGuide = (args) => {
 	];
 	const children = args['guide type'] === 'image' ? {imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'Remote control use guide. text text text text text text.'} : items.slice(0, itemCount);
 
-	return <KeyGuide arrowPosition={args['arrowPosition']} css={css} open={args['open']}>{children}</KeyGuide>;
+	const controls = {
+		arrowPosition: args['arrowPosition'],
+		open: args['open']
+	};
+
+	return <KeyGuide {...controls} css={css} >{children}</KeyGuide>;
 };
 
 select('guide type', _KeyGuide, prop.type, Config, 'icon');

@@ -135,6 +135,10 @@ class App extends ReactComponent {
 	}
 }
 
+// Declared at module scope so, the components are not created during render (react-hooks/static-components).
+const WrappedAppAutoFocus = ThemeDecorator({noAutoFocus: false}, App);
+const WrappedAppNoAutoFocus = ThemeDecorator({noAutoFocus: true}, App);
+
 const ExportedApp = (props) => {
 	// Common test parameters
 	let skin = url.searchParams.get('skin');
@@ -178,14 +182,14 @@ const ExportedApp = (props) => {
 		}
 	}
 
-	const WrappedApp = ThemeDecorator({noAutoFocus}, App);
+	const WrappedApp = noAutoFocus ? WrappedAppNoAutoFocus : WrappedAppAutoFocus;
 
 	useEffect(() => {
 		document.querySelector('#root').classList.add('spotlight-input-key');
 	}, []);
 
 	return (
-		<WrappedApp {...props} skin={skin} highContrast={highContrast} locale={locale} textSize={textSize} focusRing={focusRing} />
+		<WrappedApp {...props} focusRing={focusRing} highContrast={highContrast} locale={locale} skin={skin} textSize={textSize} />
 	);
 };
 

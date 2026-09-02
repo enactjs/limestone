@@ -87,17 +87,23 @@ export default {
 	component: 'ContextualPopupDecorator'
 };
 
-export const With5WaySelectableActivator = (args) => (
-	<div style={{textAlign: 'center', marginTop: ri.scaleToRem(260)}}>
-		<ContextualPopupWithActivator
-			direction={args['direction']}
-			popupComponent={renderPopup}
-			spotlightRestrict={args['spotlightRestrict']}
-		>
-			Hello Contextual Popup Button Decorator
-		</ContextualPopupWithActivator>
-	</div>
-);
+export const With5WaySelectableActivator = (args) => {
+	const controls = {
+		direction: args['direction'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
+	return (
+		<div style={{textAlign: 'center', marginTop: ri.scaleToRem(260)}}>
+			<ContextualPopupWithActivator
+				{...controls}
+				popupComponent={renderPopup}
+			>
+				Hello Contextual Popup Button Decorator
+			</ContextualPopupWithActivator>
+		</div>
+	);
+};
 
 select(
 	'direction',
@@ -225,17 +231,23 @@ WithButtonTooltip.parameters = {
 	}
 };
 
-export const WithSliderTooltip = (args) => (
-	<div style={{textAlign: 'center', marginTop: ri.scaleToRem(260)}}>
-		<ContextualPopupWithActivator
-			direction={args['direction']}
-			popupComponent={renderPopupWithSlider}
-			spotlightRestrict={args['spotlightRestrict']}
-		>
-			Hello Contextual Slider
-		</ContextualPopupWithActivator>
-	</div>
-);
+export const WithSliderTooltip = (args) => {
+	const controls = {
+		direction: args['direction'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
+	return (
+		<div style={{textAlign: 'center', marginTop: ri.scaleToRem(260)}}>
+			<ContextualPopupWithActivator
+				{...controls}
+				popupComponent={renderPopupWithSlider}
+			>
+				Hello Contextual Slider
+			</ContextualPopupWithActivator>
+		</div>
+	);
+};
 
 select(
 	'direction',

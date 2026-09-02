@@ -55,17 +55,25 @@ export const _TabLayout = (args) => {
 		</ImageItem>
 	));
 
+	const actions = {
+		onSelect: action('onSelect'),
+		onTabAnimationEnd: action('onTabAnimationEnd')
+	};
+
+	const controls = {
+		blockCollapseOnPortrait: args['blockCollapseOnPortrait'],
+		blockExpandOnLandscape: args['blockExpandOnLandscape'],
+		orientation: args['orientation'],
+		size: args['size'],
+		tabSize: args['tabSize'] || null
+	};
+
 	return (
 		<Panel>
 			<Header title="Limestone TabLayout" subtitle="Basic TabLayout" />
 			<TabLayout
-				blockCollapseOnPortrait={args['blockCollapseOnPortrait']}
-				blockExpandOnLandscape={args['blockExpandOnLandscape']}
-				onSelect={action('onSelect')}
-				onTabAnimationEnd={action('onTabAnimationEnd')}
-				orientation={args['orientation']}
-				size={args['size']}
-				tabSize={args['tabSize'] || null}
+				{...actions}
+				{...controls}
 			>
 				<Tab title={tabSelections[tabs][0].title} icon={tabSelections[tabs][0].icon}>
 					<Scroller>{images}</Scroller>

@@ -15,6 +15,7 @@
 		.position(0);
 		border: @lime-card-resting-border-width solid @lime-card-resting-border-color;
 		border-radius: inherit;
+		opacity: 0.15;
 		z-index: @z-index;
 	}
 }
@@ -294,6 +295,12 @@
 
 		&.selected:not(.hasContainer) .selectionContainer {
 			z-index: 3;
+		}
+
+		&.noCaption {
+			.captions {
+				padding: 0;
+			}
 		}
 	}
 

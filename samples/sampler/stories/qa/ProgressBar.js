@@ -9,16 +9,20 @@ export default {
 	component: 'ProgressBar'
 };
 
-export const TheBasicProgressBar = (args) => (
-	<ProgressBar
-		backgroundProgress={args['backgroundProgress']}
-		tooltip={args['tooltip']}
-		highlighted={args['highlighted']}
-		progress={args['progress']}
-		orientation={args['orientation']}
-		disabled={args['disabled']}
-	/>
-);
+export const TheBasicProgressBar = (args) => {
+	const controls = {
+		backgroundProgress: args['backgroundProgress'],
+		tooltip: args['tooltip'],
+		highlighted: args['highlighted'],
+		progress: args['progress'],
+		orientation: args['orientation'],
+		disabled: args['disabled']
+	};
+
+	return (
+		<ProgressBar {...controls} />
+	);
+};
 
 range('backgroundProgress', TheBasicProgressBar, Config, {min: 0, max: 1, step: 0.01}, 0.5);
 boolean('tooltip', TheBasicProgressBar, Config, false);

@@ -12,34 +12,42 @@ export default {
 	component: 'Item'
 };
 
-export const _Item = (args) => (
-	<Item
-		centered={args['centered']}
-		disabled={args['disabled']}
-		inline={args['inline']}
-		label={args['label']}
-		labelPosition={args['labelPosition']}
-		size={args['size']}
-		slotBefore={
-			args['slotBefore'] ? (
-				<Icon size="small">speaker</Icon>
-			) : null
-		}
-		slotAfter={
-			args['slotAfter'] ? (
-				<Icon size="small">arrowlargeright</Icon>
-			) : null
-		}
-	>
-		{args['children']}
-	</Item>
-);
+export const _Item = (args) => {
+	const controls = {
+		centered: args['centered'],
+		disabled: args['disabled'],
+		inline: args['inline'],
+		label: args['label'],
+		labelPosition: args['labelPosition'],
+		selected: args['selected'],
+		size: args['size']
+	};
+
+	const slotBefore = args['slotBefore'] ? (
+		<Icon size="small">speaker</Icon>
+	) : null;
+
+	const slotAfter = args['slotAfter'] ? (
+		<Icon size="small">arrowlargeright</Icon>
+	) : null;
+
+	return (
+		<Item
+			{...controls}
+			slotBefore={slotBefore}
+			slotAfter={slotAfter}
+		>
+			{args['children']}
+		</Item>
+	);
+};
 
 boolean('centered', _Item, Config);
 boolean('disabled', _Item, Config);
 boolean('inline', _Item, Config);
 text('label', _Item, Config);
 select('labelPosition', _Item, ['above', 'below', 'before', 'after'], Config);
+boolean('selected', _Item, Config);
 select('size', _Item, ['small', 'large'], Config);
 select('slotBefore', _Item, {'': '', '<Icon />': 'icon'}, Config);
 select('slotAfter', _Item, {'': '', '<Icon />': 'icon'}, Config);

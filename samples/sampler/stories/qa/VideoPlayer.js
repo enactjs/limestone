@@ -24,11 +24,14 @@ class VideoSourceSwap extends Component {
 		checkPropTypes(this, this.props);
 
 		this.state = {
-			videoTitles: ['Cosmos Laundromat', 'Sintel', 'VideoTest'],
+			videoTitles: ['Cosmos Laundromat', 'Big Buck Bunny', 'Elephants Dream'],
 			playlist: [
+				// Cosmos Laundromat (CC BY 4.0) - Blender Foundation, https://www.blender.org
 				'https://media.xiph.org/cosmoslaundromat/Pilot_Trailer_Cosmos_Laundromat.mp4',
-				'https://media.w3.org/2010/05/sintel/trailer.mp4',
-				'https://media.w3.org/2010/05/video/movie_300.mp4'
+				// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+				'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4',
+				// Elephants Dream (CC BY 3.0) - Blender Foundation, https://www.blender.org
+				'https://archive.org/download/ElephantsDream/ed_1024_512kb.mp4'
 			],
 			cursor: 0,
 			preloadCursor: 1
@@ -238,10 +241,10 @@ class VideoPlayerWithExpandedMediaControls extends Component {
 					feedbackHideDelay={0}
 					muted
 					ref={this.setVideoPlayer}
-					title="Sintel"
+					title="Big Buck Bunny"
 				>
 					<Video>
-						<source src="https://media.w3.org/2010/05/sintel/trailer.mp4" />
+						<source src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4" />
 					</Video>
 				</VideoPlayer>
 			</div>

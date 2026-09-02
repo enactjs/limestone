@@ -231,7 +231,6 @@ export const HorizontalScrollInScroller = (args) => {
 		horizontalScrollbar: args['horizontalScrollbar'],
 		itemRenderer: renderItem(Item, args['itemSize'], false),
 		itemSize: ri.scale(args['itemSize']),
-		key: args['scrollMode'],
 		noScrollByWheel: args['noScrollByWheel'],
 		onKeyDown: action('onKeyDown'),
 		onScrollStart: action('onScrollStart'),
@@ -269,23 +268,31 @@ HorizontalScrollInScroller.parameters = {
 };
 
 export const WithMoreItems = (args) => {
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
 	return (
 		<VirtualList
-			dataSize={updateDataSize(args['dataSize'])}
-			horizontalScrollbar={args['horizontalScrollbar']}
-			hoverToScroll={args['hoverToScroll']}
+			{...actions}
+			{...controls}
 			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 			itemSize={ri.scale(args['itemSize'])}
 			key={args['scrollMode']}
-			noScrollByWheel={args['noScrollByWheel']}
-			onKeyDown={action('onKeyDown')}
-			onScrollStart={action('onScrollStart')}
-			onScrollStop={action('onScrollStop')}
-			scrollMode={args['scrollMode']}
-			spacing={ri.scale(args['spacing'])}
-			spotlightDisabled={args['spotlightDisabled']}
-			verticalScrollbar={args['verticalScrollbar']}
-			wrap={args['wrap']}
 		/>
 	);
 };
@@ -307,12 +314,18 @@ WithMoreItems.parameters = {
 };
 
 export const WithSmallItemMinSizeAndLargeItemSize = (args) => {
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing'])
+	};
+
 	return (
 		<VirtualList
-			dataSize={updateDataSize(args['dataSize'])}
+			{...controls}
 			direction="horizontal"
-			horizontalScrollbar={args['horizontalScrollbar']}
-			hoverToScroll={args['hoverToScroll']}
 			itemRenderer={renderItem(Item, args['size'], false)}
 			itemSize={updateItemSize({
 				minSize: ri.scale(args['minSize']),
@@ -320,8 +333,6 @@ export const WithSmallItemMinSizeAndLargeItemSize = (args) => {
 				size: ri.scale(args['size'])
 			})}
 			key={args['scrollMode']}
-			scrollMode={args['scrollMode']}
-			spacing={ri.scale(args['spacing'])}
 		/>
 	);
 };
@@ -341,23 +352,32 @@ WithSmallItemMinSizeAndLargeItemSize.parameters = {
 
 export const _InPanels = (args) => {
 	const title = 'VirtualList in panels';
+
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		itemSize: args['itemSize'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
 	return (
 		<InPanels
-			title={title}
-			dataSize={updateDataSize(args['dataSize'])}
-			horizontalScrollbar={args['horizontalScrollbar']}
-			hoverToScroll={args['hoverToScroll']}
-			itemSize={args['itemSize']}
+			{...actions}
+			{...controls}
 			key={args['scrollMode']}
-			noScrollByWheel={args['noScrollByWheel']}
-			onKeyDown={action('onKeyDown')}
-			onScrollStart={action('onScrollStart')}
-			onScrollStop={action('onScrollStop')}
-			scrollMode={args['scrollMode']}
-			spacing={ri.scale(args['spacing'])}
-			spotlightDisabled={args['spotlightDisabled']}
-			verticalScrollbar={args['verticalScrollbar']}
-			wrap={args['wrap']}
+			title={title}
 		/>
 	);
 };
@@ -381,6 +401,25 @@ _InPanels.parameters = {
 };
 
 export const InFixedPopupPanels = (args) => {
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		itemSize: ri.scale(args['itemSize']),
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
 	return (
 		<FixedPopupPanels
 			open
@@ -389,21 +428,10 @@ export const InFixedPopupPanels = (args) => {
 			<FixedPopupPanel>
 				<Header title="Panel1" />
 				<VirtualList
-					dataSize={updateDataSize(args['dataSize'])}
-					horizontalScrollbar={args['horizontalScrollbar']}
-					hoverToScroll={args['hoverToScroll']}
+					{...actions}
+					{...controls}
 					itemRenderer={renderItem(Item, args['itemSize'], true)}
-					itemSize={ri.scale(args['itemSize'])}
 					key={args['scrollMode']}
-					noScrollByWheel={args['noScrollByWheel']}
-					onKeyDown={action('onKeyDown')}
-					onScrollStart={action('onScrollStart')}
-					onScrollStop={action('onScrollStop')}
-					scrollMode={args['scrollMode']}
-					spacing={ri.scale(args['spacing'])}
-					spotlightDisabled={args['spotlightDisabled']}
-					verticalScrollbar={args['verticalScrollbar']}
-					wrap={args['wrap']}
 				/>
 			</FixedPopupPanel>
 		</FixedPopupPanels>
@@ -427,13 +455,17 @@ InFixedPopupPanels.parameters = {
 };
 
 export const ScrollingTo0WheneverDataSizeChanges = (args) => {
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		itemSize: ri.scale(args['itemSize']),
+		scrollMode: args['scrollMode']
+	};
+
 	return (
 		<VirtualListWithCBScrollTo
-			dataSize={updateDataSize(args['dataSize'])}
+			{...controls}
 			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
-			itemSize={ri.scale(args['itemSize'])}
 			key={args['scrollMode']}
-			scrollMode={args['scrollMode']}
 		/>
 	);
 };
@@ -448,20 +480,26 @@ ScrollingTo0WheneverDataSizeChanges.parameters = {
 };
 
 export const OverscrollEffectOnWherePageKeyIsTrue = (args) => {
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		itemSize: ri.scale(args['itemSize']),
+		scrollMode: args['scrollMode']
+	};
+
+	const overscroll = {
+		arrowKey: false,
+		drag: false,
+		pageKey: true,
+		track: false,
+		wheel: false
+	};
+
 	return (
 		<VirtualList
-			overscrollEffectOn={{
-				arrowKey: false,
-				drag: false,
-				pageKey: true,
-				track: false,
-				wheel: false
-			}}
-			dataSize={updateDataSize(args['dataSize'])}
-			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
-			itemSize={ri.scale(args['itemSize'])}
+			{...controls}
 			key={args['scrollMode']}
-			scrollMode={args['scrollMode']}
+			overscrollEffectOn={overscroll}
+			itemRenderer={renderItem(StatefulSwitchItem, args['itemSize'], true)}
 		/>
 	);
 };
@@ -489,25 +527,33 @@ export const WithExtraItems = (args) => {
 		return () => window.removeEventListener('resize', handleResize);
 	}, [args]);
 
+	const actions = {
+		onKeyDown: action('onKeyDown'),
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled(for all items)'],
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
 	return (
 		<Column>
 			<Cell
+				{...actions}
+				{...controls}
 				component={VirtualList}
-				dataSize={updateDataSize(args['dataSize'])}
 				direction="vertical"
-				horizontalScrollbar={args['horizontalScrollbar']}
 				itemRenderer={renderItem(Item, itemSize, true)}
 				itemSize={itemSize}
 				key={args['scrollMode']}
-				noScrollByWheel={args['noScrollByWheel']}
-				onKeyDown={action('onKeyDown')}
-				onScrollStart={action('onScrollStart')}
-				onScrollStop={action('onScrollStop')}
-				scrollMode={args['scrollMode']}
-				spacing={ri.scale(args['spacing'])}
-				spotlightDisabled={args['spotlightDisabled(for all items)']}
-				verticalScrollbar={args['verticalScrollbar']}
-				wrap={args['wrap']}
 			/>
 			<Cell shrink component={Item}>
 				extra item1
@@ -538,25 +584,27 @@ WithExtraItems.parameters = {
 };
 
 export const WithContainerItemsHaveSpottableControls = (args) => {
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		itemSize: ri.scale(args['itemSize']),
+		scrollMode: args['scrollMode'],
+		wrap: args['wrap']
+	};
+
+	const overscroll = {
+		arrowKey: false,
+		drag: false,
+		pageKey: true,
+		track: false,
+		wheel: false
+	};
+
 	return (
 		<VirtualList
-			overscrollEffectOn={{
-				arrowKey: false,
-				drag: false,
-				pageKey: true,
-				track: false,
-				wheel: false
-			}}
-			dataSize={updateDataSize(args['dataSize'])}
-			itemRenderer={renderItem(
-				ContainerItemWithControls,
-				args['itemSize'],
-				true
-			)}
-			itemSize={ri.scale(args['itemSize'])}
+			{...controls}
 			key={args['scrollMode']}
-			scrollMode={args['scrollMode']}
-			wrap={args['wrap']}
+			overscrollEffectOn={overscroll}
+			itemRenderer={renderItem(ContainerItemWithControls, args['itemSize'], true)}
 		/>
 	);
 };
@@ -715,26 +763,28 @@ export const WithHiddenLargeItemMarginList = (args) => {
 		);
 	}, [args]);
 
+	const controls = {
+		dataSize: args['dataSize'],
+		itemSize: ri.scale(args['itemSize']),
+		scrollMode: args['scrollMode']
+	};
+
 	return (
 		<Column>
 			<Cell shrink>
 				<VirtualList
-					dataSize={args['dataSize']}
+					{...controls}
 					direction={'horizontal'}
 					itemRenderer={renderLargeMarginItem}
-					itemSize={ri.scale(args['itemSize'])}
 					key={'hiddenList'}
-					scrollMode={args['scrollMode']}
 				/>
 			</Cell>
 			<Cell>
 				<VirtualList
-					dataSize={args['dataSize']}
+					{...controls}
 					direction={'horizontal'}
 					itemRenderer={renderSmallMarginItem}
-					itemSize={ri.scale(args['itemSize'])}
 					key={'visibleList'}
-					scrollMode={args['scrollMode']}
 				/>
 			</Cell>
 		</Column>

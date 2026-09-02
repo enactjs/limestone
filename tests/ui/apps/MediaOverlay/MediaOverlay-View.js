@@ -7,7 +7,8 @@ import spotlight from '@enact/spotlight';
 spotlight.setPointerMode(false);
 
 const videos = {
-	Sintel: 'https://media.w3.org/2010/05/sintel/trailer.mp4'
+	// Big Buck Bunny (CC BY 3.0) - Blender Foundation, https://www.blender.org
+	BigBuckBunny: 'https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4'
 };
 
 const app = (props) => <div {...props}>
@@ -22,7 +23,7 @@ const app = (props) => <div {...props}>
 		text="Media Overlay text"
 		title="Media Overlay title"
 	>
-		<source src={videos.Sintel} />
+		<source src={videos.BigBuckBunny} />
 	</MediaOverlay>
 	<MediaOverlay
 		id="mediaOverlay2LongText"
@@ -36,7 +37,7 @@ const app = (props) => <div {...props}>
 		text="Media Overlay extremely long text"
 		title="Media Overlay very long title"
 	>
-		<source src={videos.Sintel} />
+		<source src={videos.BigBuckBunny} />
 	</MediaOverlay>
 </div>;
 

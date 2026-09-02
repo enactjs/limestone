@@ -74,39 +74,49 @@ export default {
 	component: 'Touchable'
 };
 
-export const WithDefaultHoldEvents = (args) => (
-	<Button
-		onHold={action('onHold')}
-		onHoldEnd={action('onHoldEnd')}
-		onHoldStart={action('onHoldStart')}
-		disabled={args['disabled']}
-	>
-		Touchable
-	</Button>
-);
+export const WithDefaultHoldEvents = (args) => {
+	const actions = {
+		onHold: action('onHold'),
+		onHoldEnd: action('onHoldEnd'),
+		onHoldStart: action('onHoldStart')
+	};
+
+	return (
+		<Button {...actions} disabled={args['disabled']}>
+			Touchable
+		</Button>
+	);
+};
 
 boolean('disabled', WithDefaultHoldEvents, Button);
 
 WithDefaultHoldEvents.storyName = 'with default hold events';
 
-export const WithACustomLongpressEventAnd1SecondFrequency = (args) => (
-	<Button
-		holdConfig={{
-			events: [
-				{name: 'hold', time: 1000},
-				{name: 'longpress', time: 2000}
-			],
-			frequency: 1000
-		}}
-		onHold={action('onHold')}
-		onHoldEnd={action('onHoldEnd')}
-		onHoldStart={action('onHoldStart')}
-		disabled={args['disabled']}
-	>
-		LongPress
-	</Button>
-);
+export const WithACustomLongpressEventAnd1SecondFrequency = (args) => {
+	const actions = {
+		onHold: action('onHold'),
+		onHoldEnd: action('onHoldEnd'),
+		onHoldStart: action('onHoldStart')
+	};
 
+	const config = {
+		events: [
+			{name: 'hold', time: 1000},
+			{name: 'longpress', time: 2000}
+		],
+		frequency: 1000
+	};
+
+	return (
+		<Button
+			{...actions}
+			holdConfig={config}
+			disabled={args['disabled']}
+		>
+			LongPress
+		</Button>
+	);
+};
 boolean('disabled', WithACustomLongpressEventAnd1SecondFrequency, Button);
 
 WithACustomLongpressEventAnd1SecondFrequency.storyName = 'with a custom longpress event and 1 second frequency';
@@ -114,26 +124,37 @@ WithACustomLongpressEventAnd1SecondFrequency.storyName = 'with a custom longpres
 export const ThatPausesTheHoldWhenMovingBeyondTolerance32Px = (args) => {
 	const moveTolerance = args['holdConfig moveTolerance'];
 	const cancelOnMove = args['holdConfig cancelOnMove'] || false;
+
+	const actions = {
+		onHold: action('onHold', {depth: 0}),
+		onHoldEnd: action('onHoldEnd'),
+		onHoldStart: action('onHoldStart')
+	};
+
+	const controls = {
+		noResume: args['noResume'],
+		disabled: args['disabled']
+	};
+
+	const style = {
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		textAlign: 'center',
+		border: '4px dashed #888',
+		width: ri.scaleToRem(480),
+		height: ri.scaleToRem(480)
+	};
+
 	return (
 		<TouchArea
+			{...actions}
+			{...controls}
 			holdConfig={{
 				moveTolerance,
 				cancelOnMove
 			}}
 			moveTolerance={moveTolerance}
-			noResume={args['noResume']}
-			onHold={action('onHold', {depth: 0})}
-			onHoldEnd={action('onHoldEnd')}
-			onHoldStart={action('onHoldStart')}
-			disabled={args['disabled']}
-			style={{
-				marginLeft: 'auto',
-				marginRight: 'auto',
-				textAlign: 'center',
-				border: '4px dashed #888',
-				width: ri.scaleToRem(480),
-				height: ri.scaleToRem(480)
-			}}
+			style={style}
 		>
 			Resumable
 		</TouchArea>
@@ -147,17 +168,24 @@ boolean('disabled', ThatPausesTheHoldWhenMovingBeyondTolerance32Px, TouchArea);
 
 ThatPausesTheHoldWhenMovingBeyondTolerance32Px.storyName = 'that pauses the hold when moving beyond tolerance (32px)';
 
-export const ThatDoesNotResumeWhenReEnteringComponent = (args) => (
-	<Button
-		noResume={args['noResume']}
-		onHold={action('onHold')}
-		onHoldEnd={action('onHoldEnd')}
-		onHoldStart={action('onHoldStart')}
-		disabled={args['disabled']}
-	>
-		Not Resumable
-	</Button>
-);
+export const ThatDoesNotResumeWhenReEnteringComponent = (args) => {
+	const actions = {
+		onHold: action('onHold'),
+		onHoldEnd: action('onHoldEnd'),
+		onHoldStart: action('onHoldStart')
+	};
+
+	const controls = {
+		noResume: args['noResume'],
+		disabled: args['disabled']
+	};
+
+	return (
+		<Button {...actions} {...controls}>
+			Not Resumable
+		</Button>
+	);
+};
 
 boolean('noResume', ThatDoesNotResumeWhenReEnteringComponent, Button, true);
 boolean('disabled', ThatDoesNotResumeWhenReEnteringComponent, Button);
@@ -182,27 +210,41 @@ boolean('disabled', WithOnFlickHandler, TouchableDiv);
 
 WithOnFlickHandler.storyName = 'with onFlick handler';
 
-export const WithDragHandlers = (args) => (
-	<TouchableDiv
-		dragConfig={{
-			global: args['dragConfig global'] || false,
-			moveTolerance: args['dragConfig moveTolerance']
-		}}
-		noResume={args['noResume']}
-		onDragStart={action('onDragStart')}
-		onDrag={action('onDrag')}
-		onDragEnd={action('onDragEnd')}
-		disabled={args['disabled']}
-		style={{
-			border: '4px dashed #888',
-			width: ri.scaleToRem(1000),
-			height: ri.scaleToRem(1000)
-		}}
-	>
-		Drag within this component. Setting <code>noResume</code> to <code>false</code> should prevent
-		drag from resuming when re-entering this component after leaving.
-	</TouchableDiv>
-);
+export const WithDragHandlers = (args) => {
+	const actions = {
+		onDragStart: action('onDragStart'),
+		onDrag: action('onDrag'),
+		onDragEnd: action('onDragEnd')
+	};
+
+	const controls = {
+		noResume: args['noResume'],
+		disabled: args['disabled']
+	};
+
+	const config = {
+		global: args['dragConfig global'] || false,
+		moveTolerance: args['dragConfig moveTolerance']
+	};
+
+	const style = {
+		border: '4px dashed #888',
+		width: ri.scaleToRem(1000),
+		height: ri.scaleToRem(1000)
+	};
+
+	return (
+		<TouchableDiv
+			{...actions}
+			{...controls}
+			dragConfig={config}
+			style={style}
+		>
+			Drag within this component. Setting <code>noResume</code> to <code>false</code> should prevent
+			drag from resuming when re-entering this component after leaving.
+		</TouchableDiv>
+	);
+};
 
 boolean('dragConfig global', WithDragHandlers, TouchableDiv, false);
 number('dragConfig moveTolerance', WithDragHandlers, TouchableDiv, 32);
@@ -219,24 +261,32 @@ export const WithPinchHandlers = (args) => {
 		setScale(ev.scale);
 	}, []);
 
+	const actions = {
+		onPinchStart: action('onPinchStart'),
+		onPinchEnd: action('onPinchEnd')
+	};
+
+	const config = {
+		global: args['pinchConfig global'] || false,
+		maxScale: args['pinchConfig maxScale'],
+		minScale: args['pinchConfig minScale'],
+		moveTolerance: args['pinchConfig moveTolerance']
+	};
+
+	const style = {
+		border: '4px dashed #888',
+		margin: ri.scaleToRem(300),
+		width: ri.scaleToRem(1000),
+		height: ri.scaleToRem(1000),
+		transform: `scale(${scale})`
+	};
+
 	return (
 		<TouchableDiv
-			pinchConfig={{
-				global: args['pinchConfig global'] || false,
-				maxScale: args['pinchConfig maxScale'],
-				minScale: args['pinchConfig minScale'],
-				moveTolerance: args['pinchConfig moveTolerance']
-			}}
-			onPinchStart={action('onPinchStart')}
+			{...actions}
+			pinchConfig={config}
 			onPinch={handlePinch}
-			onPinchEnd={action('onPinchEnd')}
-			style={{
-				border: '4px dashed #888',
-				margin: ri.scaleToRem(300),
-				width: ri.scaleToRem(1000),
-				height: ri.scaleToRem(1000),
-				transform: `scale(${scale})`
-			}}
+			style={style}
 		>
 			Pinch within this component.
 		</TouchableDiv>
@@ -250,43 +300,61 @@ number('pinchConfig moveTolerance', WithPinchHandlers, TouchableDiv, 16);
 
 WithPinchHandlers.storyName = 'with onPinch handlers';
 
-export const OnTapWhenClicked = (args) => (
-	<TouchableDiv
-		disabled={args['disabled']}
-		noResume={args['noResume']}
-		onClick={action('onClick')}
-		onDown={action('onDown')}
-		onMouseDown={action('onMouseDown')}
-		onMouseUp={action('onMouseUp')}
-		onTap={action('onTap')}
-		onTouchEnd={action('onTouchEnd')}
-		onTouchStart={action('onTouchStart')}
-		onUp={action('onUp')}
-		style={{border: '4px dashed #888', textAlign: 'center'}}
-	>
-		Click here
-	</TouchableDiv>
-);
+export const OnTapWhenClicked = (args) => {
+	const actions = {
+		onClick: action('onClick'),
+		onDown: action('onDown'),
+		onMouseDown: action('onMouseDown'),
+		onMouseUp: action('onMouseUp'),
+		onTap: action('onTap'),
+		onTouchEnd: action('onTouchEnd'),
+		onTouchStart: action('onTouchStart'),
+		onUp: action('onUp')
+	};
+
+	const controls = {
+		disabled: args['disabled'],
+		noResume: args['noResume']
+	};
+
+	const style = {border: '4px dashed #888', textAlign: 'center'};
+
+	return (
+		<TouchableDiv {...actions} {...controls} style={style}>
+			Click here
+		</TouchableDiv>
+	);
+};
 
 boolean('disabled', OnTapWhenClicked, TouchableDiv);
 boolean('noResume', OnTapWhenClicked, TouchableDiv, false);
 
 OnTapWhenClicked.storyName = 'onTap when clicked';
 
-export const WithOnClickHandler = () => (
-	<TouchableDiv
-		disabled={boolean('disabled', TouchableDiv)}
-		onClick={action('onClick')}
-		onDown={action('onDown')}
-		onMouseDown={action('onMouseDown')}
-		onMouseUp={action('onMouseUp')}
-		onTouchEnd={action('onTouchEnd')}
-		onTouchStart={action('onTouchStart')}
-		onUp={action('onUp')}
-		style={{border: '4px dashed #888', textAlign: 'center'}}
-	>
-		Click here
-	</TouchableDiv>
-);
+export const WithOnClickHandler = (args) => {
+	const actions = {
+		onClick: action('onClick'),
+		onDown: action('onDown'),
+		onMouseDown: action('onMouseDown'),
+		onMouseUp: action('onMouseUp'),
+		onTouchEnd: action('onTouchEnd'),
+		onTouchStart: action('onTouchStart'),
+		onUp: action('onUp')
+	};
+
+	const style = {border: '4px dashed #888', textAlign: 'center'};
+
+	return (
+		<TouchableDiv
+			{...actions}
+			disabled={args['disabled']}
+			style={style}
+		>
+			Click here
+		</TouchableDiv>
+	);
+};
+
+boolean('disabled', WithOnClickHandler, TouchableDiv);
 
 WithOnClickHandler.storyName = 'with onClick handler';

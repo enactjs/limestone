@@ -28,26 +28,32 @@ export default {
 	component: 'RangePicker'
 };
 
-export const _RangePicker = (args) => (
-	<RangePicker
-		max={args['max']}
-		min={args['min']}
-		changedBy={args['changedBy']}
-		decrementIcon={args['decrementIcon']}
-		defaultValue={0}
-		disabled={args['disabled']}
-		incrementIcon={args['incrementIcon']}
-		inlineTitle={args['inlineTitle']}
-		joined={args['joined']}
-		noAnimation={args['noAnimation']}
-		onChange={action('onChange')}
-		orientation={args['orientation']}
-		step={args['step']}
-		title={args['title']}
-		width={parseIntOrNullify(args['width'])}
-		wrap={args['wrap']}
-	/>
-);
+export const _RangePicker = (args) => {
+	const controls = {
+		max: args['max'],
+		min: args['min'],
+		changedBy: args['changedBy'],
+		decrementIcon: args['decrementIcon'],
+		disabled: args['disabled'],
+		incrementIcon: args['incrementIcon'],
+		inlineTitle: args['inlineTitle'],
+		joined: args['joined'],
+		noAnimation: args['noAnimation'],
+		orientation: args['orientation'],
+		step: args['step'],
+		title: args['title'],
+		width: parseIntOrNullify(args['width']),
+		wrap: args['wrap']
+	};
+
+	return (
+		<RangePicker
+			{...controls}
+			defaultValue={0}
+			onChange={action('onChange')}
+		/>
+	);
+};
 
 number('max', _RangePicker, Config, 100);
 number('min', _RangePicker, Config, 0);

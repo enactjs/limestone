@@ -1,10 +1,11 @@
 import {ImageItem, ImageItemBase} from '@enact/limestone/ImageItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, color, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
 import ri from '@enact/ui/resolution';
 
 import {svgGenerator} from '../helper/svg';
+import transparentImage from '../../images/sprite-gear-4k.png';
 
 const Config = mergeComponentMetadata('ImageItem', UiImageItem, ImageItemBase, ImageItem);
 ImageItem.displayName = 'ImageItem';
@@ -26,29 +27,34 @@ export default {
 
 export const _ImageItem = (args) => {
 	let style;
+	const backgroundSrc = args['hasBackgroundSrc'] ? args['backgroundSrc'] : null;
+	const componentSrc = args['transparentImage'] ? transparentImage : args['src'];
 	const isVertical = args['orientation'] === 'vertical';
 	const wideHeight = args['wideImage'] ? ri.scaleToRem(336) : ri.scaleToRem(240);
 
 	if (isVertical) {
-		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588)};
+		style = {width: ri.scaleToRem(768), height: ri.scaleToRem(588), position: 'absolute'};
 	} else {
-		style = {width: ri.scaleToRem(1464), height: wideHeight};
+		style = {width: ri.scaleToRem(1464), height: wideHeight, position: 'absolute'};
 	}
+
+	const controls = {
+		backgroundColor: args['backgroundColor'],
+		backgroundSrc: backgroundSrc,
+		centered: args['centered'],
+		disabled: args['disabled'],
+		label: args['label'],
+		orientation: args['orientation'],
+		selected: args['selected'],
+		showSelection: args['showSelection'],
+		src: componentSrc,
+		wideImage: args['wideImage']
+	};
 
 	return (
 		<ImageItem
-			centered={args['centered']}
-			disabled={args['disabled']}
-			label={args['label']}
-			orientation={args['orientation']}
-			selected={args['selected']}
-			showSelection={args['showSelection']}
-			src={args['src']}
-			style={{
-				position: 'absolute',
-				...style
-			}}
-			wideImage={args['wideImage']}
+			{...controls}
+			style={style}
 		>
 			{args['children']}
 		</ImageItem>
@@ -64,6 +70,10 @@ boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
 text('children', _ImageItem, Config, 'ImageItem Caption');
+color('backgroundColor', _ImageItem, Config, '#4c5059');
+object('backgroundSrc', _ImageItem, Config, src);
+boolean('hasBackgroundSrc', _ImageItem, Config);
+boolean('transparentImage', _ImageItem, Config);
 
 _ImageItem.storyName = 'ImageItem';
 _ImageItem.parameters = {

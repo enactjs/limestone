@@ -166,8 +166,8 @@ const InputPopupBase = kind({
 		 *
 		 * Overridden by `length` value.
 		 *
-		 * When smaller than `maxLength`, number type inputs will show a submit button and will not
-		 * auto-submit when the length reaches `maxLength`. Defaults to the `maxLength` value.
+		 * Defaults to the `maxLength` value. The submit button is disabled while the value is
+		 * shorter than `minLength`.
 		 *
 		 * @type {Number}
 		 * @public
@@ -184,6 +184,13 @@ const InputPopupBase = kind({
 
 		/**
 		 * Omits the submit button.
+		 *
+		 * When `true` for separated number inputs where `minLength` equals `maxLength`, the input
+		 * auto-submits when the length reaches `maxLength`.
+		 *
+		 * Only use this when auto-submit applies (a separated number input whose `minLength` equals
+		 * `maxLength`); otherwise the input cannot be submitted, as there is neither a submit button
+		 * nor auto-submit.
 		 *
 		 * @type {Boolean}
 		 * @public

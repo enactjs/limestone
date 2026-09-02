@@ -27,6 +27,10 @@ class InputInterface {
 		return element('.Input_Input_numberCell', browser);
 	}
 
+	get submitButton () {
+		return element('.Input_Input_submitButton', browser);
+	}
+
 	get title () {
 		return element('.Input_Input_titles', browser);
 	}

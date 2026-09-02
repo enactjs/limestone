@@ -1,6 +1,6 @@
 import {IconItem, IconItemBase} from '@enact/limestone/IconItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, color, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 
 import iconNames from '../helper/icons';
@@ -35,28 +35,34 @@ export const _IconItem = (args) => {
 			}
 		});
 
+	const controls = {
+		background: args['background'],
+		bordered: args['bordered'],
+		disabled: args['disabled'],
+		icon: args['icon'],
+		label: args['label'],
+		labelColor: args['labelColor'],
+		labelOn: args['labelOn'],
+		title: args['title'],
+		titleOn: args['titleOn']
+	};
+
+	const style = {
+		position: 'absolute',
+		height: args['height'] && ri.scale(args['height']),
+		width: args['width'] && ri.scale(args['width'])
+	};
+
 	return (
 		<IconItem
-			background={args['background']}
-			bordered={args['bordered']}
-			disabled={args['disabled']}
-			icon={args['icon']}
+			{...controls}
 			image={image}
-			label={args['label']}
-			labelColor={args['labelColor']}
-			labelOn={args['labelOn']}
-			style={{
-				position: 'absolute',
-				height: args['height'] && ri.scale(args['height']),
-				width: args['width'] && ri.scale(args['width'])
-			}}
-			title={args['title']}
-			titleOn={args['titleOn']}
+			style={style}
 		/>
 	);
 };
 
-text('background', _IconItem, Config, '#26282b');
+color('background', _IconItem, Config, '#26282b');
 boolean('bordered', _IconItem, Config, true);
 boolean('disabled', _IconItem, Config);
 select('icon', _IconItem, ['', ...iconNames], Config, 'usb');

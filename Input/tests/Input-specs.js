@@ -320,10 +320,32 @@ describe('Input specs', () => {
 			expect(buttonSubmit).not.toBeNull();
 		});
 
-		test('should exclude a submit button when separated number input', () => {
+		test('should include a submit button when separated number input', () => {
 			render(
 				<FloatingLayerController>
 					<Input type="number" length={4} open />
+				</FloatingLayerController>
+			);
+			const buttonSubmit = screen.getByText('Submit');
+
+			expect(buttonSubmit).not.toBeNull();
+		});
+
+		test('should include a submit button for explicit separated number input', () => {
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={10} open numberInputField="separated" />
+				</FloatingLayerController>
+			);
+			const buttonSubmit = screen.getByText('Submit');
+
+			expect(buttonSubmit).not.toBeNull();
+		});
+
+		test('should exclude a submit button for separated number input when noSubmitButton is used', () => {
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={4} open numberInputField="separated" noSubmitButton />
 				</FloatingLayerController>
 			);
 			const buttonSubmit = screen.queryByText('Submit');
@@ -331,15 +353,77 @@ describe('Input specs', () => {
 			expect(buttonSubmit).toBeNull();
 		});
 
-		test('should exclude a submit button for explicit separated number input', () => {
+		test('should include a submit button for passwordnumber separated input', () => {
 			render(
 				<FloatingLayerController>
-					<Input type="number" length={10} open numberInputField="separated" />
+					<Input type="passwordnumber" length={4} open />
 				</FloatingLayerController>
 			);
-			const buttonSubmit = screen.queryByText('Submit');
+			const buttonSubmit = screen.getByText('Submit');
 
-			expect(buttonSubmit).toBeNull();
+			expect(buttonSubmit).not.toBeNull();
+		});
+
+		test('should not call onComplete when max length is reached for separated number input with submit button', async () => {
+			jest.useFakeTimers();
+			const spy = jest.fn();
+			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={1} open numberInputField="separated" onComplete={spy} />
+				</FloatingLayerController>
+			);
+			const numberButton = screen.getByText('2');
+
+			await user.click(numberButton);
+
+			act(() => jest.advanceTimersByTime(300));
+
+			expect(spy).not.toHaveBeenCalled();
+
+			jest.useRealTimers();
+		});
+
+		test('should call onComplete when submit button clicked for separated number input with equal min and max length', async () => {
+			jest.useFakeTimers();
+			const spy = jest.fn();
+			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={1} open numberInputField="separated" onComplete={spy} />
+				</FloatingLayerController>
+			);
+			const numberButton = screen.getByText('2');
+			const submitButton = screen.getByText('Submit');
+
+			await user.click(numberButton);
+			await user.click(submitButton);
+
+			act(() => jest.advanceTimersByTime(300));
+
+			expect(spy).toHaveBeenCalled();
+
+			jest.useRealTimers();
+		});
+
+		test('should call onComplete when max length is reached for separated number input with noSubmitButton', async () => {
+			jest.useFakeTimers();
+			const spy = jest.fn();
+			const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});
+			render(
+				<FloatingLayerController>
+					<Input type="number" length={1} open numberInputField="separated" noSubmitButton onComplete={spy} />
+				</FloatingLayerController>
+			);
+			const numberButton = screen.getByText('2');
+
+			await user.click(numberButton);
+
+			act(() => jest.advanceTimersByTime(300));
+
+			expect(spy).toHaveBeenCalled();
+
+			jest.useRealTimers();
 		});
 
 		test('should show an invalid tooltip if invalid and message supplied', () => {
