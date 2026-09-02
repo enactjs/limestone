@@ -239,6 +239,16 @@ const SliderBase = (props) => {
 	const sliderMax = colorPicker ? 360 : max;
 	const sliderMin = colorPicker ? 0 : min;
 	const sliderStep = colorPicker ? 1 : step;
+	let sideStartLabel = null;
+	let sideEndLabel = null;
+
+	if (hasCustomSideLabels) {
+		sideStartLabel = tickConfig.startLabel;
+		sideEndLabel = tickConfig.endLabel;
+	} else if (hasInlineMinMax) {
+		sideStartLabel = sliderMin;
+		sideEndLabel = sliderMax;
+	}
 
 	const styleObject = {
 		'--semantic-color-surface-default-handle': `hsla(${rest.value ? rest.value : 0}, 100%, 50%, 1)`,
@@ -274,14 +284,14 @@ const SliderBase = (props) => {
 					className={mergedCss.minMax}
 					count={hasTicks ? tickConfig.count : 0}
 					css={mergedCss}
-					endLabel={hasCustomSideLabels ? tickConfig.endLabel : (hasInlineMinMax ? sliderMax : null)}
+					endLabel={sideEndLabel}
 					focused={focused}
 					labels={hasTickLabels ? tickConfig.tickLabels : null}
 					max={sliderMax}
 					min={sliderMin}
 					orientation={rest.orientation}
 					showMinMax={displayMinMax}
-					startLabel={hasCustomSideLabels ? tickConfig.startLabel : (hasInlineMinMax ? sliderMin : null)}
+					startLabel={sideStartLabel}
 				/> : null
 			}
 		/>
