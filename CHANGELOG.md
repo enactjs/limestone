@@ -18,6 +18,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Input` to show the submit button for separated number inputs by default
 
 ### Fixed
+
 - `limestone/Card` styling when no caption element is present
 
 ## [1.10.2] - 2026-07-09
