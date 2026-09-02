@@ -41,7 +41,7 @@ const chipFocusTests = [
 	<Chip>Focused Default Chip</Chip>,
 	<Chip icon="home">Focused Chip with Icon</Chip>,
 	<Chip checked>Checked and Focused Chip</Chip>,
-	<Chip disabled>Checked and Disabled Chip</Chip>,
+	<Chip disabled deleteButton={{icon: 'closex', position: 'right'}}>Disabled and Focused Chip</Chip>,
 	<Chip deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Delete Button (Right)</Chip>
 ];
 
