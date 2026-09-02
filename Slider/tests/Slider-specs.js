@@ -584,6 +584,17 @@ describe('Slider', () => {
 		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
 	});
 
+	test('should keep ticks hoverable', () => {
+		render(<Slider ticks />);
+
+		const slider = screen.getByRole('slider');
+		const tick = slider.querySelector('.tick');
+
+		expect(tick).not.toBeNull();
+		fireEvent.mouseOver(tick);
+		expect(slider).toHaveClass('hasTicks');
+	});
+
 	test('should render one tick per step when ticks is true and the range is small', () => {
 		render(<Slider max={10} min={0} step={1} ticks />);
 
@@ -719,6 +730,32 @@ describe('Slider', () => {
 		consoleSpy.mockRestore();
 	});
 
+	test('should display min and max beside the track when showMinMax is set with ticks', () => {
+		render(<Slider max={80} min={20} showMinMax ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasSideLabels');
+		expect(slider).not.toHaveClass('hasMinMax');
+		expect(slider.querySelector('.minMax')).toBeNull();
+		expect(slider.querySelector('.startLabel')).toHaveTextContent('20');
+		expect(slider.querySelector('.endLabel')).toHaveTextContent('80');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should display min and max before and after a vertical slider when showMinMax is set with ticks', () => {
+		render(<Slider max={80} min={20} orientation="vertical" showMinMax ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasSideLabels');
+		expect(slider).not.toHaveClass('hasMinMax');
+		expect(slider.querySelector('.minMax')).toBeNull();
+		expect(slider.querySelector('.startLabel')).toHaveTextContent('20');
+		expect(slider.querySelector('.endLabel')).toHaveTextContent('80');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
 	test('should display min and max values when showMinMax is set without labels', () => {
 		render(<Slider max={80} min={20} showMinMax />);
 
@@ -759,6 +796,8 @@ describe('Slider', () => {
 		expect(ticks).toHaveLength(3);
 		expect(ticks[0]).toHaveStyle({bottom: '0%'});
 		expect(ticks[2]).toHaveStyle({bottom: '100%'});
+		expect(slider).not.toHaveClass('hasTickLabels');
+		expect(slider.querySelector('.tickLabel')).toBeNull();
 	});
 
 	test('should marquee tick labels while focused', () => {

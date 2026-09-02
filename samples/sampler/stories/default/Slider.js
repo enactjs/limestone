@@ -3,6 +3,8 @@ import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, range, object, select} from '@enact/storybook-utils/addons/controls';
 
+import css from './Slider.module.less';
+
 const SliderConfig = mergeComponentMetadata('Slider', SliderBase, Slider);
 const SliderTooltipConfig = mergeComponentMetadata('SliderTooltip', SliderTooltip);
 Slider.displayName = 'Slider';
@@ -42,13 +44,17 @@ export const _Slider = (args) => {
 		wheelInterval: args['wheelInterval']
 	};
 
+	const isVertical = args['orientation'] === 'vertical';
+
 	return (
-		<Slider
-			{...actions}
-			{...controls}
-		>
-			{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
-		</Slider>
+		<div className={isVertical ? css.vertical : css.horizontal}>
+			<Slider
+				{...actions}
+				{...controls}
+			>
+				{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
+			</Slider>
+		</div>
 	);
 };
 

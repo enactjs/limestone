@@ -12,9 +12,8 @@ describe('Ticks', () => {
 	});
 
 	test('should render nothing when no tick count is provided', () => {
-		render(<Ticks startLabel="Start" />);
+		render(<Ticks />);
 
-		expect(screen.getByText('Start')).toBeInTheDocument();
 		expect(document.querySelectorAll('[aria-hidden="true"]')).toHaveLength(0);
 	});
 
@@ -27,18 +26,11 @@ describe('Ticks', () => {
 		expect(document.querySelectorAll('.tickLabel')).toHaveLength(2);
 	});
 
-	test('should omit empty side labels', () => {
-		render(<Ticks count={3} css={{startLabel: 'startLabel', endLabel: 'endLabel'}} endLabel="" startLabel="" />);
+	test('should omit tick labels on a vertical slider', () => {
+		render(<Ticks count={3} css={{tickLabel: 'tickLabel'}} labels={['A', 'B', 'C']} orientation="vertical" />);
 
-		expect(document.querySelector('.startLabel')).toBeNull();
-		expect(document.querySelector('.endLabel')).toBeNull();
-	});
-
-	test('should center side labels on a vertical slider', () => {
-		render(<Ticks count={3} endLabel="Max" focused orientation="vertical" startLabel="Min" />);
-
-		expect(screen.getByText('Min')).toBeInTheDocument();
-		expect(screen.getByText('Max')).toBeInTheDocument();
+		expect(document.querySelector('.tickLabel')).toBeNull();
+		expect(document.querySelectorAll('[aria-hidden="true"]')).toHaveLength(3);
 	});
 });
 
@@ -51,10 +43,24 @@ describe('SliderExtras', () => {
 	});
 
 	test('should render side labels without tick marks', () => {
-		render(<SliderExtras count={0} endLabel="End" startLabel="Start" />);
+		render(<SliderExtras count={0} css={{startLabel: 'startLabel', endLabel: 'endLabel'}} endLabel="End" startLabel="Start" />);
 
 		expect(screen.getByText('Start')).toBeInTheDocument();
 		expect(screen.getByText('End')).toBeInTheDocument();
 		expect(document.querySelectorAll('[aria-hidden="true"]')).toHaveLength(0);
+	});
+
+	test('should omit empty side labels', () => {
+		render(<SliderExtras count={3} css={{startLabel: 'startLabel', endLabel: 'endLabel'}} endLabel="" startLabel="" />);
+
+		expect(document.querySelector('.startLabel')).toBeNull();
+		expect(document.querySelector('.endLabel')).toBeNull();
+	});
+
+	test('should render side labels on a vertical slider', () => {
+		render(<SliderExtras count={3} endLabel="Max" focused orientation="vertical" startLabel="Min" />);
+
+		expect(screen.getByText('Min')).toBeInTheDocument();
+		expect(screen.getByText('Max')).toBeInTheDocument();
 	});
 });

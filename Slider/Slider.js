@@ -187,8 +187,11 @@ const SliderBase = (props) => {
 	let mergedCss = usePublicClassNames({componentCss, customCss: css, publicClassNames: true});
 
 	const hasTicks = !colorPicker && tickConfig.count >= 3;
-	const hasTickLabels = hasTicks && tickConfig.tickLabels != null;
-	const hasSideLabels = !colorPicker && (tickConfig.startLabel != null || tickConfig.endLabel != null);
+	const isVertical = rest.orientation === 'vertical';
+	const hasTickLabels = hasTicks && !isVertical && tickConfig.tickLabels != null;
+	const hasCustomSideLabels = !colorPicker && (tickConfig.startLabel != null || tickConfig.endLabel != null);
+	const hasInlineMinMax = hasTicks && Boolean(showMinMax) && !hasTickLabels && !hasCustomSideLabels;
+	const hasSideLabels = hasCustomSideLabels || hasInlineMinMax;
 	const displayMinMax = Boolean(showMinMax) && !hasTickLabels && !hasSideLabels;
 
 	const componentClassName = classnames(
@@ -271,14 +274,14 @@ const SliderBase = (props) => {
 					className={mergedCss.minMax}
 					count={hasTicks ? tickConfig.count : 0}
 					css={mergedCss}
-					endLabel={hasSideLabels ? tickConfig.endLabel : null}
+					endLabel={hasCustomSideLabels ? tickConfig.endLabel : (hasInlineMinMax ? sliderMax : null)}
 					focused={focused}
 					labels={hasTickLabels ? tickConfig.tickLabels : null}
 					max={sliderMax}
 					min={sliderMin}
 					orientation={rest.orientation}
 					showMinMax={displayMinMax}
-					startLabel={hasSideLabels ? tickConfig.startLabel : null}
+					startLabel={hasCustomSideLabels ? tickConfig.startLabel : (hasInlineMinMax ? sliderMin : null)}
 				/> : null
 			}
 		/>
@@ -320,8 +323,8 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	/**
 	 * Generates a numeric label for each tick from `min`, `max`, and the tick count.
 	 *
-	 * When set, {@link limestone/Slider.SliderBase.labels|labels} is ignored. When `false` or
-	 * unset, `labels` is used as provided.
+	 * Shown on horizontal sliders only. When set, {@link limestone/Slider.SliderBase.labels|labels}
+	 * is ignored. When `false` or unset, `labels` is used as provided.
 	 *
 	 * @type {Boolean}
 	 * @default false
@@ -406,7 +409,8 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 *
 	 * When two labels are provided, they are shown at the start and end of the track.
 	 * When three or more labels are provided, each label is shown beneath its corresponding
-	 * tick mark. If `ticks` is not set, tick marks are created to match the number of labels.
+	 * tick mark on a horizontal slider. Tick labels are not shown when `orientation` is
+	 * `vertical`. If `ticks` is not set, tick marks are created to match the number of labels.
 	 *
 	 * Ignored when {@link limestone/Slider.SliderBase.automaticLabels|automaticLabels} is set.
 	 *
@@ -502,6 +506,9 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 
 	/**
 	 * Displays the min and max values at the edges of the slider.
+	 *
+	 * On a slider with tick marks, the values are placed before and after the track, on the same
+	 * line as the slider. Without ticks, they are shown beside or below the track.
 	 *
 	 * Ignored when {@link limestone/Slider.SliderBase.labels|labels} are provided, so the values
 	 * do not overlap the tick labels.

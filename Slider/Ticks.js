@@ -12,11 +12,9 @@ const Ticks = ({
 	className,
 	count = 0,
 	css = {},
-	endLabel,
 	focused,
 	labels,
-	orientation,
-	startLabel
+	orientation
 }) => {
 	const vertical = orientation === 'vertical';
 	const marqueeOn = focused ? 'render' : 'hover';
@@ -28,15 +26,6 @@ const Ticks = ({
 			className={classnames(css.ticks, className)}
 			style={hasTickMarks ? {'--lime-slider-tick-count': count} : null}
 		>
-			{startLabel != null && startLabel !== '' ? (
-				<Marquee
-					alignment={vertical ? 'center' : 'right'}
-					className={css.startLabel}
-					marqueeOn={marqueeOn}
-				>
-					{startLabel}
-				</Marquee>
-			) : null}
 			{hasTickMarks ? Array.from({length: count}, (_, index) => {
 				const label = labels && labels[index];
 
@@ -48,7 +37,7 @@ const Ticks = ({
 						style={{[positionProp]: `${(index / (count - 1)) * 100}%`}}
 					>
 						<span className={css.tickMark} />
-						{label != null && label !== '' ? (
+						{!vertical && label != null && label !== '' ? (
 							<Marquee
 								alignment="center"
 								className={css.tickLabel}
@@ -60,21 +49,27 @@ const Ticks = ({
 					</div>
 				);
 			}) : null}
-			{endLabel != null && endLabel !== '' ? (
-				<Marquee
-					alignment={vertical ? 'center' : 'left'}
-					className={css.endLabel}
-					marqueeOn={marqueeOn}
-				>
-					{endLabel}
-				</Marquee>
-			) : null}
 		</div>
 	);
 };
 
+const SideLabel = ({alignment, className, focused, value}) => (
+	value != null && value !== '' ? (
+		<Marquee
+			alignment={alignment}
+			className={className}
+			marqueeOn={focused ? 'render' : 'hover'}
+		>
+			{value}
+		</Marquee>
+	) : null
+);
+
 /**
  * Combines tick marks, side labels, and min/max values as a single `minMaxComponent`.
+ *
+ * Side labels are siblings of the tick overlay so they can sit on the slider's start/end,
+ * on the same line as the track.
  *
  * @private
  */
@@ -90,27 +85,41 @@ const SliderExtras = ({
 	orientation,
 	showMinMax,
 	startLabel
-}) => (
-	<div className={css.extras}>
-		{count >= 3 || startLabel != null || endLabel != null ? (
-			<Ticks
-				count={count}
-				css={css}
-				endLabel={endLabel}
+}) => {
+	const vertical = orientation === 'vertical';
+
+	return (
+		<div className={css.extras}>
+			<SideLabel
+				alignment={vertical ? 'center' : 'right'}
+				className={css.startLabel}
 				focused={focused}
-				labels={labels}
-				orientation={orientation}
-				startLabel={startLabel}
+				value={startLabel}
 			/>
-		) : null}
-		{showMinMax ? (
-			<div className={className}>
-				<div>{min}</div>
-				<div>{max}</div>
-			</div>
-		) : null}
-	</div>
-);
+			{count >= 3 ? (
+				<Ticks
+					count={count}
+					css={css}
+					focused={focused}
+					labels={labels}
+					orientation={orientation}
+				/>
+			) : null}
+			<SideLabel
+				alignment={vertical ? 'center' : 'left'}
+				className={css.endLabel}
+				focused={focused}
+				value={endLabel}
+			/>
+			{showMinMax ? (
+				<div className={className}>
+					<div>{min}</div>
+					<div>{max}</div>
+				</div>
+			) : null}
+		</div>
+	);
+};
 
 Ticks.displayName = 'Ticks';
 
@@ -118,11 +127,9 @@ Ticks.propTypes = {
 	className: PropTypes.string,
 	count: PropTypes.number,
 	css: PropTypes.object,
-	endLabel: PropTypes.node,
 	focused: PropTypes.bool,
 	labels: PropTypes.arrayOf(PropTypes.node),
-	orientation: PropTypes.string,
-	startLabel: PropTypes.node
+	orientation: PropTypes.string
 };
 
 SliderExtras.displayName = 'SliderExtras';

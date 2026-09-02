@@ -10,7 +10,14 @@ const sliderSmokeTests = [
 	<Slider />,
 	<Slider showMinMax />,
 	<Slider ticks={5} />,
-	<Slider ticks={5} labels={['Short Text', 'Long Text Long']} />,
+	{
+		component: <Slider ticks={5} showMinMax />,
+		...padded
+	},
+	{
+		component: <Slider ticks={5} labels={['Short Text', 'Long Text Long']} />,
+		...padded
+	},
 	<Slider ticks={5} labels={['Long Text Long', 'Short Text', 'Long Text Long', 'Short Text', 'Long Text Long']} />,
 	<Slider ticks={5} disabled />,
 	<Slider disabled />,
