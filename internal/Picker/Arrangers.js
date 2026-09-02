@@ -14,11 +14,7 @@ const combineCarouselAnimations = (primary, ...secondary) => ({
 		return primary.onfinish;
 	},
 	set onfinish (fn) {
-		primary.onfinish = (...args) => {
-			fn(...args);
-			primary.cancel();
-			secondary.forEach((animation) => animation.cancel());
-		};
+		primary.onfinish = fn;
 	},
 	finish: () => {
 		primary.finish();
@@ -104,10 +100,12 @@ const animateCarouselStay = ({node}, isHorizontal) => {
 	const translate = isHorizontal ? 'translateX' : 'translateY';
 
 	const position = node.animate([
+		{transform: `${translate}(0)`},
 		{transform: `${translate}(0)`}
 	], {fill: 'both'});
 
 	const opacity = node.animate([
+		{opacity: 1},
 		{opacity: 1}
 	], {fill: 'both'});
 
