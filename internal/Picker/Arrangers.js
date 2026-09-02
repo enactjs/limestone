@@ -43,6 +43,7 @@ const combineCarouselAnimations = (primary, ...secondary) => ({
  */
 const carouselAnimateEnter = ({node}, amount, isHorizontal, options) => {
 	const translate = isHorizontal ? 'translateX' : 'translateY';
+	const translateAmount = isHorizontal ? amount : -amount;
 	const {
 		positionDuration = 470,
 		positonDelay = 30,
@@ -53,7 +54,7 @@ const carouselAnimateEnter = ({node}, amount, isHorizontal, options) => {
 	} = options;
 
 	const position = node.animate([
-		{transform: `${translate}(${amount}px)`},
+		{transform: `${translate}(${translateAmount}px)`},
 		{transform: `${translate}(0)`}
 	], {duration: positionDuration, delay: positonDelay, easing: positionEasing, fill: 'both'});
 
@@ -78,6 +79,7 @@ const carouselAnimateEnter = ({node}, amount, isHorizontal, options) => {
  */
 const animateCarouselLeave = ({node}, amount, isHorizontal, options) => {
 	const translate = isHorizontal ? 'translateX' : 'translateY';
+	const translateAmount = isHorizontal ? amount : -amount;
 	const {
 		positionDuration = 500,
 		opacityDuration = 250,
@@ -86,7 +88,7 @@ const animateCarouselLeave = ({node}, amount, isHorizontal, options) => {
 	} = options;
 
 	const position = node.animate([
-		{transform: `${translate}(${amount}px)`}
+		{transform: `${translate}(${translateAmount}px)`}
 	], {duration: positionDuration, easing: positionEasing, fill: 'both'});
 
 	const opacity = node.animate([
