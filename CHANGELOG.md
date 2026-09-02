@@ -11,6 +11,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Changed
 
+- `limestone` dependencies to resolve `npm audit` security advisories by adding `overrides` for vulnerable transitive dev/build dependencies (`brace-expansion`, `browserslist`, `decode-uri-component`, `deepmerge-ts`, `fast-xml-parser`, `ip-address`, `js-yaml`, `mocha`, `nanoid`, `postcss`, `query-string`, `serialize-javascript`, and `undici`)
 - `limestone/Alert` text container to fit the width of its text and center-align
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
