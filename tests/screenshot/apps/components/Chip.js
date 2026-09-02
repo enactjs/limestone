@@ -30,7 +30,10 @@ const chipSmokeTests = [
 
 	<Chip icon="home" deleteButton={{icon: 'closex', position: 'right'}}>Chip with Icon and Delete Button (Right)</Chip>,
 	<Chip icon="home" deleteButton={{icon: 'closex', position: 'top'}}>Chip with Icon and Delete Button (Top)</Chip>,
-	<Chip icon="home" deleteButton={{icon: 'closex', position: 'bottom'}} disabled>Disabled Chip with Icon and Delete Button (Bottom)</Chip>
+	<Chip icon="home" deleteButton={{icon: 'closex', position: 'bottom'}} disabled>Disabled Chip with Icon and Delete Button (Bottom)</Chip>,
+
+	<Chip multiline>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at consequatur illum magnam omnis possimus, quas ratione rerum? Atque corporis magni nulla numquam odio officia quas quisquam vero! Repellat, vitae.</Chip>,
+	<Chip multiline icon="home">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at consequatur illum magnam omnis possimus, quas ratione rerum? Atque corporis magni nulla numquam odio officia quas quisquam vero! Repellat, vitae.</Chip>
 ];
 
 const chipFocusTests = [
@@ -38,6 +41,7 @@ const chipFocusTests = [
 	<Chip>Focused Default Chip</Chip>,
 	<Chip icon="home">Focused Chip with Icon</Chip>,
 	<Chip checked>Checked and Focused Chip</Chip>,
+	<Chip disabled>Checked and Disabled Chip</Chip>,
 	<Chip deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Delete Button (Right)</Chip>
 ];
 
