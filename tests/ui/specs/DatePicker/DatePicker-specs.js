@@ -157,7 +157,7 @@ describe('DatePicker', function () {
 					const {day, month, year} = await extractValues(datePicker);
 					const numDays = daysInMonth({month, year});
 					await datePicker.day.click();
-					await Page.delay(200);
+					await Page.delay(500);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.incrementer('day').click();
 					await Page.delay(500);
@@ -384,15 +384,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMinValue.decrementer('year').click();
 			await datePickerCheckMinValue.decrementer('year').click();
 			// Step 3 Verify: Year Value changes to 1900.
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 
 			// check disabled picker does not work when value reached minimum end-value.
 			await datePickerCheckMinValue.decrementer('year').click();
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 			await datePickerCheckMinValue.incrementer('year').click();
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1901);
 		});
 
@@ -404,15 +404,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMaxValue.incrementer('year').click();
 			await datePickerCheckMaxValue.incrementer('year').click();
 			// Step 3 Verify: Year Value changes to 2099.
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 
 			// check disabled picker does not work when value reached maximum end-value.
 			await datePickerCheckMaxValue.incrementer('year').click();
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 			await datePickerCheckMaxValue.decrementer('year').click();
-			await Page.delay(200);
+			await Page.delay(500);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2098);
 		});
 	});

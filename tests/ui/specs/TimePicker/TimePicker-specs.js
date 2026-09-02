@@ -375,6 +375,7 @@ describe('TimePicker', function () {
 			expect(await timePicker.hour.isFocused()).toBe(true);
 
 			await timePicker.decrementer('hour').click();
+			await Page.delay(500);
 			expect((await extractValues(timePicker)).hour).toBe(23);
 			// now increment
 			await timePicker.incrementer('hour').click();
