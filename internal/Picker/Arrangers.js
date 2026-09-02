@@ -96,6 +96,22 @@ const animateCarouselLeave = ({node}, amount, isHorizontal, options) => {
 	return combineCarouselAnimations(position, opacity);
 };
 
+const animateCarouselStay = ({node}, isHorizontal) => {
+	const translate = isHorizontal ? 'translateX' : 'translateY';
+
+	const position = node.animate([
+		{transform: `${translate}(0)`},
+		{transform: `${translate}(0)`}
+	]);
+
+	const opacity = node.animate([
+		{opacity: 1},
+		{opacity: 1}
+	]);
+
+	return combineCarouselAnimations(position, opacity);
+};
+
 /**
  * Creates a carousel arranger that transitions panels with translation and fade animations.
  *
@@ -121,7 +137,8 @@ export const CarouselArranger = ({amount = 270, isHorizontal = true, optionsEnte
 		} else {
 			return animateCarouselLeave(config, -amount, isHorizontal, optionsLeave);
 		}
-	}
+	},
+	stay: (config) => animateCarouselStay(config, isHorizontal)
 });
 
 /**
