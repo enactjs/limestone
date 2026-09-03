@@ -115,6 +115,7 @@ describe('TimePicker', function () {
 
 					// Step 4: Press 5-way Up on the minute picker.
 					await Page.spotlightUp();
+					await Page.delay(500);
 					const expected = minute !== 59 ? minute + 1 : 0;
 					// Step 4-1 Verify: Spotlight on the minute picker.
 					// Step 4-2 Verify: The minute value is changed upward.
