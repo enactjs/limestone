@@ -10,7 +10,12 @@ const transitionHandlers = {
 			current.timerId = setTimeout(() => {
 				const currentSpotlight = Spotlight.getCurrent();
 				if (spotlightId && !currentSpotlight) {
-					Spotlight.focus(spotlightId);
+					const node = document.querySelector(`[data-spotlight-id=${spotlightId}]`);
+					const activeContainerNode = document.querySelector(`[data-spotlight-id=${Spotlight.getActiveContainer()}]`);
+
+					if (!node || !activeContainerNode || node.contains(activeContainerNode) || activeContainerNode.contains(node)) {
+						Spotlight.focus(spotlightId);
+					}
 				}
 			}, 40);
 		}

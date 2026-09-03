@@ -16,19 +16,29 @@ export default {
 	component: 'DatePicker'
 };
 
-export const _DatePicker = (args) => (
-	<DatePicker
-		disabled={args['disabled']}
-		spotlightDisabled={args['spotlightDisabled']}
-		noLabel={args['noLabel']}
-		monthAriaLabel={args['monthAriaLabel']}
-		dayAriaLabel={args['dayAriaLabel']}
-		yearAriaLabel={args['yearAriaLabel']}
-		titleAlignment={args['titleAlignment']}
-		onChange={action('onChange')}
-		onComplete={action('onComplete')}
-	/>
-);
+export const _DatePicker = (args) => {
+	const actions = {
+		onChange: action('onChange'),
+		onComplete: action('onComplete')
+	};
+
+	const controls = {
+		disabled: args['disabled'],
+		spotlightDisabled: args['spotlightDisabled'],
+		noLabel: args['noLabel'],
+		monthAriaLabel: args['monthAriaLabel'],
+		dayAriaLabel: args['dayAriaLabel'],
+		yearAriaLabel: args['yearAriaLabel'],
+		titleAlignment: args['titleAlignment']
+	};
+
+	return (
+		<DatePicker
+			{...actions}
+			{...controls}
+		/>
+	);
+};
 
 boolean('disabled', _DatePicker, Config);
 boolean('spotlightDisabled', _DatePicker, Config);

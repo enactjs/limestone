@@ -21,12 +21,16 @@ export const _RadioItem = (args) => {
 		<Icon slot="slotBefore">{slotBeforeSelection}</Icon>
 	) : null;
 
+	const controls = {
+		disabled: args['disabled'],
+		inline: args['inline'],
+		icon: args['icon']
+	};
+
 	return (
 		<RadioItem
-			disabled={args['disabled']}
-			inline={args['inline']}
+			{...controls}
 			onToggle={action('onToggle')}
-			icon={args['icon']}
 		>
 			{slotBefore}
 			{args['children']}

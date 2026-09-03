@@ -55,24 +55,30 @@ const prop = {
 	</buttons>
 };
 
-export const WithLongTitle = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		{args['image'] ? (
-			<image>
-				<AlertImage src={args['src']} type={args['type (image)']} />
-			</image>
-		) : null}
-		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
-		{args['children']}
-	</Alert>
-);
+export const WithLongTitle = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			onClose={action('onClose')}
+		>
+			{args['image'] ? (
+				<image>
+					<AlertImage src={args['src']} type={args['type (image)']} />
+				</image>
+			) : null}
+			{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+			{args['children']}
+		</Alert>
+	);
+};
 
 boolean('open', WithLongTitle, Config);
 text('title', WithLongTitle, Config, inputData.longTitle);
@@ -86,24 +92,30 @@ text('src', WithLongTitle, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6e6e
 
 WithLongTitle.storyName = 'with long title';
 
-export const WithLongChildren = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		{args['image'] ? (
-			<image>
-				<AlertImage src={args['src']} type={args['type (image)']} />
-			</image>
-		) : null}
-		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
-		{args['children']}
-	</Alert>
-);
+export const WithLongChildren = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			onClose={action('onClose')}
+		>
+			{args['image'] ? (
+				<image>
+					<AlertImage src={args['src']} type={args['type (image)']} />
+				</image>
+			) : null}
+			{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+			{args['children']}
+		</Alert>
+	);
+};
 
 boolean('open', WithLongChildren, Config);
 text('title', WithLongChildren, Config, 'Fullscreen Alert Title');
@@ -117,24 +129,30 @@ text('src', WithLongChildren, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '6e6
 
 WithLongChildren.storyName = 'with long children';
 
-export const WithLongTitleAndLongChildren = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		{args['image'] ? (
-			<image>
-				<AlertImage src={args['src']} type={args['type (image)']} />
-			</image>
-		) : null}
-		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
-		{args['children']}
-	</Alert>
-);
+export const WithLongTitleAndLongChildren = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			onClose={action('onClose')}
+		>
+			{args['image'] ? (
+				<image>
+					<AlertImage src={args['src']} type={args['type (image)']} />
+				</image>
+			) : null}
+			{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+			{args['children']}
+		</Alert>
+	);
+};
 
 boolean('open', WithLongTitleAndLongChildren, Config);
 text('title', WithLongTitleAndLongChildren, Config, inputData.longTitle);
@@ -148,36 +166,42 @@ text('src', WithLongTitleAndLongChildren, ImageConfig, svgGenerator(240, 240, 'd
 
 WithLongTitleAndLongChildren.storyName = 'with long title and long children';
 
-export const WithDifferentTypesOfComponentsAndLongChildren = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		css={css}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		{args['image'] ?
-			<image>
-				<AlertImage src={args['src']} type={args['type (image)']} />
-			</image> : null
-		}
-		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
-		<div>
-			<div>This is progressbar</div>
-			<ProgressBar progress={0.5} />
-		</div>
-		<div>
-			<CheckboxItem>This is CheckboxItem</CheckboxItem>
-		</div>
-		<Scroller className={css.scroller}>
-			<div style={{height: ri.scaleToRem(1600)}}>
-				{args['children']}
+export const WithDifferentTypesOfComponentsAndLongChildren = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			css={css}
+			onClose={action('onClose')}
+		>
+			{args['image'] ?
+				<image>
+					<AlertImage src={args['src']} type={args['type (image)']} />
+				</image> : null
+			}
+			{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+			<div>
+				<div>This is progressbar</div>
+				<ProgressBar progress={0.5} />
 			</div>
-		</Scroller>
-	</Alert>
-);
+			<div>
+				<CheckboxItem>This is CheckboxItem</CheckboxItem>
+			</div>
+			<Scroller className={css.scroller}>
+				<div style={{height: ri.scaleToRem(1600)}}>
+					{args['children']}
+				</div>
+			</Scroller>
+		</Alert>
+	);
+};
 
 boolean('open', WithDifferentTypesOfComponentsAndLongChildren, Config, true);
 text('title', WithDifferentTypesOfComponentsAndLongChildren, Config, 'Overlay Alert Title');
@@ -191,30 +215,36 @@ text('src', WithDifferentTypesOfComponentsAndLongChildren, ImageConfig, svgGener
 
 WithDifferentTypesOfComponentsAndLongChildren.storyName = 'with different types of components and long children';
 
-export const WithThumbnailAndScroller = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		css={css}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		<image>
-			<AlertImage src={args['src']} type={args['type (image)']} />
-		</image>
-		{args['type'] === 'fullscreen' ? prop.threeButtons : prop.threeSmallButtons}
-		<Row style={{flex: 1, height: 'auto'}}>
-			<AlertImage iconSize="small" src={args['src']} type="icon" />
-			<Scroller className={css.scroller}>
-				<div style={{height: ri.scaleToRem(1600)}}>
-					{args['children']}
-				</div>
-			</Scroller>
-		</Row>
-	</Alert>
-);
+export const WithThumbnailAndScroller = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			css={css}
+			onClose={action('onClose')}
+		>
+			<image>
+				<AlertImage src={args['src']} type={args['type (image)']} />
+			</image>
+			{args['type'] === 'fullscreen' ? prop.threeButtons : prop.threeSmallButtons}
+			<Row style={{flex: 1, height: 'auto'}}>
+				<AlertImage iconSize="small" src={args['src']} type="icon" />
+				<Scroller className={css.scroller}>
+					<div style={{height: ri.scaleToRem(1600)}}>
+						{args['children']}
+					</div>
+				</Scroller>
+			</Row>
+		</Alert>
+	);
+};
 
 boolean('open', WithThumbnailAndScroller, Config, true);
 text('title', WithThumbnailAndScroller, Config, 'Overlay Alert Title');
@@ -227,22 +257,28 @@ text('src', WithThumbnailAndScroller, ImageConfig, svgGenerator(240, 240, 'd8d8d
 
 WithThumbnailAndScroller.storyName = 'with thumbnail and scroller';
 
-export const WithCustomSizeImage = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		open={args['open']}
-		onClose={action('onClose')}
-		size={args['size']}
-		title="Fullscreen Alert Title"
-		type={args['type']}
-	>
-		<image>
-			<AlertImage src={args['src']} type="thumbnail" css={css} />
-		</image>
-		{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
-		Additional text content for Alert
-	</Alert>
-);
+export const WithCustomSizeImage = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			onClose={action('onClose')}
+			title="Fullscreen Alert Title"
+		>
+			<image>
+				<AlertImage src={args['src']} type="thumbnail" css={css} />
+			</image>
+			{args['type'] === 'fullscreen' ? prop.twoButtons : prop.twoSmallButtons}
+			Additional text content for Alert
+		</Alert>
+	);
+};
 
 boolean('open', WithCustomSizeImage, Config);
 select('buttonDirection', WithCustomSizeImage, ['auto', 'horizontal', 'vertical'], Config, 'auto');

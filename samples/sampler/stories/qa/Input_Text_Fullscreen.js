@@ -12,18 +12,24 @@ export default {
 	component: 'InputField'
 };
 
-export const LongText = (args) => (
-	<Input
-		title="Fullscreen Input"
-		subtitle={inputData.textSubtitle}
-		disabled={args['disabled']}
-		placeholder={args['placeholder']}
-		size={args['size']}
-		type={args['type']}
-		popupType="fullscreen"
-		defaultValue={inputData.longText}
-	/>
-);
+export const LongText = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		placeholder: args['placeholder'],
+		size: args['size'],
+		type: args['type']
+	};
+
+	return (
+		<Input
+			{...controls}
+			title="Fullscreen Input"
+			subtitle={inputData.textSubtitle}
+			popupType="fullscreen"
+			defaultValue={inputData.longText}
+		/>
+	);
+};
 
 boolean('disabled', LongText, Config);
 text('placeholder', LongText, Config);

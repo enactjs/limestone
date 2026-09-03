@@ -20,25 +20,31 @@ export default {
 	component: 'Heading'
 };
 
-export const _Heading = (args) => (
-	<Fragment>
-		<Heading
-			marqueeOn={args['marqueeOn']}
-			showLine={args['showLine']}
-			size={args['size']}
-			spacing={args['spacing']}
-		>
-			{args['children']}
-		</Heading>
-		<BodyText style={{marginTop: 0}}>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam dapibus imperdiet. Morbi
-			diam ex, vulputate eget luctus eu, gravida at ligula. Sed tristique eros sit amet iaculis
-			varius. Phasellus rutrum augue id nulla consectetur, a vulputate velit dictum. Vestibulum
-			ultrices tellus ac cursus condimentum. Aliquam sit amet consectetur nulla, viverra bibendum
-			metus.
-		</BodyText>
-	</Fragment>
-);
+export const _Heading = (args) => {
+	const controls = {
+		marqueeOn: args['marqueeOn'],
+		showLine: args['showLine'],
+		size: args['size'],
+		spacing: args['spacing']
+	};
+
+	return (
+		<Fragment>
+			<Heading
+				{...controls}
+			>
+				{args['children']}
+			</Heading>
+			<BodyText style={{marginTop: 0}}>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam dapibus imperdiet. Morbi
+				diam ex, vulputate eget luctus eu, gravida at ligula. Sed tristique eros sit amet iaculis
+				varius. Phasellus rutrum augue id nulla consectetur, a vulputate velit dictum. Vestibulum
+				ultrices tellus ac cursus condimentum. Aliquam sit amet consectetur nulla, viverra bibendum
+				metus.
+			</BodyText>
+		</Fragment>
+	);
+};
 
 select('marqueeOn', _Heading, prop.marqueeOn, Config);
 boolean('showLine', _Heading, Config);

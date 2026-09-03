@@ -48,6 +48,12 @@ export const FlexiblePopupPanels_ = (args) => {
 		action(type)(ev);
 	};
 
+	const actions = {
+		onHide: action('onHide'),
+		onNextClick: action('onNextClick'),
+		onPrevClick: action('onPrevClick'),
+		onShow: action('onShow')
+	};
 	const controls = {
 		fullHeight: args['fullHeight'],
 		nextButtonVisibility: args['nextButtonVisibility'],
@@ -68,10 +74,7 @@ export const FlexiblePopupPanels_ = (args) => {
 				onBack={handleNavigation('onBack')}
 				onChange={handleNavigation('onChange')}
 				onClose={handleClose}
-				onHide={action('onHide')}
-				onNextClick={action('onNextClick')}
-				onPrevClick={action('onPrevClick')}
-				onShow={action('onShow')}
+				{...actions}
 				{...controls}
 			>
 				<Panel

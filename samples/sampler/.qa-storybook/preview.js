@@ -57,6 +57,9 @@ const skins = {
 configureActions();
 
 export const parameters = {
+	controls: {
+		disableSaveFromUI: true
+	},
 	options: {
 		storySort: {
 			method: 'alphabetical'

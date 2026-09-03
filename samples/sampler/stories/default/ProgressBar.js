@@ -14,20 +14,26 @@ export default {
 	component: 'ProgressBar'
 };
 
-export const _ProgressBar = (args) => (
-	<ProgressBar
-		backgroundProgress={args['backgroundProgress']}
-		disabled={args['disabled']}
-		highlighted={args['highlighted']}
-		orientation={args['orientation']}
-		progress={args['progress']}
-		progressAnchor={args['progressAnchor']}
-		showAnchor={args['showAnchor']}
-		className={args['orientation'] === 'vertical' || args['orientation'] === 'radial' ? css.margin : null}
-	>
-		{args['tooltip'] ? <ProgressBarTooltip position={args['position']} /> : null}
-	</ProgressBar>
-);
+export const _ProgressBar = (args) => {
+	const controls = {
+		backgroundProgress: args['backgroundProgress'],
+		disabled: args['disabled'],
+		highlighted: args['highlighted'],
+		orientation: args['orientation'],
+		progress: args['progress'],
+		progressAnchor: args['progressAnchor'],
+		showAnchor: args['showAnchor'],
+		className: args['orientation'] === 'vertical' || args['orientation'] === 'radial' ? css.margin : null
+	};
+
+	return (
+		<ProgressBar
+			{...controls}
+		>
+			{args['tooltip'] ? <ProgressBarTooltip position={args['position']} /> : null}
+		</ProgressBar>
+	);
+};
 
 boolean('disabled', _ProgressBar, ProgressBarConfig);
 boolean('tooltip', _ProgressBar, ProgressBarTooltipConfig);

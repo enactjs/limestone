@@ -52,25 +52,31 @@ export default {
 	component: 'VirtualList'
 };
 
-export const _VirtualList = (args) => (
-	<VirtualList
-		dataSize={updateDataSize(args['dataSize'])}
-		horizontalScrollbar={args['horizontalScrollbar']}
-		hoverToScroll={args['hoverToScroll']}
-		itemRenderer={renderItem(args['itemSize'])}
-		itemSize={ri.scale(args['itemSize'])}
-		key={args['scrollMode']}
-		noScrollByWheel={args['noScrollByWheel']}
-		onScrollStart={action('onScrollStart')}
-		onScrollStop={action('onScrollStop')}
-		scrollMode={args['scrollMode']}
-		spacing={ri.scale(args['spacing'])}
-		spotlightDisabled={args['spotlightDisabled']}
-		stickTo={args['stickTo'] || null}
-		verticalScrollbar={args['verticalScrollbar']}
-		wrap={args['wrap']}
-	/>
-);
+export const _VirtualList = (args) => {
+	const actions = {
+		onScrollStart: action('onScrollStart'),
+		onScrollStop: action('onScrollStop')
+	};
+
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		horizontalScrollbar: args['horizontalScrollbar'],
+		hoverToScroll: args['hoverToScroll'],
+		itemRenderer: renderItem(args['itemSize']),
+		itemSize: ri.scale(args['itemSize']),
+		noScrollByWheel: args['noScrollByWheel'],
+		scrollMode: args['scrollMode'],
+		spacing: ri.scale(args['spacing']),
+		spotlightDisabled: args['spotlightDisabled'],
+		stickTo: args['stickTo'] || null,
+		verticalScrollbar: args['verticalScrollbar'],
+		wrap: args['wrap']
+	};
+
+	return (
+		<VirtualList {...actions} {...controls} key={args['scrollMode']} />
+	);
+};
 
 number('dataSize', _VirtualList, VirtualListConfig, defaultDataSize);
 select('horizontalScrollbar', _VirtualList, prop.scrollbarOption, VirtualListConfig);

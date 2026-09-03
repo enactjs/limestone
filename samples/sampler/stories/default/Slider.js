@@ -13,30 +13,40 @@ export default {
 	component: 'Slider'
 };
 
-export const _Slider = (args) => (
-	<Slider
-		activateOnSelect={args['activateOnSelect'] || false}
-		backgroundProgress={args['backgroundProgress']}
-		colorPicker={args['colorPicker']}
-		disabled={args['disabled']}
-		keyFrequency={args['keyFrequency']}
-		knobStep={args['knobStep']}
-		max={args['max']}
-		min={args['min']}
-		noFill={args['noFill']}
-		onActivate={action('onActivate')}
-		onChange={action('onChange')}
-		onWheel={action('onWheel')}
-		orientation={args['orientation']}
-		progressAnchor={args['progressAnchor']}
-		showAnchor={args['showAnchor']}
-		showMinMax={args['showMinMax']}
-		step={args['step']}
-		wheelInterval={args['wheelInterval']}
-	>
-		{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
-	</Slider>
-);
+export const _Slider = (args) => {
+	const actions = {
+		onActivate: action('onActivate'),
+		onChange: action('onChange'),
+		onWheel: action('onWheel')
+	};
+
+	const controls = {
+		activateOnSelect: args['activateOnSelect'] || false,
+		backgroundProgress: args['backgroundProgress'],
+		colorPicker: args['colorPicker'],
+		disabled: args['disabled'],
+		keyFrequency: args['keyFrequency'],
+		knobStep: args['knobStep'],
+		max: args['max'],
+		min: args['min'],
+		noFill: args['noFill'],
+		orientation: args['orientation'],
+		progressAnchor: args['progressAnchor'],
+		showAnchor: args['showAnchor'],
+		showMinMax: args['showMinMax'],
+		step: args['step'],
+		wheelInterval: args['wheelInterval']
+	};
+
+	return (
+		<Slider
+			{...actions}
+			{...controls}
+		>
+			{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
+		</Slider>
+	);
+};
 
 boolean('disabled', _Slider, SliderConfig);
 boolean('tooltip', _Slider, SliderTooltipConfig);

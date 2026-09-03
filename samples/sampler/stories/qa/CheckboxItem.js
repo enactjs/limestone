@@ -38,15 +38,21 @@ text('children', WithLongText, Config, prop.longText);
 
 WithLongText.storyName = 'with long text';
 
-export const WithTallCharacters = (args) => (
-	<CheckboxItem
-		disabled={args['disabled']}
-		inline={args['inline']}
-		onToggle={action('onToggle')}
-	>
-		{args['children']}
-	</CheckboxItem>
-);
+export const WithTallCharacters = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		inline: args['inline']
+	};
+
+	return (
+		<CheckboxItem
+			{...controls}
+			onToggle={action('onToggle')}
+		>
+			{args['children']}
+		</CheckboxItem>
+	);
+};
 
 boolean('disabled', WithTallCharacters, Config, false);
 boolean('inline', WithTallCharacters, Config);
@@ -54,15 +60,21 @@ select('children', WithTallCharacters, prop.tallText, Config, prop.tallText[0]);
 
 WithTallCharacters.storyName = 'with tall characters';
 
-export const WithExtraSpacing = (args) => (
-	<CheckboxItem
-		disabled={args['disabled']}
-		inline={args['inline']}
-		onToggle={action('onToggle')}
-	>
-		{args['children']}
-	</CheckboxItem>
-);
+export const WithExtraSpacing = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		inline: args['inline']
+	};
+
+	return (
+		<CheckboxItem
+			{...controls}
+			onToggle={action('onToggle')}
+		>
+			{args['children']}
+		</CheckboxItem>
+	);
+};
 
 boolean('disabled', WithExtraSpacing, Config, false);
 boolean('inline', WithExtraSpacing, Config);
@@ -70,15 +82,21 @@ text('children', WithExtraSpacing, Config, prop.extraSpaceText);
 
 WithExtraSpacing.storyName = 'with extra spacing';
 
-export const WithRightToLeftText = (args) => (
-	<CheckboxItem
-		disabled={args['disabled']}
-		inline={args['inline']}
-		onToggle={action('onToggle')}
-	>
-		{args['children']}
-	</CheckboxItem>
-);
+export const WithRightToLeftText = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		inline: args['inline']
+	};
+
+	return (
+		<CheckboxItem
+			{...controls}
+			onToggle={action('onToggle')}
+		>
+			{args['children']}
+		</CheckboxItem>
+	);
+};
 
 boolean('disabled', WithRightToLeftText, Config, false);
 boolean('inline', WithRightToLeftText, Config);
@@ -86,20 +104,26 @@ text('children', WithRightToLeftText, Config, prop.rtlText);
 
 WithRightToLeftText.storyName = 'with right to left text';
 
-export const Grouped = (args) => (
-	<CheckboxItemGroup
-		itemProps={{
+export const Grouped = (args) => {
+	const controls = {
+		itemProps: {
 			inline: args['itemProps-inline'],
 			disabled: args['itemProps-disabled']
-		}}
-		select={args['select']}
-		selectedProp="selected"
-		defaultSelected={0}
-		onSelect={action('onSelect')}
-	>
-		{['Checkbox Item 1', 'Checkbox Item 2', 'Checkbox Item 3']}
-	</CheckboxItemGroup>
-);
+		},
+		select: args['select']
+	};
+
+	return (
+		<CheckboxItemGroup
+			{...controls}
+			selectedProp="selected"
+			defaultSelected={0}
+			onSelect={action('onSelect')}
+		>
+			{['Checkbox Item 1', 'Checkbox Item 2', 'Checkbox Item 3']}
+		</CheckboxItemGroup>
+	);
+};
 
 boolean('itemProps-disabled', Grouped, Config, false);
 boolean('itemProps-inline', Grouped, Config, false);
@@ -108,7 +132,6 @@ select('select', Grouped, ['single', 'radio', 'multiple'], Group, 'multiple');
 Grouped.storyName = 'grouped';
 
 export const MultipleCheckBoxItems = (args) => (
-
 	<Scroller>
 		<CheckboxItem formCheckbox={args['formCheckbox']}>
 			Checkbox Item 1

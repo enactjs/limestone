@@ -87,103 +87,113 @@ WithFooterButtons.parameters = {
 	}
 };
 
-export const LongPrevNextButtons = (args) => (
-	<WizardPanels
-		current={args['current']}
-		noAnimation={args['noAnimation']}
-		noSteps={args['noSteps']}
-		nextButtonVisibility={args['nextButtonVisibility']}
-		onNextClick={action('onNextClick')}
-		onPrevClick={action('onPrevClick')}
-		onTransition={action('onTransition')}
-		onWillTransition={action('onWillTransition')}
-		prevButtonVisibility={args['prevButtonVisibility']}
-		total={args['total']}
-	>
-		<WizardPanels.Panel
-			footer="Footer in View 1"
-			subtitle="A subtitle for View 1"
-			title="WizardPanel View 1"
-			prevButton={
-				args['custom first Panel prevButton'] ? (
-					<Button icon="closex" aria-label="exit">
-						Exit
-					</Button>
-				) : (
-					void 0
-				)
-			}
+export const LongPrevNextButtons = (args) => {
+	const actions = {
+		onNextClick: action('onNextClick'),
+		onPrevClick: action('onPrevClick'),
+		onTransition: action('onTransition'),
+		onWillTransition: action('onWillTransition')
+	};
+
+	const controls = {
+		current: args['current'],
+		noAnimation: args['noAnimation'],
+		noSteps: args['noSteps'],
+		nextButtonVisibility: args['nextButtonVisibility'],
+		prevButtonVisibility: args['prevButtonVisibility'],
+		total: args['total']
+	};
+
+	return (
+		<WizardPanels
+			{...actions}
+			{...controls}
 		>
-			<Scroller>
-				<BodyText>This is BodyText.</BodyText>
-			</Scroller>
-			<footer>
-				<Button>OK</Button>
-				<Button>Cancel</Button>
-			</footer>
-		</WizardPanels.Panel>
-		<WizardPanels.Panel
-			subtitle="A subtitle for View 2"
-			title={inputData.longerString}
-			nextButton={<Button>{inputData.nextString}</Button>}
-			prevButton={<Button>{inputData.longString}</Button>}
-		>
-			<Item>
-				<slotBefore>
-					<Icon>notification</Icon>
-				</slotBefore>
-				A Long title, Previous button has long text, and Next button has short text.
-			</Item>
-		</WizardPanels.Panel>
-		<WizardPanels.Panel
-			subtitle="A subtitle for View 3"
-			title={inputData.longerString}
-			nextButton={<Button>{inputData.longString}</Button>}
-			prevButton={<Button>{inputData.longString}</Button>}
-		>
-			<Item>
-				<slotBefore>
-					<Icon>notification</Icon>
-				</slotBefore>
-				A Long title, Previous button has long text, and Next button has long text.
-			</Item>
-		</WizardPanels.Panel>
-		<WizardPanels.Panel
-			subtitle="A subtitle for View 4"
-			title={inputData.longerString}
-			nextButton={<Button>{inputData.longString}</Button>}
-			prevButton={<Button>{inputData.prevString}</Button>}
-		>
-			<Item>
-				<slotBefore>
-					<Icon>notification</Icon>
-				</slotBefore>
-				A Long title, Previous button has short text, and Next button has long text.
-			</Item>
-		</WizardPanels.Panel>
-		<WizardPanels.Panel
-			footer="Footer in View 5"
-			subtitle="A subtitle for View 5"
-			title="WizardPanel View 5"
-			nextButton={
-				args['custom last Panel nextButton'] ? (
-					<Button icon="closex" aria-label="quit">
-						Close
-					</Button>
-				) : (
-					void 0
-				)
-			}
-		>
-			<Icon>support</Icon>
-			<BodyText>A simple view</BodyText>
-			<footer>
-				<Button>OK</Button>
-				<Button>Cancel</Button>
-			</footer>
-		</WizardPanels.Panel>
-	</WizardPanels>
-);
+			<WizardPanels.Panel
+				footer="Footer in View 1"
+				subtitle="A subtitle for View 1"
+				title="WizardPanel View 1"
+				prevButton={
+					args['custom first Panel prevButton'] ? (
+						<Button icon="closex" aria-label="exit">
+							Exit
+						</Button>
+					) : (
+						void 0
+					)
+				}
+			>
+				<Scroller>
+					<BodyText>This is BodyText.</BodyText>
+				</Scroller>
+				<footer>
+					<Button>OK</Button>
+					<Button>Cancel</Button>
+				</footer>
+			</WizardPanels.Panel>
+			<WizardPanels.Panel
+				subtitle="A subtitle for View 2"
+				title={inputData.longerString}
+				nextButton={<Button>{inputData.nextString}</Button>}
+				prevButton={<Button>{inputData.longString}</Button>}
+			>
+				<Item>
+					<slotBefore>
+						<Icon>notification</Icon>
+					</slotBefore>
+					A Long title, Previous button has long text, and Next button has short text.
+				</Item>
+			</WizardPanels.Panel>
+			<WizardPanels.Panel
+				subtitle="A subtitle for View 3"
+				title={inputData.longerString}
+				nextButton={<Button>{inputData.longString}</Button>}
+				prevButton={<Button>{inputData.longString}</Button>}
+			>
+				<Item>
+					<slotBefore>
+						<Icon>notification</Icon>
+					</slotBefore>
+					A Long title, Previous button has long text, and Next button has long text.
+				</Item>
+			</WizardPanels.Panel>
+			<WizardPanels.Panel
+				subtitle="A subtitle for View 4"
+				title={inputData.longerString}
+				nextButton={<Button>{inputData.longString}</Button>}
+				prevButton={<Button>{inputData.prevString}</Button>}
+			>
+				<Item>
+					<slotBefore>
+						<Icon>notification</Icon>
+					</slotBefore>
+					A Long title, Previous button has short text, and Next button has long text.
+				</Item>
+			</WizardPanels.Panel>
+			<WizardPanels.Panel
+				footer="Footer in View 5"
+				subtitle="A subtitle for View 5"
+				title="WizardPanel View 5"
+				nextButton={
+					args['custom last Panel nextButton'] ? (
+						<Button icon="closex" aria-label="quit">
+							Close
+						</Button>
+					) : (
+						void 0
+					)
+				}
+			>
+				<Icon>support</Icon>
+				<BodyText>A simple view</BodyText>
+				<footer>
+					<Button>OK</Button>
+					<Button>Cancel</Button>
+				</footer>
+			</WizardPanels.Panel>
+		</WizardPanels>
+	);
+};
 
 number('current', LongPrevNextButtons, Config, 0);
 boolean('noAnimation', LongPrevNextButtons, Config);
@@ -275,40 +285,49 @@ class PureComponentItem extends PureComponent {
 	}
 }
 
-export const WithPureComponent = (args) => (
-	<WizardPanels
-		current={args['current']}
-		noAnimation={args['noAnimation']}
-		noSteps={args['noSteps']}
-		nextButtonVisibility={args['nextButtonVisibility']}
-		onNextClick={action('onNextClick')}
-		onPrevClick={action('onPrevClick')}
-		onTransition={action('onTransition')}
-		onWillTransition={action('onWillTransition')}
-		prevButtonVisibility={args['prevButtonVisibility']}
-		total={args['total']}
-	>
-		<WizardPanels.Panel
-			footer="Footer in View 1"
-			subtitle="A subtitle for View 1"
-			title="WizardPanel View 1"
-		>
-			<PureComponentItem>Item1</PureComponentItem>
-			<footer>
-				<Button>OK</Button>
-				<Button>Cancel</Button>
-			</footer>
-		</WizardPanels.Panel>
-		<WizardPanels.Panel
-			footer="Footer in View 2"
-			subtitle="A subtitle for View 2"
-			title="WizardPanel View 2"
-		>
-			<PureComponentItem>Item2</PureComponentItem>
-		</WizardPanels.Panel>
-	</WizardPanels>
-);
+export const WithPureComponent = (args) => {
+	const actions = {
+		onNextClick: action('onNextClick'),
+		onPrevClick: action('onPrevClick'),
+		onTransition: action('onTransition'),
+		onWillTransition: action('onWillTransition')
+	};
 
+	const controls = {
+		current: args['current'],
+		noAnimation: args['noAnimation'],
+		noSteps: args['noSteps'],
+		nextButtonVisibility: args['nextButtonVisibility'],
+		prevButtonVisibility: args['prevButtonVisibility'],
+		total: args['total']
+	};
+
+	return (
+		<WizardPanels
+			{...actions}
+			{...controls}
+		>
+			<WizardPanels.Panel
+				footer="Footer in View 1"
+				subtitle="A subtitle for View 1"
+				title="WizardPanel View 1"
+			>
+				<PureComponentItem>Item1</PureComponentItem>
+				<footer>
+					<Button>OK</Button>
+					<Button>Cancel</Button>
+				</footer>
+			</WizardPanels.Panel>
+			<WizardPanels.Panel
+				footer="Footer in View 2"
+				subtitle="A subtitle for View 2"
+				title="WizardPanel View 2"
+			>
+				<PureComponentItem>Item2</PureComponentItem>
+			</WizardPanels.Panel>
+		</WizardPanels>
+	);
+};
 number('current', WithPureComponent, Config, 0);
 boolean('noAnimation', WithPureComponent, Config);
 boolean('noSteps', WithPureComponent, Config);

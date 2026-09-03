@@ -70,7 +70,7 @@ describe('Alert', () => {
 		);
 		const alert = screen.getByRole('alert');
 
-		const actual = alert.querySelector('#undefined_content').hasChildNodes();
+		const actual = alert.querySelector('.content').hasChildNodes();
 
 		expect(actual).toBeFalsy();
 	});
@@ -227,7 +227,7 @@ describe('AlertOverlay specs', () => {
 		);
 		const alert = screen.getByRole('alert');
 
-		const actual = alert.querySelector('#undefined_content').hasChildNodes();
+		const actual = alert.querySelector('.content').hasChildNodes();
 
 		expect(actual).toBeFalsy();
 	});
@@ -305,5 +305,92 @@ describe('AlertOverlay specs', () => {
 		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
 
 		expect(buttonsLayout).toHaveClass('vertical');
+	});
+
+	test('should resolve size to `medium` when size is omitted', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay">
+					<buttons>
+						<Button size="small">yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+
+		expect(alert).toHaveClass('medium');
+		expect(alert).not.toHaveClass('small');
+	});
+
+	test('should align buttons vertically when size is `small` and buttonDirection is `auto` even with 2 buttons', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open type="overlay" size="small">
+					<buttons>
+						<Button size="small">yes</Button>
+						<Button size="small">no</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		const alert = screen.getByRole('alert');
+		const buttonsLayout = alert.querySelector('[id$="_buttons"]');
+
+		expect(buttonsLayout).toHaveClass('vertical');
+	});
+});
+
+describe('FittedContentCell', () => {
+	const originalGetClientRects = window.Range.prototype.getClientRects;
+
+	afterEach(() => {
+		window.Range.prototype.getClientRects = originalGetClientRects;
+	});
+
+	test('should set content width based on measured rects', () => {
+		window.Range.prototype.getClientRects = () => [{left: 10, right: 210}];
+
+		render(
+			<FloatingLayerController>
+				<Alert open>{'text content'}</Alert>
+			</FloatingLayerController>
+		);
+
+		const content = document.querySelector('[id$="_content"]');
+		expect(content.style.width).toBe('200px');
+	});
+
+	test('should set content width spanning multiple rects', () => {
+		window.Range.prototype.getClientRects = () => [{left: 10, right: 110}, {left: 10, right: 210}];
+
+		render(
+			<FloatingLayerController>
+				<Alert open>{'text content'}</Alert>
+			</FloatingLayerController>
+		);
+
+		const content = document.querySelector('[id$="_content"]');
+		expect(content.style.width).toBe('200px');
+	});
+
+	test('should remeasure content width on window resize', () => {
+		window.Range.prototype.getClientRects = () => [{left: 10, right: 210}];
+
+		render(
+			<FloatingLayerController>
+				<Alert open>{'text content'}</Alert>
+			</FloatingLayerController>
+		);
+
+		const content = document.querySelector('[id$="_content"]');
+		expect(content.style.width).toBe('200px');
+
+		window.Range.prototype.getClientRects = () => [{left: 10, right: 310}];
+		window.dispatchEvent(new Event('resize'));
+
+		expect(content.style.width).toBe('300px');
 	});
 });

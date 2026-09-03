@@ -29,17 +29,21 @@ export default {
 };
 
 export const _ContextualMenuDecorator = (args) => {
+	const controls = {
+		direction: args['direction'],
+		offset: args['offset'],
+		popupWidth: args['popupWidth']
+	};
+
 	const itemCount = args['items'];
 	const items = new Array(itemCount).fill().map((i, index) => `Option ${index + 1}`);
 
 	return (
 		<div style={{textAlign: 'center', marginTop: ri.scaleToRem(198)}}>
 			<ContextualButton
-				direction={args['direction']}
+				{...controls}
 				menuItems={items}
-				offset={args['offset']}
 				onClose={action('onClose')}
-				popupWidth={args['popupWidth']}
 				style={{width: ri.scaleToRem(1020)}}
 			>
 				{args['button string']}

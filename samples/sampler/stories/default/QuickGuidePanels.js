@@ -28,6 +28,21 @@ export const _QuickGuidePanels = (args) => {
 	const widthRatio = screenWidth / 1920;
 	const heightRatio = screenHeight / 1080;
 
+	const actions = {
+		onBack: action('onBack'),
+		onChange: action('onChange'),
+		onClose: action('onClose'),
+		onNextClick: action('onNextClick'),
+		onPrevClick: action('onPrevClick')
+	};
+
+	const controls = {
+		current: args['current'],
+		nextButtonVisibility: args['nextButtonVisibility'],
+		prevButtonVisibility: args['prevButtonVisibility'],
+		total: args['total']
+	};
+
 	const Story = () => (
 		<div>
 			<Panel css={css}>
@@ -42,15 +57,8 @@ export const _QuickGuidePanels = (args) => {
 				scrimType="transparent"
 			>
 				<QuickGuidePanels
-					current={args['current']}
-					nextButtonVisibility={args['nextButtonVisibility']}
-					onBack={action('onBack')}
-					onChange={action('onChange')}
-					onClose={action('onClose')}
-					onNextClick={action('onNextClick')}
-					onPrevClick={action('onPrevClick')}
-					prevButtonVisibility={args['prevButtonVisibility']}
-					total={args['total']}
+					{...actions}
+					{...controls}
 				>
 					<QuickGuidePanels.Panel>
 						<div className={css.guide}>

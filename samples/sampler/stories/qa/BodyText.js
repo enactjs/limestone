@@ -16,11 +16,18 @@ export default {
 	component: 'BodyText'
 };
 
-export const WithLongAndShortStrings = (args) => (
-	<BodyText centered={args['centered']} noWrap={args['noWrap']}>
-		{args['children']}
-	</BodyText>
-);
+export const WithLongAndShortStrings = (args) => {
+	const controls = {
+		centered: args['centered'],
+		noWrap: args['noWrap']
+	};
+
+	return (
+		<BodyText {...controls}>
+			{args['children']}
+		</BodyText>
+	);
+};
 
 boolean('centered', WithLongAndShortStrings, BodyText);
 boolean('noWrap', WithLongAndShortStrings, BodyText);

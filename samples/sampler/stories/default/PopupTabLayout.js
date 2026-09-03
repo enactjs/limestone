@@ -76,6 +76,20 @@ const PopupTabLayoutSamplesBase = (props) => {
 		}
 	};
 
+	const actions = {
+		onTabAnimationEnd: action('onTabAnimationEnd'),
+		onHide: action('onHide'),
+		onSelect: action('onSelect'),
+		onShow: action('onShow')
+	};
+
+	const controls = {
+		noAnimation: args['noAnimation'],
+		noAutoDismiss: args['noAutoDismiss'],
+		scrimType: args['scrimType'],
+		spotlightRestrict: args['spotlightRestrict']
+	};
+
 	return (
 		<div>
 			<Button focusEffect="static" onClick={toggleOpen}>
@@ -83,16 +97,10 @@ const PopupTabLayoutSamplesBase = (props) => {
 			</Button>
 
 			<PopupTabLayout
+				{...actions}
+				{...controls}
 				open={open}
 				onClose={handleClose}
-				noAnimation={args['noAnimation']}
-				noAutoDismiss={args['noAutoDismiss']}
-				onTabAnimationEnd={action('onTabAnimationEnd')}
-				onHide={action('onHide')}
-				onSelect={action('onSelect')}
-				onShow={action('onShow')}
-				scrimType={args['scrimType']}
-				spotlightRestrict={args['spotlightRestrict']}
 			>
 				<Tab
 					icon={includeIcons ? 'picture' : null}

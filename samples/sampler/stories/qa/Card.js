@@ -71,14 +71,20 @@ export default {
 	component: 'Card'
 };
 
-export const WithAsyncRender = (args) => (
-	<VirtualGridList
-		dataSize={updateDataSize(args['dataSize'])}
-		direction={args['direction']}
-		itemSize={{minWidth: ri.scale(768), minHeight: ri.scale(648)}}
-		itemRenderer={renderItem}
-	/>
-);
+export const WithAsyncRender = (args) => {
+	const controls = {
+		dataSize: updateDataSize(args['dataSize']),
+		direction: args['direction']
+	};
+
+	return (
+		<VirtualGridList
+			{...controls}
+			itemSize={{minWidth: ri.scale(768), minHeight: ri.scale(648)}}
+			itemRenderer={renderItem}
+		/>
+	);
+};
 
 number('dataSize', WithAsyncRender, Config, defaultDataSize);
 select('direction', WithAsyncRender, prop.direction, Config);

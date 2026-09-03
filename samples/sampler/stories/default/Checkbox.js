@@ -13,16 +13,22 @@ export default {
 	component: 'Checkbox'
 };
 
-export const _Checkbox = (args) => (
-	<Checkbox
-		disabled={args['disabled']}
-		indeterminate={args['indeterminate']}
-		indeterminateIcon={args['indeterminateIcon']}
-		onToggle={action('onToggle')}
-	>
-		{args['children']}
-	</Checkbox>
-);
+export const _Checkbox = (args) => {
+	const controls = {
+		disabled: args['disabled'],
+		indeterminate: args['indeterminate'],
+		indeterminateIcon: args['indeterminateIcon']
+	};
+
+	return (
+		<Checkbox
+			{...controls}
+			onToggle={action('onToggle')}
+		>
+			{args['children']}
+		</Checkbox>
+	);
+};
 
 boolean('disabled', _Checkbox, Config);
 boolean('indeterminate', _Checkbox, Config);

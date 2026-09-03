@@ -142,6 +142,13 @@ describe('Input test', () => {
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
+
+			// Submit is required when the button is shown; move focus onto it
+			for (let i = 0; i < 5 && !(await components.input3.submitButton.isFocused()); i++) {
+				await Page.spotlightDown();
+			}
+			expect(await components.input3.submitButton.isFocused()).toBe(true);
+			await Page.spotlightSelect();
 			await browser.pause(1000);
 
 			expect(await components.input3.self.isFocused()).toBe(true);
@@ -197,6 +204,13 @@ describe('Input test', () => {
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
 			await Page.spotlightSelect();
+			await Page.spotlightSelect();
+
+			// Submit is required when the button is shown; move focus onto it
+			for (let i = 0; i < 5 && !(await components.input4.submitButton.isFocused()); i++) {
+				await Page.spotlightDown();
+			}
+			expect(await components.input4.submitButton.isFocused()).toBe(true);
 			await Page.spotlightSelect();
 			await browser.pause(1000);
 

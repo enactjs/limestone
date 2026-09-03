@@ -77,25 +77,31 @@ export default {
 	component: 'Alert'
 };
 
-export const _Alert = (args) => (
-	<Alert
-		buttonDirection={args['buttonDirection']}
-		open={args['open']}
-		onClose={action('onClose')}
-		overlayPosition={args['overlayPosition']}
-		size={args['size']}
-		title={args['title']}
-		type={args['type']}
-	>
-		{args['image'] ? (
-			<image>
-				<AlertImage iconSize={args['iconSize']} src={args['src']} type={args['type (image)']} />
-			</image>
-		) : null}
-		{args['type'] === 'fullscreen' ? prop.buttons[args['buttons']] : prop.smallButtons[args['buttons']]}
-		{args['children']}
-	</Alert>
-);
+export const _Alert = (args) => {
+	const controls = {
+		buttonDirection: args['buttonDirection'],
+		open: args['open'],
+		overlayPosition: args['overlayPosition'],
+		size: args['size'],
+		title: args['title'],
+		type: args['type']
+	};
+
+	return (
+		<Alert
+			{...controls}
+			onClose={action('onClose')}
+		>
+			{args['image'] ? (
+				<image>
+					<AlertImage iconSize={args['iconSize']} src={args['src']} type={args['type (image)']} />
+				</image>
+			) : null}
+			{args['type'] === 'fullscreen' ? prop.buttons[args['buttons']] : prop.smallButtons[args['buttons']]}
+			{args['children']}
+		</Alert>
+	);
+};
 
 boolean('open', _Alert, Config);
 select('buttons', _Alert, ['no buttons', '1 button', '2 buttons', '3 buttons', '4 buttons'], Config, '2 buttons');
