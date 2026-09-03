@@ -1,5 +1,5 @@
 const Page = require('./DatePickerPage');
-const {daysInMonth, extractValues, validateTitle} = require('./DatePicker-utils.js');
+const {daysInMonth, extractValues, validateTitle, waitForValue} = require('./DatePicker-utils.js');
 
 describe('DatePicker', function () {
 
@@ -33,9 +33,9 @@ describe('DatePicker', function () {
 					const {month} = await extractValues(datePicker);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await Page.spotlightUp();
-					await browser.pause(500);
-					const {month: value} = await extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
+					await waitForValue(datePicker, 'month', expected);
+					const {month: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -43,9 +43,9 @@ describe('DatePicker', function () {
 					const {month} = await extractValues(datePicker);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await Page.spotlightDown();
-					await browser.pause(500);
-					const {month: value} = await extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
+					await waitForValue(datePicker, 'month', expected);
+					const {month: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -55,9 +55,9 @@ describe('DatePicker', function () {
 					await Page.spotlightRight();
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await Page.spotlightUp();
-					await browser.pause(500);
-					const {day: value} = await extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
+					await waitForValue(datePicker, 'day', expected);
+					const {day: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -67,9 +67,9 @@ describe('DatePicker', function () {
 					await Page.spotlightRight();
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await Page.spotlightDown();
-					await browser.pause(500);
-					const {day: value} = await extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
+					await waitForValue(datePicker, 'day', expected);
+					const {day: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -79,9 +79,9 @@ describe('DatePicker', function () {
 					await Page.spotlightRight();
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await Page.spotlightUp();
-					await browser.pause(500);
-					const {year: value} = await extractValues(datePicker);
 					const expected = year + 1;
+					await waitForValue(datePicker, 'year', expected);
+					const {year: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -91,9 +91,9 @@ describe('DatePicker', function () {
 					await Page.spotlightRight();
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await Page.spotlightDown();
-					await browser.pause(500);
-					const {year: value} = await extractValues(datePicker);
 					const expected = year - 1;
+					await waitForValue(datePicker, 'year', expected);
+					const {year: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 				// End of [QWTC-2097] - Month, Day, Year pickers Animate with 5-way - LTR
@@ -135,9 +135,9 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.incrementer('month').click();
-					await browser.pause(500);
-					const {month: value} = await extractValues(datePicker);
 					const expected = month < 12 ? month + 1 : 1;
+					await waitForValue(datePicker, 'month', expected);
+					const {month: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -147,9 +147,9 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.month.isFocused()).toBe(true);
 					await datePicker.decrementer('month').click();
-					await browser.pause(500);
-					const {month: value} = await extractValues(datePicker);
 					const expected = month > 1 ? month - 1 : 12;
+					await waitForValue(datePicker, 'month', expected);
+					const {month: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -160,9 +160,9 @@ describe('DatePicker', function () {
 					await Page.delay(500);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.incrementer('day').click();
-					await browser.pause(500);
-					const {day: value} = await extractValues(datePicker);
 					const expected = day !== numDays ? day + 1 : 1;
+					await waitForValue(datePicker, 'day', expected);
+					const {day: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -173,9 +173,9 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.decrementer('day').click();
-					await Page.delay(500);
-					const {day: value} = await extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
+					await waitForValue(datePicker, 'day', expected);
+					const {day: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -185,9 +185,9 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.incrementer('year').click();
-					await browser.pause(500);
-					const {year: value} = await extractValues(datePicker);
 					const expected = year + 1;
+					await waitForValue(datePicker, 'year', expected);
+					const {year: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 
@@ -197,9 +197,9 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.year.isFocused()).toBe(true);
 					await datePicker.decrementer('year').click();
-					await browser.pause(500);
-					const {year: value} = await extractValues(datePicker);
 					const expected = year - 1;
+					await waitForValue(datePicker, 'year', expected);
+					const {year: value} = await extractValues(datePicker);
 					expect(value).toBe(expected);
 				});
 				// End of [QWTC-2095] - Month, Day, Year pickers Animate with Pointer Click - LTR
@@ -384,15 +384,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMinValue.decrementer('year').click();
 			await datePickerCheckMinValue.decrementer('year').click();
 			// Step 3 Verify: Year Value changes to 1900.
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMinValue, 'year', 1900);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 
 			// check disabled picker does not work when value reached minimum end-value.
 			await datePickerCheckMinValue.decrementer('year').click();
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMinValue, 'year', 1900);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1900);
 			await datePickerCheckMinValue.incrementer('year').click();
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMinValue, 'year', 1901);
 			expect((await extractValues(datePickerCheckMinValue)).year).toBe(1901);
 		});
 
@@ -404,15 +404,15 @@ describe('DatePicker', function () {
 			await datePickerCheckMaxValue.incrementer('year').click();
 			await datePickerCheckMaxValue.incrementer('year').click();
 			// Step 3 Verify: Year Value changes to 2099.
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMaxValue, 'year', 2099);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 
 			// check disabled picker does not work when value reached maximum end-value.
 			await datePickerCheckMaxValue.incrementer('year').click();
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMaxValue, 'year', 2099);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2099);
 			await datePickerCheckMaxValue.decrementer('year').click();
-			await Page.delay(500);
+			await waitForValue(datePickerCheckMaxValue, 'year', 2098);
 			expect((await extractValues(datePickerCheckMaxValue)).year).toBe(2098);
 		});
 	});
