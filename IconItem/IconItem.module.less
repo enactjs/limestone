@@ -7,7 +7,8 @@
 
 .iconItem {
 	position: relative;
-	.lime-focus-out-motion();
+	&:not(:global(.hwTier-low)) { .lime-focus-out-medium-high-motion(1); }
+	&:global(.hwTier-low) { .lime-focus-out-medium-low-motion(1); }
 	will-change: transform;
 	height: @lime-iconitem-height;
 	width: @lime-iconitem-width;
@@ -76,7 +77,8 @@
 	}
 
 	.focus({
-		.lime-iconitem-focus-in-motion();
+		&:not(:global(.hwTier-low)) { .lime-focus-in-medium-high-motion(1.2); }
+		&:global(.hwTier-low) { .lime-focus-in-medium-low-motion(1.2); }
 
 		&.labelOnFocus {
 			.label, .labelContainer {
@@ -93,10 +95,12 @@
 		.focus({
 			&.pressed,
 			&:active {
-				.lime-iconitem-press-motion();
+				&:not(:global(.hwTier-low)) { .lime-press-medium-high-motion(1.1); }
+				&:global(.hwTier-low) { .lime-press-medium-low-motion(1.1); }
 			}
 			&:not(.pressed) {
-				.lime-iconitem-release-motion();
+				&:not(:global(.hwTier-low)) { .lime-release-medium-high-motion(1.2); }
+				&:global(.hwTier-low) { .lime-release-medium-low-motion(1.2); }
 			}
 		});
 	}

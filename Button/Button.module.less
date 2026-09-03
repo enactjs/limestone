@@ -339,7 +339,8 @@
 
 		.bg {
 			.lime-button-resting-bg-colors();
-			.lime-focus-out-motion();
+			&:not(:global(.hwTier-low)) { .lime-focus-out-small-high-motion(1); }
+			&:global(.hwTier-low) { .lime-focus-out-small-low-motion(1); }
 			border-width: @lime-button-bg-border-width;
 			border-style: @lime-button-bg-border-style;
 			border-color: @lime-button-outline-border-color;
@@ -506,7 +507,8 @@
 			&.focusExpand {
 				.bg {
 					.lime-bg-colors({
-						.lime-focus-in-motion();
+						&:not(:global(.hwTier-low)) { .lime-focus-in-small-high-motion(1.1); }
+						&:global(.hwTier-low) { .lime-focus-in-small-low-motion(1.1); }
 					});
 				}
 			}
@@ -522,7 +524,8 @@
 					&:active {
 						.bg {
 							.lime-bg-colors({
-								.lime-press-motion();
+								&:not(:global(.hwTier-low)) { .lime-press-small-high-motion(1.05); }
+								&:global(.hwTier-low) { .lime-press-small-low-motion(1.05); }
 							});
 						}
 					}
@@ -530,7 +533,8 @@
 					&:not(.pressed) {
 						.bg {
 							.lime-bg-colors({
-								.lime-release-motion();
+								&:not(:global(.hwTier-low)) { .lime-release-small-high-motion(1.1); }
+								&:global(.hwTier-low) { .lime-release-small-low-motion(1.1); }
 							});
 						}
 					}
