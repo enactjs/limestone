@@ -14,7 +14,10 @@ const combineCarouselAnimations = (primary, ...secondary) => ({
 		return primary.onfinish;
 	},
 	set onfinish (fn) {
-		primary.onfinish = fn;
+		primary.onfinish = (...args) => {
+			fn(...args);
+			secondary.forEach((animation) => animation.finish());
+		};
 	},
 	finish: () => {
 		primary.finish();
