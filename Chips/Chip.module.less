@@ -20,10 +20,6 @@
 			border-radius: @lime-chip-border-radius;
 		}
 
-		.icon {
-			margin-block: 0;
-		}
-
 		&:has(.icon) {
 			.padding-start-end(@lime-chip-padding-icon-left, @lime-button-small-h-padding);
 		}
@@ -35,12 +31,17 @@
 			.client {
 				padding: 0;
 			}
+
+			.icon {
+				margin-block: 0;
+			}
 		}
 	}
 
 	.multiline {
-		text-align: left;
-		white-space: wrap;
+		text-align: start;
+		white-space: normal;
+		min-width: 0;
 		padding-block: @lime-chip-multiline-padding;
 	}
 

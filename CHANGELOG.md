@@ -2,6 +2,21 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+
+### Changed
+
+- `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
+
+### Fixed
+
+- `limestone/Chips.Chip` `deleteButton` to places accordingly when `multiline=true`
+
 ## [1.11.0] - 2026-09-02
 
 ### Added
@@ -16,7 +31,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
-- `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
 - `limestone/Input` to show the submit button for separated number inputs by default
 
 ### Fixed

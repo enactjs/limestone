@@ -291,9 +291,7 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	isImage: PropTypes.bool,
 
 	/**
-	 * A boolean prop that determines whether the associated component or behavior
-	 * should support multiline functionality.
-	 * Typically used to enable or disable multiline input, display, or processing.
+	 * Wraps the chip label onto multiple lines instead of marquee-scrolling a single line.
 	 *
 	 * @type {Boolean}
 	 * @public
