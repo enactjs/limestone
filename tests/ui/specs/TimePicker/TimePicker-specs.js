@@ -58,6 +58,7 @@ describe('TimePicker', function () {
 					await Page.spotlightRight();
 					await browser.waitUntil(async () => await timePicker.minute.isFocused(), {timeout: 1500,  interval: 100});
 					await Page.spotlightDown();
+					await Page.delay(500);
 					const {minute: value} = await extractValues(timePicker);
 					const expected = minute !== 0 ? minute - 1 : 59;
 					expect(value).toBe(expected);
@@ -190,7 +191,7 @@ describe('TimePicker', function () {
 					await timePicker.minute.click();
 					await browser.waitUntil(async () => await timePicker.minute.isFocused(), {timeout: 1500,  interval: 100});
 					await timePicker.decrementer('minute').click();
-					await Page.delay(200);
+					await Page.delay(500);
 					const {minute: value} = await extractValues(timePicker);
 					const expected = minute !== 0 ? minute - 1 : 59;
 					expect(value).toBe(expected);
