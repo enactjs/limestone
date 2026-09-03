@@ -45,17 +45,24 @@ export const _Slider = (args) => {
 	};
 
 	const isVertical = args['orientation'] === 'vertical';
-
-	return (
-		<div className={isVertical ? css.vertical : css.horizontal}>
-			<Slider
-				{...actions}
-				{...controls}
-			>
-				{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
-			</Slider>
-		</div>
+	const slider = (
+		<Slider
+			{...actions}
+			{...controls}
+		>
+			{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
+		</Slider>
 	);
+
+	if (isVertical) {
+		return (
+			<div className={css.vertical}>
+				{slider}
+			</div>
+		);
+	}
+
+	return slider;
 };
 
 boolean('disabled', _Slider, SliderConfig);

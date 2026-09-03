@@ -393,13 +393,13 @@
 		}
 
 		:global(.spotlight-input-mouse) & {
-			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover)) {
+			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
 				.knob::before {
 					.lime-slider-focus-in-motion();
 				}
 			}
 
-			&:not([disabled]):not(.colorPicker) {
+			&:not([disabled]):not(.colorPicker, .pressed) {
 				.tick:hover::after {
 					opacity: @lime-slider-tick-hover-opacity;
 				}
@@ -582,6 +582,7 @@
 
 		.tickMark {
 			background-color: @lime-slider-tick-color;
+			.lime-taparea(@lime-slider-tick-width);
 		}
 
 		.tickLabel,
