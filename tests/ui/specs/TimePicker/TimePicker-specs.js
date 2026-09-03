@@ -5,6 +5,7 @@ describe('TimePicker', function () {
 	describe('LTR locale', function () {
 		beforeEach(async function () {
 			await Page.open();
+			await Page.delay(300);
 		});
 
 		describe('default', function () {
