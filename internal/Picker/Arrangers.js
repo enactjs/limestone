@@ -1,8 +1,11 @@
 /**
  * Combines a primary animation with secondary animations so they can be controlled together.
+ * `primary` should be whichever animation takes the longest to complete; it is used as the
+ * source for state and finish callbacks, and the rest are snapped to their end state when it
+ * finishes.
  *
- * @param {Animation} primary			Animation used as the source for state and finish callbacks.
- * @param {...Animation} secondary		Additional animations controlled alongside the primary animation.
+ * @param {Animation} primary			Longest-running animation; used as the source for state and finish callbacks.
+ * @param {...Animation} secondary		Shorter-running animations controlled alongside the primary animation.
  * @returns {Animation} 				Combined animation-like controller.
  * @private
  */
