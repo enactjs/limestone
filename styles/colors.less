@@ -369,6 +369,8 @@
 // ---------------------------------------
 @lime-slider-min-max-color: var(--semantic-color-on-background-sub);
 @lime-slider-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-slider-tick-color: @lime-slider-track-color;
+@lime-slider-tick-label-color: @lime-slider-min-max-color;
 @lime-slider-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
 @lime-slider-track-active-color: var(--semantic-color-surface-white);
 @lime-slider-track-active-focused-color: var(--semantic-color-surface-white);
@@ -380,6 +382,7 @@
 @lime-slider-handle-disabled-color: transparent;
 @lime-slider-handle-focused-shadow: 0 24px 36px @lime-shadow-color;
 @lime-slider-disabled-bar-opacity: 0.3;
+@lime-slider-tick-hover-opacity: 0.4;
 
 // Spinner
 // ---------------------------------------
