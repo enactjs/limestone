@@ -146,7 +146,7 @@ const PageViewsBase = kind({
 		 * Disables page transitions.
 		 *
 		 * @type {Boolean}
-		 * @default false
+		 * @default true
 		 * @public
 		 */
 		noAnimation: PropTypes.bool,
@@ -235,6 +235,7 @@ const PageViewsBase = kind({
 
 	defaultProps: {
 		arranger: BasicArranger,
+		noAnimation: true,
 		pageIndicatorPosition: 'bottom',
 		pageIndicatorType: 'dot',
 		showFooterButtons: false

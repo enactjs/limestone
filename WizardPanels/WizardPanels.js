@@ -14,7 +14,7 @@ import compose from 'ramda/src/compose';
 import $L from '../internal/$L';
 import {Header} from '../Panels';
 import {PanelBase} from '../Panels/Panel';
-import {BasicArranger, CrossFadeArranger, CancelDecorator, FloatingLayerIdProvider, NavigationButton, PanelsRouter} from '../internal/Panels';
+import {BasicArranger, CancelDecorator, FadeArranger, FloatingLayerIdProvider, NavigationButton, PanelsRouter} from '../internal/Panels';
 import Skinnable from '../Skinnable';
 import Steps from '../Steps';
 
@@ -281,6 +281,7 @@ const WizardPanelsBase = kind({
 	},
 
 	defaultProps: {
+		noAnimation: true,
 		index: 0,
 		nextButtonVisibility: 'auto',
 		noSubtitle: false,
@@ -391,7 +392,7 @@ const WizardPanelsBase = kind({
 				header={
 					<HeaderContainer
 						aria-label={ariaLabel}
-						arranger={noAnimation ? null : CrossFadeArranger}
+						arranger={FadeArranger}
 						centered
 						css={css}
 						noCloseButton
