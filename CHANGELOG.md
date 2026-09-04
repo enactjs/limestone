@@ -15,7 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Chips.Chip` `deleteButton` to places accordingly when `multiline=true`
+- `limestone/Chips.Chip` `deleteButton` positioning when `multiline` is `true`
 
 ## [1.11.0] - 2026-09-02
 
