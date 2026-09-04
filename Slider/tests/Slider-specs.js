@@ -575,6 +575,250 @@ describe('Slider', () => {
 		expect(slider).toHaveClass(expected);
 	});
 
+	test('should render tick marks when ticks is true', () => {
+		render(<Slider ticks />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasTicks');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should keep ticks hoverable', () => {
+		render(<Slider ticks />);
+
+		const slider = screen.getByRole('slider');
+		const tick = slider.querySelector('.tick');
+
+		expect(tick).not.toBeNull();
+		fireEvent.mouseOver(tick);
+		expect(slider).toHaveClass('hasTicks');
+	});
+
+	test('should render one tick per step when ticks is true and the range is small', () => {
+		render(<Slider max={10} min={0} step={1} ticks />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(11);
+	});
+
+	test('should keep an explicit tick count even when it differs from the step count', () => {
+		render(<Slider max={10} min={0} step={1} ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should increment by the tick interval when alignStepsWithTicks is set even if knobStep is set', () => {
+		render(<Slider activateOnSelect alignStepsWithTicks defaultValue={0} knobStep={1} max={100} min={0} step={1} ticks={5} />);
+		const slider = screen.getByRole('slider');
+
+		activate(slider);
+		rightKeyDown(slider);
+
+		expect(slider).toHaveAttribute('aria-valuetext', '25');
+	});
+
+	test('should render the specified number of tick marks', () => {
+		render(<Slider ticks={4} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(4);
+	});
+
+	test('should not render tick marks when ticks is less than 3', () => {
+		jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+		render(<Slider ticks={2} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).not.toHaveClass('hasTicks');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(0);
+	});
+
+	test('should render start and end labels when two labels are provided', () => {
+		render(<Slider labels={['Short Text', 'Long Text']} ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasSideLabels');
+		expect(slider).toHaveTextContent('Short Text');
+		expect(slider).toHaveTextContent('Long Text');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should render a label for each tick when three or more labels are provided', () => {
+		render(<Slider labels={['Low', 'Medium', 'High', 'Max']} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasTicks');
+		expect(slider).toHaveClass('hasTickLabels');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(4);
+		expect(slider).toHaveTextContent('Low');
+		expect(slider).toHaveTextContent('Medium');
+		expect(slider).toHaveTextContent('High');
+		expect(slider).toHaveTextContent('Max');
+	});
+
+	test('should not display min and max values when tick labels are provided', () => {
+		render(<Slider labels={['A', 'B', 'C']} showMinMax />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasTickLabels');
+		expect(slider).not.toHaveClass('hasMinMax');
+		expect(slider.querySelector('.minMax')).toBeNull();
+	});
+
+	test('should generate tick labels from min and max when automaticLabels is set', () => {
+		render(<Slider automaticLabels max={100} min={0} ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+		const tickLabels = [...slider.querySelectorAll('.tickLabel')].map((node) => node.textContent);
+
+		expect(slider).toHaveClass('hasTickLabels');
+		expect(tickLabels).toEqual(['0', '25', '50', '75', '100']);
+	});
+
+	test('should ignore labels when automaticLabels is set', () => {
+		render(<Slider automaticLabels labels={['Low', 'Medium', 'High']} max={10} min={0} ticks={3} />);
+
+		const slider = screen.getByRole('slider');
+		const tickLabels = [...slider.querySelectorAll('.tickLabel')].map((node) => node.textContent);
+
+		expect(tickLabels).toEqual(['0', '5', '10']);
+	});
+
+	test('should use the label count when ticks is true and three or more labels are provided', () => {
+		render(<Slider labels={['A', 'B', 'C', 'D']} ticks />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(4);
+		expect(slider).toHaveTextContent('A');
+		expect(slider).toHaveTextContent('D');
+	});
+
+	test('should use five ticks when ticks is true and alignStepsWithTicks is set', () => {
+		render(<Slider alignStepsWithTicks max={10} min={0} step={1} ticks />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should warn when alignStepsWithTicks is set without ticks', () => {
+		const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+		render(<Slider alignStepsWithTicks />);
+
+		expect(consoleSpy).toHaveBeenCalled();
+		consoleSpy.mockRestore();
+	});
+
+	test('should warn when automaticLabels is set without ticks', () => {
+		const consoleSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+
+		render(<Slider automaticLabels />);
+
+		expect(consoleSpy).toHaveBeenCalled();
+		consoleSpy.mockRestore();
+	});
+
+	test('should display min and max beside the track when showMinMax is set with ticks', () => {
+		render(<Slider max={80} min={20} showMinMax ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasSideLabels');
+		expect(slider).not.toHaveClass('hasMinMax');
+		expect(slider.querySelector('.minMax')).toBeNull();
+		expect(slider.querySelector('.startLabel')).toHaveTextContent('20');
+		expect(slider.querySelector('.endLabel')).toHaveTextContent('80');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should display min and max before and after a vertical slider when showMinMax is set with ticks', () => {
+		render(<Slider max={80} min={20} orientation="vertical" showMinMax ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).toHaveClass('hasSideLabels');
+		expect(slider).not.toHaveClass('hasMinMax');
+		expect(slider.querySelector('.minMax')).toBeNull();
+		expect(slider.querySelector('.startLabel')).toHaveTextContent('20');
+		expect(slider.querySelector('.endLabel')).toHaveTextContent('80');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should display min and max values when showMinMax is set without labels', () => {
+		render(<Slider max={80} min={20} showMinMax />);
+
+		const slider = screen.getByRole('slider');
+		const minMax = slider.querySelector('.minMax');
+
+		expect(slider).toHaveClass('hasMinMax');
+		expect(minMax).toHaveTextContent('20');
+		expect(minMax).toHaveTextContent('80');
+	});
+
+	test('should skip empty tick labels', () => {
+		render(<Slider labels={['Low', '', 'High']} />);
+
+		const slider = screen.getByRole('slider');
+		const tickLabels = [...slider.querySelectorAll('.tickLabel')].map((node) => node.textContent);
+
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(3);
+		expect(tickLabels).toEqual(['Low', 'High']);
+	});
+
+	test('should skip empty start and end labels', () => {
+		render(<Slider labels={['', '']} ticks={5} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider.querySelector('.startLabel')).toBeNull();
+		expect(slider.querySelector('.endLabel')).toBeNull();
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(5);
+	});
+
+	test('should position ticks on a vertical slider', () => {
+		render(<Slider labels={['Low', 'Mid', 'High']} orientation="vertical" />);
+
+		const slider = screen.getByRole('slider');
+		const ticks = slider.querySelectorAll('.tick');
+
+		expect(ticks).toHaveLength(3);
+		expect(ticks[0]).toHaveStyle({bottom: '0%'});
+		expect(ticks[2]).toHaveStyle({bottom: '100%'});
+		expect(slider).not.toHaveClass('hasTickLabels');
+		expect(slider.querySelector('.tickLabel')).toBeNull();
+	});
+
+	test('should marquee tick labels while focused', () => {
+		render(<Slider labels={['Short Text', 'Long Text']} ticks={5} />);
+		const slider = screen.getByRole('slider');
+
+		focus(slider);
+
+		expect(slider.querySelector('.startLabel')).toBeInTheDocument();
+		expect(slider.querySelector('.endLabel')).toBeInTheDocument();
+	});
+
+	test('should not render ticks when colorPicker is set', () => {
+		render(<Slider colorPicker ticks={5} labels={['A', 'B', 'C']} />);
+
+		const slider = screen.getByRole('slider');
+
+		expect(slider).not.toHaveClass('hasTicks');
+		expect(slider.querySelectorAll('.tickMark')).toHaveLength(0);
+	});
+
 	test('should fire `onChange` with `onChange` type when value changed for `colorPicker`', () => {
 		const handleChange = jest.fn();
 
