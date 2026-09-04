@@ -185,4 +185,61 @@ describe('Chip', () => {
 		const chipButton = screen.getByRole('checkbox');
 		expect(chipButton).toHaveAttribute('data-chip-index', 'minimal-chip');
 	});
+
+	test('should wrap children in a multiline container when `multiline` is `true`', () => {
+		const children = 'Multiline label text';
+		render(<ChipBase id="chip" multiline>{children}</ChipBase>);
+
+		const label = screen.getByText(children);
+		expect(label).toHaveClass('multiline');
+	});
+
+	test('should not wrap children in a multiline container when `multiline` is `false`', () => {
+		const children = 'Single line label';
+		render(<ChipBase id="chip">{children}</ChipBase>);
+
+		const label = screen.getByText(children);
+		expect(label).not.toHaveClass('multiline');
+	});
+
+	test('should not reveal the delete button when the chip is disabled', () => {
+		render(
+			<ChipBase
+				data-testid="chip"
+				id="chip"
+				disabled
+				deleteButton={{position: 'right'}}
+			>
+				Disabled Chip
+			</ChipBase>
+		);
+
+		const chip = screen.getByTestId('chip');
+		const chipButton = screen.getByRole('checkbox');
+		const deleteButtonContainer = chip.querySelector('.deleteButtonContainer');
+
+		fireEvent.focus(chipButton);
+
+		expect(deleteButtonContainer).not.toHaveClass('focused');
+	});
+
+	test('should reveal the delete button on focus when the chip is not disabled', () => {
+		render(
+			<ChipBase
+				data-testid="chip"
+				id="chip"
+				deleteButton={{position: 'right'}}
+			>
+				Chip
+			</ChipBase>
+		);
+
+		const chip = screen.getByTestId('chip');
+		const chipButton = screen.getByRole('checkbox');
+		const deleteButtonContainer = chip.querySelector('.deleteButtonContainer');
+
+		fireEvent.focus(chipButton);
+
+		expect(deleteButtonContainer).toHaveClass('focused');
+	});
 });
