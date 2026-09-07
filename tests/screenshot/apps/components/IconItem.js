@@ -34,6 +34,7 @@ const defaultIconItemTests = [
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" titleOn="focus" />,
+	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />,
 	<IconItem background="#ffffff" description="Desctiption" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />
 ];
 
