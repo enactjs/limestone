@@ -4,8 +4,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+
+### Changed
+
+- `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
+
 ### Fixed
 
+- `limestone/Chips.Chip` `deleteButton` positioning when `multiline` is `true`
 - `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
 
 ## [1.11.0] - 2026-09-02
