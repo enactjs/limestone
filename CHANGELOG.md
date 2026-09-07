@@ -4,19 +4,34 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Fixed
+
+- `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
+
+## [1.11.0] - 2026-09-02
+
 ### Added
 
 - `limestone/IconItem` prop `description`
 - `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 - `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
+- `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
+- `limestone/Slider` hover halo on tick marks at a lower opacity than the selected knob
+- `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
+- `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
 
 ### Changed
 
 - `limestone/Alert` text container to fit the width of its text and center-align
+- `limestone/Alert` styling to match the latest GUI
+- `limestone/Card` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/Input` to show the submit button for separated number inputs by default
+- `limestone/Slider` `showMinMax` to place min and max before and after the track when tick marks are shown
+- `limestone/Slider` to omit tick labels when `orientation` is `vertical`
 
 ### Fixed
+
 - `limestone/Card` styling when no caption element is present
 
 ## [1.10.2] - 2026-07-09
