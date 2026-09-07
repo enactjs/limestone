@@ -601,14 +601,21 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 		useEffect(() => {
-			snapshot.current = getSnapshotBeforeUpdate();
+			// `snapshot.current` holds the previous cycle's measurements (from the prior
+			// commit). In the class component these were captured in getSnapshotBeforeUpdate
+			// (pre-commit, i.e. the old DOM) and compared in componentDidUpdate against the new
+			// DOM. There is no hook that runs pre-commit, so we instead persist the previous
+			// measurements across renders and compare the current (post-render) DOM against them.
+			const prevSnapshot = snapshot.current;
+			const currentClientSiblingWidth = getClientSiblingNodeWidth();
+			const currentContainerWidth = getContainerNodeWidth();
 
-			if (snapshot.current.clientSiblingWidth !== getClientSiblingNodeWidth()) {
+			if (prevSnapshot && prevSnapshot.clientSiblingWidth !== currentClientSiblingWidth) {
 				clientSiblingRef.current = findClientSiblingRef.current();
 			}
 
 			if (prevProps.current.direction !== componentProps.direction ||
-                snapshot.current.containerWidth !== getContainerNodeWidth() ||
+                (prevSnapshot && prevSnapshot.containerWidth !== currentContainerWidth) ||
                 (prevProps.current.open && componentProps.open)) {
 				adjustedDirection.current = componentProps.direction;
 				// NOTE: `setState` is called and will cause re-render
@@ -621,10 +628,19 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			} else if (!componentProps.open && prevProps.current.open) {
 				off('keydown', keyDownRef.current);
 				off('keyup', keyUpRef.current);
-				if (snapshot.current && snapshot.current.shouldSpotActivator) {
+				// shouldSpotActivator depends on the open->closed transition, evaluated here
+				// against the (still-current) prevProps before it is advanced below.
+				const closingSnapshot = getSnapshotBeforeUpdate();
+				if (closingSnapshot && closingSnapshot.shouldSpotActivator) {
 					spotActivator(activator);
 				}
 			}
+
+			// Store this cycle's measurements to compare against on the next update.
+			snapshot.current = {
+				clientSiblingWidth: currentClientSiblingWidth,
+				containerWidth: currentContainerWidth
+			};
 
 			prevProps.current = componentProps;
 		}, [activator, componentProps, getContainerNodeWidth, getClientSiblingNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
