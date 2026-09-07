@@ -142,6 +142,14 @@ const WizardPanelsBase = kind({
 		noAnimation: PropTypes.bool,
 
 		/**
+		 * Disables content transitions.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noContentAnimation: PropTypes.bool,
+
+		/**
 		* Omits the steps component.
 		*
 		* @type {Boolean}
@@ -281,7 +289,8 @@ const WizardPanelsBase = kind({
 	},
 
 	defaultProps: {
-		noAnimation: true,
+		noAnimation: false,
+		noContentAnimation: true,
 		index: 0,
 		nextButtonVisibility: 'auto',
 		noSubtitle: false,
@@ -365,6 +374,7 @@ const WizardPanelsBase = kind({
 		nextButton,
 		nextButtonVisibility,
 		noAnimation,
+		noContentAnimation,
 		noSubtitle,
 		onNextClick,
 		onPrevClick,
@@ -392,7 +402,7 @@ const WizardPanelsBase = kind({
 				header={
 					<HeaderContainer
 						aria-label={ariaLabel}
-						arranger={FadeArranger}
+						arranger={noAnimation ? null : FadeArranger}
 						centered
 						css={css}
 						noCloseButton
@@ -441,7 +451,7 @@ const WizardPanelsBase = kind({
 								duration={400}
 								onTransition={onTransition}
 								onWillTransition={onWillTransition}
-								noAnimation={noAnimation}
+								noAnimation={(noAnimation || noContentAnimation)}
 								reverseTransition={reverseTransition}
 							>
 								{children}

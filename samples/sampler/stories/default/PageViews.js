@@ -100,7 +100,7 @@ export const _PageViews = (args) => {
 boolean('bannerMode', _PageViews, Config, false);
 boolean('fullContents', _PageViews, Config, false);
 text('footerCloseLabel', _PageViews, Config, 'Close');
-boolean('noAnimation', _PageViews, Config);
+boolean('noAnimation', _PageViews, Config, true);
 boolean('showFooterButtons', _PageViews, Config, false);
 select('pageIndicatorPosition', _PageViews, propOptions.pageIndicatorPosition, Config, 'bottom');
 select('pageIndicatorType', _PageViews, propOptions.pageIndicatorType, Config, 'dot');
