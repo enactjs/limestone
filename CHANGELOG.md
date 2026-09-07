@@ -16,6 +16,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Chips.Chip` `deleteButton` positioning when `multiline` is `true`
+- `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
 
 ## [1.11.0] - 2026-09-02
 
