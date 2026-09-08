@@ -42,7 +42,7 @@ describe('TooltipDecorator', () => {
 			const expected = 'IMG';
 			const tooltip = screen.getByText('Label');
 
-			expect(tooltip.children[0].tagName).toBe(expected);
+			expect(tooltip.children[0].children[0].tagName).toBe(expected);
 		});
 
 		test('should apply `imageBelow` class when `tooltipImagePosition` is `below`', () => {

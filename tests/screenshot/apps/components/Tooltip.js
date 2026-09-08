@@ -45,13 +45,8 @@ const tooltipExtendedTests = [
 const tooltipImageSize = {height: 200, width: 200};
 
 const tooltipImageTests = [
-	// Image above the text label (default position)
 	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize}),
-
-	// Image below the text label
 	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize, tooltipImagePosition: 'below'}),
-
-	// Image below the text label, tooltip positioned below the anchor
 	TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize, tooltipImagePosition: 'below'})
 ];
 
