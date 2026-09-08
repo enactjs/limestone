@@ -200,4 +200,65 @@ describe('Card', () => {
 
 		expect(screen.getByRole('progressbar')).toBeInTheDocument();
 	});
+
+	test('should apply `sports` class when both `leftTeam` and `rightTeam` are provided', () => {
+		render(
+			<CardBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/2'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).toHaveClass('sports');
+	});
+
+	test('should not apply `sports` class when only one team is provided', () => {
+		render(
+			<CardBase
+				data-testid="card"
+				src={src}
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).not.toHaveClass('sports');
+	});
+
+	test('should render the composed team score without requiring `src`', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1/1'}}
+			/>
+		);
+
+		expect(screen.getByText('0/0 : 1/1')).toBeInTheDocument();
+	});
+
+	test('should render team logos with the same badge implementation as `primaryBadge`', () => {
+		render(
+			<CardBase
+				leftTeam={{logo: 'Left Logo', score: '0/0'}}
+				rightTeam={{logo: <div data-testid="right-team-logo" />, score: '0/0'}}
+			/>
+		);
+
+		expect(screen.getByText('Left Logo')).toBeInTheDocument();
+		expect(screen.getByTestId('right-team-logo')).toBeInTheDocument();
+	});
+
+	test('should still render `primaryBadge` and `secondaryBadge` in the sports layout', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				primaryBadge="Primary Badge"
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+				secondaryBadge="Secondary Badge"
+			/>
+		);
+
+		expect(screen.getByText('Primary Badge')).toBeInTheDocument();
+		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
+	});
 });
