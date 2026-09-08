@@ -206,6 +206,7 @@ const AlertBase = kind({
 		 * When omitted, defaults to `medium` when there are exactly 2 buttons, otherwise `small`.
 		 *
 		 * @type {('small'|'medium'|'large')}
+		 * @default 'medium'
 		 * @public
 		 */
 		size: PropTypes.oneOf(['small', 'medium', 'large']),
@@ -239,6 +240,7 @@ const AlertBase = kind({
 		buttonDirection: 'auto',
 		open: false,
 		overlayPosition: 'center',
+		size: 'medium',
 		type: 'fullscreen'
 	},
 
@@ -268,14 +270,11 @@ const AlertBase = kind({
 			const resolvedSize = size || (buttonDirection !== 'vertical' && buttonCount === 2 ? 'medium' : 'small');
 			let resolvedButtonDirection = buttonDirection;
 			if (buttonDirection === 'auto') {
-				const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
+				const useHorizontal = (type === 'overlay' && buttonCount === 2 && resolvedSize !== 'small') || (type === 'fullscreen' && buttonCount < 4);
 				resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
 			}
 			return styler.append({noImage: !image}, resolvedSize, type, resolvedButtonDirection);
-		},
-		size: ({buttons, buttonDirection, size}) => size || (
-			buttonDirection !== 'vertical' && Children.toArray(buttons).filter(Boolean).length === 2 ? 'medium' : 'small'
-		)
+		}
 	},
 
 	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, size, title, type, style, ...rest}) => {
@@ -285,7 +284,7 @@ const AlertBase = kind({
 		const showTitle = ((fullscreen || size === 'large') && title);
 		let resolvedButtonDirection = buttonDirection;
 		if (buttonDirection === 'auto') {
-			const useHorizontal = (type === 'overlay' && buttonCount === 2) || (type === 'fullscreen' && buttonCount < 4);
+			const useHorizontal = (type === 'overlay' && buttonCount === 2 && size !== 'small') || (type === 'fullscreen' && buttonCount < 4);
 			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
 		}
 		const overlayHorizontalButtons = (

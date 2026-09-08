@@ -12,6 +12,39 @@
 		min-width: @lime-chip-min-width;
 	}
 
+	.content {
+		font-size: @lime-chip-font-size;
+		line-height: @lime-chip-line-height;
+
+		.bg {
+			border-radius: @lime-chip-border-radius;
+		}
+
+		&:has(.icon) {
+			.padding-start-end(@lime-chip-padding-icon-left, @lime-button-small-h-padding);
+		}
+
+		&:has(.multiline) {
+			height: auto;
+			max-width: @lime-chip-multiline-max-width;
+
+			.client {
+				padding: 0;
+			}
+
+			.icon {
+				margin-block: 0;
+			}
+		}
+	}
+
+	.multiline {
+		text-align: start;
+		white-space: normal;
+		min-width: 0;
+		padding-block: @lime-chip-multiline-padding;
+	}
+
 	.deleteButtonContainer {
 		position: absolute;
 		display: none;
@@ -23,15 +56,15 @@
 		}
 
 		&.bottom {
-			bottom: ~"calc("@lime-chip-button-spacing ~"* -1)";
+			bottom: ~"calc(" @lime-chip-button-spacing ~" * -1)";
 			left: 50%;
 			transform: translate(-50%, 100%);
 		}
 
 		&.top {
-			top: ~"calc(-100% - " @lime-chip-button-spacing ~")";
+			top: ~"calc(" @lime-chip-button-spacing ~" * -1)";
 			left: 50%;
-			transform: translateX(-50%);
+			transform: translate(-50%, -100%);
 		}
 	}
 

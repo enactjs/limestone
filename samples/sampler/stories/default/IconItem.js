@@ -1,6 +1,6 @@
 import {IconItem, IconItemBase} from '@enact/limestone/IconItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, number, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, color, number, object, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
 
 import iconNames from '../helper/icons';
@@ -62,7 +62,7 @@ export const _IconItem = (args) => {
 	);
 };
 
-text('background', _IconItem, Config, '#26282b');
+color('background', _IconItem, Config, '#26282b');
 boolean('bordered', _IconItem, Config, true);
 boolean('disabled', _IconItem, Config);
 select('icon', _IconItem, ['', ...iconNames], Config, 'usb');

@@ -52,7 +52,7 @@ export const _Input = (args) => {
 	if (controls.type === 'number' || controls.type === 'passwordnumber') {
 		controls.numberInputField = args['numberInputField'];
 
-		const minMax = args['customize min/max'];
+		const minMax = args['customizeMinMax'];
 		if (minMax) {
 			controls.maxLength = args['maxLength'];
 			controls.minLength = args['minLength'];
@@ -88,10 +88,10 @@ boolean('noBackButton', _Input, ConfigPopup);
 boolean('noSubmitButton', _Input, ConfigPopup);
 select('backButtonAriaLabel', _Input, prop.backButtonAriaLabel, ConfigPopup);
 select('numberInputField', _Input, prop.numericKind, ConfigNumberPopup);
-boolean('customize min/max', _Input, ConfigNumberPopup, false);
-range('maxLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 4, {if: {arg:'customize min/max', truthy: true}});
-range('minLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 0, {if: {arg:'customize min/max', truthy: true}});
-range('length', _Input, ConfigNumberPopup, {min: 1, max: 20}, 4, {if: {arg:'customize min/max', truthy: false}});
+boolean('customizeMinMax', _Input, ConfigNumberPopup, false);
+range('maxLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 4, {if: {arg:'customizeMinMax', truthy: true}});
+range('minLength', _Input, ConfigNumberPopup, {min: 0, max: 20}, 0, {if: {arg:'customizeMinMax', truthy: true}});
+range('length', _Input, ConfigNumberPopup, {min: 1, max: 20}, 4, {if: {arg:'customizeMinMax', truthy: false}});
 select('size', _Input, prop.size, Config);
 text('placeholder', _Input, Config, 'placeholder string');
 boolean('disabled', _Input, Config);

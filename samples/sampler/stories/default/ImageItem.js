@@ -1,6 +1,6 @@
 import {ImageItem, ImageItemBase} from '@enact/limestone/ImageItem';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
-import {boolean, object, select, text} from '@enact/storybook-utils/addons/controls';
+import {boolean, color, object, select, text} from '@enact/storybook-utils/addons/controls';
 import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
 import ri from '@enact/ui/resolution';
 
@@ -70,7 +70,7 @@ boolean('showSelection', _ImageItem, Config);
 boolean('wideImage', _ImageItem, Config);
 object('src', _ImageItem, Config, src);
 text('children', _ImageItem, Config, 'ImageItem Caption');
-text('backgroundColor', _ImageItem, Config, '#4c5059');
+color('backgroundColor', _ImageItem, Config, '#4c5059');
 object('backgroundSrc', _ImageItem, Config, src);
 boolean('hasBackgroundSrc', _ImageItem, Config);
 boolean('transparentImage', _ImageItem, Config);

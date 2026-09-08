@@ -536,6 +536,49 @@ describe('ContextualPopupDecorator Specs', () => {
 		offSpy.mockRestore();
 	});
 
+	// Guard for WRR-21642 / NXT-19858.
+	// #270 converted the decorator to a functional component and collapsed
+	// getSnapshotBeforeUpdate/componentDidUpdate into a single post-render effect. The fix
+	// persists the previous render's measurements in a ref and compares the current DOM
+	// against them so the popup still repositions when the wrapped component is updated.
+	// A fully isolated assertion of the reset is impractical here: `getClientSiblingNodeWidth`
+	// reads through the same ref that goes stale, and the sampler `WithChangingComponent`
+	// story is what exercises the real re-resolution. This guard exercises the effect on a
+	// rerender while open (where the collapsed logic lives) with a wrapped component whose
+	// output changes, asserting the effect runs without throwing and the popup stays open and
+	// positioned. It would fail if the snapshot logic threw (e.g. reading a null snapshot).
+	test('should keep the popup rendered and positioned when the wrapped component is updated', () => {
+		const Root = FloatingLayerDecorator('div');
+		const popup = () => <div><Button>Button</Button></div>;
+		const {rerender} = render(
+			<Root>
+				<ContextualButton direction="right middle" open popupComponent={popup}>
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		const popupContainer = screen.getByRole('alert').querySelector('[class][style]');
+
+		expect(popupContainer).toBeInTheDocument();
+		// The container carries the computed position as inline style (top/left/right).
+		expect(popupContainer.style.top).not.toBe('');
+
+		// Update the wrapped (activator) component; the reposition effect runs on this rerender.
+		rerender(
+			<Root>
+				<ContextualButton direction="right middle" open popupComponent={popup}>
+					A much longer activator label
+				</ContextualButton>
+			</Root>
+		);
+
+		const popupContainerAfter = screen.getByRole('alert').querySelector('[class][style]');
+
+		expect(popupContainerAfter).toBeInTheDocument();
+		expect(popupContainerAfter.style.top).not.toBe('');
+	});
+
 	test('should create and observe with `ResizeObserver` when the popup opened and disconnect when the popup closed', () => {
 		const originalObserver = global.ResizeObserver;
 
