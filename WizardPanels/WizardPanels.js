@@ -145,6 +145,7 @@ const WizardPanelsBase = kind({
 		 * Disables content transitions.
 		 *
 		 * @type {Boolean}
+		 * @default false
 		 * @public
 		 */
 		noContentAnimation: PropTypes.bool,
@@ -290,7 +291,7 @@ const WizardPanelsBase = kind({
 
 	defaultProps: {
 		noAnimation: false,
-		noContentAnimation: true,
+		noContentAnimation: false,
 		index: 0,
 		nextButtonVisibility: 'auto',
 		noSubtitle: false,

@@ -174,7 +174,7 @@ describe('DatePicker', function () {
 					await Page.delay(200);
 					expect(await datePicker.day.isFocused()).toBe(true);
 					await datePicker.decrementer('day').click();
-					await Page.delay(1000);
+					await Page.delay(500);
 					const {day: value} = await extractValues(datePicker);
 					const expected = day !== 1 ? day - 1 : numDays;
 					expect(value).toBe(expected);

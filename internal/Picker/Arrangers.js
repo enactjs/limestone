@@ -52,7 +52,7 @@ const carouselAnimateEnter = ({node}, amount, isHorizontal, options) => {
 	const translateAmount = isHorizontal ? amount : -amount;
 	const {
 		positionDuration = 470,
-		positonDelay = 30,
+		positionDelay = 30,
 		opacityDuration = 380,
 		opacityDelay = 120,
 		positionEasing = 'ease-out',
@@ -62,7 +62,7 @@ const carouselAnimateEnter = ({node}, amount, isHorizontal, options) => {
 	const position = node.animate([
 		{transform: `${translate}(${translateAmount}px)`},
 		{transform: `${translate}(0)`}
-	], {duration: positionDuration, delay: positonDelay, easing: positionEasing, fill: 'both'});
+	], {duration: positionDuration, delay: positionDelay, easing: positionEasing, fill: 'both'});
 
 	const opacity = node.animate([
 		{opacity: 0},

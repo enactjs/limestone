@@ -146,7 +146,7 @@ const PageViewsBase = kind({
 		 * Disables page transitions.
 		 *
 		 * @type {Boolean}
-		 * @default true
+		 * @default false
 		 * @public
 		 */
 		noAnimation: PropTypes.bool,
