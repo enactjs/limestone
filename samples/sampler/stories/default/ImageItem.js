@@ -47,7 +47,7 @@ export const _ImageItem = (args) => {
 		disabled: args['disabled'],
 		label: args['label'],
 		orientation: args['orientation'],
-		secondaryLabel: args['secondaryLabel'],
+		secondaryLabel: args['secondaryLabel'] ? args['secondaryLabel'] : undefined,
 		selected: args['selected'],
 		showSelection: args['showSelection'],
 		src: componentSrc,
