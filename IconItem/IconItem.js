@@ -133,7 +133,7 @@ const IconItemBase = kind({
 		'data-webos-voice-intent': PropTypes.string,
 
 		/**
-		 * Description text showing below the title.
+		 * Description text showing below the title. Requires `title` prop to be applied.
 		 *
 		 * @type {String}
 		 * @public
