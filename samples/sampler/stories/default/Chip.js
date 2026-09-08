@@ -22,7 +22,8 @@ export const _Chip = (args) => {
 		checked: args['checked'],
 		deleteButton: args['deleteButton'],
 		disabled: args['disabled'],
-		imageSize: args['imageSize']
+		imageSize: args['imageSize'],
+		multiline: args['multiline']
 	};
 
 	const isImage = args['isImage'];
@@ -49,6 +50,7 @@ const deleteButtonProps = {
 };
 
 boolean('checked', _Chip, Config, false);
+boolean('multiline', _Chip, Config);
 select('icon', _Chip, ['', ...icons], Config, 'home');
 text('children', _Chip, Config, 'chip');
 object('deleteButton', _Chip, Config, deleteButtonProps);

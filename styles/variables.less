@@ -526,8 +526,14 @@
 // Chip
 // ---------------------------------------
 @lime-chip-margin: 0;
+@lime-chip-padding-icon-left: var(--primitive-spacing-36);
+@lime-chip-border-radius: var(--semantic-radius-container);
 @lime-chip-button-spacing: var(--primitive-spacing-12);
+@lime-chip-line-height: 72px;
+@lime-chip-font-size: var(--primitive-font-size-54);
 @lime-chip-min-width: 108px;
+@lime-chip-multiline-padding: var(--primitive-spacing-18);
+@lime-chip-multiline-max-width: 1200px;
 @lime-chips-gap: var(--primitive-spacing-36);
 
 // ContextualMenu
@@ -1145,6 +1151,22 @@
 @lime-slider-bar-vertical-min-height: 240px;
 @lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
 @lime-slider-bar-padding: var(--primitive-spacing-60);
+@lime-slider-tick-width: 6px;
+@lime-slider-tick-height: 36px;
+@lime-slider-tick-border-radius: var(--primitive-radius-999);
+@lime-slider-tick-margin: var(--primitive-spacing-12);
+@lime-slider-tick-label-margin-top: var(--primitive-spacing-12);
+@lime-slider-tick-label-offset: ~"calc("@lime-slider-tick-label-margin-top ~"+" ((@lime-slider-tick-height - @lime-slider-bar-height) / 2) ~")";
+@lime-slider-tick-label-font-size: var(--primitive-font-size-48);
+@lime-slider-tick-label-font-size-large: var(--primitive-font-size-60);
+@lime-slider-tick-label-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-tick-label-line-height: 64px;
+@lime-slider-tick-label-line-height-large: 80px;
+@lime-slider-tick-label-letter-spacing: 0;
+@lime-slider-bar-ticks-padding-bottom: var(--primitive-spacing-36);
+@lime-slider-bar-tick-labels-padding-bottom: var(--primitive-spacing-100);
+@lime-slider-side-label-width: 360px;
+@lime-slider-side-label-gap: var(--primitive-spacing-36);
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;
