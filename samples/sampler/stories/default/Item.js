@@ -18,6 +18,7 @@ export const _Item = (args) => {
 		disabled: args['disabled'],
 		inline: args['inline'],
 		label: args['label'],
+		secondaryLabel: args['secondaryLabel'],
 		labelPosition: args['labelPosition'],
 		selected: args['selected'],
 		size: args['size']
@@ -46,6 +47,7 @@ boolean('centered', _Item, Config);
 boolean('disabled', _Item, Config);
 boolean('inline', _Item, Config);
 text('label', _Item, Config);
+text('secondaryLabel', _Item, Config);
 select('labelPosition', _Item, ['above', 'below', 'before', 'after'], Config);
 boolean('selected', _Item, Config);
 select('size', _Item, ['small', 'large'], Config);

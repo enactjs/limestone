@@ -34,7 +34,7 @@ const MarqueeBase = ({...rest}) => {
 };
 const Marquee = MarqueeDecorator({invalidateProps: ['remeasure', 'contentSize']}, MarqueeBase);
 
-const ItemContent = ({componentRef, content, contentSize, css, label, labelPosition, marqueeOn, ...rest}) => {
+const ItemContent = ({componentRef, content, contentSize, css, label, labelPosition, marqueeOn, secondaryLabel, ...rest}) => {
 	const LabelPositionClassname = {
 		[css.labelAbove]: labelPosition === 'above',
 		[css.labelAfter]: labelPosition === 'after',
@@ -63,6 +63,9 @@ const ItemContent = ({componentRef, content, contentSize, css, label, labelPosit
 					<Cell component={Marquee} className={css.label} {...marqueeProps} shrink>
 						{label}
 					</Cell>
+					{secondaryLabel && <Cell component={Marquee} className={css.label} {...marqueeProps} shrink>
+						{secondaryLabel}
+					</Cell>}
 				</Layout>
 			)}
 		</Cell>
@@ -75,7 +78,8 @@ ItemContent.propTypes = {
 	content: PropTypes.any,
 	css: PropTypes.object,
 	label: PropTypes.any,
-	labelPosition: PropTypes.any
+	labelPosition: PropTypes.any,
+	secondaryLabel: PropTypes.any
 };
 
 /**
@@ -182,6 +186,14 @@ const ItemBase = kind({
 		marqueeOn: PropTypes.oneOf(['focus', 'hover', 'render']),
 
 		/**
+		 * The secondary label to be displayed along with the text.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		secondaryLabel: PropTypes.node,
+
+		/**
 		 * Applies a selected style to the component.
 		 *
 		 * @type {Boolean}
@@ -250,11 +262,16 @@ const ItemBase = kind({
 	},
 
 	computed: {
-		className: ({centered, label, selected, size, styler}) => styler.append({centered, selected, hasLabel: label != null}, size),
+		className: ({centered, label, secondaryLabel, selected, size, styler}) => styler.append({
+			centered,
+			selected,
+			hasLabel: label != null || secondaryLabel != null,
+			hasSecondaryLabel: label != null && secondaryLabel != null
+		}, size),
 		label: ({label}) => (typeof label === 'number' ? label.toString() : label)
 	},
 
-	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
+	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, secondaryLabel, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
 		delete rest.size;
 
 		const keys = Object.keys(rest);
@@ -285,6 +302,7 @@ const ItemBase = kind({
 					label={label}
 					labelPosition={labelPosition}
 					marqueeOn={marqueeOn}
+					secondaryLabel={secondaryLabel}
 					shrink={inline}
 				/>
 				{slotAfter ? (
