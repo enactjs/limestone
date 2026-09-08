@@ -47,6 +47,7 @@ export const _ImageItem = (args) => {
 		disabled: args['disabled'],
 		label: args['label'],
 		orientation: args['orientation'],
+		// eslint-disable-next-line no-undefined
 		secondaryLabel: args['secondaryLabel'] ? args['secondaryLabel'] : undefined,
 		selected: args['selected'],
 		showSelection: args['showSelection'],
