@@ -383,7 +383,6 @@ const TimePickerBase = kind({
 									onSpotlightDisappear={onSpotlightDisappear}
 									onSpotlightLeft={isLeft ? onSpotlightLeft : null}
 									onSpotlightRight={isRight ? onSpotlightRight : null}
-									reverse
 									spotlightDisabled={spotlightDisabled}
 									value={meridiem}
 									width={meridiemPickerWidth}

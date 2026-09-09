@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
 
 ### Changed
 
