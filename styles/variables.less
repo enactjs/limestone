@@ -156,6 +156,8 @@
 @lime-heading-subtitle-font-size:   #guide.header[standard-subtitle-font-size];
 @lime-heading-subtitle-font-size-large:   #guide.header[standard-subtitle-font-size-large];
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
+@lime-iconitem-description-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-description-font-size-large:     var(--primitive-font-size-50);
 @lime-iconitem-label-font-size:     var(--primitive-font-size-42);
 @lime-iconitem-label-font-size-large:     var(--primitive-font-size-50);
 @lime-iconitem-title-font-size:     var(--primitive-font-size-48);
@@ -318,6 +320,7 @@
 @lime-icon-other-font-family: "LG Icons";
 
 // IconItem
+@lime-iconitem-description-font-weight: var(--primitive-font-weight-semibold);
 @lime-iconitem-label-font-weight: var(--primitive-font-weight-semibold);
 @lime-iconitem-title-font-weight: var(--primitive-font-weight-semibold);
 
@@ -758,6 +761,8 @@
 // ---------------------------------------
 @lime-iconitem-height: 256px;
 @lime-iconitem-width: 334px;
+@lime-iconitem-description-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~" + "@lime-iconitem-description-line-height ~" + 30px)"; // 24 margin title + 6 margin description
+@lime-iconitem-description-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~" + "@lime-iconitem-description-line-height-large ~" + 30px)"; // 24 margin title + 6 margin description
 @lime-iconitem-title-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~"+ 24px)";
 @lime-iconitem-title-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~"+ 24px)";
 @lime-iconitem-border-radius: var(--semantic-radius-container);
@@ -770,12 +775,15 @@
 @lime-iconitem-icon-width-large: @lime-iconitem-icon-height-large;
 @lime-iconitem-image-height: 230px;
 @lime-iconitem-image-width: @lime-iconitem-image-height;
+@lime-iconitem-description-margin: var(--primitive-spacing-6) 0 0 0;
 @lime-iconitem-label-image-height: ~"calc("@lime-iconitem-height ~"- "@lime-iconitem-label-line-height ~"- 24px)";
-@lime-iconitem-label-line-height: 54px;
-@lime-iconitem-label-line-height-large: 64px;
+@lime-iconitem-label-line-height: 56px;
+@lime-iconitem-label-line-height-large: 66px;
 @lime-iconitem-label-padding: 0 var(--primitive-spacing-12);
-@lime-iconitem-title-line-height: 60px;
-@lime-iconitem-title-line-height-large: 70px;
+@lime-iconitem-description-line-height: @lime-iconitem-label-line-height;
+@lime-iconitem-description-line-height-large: @lime-iconitem-label-line-height-large;
+@lime-iconitem-title-line-height: 64px;
+@lime-iconitem-title-line-height-large: 80px;
 @lime-iconitem-title-margin: var(--primitive-spacing-24) 0 0 0;
 @lime-iconitem-focus-transform: scale(1.2);
 @lime-iconitem-pressed-transform: scale(1.1);

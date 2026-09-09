@@ -226,18 +226,22 @@ describe('RangePicker', function () {
 			await maxValueRangePicker.focus();
 			expect(await maxValueRangePicker.incrementer(maxValueRangePicker.self).isFocused()).toBe(true);
 			await Page.spotlightSelect();
+			await browser.pause(500);
 			// Step 3 Verify: The ending value displays 5.
 			expect(await extractValue(maxValueRangePicker)).toBe(5);
 			// Step 4: 5-way Select 2 times the Right arrow button.
 			await Page.spotlightSelect();
+			await browser.pause(500);
 			expect(await extractValue(maxValueRangePicker)).toBe(10);
 			await Page.spotlightSelect();
+			await browser.pause(500);
 			// Step 4 Verify: The ending value displays 15.
 			expect(await extractValue(maxValueRangePicker)).toBe(15);
 
 			// Step 5: 5-way Spot and 5-way Select the Left arrow button.
 			await Page.spotlightLeft();
 			await Page.spotlightSelect();
+			await browser.pause(500);
 			// Step 5 Verify: The ending value displays 10.
 			expect(await extractValue(maxValueRangePicker)).toBe(10);
 		});

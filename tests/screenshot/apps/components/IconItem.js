@@ -19,6 +19,7 @@ const defaultIconItemTests = [
 	<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" />,
 	<IconItem background="#000000" icon="usb" label="Label" title="App title" titleOn="focus" />,
 	<IconItem background="#000000" icon="usb" label="Label" labelOn="focus" title="App title" titleOn="focus" />,
+	<IconItem background="#000000" description="Desctiption" icon="usb" label="Label" labelOn="focus" title="App title" titleOn="focus" />,
 
 	// Image type
 	<IconItem background="#ffffff" image={imageProp} />,
@@ -33,7 +34,8 @@ const defaultIconItemTests = [
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" />,
 	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" title="App title" titleOn="focus" />,
-	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />
+	<IconItem background="#ffffff" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />,
+	<IconItem background="#ffffff" description="Desctiption" image={imageProp} label="Label" labelColor="dark" labelOn="focus" title="App title" titleOn="focus" />
 ];
 
 const iconItemSmokeTests = [
