@@ -38,7 +38,8 @@
 
 	.image {
 		position: relative;
-		.lime-focus-out-motion();
+		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
+		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
 	}
 
 	.selectionContainer {
@@ -186,7 +187,8 @@
 	&.vertical {
 		width: var(--card-image-width);
 		height: auto;
-		.lime-focus-out-motion();
+		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
+		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
 
 		.captionImageIconsContainer {
 			margin-top: @lime-card-caption-image-icon-margin;
@@ -307,7 +309,8 @@
 	&.horizontal {
 		width: @lime-card-horizontal-width;
 		height: @lime-card-horizontal-height;
-		.lime-focus-out-motion();
+		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
+		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
@@ -348,7 +351,8 @@
 
 	.focus({
 		&.hasContainer {
-			.lime-focus-in-motion();
+			&:not(:global(.hwTier-low)) { .lime-focus-in-large-high-motion(1.1); }
+			&:global(.hwTier-low) { .lime-focus-in-large-low-motion(1.1); }
 
 			&.roundedImage::before {
 				border-radius: @lime-card-border-radius;
@@ -377,10 +381,12 @@
 			&.hasContainer {
 				&.pressed,
 				&:active {
-					.lime-press-motion();
+					&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
+					&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
 				}
 				&:not(.pressed) {
-					.lime-release-motion();
+					&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
+					&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
 				}
 			}
 		});
@@ -391,7 +397,8 @@
 			&.vertical {
 				&:not(.captionOverlay):not(.hasContainer) .image,
 				&.captionOverlay {
-					.lime-focus-in-motion();
+					&:not(:global(.hwTier-low)) { .lime-focus-in-large-high-motion(1.1); }
+					&:global(.hwTier-low) { .lime-focus-in-large-low-motion(1.1); }
 				}
 			}
 		});
@@ -402,18 +409,22 @@
 					&.captionOverlay {
 						&.pressed,
 						&:active {
-							.lime-press-motion();
+							&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
+							&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
 						}
 						&:not(.pressed) {
-							.lime-release-motion();
+							&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
+							&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
 						}
 					}
 
 					&:not(.captionOverlay):not(.hasContainer).pressed .image {
-						.lime-press-motion();
+						&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
+						&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
 					}
 					&:not(.captionOverlay):not(.hasContainer):not(.pressed) .image {
-						.lime-release-motion();
+						&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
+						&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
 					}
 				}
 			});

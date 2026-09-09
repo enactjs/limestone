@@ -21,12 +21,14 @@
 
 	.mediaContainer {
 		position: relative;
-		.lime-focus-out-motion();
+		&:not(:global(.hwTier-low)) { .lime-focus-out-medium-high-motion(1); }
+		&:global(.hwTier-low) { .lime-focus-out-medium-low-motion(1); }
 	}
 
 	.focus({
 		.mediaContainer {
-			.lime-focus-in-motion();
+			&:not(:global(.hwTier-low)) { .lime-focus-in-medium-high-motion(1.1); }
+			&:global(.hwTier-low) { .lime-focus-in-medium-low-motion(1.1); }
 		}
 	});
 
@@ -35,12 +37,14 @@
 			&.pressed,
 			&:active {
 				.mediaContainer {
-					.lime-press-motion();
-				}				
+					&:not(:global(.hwTier-low)) { .lime-press-medium-high-motion(1.05); }
+					&:global(.hwTier-low) { .lime-press-medium-low-motion(1.05); }
+				}
 			}
 			&:not(.pressed) {
 				.mediaContainer {
-					.lime-release-motion();
+					&:not(:global(.hwTier-low)) { .lime-release-medium-high-motion(1.1); }
+					&:global(.hwTier-low) { .lime-release-medium-low-motion(1.1); }
 				}
 			}
 		});

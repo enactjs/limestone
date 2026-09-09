@@ -258,9 +258,10 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	const Decorator = (props) => {
 		checkPropTypes(Decorator, props);
-		const {skin: skinProp, ...rest} = props;
+		const {hwTier, skin: skinProp, ...rest} = props;
 		const skinName = skinProp || 'neutral';
 		const className = classNames(css.root, props.className, 'limestone-theme', 'enact-unselectable', {
+			[`hwTier-${hwTier}`]: hwTier,
 			[bgClassName]: !float,
 			'enact-fit': !disableFullscreen,
 			noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION
@@ -297,6 +298,14 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	Decorator.displayName = 'ThemeDecorator';
 	Decorator.propTypes = /** @lends limestone/ThemeDecorator.prototype */ {
+		/**
+		 * Sets the hardware tier of the device.
+		 *
+		 * @type {('high'|'low')}
+		 * @public
+		 */
+		hwTier: PropTypes.oneOf(['high', 'low']),
+
 		/**
 		 * Assign a skin.
 		 *
