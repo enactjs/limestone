@@ -14,7 +14,7 @@ import compose from 'ramda/src/compose';
 import $L from '../internal/$L';
 import {Header} from '../Panels';
 import {PanelBase} from '../Panels/Panel';
-import {BasicArranger, CrossFadeArranger, CancelDecorator, FloatingLayerIdProvider, NavigationButton, PanelsRouter} from '../internal/Panels';
+import {BasicArranger, CancelDecorator, FadeArranger, FloatingLayerIdProvider, NavigationButton, PanelsRouter} from '../internal/Panels';
 import Skinnable from '../Skinnable';
 import Steps from '../Steps';
 
@@ -140,6 +140,15 @@ const WizardPanelsBase = kind({
 		 * @public
 		 */
 		noAnimation: PropTypes.bool,
+
+		/**
+		 * Disables content transitions.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		noContentAnimation: PropTypes.bool,
 
 		/**
 		* Omits the steps component.
@@ -281,6 +290,8 @@ const WizardPanelsBase = kind({
 	},
 
 	defaultProps: {
+		noAnimation: false,
+		noContentAnimation: false,
 		index: 0,
 		nextButtonVisibility: 'auto',
 		noSubtitle: false,
@@ -364,6 +375,7 @@ const WizardPanelsBase = kind({
 		nextButton,
 		nextButtonVisibility,
 		noAnimation,
+		noContentAnimation,
 		noSubtitle,
 		onNextClick,
 		onPrevClick,
@@ -391,7 +403,7 @@ const WizardPanelsBase = kind({
 				header={
 					<HeaderContainer
 						aria-label={ariaLabel}
-						arranger={noAnimation ? null : CrossFadeArranger}
+						arranger={noAnimation ? null : FadeArranger}
 						centered
 						css={css}
 						noCloseButton
@@ -440,7 +452,7 @@ const WizardPanelsBase = kind({
 								duration={400}
 								onTransition={onTransition}
 								onWillTransition={onWillTransition}
-								noAnimation={noAnimation}
+								noAnimation={(noAnimation || noContentAnimation)}
 								reverseTransition={reverseTransition}
 							>
 								{children}
