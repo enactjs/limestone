@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/TabLayout` isomorphic build
+- `limestone/VirtualList` long press scroll between multiple VirtualLists
 
 ## [1.9.4] - 2026-06-18
 
