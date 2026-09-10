@@ -5,6 +5,7 @@
  * <ImageItem
  *   src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
  *   label="A secondary caption"
+ *   secondaryLabel="A ternary caption"
  * >
  * 	The primary caption for the image
  * </ImageItem>
@@ -103,7 +104,7 @@ const ImageItemBase = kind({
 		 * The following classes are supported:
 		 *
 		 * * `caption` - The caption component class
-		 * * `fullImage` - Applied when `orientation` prop is `vertical` without `label` and `children`
+		 * * `fullImage` - Applied when `orientation` prop is `vertical` without `label`, `secondaryLabel` and `children`
 		 * * `horizontal` - Applied when `orientation` prop is `horizontal`
 		 * * `image` - The image component class
 		 * * `imageIcon` - The image icon component class
@@ -196,6 +197,18 @@ const ImageItemBase = kind({
 		placeholder: PropTypes.string,
 
 		/**
+		 * A ternary caption displayed with the image.
+		 *
+		 * Typically used as an additional description line under
+		 * {@link limestone/ImageItem.ImageItemBase.label|label} (for example on horizontal
+		 * ImageItems with a two-line secondary caption).
+		 *
+		 * @type {String|Node}
+		 * @public
+		 */
+		secondaryLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+
+		/**
 		 * Applies a selected visual effect to the image, but only if `showSelection`
 		 * is also `true`.
 		 *
@@ -264,14 +277,14 @@ const ImageItemBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({'aria-label': customAriaLabel, children, label, selected, showSelection}) => {
-			const defaultAriaLabel = `${children || ''}${label ? ` ${label}` : ''}`;
+		'aria-label': ({'aria-label': customAriaLabel, children, label, secondaryLabel, selected, showSelection}) => {
+			const defaultAriaLabel = `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}`;
 			return `${customAriaLabel || defaultAriaLabel}${selected && showSelection ? ' ' + $L('Selected') : ''}`;
 		},
-		children: ({centered, children, css, 'data-index': index, imageIconComponent, imageIconSrc, label, orientation}) => {
+		children: ({centered, children, css, 'data-index': index, imageIconComponent, imageIconSrc, label, orientation, secondaryLabel}) => {
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
 
-			if (!hasImageIcon && !children && !label) return;
+			if (!hasImageIcon && !children && !label && !secondaryLabel) return;
 
 			const alignment = orientation === 'vertical' && centered ? {alignment: 'center'} : null;
 			const captions = (
@@ -287,6 +300,7 @@ const ImageItemBase = kind({
 					<Cell>
 						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
 						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
+						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
 					</Cell>
 				</Row>
 			);
@@ -297,6 +311,7 @@ const ImageItemBase = kind({
 						fallback={<>
 							<div className={css.placeholderCaption} />
 							{typeof label !== 'undefined' ? <div className={css.placeholderLabel} /> : null}
+							{typeof secondaryLabel !== 'undefined' ? <div className={css.placeholderLabel} /> : null}
 						</>}
 						index={index}
 					>
@@ -305,8 +320,8 @@ const ImageItemBase = kind({
 					captions
 			);
 		},
-		className: ({children, imageIconSrc, label, orientation, styler, wideImage}) => styler.append({
-			fullImage: orientation === 'vertical' && !children && !label && !imageIconSrc,
+		className: ({children, imageIconSrc, label, orientation, secondaryLabel, styler, wideImage}) => styler.append({
+			fullImage: orientation === 'vertical' && !children && !label && !secondaryLabel && !imageIconSrc,
 			wideImage: orientation === 'horizontal' && wideImage
 		}),
 		selectionComponent: ({css, selectionComponent : SelectionComponent}) => {
@@ -323,6 +338,7 @@ const ImageItemBase = kind({
 		delete rest.imageIconComponent;
 		delete rest.imageIconSrc;
 		delete rest.label;
+		delete rest.secondaryLabel;
 		delete rest.wideImage;
 
 		return (
@@ -371,6 +387,7 @@ const ImageItemDecorator = compose(
  * <ImageItem
  *   src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
  *   label="A secondary caption"
+ *   secondaryLabel="A ternary caption"
  * >
  * 	The primary caption for the image
  * </ImageItem>
