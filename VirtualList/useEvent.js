@@ -159,14 +159,15 @@ const useEventKey = (props, instances, context) => {
 						// Detect this by checking if the index jumped unnaturally during key repeat.
 						const isForwardKey = isPrimaryDirectionVertical ? isDownKey : isRightMovement;
 						const isBackwardKey = isPrimaryDirectionVertical ? isUpKey : isLeftMovement;
-						const isOutdatedIndex = repeat && prevKeyDownIndexRef.current !== -1 && (
+						const isMovingWithinList = nextIndex >= 0;
+						const isOutdatedIndex = isMovingWithinList && repeat && prevKeyDownIndexRef.current !== -1 && (
 							(isForwardKey && (prevKeyDownIndexRef.current > index || index > prevKeyDownIndexRef.current + dimensionToExtent)) ||
 							(isBackwardKey && (prevKeyDownIndexRef.current < index || index < prevKeyDownIndexRef.current - dimensionToExtent))
 						);
 
 						// Block the first repeat event when entering VirtualList from outside with acceleration.
 						// prevKeyDownIndexRef is -1 only on first entry; a repeat here means key was held before entering.
-						const isFirstEntryRepeat = repeat && !hasProcessedKeyDownRef.current;
+						const isFirstEntryRepeat = isMovingWithinList && repeat && !hasProcessedKeyDownRef.current;
 
 						if (isFirstEntryRepeat) {
 							ev.preventDefault();
