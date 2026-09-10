@@ -1,10 +1,24 @@
 import {Tooltip} from '../../../../TooltipDecorator/TooltipDecorator';
 
+import hd from '../../images/200x200.png';
+
 import {withConfig, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const TooltipDisplay = (props) => (
 	<div {...props}>
-		<Tooltip type={props.type} direction={props.direction} arrowAnchor={props.arrowAnchor} style={{top: '50%', left: '50%'}} marquee={props.marquee} width={props.tooltipWidth}>{props.children || `View ${props.type} ${props.direction} ${props.arrowAnchor}`}</Tooltip>
+		<Tooltip
+			type={props.type}
+			direction={props.direction}
+			arrowAnchor={props.arrowAnchor}
+			style={{top: '50%', left: '50%'}}
+			marquee={props.marquee}
+			width={props.tooltipWidth}
+			tooltipImage={props.tooltipImage}
+			tooltipImagePosition={props.tooltipImagePosition}
+			tooltipImageSize={props.tooltipImageSize}
+		>
+			{props.children || `View ${props.type} ${props.direction} ${props.arrowAnchor}`}
+		</Tooltip>
 	</div>
 );
 
@@ -28,6 +42,14 @@ const tooltipExtendedTests = [
 	TooltipDisplay({type: 'balloon', direction: 'left', arrowAnchor: 'middle', tooltipWidth: 200, marquee: true})
 ];
 
+const tooltipImageSize = {height: 200, width: 200};
+
+const tooltipImageTests = [
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize}),
+	TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize, tooltipImagePosition: 'below'}),
+	TooltipDisplay({type: 'balloon', direction: 'below', arrowAnchor: 'center', tooltipImage: hd, tooltipImageSize, tooltipImagePosition: 'below'})
+];
+
 const tooltipLargeTextTests = [
 	// textSize = 'large'
 	{textSize: 'large', component: TooltipDisplay({type: 'balloon', direction: 'above', arrowAnchor: 'center'})},
@@ -47,6 +69,7 @@ const TooltipTests = [
 	}, [
 		...tooltipSmokeTests,
 		...tooltipExtendedTests,
+		...tooltipImageTests,
 		...tooltipLargeTextTests
 	]),
 	...withTallglyphLocale(tooltipTallglyphTests, {wrapper: {full: true}})

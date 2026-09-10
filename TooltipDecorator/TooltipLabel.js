@@ -68,6 +68,15 @@ const TooltipLabel = kind({
 		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
+		 * Position of the image in relation to the text label.
+		 *
+		 * @type {('above'|'below')}
+		 * @default 'above'
+		 * @public
+		 */
+		tooltipImagePosition: PropTypes.oneOf(['above', 'below']),
+
+		/**
 		 * The size of the image.
 		 *
 		 * The following properties should be provided:
@@ -100,6 +109,10 @@ const TooltipLabel = kind({
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 	},
 
+	defaultProps: {
+		tooltipImagePosition: 'above'
+	},
+
 	styles: {
 		css: componentCss,
 		name: 'tooltipLabel',
@@ -107,11 +120,12 @@ const TooltipLabel = kind({
 	},
 
 	computed: {
-		className: ({tooltipImage, marquee, noArrow, styler, width}) => styler.append({
+		className: ({tooltipImage, tooltipImagePosition, marquee, noArrow, styler, width}) => styler.append({
 			multi: (!marquee && (!!width || !!tooltipImage)),
 			marquee,
 			noArrow: !!noArrow,
-			image: !!tooltipImage
+			image: !!tooltipImage,
+			imageBelow: !!tooltipImage && tooltipImagePosition === 'below'
 		}),
 		style: ({children, width, tooltipImageSize, style}) => {
 			const enforcedWidth = typeof width === 'number' ? scaleToRem(width) : width;
@@ -128,6 +142,7 @@ const TooltipLabel = kind({
 
 	render: ({centered, children, css, tooltipImage, marquee, ...rest}) => {
 		delete rest.noArrow;
+		delete rest.tooltipImagePosition;
 		delete rest.tooltipImageSize;
 		delete rest.width;
 
