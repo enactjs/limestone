@@ -7,12 +7,17 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Added
 
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/Item` prop `secondaryLabel`
+- `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
+- `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
+- `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
 - `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
 
 ### Changed
 
 - `limestone/Chips.Chip` styling to match the latest GUI
 - `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
+- `limestone/Tooltip` styling to match the latest GUI
 
 ### Fixed
 
@@ -26,10 +31,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/IconItem` prop `description`
 - `limestone/Image` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
 - `limestone/ImageItem` props `backgroundColor` and `backgroundSrc` to be able to change the background of a transparent image
-- `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
-- `limestone/Slider` hover halo on tick marks at a lower opacity than the selected knob
-- `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
-- `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
 
 ### Changed
 
@@ -37,9 +38,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
-- `limestone/Input` to show the submit button for separated number inputs by default
-- `limestone/Slider` `showMinMax` to place min and max before and after the track when tick marks are shown
-- `limestone/Slider` to omit tick labels when `orientation` is `vertical`
+- `limestone/Input` to show the Submit button for separated number inputs by default
 
 ### Fixed
 
