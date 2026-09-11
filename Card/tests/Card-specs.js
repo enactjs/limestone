@@ -289,7 +289,7 @@ describe('Card', () => {
 	});
 
 	test('should not render a score pill when neither team has a score', () => {
-		const {container} = render(
+		render(
 			<CardBase
 				data-testid="card"
 				leftTeam={{backgroundColor: '#1b2a4a'}}
@@ -298,7 +298,7 @@ describe('Card', () => {
 		);
 
 		expect(screen.getByTestId('card')).toHaveClass('sports');
-		expect(container.querySelector('.score')).toBeNull();
+		expect(screen.queryByText(' : ', {exact: false})).not.toBeInTheDocument();
 	});
 
 	test('should not render `captionImageIconsSrc` when the sports layout uses `captionOverlayOnFocus`', () => {
@@ -317,16 +317,16 @@ describe('Card', () => {
 	});
 
 	test('should require `src` when both teams are not provided', () => {
-		const error = CardBase.propTypes.src({}, 'src', 'Card');
+		render(<CardBase data-testid="card" />);
 
-		expect(error).toBeInstanceOf(Error);
-		expect(error.message).toContain('marked as required');
+		expect(console.error.mock.calls.flat().join('\n')).toContain('marked as required'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
 	});
 
 	test('should reject an invalid `src` type', () => {
-		const error = CardBase.propTypes.src({src: 1}, 'src', 'Card');
+		render(<CardBase src={[]} />);
 
-		expect(error).toBeInstanceOf(Error);
-		expect(error.message).toContain('Invalid prop');
+		expect(console.error.mock.calls.flat().join('\n')).toContain('Invalid prop'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
 	});
 });
