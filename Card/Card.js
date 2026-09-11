@@ -156,39 +156,6 @@ const CardBase = kind({
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
-		 * Source for the image.
-		 * String value or Object of values used to determine which image will appear on
-		 * a specific screenSize.
-		 *
-		 * Required unless both {@link limestone/Card.CardBase#leftTeam|leftTeam} and
-		 * {@link limestone/Card.CardBase#rightTeam|rightTeam} are provided. In that case the
-		 * image area uses the team colors as a diagonal gradient instead.
-		 *
-		 * @type {String|Object}
-		 * @public
-		 */
-		src: (props, propName, componentName) => {
-			const value = props[propName];
-			const hasTeams = Boolean(props.leftTeam && props.rightTeam);
-			const hasValue = value != null && value !== '';
-			const isValidType = typeof value === 'string' || (typeof value === 'object' && !Array.isArray(value));
-
-			if (!hasTeams && !hasValue) {
-				return new Error(
-					`The prop \`${propName}\` is marked as required in \`${componentName}\` unless both \`leftTeam\` and \`rightTeam\` are provided.`
-				);
-			}
-
-			if (hasValue && !isValidType) {
-				return new Error(
-					`Invalid prop \`${propName}\` of type \`${typeof value}\` supplied to \`${componentName}\`, expected \`string\` or \`object\`.`
-				);
-			}
-
-			return null;
-		},
-
-		/**
 		 * The "aria-label" for the Card.
 		 *
 		 * @type {String}
@@ -492,14 +459,6 @@ const CardBase = kind({
 		progressBarOverlay: PropTypes.bool,
 
 		/**
-		 * Set to `true` to display the image with rounded corners.
-		 *
-		 * @type {Boolean}
-		 * @public
-		 */
-		roundedImage: PropTypes.bool,
-
-		/**
 		 * Configures the right team for the sports layout.
 		 *
 		 * See {@link limestone/Card.CardBase#leftTeam|leftTeam} for the object shape and behavior.
@@ -508,6 +467,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		rightTeam: teamShape,
+
+		/**
+		 * Set to `true` to display the image with rounded corners.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		roundedImage: PropTypes.bool,
 
 		/**
 		 * The secondary badge.
@@ -588,6 +555,39 @@ const CardBase = kind({
 		 * @public
 		 */
 		splitCaption: PropTypes.bool,
+
+		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * Required unless both {@link limestone/Card.CardBase#leftTeam|leftTeam} and
+		 * {@link limestone/Card.CardBase#rightTeam|rightTeam} are provided. In that case the
+		 * image area uses the team colors as a diagonal gradient instead.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
+		src: (props, propName, componentName) => {
+			const value = props[propName];
+			const hasTeams = Boolean(props.leftTeam && props.rightTeam);
+			const hasValue = value != null && value !== '';
+			const isValidType = typeof value === 'string' || (typeof value === 'object' && !Array.isArray(value));
+
+			if (!hasTeams && !hasValue) {
+				return new Error(
+					`The prop \`${propName}\` is marked as required in \`${componentName}\` unless both \`leftTeam\` and \`rightTeam\` are provided.`
+				);
+			}
+
+			if (hasValue && !isValidType) {
+				return new Error(
+					`Invalid prop \`${propName}\` of type \`${typeof value}\` supplied to \`${componentName}\`, expected \`string\` or \`object\`.`
+				);
+			}
+
+			return null;
+		},
 
 		/**
 		 * Removes the marquee effect of caption and label text.
