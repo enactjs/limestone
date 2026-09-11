@@ -201,6 +201,8 @@ const CardBase = kind({
 		 *
 		 * An array of String values or Objects of values used to determine which image will appear on
 		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
+		 * It is not shown when both `leftTeam` and `rightTeam` are provided and the caption is
+		 * overlaid (`captionOverlay` or `captionOverlayOnFocus`).
 		 *
 		 * @type {String[]|Object[]}
 		 * @public
@@ -624,10 +626,11 @@ const CardBase = kind({
 			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${score ? ` ${score}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, progressBarOverlay, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
+		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, leftTeam, orientation, progress, progressBarOverlay, rightTeam, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
 			const isCenteredTitle = (captionOverlay || captionOverlayOnFocus) && orientation === 'vertical' && centeredTitle;
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
-			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical');
+			const isSportsOverlay = Boolean(leftTeam && rightTeam) && (captionOverlay || captionOverlayOnFocus);
+			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical' && !isSportsOverlay);
 			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
 			const labelsProps = withoutMarquee ? {style: {textAlign: alignment?.alignment}} : {...alignment};
 			const CaptionsComponent = isCenteredTitle ? Column : Row;

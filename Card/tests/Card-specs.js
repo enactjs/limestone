@@ -248,6 +248,21 @@ describe('Card', () => {
 		expect(screen.getByTestId('right-team-logo')).toBeInTheDocument();
 	});
 
+	test('should not render `captionImageIconsSrc` when the sports layout uses `captionOverlay`', () => {
+		render(
+			<CardBase
+				captionImageIconsSrc={[src]}
+				captionOverlay
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+			>
+				Title
+			</CardBase>
+		);
+
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
 	test('should still render `primaryBadge` and `secondaryBadge` in the sports layout', () => {
 		render(
 			<CardBase

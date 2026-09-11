@@ -55,6 +55,10 @@ export const _Sports = (args) => {
 
 	const controls = {
 		captionImageIconsSrc: [captionImageIconsSrc, captionImageIconsSrc, captionImageIconsSrc, captionImageIconsSrc],
+		captionOverflow: args['captionOverflow'],
+		captionOverflowOnFocus: args['captionOverflowOnFocus'],
+		captionOverlay: args['captionOverlay'],
+		captionOverlayOnFocus: args['captionOverlayOnFocus'],
 		disabled: args['disabled'],
 		hasContainer: args['hasContainer'],
 		// eslint-disable-next-line no-undefined
@@ -84,6 +88,10 @@ export const _Sports = (args) => {
 };
 
 object('captionImageIconsSrc', _Sports, Config, defaultCaptionImageIconsSrc);
+boolean('captionOverflow', _Sports, Config);
+boolean('captionOverflowOnFocus', _Sports, Config);
+boolean('captionOverlay', _Sports, Config);
+boolean('captionOverlayOnFocus', _Sports, Config);
 text('children', _Sports, Config, 'Item Label');
 boolean('disabled', _Sports, Config);
 boolean('hasContainer', _Sports, Config, true);
