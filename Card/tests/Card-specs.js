@@ -200,4 +200,133 @@ describe('Card', () => {
 
 		expect(screen.getByRole('progressbar')).toBeInTheDocument();
 	});
+
+	test('should apply `sports` class when both `leftTeam` and `rightTeam` are provided', () => {
+		render(
+			<CardBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/2'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).toHaveClass('sports');
+	});
+
+	test('should not apply `sports` class when only one team is provided', () => {
+		render(
+			<CardBase
+				data-testid="card"
+				src={src}
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).not.toHaveClass('sports');
+	});
+
+	test('should render the composed team score without requiring `src`', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1/1'}}
+			/>
+		);
+
+		expect(screen.getByText('0/0 : 1/1')).toBeInTheDocument();
+	});
+
+	test('should render team logos with the same badge implementation as `primaryBadge`', () => {
+		render(
+			<CardBase
+				leftTeam={{logo: 'Left Logo', score: '0/0'}}
+				rightTeam={{logo: <div data-testid="right-team-logo" />, score: '0/0'}}
+			/>
+		);
+
+		expect(screen.getByText('Left Logo')).toBeInTheDocument();
+		expect(screen.getByTestId('right-team-logo')).toBeInTheDocument();
+	});
+
+	test('should not render `captionImageIconsSrc` when the sports layout uses `captionOverlay`', () => {
+		render(
+			<CardBase
+				captionImageIconsSrc={[src]}
+				captionOverlay
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+			>
+				Title
+			</CardBase>
+		);
+
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
+	test('should still render `primaryBadge` and `secondaryBadge` in the sports layout', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				primaryBadge="Primary Badge"
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+				secondaryBadge="Secondary Badge"
+			/>
+		);
+
+		expect(screen.getByText('Primary Badge')).toBeInTheDocument();
+		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
+	});
+
+	test('should render a single score when only one team has a score', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+				rightTeam={{backgroundColor: '#e31c23'}}
+			/>
+		);
+
+		expect(screen.getByText('1/0')).toBeInTheDocument();
+	});
+
+	test('should not render a score pill when neither team has a score', () => {
+		render(
+			<CardBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a'}}
+				rightTeam={{backgroundColor: '#e31c23'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).toHaveClass('sports');
+		expect(screen.queryByText(' : ', {exact: false})).not.toBeInTheDocument();
+	});
+
+	test('should not render `captionImageIconsSrc` when the sports layout uses `captionOverlayOnFocus`', () => {
+		render(
+			<CardBase
+				captionImageIconsSrc={[src]}
+				captionOverlayOnFocus
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+			>
+				Title
+			</CardBase>
+		);
+
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
+	test('should require `src` when both teams are not provided', () => {
+		render(<CardBase data-testid="card" />);
+
+		expect(console.error.mock.calls.flat().join('\n')).toContain('marked as required'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
+	});
+
+	test('should reject an invalid `src` type', () => {
+		render(<CardBase src={[]} />);
+
+		expect(console.error.mock.calls.flat().join('\n')).toContain('Invalid prop'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
+	});
 });

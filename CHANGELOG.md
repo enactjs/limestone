@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Card` props `leftTeam` and `rightTeam` to display a sports match layout with team colors, logos, and score
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
 - `limestone/IconItem` prop `description`
 - `limestone/ImageItem` prop `secondaryLabel`

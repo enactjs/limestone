@@ -73,6 +73,8 @@ const newTypeCardTests = [
 	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflow progressBarOverlay selected showProgressBar>Title</Card>,
 	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="This is very very very very long label. This is very very long label." labelIcons={labelIcons} primaryBadge={iconBadge} progress={0.7} secondaryBadge={imageBadge} captionOverflowOnFocus progressBarOverlay selected showProgressBar>Title</Card>,
 	<Card src={img} captionImageIconsSrc={[img, img, img, img]} label="Secondary Text" labelIcons={labelIcons} primaryBadge={iconBadge} duration={234} secondaryBadge={imageBadge} durationOverlay selected showDuration>Title</Card>,
+	<Card captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge}>Item Label</Card>,
+	<Card captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge} selected>Item Label</Card>,
 
 	// Horizontal
 	<Card src={img} label="Secondary Text" labelIcons={labelIcons} orientation="horizontal" secondaryLabel="Secondary Text" secondaryLabelIcons={labelIcons} selected>Title</Card>
