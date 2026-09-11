@@ -276,4 +276,57 @@ describe('Card', () => {
 		expect(screen.getByText('Primary Badge')).toBeInTheDocument();
 		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
 	});
+
+	test('should render a single score when only one team has a score', () => {
+		render(
+			<CardBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1/0'}}
+				rightTeam={{backgroundColor: '#e31c23'}}
+			/>
+		);
+
+		expect(screen.getByText('1/0')).toBeInTheDocument();
+	});
+
+	test('should not render a score pill when neither team has a score', () => {
+		const {container} = render(
+			<CardBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a'}}
+				rightTeam={{backgroundColor: '#e31c23'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).toHaveClass('sports');
+		expect(container.querySelector('.score')).toBeNull();
+	});
+
+	test('should not render `captionImageIconsSrc` when the sports layout uses `captionOverlayOnFocus`', () => {
+		render(
+			<CardBase
+				captionImageIconsSrc={[src]}
+				captionOverlayOnFocus
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+			>
+				Title
+			</CardBase>
+		);
+
+		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
+	test('should require `src` when both teams are not provided', () => {
+		const error = CardBase.propTypes.src({}, 'src', 'Card');
+
+		expect(error).toBeInstanceOf(Error);
+		expect(error.message).toContain('marked as required');
+	});
+
+	test('should reject an invalid `src` type', () => {
+		const error = CardBase.propTypes.src({src: 1}, 'src', 'Card');
+
+		expect(error).toBeInstanceOf(Error);
+		expect(error.message).toContain('Invalid prop');
+	});
 });
