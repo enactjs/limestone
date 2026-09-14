@@ -138,7 +138,7 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 			}
 		}, [initialValue, props, value]);
 
-		const handleCancel = () => {
+		const handleCancel = () => { // eslint-disable-line @typescript-eslint/no-unused-vars
 			// if we're cancelling, reset our state and emit an onChange with the initial value
 			setValue(null as unknown as number);
 			setInitialValue(null);
