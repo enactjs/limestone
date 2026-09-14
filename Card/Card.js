@@ -132,17 +132,6 @@ const CardBase = kind({
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
-		 * Source for the image.
-		 * String value or Object of values used to determine which image will appear on
-		 * a specific screenSize.
-		 *
-		 * @type {String|Object}
-		 * @required
-		 * @public
-		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-
-		/**
 		 * The "aria-label" for the Card.
 		 *
 		 * @type {String}
@@ -317,6 +306,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.element]),
+
+		/**
+		 * Nodes rendered inside the image, after badges and before the selection overlay.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		imageOverlay: PropTypes.node,
 
 		/**
 		 * The size of the image.
@@ -512,6 +509,35 @@ const CardBase = kind({
 		splitCaption: PropTypes.bool,
 
 		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @required
+		 * @public
+		 */
+		src: (props, propName, componentName) => {
+			const value = props[propName];
+			const hasValue = value != null && value !== '';
+			const isValidType = typeof value === 'string' || (typeof value === 'object' && !Array.isArray(value));
+
+			if (!hasValue) {
+				return new Error(
+					`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${value}\`.`
+				);
+			}
+
+			if (!isValidType) {
+				return new Error(
+					`Invalid prop \`${propName}\` of type \`${typeof value}\` supplied to \`${componentName}\`, expected \`string\` or \`object\`.`
+				);
+			}
+
+			return null;
+		},
+
+		/**
 		 * Removes the marquee effect of caption and label text.
 		 * @type {Boolean}
 		 * @public
@@ -641,7 +667,7 @@ const CardBase = kind({
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({captionImageSize, css, disabled, icon, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
+	render: ({captionImageSize, css, disabled, icon, imageOverlay, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
 		delete rest.captionImageIconsSrc;
 		delete rest.captionOverflow;
 		delete rest.captionOverflowOnFocus;
@@ -677,6 +703,7 @@ const CardBase = kind({
 						{secondaryBadge ? (
 							getBadge(secondaryBadge, secondaryBadgeSize, css.secondaryBadge)
 						) : null}
+						{imageOverlay}
 						<div className={css.selectionContainer}>
 							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>
