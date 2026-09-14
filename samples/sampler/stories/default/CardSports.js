@@ -1,4 +1,5 @@
 import {Card, CardBase} from '@enact/limestone/Card';
+import CardSports, {CardSportsBase} from '@enact/limestone/CardSports';
 import icons from '@enact/limestone/Icon/IconList';
 import {Icon} from '@enact/limestone/Icon';
 import {Image} from '@enact/limestone/Image';
@@ -9,8 +10,8 @@ import {Card as UiCard} from '@enact/ui/Card';
 
 import {svgGenerator} from '../helper/svg';
 
-const Config = mergeComponentMetadata('Card', UiCard, CardBase, Card);
-Card.displayName = 'Card';
+const Config = mergeComponentMetadata('CardSports', UiCard, CardBase, Card, CardSportsBase, CardSports);
+CardSports.displayName = 'CardSports';
 
 const generateImageSrc = (color) => {
 	return {
@@ -44,11 +45,11 @@ const defaultRightTeam = {
 const defaultCaptionImageIconsSrc = generateImageSrc('0084ff');
 
 export default {
-	title: 'Limestone/Card',
-	component: 'Card'
+	title: 'Limestone/CardSports',
+	component: 'CardSports'
 };
 
-export const _Sports = (args) => {
+export const _CardSports = (args) => {
 	const captionImageIconsSrc = args['captionImageIconsSrc'];
 	const leftTeam = args['leftTeam'] || defaultLeftTeam;
 	const rightTeam = args['rightTeam'] || defaultRightTeam;
@@ -78,35 +79,35 @@ export const _Sports = (args) => {
 	};
 
 	return (
-		<Card
+		<CardSports
 			{...controls}
 			onClick={action('onClick')}
 		>
 			{args['children']}
-		</Card>
+		</CardSports>
 	);
 };
 
-object('captionImageIconsSrc', _Sports, Config, defaultCaptionImageIconsSrc);
-boolean('captionOverflow', _Sports, Config);
-boolean('captionOverflowOnFocus', _Sports, Config);
-boolean('captionOverlay', _Sports, Config);
-boolean('captionOverlayOnFocus', _Sports, Config);
-text('children', _Sports, Config, 'Item Label');
-boolean('disabled', _Sports, Config);
-boolean('hasContainer', _Sports, Config, true);
-text('label', _Sports, Config, 'Description Label');
-object('leftTeam', _Sports, Config, defaultLeftTeam);
-select('leftTeamLogo', _Sports, ['image', 'icon', 'text'], Config, 'image');
-select('primaryBadge', _Sports, ['image', 'icon', 'text'], Config, 'icon');
-object('rightTeam', _Sports, Config, defaultRightTeam);
-select('rightTeamLogo', _Sports, ['image', 'icon', 'text'], Config, 'image');
-boolean('roundedImage', _Sports, Config, true);
-select('secondaryBadge', _Sports, ['image', 'icon', 'text'], Config, 'icon');
-boolean('selected', _Sports, Config);
+object('captionImageIconsSrc', _CardSports, Config, defaultCaptionImageIconsSrc);
+boolean('captionOverflow', _CardSports, Config);
+boolean('captionOverflowOnFocus', _CardSports, Config);
+boolean('captionOverlay', _CardSports, Config);
+boolean('captionOverlayOnFocus', _CardSports, Config);
+text('children', _CardSports, Config, 'Item Label');
+boolean('disabled', _CardSports, Config);
+boolean('hasContainer', _CardSports, Config, true);
+text('label', _CardSports, Config, 'Description Label');
+object('leftTeam', _CardSports, Config, defaultLeftTeam);
+select('leftTeamLogo', _CardSports, ['image', 'icon', 'text'], Config, 'image');
+select('primaryBadge', _CardSports, ['image', 'icon', 'text'], Config, 'icon');
+object('rightTeam', _CardSports, Config, defaultRightTeam);
+select('rightTeamLogo', _CardSports, ['image', 'icon', 'text'], Config, 'image');
+boolean('roundedImage', _CardSports, Config, true);
+select('secondaryBadge', _CardSports, ['image', 'icon', 'text'], Config, 'icon');
+boolean('selected', _CardSports, Config);
 
-_Sports.storyName = 'Sports';
-_Sports.parameters = {
+_CardSports.storyName = 'CardSports';
+_CardSports.parameters = {
 	info: {
 		text: 'The sports Card'
 	}

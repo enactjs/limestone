@@ -118,30 +118,6 @@ const getLabelIcons = (icons, key, className) => {
 	}) || null;
 };
 
-const TRANSPARENT_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-
-const teamShape = PropTypes.shape({
-	backgroundColor: PropTypes.string,
-	logo: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-	logoSize: PropTypes.oneOfType([
-		PropTypes.number,
-		PropTypes.shape({
-			height: PropTypes.number,
-			width: PropTypes.number
-		})
-	]),
-	score: PropTypes.string
-});
-
-const formatTeamScore = (leftTeam, rightTeam) => {
-	const leftScore = leftTeam?.score;
-	const rightScore = rightTeam?.score;
-
-	if (leftScore && rightScore) return `${leftScore} : ${rightScore}`;
-
-	return leftScore || rightScore || null;
-};
-
 /**
  * A Limestone styled base component for {@link limestone/Card.Card|Card}.
  *
@@ -168,8 +144,6 @@ const CardBase = kind({
 		 *
 		 * An array of String values or Objects of values used to determine which image will appear on
 		 * a specific screenSize. This prop is only used when `orientation` is `'vertical'`.
-		 * It is not shown when both `leftTeam` and `rightTeam` are provided and the caption is
-		 * overlaid (`captionOverlay` or `captionOverlayOnFocus`).
 		 *
 		 * @type {String[]|Object[]}
 		 * @public
@@ -334,6 +308,14 @@ const CardBase = kind({
 		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.element]),
 
 		/**
+		 * Nodes rendered inside the image, after badges and before the selection overlay.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		imageOverlay: PropTypes.node,
+
+		/**
 		 * The size of the image.
 		 *
 		 * The following properties should be provided:
@@ -369,26 +351,6 @@ const CardBase = kind({
 			PropTypes.element,
 			PropTypes.arrayOf(PropTypes.element)
 		]),
-
-		/**
-		 * Configures the left team for the sports layout.
-		 *
-		 * When both `leftTeam` and `rightTeam` are provided, the Card displays a sports match
-		 * layout: a diagonal color split, team logos beside a centered score, and `src` is no
-		 * longer required.
-		 *
-		 * The following properties should be provided:
-		 * * `backgroundColor` - The color for this team's half of the image
-		 * * `logo` - The team logo. Same type as
-		 *   {@link limestone/Card.CardBase#primaryBadge|primaryBadge} (`Element` or `String`)
-		 * * `logoSize` - The size of the logo. Same type as
-		 *   {@link limestone/Card.CardBase#primaryBadgeSize|primaryBadgeSize}
-		 * * `score` - The score text for this team
-		 *
-		 * @type {Object}
-		 * @public
-		 */
-		leftTeam: teamShape,
 
 		/**
 		 * The layout orientation of the component.
@@ -457,16 +419,6 @@ const CardBase = kind({
 		 * @public
 		 */
 		progressBarOverlay: PropTypes.bool,
-
-		/**
-		 * Configures the right team for the sports layout.
-		 *
-		 * See {@link limestone/Card.CardBase#leftTeam|leftTeam} for the object shape and behavior.
-		 *
-		 * @type {Object}
-		 * @public
-		 */
-		rightTeam: teamShape,
 
 		/**
 		 * Set to `true` to display the image with rounded corners.
@@ -561,26 +513,22 @@ const CardBase = kind({
 		 * String value or Object of values used to determine which image will appear on
 		 * a specific screenSize.
 		 *
-		 * Required unless both {@link limestone/Card.CardBase#leftTeam|leftTeam} and
-		 * {@link limestone/Card.CardBase#rightTeam|rightTeam} are provided. In that case the
-		 * image area uses the team colors as a diagonal gradient instead.
-		 *
 		 * @type {String|Object}
+		 * @required
 		 * @public
 		 */
 		src: (props, propName, componentName) => {
 			const value = props[propName];
-			const hasTeams = Boolean(props.leftTeam && props.rightTeam);
 			const hasValue = value != null && value !== '';
 			const isValidType = typeof value === 'string' || (typeof value === 'object' && !Array.isArray(value));
 
-			if (!hasTeams && !hasValue) {
+			if (!hasValue) {
 				return new Error(
-					`The prop \`${propName}\` is marked as required in \`${componentName}\` unless both \`leftTeam\` and \`rightTeam\` are provided.`
+					`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${value}\`.`
 				);
 			}
 
-			if (hasValue && !isValidType) {
+			if (!isValidType) {
 				return new Error(
 					`Invalid prop \`${propName}\` of type \`${typeof value}\` supplied to \`${componentName}\`, expected \`string\` or \`object\`.`
 				);
@@ -621,16 +569,14 @@ const CardBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({'aria-label': ariaLabel, children, label, leftTeam, rightTeam, secondaryLabel, selected}) => {
-			const score = formatTeamScore(leftTeam, rightTeam);
-			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${score ? ` ${score}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
+		'aria-label': ({'aria-label': ariaLabel, children, label, secondaryLabel, selected}) => {
+			return ariaLabel || `${children || ''}${label ? ` ${label}` : ''}${secondaryLabel ? ` ${secondaryLabel}` : ''}${selected ? ' ' + $L('Selected') : ''}`;
 		},
 		captionOverlay: ({captionOverlay, captionOverlayOnFocus}) => captionOverlay || captionOverlayOnFocus,
-		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, leftTeam, orientation, progress, progressBarOverlay, rightTeam, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
+		children: ({captionImageIconsSrc, captionOverlay, captionOverlayOnFocus, centered, centeredTitle, children, css, duration, durationOverlay, 'data-index': index, imageIconSrc, label, labelIcons, orientation, progress, progressBarOverlay, secondaryLabel, secondaryLabelIcons, showDuration, showProgressBar, splitCaption, withoutMarquee}) => {
 			const isCenteredTitle = (captionOverlay || captionOverlayOnFocus) && orientation === 'vertical' && centeredTitle;
 			const hasImageIcon = imageIconSrc && orientation === 'vertical';
-			const isSportsOverlay = Boolean(leftTeam && rightTeam) && (captionOverlay || captionOverlayOnFocus);
-			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical' && !isSportsOverlay);
+			const hasCaptionImageIcons = captionImageIconsSrc && (captionImageIconsSrc.filter(Boolean).length && orientation === 'vertical');
 			const alignment = (centered && !imageIconSrc) || isCenteredTitle ? {alignment: 'center'} : null;
 			const labelsProps = withoutMarquee ? {style: {textAlign: alignment?.alignment}} : {...alignment};
 			const CaptionsComponent = isCenteredTitle ? Column : Row;
@@ -701,7 +647,7 @@ const CardBase = kind({
 					selectedCaptions
 			);
 		},
-		className: ({captionImageIconsSrc, captionOverflow, captionOverflowOnFocus, captionOverlay, captionOverlayOnFocus, centeredTitle, children, durationOverlay, icon, imageIconSrc, label, leftTeam, pressed, progressBarOverlay, roundedImage, hasContainer, orientation, rightTeam, secondaryLabel, showProgressBar, styler}) => styler.append({
+		className: ({captionImageIconsSrc, captionOverflow, captionOverflowOnFocus, captionOverlay, captionOverlayOnFocus, centeredTitle, children, durationOverlay, icon, imageIconSrc, label, pressed, progressBarOverlay, roundedImage, hasContainer, orientation, secondaryLabel, showProgressBar, styler}) => styler.append({
 			captionOverflow: captionOverflow && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverflowOnFocus: !captionOverflow && captionOverflowOnFocus && orientation === 'vertical' && !captionOverlay && !captionOverlayOnFocus,
 			captionOverlay: captionOverlay && orientation === 'vertical',
@@ -714,15 +660,14 @@ const CardBase = kind({
 			hasContainer: (orientation === 'horizontal') || (hasContainer && !captionOverlay && !captionOverlayOnFocus),
 			hasLabel: (orientation === 'vertical') && (label && secondaryLabel),
 			isCheckIcon: icon === 'check',
-			progressBarOverlay,
-			sports: Boolean(leftTeam && rightTeam)
+			progressBarOverlay
 		}),
 		showDuration: ({showDuration, showProgressBar, durationOverlay}) => showDuration && durationOverlay && !showProgressBar,
 		showProgressBar: ({showProgressBar, progressBarOverlay}) => showProgressBar && progressBarOverlay,
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({captionImageSize, css, disabled, icon, imageSize, leftTeam, primaryBadge, primaryBadgeSize, rightTeam, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
+	render: ({captionImageSize, css, disabled, icon, imageOverlay, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
 		delete rest.captionImageIconsSrc;
 		delete rest.captionOverflow;
 		delete rest.captionOverflowOnFocus;
@@ -742,12 +687,6 @@ const CardBase = kind({
 		delete rest.withoutMarquee;
 
 		const defaultImageSize = getDefaultImageSize(rest.orientation);
-		const isSports = Boolean(leftTeam && rightTeam);
-		const teamScore = isSports ? formatTeamScore(leftTeam, rightTeam) : null;
-
-		if (isSports && !rest.src && !rest.placeholder) {
-			rest.placeholder = TRANSPARENT_PLACEHOLDER;
-		}
 
 		return (
 			<UiCard
@@ -764,28 +703,7 @@ const CardBase = kind({
 						{secondaryBadge ? (
 							getBadge(secondaryBadge, secondaryBadgeSize, css.secondaryBadge)
 						) : null}
-						{isSports ? (
-							<>
-								<div className={css.sportsBackground} />
-								<div className={css.sportsOverlay}>
-									<div className={css.teamSide}>
-										{leftTeam.logo ? (
-											getBadge(leftTeam.logo, leftTeam.logoSize, css.teamLogo)
-										) : null}
-									</div>
-									{teamScore ? (
-										<div className={css.score}>{teamScore}</div>
-									) : (
-										<div />
-									)}
-									<div className={css.teamSide}>
-										{rightTeam.logo ? (
-											getBadge(rightTeam.logo, rightTeam.logoSize, css.teamLogo)
-										) : null}
-									</div>
-								</div>
-							</>
-						) : null}
+						{imageOverlay}
 						<div className={css.selectionContainer}>
 							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>
@@ -802,9 +720,7 @@ const CardBase = kind({
 					'--card-image-height': ri.scaleToRem(imageSize?.height ?? defaultImageSize.height),
 					'--card-image-width': ri.scaleToRem(imageSize?.width ?? defaultImageSize.width),
 					...(captionImageSize?.height && {'--caption-image-height': ri.scaleToRem(captionImageSize.height)}),
-					...(captionImageSize?.width && {'--caption-image-width': ri.scaleToRem(captionImageSize.width)}),
-					...(leftTeam?.backgroundColor && {'--card-left-team-color': leftTeam.backgroundColor}),
-					...(rightTeam?.backgroundColor && {'--card-right-team-color': rightTeam.backgroundColor})
+					...(captionImageSize?.width && {'--caption-image-width': ri.scaleToRem(captionImageSize.width)})
 				}}
 			/>
 		);
@@ -836,18 +752,6 @@ const CardDecorator = compose(
  * ```
  * <Card
  *   src="https://placehold.co/100x100/9037ab/ffffff/png?text=Image0"
- *   label="A secondary caption"
- * >
- *  The primary caption
- * </Card>
- * ```
- *
- * Sports layout (`src` is optional when both teams are provided):
- * ```
- * <Card
- *   hasContainer
- *   leftTeam={{backgroundColor: '#1b2a4a', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
- *   rightTeam={{backgroundColor: '#e31c23', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
  *   label="A secondary caption"
  * >
  *  The primary caption
