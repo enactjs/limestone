@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/ContextualPopupDecorator` hole punch scrim to reposition together with the popup when the wrapped component is updated
+
 ## [1.11.1] - 2026-09-09
 
 ### Fixed
