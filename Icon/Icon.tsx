@@ -1,0 +1,222 @@
+/**
+ * Provides Limestone styled icon components and behaviors.
+ *
+ * @example
+ * <Icon>plus</Icon>
+ *
+ * @module limestone/Icon
+ * @exports Icon
+ * @exports IconBase
+ * @exports IconDecorator
+ * @exports icons
+ */
+
+import deprecate from '@enact/core/internal/deprecate';
+import kind from '@enact/core/kind';
+import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import {IconBase as UiIconBase} from '@enact/ui/Icon';
+import Pure from '@enact/ui/internal/Pure';
+import {scaleToRem} from '@enact/ui/resolution';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+import type {ComponentType} from 'react';
+
+import Skinnable from '../Skinnable';
+
+import iconList from './IconList';
+
+import componentCss from './Icon.module.less';
+
+let warnedJumpBackward = false;
+let warnedJumpBackward2 = false;
+let warnedJumpForward = false;
+let warnedJumpForward2 = false;
+
+export interface IconBaseProps {
+	children?: string | Record<string, string>;
+	css?: Record<string, string>;
+	flip?: 'auto' | 'both' | 'horizontal' | 'vertical';
+	locale?: string;
+	rtl?: boolean;
+	size?: 'large' | 'medium' | 'small' | 'tiny' | number;
+	[key: string]: any;
+}
+
+/**
+ * Renders a limestone-styled icon without any behavior.
+ *
+ * @class IconBase
+ * @memberof limestone/Icon
+ * @extends ui/Icon.Icon
+ * @ui
+ * @public
+ */
+const IconBase = kind({
+	name: 'Icon',
+
+	_propTypes: {} as IconBaseProps,
+
+	propTypes: /** @lends limestone/Icon.IconBase.prototype */ {
+		/**
+		 * The icon content.
+		 *
+		 * @see {@link ui/Icon.IconBase.children}
+		 * @type {String|Object}
+		 * @deprecated `jumpbackward`, `jumpforward`, `jumpbackward2`, and `jumpforward2` icons will be renamed to `previous`, `next`, `jumpbackward`, and `jumpforward` in 2.0.0.
+		 * @public
+		 */
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `icon` - The root component class
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		/**
+		 * Flips the icon
+		 *
+		 * When `'auto'` and `rtl`, the icon is flipped horizontally.
+		 *
+		 * @type {('auto'|'both'|'horizontal'|'vertical')}
+		 * @public
+		 */
+		flip: PropTypes.oneOf(['auto', 'both', 'horizontal', 'vertical']) as PropTypes.Validator<'auto' | 'both' | 'horizontal' | 'vertical' | undefined>,
+
+		/**
+		 * The current locale as a
+		 * {@link https://tools.ietf.org/html/rfc5646|BCP 47 language tag}.
+		 *
+		 * @type {String}
+		 * @private
+		*/
+		locale: PropTypes.string,
+
+		/**
+		 * Indicates the content's text direction is right-to-left.
+		 *
+		 * This is set automatically when using {@link ui/Icon.Icon}.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		rtl: PropTypes.bool,
+
+		/**
+		 * The size of the icon.
+		 *
+		 * A collection of preset sizes is available in addition to a numeric size option.
+		 * A number represents the design-time pixel dimensions of the icon. The final value will
+		 * automatically adapt to the screen resolutions, as defined in the `screenTypes` file of
+		 * this theme.
+		 *
+		 * @type {('large'|'medium'|'small'|'tiny'|Number)}
+		 * @default 'small'
+		 * @public
+		 */
+		size: PropTypes.oneOfType([
+			PropTypes.oneOf(['large', 'medium', 'small', 'tiny']),
+			PropTypes.number
+		]) as PropTypes.Validator<'large' | 'medium' | 'small' | 'tiny' | number | undefined>
+	},
+
+	defaultProps: {
+		size: 'small'
+	},
+
+	styles: {
+		css: componentCss,
+		publicClassNames: ['icon']
+	},
+
+	computed: {
+		className: ({size, styler}: Record<string, any>) => styler.append(
+			(typeof size === 'string' ? size : null)
+		),
+		flip: ({children, flip, locale, rtl}: Record<string, any>) => {
+			if (flip === 'auto') {
+				if (locale === 'he-IL' && children === 'help') {
+					return null;
+				}
+				return rtl ? 'horizontal' : null;
+			}
+
+			return flip;
+		},
+		style: ({size, style}: Record<string, any>) => ({
+			...style,
+			'--icon-size': (typeof size === 'number') ? scaleToRem(size) : null
+		})
+	},
+
+	render: ({css, size, ...rest}: Record<string, any>) => {
+		delete rest.locale;
+		delete rest.rtl;
+
+		if (!warnedJumpBackward && rest.children === 'jumpbackward') {
+			deprecate({name: 'Icon `jumpbackward`', message: 'Wiil be renamed to `previous` in 2.0.0'});
+			warnedJumpBackward = true;
+		}
+		if (!warnedJumpBackward2 && rest.children === 'jumpbackward2') {
+			deprecate({name: 'Icon `jumpbackward2`', message: 'Wiil be renamed to `jumpbackward` in 2.0.0'});
+			warnedJumpBackward2 = true;
+		}
+		if (!warnedJumpForward && rest.children === 'jumpforward') {
+			deprecate({name: 'Icon `jumpforward`', message: 'Wiil be renamed to `next` in 2.0.0'});
+			warnedJumpForward = true;
+		}
+		if (!warnedJumpForward2 && rest.children === 'jumpforward2') {
+			deprecate({name: 'Icon `jumpforward2`', message: 'Wiil be renamed to `jumpforward` in 2.0.0'});
+			warnedJumpForward2 = true;
+		}
+
+		return UiIconBase.inline!({
+			...rest,
+			size: (typeof size === 'string' ? size : void 0),
+			css,
+			iconList
+		}, void 0 as any);
+	}
+});
+
+/**
+ * Limestone-specific behaviors to apply to {@link limestone/Icon.IconBase|IconBase}.
+ *
+ * @hoc
+ * @memberof limestone/Icon
+ * @mixes limestone/Skinnable.Skinnable
+ * @public
+ */
+const IconDecorator = compose(
+	Pure,
+	Skinnable,
+	I18nContextDecorator({localeProp: 'locale', rtlProp: 'rtl'})
+);
+
+/**
+ * A Limestone-styled icon.
+ *
+ * @class Icon
+ * @memberof limestone/Icon
+ * @extends limestone/Icon.IconBase
+ * @mixes limestone/Icon.IconDecorator
+ * @ui
+ * @public
+ */
+const Icon = IconDecorator(IconBase) as ComponentType<any>;
+
+
+export default Icon;
+export {
+	Icon,
+	IconBase,
+	IconDecorator,
+	iconList as icons
+};

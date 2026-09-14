@@ -1,0 +1,77 @@
+import hoc from '@enact/core/hoc';
+import EnactPropTypes from '@enact/core/internal/prop-types';
+import useChainRefs from '@enact/core/useChainRefs';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import Spotlight from '@enact/spotlight';
+import PropTypes from 'prop-types';
+import {useRef, useCallback} from 'react';
+
+const isSelector = (autoFocus: string) => autoFocus && autoFocus !== 'last-focused' && autoFocus !== 'default-element' && autoFocus !== 'none';
+
+function configureContainer (ref: {current: Record<string, any>}, autoFocus: string, spotlightId: string) {
+	if (ref.current.id === spotlightId && ref.current.autoFocus === autoFocus) return;
+
+	ref.current.id = spotlightId;
+	ref.current.autoFocus = autoFocus;
+
+	// If autoFocus is a selector, we're using default-element but need to update the selector
+	// for that element in the container config
+	if (isSelector(autoFocus)) {
+		Spotlight.set(spotlightId, {
+			defaultElement: autoFocus
+		});
+	}
+}
+
+function useAutoFocus ({autoFocus = 'last-focused', hideChildren}: {autoFocus?: string; hideChildren?: boolean}) {
+	const ref = useRef<Record<string, any>>({id: null, autoFocus: null});
+
+	return useCallback((node: HTMLElement | null) => {
+		if (!node) return;
+
+		// FIXME: This is a candidate to move to the decorator once hooks have been fully
+		// adopted and we can configure SpotlightContainerDecorator with the current props
+		const {spotlightId} = (node as HTMLElement & {dataset: Record<string, string>}).dataset;
+
+		configureContainer(ref, autoFocus, spotlightId);
+
+		// In order to spot the body components, we defer spotting until !hideChildren. If the
+		// Panel opts out of hideChildren support by explicitly setting it to false, it'll spot
+		// on first render.
+		if (!hideChildren && autoFocus !== 'none' && !Spotlight.getCurrent() && !Spotlight.isPaused()) {
+			// For the purpose of imperatively focusing the Panel contents, we find the target
+			// within the panel using a (currently) private Spotlight API with the enterTo parameter
+			// to influence which configuration is used to find said target.
+			const enterTo = isSelector(autoFocus) || autoFocus === 'default-element' ? 'default-element' : 'last-focused';
+			Spotlight.focus(spotlightId, {enterTo});
+		}
+	}, [autoFocus, hideChildren, ref]);
+}
+
+const AutoFocusDecorator = hoc((config, Wrapped) => {
+	// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
+	function AutoFocusDecorator (props: Record<string, any>) {
+		const autoFocusDecoratorProps = setDefaultProps(props, {autoFocus: 'last-focused'});
+		checkPropTypes(AutoFocusDecorator, autoFocusDecoratorProps);
+		const {autoFocus, componentRef, hideChildren, ...rest} = autoFocusDecoratorProps;
+
+		const hook = useAutoFocus({autoFocus, hideChildren});
+		const ref = useChainRefs(componentRef, hook);
+
+		return <Wrapped {...rest} componentRef={ref} hideChildren={hideChildren} />;
+	}
+
+	AutoFocusDecorator.propTypes = {
+		autoFocus: PropTypes.string,
+		componentRef: EnactPropTypes.ref,
+		hideChildren: PropTypes.bool
+	};
+
+	return AutoFocusDecorator;
+});
+
+export default useAutoFocus;
+export {
+	AutoFocusDecorator,
+	useAutoFocus
+};
