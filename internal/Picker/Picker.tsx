@@ -151,7 +151,7 @@ const PickerBase = (props: Record<string, any>) => {
 		setPressed(0);
 	}, []);
 
-	const emulateMouseUp = useMemo(() => new Job(clearPressedState, 175), [clearPressedState]);  // eslint-disable-line react-hooks/refs
+	const emulateMouseUp = useMemo(() => new Job(clearPressedState, 175), [clearPressedState]);
 
 	const handleVoice = useCallback((ev: any) => {
 		const voiceIndex = ev && ev.detail && typeof ev.detail.matchedIndex !== 'undefined' && Number(ev.detail.matchedIndex);
@@ -212,9 +212,9 @@ const PickerBase = (props: Record<string, any>) => {
 		}
 	}, [hasReachedBound, setPressedState, step, updateValue]);
 
-	const throttleWheelDec = useMemo(() => new Job(handleDecrement, 100), [handleDecrement]);  // eslint-disable-line react-hooks/refs
+	const throttleWheelDec = useMemo(() => new Job(handleDecrement, 100), [handleDecrement]);
 
-	const throttleWheelInc = useMemo(() => new Job(handleIncrement, 100), [handleIncrement]);  // eslint-disable-line react-hooks/refs
+	const throttleWheelInc = useMemo(() => new Job(handleIncrement, 100), [handleIncrement]);
 
 	const handleWheel = useCallback((ev: any) => {
 		forwardWheel(ev, props);
@@ -624,7 +624,7 @@ const PickerBase = (props: Record<string, any>) => {
 					duration={100}
 					index={index}
 					noAnimation={noAnimation}
-					reverseTransition={reverseTransition.current} // eslint-disable-line react-hooks/refs
+					reverseTransition={reverseTransition.current}
 				>
 					{children}
 				</PickerViewManager>
