@@ -31,7 +31,6 @@ const useEventKey = (props, instances, context) => {
 	});
 
 	const prevKeyDownIndexRef = useRef(-1);
-	const hasProcessedKeyDownRef = useRef(false);
 
 	// Functions
 
@@ -165,17 +164,6 @@ const useEventKey = (props, instances, context) => {
 							(isBackwardKey && (prevKeyDownIndexRef.current < index || index < prevKeyDownIndexRef.current - dimensionToExtent))
 						);
 
-						// Block the first repeat event when entering VirtualList from outside with acceleration.
-						// prevKeyDownIndexRef is -1 only on first entry; a repeat here means key was held before entering.
-						const isFirstEntryRepeat = isMovingWithinList && repeat && !hasProcessedKeyDownRef.current;
-
-						if (isFirstEntryRepeat) {
-							ev.preventDefault();
-							ev.stopPropagation();
-							resetAccelerator();
-							return;
-						}
-
 						if (isOutdatedIndex) {
 							ev.preventDefault();
 							ev.stopPropagation();
@@ -250,7 +238,6 @@ const useEventKey = (props, instances, context) => {
 					}
 
 					prevKeyDownIndexRef.current = index;
-					hasProcessedKeyDownRef.current = true;
 
 					if (isLeaving) {
 						handleDirectionKeyDown(ev, 'keyLeave');
