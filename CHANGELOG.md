@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/VirtualList` long press scroll between multiple VirtualLists
+
 ## [1.11.1] - 2026-09-09
 
 ### Fixed
