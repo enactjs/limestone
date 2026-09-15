@@ -35,7 +35,7 @@ describe('useTooltip', () => {
 					bottom: 0,
 					right: 0
 				};
-			});
+			}) as unknown as () => DOMRect;
 		});
 
 		test('should render a tooltip if hovered', async () => {
@@ -161,7 +161,7 @@ describe('useTooltip', () => {
 						bottom: 0,
 						right: 0
 					};
-				});
+				}) as unknown as () => DOMRect;
 
 				act(() => button.focus());
 				fireEvent.mouseOver(button);
@@ -193,7 +193,7 @@ describe('useTooltip', () => {
 						bottom: 0,
 						right: 0
 					};
-				});
+				}) as unknown as () => DOMRect;
 
 				act(() => button.focus());
 				fireEvent.mouseOver(button);

@@ -39,7 +39,6 @@ export interface IconBaseProps {
 	locale?: string;
 	rtl?: boolean;
 	size?: 'large' | 'medium' | 'small' | 'tiny' | number;
-	[key: string]: any;
 }
 
 /**
@@ -212,6 +211,17 @@ const IconDecorator = compose(
  */
 const Icon = IconDecorator(IconBase) as ComponentType<any>;
 
+
+/**
+ * An object whose keys can be used as the child of an {@link limestone/Icon.Icon|Icon} component.
+ *
+ * @see {@link limestone/Icon.IconList}
+ * @name icons
+ * @memberof limestone/Icon
+ * @constant
+ * @type {Object}
+ * @public
+ */
 
 export default Icon;
 export {

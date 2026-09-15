@@ -180,7 +180,10 @@ describe('Panels Arrangers Specs', () => {
 		// `AnimateOnIdle`) so multiple views can start/end together. Forcing it to run its
 		// callback synchronously here lets the deferred call be asserted without fake timers.
 		beforeEach(() => {
-			window.requestIdleCallback = jest.fn((callback) => callback());
+			window.requestIdleCallback = jest.fn((callback: IdleRequestCallback) => {
+				callback({didTimeout: false, timeRemaining: () => 0} as IdleDeadline);
+				return 0;
+			});
 		});
 
 		afterEach(() => {

@@ -364,7 +364,7 @@ const ButtonDecorator = compose(
  * @ui
  * @public
  */
-const Button = ButtonDecorator(ButtonBase) as ComponentType<any>;
+const Button = ButtonDecorator(ButtonBase) as ComponentType<ButtonBaseProps>;
 
 export default Button;
 export {
