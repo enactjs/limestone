@@ -1,0 +1,67 @@
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import PropTypes from 'prop-types';
+import {useState, useRef, useEffect} from 'react';
+
+// A delay that prevents children from being rendered to some extent
+// when the user continues to wheel through the list
+const delayToRenderChildren = 600;
+
+/**
+ * This component introduced to enhance scroll performance when `ImageItem` or `Card` used in `VirtualGridList`.
+ * Basically it renders `children` asynchronously when `children` and `index` changed.
+ * When `ImageItem` used in other components, it will render immediately.
+ *
+ * @class AsyncRenderChildren
+ * @ui
+ * @private
+ */
+function AsyncRenderChildren (props: Record<string, any>) {
+	const asyncRenderChildrenProps = setDefaultProps(props, {fallback: ''});
+	checkPropTypes(AsyncRenderChildren, asyncRenderChildrenProps);
+	const {children, fallback, index} = asyncRenderChildrenProps;
+	const [prevIndex, setPrevIndex] = useState(index);
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const async = (index !== prevIndex);
+
+	useEffect(() => {
+		if (async) {
+			timerRef.current = setTimeout(() => {
+				timerRef.current = null;
+				setPrevIndex(index);
+			}, delayToRenderChildren);
+		}
+
+		return () => {
+			if (timerRef.current) {
+				clearTimeout(timerRef.current);
+				timerRef.current = null;
+			}
+		};
+	});
+
+	return async ? fallback : children;
+}
+
+AsyncRenderChildren.propTypes = /** @lends limestone/ImageItem.AsyncRenderChildren.prototype */ {
+	/**
+	 * The fallback element that shows before `children` render.
+	 *
+	 * @type {*}
+	 * @private
+	 */
+	fallback: PropTypes.any,
+
+	/**
+	 * `data-index` of {@link limestone/ImageItem|ImageItem} or {@link limestone/Card|Card}.
+	 * Renders `children` asynchronously when this value changed.
+	 *
+	 * @type {Number}
+	 * @private
+	 */
+	index: PropTypes.number
+};
+
+export default AsyncRenderChildren;
+export {
+	AsyncRenderChildren
+};

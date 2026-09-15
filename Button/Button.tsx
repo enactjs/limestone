@@ -1,0 +1,374 @@
+/**
+ * Limestone styled button components and behaviors.
+ *
+ * @example
+ * <Button>Hello Enact!</Button>
+ *
+ * @module limestone/Button
+ * @exports Button
+ * @exports ButtonBase
+ * @exports ButtonDecorator
+ */
+
+import hoc from '@enact/core/hoc';
+import kind from '@enact/core/kind';
+import {cap} from '@enact/core/util';
+import EnactPropTypes, {EnactPropTypeShapes} from '@enact/core/internal/prop-types';
+import Spottable from '@enact/spotlight/Spottable';
+import {ButtonBase as UiButtonBase, ButtonDecorator as UiButtonDecorator} from '@enact/ui/Button';
+import Pure from '@enact/ui/internal/Pure';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+import {Children} from 'react';
+import type {ComponentType} from 'react';
+
+import Icon from '../Icon';
+import {MarqueeDecorator} from '../Marquee';
+import Skinnable from '../Skinnable';
+import TooltipDecorator from '../TooltipDecorator';
+
+import componentCss from './Button.module.less';
+
+export interface ButtonBaseProps {
+	backgroundOpacity?: 'opaque' | 'transparent' | null;
+	bordered?: boolean;
+	centered?: boolean;
+	collapsable?: boolean;
+	collapsed?: boolean;
+	color?: 'red' | 'green' | 'yellow' | 'blue';
+	css?: Record<string, string>;
+	focusEffect?: 'expand' | 'static';
+	iconComponent?: EnactPropTypeShapes.componentOverride;
+	iconOnly?: boolean;
+	iconPosition?: 'before' | 'after';
+	minWidth?: boolean;
+	roundBorder?: boolean;
+	shadowed?: boolean;
+	size?: 'large' | 'small';
+	[key: string]: any;
+}
+
+/**
+ * A button component.
+ *
+ * This component is most often not used directly but may be composed within another component as it
+ * is within {@link limestone/Button.Button|Button}.
+ *
+ * @class ButtonBase
+ * @memberof limestone/Button
+ * @extends ui/Button.ButtonBase
+ * @ui
+ * @public
+ */
+const ButtonBase = kind({
+	name: 'Button',
+
+	_propTypes: {} as ButtonBaseProps,
+
+	propTypes: /** @lends limestone/Button.ButtonBase.prototype */ {
+		/**
+		 * The background opacity of this button.
+		 *
+		 * Text buttons and icon+text buttons, by default are opaque, while icon-only buttons
+		 * default to transparent. This value can be overridden by setting this prop.
+		 *
+		 * Valid values are: `'opaque'`, and `'transparent'`.
+		 *
+		 * @type {('opaque'|'transparent')}
+		 * @default 'opaque'
+		 * @public
+		 */
+		backgroundOpacity: PropTypes.oneOf(['opaque', 'transparent']) as PropTypes.Validator<'opaque' | 'transparent' | null | undefined>,
+
+		/**
+		 * Adds a border to the button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		bordered: PropTypes.bool,
+
+		/**
+		 * Centers the contents.
+		 *
+		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
+		 * defined.
+		 *
+		 * Applies the `centered` CSS class.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		centered: PropTypes.bool,
+
+		/**
+		 * Enables the `collapsed` feature.
+		 *
+		 * This requires that both the text and {@link ui/Button.ButtonBase.icon|icon} are
+		 * defined.
+		 *
+		 * Use {@link limestone/Button.ButtonBase.collapsed|collapsed} to toggle the collapsed state.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @see {@link limestone/Button.ButtonBase.collapsed}
+		 * @private
+		 */
+		collapsable: PropTypes.bool,
+
+		/**
+		 * Toggles the collapsed state of this button, down to just its icon.
+		 *
+		 * This requires that {@link limestone/Button.ButtonBase.collapsable|collapsable} is enabled
+		 * and both the text and {@link ui/Button.ButtonBase.icon|icon} are defined.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @see {@link limestone/Button.ButtonBase.collapsable}
+		 * @private
+		 */
+		collapsed: PropTypes.bool,
+
+		/**
+		 * The color of the underline beneath button's content.
+		 *
+		 * Accepts one of the following color names, which correspond with the colored buttons on a
+		 * standard remote control: `'red'`, `'green'`, `'yellow'`, `'blue'`.
+		 *
+		 * @type {('red'|'green'|'yellow'|'blue')}
+		 * @public
+		 */
+		color: PropTypes.oneOf(['red', 'green', 'yellow', 'blue']) as PropTypes.Validator<'red' | 'green' | 'yellow' | 'blue' | undefined>,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `button` - The root class name
+		 * * `bg` - The background node of the button
+		 * * `large` - Applied to a `size='large'` button
+		 * * `selected` - Applied to a `selected` button
+		 * * `small` - Applied to a `size='small'` button
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		// `client` was intentionally excluded from the above documented exported classes as they do
+		// not appear to provide value to the end-developer, but are needed by PopupTabLayout
+		// internally for its design guidelines. Same for `pressed` which is used by Dropdown to
+		// nullify the key-press activate animation.
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		/**
+		 * Set the visual effect applied to the button when focused.
+		 *
+		 * @type {('expand'|'static')}
+		 * @default 'expand'
+		 * @public
+		 */
+		focusEffect: PropTypes.oneOf(['expand', 'static']) as PropTypes.Validator<'expand' | 'static' | undefined>,
+
+		/**
+		 * The component used to render the {@link limestone/Button.ButtonBase.icon|icon}.
+		 *
+		 * This component will receive the `icon` class to customize its styling.
+		 *
+		 * @type {Component|Node}
+		 * @private
+		 */
+		iconComponent: EnactPropTypes.componentOverride as PropTypes.Validator<EnactPropTypeShapes.componentOverride | undefined>,
+
+		/**
+		 * True if button is an icon only button.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		iconOnly: PropTypes.bool,
+
+		/**
+		 * Specifies on which side (`'before'` or `'after'`) of the text the icon appears.
+		 *
+		 * @type {('before'|'after')}
+		 * @default 'before'
+		 * @public
+		 */
+		iconPosition: PropTypes.oneOf(['before', 'after']) as PropTypes.Validator<'before' | 'after' | undefined>,
+
+		/**
+		 * Boolean controlling whether this component should enforce the "minimum width" rules.
+		 *
+		 * *NOTE*: If you don't specify this prop, it works as `false` for icon only Button
+		 * and as `true` for other Buttons.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		minWidth: PropTypes.bool,
+
+		/**
+		 * True if both sides of button are fully rounded.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		roundBorder: PropTypes.bool,
+
+		/**
+		 * Adds shadow to the text.
+		 * It is only applied when the background opacity of the button is `transparent`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		shadowed: PropTypes.bool,
+
+		/**
+		 * The size of the button.
+		 *
+		 * @type {('large'|'small')}
+		 * @default 'large'
+		 * @public
+		 */
+		size: PropTypes.oneOf(['large', 'small']) as PropTypes.Validator<'large' | 'small' | undefined>
+	},
+
+	defaultProps: {
+		backgroundOpacity: null,
+		collapsable: false,
+		collapsed: false,
+		focusEffect: 'expand',
+		iconComponent: Icon,
+		iconOnly: false,
+		iconPosition: 'before',
+		roundBorder: false,
+		size: 'large'
+	},
+
+	styles: {
+		css: componentCss,
+		publicClassNames: ['button', 'bg', 'client', 'hasIcon', 'icon', 'iconAfter', 'iconBefore', 'large', 'pressed', 'selected', 'small']
+	},
+
+	computed: {
+		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}: Record<string, any>) => styler.append(
+			{
+				bordered,
+				centered,
+				collapsable,
+				collapsed,
+				hasColor: color,
+				iconOnly,
+				roundBorder,
+				shadowed: shadowed && (backgroundOpacity ? backgroundOpacity === 'transparent' : iconOnly)
+			},
+			backgroundOpacity || (iconOnly ? 'transparent' : 'opaque'), // Defaults to opaque, unless otherwise specified
+			color,
+			`focus${cap(focusEffect)}`,
+			// iconBefore/iconAfter only applies when using text and an icon
+			!iconOnly && `icon${cap(iconPosition)}`,
+			size
+		),
+		minWidth: ({iconOnly, minWidth}: Record<string, any>) => ((minWidth != null) ? minWidth : !iconOnly)
+	},
+
+	render: ({css, ...rest}: Record<string, any>) => {
+		delete rest.backgroundOpacity;
+		delete rest.bordered;
+		delete rest.centered;
+		delete rest.color;
+		delete rest.collapsable;
+		delete rest.collapsed;
+		delete rest.focusEffect;
+		delete rest.iconOnly;
+		delete rest.iconPosition;
+		delete rest.roundBorder;
+		delete rest.shadowed;
+
+		return UiButtonBase.inline!({
+			'data-webos-voice-intent': 'Select',
+			...rest,
+			css
+		}, void 0 as any);
+	}
+});
+
+
+/**
+ * A higher-order component that determines if it is a button that only displays an icon.
+ *
+ * @class IconButtonDecorator
+ * @memberof limestone/Button
+ * @hoc
+ * @private
+ */
+const IconButtonDecorator = hoc((config, Wrapped) => {
+	return kind({
+		name: 'IconButtonDecorator',
+
+		computed: {
+			iconOnly: ({children}: Record<string, any>) => (Children.toArray(children).filter(Boolean).length === 0)
+		},
+
+		render: (props: Record<string, any>) => {
+			return (
+				<Wrapped {...props} />
+			);
+		}
+	});
+});
+
+/**
+ * Applies Limestone specific behaviors to {@link limestone/Button.ButtonBase|Button} components.
+ *
+ * @hoc
+ * @memberof limestone/Button
+ * @mixes limestone/TooltipDecorator.TooltipDecorator
+ * @mixes limestone/Marquee.MarqueeDecorator
+ * @mixes ui/Button.ButtonDecorator
+ * @mixes spotlight/Spottable.Spottable
+ * @mixes limestone/Skinnable.Skinnable
+ * @public
+ */
+const ButtonDecorator = compose(
+	UiButtonDecorator,
+	Pure,
+	IconButtonDecorator,
+	TooltipDecorator({tooltipDestinationProp: 'decoration'}),  // Future note: This should eventually be conditionally applied via hooks (after refactoring)
+	MarqueeDecorator({css: componentCss}),
+	Spottable,
+	Skinnable
+);
+
+/**
+ * A button component, ready to use in Limestone applications.
+ *
+ * Usage:
+ * ```
+ * <Button
+ *	backgroundOpacity="transparent"
+ *	size="small"
+ *	icon="home"
+ * >
+ * 	Press me!
+ * </Button>
+ * ```
+ *
+ * @class Button
+ * @memberof limestone/Button
+ * @extends limestone/Button.ButtonBase
+ * @mixes limestone/Button.ButtonDecorator
+ * @ui
+ * @public
+ */
+const Button = ButtonDecorator(ButtonBase) as ComponentType<ButtonBaseProps>;
+
+export default Button;
+export {
+	Button,
+	ButtonBase,
+	ButtonDecorator
+};
