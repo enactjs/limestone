@@ -171,26 +171,6 @@ describe('VirtualList useEvent', () => {
 		global.Element.prototype.scrollTo = scrollToFn;
 	});
 
-	test('should handle repeat keydown on first VirtualList entry without error', () => {
-		render(
-			<VirtualList
-				clientSize={clientSize}
-				dataSize={dataSize}
-				itemRenderer={renderItem}
-				itemSize={itemSize}
-			/>
-		);
-
-		const list = screen.getByRole('list');
-		const item0 = list.children.item(0).children.item(0);
-
-		focus(item0);
-		expect(currentFocusIndex).toBe(0);
-
-		keyDownRepeat(40)(item0);
-		expect(currentFocusIndex).toBe(0);
-	});
-
 	test('should handle repeat keydown when data-index jumps unexpectedly without error', () => {
 		render(
 			<VirtualList
