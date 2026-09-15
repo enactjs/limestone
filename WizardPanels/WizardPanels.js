@@ -337,13 +337,16 @@ const WizardPanelsBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({'aria-label': label, current, index, noSteps, subtitle, title, total, totalPanels}) => {
+		'aria-label': ({'aria-label': label, current, index, noSteps, noSubtitle, subtitle, title, total, totalPanels}) => {
 			if (label) return label;
 
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
 			const totalNum = (typeof total === 'number' && total > 0) ? total : totalPanels;
 			const step = noSteps ? '' : new IString($L('Step {current} of {total}')).format({current: stepNum, total: totalNum});
-			return `${step}${title} ${subtitle}`;
+			// Exclude subtitle from aria-label when noSubtitle is true to prevent
+			// long panel announcements from interrupting child item TTS during rapid navigation
+			const displaySubtitle = noSubtitle ? '' : subtitle;
+			return `${step}${title} ${displaySubtitle}`.trim();
 		},
 		className: ({noSteps, noSubtitle, styler}) => styler.append(
 			{
