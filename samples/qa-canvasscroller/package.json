@@ -1,0 +1,32 @@
+{
+  "name": "qa-canvasscroller",
+  "version": "0.1.0",
+  "description": "QA CanvasScroller - DOM vs canvas static content block",
+  "author": "",
+  "main": "src/index.js",
+  "scripts": {
+    "serve": "enact serve",
+    "pack": "enact pack",
+    "pack-p": "enact pack -p",
+    "clean": "enact clean",
+    "lint": "enact lint --strict ."
+  },
+  "license": "Apache-2.0",
+  "private": true,
+  "repository": "",
+  "enact": {
+    "title": "QA CanvasScroller",
+    "theme": "limestone"
+  },
+  "dependencies": {
+    "@enact/core": "^5.6.0",
+    "@enact/i18n": "^5.6.0",
+    "@enact/limestone": "../../",
+    "@enact/spotlight": "^5.6.0",
+    "@enact/ui": "^5.6.0",
+    "ilib": "^14.22.0",
+    "prop-types": "^15.8.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

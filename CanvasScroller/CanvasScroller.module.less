@@ -1,0 +1,29 @@
+// Prototype styles for limestone/CanvasScroller.
+
+.canvasContentBlock {
+	position: relative;
+	// The wrapper reserves the full content height so the Scroller's bounds, scrollbar size and
+	// 5-way paging math are identical to the DOM case. Only painting is different.
+}
+
+.canvas {
+	position: sticky;
+	top: 0;
+	display: block;
+	// The canvas never leaves the scrollport; it is repainted with the visible slice instead.
+	pointer-events: none;
+}
+
+.textMirror {
+	// Single visually-hidden node carrying the same text for assistive tech and text search.
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: pre-wrap;
+	border: 0;
+}
