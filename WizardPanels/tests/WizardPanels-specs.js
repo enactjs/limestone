@@ -833,7 +833,52 @@ describe('WizardPanels Specs', () => {
 			);
 
 			const header = screen.getByRole('region').children[0].children[0];
-			const expected = `Step ${current} of ${total} `;
+			const expected = `Step ${current} of ${total}`;
+
+			await waitFor(() => {
+				expect(header).toHaveAttribute('aria-label', expected);
+			});
+		}
+	);
+
+
+	test(
+		'should exclude subtitle from aria-label when noSubtitle is true',
+		async () => {
+			const title = 'Test Title';
+			const subtitle = 'Test Subtitle';
+			render(
+				<WizardPanels noSubtitle>
+					<Panel title={title} subtitle={subtitle}>
+						Content
+					</Panel>
+				</WizardPanels>
+			);
+
+			const header = screen.getByRole('region').children[0].children[0];
+			const expected = `Step 1 of 1${title}`;
+
+			await waitFor(() => {
+				expect(header).toHaveAttribute('aria-label', expected);
+			});
+		}
+	);
+
+	test(
+		'should include subtitle in aria-label when noSubtitle is false',
+		async () => {
+			const title = 'Test Title';
+			const subtitle = 'Test Subtitle';
+			render(
+				<WizardPanels noSubtitle={false}>
+					<Panel title={title} subtitle={subtitle}>
+						Content
+					</Panel>
+				</WizardPanels>
+			);
+
+			const header = screen.getByRole('region').children[0].children[0];
+			const expected = `Step 1 of 1${title} ${subtitle}`;
 
 			await waitFor(() => {
 				expect(header).toHaveAttribute('aria-label', expected);
