@@ -117,6 +117,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const snapshot = useRef(null);
 		const resizeObserver = useRef(null);
 		const findClientSiblingRef = useRef(null);
+		const holepunchScrimRef = useRef(false);
 
 		const keyDownRef = useRef(null);
 		const keyUpRef = useRef(null);
@@ -377,8 +378,22 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const positionContextualPopup = useCallback(() => {
 			if (containerNode.current && clientSiblingRef?.current) {
 				const localContainerNode = containerNode.current.getBoundingClientRect();
-				const {top, left, bottom, right, width, height} = clientSiblingRef.current.getBoundingClientRect();
+				const clientRect = clientSiblingRef.current.getBoundingClientRect();
+				const {top, left, bottom, right, width, height} = clientRect;
 				const clientNode = {top, left, bottom, right, width, height};
+
+				// Keep the hole punch scrim's hole aligned with the activator. The hole is
+				// measured from the same rect used for popup positioning, so it stays in sync
+				// whenever the activator moves or resizes (e.g. observer-driven repositions or a
+				// wrapped-component update), not just on the initial open. Bail out when the
+				// bounds are unchanged so observer ticks don't trigger needless re-renders.
+				if (holepunchScrimRef.current) {
+					setHoleBounds((prev) => (
+						prev && prev.top === top && prev.left === left && prev.width === width && prev.height === height ?
+							prev :
+							clientRect
+					));
+				}
 
 				clientNode.left = componentProps.rtl ? window.innerWidth - right : left;
 				clientNode.right = componentProps.rtl ? window.innerWidth - left : right;
@@ -677,6 +692,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		useEffect(() => {
+			holepunchScrimRef.current = holepunchScrim;
+
 			if (clientSiblingRef?.current && holepunchScrim) {
 				setHoleBounds(clientSiblingRef.current.getBoundingClientRect());
 			}
