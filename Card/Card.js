@@ -132,6 +132,17 @@ const CardBase = kind({
 
 	propTypes: /** @lends limestone/Card.CardBase.prototype */ {
 		/**
+		 * Source for the image.
+		 * String value or Object of values used to determine which image will appear on
+		 * a specific screenSize.
+		 *
+		 * @type {String|Object}
+		 * @required
+		 * @public
+		 */
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+
+		/**
 		 * The "aria-label" for the Card.
 		 *
 		 * @type {String}
@@ -507,35 +518,6 @@ const CardBase = kind({
 		 * @public
 		 */
 		splitCaption: PropTypes.bool,
-
-		/**
-		 * Source for the image.
-		 * String value or Object of values used to determine which image will appear on
-		 * a specific screenSize.
-		 *
-		 * @type {String|Object}
-		 * @required
-		 * @public
-		 */
-		src: (props, propName, componentName) => {
-			const value = props[propName];
-			const hasValue = value != null && value !== '';
-			const isValidType = typeof value === 'string' || (typeof value === 'object' && !Array.isArray(value));
-
-			if (!hasValue) {
-				return new Error(
-					`The prop \`${propName}\` is marked as required in \`${componentName}\`, but its value is \`${value}\`.`
-				);
-			}
-
-			if (!isValidType) {
-				return new Error(
-					`Invalid prop \`${propName}\` of type \`${typeof value}\` supplied to \`${componentName}\`, expected \`string\` or \`object\`.`
-				);
-			}
-
-			return null;
-		},
 
 		/**
 		 * Removes the marquee effect of caption and label text.
