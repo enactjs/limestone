@@ -20,7 +20,7 @@ import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {HeadingBase as UiHeadingBase} from '@enact/ui/Heading';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import {MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
@@ -28,12 +28,14 @@ import Skinnable from '../Skinnable';
 import componentCss from './Heading.module.less';
 
 export interface HeadingBaseProps {
+	children?: ReactNode;
+	className?: string;
 	css?: Record<string, string>;
+	marqueeOn?: 'hover' | 'render';
 	showLine?: boolean;
 	size?: 'large' | 'medium' | 'small' | 'tiny' | 'title' | 'subtitle';
 	slotSize?: string;
 	spacing?: 'auto' | 'large' | 'medium' | 'small' | 'none';
-	[key: string]: any;
 }
 
 /**
@@ -134,10 +136,10 @@ const HeadingBase = kind({
 	},
 
 	computed: {
-		className: ({showLine, styler}: Record<string, any>) => styler.append({showLine})
+		className: ({showLine, styler}) => styler.append({showLine})
 	},
 
-	render: ({css, ...rest}: Record<string, any>) => {
+	render: ({css, ...rest}) => {
 		delete rest.showLine;
 		delete rest.slotSize;
 
@@ -183,7 +185,7 @@ const HeadingDecorator = compose(
  * @ui
  * @public
  */
-const Heading = HeadingDecorator(HeadingBase) as ComponentType<any> & {defaultProps?: Record<string, any>};
+const Heading = HeadingDecorator(HeadingBase) as ComponentType<HeadingBaseProps> & {defaultProps?: Partial<HeadingBaseProps>};
 
 /**
  * Marquee animation trigger.

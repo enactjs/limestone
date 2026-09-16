@@ -30,11 +30,20 @@ import componentCss from './Switch.module.less';
  * @ui
  * @public
  */
+export interface SwitchBaseProps {
+	css?: Record<string, string>;
+	disabled?: boolean;
+	noAnimation?: boolean;
+	selected?: boolean;
+}
+
 const SwitchBase = kind({
 	name: 'Switch',
 
+	_propTypes: {} as SwitchBaseProps,
+
 	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Disables Switch and becomes non-interactive.
@@ -76,26 +85,27 @@ const SwitchBase = kind({
 	},
 
 	computed: {
-		className: ({noAnimation, selected, styler}: Record<string, any>) => styler.append({
+		className: ({noAnimation, selected, styler}) => styler.append({
 			animated: !noAnimation,
 			selected
 		})
 	},
 
-	render: ({css, disabled, selected, ...rest}: Record<string, any>) => {
-		delete rest.noAnimation;
+	render: ({css, disabled, selected, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.noAnimation;
 
 		return (
 			<div
-				{...rest}
+				{...restProps}
 				aria-pressed={selected}
 				aria-disabled={disabled}
 				{...({disabled} as any)}
 				role="button"
 			>
-				<div className={css.bg} />
-				<div className={css.client}>
-					<div className={css.icon} />
+				<div className={css!.bg} />
+				<div className={css!.client}>
+					<div className={css!.icon} />
 				</div>
 			</div>
 		);
@@ -132,7 +142,7 @@ const SwitchDecorator = compose(
  * @ui
  * @public
  */
-const Switch = SwitchDecorator(SwitchBase) as ComponentType<any>;
+const Switch = SwitchDecorator(SwitchBase) as ComponentType<SwitchBaseProps>;
 
 export default Switch;
 export {

@@ -21,7 +21,7 @@ import {useMeasurable} from '@enact/ui/Measurable';
 import Pure from '@enact/ui/internal/Pure';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import {MarqueeDecorator, MarqueeController} from '../Marquee';
 import Skinnable from '../Skinnable';
@@ -85,6 +85,7 @@ ItemContent.propTypes = {
 
 export interface ItemBaseProps {
 	centered?: boolean;
+	children?: ReactNode;
 	componentRef?: EnactPropTypeShapes.ref;
 	contentRef?: EnactPropTypeShapes.ref;
 	contentSize?: number;
@@ -101,7 +102,6 @@ export interface ItemBaseProps {
 	slotAfterAria?: string;
 	slotBefore?: any;
 	slotBeforeAria?: string;
-	[key: string]: any;
 }
 
 /**
@@ -286,20 +286,22 @@ const ItemBase = kind({
 	},
 
 	computed: {
-		className: ({centered, label, secondaryLabel, selected, size, styler}: Record<string, any>) => styler.append({
+		className: ({centered, label, secondaryLabel, selected, size, styler}) => styler.append({
 			centered,
 			selected,
 			hasLabel: label != null || secondaryLabel != null,
 			hasSecondaryLabel: label != null && secondaryLabel != null
 		}, size),
-		label: ({label}: Record<string, any>) => (typeof label === 'number' ? label.toString() : label)
+		label: ({label}) => (typeof label === 'number' ? label.toString() : label)
 	},
 
-	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, secondaryLabel, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}: Record<string, any>) => {
-		delete rest.size;
+	render: ({centered, children, componentRef, contentRef, contentSize, css, inline, label, labelPosition, marqueeOn, secondaryLabel, slotAfter, slotAfterAria, slotBefore, slotBeforeAria, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.size;
 
 		const keys = Object.keys(rest);
-		const voiceProps = (!keys.includes('data-webos-voice-label') && !keys.includes('data-webos-voice-labels') && label && typeof label === 'string' && children && children[0] && typeof children[0] === 'string') ? {'data-webos-voice-labels': JSON.stringify([label, children[0]])} : {};
+		const childrenArray = children as any;
+		const voiceProps = (!keys.includes('data-webos-voice-label') && !keys.includes('data-webos-voice-labels') && label && typeof label === 'string' && childrenArray && childrenArray[0] && typeof childrenArray[0] === 'string') ? {'data-webos-voice-labels': JSON.stringify([label, childrenArray[0]])} : {};
 
 		const rowProps: Record<string, any> = {
 			align: centered ? 'center center' : 'center',
@@ -312,13 +314,13 @@ const ItemBase = kind({
 				component={Row}
 				{...rowProps}
 				{...voiceProps}
-				{...rest}
+				{...restProps}
 				inline={inline}
 				css={css}
 			>
-				<div className={css.bg} />
+				<div className={css!.bg} />
 				{slotBefore ? (
-					<Cell className={css.slotBefore} aria-label={slotBeforeAria} shrink>
+					<Cell className={css!.slotBefore} aria-label={slotBeforeAria} shrink>
 						{slotBefore}
 					</Cell>
 				) : null}
@@ -334,7 +336,7 @@ const ItemBase = kind({
 					shrink={inline}
 				/>
 				{slotAfter ? (
-					<Cell className={css.slotAfter} aria-label={slotAfterAria} shrink>
+					<Cell className={css!.slotAfter} aria-label={slotAfterAria} shrink>
 						{slotAfter}
 					</Cell>
 				) : null}
@@ -393,7 +395,7 @@ const ItemDecorator = compose(
  * @ui
  * @public
  */
-const Item = Pure(ItemDecorator(ItemBase)) as ComponentType<any>;
+const Item = Pure(ItemDecorator(ItemBase)) as ComponentType<ItemBaseProps>;
 
 export default Item;
 export {

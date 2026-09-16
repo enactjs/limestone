@@ -15,7 +15,7 @@ import {clamp} from '@enact/core/util';
 import Changeable from '@enact/ui/Changeable';
 import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Heading from '../Heading';
 import {Picker, PickerItem} from '../internal/Picker';
@@ -39,8 +39,36 @@ const digits = (num: number): number => {
  * @ui
  * @public
  */
+export interface RangePickerBaseProps {
+	max: number;
+	min: number;
+	value: number;
+	'aria-valuetext'?: string;
+	accessibilityHint?: string;
+	changedBy?: 'enter' | 'arrow';
+	children?: ReactNode;
+	className?: string;
+	css?: Record<string, string>;
+	'data-webos-voice-labels-ext'?: string;
+	decrementIcon?: string;
+	disabled?: boolean;
+	incrementIcon?: string;
+	inlineTitle?: boolean;
+	joined?: boolean;
+	noAnimation?: boolean;
+	onChange?: (...args: any[]) => any;
+	orientation?: 'horizontal' | 'vertical';
+	padded?: boolean;
+	step?: number;
+	title?: string;
+	width?: 'small' | 'medium' | 'large' | number | null;
+	wrap?: boolean;
+}
+
 const RangePickerBase = kind({
 	name: 'RangePicker',
+
+	_propTypes: {} as RangePickerBaseProps,
 
 	propTypes: /** @lends limestone/RangePicker.RangePickerBase.prototype */ {
 		/**
@@ -266,7 +294,7 @@ const RangePickerBase = kind({
 		width: PropTypes.oneOfType([
 			PropTypes.oneOf([null, 'small', 'medium', 'large']),
 			PropTypes.number
-		]),
+		]) as PropTypes.Validator<'small' | 'medium' | 'large' | number | null | undefined>,
 
 		/**
 		 * Allows picker to continue from the start of the list after it reaches the end and
@@ -289,8 +317,8 @@ const RangePickerBase = kind({
 	},
 
 	computed: {
-		disabled: ({disabled, max, min}: Record<string, any>) => min >= max ? true : disabled,
-		label: ({max, min, padded, value}: Record<string, any>) => {
+		disabled: ({disabled, max, min}) => min >= max ? true : disabled,
+		label: ({max, min, padded, value}) => {
 			value = clamp(min, max, value);
 
 			if (padded) {
@@ -304,23 +332,23 @@ const RangePickerBase = kind({
 
 			return value;
 		},
-		width: ({max, min, width}: Record<string, any>) => (width || Math.max(max.toString().length, min.toString().length)),
-		value: ({min, max, value}: Record<string, any>) => {
+		width: ({max, min, width}) => (width || Math.max(max.toString().length, min.toString().length)),
+		value: ({min, max, value}) => {
 			if (__DEV__) {
 				validateRange(value, min, max, 'RangePicker');
 			}
 			return clamp(min, max, value);
 		},
-		voiceLabel: ({min, max}: Record<string, any>) => {
+		voiceLabel: ({min, max}) => {
 			return JSON.stringify([min, max]);
 		}
 	},
 
-	render: ({css, label, inlineTitle, title, value, voiceLabel, ...rest}: Record<string, any>) => {
+	render: ({css, label, inlineTitle, title, value, voiceLabel, ...rest}) => {
 		delete rest.padded;
 		return (
 			<>
-				{title ? <Heading css={css} className={classnames(css.title, {[css.inlineTitle]: inlineTitle})} size="tiny">{title}</Heading> : null}
+				{title ? <Heading css={css} className={classnames(css!.title, {[css!.inlineTitle]: inlineTitle})} size="tiny">{title}</Heading> : null}
 				<Picker {...rest} css={css} data-webos-voice-labels-ext={voiceLabel} index={0} reverse={false} type="number" value={value}>
 					<PickerItem key={value} marqueeDisabled style={{direction: 'ltr'}}>{label}</PickerItem>
 				</Picker>
@@ -346,7 +374,7 @@ const RangePicker = Pure(
 	Changeable(
 		RangePickerBase
 	)
-) as ComponentType<any>;
+) as ComponentType<Omit<RangePickerBaseProps, 'value'> & {defaultValue?: number; value?: number}>;
 
 /**
  * Default value

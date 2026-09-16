@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import UiBodyText from '@enact/ui/BodyText';
 import Pure from '@enact/ui/internal/Pure';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import {MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
@@ -24,10 +24,10 @@ import componentCss from './BodyText.module.less';
 
 export interface BodyTextBaseProps {
 	centered?: boolean;
+	children?: ReactNode;
 	css?: Record<string, string>;
 	noWrap?: boolean;
 	size?: 'small' | 'large';
-	[key: string]: any;
 }
 
 // Create a Marquee using BodyText as the base
@@ -107,19 +107,20 @@ const BodyTextBase = kind({
 	},
 
 	computed: {
-		children: ({children, noWrap}: Record<string, any>) => noWrap ? children?.replaceAll('\n', ' ') : children,
-		className: ({noWrap, size, styler}: Record<string, any>) => styler.append(size, {noWrap})
+		children: ({children, noWrap}) => noWrap ? children?.toString().replaceAll('\n', ' ') : children,
+		className: ({noWrap, size, styler}) => styler.append(size, {noWrap})
 	},
 
-	render: ({centered, css, noWrap, ...rest}: Record<string, any>) => {
-		delete rest.size;
+	render: ({centered, css, noWrap, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.size;
 
 		if (noWrap) {
 			return (
 				<MarqueeBodyText
 					component="div" // Assign a new component to BodyText, since DIV is not allowed inside a P tag (the default for BodyText)
 					marqueeOn="render"
-					{...rest}
+					{...restProps}
 					alignment={centered ? 'center' : null} // Centering Marquee
 					centered={centered} // Centering UiBodyText
 					css={css}
@@ -128,7 +129,7 @@ const BodyTextBase = kind({
 		}
 		return (
 			<UiBodyText
-				{...rest}
+				{...restProps}
 				centered={centered}
 				css={css}
 			/>
@@ -169,7 +170,7 @@ const BodyTextDecorator = compose(
  * @ui
  * @public
  */
-const BodyText = BodyTextDecorator(BodyTextBase) as ComponentType<any>;
+const BodyText = BodyTextDecorator(BodyTextBase) as ComponentType<BodyTextBaseProps>;
 
 export default BodyText;
 export {

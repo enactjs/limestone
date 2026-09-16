@@ -15,12 +15,12 @@
 
 import kind from '@enact/core/kind';
 import {coerceArray} from '@enact/core/util';
-import EnactPropTypes from '@enact/core/internal/prop-types';
+import EnactPropTypes, {EnactPropTypeShapes} from '@enact/core/internal/prop-types';
 import Repeater from '@enact/ui/Repeater';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Icon from '../Icon';
 import Skinnable from '../Skinnable';
@@ -44,8 +44,26 @@ const PageIndicator = ({className, css, ...rest}: Record<string, any>) => {
  * @ui
  * @public
  */
+export interface StepsBaseProps {
+	children?: ReactNode;
+	className?: string;
+	css?: Record<string, string>;
+	current?: number;
+	currentIcon?: string;
+	futureIcon?: string;
+	highlightCurrentOnly?: boolean;
+	iconComponent?: EnactPropTypeShapes.renderable;
+	pastIcon?: string;
+	size?: 'large' | 'medium' | 'small' | 'tiny' | number;
+	skip?: number | number[];
+	skipIcon?: string;
+	total?: number;
+}
+
 const StepsBase = kind({
 	name: 'Steps',
+
+	_propTypes: {} as StepsBaseProps,
 
 	propTypes: /** @lends limestone/Steps.StepsBase.prototype */ {
 		/**
@@ -68,7 +86,7 @@ const StepsBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Indicate the current step.
@@ -153,7 +171,7 @@ const StepsBase = kind({
 		size: PropTypes.oneOfType([
 			PropTypes.oneOf(['large', 'medium', 'small', 'tiny']),
 			PropTypes.number
-		]),
+		]) as PropTypes.Validator<'large' | 'medium' | 'small' | 'tiny' | number | undefined>,
 
 		/**
 		 * Indicate which steps to skip.
@@ -163,7 +181,7 @@ const StepsBase = kind({
 		 * @type {Number|Number[]}
 		 * @public
 		 */
-		skip: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]),
+		skip: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]) as PropTypes.Validator<number | number[] | undefined>,
 
 		/**
 		 * The icon to use for any skipped steps, past or future.
@@ -207,15 +225,15 @@ const StepsBase = kind({
 	},
 
 	computed: {
-		iconComponent: ({highlightCurrentOnly, iconComponent}: Record<string, any>) => ((highlightCurrentOnly && iconComponent === Icon) ? PageIndicator : iconComponent),
-		steps: ({current, pastIcon, currentIcon, futureIcon, highlightCurrentOnly, skip, skipIcon, total, styler}: Record<string, any>) => {
-			skip = coerceArray(skip);
+		iconComponent: ({highlightCurrentOnly, iconComponent}) => ((highlightCurrentOnly && iconComponent === Icon) ? PageIndicator : iconComponent),
+		steps: ({current, pastIcon, currentIcon, futureIcon, highlightCurrentOnly, skip, skipIcon, total, styler}) => {
+			const skipArray = coerceArray(skip) as number[];
 			return Array.from(Array(total)).map((el, index) => {
 				const stepNum = index + 1;
-				const skipStep = (skip.indexOf(stepNum) >= 0);
-				const past = (stepNum < current);
+				const skipStep = (skipArray.indexOf(stepNum) >= 0);
+				const past = (stepNum < current!);
 				const present = (stepNum === current);
-				const future = (stepNum > current);
+				const future = (stepNum > current!);
 
 				let children, numbers = false;
 				if (present) {
@@ -241,23 +259,24 @@ const StepsBase = kind({
 				};
 			});
 		},
-		className: ({className, css, highlightCurrentOnly}: Record<string, any>) => classNames(className, {
-			[css.highlightCurrentOnly] : highlightCurrentOnly
+		className: ({className, css, highlightCurrentOnly}) => classNames(className, {
+			[css!.highlightCurrentOnly] : highlightCurrentOnly
 		})
 	},
 
-	render: ({css, iconComponent, size, steps, ...rest}: Record<string, any>) => {
-		delete rest.current;
-		delete rest.currentIcon;
-		delete rest.futureIcon;
-		delete rest.highlightCurrentOnly;
-		delete rest.pastIcon;
-		delete rest.skip;
-		delete rest.skipIcon;
-		delete rest.total;
+	render: ({css, iconComponent, size, steps, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.current;
+		delete restProps.currentIcon;
+		delete restProps.futureIcon;
+		delete restProps.highlightCurrentOnly;
+		delete restProps.pastIcon;
+		delete restProps.skip;
+		delete restProps.skipIcon;
+		delete restProps.total;
 		return (
 			<Repeater
-				{...rest}
+				{...restProps}
 				component="div"
 				childComponent={iconComponent}
 				itemProps={{css, size}}
@@ -290,7 +309,7 @@ const StepsDecorator = compose(
  * @ui
  * @public
  */
-const Steps = StepsDecorator(StepsBase) as ComponentType<any>;
+const Steps = StepsDecorator(StepsBase) as ComponentType<StepsBaseProps>;
 
 export default Steps;
 export {

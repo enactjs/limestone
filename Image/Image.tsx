@@ -21,16 +21,17 @@ import {selectSrc} from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {useEffect, useState} from 'react';
-import type {ComponentType} from 'react';
+import type {ComponentType, RefAttributes} from 'react';
 
 import Skinnable from '../Skinnable';
 
 import componentCss from './Image.module.less';
 
 export interface ImageBaseProps {
+	className?: string;
 	componentRef?: EnactPropTypeShapes.ref;
 	css?: Record<string, string>;
-	[key: string]: any;
+	src?: string | Record<string, string>;
 }
 
 /**
@@ -78,7 +79,7 @@ const ImageBase = kind({
 		publicClassNames: ['image']
 	},
 
-	render: ({css, componentRef, ...rest}: Record<string, any>) => {
+	render: ({css, componentRef, ...rest}) => {
 		return (
 			UiImageBase.inline!({
 				draggable: 'false',
@@ -164,7 +165,7 @@ const ImageDecorator = compose(
  * @ui
  * @public
  */
-const Image = ImageDecorator(ImageBase) as ComponentType<any>;
+const Image = ImageDecorator(ImageBase) as ComponentType<ImageBaseProps & RefAttributes<HTMLElement>>;
 
 
 export default Image;

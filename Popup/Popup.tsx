@@ -22,6 +22,7 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
+import type {ReactNode} from 'react';
 import warning from 'warning';
 
 import Skinnable from '../Skinnable';
@@ -299,7 +300,28 @@ const popupDefaultProps = {
  * @ui
  * @public
  */
-const Popup = (props: Record<string, any>) => {
+export interface PopupProps {
+	children?: ReactNode;
+	className?: string;
+	css?: Record<string, string>;
+	'data-index'?: number;
+	id?: string;
+	no5WayClose?: boolean;
+	noAlertRole?: boolean;
+	noAnimation?: boolean;
+	noAutoDismiss?: boolean;
+	noOutline?: boolean;
+	onClose?: (...args: any[]) => any;
+	onHide?: (...args: any[]) => any;
+	onKeyDown?: (...args: any[]) => any;
+	onShow?: (...args: any[]) => any;
+	open?: boolean;
+	position?: 'bottom' | 'bottom left' | 'bottom right' | 'center' | 'fullscreen' | 'left' | 'right' | 'top' | 'top left' | 'top right';
+	scrimType?: 'transparent' | 'translucent' | 'none';
+	spotlightRestrict?: 'self-first' | 'self-only';
+}
+
+const Popup = (props: PopupProps) => {
 	checkPropTypes(Popup, props);
 
 	const componentProps = setDefaultProps(props, popupDefaultProps);

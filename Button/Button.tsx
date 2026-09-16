@@ -20,7 +20,7 @@ import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children} from 'react';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Icon from '../Icon';
 import {MarqueeDecorator} from '../Marquee';
@@ -33,11 +33,14 @@ export interface ButtonBaseProps {
 	backgroundOpacity?: 'opaque' | 'transparent' | null;
 	bordered?: boolean;
 	centered?: boolean;
+	children?: ReactNode;
 	collapsable?: boolean;
 	collapsed?: boolean;
 	color?: 'red' | 'green' | 'yellow' | 'blue';
 	css?: Record<string, string>;
+	disabled?: boolean;
 	focusEffect?: 'expand' | 'static';
+	icon?: ReactNode | boolean;
 	iconComponent?: EnactPropTypeShapes.componentOverride;
 	iconOnly?: boolean;
 	iconPosition?: 'before' | 'after';
@@ -45,7 +48,6 @@ export interface ButtonBaseProps {
 	roundBorder?: boolean;
 	shadowed?: boolean;
 	size?: 'large' | 'small';
-	[key: string]: any;
 }
 
 /**
@@ -254,7 +256,7 @@ const ButtonBase = kind({
 	},
 
 	computed: {
-		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}: Record<string, any>) => styler.append(
+		className: ({backgroundOpacity, bordered, centered, collapsable, collapsed, color, focusEffect, iconOnly, iconPosition, roundBorder, shadowed, size, styler}) => styler.append(
 			{
 				bordered,
 				centered,
@@ -272,25 +274,26 @@ const ButtonBase = kind({
 			!iconOnly && `icon${cap(iconPosition)}`,
 			size
 		),
-		minWidth: ({iconOnly, minWidth}: Record<string, any>) => ((minWidth != null) ? minWidth : !iconOnly)
+		minWidth: ({iconOnly, minWidth}) => ((minWidth != null) ? minWidth : !iconOnly)
 	},
 
-	render: ({css, ...rest}: Record<string, any>) => {
-		delete rest.backgroundOpacity;
-		delete rest.bordered;
-		delete rest.centered;
-		delete rest.color;
-		delete rest.collapsable;
-		delete rest.collapsed;
-		delete rest.focusEffect;
-		delete rest.iconOnly;
-		delete rest.iconPosition;
-		delete rest.roundBorder;
-		delete rest.shadowed;
+	render: ({css, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.backgroundOpacity;
+		delete restProps.bordered;
+		delete restProps.centered;
+		delete restProps.color;
+		delete restProps.collapsable;
+		delete restProps.collapsed;
+		delete restProps.focusEffect;
+		delete restProps.iconOnly;
+		delete restProps.iconPosition;
+		delete restProps.roundBorder;
+		delete restProps.shadowed;
 
 		return UiButtonBase.inline!({
 			'data-webos-voice-intent': 'Select',
-			...rest,
+			...restProps,
 			css
 		}, void 0 as any);
 	}
@@ -310,10 +313,10 @@ const IconButtonDecorator = hoc((config, Wrapped) => {
 		name: 'IconButtonDecorator',
 
 		computed: {
-			iconOnly: ({children}: Record<string, any>) => (Children.toArray(children).filter(Boolean).length === 0)
+			iconOnly: ({children}) => (Children.toArray(children).filter(Boolean).length === 0)
 		},
 
-		render: (props: Record<string, any>) => {
+		render: (props) => {
 			return (
 				<Wrapped {...props} />
 			);

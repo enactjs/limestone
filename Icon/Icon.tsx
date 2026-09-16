@@ -136,10 +136,10 @@ const IconBase = kind({
 	},
 
 	computed: {
-		className: ({size, styler}: Record<string, any>) => styler.append(
+		className: ({size, styler}) => styler.append(
 			(typeof size === 'string' ? size : null)
 		),
-		flip: ({children, flip, locale, rtl}: Record<string, any>) => {
+		flip: ({children, flip, locale, rtl}) => {
 			if (flip === 'auto') {
 				if (locale === 'he-IL' && children === 'help') {
 					return null;
@@ -149,13 +149,13 @@ const IconBase = kind({
 
 			return flip;
 		},
-		style: ({size, style}: Record<string, any>) => ({
+		style: ({size, style}) => ({
 			...style,
 			'--icon-size': (typeof size === 'number') ? scaleToRem(size) : null
 		})
 	},
 
-	render: ({css, size, ...rest}: Record<string, any>) => {
+	render: ({css, size, ...rest}) => {
 		delete rest.locale;
 		delete rest.rtl;
 

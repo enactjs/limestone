@@ -20,7 +20,6 @@ export interface RegionBaseProps {
 	title: string;
 	'aria-label'?: string;
 	children?: ReactNode;
-	[key: string]: any;
 }
 
 /**
@@ -68,10 +67,10 @@ const RegionBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({'aria-label': ariaLabel, title}: Record<string, any>) => ariaLabel || title
+		'aria-label': ({'aria-label': ariaLabel, title}) => ariaLabel || title
 	},
 
-	render: ({'aria-label': ariaLabel, children, title, ...rest}: Record<string, any>) => {
+	render: ({'aria-label': ariaLabel, children, title, ...rest}) => {
 		return (
 			<div {...rest} role="region" aria-label={ariaLabel}>
 				<Heading showLine>{title}</Heading>

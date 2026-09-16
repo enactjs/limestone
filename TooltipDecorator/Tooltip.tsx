@@ -2,7 +2,7 @@ import EnactPropTypes, {EnactPropTypeShapes} from '@enact/core/internal/prop-typ
 import kind from '@enact/core/kind';
 import {usePublicClassNames} from '@enact/core/usePublicClassNames';
 import PropTypes from 'prop-types';
-import type {ComponentType, Ref} from 'react';
+import type {ComponentType, CSSProperties, ReactNode, Ref} from 'react';
 
 import Skinnable from '../Skinnable';
 
@@ -28,13 +28,36 @@ function defaultDirection (type: string) {
  * @ui
  * @public
  */
+export interface TooltipBaseProps {
+	children: ReactNode;
+	'aria-hidden'?: boolean;
+	arrowAnchor?: 'left' | 'center' | 'right' | 'top' | 'middle' | 'bottom';
+	css?: Record<string, string>;
+	direction?: 'above' | 'below' | 'left' | 'right';
+	labelOffset?: number;
+	marquee?: boolean;
+	noArrow?: boolean;
+	position?: {bottom?: number; left?: number; right?: number; top?: number};
+	relative?: boolean;
+	style?: CSSProperties;
+	tooltipCss?: Record<string, any>;
+	tooltipImage?: string | Record<string, string>;
+	tooltipImagePosition?: 'above' | 'below';
+	tooltipImageSize?: {height?: number; width?: number};
+	tooltipRef?: EnactPropTypeShapes.ref;
+	type?: 'balloon' | 'transparent';
+	width?: number | string;
+}
+
 const TooltipBase = kind({
 	name: 'Tooltip',
+
+	_propTypes: {} as TooltipBaseProps,
 
 	propTypes: /** @lends limestone/TooltipDecorator.TooltipBase.prototype */ {
 		children: PropTypes.node.isRequired,
 		arrowAnchor: PropTypes.oneOf(['left', 'center', 'right', 'top', 'middle', 'bottom']),
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 		direction: PropTypes.oneOf(['above', 'below', 'left', 'right']),
 		labelOffset: PropTypes.number,
 		marquee: PropTypes.bool,
@@ -44,18 +67,18 @@ const TooltipBase = kind({
 			left: PropTypes.number,
 			right: PropTypes.number,
 			top: PropTypes.number
-		}),
+		}) as PropTypes.Validator<{bottom?: number; left?: number; right?: number; top?: number} | undefined>,
 		relative: PropTypes.bool,
 		tooltipCss: PropTypes.object,
-		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 		tooltipImagePosition: PropTypes.oneOf(['above', 'below']),
 		tooltipImageSize: PropTypes.shape({
 			height: PropTypes.number,
 			width: PropTypes.number
-		}),
+		}) as PropTypes.Validator<{height?: number; width?: number} | undefined>,
 		tooltipRef: EnactPropTypes.ref as PropTypes.Validator<EnactPropTypeShapes.ref | undefined>,
 		type: PropTypes.oneOf(['balloon', 'transparent']),
-		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]) as PropTypes.Validator<number | string | undefined>
 	},
 
 	defaultProps: {
@@ -72,14 +95,14 @@ const TooltipBase = kind({
 	},
 
 	computed: {
-		labelOffset: ({labelOffset}: Record<string, any>) => {
+		labelOffset: ({labelOffset}) => {
 			if (labelOffset) {
 				const cappedPosition = Math.max(-0.5, Math.min(0.5, labelOffset));
 				return {transform: `translateX(${cappedPosition * 100}%)`};
 			}
 		},
-		className: ({direction, arrowAnchor, noArrow, relative, tooltipCss, type, styler}: Record<string, any>) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, tooltipCss.tooltip, {relative, absolute: !relative, noArrow}, type),
-		style: ({position, style}: Record<string, any>) => {
+		className: ({direction, arrowAnchor, noArrow, relative, tooltipCss, type, styler}) => styler.append(direction || defaultDirection(type), `${arrowAnchor || defaultArrowAnchor(type)}Arrow`, tooltipCss?.tooltip, {relative, absolute: !relative, noArrow}, type),
+		style: ({position, style}) => {
 			return {
 				...style,
 				...position
@@ -87,8 +110,7 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, tooltipImage, tooltipImagePosition, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}: Record<string, any>) => {
-		delete rest.labelOffset;
+	render: ({arrowAnchor, children, css, tooltipImage, tooltipImagePosition, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}: Omit<TooltipBaseProps, 'labelOffset'> & {labelOffset?: {transform?: string} | number}) => {
 		delete rest.direction;
 		delete rest.position;
 		delete rest.relative;
@@ -128,7 +150,7 @@ const TooltipBase = kind({
  * @ui
  * @public
  */
-const Tooltip = Skinnable(TooltipBase) as ComponentType<any>;
+const Tooltip = Skinnable(TooltipBase) as ComponentType<TooltipBaseProps>;
 
 export default Tooltip;
 export {Tooltip, TooltipBase, defaultArrowAnchor, defaultDirection};
