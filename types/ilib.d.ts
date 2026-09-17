@@ -40,3 +40,37 @@ declare module 'ilib/lib/DateFactory' {
 	export default DateFactory;
 	export type {IDate};
 }
+
+declare module 'ilib/lib/ResBundle' {
+	/**
+	 * An ilib resource bundle, used to look up and translate strings for a locale. Field/method
+	 * names verified against the real ilib@14.22.0 source (`lib/ResBundle.js`) -- not guessed;
+	 * typed loosely (constructor options, `getString`/`getStringJS` source/key/escapeMode
+	 * arguments) since callers in this codebase construct instances and pass them through
+	 * opaquely (e.g. Enact's `$L`/`getIStringFromBundle`) rather than reading their fields.
+	 */
+	class ResBundle {
+		constructor(options?: Record<string, any>);
+
+		/**
+		 * Caches ilib populates lazily on the constructor function itself (not per-instance).
+		 * They don't exist until first use, which is why callers `delete` rather than reassign
+		 * them to force a reload -- hence optional, to satisfy `delete`'s requirement that the
+		 * operand be optional.
+		 */
+		static strings?: any;
+		static sysres?: any;
+
+		getLocale(): any;
+		getName(): string;
+		getType(): string;
+		getString(source?: any, key?: string, escapeMode?: string): any;
+		getStringJS(source?: any, key?: string, escapeMode?: string): string | string[] | undefined;
+		containsKey(source?: string, key?: string): boolean;
+		getResObj(): Record<string, any>;
+
+		[key: string]: any;
+	}
+
+	export default ResBundle;
+}
