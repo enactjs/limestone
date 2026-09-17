@@ -19,8 +19,9 @@
  * @private
  */
 
+import {ResizeContext} from '@enact/ui/Resizable';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {firstLineAtOrAfter, layoutBlocks, readThemeStyle} from './textLayout';
 
@@ -65,6 +66,8 @@ const CanvasContentBlock = ({blocks, width, ...rest}) => {
 	const rafRef = useRef(0);
 	const idleRef = useRef(0);
 	const dprRef = useRef(1);
+	const resizeRegistryRef = useRef(null);
+	const notifiedHeightRef = useRef(-1);
 
 	// `width` is optional: when omitted the block measures the space the Scroller gives it.
 	const [measuredWidth, setMeasuredWidth] = useState(0);
@@ -79,6 +82,26 @@ const CanvasContentBlock = ({blocks, width, ...rest}) => {
 	);
 
 	layoutRef.current = layout;
+
+	// The block starts at zero height and only gets its real height once the theme probes and the
+	// measured width have resolved. `ScrollerBasic` recalculates its bounds only when it re-renders,
+	// so without telling it, the Scroller keeps the bounds it took on the first pass: no overflow,
+	// no scrollbar, and — because the thumb is what 5-way scrolling drives — no way to scroll the
+	// block with a remote at all. `invalidateBounds` is the contract for saying "measure me again".
+	const resizeContextValue = useContext(ResizeContext);
+
+	useEffect(() => {
+		if (typeof resizeContextValue === 'function') {
+			resizeRegistryRef.current = resizeContextValue(() => {});
+		}
+
+		return () => {
+			if (resizeRegistryRef.current) {
+				resizeRegistryRef.current.unregister();
+				resizeRegistryRef.current = null;
+			}
+		};
+	}, [resizeContextValue]);
 
 	// One text node for assistive tech, instead of one DOM node per paragraph.
 	const plainText = useMemo(() => blocks.map((b) => b.text).join('\n\n'), [blocks]);
@@ -228,6 +251,18 @@ const CanvasContentBlock = ({blocks, width, ...rest}) => {
 		measure();
 		paint();
 	}, [measure, paint, layout]);
+
+	useLayoutEffect(() => {
+		const height = layout ? layout.height : 0;
+
+		if (height !== notifiedHeightRef.current) {
+			notifiedHeightRef.current = height;
+
+			if (resizeRegistryRef.current) {
+				resizeRegistryRef.current.notify({action: 'invalidateBounds'});
+			}
+		}
+	}, [layout]);
 
 	useEffect(() => {
 		const scrollParent = scrollParentRef.current;
