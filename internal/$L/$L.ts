@@ -1,0 +1,95 @@
+/* global ILIB_LIMESTONE_PATH */
+
+import {getIStringFromBundle} from '@enact/i18n/src/resBundle';
+import type {TranslatableString} from '@enact/i18n/types/TranslatableString';
+import ResBundle from 'ilib/lib/ResBundle';
+
+// The ilib.ResBundle for the active locale used by $L
+let resBundle: ResBundle | null;
+
+/**
+ * Returns the current ilib.ResBundle
+ *
+ * @returns {ilib.ResBundle} Current ResBundle
+ */
+function getResBundle (): ResBundle | null {
+	return resBundle;
+}
+
+/**
+ * Creates a new ilib.ResBundle for string translation
+ *
+ * @param  {ilib.Locale} options Locale for ResBundle
+ *
+ * @returns {Promise|ResBundle} Resolves with a new ilib.ResBundle
+ */
+function createResBundle (options: Record<string, any>) {
+	const opts = options;
+
+	if (typeof ILIB_LIMESTONE_PATH !== 'undefined') {
+		opts.basePath = ILIB_LIMESTONE_PATH;
+	}
+
+	if (!opts.onLoad) return;
+
+	// eslint-disable-next-line no-new
+	new ResBundle({
+		...opts,
+		onLoad: (bundle: ResBundle | null) => {
+			opts.onLoad(bundle || null);
+		}
+	});
+}
+
+/**
+ * Deletes the current bundle object of strings.
+ * @returns {undefined}
+ */
+function clearResBundle () {
+	delete ResBundle.strings;
+	delete ResBundle.sysres;
+	resBundle = null;
+}
+
+/**
+ * Set the locale for the strings that $L loads. This may reload the
+ * string resources if necessary.
+ *
+ * @param {string} bundle the locale specifier
+ * @returns {ilib.ResBundle} Current ResBundle
+ */
+function setResBundle (bundle: ResBundle | null): ResBundle | null {
+	return (resBundle = bundle);
+}
+
+function toIString (str: string | TranslatableString) {
+	let rb = getResBundle();
+
+	if (!rb) {
+		createResBundle({sync: true, onLoad: setResBundle});
+		rb = getResBundle();
+	}
+
+	return getIStringFromBundle(str, rb);
+}
+
+/**
+ * Maps a string or key/value object to a translated string for the current locale.
+ *
+ * @function
+ * @memberof i18n/$L
+ * @param  {String|Object} str Source string
+ *
+ * @returns {String} The translated string
+ */
+function $L (str: string | TranslatableString): string {
+	return String(toIString(str));
+}
+
+export default $L;
+export {
+	$L,
+	clearResBundle,
+	createResBundle,
+	setResBundle
+};

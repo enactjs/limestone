@@ -1,0 +1,238 @@
+import hoc from '@enact/core/hoc';
+import EnactPropTypes from '@enact/core/internal/prop-types';
+import useChainRefs from '@enact/core/useChainRefs';
+import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
+import PropTypes from 'prop-types';
+import {Children, createContext, useCallback, useState} from 'react';
+
+import useAutoFocus from './useAutoFocus';
+import useFocusOnTransition from './useFocusOnTransition';
+import useToggleRole from './useToggleRole';
+
+const PanelsContext = createContext<((panel: any) => void) | null>(null);
+
+// single-index ViewManagers need some help knowing when the transition direction needs to change
+// because the index is always 0 from its perspective.
+function useReverseTransition (index = -1, rtl?: boolean) {
+	const prevIndex = usePrevious(index);
+
+	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
+	if (prevIndex !== index) {
+		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
+		return {reverseTransition: reverse, prevIndex: index};
+	}
+
+	return {reverseTransition: rtl, prevIndex: index};
+}
+
+const defaultConfig = {
+	type: 'wizard'
+};
+
+/**
+ * PanelsRouter passes the children, footer, subtitle, and title from
+ * {@link limestone/WizardPanels.Panel|WizardPanel} to
+ * {@link limestone/WizardPanels.WizardPanelsBase|WizardPanelsBase} and passes the children from
+ * {@link limestone/QuickGuidePanels.Panel|QuickGuidePanel} to
+ * {@link limestone/QuickGuidePanels.QuickGuidePanelsBase|QuickGuidePanelsBase}.
+ *
+ * @class PanelsRouter
+ * @memberof limestone/internal/Panels
+ * @hoc
+ * @private
+ */
+const PanelsRouter = hoc(defaultConfig, (config, Wrapped) => {
+	const PanelsProvider = (props: Record<string, any>) => {
+		const panelsProviderProps = setDefaultProps(props, {
+			autoFocus: 'default-element',
+			index: 0,
+			subtitle: '',
+			title: ''
+		});
+
+		checkPropTypes(PanelsProvider, panelsProviderProps);
+
+		const {
+			autoFocus,
+			children,
+			componentRef,
+			'data-spotlight-id': spotlightId,
+			index,
+			onTransition,
+			onWillTransition,
+			rtl,
+			subtitle,
+			title,
+			...rest
+		} = panelsProviderProps;
+
+		const [panel, setPanel] = useState<Record<string, any> | null>(null);
+		const {ref: a11yRef, onWillTransition: a11yOnWillTransition} = useToggleRole();
+		const autoFocusRef = useAutoFocus({autoFocus, hideChildren: panel == null});
+		const ref = useChainRefs(autoFocusRef, a11yRef as any, componentRef);
+		const {reverseTransition, prevIndex} = useReverseTransition(index, rtl);
+		const {
+			onWillTransition: focusOnWillTransition,
+			...transition
+		} = useFocusOnTransition({onTransition, onWillTransition, spotlightId});
+
+		const handleWillTransition = useCallback((ev: any) => {
+			focusOnWillTransition(ev);
+			(a11yOnWillTransition as (...args: any[]) => any)(ev);
+		}, [a11yOnWillTransition, focusOnWillTransition]);
+
+		const totalPanels = panel ? Children.count(children) : 0;
+		const currentTitle = panel && panel.title ? panel.title : title;
+		const currentSubTitle = panel && panel.subtitle ? panel.subtitle : subtitle;
+		delete rest.onBack;
+
+		return (
+			<PanelsContext value={setPanel}>
+				{Children.toArray(children)[index]}
+				{config.type === 'wizard' ?
+					<Wrapped
+						{...rest}
+						{...panel}
+						{...transition}
+						componentRef={ref}
+						data-spotlight-id={spotlightId}
+						index={index}
+						onWillTransition={handleWillTransition}
+						title={currentTitle}
+						subtitle={currentSubTitle}
+						totalPanels={totalPanels}
+						reverseTransition={reverseTransition}
+					>
+						{panel && panel.children ? (
+							<div className="enact-fit" key={`panel${prevIndex}`}>
+								{panel.children}
+							</div>
+						) : null}
+					</Wrapped> : <Wrapped
+						{...rest}
+						{...panel}
+						{...transition}
+						componentRef={ref}
+						data-spotlight-id={spotlightId}
+						index={index}
+						onWillTransition={handleWillTransition}
+						totalPanels={totalPanels}
+					>
+						{panel && panel.children ? (
+							<div className="enact-fit" key={`panel${prevIndex}`}>
+								{panel.children}
+							</div>
+						) : null}
+					</Wrapped>
+				}
+			</PanelsContext>
+		);
+	};
+
+	PanelsProvider.propTypes =  /** @lends limestone/internal/Panels.PanelsRouter.prototype */  {
+		/**
+		 * Sets the strategy used to automatically focus an element within the Panels upon render.
+		 * When set to 'none', focus is not set only on the first render.
+		 *
+		 * @type {('default-element'|'last-focused'|'none'|String)}
+		 * @default 'default-element'
+		 * @private
+		 */
+		autoFocus: PropTypes.string,
+
+		/**
+		 * Obtains a reference to the root node.
+		 *
+		 * @type {Function|Object}
+		 * @private
+		 */
+		componentRef: EnactPropTypes.ref,
+
+		/**
+		* The spotlight id for the panel
+		*
+		* @type {String}
+		* @private
+		*/
+		'data-spotlight-id': PropTypes.string,
+
+		/**
+		* The currently selected step.
+		*
+		* @type {Number}
+		* @default 0
+		* @private
+		*/
+		index: PropTypes.number,
+
+		/**
+		 * Disables panel transitions.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		noAnimation: PropTypes.bool,
+
+		/**
+		* Called when a transition completes
+		*
+		* @type {Function}
+		* @private
+		*/
+		onTransition: PropTypes.func,
+
+		/**
+		* Called when a transition begins
+		*
+		* @type {Function}
+		* @private
+		*/
+		onWillTransition: PropTypes.func,
+
+		/**
+		 * Used to determine the transition direction
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		rtl: PropTypes.bool,
+
+		/**
+		* The "default" subtitle for WizardPanels if subtitle isn't explicitly set in
+		* {@link limestone/WizardPanels.Panel|Panel}.
+		* @example
+		* 	<WizardPanels subtitle="Subtitle">
+		*		<WizardPanels.Panel>
+		*			lorem ipsum ...
+		*		</WizardPanels.Panel>
+		*	</WizardPanels>
+		*
+		* @type {String}
+		* @private
+		*/
+		subtitle: PropTypes.string,
+
+		/**
+		* The "default" title for WizardPanels if title isn't explicitly set in
+		* {@link limestone/WizardPanels.Panel|Panel}.
+		* @example
+		* 	<WizardPanels title="Title">
+		*		<WizardPanels.Panel>
+		*			lorem ipsum ...
+		*		</WizardPanels.Panel>
+		*	</WizardPanels>
+		*
+		* @type {String}
+		* @private
+		*/
+		title: PropTypes.string
+	};
+
+	return PanelsProvider;
+});
+
+export default PanelsRouter;
+export {
+	PanelsRouter,
+	PanelsContext
+};

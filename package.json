@@ -63,7 +63,16 @@
     "vue-template-compiler": "@vue/compiler-sfc@3.4.31"
   },
   "devDependencies": {
-    "@enact/docs-utils": "^0.5.0",
-    "@enact/ui-test-utils": "^4.0.5"
+    "@enact/docs-utils": "enactjs/docs-utils#feature/typescript",
+    "@enact/ui-test-utils": "^4.0.5",
+    "@types/invariant": "^2.2.4",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.0.0",
+    "@types/prop-types": "^15.7.15",
+    "@types/ramda": "^0.32.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/warning": "^3.0.4",
+    "typescript": "^7.0.2"
   }
 }
