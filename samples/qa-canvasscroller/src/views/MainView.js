@@ -76,11 +76,11 @@ const MainView = () => {
 
 		startRef.current = null;
 
-		const id = requestAnimationFrame(() => requestAnimationFrame(() => {
+		const id = window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
 			setBuildMs(Math.round(performance.now() - t0));
 		}));
 
-		return () => cancelAnimationFrame(id);
+		return () => window.cancelAnimationFrame(id);
 	}, [mode, sections]);
 
 	const contentWidth = ri.scale(1600);

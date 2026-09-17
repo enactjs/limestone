@@ -5,6 +5,12 @@
  * expensive part (measuring glyphs and choosing break points) is paid once, up front, and the
  * per-frame cost collapses to "draw the handful of lines that are currently on screen".
  *
+ * Type is **not** described here. A canvas has no cascade, so sizes, weights, families and colors
+ * are read out of real themed elements by {@link limestone/CanvasScroller.CanvasContentBlock} and
+ * handed in as a resolved `style`, already in CSS pixels. Restating limestone's type scale as
+ * numbers in this file would silently drift from the theme, and would miss resolution scaling and
+ * the locale overrides entirely.
+ *
  * The output is a flat, y-sorted array of lines so that the painter can binary-search straight to
  * the first visible line instead of walking the block list.
  *
@@ -12,53 +18,22 @@
  * @private
  */
 
-import ri from '@enact/ui/resolution';
-
 let measureContext = null;
 
-const getMeasureContext = () => {
-	if (!measureContext) {
-		measureContext = document.createElement('canvas').getContext('2d');
-	}
-	return measureContext;
-};
-
 /**
- * Default type scale, expressed in 1080p design pixels and scaled through `ri.scale` so the canvas
- * matches the rest of the app on UHD panels.
+ * Returns `null` during isomorphic prerender, where there is no canvas to measure with. The block
+ * then lays out as empty and fills in on the client, on mount.
  *
  * @private
  */
-const defaultMetrics = {
-	bodySize: 24,
-	bodyFamily: 'LG Smart UI, sans-serif',
-	bodyColor: '#e6e6e6',
-	bodyLineHeight: 36,
-	headingSize: 34,
-	headingFamily: 'LG Smart UI, sans-serif',
-	headingWeight: 'bold',
-	headingColor: '#ffffff',
-	headingLineHeight: 52,
-	paragraphGap: 18,
-	blockGap: 40,
-	paddingX: 24,
-	paddingY: 12,
-	background: 'transparent'
-};
+const getMeasureContext = () => {
+	if (typeof window === 'undefined') return null;
 
-const resolveMetrics = (metrics) => {
-	const m = Object.assign({}, defaultMetrics, metrics);
+	if (!measureContext) {
+		measureContext = window.document.createElement('canvas').getContext('2d');
+	}
 
-	return Object.assign({}, m, {
-		bodyFont: `${ri.scale(m.bodySize)}px ${m.bodyFamily}`,
-		headingFont: `${m.headingWeight} ${ri.scale(m.headingSize)}px ${m.headingFamily}`,
-		bodyLineHeightPx: ri.scale(m.bodyLineHeight),
-		headingLineHeightPx: ri.scale(m.headingLineHeight),
-		paragraphGapPx: ri.scale(m.paragraphGap),
-		blockGapPx: ri.scale(m.blockGap),
-		paddingXPx: ri.scale(m.paddingX),
-		paddingYPx: ri.scale(m.paddingY)
-	});
+	return measureContext;
 };
 
 /**
@@ -66,18 +41,24 @@ const resolveMetrics = (metrics) => {
  *
  * @param {Object[]} blocks Content model; each entry is `{type: 'heading'|'paragraph', text}`
  * @param {Number} width Content width in CSS pixels, including horizontal padding
- * @param {Object} [metrics] Type scale overrides, in 1080p design pixels
- * @returns {{lines: Object[], height: Number, metrics: Object}} Flat, y-sorted line list
+ * @param {Object} style Resolved type, in CSS pixels, from {@link readThemeStyle}
+ * @returns {{lines: Object[], height: Number, style: Object}} Flat, y-sorted line list
  * @private
  */
-const layoutBlocks = (blocks, width, metrics) => {
-	const m = resolveMetrics(metrics);
+const layoutBlocks = (blocks, width, style) => {
 	const ctx = getMeasureContext();
-	const maxWidth = width - m.paddingXPx * 2;
-	const lines = [];
-	let y = m.paddingYPx;
 
-	const pushWrapped = (text, font, color, lineHeight) => {
+	if (!ctx || !style) {
+		return {lines: [], height: 0, style};
+	}
+
+	const maxWidth = width - style.paddingX * 2;
+	const lines = [];
+	let y = style.paddingY;
+
+	const pushWrapped = (text, role) => {
+		const {font, color, lineHeight} = style[role];
+
 		ctx.font = font;
 
 		const words = String(text).split(/\s+/);
@@ -104,20 +85,15 @@ const layoutBlocks = (blocks, width, metrics) => {
 
 	for (let i = 0; i < blocks.length; i++) {
 		const block = blocks[i];
+		const isHeading = block.type === 'heading';
 
-		if (block.type === 'heading') {
-			pushWrapped(block.text, m.headingFont, m.headingColor, m.headingLineHeightPx);
-		} else {
-			pushWrapped(block.text, m.bodyFont, m.bodyColor, m.bodyLineHeightPx);
-			y += m.paragraphGapPx;
-		}
+		pushWrapped(block.text, isHeading ? 'heading' : 'body');
 
-		if (block.type === 'heading' || i === blocks.length - 1 || blocks[i + 1].type === 'heading') {
-			y += m.blockGapPx;
-		}
+		// Mirrors the bottom margin the themed element would have contributed in the DOM.
+		y += isHeading ? style.heading.marginBottom : style.body.marginBottom;
 	}
 
-	return {lines, height: Math.ceil(y + m.paddingYPx), metrics: m};
+	return {lines, height: Math.ceil(y + style.paddingY), style};
 };
 
 /**
@@ -147,9 +123,57 @@ const firstLineAtOrAfter = (lines, target) => {
 	return ans;
 };
 
+/**
+ * Reads one probe element's resolved type into the shape the painter and `ctx.font` want.
+ *
+ * `line-height: normal` has no numeric value to read, so it falls back to the ratio browsers use.
+ *
+ * @param {Node} node A themed, hidden probe element
+ * @returns {Object} `{font, color, lineHeight, marginBottom, marginLeft}` in CSS pixels
+ * @private
+ */
+const readProbe = (node) => {
+	const cs = window.getComputedStyle(node);
+	const fontSize = parseFloat(cs.fontSize) || 0;
+	const parsedLineHeight = parseFloat(cs.lineHeight);
+
+	return {
+		// The canvas font shorthand ignores any line-height component, so it is carried separately.
+		font: `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`,
+		color: cs.color,
+		lineHeight: isNaN(parsedLineHeight) ? Math.round(fontSize * 1.2) : parsedLineHeight,
+		marginBottom: parseFloat(cs.marginBottom) || 0,
+		marginLeft: parseFloat(cs.marginLeft) || 0
+	};
+};
+
+/**
+ * Resolves limestone's type off the live probe elements.
+ *
+ * @param {Node} bodyNode Probe carrying the body-text mixin
+ * @param {Node} headingNode Probe carrying the heading styles
+ * @returns {Object} Resolved style for {@link layoutBlocks}, or `null` before the probes exist
+ * @private
+ */
+const readThemeStyle = (bodyNode, headingNode) => {
+	if (typeof window === 'undefined' || !bodyNode || !headingNode) return null;
+
+	const body = readProbe(bodyNode);
+	const heading = readProbe(headingNode);
+
+	return {
+		body,
+		heading,
+		// The themed elements carry their own horizontal margin; reuse it so canvas text lines up
+		// with DOM content elsewhere in the same scroller.
+		paddingX: body.marginLeft,
+		paddingY: 0
+	};
+};
+
 export default layoutBlocks;
 export {
-	defaultMetrics,
 	firstLineAtOrAfter,
-	layoutBlocks
+	layoutBlocks,
+	readThemeStyle
 };

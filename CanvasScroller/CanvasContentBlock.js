@@ -1,3 +1,5 @@
+/* global ResizeObserver */
+
 /**
  * A large, static block of text painted into a 2D canvas instead of a DOM subtree.
  *
@@ -20,7 +22,7 @@
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
-import {firstLineAtOrAfter, layoutBlocks} from './textLayout';
+import {firstLineAtOrAfter, layoutBlocks, readThemeStyle} from './textLayout';
 
 import css from './CanvasScroller.module.less';
 
@@ -51,8 +53,10 @@ const findScrollParent = (node) => {
  * @ui
  * @private
  */
-const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
+const CanvasContentBlock = ({blocks, width, ...rest}) => {
 	const rootRef = useRef(null);
+	const bodyProbeRef = useRef(null);
+	const headingProbeRef = useRef(null);
 	const canvasRef = useRef(null);
 	const ctxRef = useRef(null);
 	const scrollParentRef = useRef(null);
@@ -66,9 +70,12 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 	const [measuredWidth, setMeasuredWidth] = useState(0);
 	const effectiveWidth = width || measuredWidth;
 
+	// Resolved from the themed probes on mount; until then there is nothing to lay out.
+	const [themeStyle, setThemeStyle] = useState(null);
+
 	const layout = useMemo(
-		() => (effectiveWidth > 0 ? layoutBlocks(blocks, effectiveWidth, metrics) : null),
-		[blocks, effectiveWidth, metrics]
+		() => (effectiveWidth > 0 && themeStyle ? layoutBlocks(blocks, effectiveWidth, themeStyle) : null),
+		[blocks, effectiveWidth, themeStyle]
 	);
 
 	layoutRef.current = layout;
@@ -89,21 +96,16 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 		const viewHeight = canvas.height / dpr;
 		const maxTop = Math.max(0, current.height - viewHeight);
 		const top = Math.min(Math.max(0, scrollParent.scrollTop - offsetRef.current), maxTop);
-		const {lines, metrics: m} = current;
+		const {lines, style} = current;
 
 		ctx.save();
 		ctx.scale(dpr, dpr);
 		ctx.clearRect(0, 0, viewWidth, viewHeight);
 
-		if (m.background && m.background !== 'transparent') {
-			ctx.fillStyle = m.background;
-			ctx.fillRect(0, 0, viewWidth, viewHeight);
-		}
-
 		ctx.textBaseline = 'top';
 
 		// Start one heading-height above the fold so a line straddling the top edge is still drawn.
-		let i = firstLineAtOrAfter(lines, top - m.headingLineHeightPx);
+		let i = firstLineAtOrAfter(lines, top - style.heading.lineHeight);
 		let font = null;
 		let fill = null;
 
@@ -120,7 +122,7 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 				ctx.fillStyle = line.color;
 				fill = line.color;
 			}
-			ctx.fillText(line.text, m.paddingXPx, line.y - top);
+			ctx.fillText(line.text, style.paddingX, line.y - top);
 		}
 
 		ctx.restore();
@@ -130,7 +132,7 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 		paint();
 
 		if (++idleRef.current < IDLE_FRAMES) {
-			rafRef.current = requestAnimationFrame(pump);
+			rafRef.current = window.requestAnimationFrame(pump);
 		} else {
 			rafRef.current = 0;
 		}
@@ -140,7 +142,7 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 		idleRef.current = 0;
 
 		if (!rafRef.current) {
-			rafRef.current = requestAnimationFrame(pump);
+			rafRef.current = window.requestAnimationFrame(pump);
 		}
 	}, [pump]);
 
@@ -176,6 +178,47 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 		}
 	}, [width]);
 
+	// The canvas has no cascade, so read the theme's type off the probes once they are in the DOM.
+	// Re-read whenever the resolution class or locale could have changed the computed values.
+	const syncThemeStyle = useCallback(() => {
+		const next = readThemeStyle(bodyProbeRef.current, headingProbeRef.current);
+
+		if (!next) return;
+
+		setThemeStyle((prev) => (
+			prev &&
+			prev.body.font === next.body.font &&
+			prev.body.lineHeight === next.body.lineHeight &&
+			prev.body.color === next.body.color &&
+			prev.heading.font === next.heading.font &&
+			prev.heading.lineHeight === next.heading.lineHeight &&
+			prev.heading.color === next.heading.color &&
+			prev.paddingX === next.paddingX ?
+				prev :
+				next
+		));
+	}, []);
+
+	useLayoutEffect(() => {
+		syncThemeStyle();
+
+		// Glyph metrics change when the themed webfont finishes loading, which would leave the
+		// wrap points measured against the fallback face.
+		const fonts = typeof window !== 'undefined' && window.document.fonts;
+
+		if (!fonts || !fonts.ready) return;
+
+		let cancelled = false;
+
+		fonts.ready.then(() => {
+			if (!cancelled) syncThemeStyle();
+		});
+
+		return () => {
+			cancelled = true;
+		};
+	}, [syncThemeStyle, measuredWidth]);
+
 	useLayoutEffect(() => {
 		const canvas = canvasRef.current;
 
@@ -195,7 +238,7 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 
 		scrollParent.addEventListener('scroll', onScroll, {passive: true});
 
-		const ro = typeof ResizeObserver === 'function' ? new ResizeObserver(() => {
+		const ro = (typeof window !== 'undefined' && window.ResizeObserver) ? new ResizeObserver(() => {
 			measure();
 			requestPaint();
 		}) : null;
@@ -206,7 +249,7 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 			scrollParent.removeEventListener('scroll', onScroll);
 			if (ro) ro.disconnect();
 			if (rafRef.current) {
-				cancelAnimationFrame(rafRef.current);
+				window.cancelAnimationFrame(rafRef.current);
 				rafRef.current = 0;
 			}
 		};
@@ -222,6 +265,10 @@ const CanvasContentBlock = ({blocks, metrics, width, ...rest}) => {
 				width: effectiveWidth ? `${effectiveWidth}px` : '100%'
 			}}
 		>
+			<div aria-hidden className={css.probes}>
+				<div className={css.probeBody} ref={bodyProbeRef} />
+				<div className={css.probeHeading} ref={headingProbeRef} />
+			</div>
 			<canvas aria-hidden className={css.canvas} ref={canvasRef} />
 			<div className={css.textMirror}>{plainText}</div>
 		</div>
@@ -242,14 +289,6 @@ CanvasContentBlock.propTypes = /** @lends limestone/CanvasScroller.CanvasContent
 		text: PropTypes.string.isRequired,
 		type: PropTypes.oneOf(['heading', 'paragraph'])
 	})).isRequired,
-
-	/**
-	 * Type scale overrides, in 1080p design pixels.
-	 *
-	 * @type {Object}
-	 * @private
-	 */
-	metrics: PropTypes.object,
 
 	/**
 	 * Content width in CSS pixels. Measured from the available space when omitted.

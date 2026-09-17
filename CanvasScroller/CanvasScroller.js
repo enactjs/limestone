@@ -30,8 +30,9 @@ import CanvasContentBlock from './CanvasContentBlock';
 /**
  * A Limestone-styled Scroller whose content is a canvas-painted static text block.
  *
- * Accepts every {@link limestone/Scroller.Scroller} prop; `blocks`, `contentWidth` and `metrics`
- * are consumed here and the rest are forwarded.
+ * Accepts every {@link limestone/Scroller.Scroller} prop; `blocks` and `contentWidth` are
+ * consumed here and the rest are forwarded. Type is taken from the limestone theme itself, not
+ * from props.
  *
  * @class CanvasScroller
  * @memberof limestone/CanvasScroller
@@ -39,9 +40,9 @@ import CanvasContentBlock from './CanvasContentBlock';
  * @ui
  * @public
  */
-const CanvasScroller = ({blocks, contentWidth, metrics, ...rest}) => (
+const CanvasScroller = ({blocks, contentWidth, ...rest}) => (
 	<Scroller direction="vertical" focusableScrollbar="byEnter" {...rest}>
-		<CanvasContentBlock blocks={blocks} metrics={metrics} width={contentWidth} />
+		<CanvasContentBlock blocks={blocks} width={contentWidth} />
 	</Scroller>
 );
 
@@ -71,22 +72,7 @@ CanvasScroller.propTypes = /** @lends limestone/CanvasScroller.CanvasScroller.pr
 	 * @type {Number}
 	 * @public
 	 */
-	contentWidth: PropTypes.number,
-
-	/**
-	 * Type scale overrides, in 1080p design pixels.
-	 *
-	 * Recognized keys: `bodySize`, `bodyFamily`, `bodyColor`, `bodyLineHeight`, `headingSize`,
-	 * `headingFamily`, `headingWeight`, `headingColor`, `headingLineHeight`, `paragraphGap`,
-	 * `blockGap`, `paddingX`, `paddingY`, `background`.
-	 *
-	 * Like `blocks`, this takes part in the layout memo — pass a hoisted constant, not an inline
-	 * object literal, or every render re-runs the measure pass.
-	 *
-	 * @type {Object}
-	 * @public
-	 */
-	metrics: PropTypes.object
+	contentWidth: PropTypes.number
 };
 
 export default CanvasScroller;

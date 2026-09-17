@@ -1,5 +1,8 @@
 // Prototype styles for limestone/CanvasScroller.
 
+@import "../styles/variables.less";
+@import "../styles/mixins.less";
+
 .canvasContentBlock {
 	position: relative;
 	// The wrapper reserves the full content height so the Scroller's bounds, scrollbar size and
@@ -26,4 +29,34 @@
 	clip-path: inset(50%);
 	white-space: pre-wrap;
 	border: 0;
+}
+
+// --- type probes -------------------------------------------------------------------------------
+// The canvas has no cascade, so the theme's type has to be read out of real elements. These carry
+// limestone's own mixins and variables, so the painted text tracks the theme, the resolution
+// scaling and the locale overrides instead of duplicating any of it as numbers.
+.probes {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 0;
+	overflow: hidden;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.probeBody {
+	.lime-body-text();
+	margin: @lime-bodytext-margin;
+	padding: @lime-bodytext-padding;
+}
+
+.probeHeading {
+	.lime-font(@lime-heading-small-font-family; @lime-non-latin-font-family; {});
+	.enact-locale-line-height(@lime-heading-line-height, @lime-tallglyph-heading-line-height);
+	margin: @lime-heading-margin;
+	padding: @lime-heading-padding;
+	font-style: @lime-heading-font-style;
+	font-weight: @lime-heading-small-font-weight;
+	font-size: @lime-heading-small-font-size;
 }

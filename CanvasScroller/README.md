@@ -75,8 +75,23 @@ elements, and there are none.
 | File | Role |
 | --- | --- |
 | `CanvasScroller.js` | Composition: `limestone/Scroller` + the canvas content block |
-| `CanvasContentBlock.js` | The painter — sticky canvas, scroll pump, resize handling, a11y mirror |
+| `CanvasContentBlock.js` | The painter — sticky canvas, scroll pump, resize handling, a11y mirror, type probes |
 | `textLayout.js` | Measure and line-break the content model once; binary search by `y` |
+
+## Type comes from the theme, not from props
+
+A canvas has no cascade, so the painter has to be told what the text looks like. It does **not**
+carry its own type scale. Two hidden probe elements are rendered inside the block, styled by
+`CanvasScroller.module.less` with limestone's own `.lime-body-text()` mixin and heading variables;
+their resolved `font`, `color`, `line-height` and margins are read back with `getComputedStyle` and
+handed to the layout pass in CSS pixels.
+
+This is the only approach that stays correct. Restating the scale as numbers means duplicating
+`@lime-body-font-size` and friends, and then silently missing `ri` resolution scaling, skin changes,
+and the tall-glyph and non-Latin locale overrides — the first version of this prototype did exactly
+that and rendered text at roughly a quarter of the right size. The probes are re-read once
+`document.fonts.ready` settles, because glyph metrics change when the themed webfont finishes
+loading and the wrap points would otherwise be measured against the fallback face.
 
 ## Status
 
