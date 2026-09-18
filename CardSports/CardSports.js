@@ -22,11 +22,10 @@
 
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
-import ri from '@enact/ui/resolution';
 import PropTypes from 'prop-types';
-import {cloneElement, isValidElement} from 'react';
 
 import Card, {CardBase} from '../Card';
+import {getBadge} from '../Card/utils';
 import $L from '../internal/$L';
 
 import cardCss from '../Card/Card.module.less';
@@ -54,22 +53,6 @@ const formatTeamScore = (leftTeam, rightTeam) => {
 	if (leftScore && rightScore) return `${leftScore} : ${rightScore}`;
 
 	return leftScore || rightScore || null;
-};
-
-const getBadge = (badge, size, className) => {
-	let element = <div>{badge}</div>;
-	let elementSize = {};
-
-	if (isValidElement(badge)) element = badge;
-	if (size) {
-		elementSize = typeof size === 'object' ? {
-			width: ri.scaleToRem(size.width), height: ri.scaleToRem(size.height)
-		} : {
-			fontSize: ri.scaleToRem(size)
-		};
-	}
-
-	return cloneElement(element, {className: className, style: {...elementSize}});
 };
 
 /**
@@ -160,12 +143,24 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			 *
 			 * * `cardSports` - The root class name
 			 * * `score` - The score pill
+			 * * `sportsBackground` - The diagonal team-color gradient behind the image
 			 * * `sportsOverlay` - The logos and score overlay
+			 * * `teamLogo` - Applied to a team's logo
+			 * * `teamSide` - Applied to each team's half of the overlay
 			 *
 			 * @type {Object}
 			 * @public
 			 */
 			css: PropTypes.object,
+
+			/**
+			 * Additional overlay rendered inside the image, after the sports match overlay.
+			 *
+			 * @type {Node}
+			 * @see {@link limestone/Card.CardBase#imageOverlay}
+			 * @public
+			 */
+			imageOverlay: PropTypes.node,
 
 			/**
 			 * Source for the image.
@@ -199,7 +194,7 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 				(captionOverlay || captionOverlayOnFocus) ? null : captionImageIconsSrc
 			),
 			className: ({styler}) => styler.append(cardCss.sports),
-			imageOverlay: ({css, leftTeam, rightTeam}) => {
+			imageOverlay: ({css, imageOverlay, leftTeam, rightTeam}) => {
 				const teamScore = formatTeamScore(leftTeam, rightTeam);
 
 				return (
@@ -222,6 +217,7 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 								) : null}
 							</div>
 						</div>
+						{imageOverlay}
 					</>
 				);
 			},

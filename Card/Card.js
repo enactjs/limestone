@@ -34,6 +34,7 @@ import {Marquee, MarqueeController} from '../Marquee';
 import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
+import {getBadge} from './utils';
 import componentCss from './Card.module.less';
 
 const formatDuration = (duration) => {
@@ -52,22 +53,6 @@ const formatDuration = (duration) => {
 	}
 
 	return `${mm}:${ss}`;
-};
-
-const getBadge = (badge, size, className) => {
-	let element = <div>{badge}</div>;
-	let elementSize = {};
-
-	if (isValidElement(badge)) element = badge;
-	if (size) {
-		elementSize = typeof size === 'object' ? {
-			width: ri.scaleToRem(size.width), height: ri.scaleToRem(size.height)
-		} : {
-			fontSize: ri.scaleToRem(size)
-		};
-	}
-
-	return cloneElement(element, {className: className, style: {...elementSize}});
 };
 
 const getImageIcons = (images, key, className) => {

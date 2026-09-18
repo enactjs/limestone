@@ -60,6 +60,19 @@ describe('CardSports', () => {
 		expect(screen.queryAllByRole('img')).toHaveLength(2);
 	});
 
+	test('should still render `imageOverlay` after the sports overlay', () => {
+		render(
+			<CardSportsBase
+				imageOverlay={<div>Extra Overlay</div>}
+				leftTeam={{backgroundColor: '#1b2a4a', score: '0/0'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0/0'}}
+			/>
+		);
+
+		expect(screen.getByText('Extra Overlay')).toBeInTheDocument();
+		expect(screen.getByText('0/0 : 0/0')).toBeInTheDocument();
+	});
+
 	test('should still render `primaryBadge` and `secondaryBadge`', () => {
 		render(
 			<CardSportsBase
