@@ -89,6 +89,20 @@
 		right: @lime-card-badge-right;
 	}
 
+	&.sports {
+		.primaryBadge, .secondaryBadge {
+			z-index: 2;
+		}
+
+		.image {
+			overflow: hidden;
+		}
+
+		&.selected .image::after {
+			z-index: 3;
+		}
+	}
+
 	.caption, .label {
 		overflow-wrap: break-word;
 	}
