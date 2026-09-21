@@ -46,7 +46,7 @@ function findModuleFiles (dir, acc = []) {
 const files = findModuleFiles(process.cwd());
 
 if (files.length === 0) {
-	console.warn('validate-docs: no @module files found');
+	process.stderr.write('validate-docs: no @module files found\n');
 	process.exit(2);
 }
 
@@ -54,6 +54,6 @@ docs.getDocumentation(files, true, true).then(() => {
 	docs.postValidate(true, true);
 	process.exit(process.exitCode || 0);
 }).catch((err) => {
-	console.error(err);
+	process.stderr.write(`${err}\n`);
 	process.exit(2);
 });
