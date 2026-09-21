@@ -1,0 +1,331 @@
+import {forward, handle} from '@enact/core/handle';
+import hoc from '@enact/core/hoc';
+import kind from '@enact/core/kind';
+import EnactPropTypes, {EnactPropTypeShapes} from '@enact/core/internal/prop-types';
+import SpotlightContainerDecorator, {spotlightDefaultClass} from '@enact/spotlight/SpotlightContainerDecorator';
+import ComponentOverride from '@enact/ui/ComponentOverride';
+import ForwardRef from '@enact/ui/ForwardRef';
+import Slottable from '@enact/ui/Slottable';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+import type {ComponentType, ReactNode} from 'react';
+
+import Skinnable from '../Skinnable';
+import SharedStateDecorator from '../internal/SharedStateDecorator';
+
+import {AutoFocusDecorator} from '../internal/Panels';
+import {ContextAsDefaults} from '../internal/Panels/util';
+import {FloatingLayerIdProvider} from '../internal/Panels';
+
+import componentCss from './Panel.module.less';
+
+const ComponentOverrideAny = ComponentOverride as ComponentType<any>;
+
+let panelId = 0;
+
+export interface PanelBaseProps {
+	'aria-label'?: string;
+	children?: ReactNode;
+	componentRef?: EnactPropTypeShapes.ref;
+	css?: Record<string, string>;
+	'data-index'?: number;
+	floatingLayerId?: string;
+	header?: ReactNode;
+	hideChildren?: boolean;
+	panelType?: 'wizard';
+	spotlightId?: string;
+}
+
+/**
+ * A Panel is the standard view container used inside a {@link limestone/Panels.Panels|Panels} view
+ * manager instance.
+ *
+ * {@link limestone/Panels.Panels|Panels} will typically contain several instances of these and
+ * transition between them.
+ *
+ * @class Panel
+ * @memberof limestone/Panels
+ * @ui
+ * @public
+ */
+const PanelBase = (kind as any)({
+	name: 'Panel',
+
+	_propTypes: {} as PanelBaseProps,
+
+	propTypes: /** @lends limestone/Panels.Panel.prototype */ {
+		/**
+ 		 * The "aria-label" for the Panel.
+		 *
+		 * By default, the panel will be labeled by its {@link limestone/Panels.Header|Header}.
+		 * When `aria-label` is set, it will be used instead to provide an accessibility label for
+		 * the panel.
+		 *
+		 * @memberof limestone/Panels.Panel.prototype
+		 * @type {String}
+		 * @public
+		 */
+		'aria-label': PropTypes.string,
+
+		/**
+		 * Obtains a reference to the root node.
+		 *
+		 * @type {Function|Object}
+		 * @public
+		 */
+		componentRef: EnactPropTypes.ref,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `panel` - The root class name
+		 * * `body` - The node containing the panel's children
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object,
+
+		/**
+		 * The floating layer id
+		 *
+		 * @type {String}
+		 * @private
+		 */
+		floatingLayerId: PropTypes.string,
+
+		/**
+		 * Header for the panel.
+		 *
+		 * This is usually passed by the {@link ui/Slottable.Slottable|Slottable} API by using a
+		 * {@link limestone/Panels.Header|Header} component as a child of the Panel.
+		 *
+		 * @type {Header}
+		 * @public
+		 */
+		header: PropTypes.node,
+
+		/**
+		 * Hides the body components.
+		 *
+		 * When a Panel is used within {@link limestone/Panels.Panels|Panels} this property will
+		 * be set automatically to `true` on render and `false` after animating into view.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		hideChildren: PropTypes.bool,
+
+		/**
+		 * Set the type of panel to be used.
+		 *
+		 * @type {('wizard')}
+		 * @private
+		 */
+		panelType: PropTypes.oneOf(['wizard'])
+	},
+
+	defaultProps: {
+		hideChildren: false
+	},
+
+	styles: {
+		css: componentCss,
+		className: 'panel',
+		publicClassNames: ['panel', 'body']
+	},
+
+	handlers: {
+		onScroll: handle(
+			forward('onScroll'),
+			({currentTarget, eventTarget}: any) => {
+				if (currentTarget === eventTarget) {
+					currentTarget.scrollTop = 0;
+					currentTarget.scrollLeft = 0;
+				}
+			}
+		)
+	},
+
+	computed: {
+		children: ({children, hideChildren}: any) => hideChildren ? null : children,
+		bodyClassName: ({css, header, hideChildren, styler}: any) => styler.join(css.body, {
+			noHeader: !header,
+			visible: !hideChildren
+		}),
+		// nulling headerId prevents the aria-labelledby relationship which is necessary to allow
+		// aria-label to take precedence
+		// (see https://www.w3.org/TR/wai-aria/states_and_properties#aria-labelledby)
+		ids: ({'aria-label': label, panelType}: any) => {
+			if (label) {
+				return {};
+			} else if (panelType === 'wizard') {
+				const id = `panel_${++panelId}_header`;
+
+				return {
+					headerId: id,
+					labelledby: id
+				};
+			} else {
+				const labelledby = `panel_${++panelId}_title panel_${panelId}_subtitle`;
+				const [titleId, subtitleId] = labelledby.split(' ');
+
+				return {
+					labelledby,
+					subtitleId,
+					titleId
+				};
+			}
+		}
+	},
+
+	render: ({
+		bodyClassName,
+		children,
+		componentRef,
+		css,
+		floatingLayerId,
+		header,
+		ids: {headerId = null, labelledby, subtitleId = null, titleId = null},
+		...rest
+	}: any) => {
+		delete rest.hideChildren;
+		delete rest.panelType;
+
+		return (
+			<article role="region" {...rest} aria-owns={floatingLayerId} {...(labelledby ? {'aria-labelledby': labelledby} : {})} ref={componentRef}>
+				<div className={css.header} id={headerId}>
+					<ComponentOverrideAny
+						component={header}
+						data-index={rest['data-index']}
+						subtitleId={subtitleId}
+						titleId={titleId}
+					/>
+				</div>
+				<section className={bodyClassName}>{children}</section>
+			</article>
+		);
+	}
+});
+
+/**
+ * Sets the strategy used to automatically focus an element within the panel upon render.
+ *
+ * * "none" - Automatic focus is disabled
+ * * "last-focused" - The element last focused in the panel with be restored
+ * * "default-element" - The first spottable component within the body will be focused
+ * * Custom Selector - A custom CSS selector may also be provided which will be used to find
+ *   the target within the Panel
+ *
+ * When used within {@link limestone/Panels.Panels|Panels}, this prop may be set by
+ * `Panels` to "default-element" when navigating "forward" to a higher index. This behavior
+ * may be overridden by setting `autoFocus` on the `Panel` instance as a child of `Panels`
+ * or by wrapping `Panel` with a custom component and overriding the value passed by
+ * `Panels`.
+ *
+ * ```
+ * // Panel within CustomPanel will always receive "last-focused"
+ * const CustomPanel = (props) => <Panel {...props} autoFocus="last-focused" />;
+ *
+ * // The first panel will always receive "last-focused". The second panel will receive
+ * // "default-element" when navigating from the first panel but `autoFocus` will be unset
+ * // when navigating from the third panel and as a result will default to "last-focused".
+ * const MyPanels = () => (
+ *   <Panels>
+ *     <Panel autoFocus="last-focused" />
+ *     <Panel />
+ *     <Panel />
+ *   </Panels>
+ * );
+ * ```
+ *
+ * @name autoFocus
+ * @type {('default-element'|'last-focused'|'none'|String)}
+ * @memberof limestone/Panels.Panel.prototype
+ * @default 'last-focused'
+ * @public
+ */
+
+/**
+ * Applies Limestone specific behaviors to {@link limestone/Panels.Panel.PanelBase|Panel} components.
+ *
+ * @hoc
+ * @memberof limestone/Panels
+ * @mixes spotlight/SpotlightContainerDecorator.SpotlightContainerDecorator
+ * @mixes ui/Slottable.Slottable
+ * @mixes limestone/Skinnable.Skinnable
+ * @public
+ */
+const PanelDecorator = hoc({defaultElement: `.${componentCss.body} *`}, (config: any, Wrapped: ComponentType<any>) => {
+	let {defaultElement} = config;
+
+	defaultElement = [
+		`.${spotlightDefaultClass}`,
+		...(Array.isArray(defaultElement) ? defaultElement : [defaultElement])
+	];
+
+	const Decorator = compose(
+		(ForwardRef as any)({prop: 'componentRef'}),
+		FloatingLayerIdProvider as any,
+		ContextAsDefaults as any,
+		SharedStateDecorator({idProp: 'data-index'}) as any,
+		(SpotlightContainerDecorator as any)({
+			// prefer any spottable within the panel body for first render
+			continue5WayHold: true,
+			defaultElement,
+			enterTo: 'last-focused',
+			lastFocusedPersist: (node: any, all: any[]) => {
+				const filtered = all.filter((element: any) => element && !element.dataset?.spotlightIgnoreRestore);
+				const container = typeof node === 'string';
+				return {
+					container,
+					element: !container,
+					key: container ? node : filtered.indexOf(node)
+				};
+			},
+			lastFocusedRestore: ({container, key}: {container: any; key: any}, all: any[]) => {
+				const filtered = all.filter((element: any) => element && !element.dataset?.spotlightIgnoreRestore);
+				return container ? key : filtered[key];
+			},
+			preserveId: true
+		}),
+		(Slottable as any)({slots: ['header']}),
+		AutoFocusDecorator as any,
+		Skinnable as any
+	);
+
+	return Decorator(Wrapped);
+});
+
+/**
+ * Prevents the component from restoring any framework shared state.
+ *
+ * When `false`, the default, Panel will store state for some framework components in order to
+ * restore that state when returning to the Panel. Setting this prop to `true` will suppress that
+ * behavior and not store or retrieve any framework component state.
+ *
+ * @name noSharedState
+ * @type {Boolean}
+ * @default false
+ * @memberof limestone/Panels.Panel.prototype
+ */
+
+/**
+ * The container id for {@link spotlight/SpotlightContainerDecorator/#SpotlightContainerDecorator.spotlightId|Spotlight container}.
+ *
+ * When the `Panel` is used within {@link limestone/Panels.Panels|Panels}, this prop will be
+ * generated by `Panels`. When using the panel alone, you need to specify this prop for restoring focus.
+ *
+ * @name spotlightId
+ * @type {String}
+ * @memberof limestone/Panels.Panel.prototype
+ */
+
+const Panel = PanelDecorator(PanelBase) as ComponentType<PanelBaseProps>;
+
+export default Panel;
+export {Panel, PanelBase, PanelDecorator};

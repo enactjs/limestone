@@ -1,0 +1,187 @@
+import classNames from 'classnames';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
+import {useScrollbar as useScrollbarBase} from '@enact/ui/useScroll/Scrollbar';
+import PropTypes from 'prop-types';
+import {memo, useCallback} from 'react';
+
+import ScrollbarTrack from './ScrollbarTrack';
+import Skinnable from '../Skinnable';
+
+import type {ComponentType} from 'react';
+import type {ScrollbarBaseProps} from './types';
+
+import componentCss from './Scrollbar.module.less';
+
+const useThemeScrollbar = (props: ScrollbarBaseProps) => {
+	const {
+		restProps,
+		scrollbarProps: {className: scrollbarClassName, ...restScrollbarProps},
+		scrollbarTrackProps
+	} = useScrollbarBase(props);
+
+	const {
+		'aria-label': ariaLabel,
+		cbAlertScrollbarTrack,
+		focusableScrollbar,
+		onInteractionForScroll,
+		rtl,
+		scrollbarTrackCss,
+		...rest
+	} = restProps;
+
+	const
+		{ref: scrollbarContainerRef} = restScrollbarProps,
+		{ref: scrollbarTrackRef} = scrollbarTrackProps,
+		{vertical} = props;
+
+	const onClick = useCallback((ev: any) => {
+		// Click on bodyText scrollbar.
+		const {nativeEvent, target} = ev;
+
+		if (!focusableScrollbar || !scrollbarTrackRef.current) {
+			return;
+		}
+
+		// Click the scrollbar area. If user click the thumb, do nothing.
+		if ((target === scrollbarContainerRef.current) ||
+			(target === scrollbarTrackRef.current)) {
+			const
+				clickPoint = nativeEvent[vertical ? 'offsetY' : 'offsetX'],
+				thumb = scrollbarTrackRef.current.children[0],
+				thumbPosition = thumb[vertical ? 'offsetTop' : 'offsetLeft'],
+				thumbSize = thumb[vertical ? 'offsetHeight' : 'offsetWidth'],
+				clickThumb = clickPoint > thumbPosition && clickPoint < thumbPosition + thumbSize;
+
+			if (!clickThumb) {
+				ev.preventDefault();
+				ev.nativeEvent.stopImmediatePropagation();
+				onInteractionForScroll({
+					inputType: 'track',
+					isForward: clickPoint > thumbPosition,
+					isPagination: true,
+					isVerticalScrollBar: vertical
+				});
+			}
+		}
+	}, [focusableScrollbar, onInteractionForScroll, scrollbarContainerRef, scrollbarTrackRef, vertical]);
+
+	return {
+		restProps: rest,
+		scrollbarProps: {
+			...restScrollbarProps,
+			className: classNames(scrollbarClassName, {[componentCss.focusableScrollbar]: focusableScrollbar}),
+			onClick
+		},
+		scrollbarTrackProps: {
+			...scrollbarTrackProps,
+			'aria-label': ariaLabel,
+			cbAlertScrollbarTrack,
+			focusableScrollbar,
+			onInteractionForScroll,
+			rtl,
+			scrollbarTrackCss
+		}
+	};
+};
+
+/**
+ * A Limestone-styled scrollbar base component.
+ *
+ * @class ScrollbarBase
+ * @memberof limestone/useScroll
+ * @ui
+ * @private
+ */
+const ScrollbarBaseComponent = (props: ScrollbarBaseProps) => {
+	const scrollbarBaseProps = setDefaultProps(props, {
+		css: componentCss,
+		minThumbSize: 120,
+		vertical: true
+	}) as ScrollbarBaseProps;
+
+	checkPropTypes(ScrollbarBase, scrollbarBaseProps);
+
+	const {css, minThumbSize, vertical, ...rest} = scrollbarBaseProps;
+
+	const propsForHook = {css, minThumbSize, vertical, ...rest};
+	const {
+		restProps,
+		scrollbarProps,
+		scrollbarTrackProps
+	} = useThemeScrollbar(propsForHook);
+
+	return (
+		<div {...restProps} {...scrollbarProps}>
+			<ScrollbarTrack {...scrollbarTrackProps} />
+		</div>
+	);
+};
+
+const ScrollbarBase = memo(ScrollbarBaseComponent) as any;
+
+ScrollbarBase.displayName = 'ScrollbarBase';
+
+ScrollbarBase.propTypes = /** @lends limestone/useScroll.Scrollbar.prototype */ {
+	/**
+	 * Customizes the component by mapping the supplied collection of CSS class names to the
+	 * corresponding internal elements and states of this component.
+	 *
+	 * The following classes are supported:
+	 *
+	 * * `scrollbar` - The scrollbar component class
+	 *
+	 * @type {Object}
+	 * @public
+	 */
+	css: PropTypes.object,
+
+	/**
+	 * The minimum size of the thumb.
+	 * This value will be applied ri.scale.
+	 *
+	 * @type {number}
+	 * @public
+	 */
+	minThumbSize: PropTypes.number,
+
+	/**
+	 * Customizes the component by mapping the supplied collection of CSS class names to the
+	 * corresponding internal elements and states of this component.
+	 *
+	 * The following classes are supported:
+	 *
+	 * * `scrollbarTrack` - The scrollbarTrack component class
+	 * * `thumb` - The scrollbar thumb component class
+	 *
+	 * @type {Object}
+	 * @public
+	 */
+	scrollbarTrackCss: PropTypes.object,
+
+	/**
+	 * The scrollbar will be oriented vertically.
+	 *
+	 * @type {Boolean}
+	 * @default true
+	 * @public
+	 */
+	vertical: PropTypes.bool
+};
+
+/**
+ * A Limestone-styled scroll bar.
+ *
+ * @class Scrollbar
+ * @memberof limestone/useScroll
+ * @ui
+ * @private
+ */
+const Scrollbar = Skinnable(ScrollbarBase) as ComponentType<ScrollbarBaseProps>;
+
+Scrollbar.displayName = 'Scrollbar';
+
+export default Scrollbar;
+export {
+	Scrollbar,
+	ScrollbarBase
+};

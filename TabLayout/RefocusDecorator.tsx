@@ -1,0 +1,157 @@
+import {checkPropTypes} from '@enact/core/util';
+import Spotlight from '@enact/spotlight';
+import {useId} from '@enact/ui/internal/IdProvider';
+import PropTypes from 'prop-types';
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import type {ComponentType} from 'react';
+
+import css from './TabGroup.module.less';
+
+function getTabsSpotlightId (spotlightId: string, collapsed: boolean) {
+	return `${spotlightId}-tabs-${collapsed ? 'collapsed' : 'expanded'}`;
+}
+
+function getContainerNode (containerId: string) {
+	return document.querySelector(`[data-spotlight-id='${containerId}']`);
+}
+
+const getNavigableFilter = (spotlightId: string, collapsed: boolean) => (elem: Element) => (
+	Spotlight.getPointerMode() || (
+		!elem.classList.contains(css.tab) &&
+		(elem as HTMLElement).dataset.spotlightId !== getTabsSpotlightId(spotlightId, collapsed)
+	)
+);
+
+function useScreenOrientation () {
+	const getOrientation = () =>
+		(typeof window === 'object' && window.innerWidth > window.innerHeight) ? 'landscape' : 'portrait';
+
+	const [orientation, setOrientation] = useState(getOrientation());
+
+	useEffect(() => {
+		const handleResize = () => {
+			setOrientation(getOrientation());
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		// Cleanup
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
+
+	return orientation;
+}
+
+interface RefocusDecoratorProps {
+	blockCollapseOnPortrait?: boolean;
+	blockExpandOnLandscape?: boolean;
+	collapsed?: boolean;
+	index?: number;
+	onCollapse?: (...args: any[]) => any;
+	onExpand?: (...args: any[]) => any;
+	onTabAnimationEnd?: (...args: any[]) => any;
+	orientation?: string;
+	spotlightId?: string;
+	[key: string]: any;
+}
+
+const RefocusDecorator = (Wrapped: ComponentType<any>) => {
+	// eslint-disable-next-line no-shadow
+	function RefocusDecorator (props: RefocusDecoratorProps) {
+		checkPropTypes(RefocusDecorator, props);
+		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, ...rest} = props;
+		let {spotlightId} = props;
+		const {generateId} = useId({prefix: 'lime-tablayout-'});
+
+		const screenOrientation = useScreenOrientation();
+		const screenOrientationRef = useRef('landscape');
+
+		// generate an id for the component (and a derived id for the tabs) so we can refocus them
+		// generating a different ID by orientation so swapping orientations doesn't clear container
+		// config before the new one is mounted
+		spotlightId = spotlightId || generateId(orientation || 'vertical');
+
+		useLayoutEffect(() => {
+			if (!Spotlight.getPointerMode() && !Spotlight.isPaused()) {
+				const current = Spotlight.getCurrent() as Element | null,
+					tabsSpotlightId = getTabsSpotlightId(spotlightId!, collapsed!),
+					containerNode = getContainerNode(tabsSpotlightId);
+
+				if (!current || containerNode && containerNode.querySelector(`.${css.selected}`) !== current) {
+					Spotlight.focus(spotlightId!);
+				}
+			}
+		}, [index]);	// eslint-disable-line react-hooks/exhaustive-deps
+
+		useEffect(() => {
+			Spotlight.set(spotlightId!, {
+				navigableFilter: collapsed && orientation !== 'horizontal' ? getNavigableFilter(spotlightId!, collapsed!) : null
+			});
+		}, [collapsed, orientation, spotlightId]);
+
+		useEffect(() => {
+			if (screenOrientationRef.current !== screenOrientation) {
+				const currentFocusedElement = document.querySelector(':focus'),
+					tabsSpotlightId = getTabsSpotlightId(spotlightId!, false),
+					tabsContainer = getContainerNode(tabsSpotlightId);
+
+				if (tabsContainer && !tabsContainer.contains(currentFocusedElement)) {
+					if (!blockCollapseOnPortrait && screenOrientation === 'portrait') {
+						onCollapse?.();
+					}
+					if (!blockExpandOnLandscape && screenOrientation === 'landscape') {
+						onExpand?.();
+					}
+				}
+
+				screenOrientationRef.current = screenOrientation;
+			}
+		}, [blockCollapseOnPortrait, blockExpandOnLandscape, onCollapse, onExpand, screenOrientation, spotlightId]);
+
+		const handleTabAnimationEnd = useCallback((ev: any) => {
+			if (onTabAnimationEnd) {
+				onTabAnimationEnd(ev);
+			}
+
+			if (!collapsed && !Spotlight.getPointerMode() && !Spotlight.isPaused()) {
+				const tabsSpotlightId = getTabsSpotlightId(spotlightId!, collapsed!);
+				const containerNode = getContainerNode(tabsSpotlightId);
+
+				if (containerNode && !containerNode.contains(Spotlight.getCurrent() as Node | null)) {
+					Spotlight.focus(tabsSpotlightId);
+				}
+			}
+
+		}, [collapsed, onTabAnimationEnd, spotlightId]);
+
+		return (
+			<Wrapped
+				{...rest}
+				collapsed={collapsed}
+				index={index}
+				onCollapse={onCollapse}
+				onExpand={onExpand}
+				onTabAnimationEnd={handleTabAnimationEnd}
+				orientation={orientation}
+				spotlightId={spotlightId}
+			/>
+		);
+	}
+
+	RefocusDecorator.propTypes = {
+		collapsed: PropTypes.bool,
+		index: PropTypes.number,
+		onTabAnimationEnd: PropTypes.func,
+		orientation: PropTypes.string,
+		spotlightId: PropTypes.string
+	};
+
+	return RefocusDecorator;
+};
+
+export default RefocusDecorator;
+export {
+	getNavigableFilter,
+	getTabsSpotlightId,
+	RefocusDecorator
+};
