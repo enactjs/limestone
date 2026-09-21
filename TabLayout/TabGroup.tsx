@@ -266,7 +266,6 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 		// eslint-disable-next-line react-hooks/rules-of-hooks
 		const children = useMemo(() => tabs.map((tab: TabData) => {
 			if (tab) {
-				// eslint-disable-next-line no-shadow
 				const {icon, title, tabKey, sprite, ...restTab} = tab;
 				const key = tabKey || tabKey === 0 ? tabKey : `tabs_${title + (typeof icon === 'string' ? icon : '')}`;
 
