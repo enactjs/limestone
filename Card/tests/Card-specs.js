@@ -200,4 +200,29 @@ describe('Card', () => {
 
 		expect(screen.getByRole('progressbar')).toBeInTheDocument();
 	});
+
+	test('should render `imageOverlay` inside the image', () => {
+		render(
+			<CardBase
+				imageOverlay={<div>Sports Overlay</div>}
+				src={src}
+			/>
+		);
+
+		expect(screen.getByText('Sports Overlay')).toBeInTheDocument();
+	});
+
+	test('should require `src`', () => {
+		render(<CardBase data-testid="card" />);
+
+		expect(console.error.mock.calls.flat().join('\n')).toContain('marked as required'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
+	});
+
+	test('should reject an invalid `src` type', () => {
+		render(<CardBase src={[]} />);
+
+		expect(console.error.mock.calls.flat().join('\n')).toContain('Invalid prop'); // eslint-disable-line no-console
+		console.error.mockClear(); // eslint-disable-line no-console
+	});
 });
