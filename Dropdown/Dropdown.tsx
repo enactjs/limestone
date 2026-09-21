@@ -61,7 +61,7 @@ interface DropdownButtonBaseProps {
 	[key: string]: any;
 }
 
-const DropdownButtonBase = (kind as any)({
+const DropdownButtonBase = kind({
 	name: 'DropdownButtonBase',
 
 	_propTypes: {} as DropdownButtonBaseProps,
@@ -127,7 +127,7 @@ export interface DropdownBaseProps {
  * @ui
  * @public
  */
-const DropdownBase = (kind as any)({
+const DropdownBase = kind({
 	name: 'Dropdown',
 
 	_propTypes: {} as DropdownBaseProps,

@@ -31,7 +31,7 @@ function useNavButtonFocus ({index}: {index?: number}) {
 }
 
 const NavButtonFocusDecorator = (Wrapped: ComponentType<any>) => {
-	// eslint-disable-next-line no-shadow
+	// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
 	function NavButtonFocusDecorator (props: {index?: number; [key: string]: any}) {
 		checkPropTypes(NavButtonFocusDecorator, props);
 

@@ -18,7 +18,7 @@ export interface PageProps {
  * @ui
  * @public
  */
-const Page = (kind as any)({
+const Page = kind({
 	name: 'Page',
 
 	_propTypes: {} as PageProps,

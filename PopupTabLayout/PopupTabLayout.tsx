@@ -11,7 +11,7 @@
 
 import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
-import kind, {type KindConfig} from '@enact/core/kind';
+import kind from '@enact/core/kind';
 import useHandlers from '@enact/core/useHandlers';
 import {cap, checkPropTypes} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
@@ -34,8 +34,6 @@ import Popup from '../Popup';
 import {PopupTabLayoutStateContext} from './PopupTabLayoutStateContext';
 
 import componentCss from './PopupTabLayout.module.less';
-
-type TypedKindConfig<P> = KindConfig & {_propTypes?: P};
 
 const PanelsComponent = Panels as ComponentType<any>;
 const PanelComponent = Panel as ComponentType<any>;
@@ -363,7 +361,7 @@ const PopupTabLayoutBase = kind({
 			</PopupTabLayoutStateContext>
 		);
 	}
-} as TypedKindConfig<PopupTabLayoutBaseProps>);
+});
 
 interface OptimizedFocusDecoratorProps {
 	open?: boolean;
@@ -375,8 +373,6 @@ interface OptimizedFocusDecoratorProps {
 const OptimizedFocusDecorator = hoc({}, (config: Record<string, any>, Wrapped: ComponentType<any>) => {
 	return class extends Component<OptimizedFocusDecoratorProps> {
 		static displayName = 'OptimizedFocusDecorator';
-
-		paused!: Pause;
 
 		static propTypes = /** @lends limestone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
 			/**
@@ -416,7 +412,7 @@ const OptimizedFocusDecorator = hoc({}, (config: Record<string, any>, Wrapped: C
 
 		componentDidMount () {
 			if (this.props.optimized && this.props.open) {
-				this.paused.resume();
+				this.paused?.resume();
 				Spotlight.focus(this.props.spotlightId!);
 			}
 		}
@@ -428,6 +424,8 @@ const OptimizedFocusDecorator = hoc({}, (config: Record<string, any>, Wrapped: C
 				}
 			}
 		}
+
+		paused?: Pause;
 
 		render () {
 			if (this.props.optimized) {

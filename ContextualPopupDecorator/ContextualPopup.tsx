@@ -27,6 +27,8 @@ export type ContextualPopupDirection =
 
 export interface ContextualPopupArrowProps {
 	direction?: ContextualPopupArrowDirection;
+	style?: CSSProperties;
+	[key: string]: any;
 }
 
 /**
@@ -37,7 +39,7 @@ export interface ContextualPopupArrowProps {
  * @ui
  * @private
  */
-const ContextualPopupArrow = (kind as any)({
+const ContextualPopupArrow = kind<ContextualPopupArrowProps>({
 	name: 'ContextualPopupArrow',
 
 	_propTypes: {} as ContextualPopupArrowProps,
@@ -91,7 +93,7 @@ export interface ContextualPopupBaseProps {
  * @ui
  * @public
  */
-const ContextualPopupBase = (kind as any)({
+const ContextualPopupBase = kind({
 	name: 'ContextualPopup',
 
 	_propTypes: {} as ContextualPopupBaseProps,

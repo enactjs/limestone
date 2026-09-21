@@ -90,7 +90,7 @@ const SpottableColumn = SpotlightContainerDecorator(Column) as ComponentType<any
  * @ui
  * @public
  */
-const PageViewsBase = (kind as any)({
+const PageViewsBase = kind({
 	name: 'PageViews',
 
 	_propTypes: {} as PageViewsBaseProps,

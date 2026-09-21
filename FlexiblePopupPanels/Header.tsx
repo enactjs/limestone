@@ -27,7 +27,7 @@ export interface HeaderBaseProps {
  * @ui
  * @public
  */
-const HeaderBase = (kind as any)({
+const HeaderBase = kind({
 	name: 'Header',
 
 	contextType: PanelsStateContext,

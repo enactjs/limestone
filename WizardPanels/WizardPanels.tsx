@@ -77,7 +77,7 @@ const HeaderContainer = SpotlightContainerDecorator(Header) as ComponentType<any
  * @ui
  * @public
  */
-const WizardPanelsBase = (kind as any)({
+const WizardPanelsBase = kind({
 	name: 'WizardPanels',
 
 	_propTypes: {} as WizardPanelsBaseProps,

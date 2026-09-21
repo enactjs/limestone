@@ -107,7 +107,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
 		)
 	) as ComponentType<any>;
 
-	return (kind as any)({
+	return kind({
 		name: 'ContextualMenuDecorator',
 
 		_propTypes: {} as ContextualMenuDecoratorBaseProps,

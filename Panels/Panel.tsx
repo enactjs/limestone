@@ -48,7 +48,7 @@ export interface PanelBaseProps {
  * @ui
  * @public
  */
-const PanelBase = (kind as any)({
+const PanelBase = kind({
 	name: 'Panel',
 
 	_propTypes: {} as PanelBaseProps,

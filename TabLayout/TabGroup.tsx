@@ -1,5 +1,5 @@
 import handle, {forProp, forward, forwardCustom, not} from '@enact/core/handle';
-import kind, {type KindConfig} from '@enact/core/kind';
+import kind from '@enact/core/kind';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
@@ -21,8 +21,6 @@ import {ScrollerBase} from '../Scroller';
 import Sprite from '../Sprite';
 
 import componentCss from './TabGroup.module.less';
-
-type TypedKindConfig<P> = KindConfig & {_propTypes?: P};
 
 interface TabBaseProps {
 	buttonSize?: string;
@@ -139,7 +137,7 @@ const TabBase = kind<TabBaseProps>({
 			}
 		}
 	}
-} as TypedKindConfig<TabBaseProps>);
+});
 
 const Tab = Toggleable({prop: 'stopped', activate: 'onBlur', deactivate: 'onFocus'}, Skinnable(TabBase));
 
@@ -359,7 +357,7 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 			</Component>
 		);
 	}
-} as TypedKindConfig<TabGroupBaseProps>);
+});
 
 const TabGroupDecorator = (compose as any)(
 	DebounceDecorator({cancel: 'onBlur', debounce: 'onFocusTab', delay: 300}),

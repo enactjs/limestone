@@ -56,7 +56,7 @@ interface RefocusDecoratorProps {
 }
 
 const RefocusDecorator = (Wrapped: ComponentType<any>) => {
-	// eslint-disable-next-line no-shadow
+	// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
 	function RefocusDecorator (props: RefocusDecoratorProps) {
 		checkPropTypes(RefocusDecorator, props);
 		const {blockCollapseOnPortrait, blockExpandOnLandscape, collapsed, index, onCollapse, onExpand, onTabAnimationEnd, orientation, ...rest} = props;

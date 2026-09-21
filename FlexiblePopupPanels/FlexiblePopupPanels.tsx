@@ -35,7 +35,7 @@ export interface FlexiblePopupPanelsBaseProps {
  * @ui
  * @public
  */
-const FlexiblePopupPanelsBase = (kind as any)({
+const FlexiblePopupPanelsBase = kind({
 	name: 'FlexiblePopupPanels',
 
 	_propTypes: {} as FlexiblePopupPanelsBaseProps,

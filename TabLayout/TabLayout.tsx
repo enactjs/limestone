@@ -11,7 +11,7 @@
 
 import handle, {forward, forwardCustom, forProp, not} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
-import kind, {type KindConfig} from '@enact/core/kind';
+import kind from '@enact/core/kind';
 import {cap, mapAndFilterChildren} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
@@ -36,8 +36,6 @@ import Tab from './Tab';
 
 import componentCss from './TabLayout.module.less';
 import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
-
-type TypedKindConfig<P> = KindConfig & {_propTypes?: P};
 
 const LayoutComponent = Layout as ComponentType<any>;
 const CellComponent = Cell as ComponentType<any>;
@@ -636,7 +634,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 			</TabLayoutContext>
 		);
 	}
-} as TypedKindConfig<TabLayoutBaseProps>);
+});
 
 const TabLayoutDecorator = (compose as any)(
 	(Toggleable as any)({prop: 'collapsed', activate: 'onCollapse', deactivate: 'onExpand'}),

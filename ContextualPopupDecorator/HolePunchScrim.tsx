@@ -21,7 +21,7 @@ export interface HolePunchScrimBaseProps {
 	style?: CSSProperties;
 }
 
-const HolePunchScrimBase = (kind as any)({
+const HolePunchScrimBase = kind({
 	name: 'HolePunchScrim',
 
 	_propTypes: {} as HolePunchScrimBaseProps,

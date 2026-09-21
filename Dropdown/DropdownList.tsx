@@ -105,7 +105,7 @@ export interface DropdownListBaseProps {
 	[key: string]: any;
 }
 
-const DropdownListBase = (kind as any)({
+const DropdownListBase = kind({
 	name: 'DropdownListBase',
 
 	_propTypes: {} as DropdownListBaseProps,
@@ -255,7 +255,7 @@ interface DropdownListSpotlightDecoratorProps extends DropdownListBaseProps {
 const DropdownListSpotlightDecorator = (hoc as any)((config: Record<string, any>, Wrapped: ComponentType<any>) => {
 	const WrappedWithRef = WithRef(Wrapped);
 
-	// eslint-disable-next-line no-shadow
+	// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
 	const DropdownListSpotlightDecorator = (props: DropdownListSpotlightDecoratorProps) => {
 		checkPropTypes(DropdownListSpotlightDecorator, props);
 

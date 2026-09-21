@@ -1,8 +1,6 @@
-import kind, {type KindConfig} from '@enact/core/kind';
+import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import type {ReactNode} from 'react';
-
-type TypedKindConfig<P> = KindConfig & {_propTypes?: P};
 
 export interface TabProps {
 	title: string;
@@ -91,6 +89,6 @@ const Tab = kind({
 	},
 
 	render: () => <div>Tab is only to be used in TabLayout!</div>
-} as TypedKindConfig<TabProps>);
+});
 
 export default Tab;

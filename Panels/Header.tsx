@@ -72,7 +72,7 @@ export interface HeaderBaseProps {
  * @ui
  * @public
  */
-const HeaderBase = (kind as any)({
+const HeaderBase = kind({
 	name: 'Header',
 
 	_propTypes: {} as HeaderBaseProps,
@@ -563,7 +563,7 @@ const HeaderBase = (kind as any)({
 
 // Customized ContextAsDefaults Header HOC to incorporate the backButtonAvailable prop feature
 const ContextAsDefaultsHeader = (Wrapped: ComponentType<any>) => {
-	// eslint-disable-next-line no-shadow
+	// eslint-disable-next-line no-shadow, @typescript-eslint/no-shadow
 	function ContextAsDefaultsHeader (props: HeaderBaseProps & {'data-index'?: number}) {
 		checkPropTypes(ContextAsDefaultsHeader, props);
 
@@ -598,7 +598,7 @@ const ContextAsDefaultsHeader = (Wrapped: ComponentType<any>) => {
 };
 
 const HeaderMeasurementDecorator = (Wrapped: ComponentType<any>) => {
-	return function HeaderMeasurementDecorator (props: HeaderBaseProps) { // eslint-disable-line no-shadow
+	return function HeaderMeasurementDecorator (props: HeaderBaseProps) { // eslint-disable-line no-shadow, @typescript-eslint/no-shadow
 		const slotBeforeRef = useRef<any>(null);
 		const slotAfterRef = useRef<any>(null);
 		const lastSlotSizeRef = useRef<any>(null);

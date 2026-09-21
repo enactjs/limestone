@@ -65,7 +65,7 @@ export interface QuickGuidePanelsBaseProps {
  * @ui
  * @public
  */
-const QuickGuidePanelsBase = (kind as any)({
+const QuickGuidePanelsBase = kind({
 	name: 'QuickGuidePanels',
 
 	_propTypes: {} as QuickGuidePanelsBaseProps,
