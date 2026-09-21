@@ -75,13 +75,7 @@ const IconItemTests = [
 	...iconItemSmokeTests,
 	...iconItemExtendedTests,
 	...iconItemFocusTests,
-	...withConfig({
-		focusRing: true,
-		focus: true
-	}, [
-		<IconItem background="#1b1b1b" icon="usb" />,
-		<IconItem background="#1b1b1b" icon="usb" label="Label" />
-	]),
+	...withConfig({focusRing: true, focus: true}, iconItemSmokeTests),
 	...withConfig({skinVariants: ['largeText']}, iconItemSmokeTests),
 	...withTallglyphLocale(iconItemTallglyphTests)
 ];

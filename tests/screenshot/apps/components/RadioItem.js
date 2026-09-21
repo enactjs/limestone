@@ -8,8 +8,13 @@ const radioItemSmokeTests = [
 	<RadioItem disabled>RadioItem</RadioItem>,
 	<RadioItem inline>Inline RadioItem</RadioItem>,
 	<RadioItem disabled inline>RadioItem Not Checked</RadioItem>,
-	<RadioItem selected>RadioItem Checked</RadioItem>
+	<RadioItem selected>RadioItem Checked</RadioItem>,
 
+	// [QWTC-2231]
+	<RadioItem disabled>Focused RadioItem</RadioItem>,
+	<RadioItem inline>Focused Inline RadioItem</RadioItem>,
+	<RadioItem selected>Focused RadioItem Checked</RadioItem>,
+	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>
 ];
 
 const radioItemQwtcTests = [
@@ -68,28 +73,18 @@ const radioItemSlotBeforeTests = [
 	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>RadioItem Checked</RadioItem>
 ];
 
-const radioItemFocusTests = [
-	// Focused — smoke representatives
-	<RadioItem>Focused RadioItem</RadioItem>,
-	// [QWTC-2231]
-	<RadioItem disabled>Focused RadioItem</RadioItem>,
-	<RadioItem inline>Focused Inline RadioItem</RadioItem>,
-	<RadioItem selected>Focused RadioItem Checked</RadioItem>,
-	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>
-];
-
 const radioItemLargeTextTests = [
 	// [QWTC-2231]
-	<RadioItem disabled>Focused RadioItem</RadioItem>,
-	<RadioItem selected disabled icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected disabled inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected inline icon="arrowup">Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected icon="arrowup">Focused RadioItem Checked</RadioItem>,
+	<RadioItem disabled>RadioItem</RadioItem>,
+	<RadioItem selected disabled icon="arrowup">RadioItem Checked</RadioItem>,
+	<RadioItem selected disabled inline icon="arrowup">RadioItem Checked</RadioItem>,
+	<RadioItem selected inline icon="arrowup">RadioItem Checked</RadioItem>,
+	<RadioItem selected icon="arrowup">RadioItem Checked</RadioItem>,
 	// Icon slotBefore
-	<RadioItem><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
-	<RadioItem inline><Icon slot="slotBefore">home</Icon>Focused RadioItem</RadioItem>,
-	<RadioItem selected><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
-	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>Focused RadioItem Checked</RadioItem>,
+	<RadioItem><Icon slot="slotBefore">home</Icon>RadioItem</RadioItem>,
+	<RadioItem inline><Icon slot="slotBefore">home</Icon>RadioItem</RadioItem>,
+	<RadioItem selected><Icon slot="slotBefore">home</Icon>RadioItem Checked</RadioItem>,
+	<RadioItem selected inline><Icon slot="slotBefore">home</Icon>RadioItem Checked</RadioItem>,
 	// [QWTC-1851]
 	<RadioItem disabled>مساء الخير</RadioItem>,
 	// [QWTC-1851]
@@ -162,7 +157,7 @@ const RadioItemTests = [
 	...radioItemSmokeTests,
 	...radioItemQwtcTests,
 	...radioItemExtendedTests,
-	...withConfig({focus: true}, radioItemFocusTests),
+	...withConfig({focus: true}, radioItemSmokeTests),
 	...withConfig({textSize: 'large'}, radioItemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, radioItemRtlTests),
 	...withTallglyphLocale(radioItemTallglyphTests)

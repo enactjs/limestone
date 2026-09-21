@@ -1,7 +1,7 @@
 import {InputField} from '../../../../Input';
 import {useLayoutEffect} from 'react';
 
-import {LoremString, withConfig, withProps, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
+import {LoremString, withConfig, withTallglyphLocale, TallglyphHindi, TallglyphKhmer, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const SelectionInput = props => {
 	useLayoutEffect(() => {
@@ -74,13 +74,6 @@ const inputFieldExtendedTests = [
 	// Selection color
 	<SelectionInput value="Selection value" />
 ];
-
-const inputFieldFocusTests = withProps({focus: true}, [
-	<InputField />,
-	<InputField placeholder="Focused Placeholder InputField" />,
-	<InputField value="Focused Simple value" type="number" />,
-	<InputField value="https://enactjs.com" type="url" />
-]);
 
 const inputFieldLargeTextTests = [
 	// Large text — smoke representatives
@@ -244,7 +237,7 @@ const InputFieldTests = [
 	...inputFieldSmokeTests,
 	...inputFieldQwtcTests,
 	...inputFieldExtendedTests,
-	...inputFieldFocusTests,
+	...withConfig({focus: true}, inputFieldSmokeTests),
 	...withConfig({textSize: 'large'}, inputFieldLargeTextTests),
 	...inputFieldRtlTests,
 	...withTallglyphLocale(inputFieldTallglyphTests)

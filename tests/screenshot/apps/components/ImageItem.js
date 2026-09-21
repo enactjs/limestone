@@ -56,36 +56,13 @@ const imageItemSecondaryLabelCases = [
 	<ImageItem src={img} orientation="horizontal" label="Short" secondaryLabel="Short" wideImage>Short</ImageItem>
 ];
 
-const imageItemFocusTests = [
-	// Vertical
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical">Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" imageIconSrc={img} />,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short">Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" selected showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} style={verticalStyle} orientation="vertical" label="Focused Short" imageIconSrc={img} css={css}>Focused Short</ImageItem>,
-
-	// Horizontal
-	<ImageItem src={img} orientation="horizontal" />,
-	<ImageItem src={img} orientation="horizontal">Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" />,
-	<ImageItem src={img} orientation="horizontal" imageIconSrc={img} />,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short">Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" imageIconSrc={img}>Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" showSelection>Focused Short</ImageItem>,
-	<ImageItem src={img} orientation="horizontal" label="Focused Short" selected showSelection>Focused Short</ImageItem>
-];
-
-const imageItemFocusCases = withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemFocusTests);
+const imageItemFocusCases = withConfig({focus: true, wrapper: {light: true, padded: true}}, imageItemBaseCases);
 
 // Focus representatives (one vertical + one horizontal) for axes where the focus overlay
 // barely interacts with the variant
 const imageItemFocusReps = withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-	imageItemFocusTests[0],
-	imageItemFocusTests[9]
+	imageItemBaseCases[0],
+	imageItemBaseCases[9]
 ]);
 
 const imageItemTallglyphTests = [
