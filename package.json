@@ -25,7 +25,7 @@
     "test-json": "enact test --json",
     "test-watch": "enact test --watch",
     "transpile": "enact transpile",
-    "validate-docs": "validate-docs --strict --standalone"
+    "validate-docs": "node scripts/validate-docs.js"
   },
   "license": "Apache-2.0",
   "keywords": [
