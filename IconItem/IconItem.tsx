@@ -57,7 +57,7 @@ export interface ImageShape {
 	src: string | Record<string, string>;
 }
 
-const ImageShape = PropTypes.shape({
+const ImageShapePropType = PropTypes.shape({
 	size: PropTypes.shape({
 		height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
@@ -195,7 +195,7 @@ const IconItemBase = kind({
 		 * @type {limestone/IconItem.ImageShape}
 		 * @public
 		 */
-		image: ImageShape as PropTypes.Validator<ImageShape | undefined>,
+		image: ImageShapePropType as PropTypes.Validator<ImageShape | undefined>,
 
 		/**
 		 * A label displayed in the content.

@@ -127,17 +127,6 @@ const TimePickerBase = kind({
 		minute: PropTypes.number.isRequired,
 
 		/**
-		 * The order in which the component pickers are displayed.
-		 *
-		 * Should be an array of 2 or 3 strings containing one of `'h'`, `'k'`, `'m'`, and `'a'`.
-		 *
-		 * @type {String[]}
-		 * @required
-		 * @public
-		 */
-		order: PropTypes.arrayOf(PropTypes.oneOf(['h', 'k', 'm', 'a'])).isRequired as PropTypes.Validator<('h' | 'k' | 'm' | 'a')[]>,
-
-		/**
 		 * Disables voice control.
 		 *
 		 * @type {Boolean}
@@ -270,6 +259,17 @@ const TimePickerBase = kind({
 		 * @public
 		 */
 		onSpotlightRight: PropTypes.func,
+
+		/**
+		 * The order in which the component pickers are displayed.
+		 *
+		 * Should be an array of 2 or 3 strings containing one of `'h'`, `'k'`, `'m'`, and `'a'`.
+		 *
+		 * @type {String[]}
+		 * @required
+		 * @public
+		 */
+		order: PropTypes.arrayOf(PropTypes.oneOf(['h', 'k', 'm', 'a'])).isRequired as PropTypes.Validator<('h' | 'k' | 'm' | 'a')[]>,
 
 		/**
 		 * Set content to RTL.

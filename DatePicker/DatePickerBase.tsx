@@ -91,17 +91,6 @@ const DatePickerBase = kind({
 		month: PropTypes.number.isRequired,
 
 		/**
-		 * The order in which the component pickers are displayed.
-		 *
-		 * The value should be an array of 3 strings containing one of `'m'`, `'d'`, and `'y'`.
-		 *
-		 * @type {String[]}
-		 * @required
-		 * @public
-		 */
-		order: PropTypes.arrayOf(PropTypes.oneOf(['m', 'd', 'y'])).isRequired as PropTypes.Validator<('m' | 'd' | 'y')[]>,
-
-		/**
 		 * The `year` component of the Date.
 		 *
 		 * @type {Number}
@@ -233,6 +222,17 @@ const DatePickerBase = kind({
 		 * @public
 		 */
 		onSpotlightRight: PropTypes.func,
+
+		/**
+		 * The order in which the component pickers are displayed.
+		 *
+		 * The value should be an array of 3 strings containing one of `'m'`, `'d'`, and `'y'`.
+		 *
+		 * @type {String[]}
+		 * @required
+		 * @public
+		 */
+		order: PropTypes.arrayOf(PropTypes.oneOf(['m', 'd', 'y'])).isRequired as PropTypes.Validator<('m' | 'd' | 'y')[]>,
 
 		/**
 		 * Indicates the content's text direction is right-to-left.
