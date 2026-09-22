@@ -89,6 +89,7 @@ export const _VirtualGridList = (args) => {
 	};
 
 	const controls = {
+		useCanvasScroll: args['useCanvasScroll'],
 		dataSize: updateDataSize(args['dataSize']),
 		direction: args['direction'],
 		horizontalScrollbar: args['horizontalScrollbar'],
@@ -114,6 +115,7 @@ export const _VirtualGridList = (args) => {
 	);
 };
 
+boolean('useCanvasScroll', _VirtualGridList, VirtualGridListConfig);
 select('direction', _VirtualGridList, prop.direction, VirtualGridListConfig);
 number('dataSize', _VirtualGridList, VirtualGridListConfig, defaultDataSize);
 select('direction', _VirtualGridList, prop.direction, VirtualGridListConfig);

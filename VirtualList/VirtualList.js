@@ -75,7 +75,7 @@ let VirtualList = (props) => {
 			wheel: false
 		};
 	}
-	const {continue5WayHold, itemSize, hoverToScroll, ...rest} = virtualListProps;
+	const {continue5WayHold, itemSize, hoverToScroll, useCanvasScroll, ...rest} = virtualListProps;
 
 	Spotlight.set(props.id, {continue5WayHold});
 
@@ -123,7 +123,7 @@ let VirtualList = (props) => {
 	return (
 		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...themeScrollContainerProps} {...scrollContentWrapperRest}>
-				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
+				<UiVirtualListBasic useCanvasScroll={useCanvasScroll} {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
@@ -609,7 +609,7 @@ let VirtualGridList = (props) => {
 			wheel: false
 		};
 	}
-	const {continue5WayHold, hoverToScroll, ...rest} = virtualGridListProps;
+	const {continue5WayHold, hoverToScroll, useCanvasScroll, ...rest} = virtualGridListProps;
 
 	Spotlight.set(props.id, {continue5WayHold});
 
@@ -640,7 +640,7 @@ let VirtualGridList = (props) => {
 	return (
 		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
-				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
+				<UiVirtualListBasic useCanvasScroll={useCanvasScroll} {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}

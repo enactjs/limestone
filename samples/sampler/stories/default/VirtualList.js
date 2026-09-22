@@ -74,10 +74,11 @@ export const _VirtualList = (args) => {
 	};
 
 	return (
-		<VirtualList {...actions} {...controls} key={args['scrollMode']} />
+		<VirtualList useCanvasScroll={args['useCanvasScroll']} {...actions} {...controls} key={args['scrollMode']} />
 	);
 };
 
+boolean('useCanvasScroll', _VirtualList, VirtualListConfig);
 number('dataSize', _VirtualList, VirtualListConfig, defaultDataSize);
 select('horizontalScrollbar', _VirtualList, prop.scrollbarOption, VirtualListConfig);
 boolean('hoverToScroll', _VirtualList, VirtualListConfig);
