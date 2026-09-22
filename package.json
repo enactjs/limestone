@@ -16,7 +16,6 @@
     "sampler": "npm run --prefix samples/sampler serve",
     "sampler-qa": "npm run --prefix samples/sampler serve-qa",
     "test": "enact test",
-    "pretest-ui": "node -e \"require('fs').mkdirSync('tests/ui/dist/framework',{recursive:true})\"",
     "test-ui": "start-tests tests/ui/config/wdio.conf.js",
     "test-ui-docker": "start-tests tests/ui/config/wdio.docker.conf.js",
     "test-ui-tv": "start-tests tests/ui/config/wdio.tv.conf.js",
