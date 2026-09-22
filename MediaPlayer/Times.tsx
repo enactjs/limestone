@@ -31,11 +31,58 @@ const TimesBase = kind({
 	_propTypes: {} as TimesBaseProps,
 
 	propTypes: /** @lends limestone/MediaPlayer.Times.prototype */ {
+		/**
+		 * The current time in seconds of the video source.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
 		current: PropTypes.number,
+
+		/**
+		 * An instance of a Duration Formatter from i18n.
+		 *
+		 * Must have a `format()` method that returns a string.
+		 *
+		 * @type {Object}
+		 * @required
+		 * @public
+		 */
 		formatter: PropTypes.object.isRequired as PropTypes.Validator<DurationFmt>,
+
+		/**
+		 * Checks if current time and total time should include the hour.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		includeHour: PropTypes.bool,
+
+		/**
+		 * Removes the current time.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noCurrentTime: PropTypes.bool,
+
+		/**
+		 * Removes the total time.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noTotalTime: PropTypes.bool,
+
+		/**
+		 * The total time (duration) in seconds of the loaded video source.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
 		total: PropTypes.number
 	},
 

@@ -76,30 +76,223 @@ const InputFieldBase = kind({
 	_propTypes: {} as InputFieldBaseProps,
 
 	propTypes: /** @lends limestone/Input.InputFieldBase.prototype */ {
+		/**
+		 * Indicates the input is currently active/focused for editing
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
 		active: PropTypes.bool,
+
+		/**
+		 * Passed by AnnounceDecorator for accessibility.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		announce: PropTypes.func,
+
+		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		caretToEndOnFocus: PropTypes.bool,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `inputField` - The root class name
+		 * * `input` - The <input> class name
+		 * * `inputHighlight` - The class used to make input text appear highlighted when `.inputField` has focus, but not `.input`
+		 * * `tooltip` - The "invalid" tooltip
+		 * * `tooltipLabel` - The "invalid" tooltip's label
+		 *
+		 * @type {Object}
+		 * @private
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		// TODO: Document voice control props and make public
 		'data-webos-voice-group-label': PropTypes.string,
 		'data-webos-voice-intent': PropTypes.string,
 		'data-webos-voice-label': PropTypes.string,
+
+		/**
+		 * Disables InputField and becomes non-interactive.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Blurs the input when the "enter" key is pressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		dismissOnEnter: PropTypes.bool,
+
+		/**
+		 * The icon to be placed at the end of the input.
+		 *
+		 * @see {@link limestone/Icon.Icon}
+		 * @type {String}
+		 * @public
+		 */
 		iconAfter: PropTypes.string,
+
+		/**
+		 * The icon to be placed at the beginning of the input.
+		 *
+		 * @see {@link limestone/Icon.Icon}
+		 * @type {String}
+		 * @public
+		 */
 		iconBefore: PropTypes.string,
+
+		/**
+		 * Indicates {@link limestone/Input.InputFieldBase.value|value} is invalid and shows
+		 * {@link limestone/Input.InputFieldBase.invalidMessage|invalidMessage}, if set.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		invalid: PropTypes.bool,
+
+		/**
+		 * The tooltip text to be displayed when the input is
+		 * {@link limestone/Input.InputFieldBase.invalid|invalid}.
+		 *
+		 * If this value is *falsy*, the tooltip will be shown with the default message.
+		 *
+		 * @type {String}
+		 * @default 'Please enter a valid value.'
+		 * @public
+		 */
 		invalidMessage: PropTypes.string,
+
+		/**
+		 * Wraps the input's value/placeholder display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		marqueeContent: PropTypes.bool,
+
+		/**
+		 * Called before the input value is changed.
+		 *
+		 * The change can be prevented by calling `preventDefault` on the event.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onBeforeChange: PropTypes.func,
+
+		/**
+		 * Called when blurred.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onBlur: PropTypes.func,
+
+		/**
+		 * Called when the input value is changed.
+		 *
+		 * The event payload includes the current `value` as well as a `stopPropagation()` method
+		 * which may be called to stop the original `onChange` event from the `<input>` from
+		 * bubbling.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onChange: PropTypes.func,
+
+		/**
+		 * Called when clicked.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onClick: PropTypes.func,
+
+		/**
+		 * Called when focused.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onFocus: PropTypes.func,
+
+		/**
+		 * Called when a key is pressed down.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onKeyDown: PropTypes.func,
+
+		/**
+		 * Text to display when {@link limestone/Input.InputFieldBase.value|value} is not set.
+		 *
+		 * @type {String}
+		 * @default ''
+		 * @public
+		 */
 		placeholder: PropTypes.string,
+
+		/**
+		 * Indicates the content's text direction is right-to-left.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
 		rtl: PropTypes.bool,
+
+		/**
+		 * The size of the input field.
+		 *
+		 * @type {('large'|'small')}
+		 * @default 'small'
+		 * @public
+		 */
 		size: PropTypes.oneOf(['small', 'large']) as PropTypes.Validator<'small' | 'large' | undefined>,
+
+		/**
+		 * The type of input.
+		 *
+		 * Accepted values correspond to the standard HTML5 input types.
+		 *
+		 * @type {String}
+		 * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Form_%3Cinput%3E_types|MDN input types doc}
+		 * @default 'text'
+		 * @public
+		 */
 		type: PropTypes.string,
+
+		/**
+		 * The value of the input.
+		 *
+		 * @type {String|Number}
+		 * @public
+		 */
 		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) as PropTypes.Validator<string | number | undefined>
 	},
 

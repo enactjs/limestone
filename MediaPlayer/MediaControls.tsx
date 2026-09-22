@@ -34,6 +34,12 @@ interface DivComponentProps {
 const DivComponent = ({mediaControlsRef, ...rest}: DivComponentProps) => (<div ref={mediaControlsRef as any} {...rest} />);
 
 DivComponent.propTypes = {
+	/*
+	 * Called with the reference to the mediaControls node.
+	 *
+	 * @type {Object|Function}
+	 * @public
+	 */
 	mediaControlsRef: EnactPropTypes.ref
 };
 
@@ -128,44 +134,356 @@ const MediaControlsBase = kind({
 
 	propTypes: /** @lends limestone/MediaPlayer.MediaControls.prototype */ {
 		id: PropTypes.string.isRequired,
+
+		/**
+		 * The `aria-label` for the action guide.
+		 *
+		 * When the media has been loaded first, this aria-label is read after media title.
+		 * You can use this aria-label to guide the user to find the action guide button for more controls.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		actionGuideAriaLabel: PropTypes.string,
+
+		/**
+		 * The `aria-label` for the action guide button.
+		 *
+		 * This aria-label is read when the action guide button is focused.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		actionGuideButtonAriaLabel: PropTypes.string,
+
+		/**
+		 * Disables the ActionGuide.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		actionGuideDisabled: PropTypes.bool,
+
+		/**
+		 * The label for the action guide.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		actionGuideLabel: PropTypes.string,
+
+		/**
+		 * These components are placed below the action guide. Typically, these will be media playlist controls.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		bottomComponents: PropTypes.node,
+
+		/**
+		 * The `aria-label` for the jumpBackward button.
+		 *
+		 * @type {String}
+		 * @deprecated Will be removed in 2.0.0. Use `previousAriaLabel` instead.
+		 * @public
+		 */
 		jumpBackwardAriaLabel: PropTypes.string,
+
+		/**
+		 * Jump backward {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'jumpbackward'
+		 * @deprecated Will be removed in 2.0.0. Use `previousIcon` instead.
+		 * @public
+		 */
 		jumpBackwardIcon: PropTypes.string,
+
+		/**
+		 * Disables state on the media "jump" buttons; the outer pair.
+		 *
+		 * @type {Boolean}
+		 * @deprecated Will be removed in 2.0.0. Use `previousButtonDisabled` and `nextButtonDisabled` instead.
+		 * @public
+		 */
 		jumpButtonsDisabled: PropTypes.bool,
+
+		/**
+		 * The `aria-label` for the jumpForward button.
+		 *
+		 * @type {String}
+		 * @deprecated Will be removed in 2.0.0. Use `nextAriaLabel` instead.
+		 * @public
+		 */
 		jumpForwardAriaLabel: PropTypes.string,
+
+		/**
+		 * Jump forward {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'jumpforward'
+		 * @deprecated Will be removed in 2.0.0. Use `nextIcon` instead.
+		 * @public
+		 */
 		jumpForwardIcon: PropTypes.string,
+
+		/**
+		 * Called with the reference to the mediaControls node.
+		 *
+		 * @type {Object|Function}
+		 * @public
+		 */
 		mediaControlsRef: EnactPropTypes.ref,
+
+		/**
+		 * Disables the media buttons.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		mediaDisabled: PropTypes.bool,
+
+		/**
+		 * When `true`, more components are rendered. This does not indicate the visibility of more components.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		moreComponentsRendered: PropTypes.bool,
+
+		/**
+		 * The spotlight ID for the moreComponent container.
+		 *
+		 * @type {String}
+		 * @public
+		 * @default 'moreComponents'
+		 */
 		moreComponentsSpotlightId: PropTypes.string,
+
+		/**
+		 * The `aria-label` for the next button.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		nextAriaLabel: PropTypes.string,
+
+		/**
+		 * Disables the next button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		nextButtonDisabled: PropTypes.bool,
+
+		/**
+		 * Next {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'next'
+		 * @public
+		 */
 		nextIcon: PropTypes.string,
+
+		/**
+		 * Removes the "jump" buttons. The buttons that skip forward or backward in the video.
+		 *
+		 * @type {Boolean}
+		 * @deprecated Will be removed in 2.0.0. Use `noPreviousButton` and `noNextButton` instead.
+		 * @public
+		 */
 		noJumpButtons: PropTypes.bool,
+
+		/**
+		 * Removes the next button. The button that plays the next video of the playlist.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noNextButton: PropTypes.bool,
+
+		/**
+		 * Removes the previous button. The button that plays the previous video of the playlist.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noPreviousButton: PropTypes.bool,
+
+		/**
+		 * Called when the button in ActionGuide is clicked.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onActionGuideClick: PropTypes.func,
+
+		/**
+		 * Called when cancel/back key events are fired.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onClose: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the JumpBackward button
+		 *
+		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onPreviousButtonClick` instead.
+		 * @public
+		 */
 		onJumpBackwardButtonClick: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the JumpForward button.
+		 *
+		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onNextButtonClick` instead.
+		 * @public
+		 */
 		onJumpForwardButtonClick: PropTypes.func,
+
+		/**
+		 * Called when the user presses a media control button.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onKeyDownFromMediaButtons: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the next button.
+		 *
+		 * If this function is not set, the button will work as the default jumpForward button.
+		 * Next button will be the default in 2.0.0.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onNextButtonClick: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the Play button.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onPlayButtonClick: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the previous button
+		 *
+		 * If this function is not set, the button will work as the default jumpBackward button.
+		 * Previous button will be the default in 2.0.0.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onPreviousButtonClick: PropTypes.func,
+
+		/**
+		 * `true` when the video is paused.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		paused: PropTypes.bool,
+
+		/**
+		 * A string which is sent to the `pause` icon of the player controls. This can be
+		 * anything that is accepted by {@link limestone/Icon.Icon|Icon}. This will be temporarily replaced by
+		 * the {@link limestone/MediaPlayer.MediaControls.playIcon|playIcon} when the
+		 * {@link limestone/MediaPlayer.MediaControls.paused|paused} boolean is `false`.
+		 *
+		 * @type {String}
+		 * @default 'pause'
+		 * @public
+		 */
 		pauseIcon: PropTypes.string,
+
+		/**
+		 * A string which is sent to the `play` icon of the player controls. This can be
+		 * anything that is accepted by {@link limestone/Icon.Icon}. This will be temporarily replaced by
+		 * the {@link limestone/MediaPlayer.MediaControls.pauseIcon|pauseIcon} when the
+		 * {@link limestone/MediaPlayer.MediaControls.paused|paused} boolean is `true`.
+		 *
+		 * @type {String}
+		 * @default 'play'
+		 * @public
+		 */
 		playIcon: PropTypes.string,
+
+		/**
+		 * Disables the media "play"/"pause" button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		playPauseButtonDisabled: PropTypes.bool,
+
+		/**
+		 * The `aria-label` for the previous button.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		previousAriaLabel: PropTypes.string,
+
+		/**
+		 * Disables the previous button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		previousButtonDisabled: PropTypes.bool,
+
+		/**
+		 * Previous {@link limestone/Icon.Icon|icon} name. Accepts any
+		 * {@link limestone/Icon.Icon|icon} component type.
+		 *
+		 * @type {String}
+		 * @default 'previous'
+		 * @public
+		 */
 		previousIcon: PropTypes.string,
+
+		/**
+		 * When `true`, more components are visible.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
 		showMoreComponents: PropTypes.bool,
+
+		/**
+		 * `true` controls are disabled from Spotlight.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		spotlightDisabled: PropTypes.bool,
+
+		/**
+		 * The spotlight ID for the media controls container.
+		 *
+		 * @type {String}
+		 * @public
+		 * @default 'mediaControls'
+		 */
 		spotlightId: PropTypes.string,
+
+		/**
+		 * The visibility of the component. When `false`, the component will be hidden.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 
@@ -351,23 +669,159 @@ const MediaControlsDecorator = hoc((config, Wrapped: any) => {
 		static displayName = 'MediaControlsDecorator';
 
 		static propTypes = /** @lends limestone/MediaPlayer.MediaControlsDecorator.prototype */ {
+			/**
+			 * The label for the action guide.
+			 *
+			 * @type {String}
+			 * @public
+			 */
 			actionGuideLabel: PropTypes.string,
+
+			/**
+			 * These components are placed below the children. Typically, these will be media playlist items.
+			 *
+			 * @type {Node}
+			 * @public
+			 */
 			bottomComponents: PropTypes.node,
+
+			/**
+			 * The number of milliseconds that the player will pause before firing the
+			 * first jump event on a right or left pulse.
+			 *
+			 * @type {Number}
+			 * @default 400
+			 * @public
+			 */
 			initialJumpDelay: PropTypes.number,
+
+			/**
+			 * The number of milliseconds that the player will throttle before firing a
+			 * jump event on a right or left pulse.
+			 *
+			 * @type {Number}
+			 * @default 200
+			 * @public
+			 */
 			jumpDelay: PropTypes.number,
+
+			/**
+			 * Disables the media buttons.
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			mediaDisabled: PropTypes.bool,
+
+			/**
+			 * Disables showing more components.
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			moreActionDisabled: PropTypes.bool,
+
+			/**
+			 * Setting this to `true` will disable left and right keys for seeking.
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			no5WayJump: PropTypes.bool,
+
+			/**
+			 * Called when media fast forwards.
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onFastForward: PropTypes.func,
+
+			/**
+			 * Called when media jumps.
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onJump: PropTypes.func,
+
+			/**
+			 * Called when media gets paused.
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onPause: PropTypes.func,
+
+			/**
+			 * Called when media starts playing.
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onPlay: PropTypes.func,
+
+			/**
+			 * Called when media rewinds.
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onRewind: PropTypes.func,
+
+			/**
+			 * Called when the visibility of more components is changed
+			 *
+ 			 * Event payload includes:
+			 *
+			 * * `type` - Type of event, `'onToggleMore'`
+			 * * `showMoreComponents` - `true` when the components are visible`
+			 * * `liftDistance` - The distance, in pixels, the component animates
+			 *
+			 * @type {Function}
+			 * @public
+			 */
 			onToggleMore: PropTypes.func,
+
+			/**
+			 * The video pause state.
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			paused: PropTypes.bool,
+
+			/**
+			 * Disables state on the media "play"/"pause" button
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			playPauseButtonDisabled: PropTypes.bool,
+
+			/**
+			 * Disables the media playback-rate control via rewind and fast-forward keys
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			rateChangeDisabled: PropTypes.bool,
+
+			/**
+			 * Registers the MediaControls component with an
+			 * {@link core/internal/ApiDecorator.ApiDecorator|ApiDecorator}.
+			 *
+			 * @type {Function}
+			 * @private
+			 */
 			setApiProvider: PropTypes.func,
+
+			/**
+			 * The visibility of the component. When `false`, the component will be hidden.
+			 *
+			 * @type {Boolean}
+			 * @public
+			 */
 			visible: PropTypes.bool
 		};
 

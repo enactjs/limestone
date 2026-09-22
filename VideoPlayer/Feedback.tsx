@@ -31,7 +31,32 @@ const FeedbackBase = kind({
 
 	propTypes: /** @lends limestone/VideoPlayer.Feedback.prototype */ {
 		children: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+		/**
+		 * Refers to one of the following possible media playback states.
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,
+		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
+		 *
+		 * Each state understands where its related icon should be positioned, and whether it should
+		 * respond to changes to the `visible` property.
+		 *
+		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.
+		 *
+		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
+		 * @public
+		 */
 		playbackState: PropTypes.oneOf(Object.keys(states)),
+
+		/**
+		 * If the current `playbackState` allows this component's visibility to be changed,
+		 * this component will be hidden. If not, setting this property will have no effect.
+		 * All `playbackState`s respond to this property except the following:
+		 * `'rewind'`, `'fastForward'`.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 

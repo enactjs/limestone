@@ -161,9 +161,42 @@ const PopupContent = (props: PopupContentProps) => {
 };
 
 PopupContent.propTypes = {
+	/**
+	 * Indicates the color.
+	 *
+	 * @type {String}
+	 * @private
+	 */
 	color: PropTypes.string,
+
+	/**
+	 * Called when color is modified.
+	 *
+	 * @type {Function}
+	 * @private
+	 */
 	colorHandler: PropTypes.func,
+
+	/**
+	 * Customizes the component by mapping the supplied collection of CSS class names to the
+	 * corresponding internal elements and states of this component.
+	 *
+	 * The following classes are supported:
+	 *
+	 * `colorPicker` - The root class name
+	 * `coloredDiv`  - A class name used for a single div
+	 *
+	 * @type {Object}
+	 * @private
+	 */
 	css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+	/**
+	 * Contains an array with a couple of possible preset colors.
+	 *
+	 * @type {Array}
+	 * @private
+	 */
 	presetColors: PropTypes.array as PropTypes.Validator<string[] | undefined>
 };
 
@@ -194,13 +227,80 @@ const ColorPickerBase = kind({
 	_propTypes: {} as ColorPickerBaseProps,
 
 	propTypes: /** @lends limestone/ColorPicker.ColorPickerBase.prototype */ {
+		/**
+		 * Indicates the color.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		color: PropTypes.string,
+
+		/**
+		 * Called when the color is modified.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		colorHandler: PropTypes.func,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * `colorPicker` - The root class name
+		 * `coloredDiv`  - A class name used for a single div
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		/**
+		 * Applies the `disabled` class.
+		 *
+		 * When `true`, the color picker is shown as disabled.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Called to open or close the color picker.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onTogglePopup: PropTypes.func,
+
+		/**
+		 * Indicates if the color picker is open.
+		 *
+		 * When `true`, contextual popup opens.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
 		popupOpen: PropTypes.bool,
+
+		/**
+		 * Contains an array with a couple of possible preset colors.
+		 *
+		 * @type {Array}
+		 * @public
+		 */
 		presetColors: PropTypes.array as PropTypes.Validator<string[] | undefined>,
+
+		/**
+		 * Contains the text that shows near color picker.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		text: PropTypes.string
 	},
 

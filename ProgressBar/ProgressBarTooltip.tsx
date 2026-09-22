@@ -134,12 +134,81 @@ const ProgressBarTooltipBase = kind({
 	_propTypes: {} as ProgressBarTooltipBaseProps,
 
 	propTypes: /** @lends limestone/ProgressBar.ProgressBarTooltip.prototype */{
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `tooltip` - The root component class
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
+		/**
+		 * Sets the orientation of the tooltip based on the orientation of the bar.
+		 *
+		 * 'vertical' sends the tooltip to one of the sides, 'horizontal' positions it above the
+		 * bar, 'radial' can position it on all sides.
+		 *
+		 * @type {('horizontal'|'vertical'|'radial')}
+		 * @default 'horizontal'
+		 * @public
+		 */
 		orientation: PropTypes.oneOf(['horizontal', 'vertical', 'radial']) as PropTypes.Validator<'horizontal' | 'vertical' | 'radial' | undefined>,
 
+		/**
+		 * Displays the value as a percentage.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		percent: PropTypes.bool,
 
+		/**
+		 * Position of the tooltip with respect to the progress bar.
+		 *
+		 * * For `orientation="horizontal"` or `orientation="radial"` progress bars, the default value is `'above'`.
+		 * * For `orientation="vertical"` progress bars, the default value is `'before'`.
+		 *
+		 * When using `'before'` or `'after'` alone or in any of the below combinations, `'before'`
+		 * will position the tooltip on the side of the current locale's text directionality. In LTR
+		 * locales, it will be on the left; in RTL locales, it will be on the right. Similarly,
+		 * `'after'` will position the tooltip on the opposite side: the right side for LTR and
+		 * left for RTL.
+		 *
+		 * Valid values when `orientation="horizontal"` or `orientation="radial"`
+		 *
+		 * | *Value* | *Tooltip Direction* |
+		 * |---|---|
+		 * | `'above'` | Above component, flowing to the nearest end |
+		 * | `'above left'` | Above component, flowing to the left |
+		 * | `'above before'` | Above component, flowing to the start of text |
+		 * | `'above center'` | Above component, flowing to the center |
+		 * | `'above right'` | Above component, flowing to the right |
+		 * | `'above after'` | Above component, flowing to the end of text |
+		 * | `'below'` | Below component, flowing to the nearest end |
+		 * | `'below left'` | Below component, flowing to the left |
+		 * | `'below before'` | Below component, flowing to the start of text |
+		 * | `'below center'` | Below component, flowing to the center |
+		 * | `'below right'` | Below component, flowing to the right |
+		 * | `'below after'` | Below component, flowing to the end of text |
+		 *
+		 * Valid values when `orientation="vertical"` or `orientation="radial"`
+		 *
+		 * | *Value* | *Tooltip Direction* |
+		 * |---|---|
+		 * | `'left'` | Left of the component, contents middle aligned |
+		 * | `'before'` | Start of text side of the component, contents middle aligned |
+		 * | `'right'` | right of the component, contents middle aligned |
+		 * | `'after'` | End of text side of the component, contents middle aligned |
+		 *
+		 * @type {('above'|'above before'|'above left'|'above after'|'above center'|'above right'|'below'|'below left'|'below before'|'below center'|'below right'|'below after'|'left'|'before'|'right'|'after')}
+		 * @public
+		 */
 		position: validatePosition(PropTypes.oneOf([
 			// horizontal or radial
 			'above',
@@ -162,10 +231,32 @@ const ProgressBarTooltipBase = kind({
 			'after'
 		])) as PropTypes.Validator<ProgressBarTooltipBaseProps['position']>,
 
+		/**
+		 * The proportion of the filled part of the bar.
+		 *
+		 * * Should be a number between 0 and 1.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
 		proportion: PropTypes.number,
 
+		/**
+		 * Sets the text direction to be right-to-left
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
 		rtl: PropTypes.bool,
 
+		/**
+		 * Visibility of the tooltip
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 

@@ -86,6 +86,12 @@ const RootComponent = (props: RootComponentProps) => {
 };
 
 RootComponent.propTypes = {
+	/*
+	 * Called with the reference to the mediaControls node.
+	 *
+	 * @type {Object|Function}
+	 * @public
+	 */
 	playerRef: EnactPropTypes.ref
 };
 
@@ -243,68 +249,632 @@ const VideoPlayerBase = class extends Component<VideoPlayerBaseProps, Record<str
 	static displayName = 'VideoPlayerBase';
 
 	static propTypes = /** @lends limestone/VideoPlayer.VideoPlayerBase.prototype */ {
+		/**
+		 * passed by AnnounceDecorator for accessibility
+		 *
+		 * @type {Function}
+		 * @private
+		 */
 		announce: PropTypes.func,
+
+		/**
+		 * The time (in milliseconds) before the control buttons will hide.
+		 *
+		 * Setting this to 0 or `null` disables closing, requiring user input to open and close.
+		 *
+		 * @type {Number}
+		 * @default 5000
+		 * @public
+		 */
 		autoCloseTimeout: PropTypes.number,
+
+		/**
+		 * Sets the hint string read when focusing the back button.
+		 *
+		 * @type {String}
+		 * @default 'go to previous'
+		 * @public
+		 */
 		backButtonAriaLabel: PropTypes.string,
+
+		/**
+		 * Removes interactive capability from this component. This includes, but is not limited to,
+		 * key-press events, most clickable buttons, and prevents the showing of the controls.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Amount of time (in milliseconds) after which the feedback text/icon part of the slider's
+		 * tooltip will automatically hidden after the last action.
+		 * Setting this to 0 or `null` disables feedbackHideDelay; feedback will always be present.
+		 *
+		 * @type {Number}
+		 * @default 3000
+		 * @public
+		 */
 		feedbackHideDelay: PropTypes.number,
+
+		/**
+		 * Checks if current time and total time should include the hour.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		includeTimeHour: PropTypes.bool,
+
+		/**
+		 * Components placed below the title.
+		 *
+		 * Typically, these will be media descriptor icons, like how many audio channels, what codec
+		 * the video uses, but can also be a description for the video or anything else that seems
+		 * appropriate to provide information about the video to the user.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		infoComponents: PropTypes.node,
+
+		/**
+		 * The number of milliseconds that the player will pause before firing the
+		 * first jump event on a right or left pulse.
+		 *
+		 * @type {Number}
+		 * @default 400
+		 * @public
+		 */
 		initialJumpDelay: PropTypes.number,
+
+		/**
+		 * The number of seconds the player should skip forward or backward when a "jump" button is
+		 * pressed.
+		 *
+		 * @type {Number}
+		 * @default 30
+		 * @public
+		 */
 		jumpBy: PropTypes.number,
+
+		/**
+		 * The number of milliseconds that the player will throttle before firing a
+		 * jump event on a right or left pulse.
+		 *
+		 * @type {Number}
+		 * @default 200
+		 * @public
+		 */
 		jumpDelay: PropTypes.number,
+
+		/**
+		 * Manually set the loading state of the media, in case you have information that
+		 * `VideoPlayer` does not have.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		loading: PropTypes.bool,
+
+		/**
+		 * The current locale as a
+		 * {@link https://tools.ietf.org/html/rfc5646|BCP 47 language tag}.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		locale: PropTypes.string,
+
+		/**
+		 * Overrides the default media control component to support customized behaviors.
+		 *
+		 * The provided component will receive the following props from `VideoPlayer`:
+		 *
+		 * * `initialJumpDelay` - Time (in ms) to wait before starting a jump
+		 * * `jumpDelay` -  - Time (in ms) to wait between jumps
+		 * * `mediaDisabled` - `true` when the media controls are not interactive
+		 * * `no5WayJump` - `true` when 5-way jumping is disabled
+		 * * `onClose` - Called when cancel key is pressed when the media controls are visible
+		 * * `onFastForward` - Called when the media is fast forwarded via a key event
+		 * * `onJump` - Called when the media jumps either forward or backward
+		 * * `onJumpBackwardButtonClick` - Called when the jump backward button is pressed
+		 * * `onJumpForwardButtonClick` - Called when the jump forward button is pressed
+		 * * `onKeyDown` - Called when a key is pressed
+		 * * `onNextButtonClick` - Called when the next button is pressed
+		 * * `onPause` - Called when the media is paused via a key event
+		 * * `onPlay` - Called when the media is played via a key event
+		 * * `onPreviousButtonClick` - Called when the previous button is pressed
+		 * * `onRewind` - Called when the media is rewound via a key event
+		 * * `onToggleMore` - Called when the more components are hidden or shown
+		 * * `paused` - `true` when the media is paused
+		 * * `spotlightId` - The spotlight container Id for the media controls
+		 * * `spotlightDisabled` - `true` when spotlight is disabled for the media controls
+		 * * `visible` - `true` when the media controls should be displayed
+		 *
+		 * @type {Component|Element}
+		 * @default limestone/MediaPlayer.MediaControls
+		 * @public
+		 */
 		mediaControlsComponent: EnactPropTypes.componentOverride,
+
+		/**
+		 * Amount of time (in milliseconds), after the last user action, that the `miniFeedback`
+		 * will automatically hide.
+		 * Setting this to 0 or `null` disables `miniFeedbackHideDelay`; `miniFeedback` will always
+		 * be present.
+		 *
+		 * @type {Number}
+		 * @default 2000
+		 * @public
+		 */
 		miniFeedbackHideDelay: PropTypes.number,
+
+		/**
+		 * Disable audio for this video.
+		 *
+		 * In a TV context, this is handled by the remote control, not programmatically in the
+		 * VideoPlayer API.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		muted: PropTypes.bool,
+
+		/**
+		 * Prevents the default behavior of using left and right keys for seeking.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		no5WayJump: PropTypes.bool,
+
+		/**
+		 * Prevents the default behavior of playing a video immediately after it's loaded.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		noAutoPlay: PropTypes.bool,
+
+		/**
+		 * Prevents the default behavior of showing media controls immediately after it's loaded.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		noAutoShowMediaControls: PropTypes.bool,
+
+		/**
+		 * Hides media slider feedback when fast-forward or rewind while media controls are hidden.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		noMediaSliderFeedback: PropTypes.bool,
+
+		/**
+		 * Removes the mini feedback.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		noMiniFeedback: PropTypes.bool,
+
+		/**
+		 * Removes the media slider.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		noSlider: PropTypes.bool,
+
+		/**
+		 * Removes spinner while loading.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noSpinner: PropTypes.bool,
+
+		/**
+		 * Called when the back button is clicked.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onBack: PropTypes.func,
+
+		/**
+		 * Called when the player's controls change availability, whether they are shown
+		 * or hidden.
+		 *
+		 * The current status is sent as the first argument in an object with a key `available`
+		 * which will be either `true` or `false`. (e.g.: `onControlsAvailable({available: true})`)
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onControlsAvailable: PropTypes.func,
+
+		/**
+		 * Called when the video has been fast forwarded.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onFastForward: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the JumpBackward button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onPrevious` instead.
+		 * @public
+		 */
 		onJumpBackward: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the JumpForward button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @deprecated Will be removed in 2.0.0. Use `onNext` instead.
+		 * @public
+		 */
 		onJumpForward: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the next button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onNext: PropTypes.func,
+
+		/**
+		 * Called when the video has been paused.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onPause: PropTypes.func,
+
+		/**
+		 * Called when the video has been played.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onPlay: PropTypes.func,
+
+		/**
+		 * Called when the user clicks the previous button.
+		 *
+		 * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onPrevious: PropTypes.func,
+
+		/**
+		 * Called when the video has been rewound.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onRewind: PropTypes.func,
+
+		/**
+		 * Called when the user is moving the VideoPlayer's Slider knob independently of
+		 * the current playback position.
+		 *
+		 * It is passed an object with a `seconds` key (float value) to indicate the current time
+		 * index. It can be used to update the `thumbnailSrc` to reflect the current scrub
+		 * position.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onScrub: PropTypes.func,
+
+		/**
+		 * Called when seek is attempted while `seekDisabled` is true.
+		 *
+		 * @type {Function}
+		 */
 		onSeekFailed: PropTypes.func,
+
+		/**
+		 * Called when seeking outside of the current `selection` range.
+		 *
+		 * By default, the seek will still be performed. Calling `preventDefault()` on the event
+		 * will prevent the seek operation.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onSeekOutsideSelection: PropTypes.func,
+
+		/**
+		 * Called when the visibility of more components is changed
+		 *
+		 * Event payload includes:
+		 *
+		 * * `type` - Type of event, `'onToggleMore'`
+		 * * `showMoreComponents` - `true` when the components are visible`
+		 * * `liftDistance` - The distance, in pixels, the component animates
+		 *`
+		 * @type {Function}
+		 * @public
+		 */
 		onToggleMore: PropTypes.func,
+
+		/**
+		 * Called once before the video is forwarded.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onWillFastForward: PropTypes.func,
+
+		/**
+		  * Called once before the video is jump backwarded.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @deprecated Will be removed in 2.0.0. Use `onWillPrevious` instead.
+		  * @public
+		  */
 		onWillJumpBackward: PropTypes.func,
+
+		/**
+		  * Called once before the video is jump forwarded.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @deprecated Will be removed in 2.0.0. Use `onWillNext` instead.
+		  * @public
+		  */
 		onWillJumpForward: PropTypes.func,
+
+		/**
+		  * Called once before playing the next video in the playlist.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
 		onWillNext: PropTypes.func,
+
+		/**
+		  * Called once before the video is paused.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
 		onWillPause: PropTypes.func,
+
+		/**
+		  * Called once before the video is played
+		  *
+		  * @type {Function}
+		  * @public
+		  */
 		onWillPlay: PropTypes.func,
+
+		/**
+		  * Called once before playing the previous video in the playlist.
+		  *
+		  * Is passed a {@link limestone/VideoPlayer.videoStatus} as the first argument.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
 		onWillPrevious: PropTypes.func,
+
+		/**
+		  * Called once before the video is rewound.
+		  *
+		  * @type {Function}
+		  * @public
+		  */
 		onWillRewind: PropTypes.func,
+
+		/**
+		 * Pauses the video when it reaches either the start or the end of the video during rewind,
+		 * slow rewind, fast-forward, or slow forward.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		pauseAtEnd: PropTypes.bool,
+
+		/**
+		 * Mapping of playback rate names to playback rate values that may be set.
+		 *
+		 * @type {limestone/VideoPlayer.playbackRateHash}
+		 * @default {
+		 *	fastForward: ['2', '4', '8', '16'],
+		 *	rewind: ['-2', '-4', '-8', '-16'],
+		 *	slowForward: ['1/4', '1/2'],
+		 *	slowRewind: ['-1/2', '-1']
+		 * }
+		 * @public
+		 */
 		playbackRateHash: PropTypes.shape({
 			fastForward: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 			rewind: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 			slowForward: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 			slowRewind: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
 		}),
+		/**
+		 * Disables seek function.
+		 *
+		 * Note that jump by arrow keys will also be disabled when `true`.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		seekDisabled: PropTypes.bool,
+
+		/**
+		 * A range of the video to display as selected.
+		 *
+		 * The value of `selection` may either be:
+		 * * `null` or `undefined` for no selection,
+		 * * a single-element array with the start time of the selection
+		 * * a two-element array containing both the start and end time of the selection in seconds
+		 *
+		 * When the start time is specified, the media slider will show filled starting at that
+		 * time to the current time.
+		 *
+		 * When the end time is specified, the slider's background will be filled between the two
+		 * times.
+		 *
+		 * @type {Number[]}
+		 * @public
+		 */
 		selection: PropTypes.arrayOf(PropTypes.number),
+
+		/**
+		 * Registers the VideoPlayer component with an
+		 * {@link core/internal/ApiDecorator.ApiDecorator}.
+		 *
+		 * @type {Function}
+		 * @private
+		 */
 		setApiProvider: PropTypes.func,
+
+		/**
+		 * The video source.
+		 *
+		 * Any children `<source>` tag elements of {@link limestone/VideoPlayer|VideoPlayer} will
+		 * be sent directly to the `videoComponent` as video sources.
+		 *
+		 * @type {Node}
+		 * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source
+		 * @public
+		 */
 		source: PropTypes.node,
+
+		/**
+		 * Disables spotlight navigation into the component.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		spotlightDisabled: PropTypes.bool,
+
+		/**
+		 * The spotlight container ID for the player.
+		 *
+		 * @type {String}
+		 * @public
+		 * @default 'videoPlayer'
+		 */
 		spotlightId: PropTypes.string,
+
+		/**
+		 * The thumbnail component to be used instead of the built-in version.
+		 *
+		 * The internal thumbnail style will not be applied to this component. This component
+		 * follows the same rules as the built-in version.
+		 *
+		 * @type {String|Component|Element}
+		 * @public
+		 */
 		thumbnailComponent: EnactPropTypes.renderableOverride,
+
+		/**
+		 * Thumbnail image source to show on the slider knob.
+		 *
+		 * This is a standard {@link limestone/Image} component so it supports all the same
+		 * options for the `src` property. If no `thumbnailComponent` and no `thumbnailSrc` is set,
+		 * no tooltip will display.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		thumbnailSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+
+		/**
+		* Enables the thumbnail transition from opaque to translucent.
+		*
+		* @type {Boolean}
+		* @public
+		*/
 		thumbnailUnavailable: PropTypes.bool,
+
+		/**
+		 * Title for the video being played.
+		 *
+		 * @type {String|Node}
+		 * @public
+		 */
 		title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+
+		/**
+		 * The time (in milliseconds) before the title disappears from the controls.
+		 *
+		 * Setting this to `0` disables hiding.
+		 *
+		 * @type {Number}
+		 * @default 5000
+		 * @public
+		 */
 		titleHideDelay: PropTypes.number,
+
+		/**
+		 * Video component to use.
+		 *
+		 * The default renders an `HTMLVideoElement`. Custom video components must have a similar
+		 * API structure, exposing the following APIs:
+		 *
+		 * Properties:
+		 * * `currentTime` {Number} - Playback index of the media in seconds
+		 * * `duration` {Number} - Media's entire duration in seconds
+		 * * `error` {Boolean} - `true` if video playback has errored.
+		 * * `loading` {Boolean} - `true` if video playback is loading.
+		 * * `paused` {Boolean} - Playing vs paused state. `true` means the media is paused
+		 * * `playbackRate` {Number} - Current playback rate, as a number
+		 * * `proportionLoaded` {Number} - A value between `0` and `1`
+		 *	representing the proportion of the media that has loaded
+		 * * `proportionPlayed` {Number} - A value between `0` and `1` representing the
+		 *	proportion of the media that has already been shown
+		 *
+		 * Events:
+		 * * `onLoadStart` - Called when the video starts to load
+		 * * `onUpdate` - Sent when any of the properties were updated
+		 *
+		 * Methods:
+		 * * `play()` - play video
+		 * * `pause()` - pause video
+		 * * `load()` - load video
+		 *
+		 * The {@link limestone/VideoPlayer.Video.source|source} property is passed to
+		 * the video component as a child node.
+		 *
+		 * @type {Component|Element}
+		 * @default {@link ui/Media.Media}
+		 * @public
+		 */
 		videoComponent: EnactPropTypes.componentOverride
 	};
 

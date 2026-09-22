@@ -65,38 +65,161 @@ const MediaOverlayBase = kind({
 	_propTypes: {} as MediaOverlayBaseProps,
 
 	propTypes: /** @lends limestone/MediaOverlay.MediaOverlayBase.prototype */ {
+		/**
+		 * Any children `<source>` tag elements will be sent directly to the media element as
+		 * sources.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		source: PropTypes.node.isRequired,
 
+		/**
+		 * The primary caption to be displayed.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		caption: PropTypes.node,
 
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `image` - class name for image
+		 * * `textLayout` - class name for text layout
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
+		/**
+		 * Image path for image overlay.
+		 *
+		 * NOTE: When image is displayed, media is not displayed even though it is playing.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		imageOverlay: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
+		/**
+		 * Restarts the video every time it is finished.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		loop: PropTypes.bool,
 
+		/**
+		 * Determines what triggers the marquee to start its animation.
+		 *
+		 * @type {('focus'|'hover'|'render')}
+		 * @public
+		 */
 		marqueeOn: PropTypes.oneOf(['focus', 'hover', 'render']) as PropTypes.Validator<'focus' | 'hover' | 'render' | undefined>,
 
+		/**
+		 * Media component to use.
+		 *
+		 * The default (`'video'`) renders an `HTMLVideoElement`. Custom media components must have
+		 * a similar API structure, exposing the following APIs:
+		 *
+		 * Methods:
+		 * * `load()` - load media
+		 *
+		 * @type {String|Component}
+		 * @default 'video'
+		 * @public
+		 */
 		mediaComponent: EnactPropTypes.renderable as PropTypes.Validator<EnactPropTypeShapes.renderable | undefined>,
 
+		/**
+		 * Mutes the audio output of the video.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		muted: PropTypes.bool,
 
+		/**
+		 * Prevents the video playback starting on load.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noAutoPlay: PropTypes.bool,
 
+		/**
+		 * Placeholder for image overlay.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		placeholder: PropTypes.string,
 
+		/**
+		 * Indicates if the component is pressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
 		pressed: PropTypes.bool,
 
+		/**
+		 * A number between `0` and `1` indicating the proportion of the filled portion of the bar.
+		 *
+		 * Only applicable when `showProgress` is enabled.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
 		progress: PropTypes.number,
 
+		/**
+		 * Displays the progress bar
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		showProgress: PropTypes.bool,
 
+		/**
+		 * The third caption line to be displayed.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		subtitle: PropTypes.string,
 
+		/**
+		 * Text to display over media.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		text: PropTypes.string,
 
+		/**
+		 * Aligns the `text` vertically within the component.
+		 *
+		 * @type {('center'|'end'|'start')}
+		 * @default 'end'
+		 * @public
+		 */
 		textAlign: PropTypes.oneOf(['center', 'end', 'start']) as PropTypes.Validator<'center' | 'end' | 'start' | undefined>,
 
+		/**
+		 * The second caption line to be displayed.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		title: PropTypes.string
 	},
 

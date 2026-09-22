@@ -341,13 +341,76 @@ const InputSpotlightDecorator = hoc(defaultConfig, (config, Wrapped) => {
 
 	InputSpotlightDecorator.displayName = 'InputSpotlightDecorator';
 	InputSpotlightDecorator.propTypes = /** @lends limestone/Input/InputSpotlightDecorator.InputSpotlightDecorator.prototype */ {
+		/**
+		 * Focuses the <input> when the decorator is focused via 5-way.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		autoFocus: PropTypes.bool,
+
+		/**
+		 * Moves the caret to the end of the text when the input receives focus.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		caretToEndOnFocus: PropTypes.bool,
+
+		/**
+		 * Applies a disabled style and the control becomes non-interactive.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Blurs the input when the "enter" key is pressed.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		dismissOnEnter: PropTypes.bool,
+
+		/**
+		 * Called when the internal <input> is focused.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onActivate: PropTypes.func,
+
+		/**
+		 * Called when the internal <input> loses focus.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onDeactivate: PropTypes.func,
+
+		/**
+		 * Called when the component is removed while retaining focus.
+		 *
+		 * @type {Function}
+		 * @param {Object} event
+		 * @public
+		 */
 		onSpotlightDisappear: PropTypes.func,
+
+		/**
+		 * Disables spotlight navigation into the component.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		spotlightDisabled: PropTypes.bool
 	};
 

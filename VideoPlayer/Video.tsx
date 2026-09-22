@@ -32,10 +32,79 @@ const VideoBase = class extends Component<VideoBaseProps> {
 	static displayName = 'Video';
 
 	static propTypes = /** @lends limestone/VideoPlayer.Video.prototype */ {
+		/**
+		 * Video plays automatically.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		autoPlay: PropTypes.bool,
+
+		/**
+		 * Video component to use.
+		 *
+		 * The default (`'video'`) renders an `HTMLVideoElement`. Custom video components must have
+		 * a similar API structure, exposing the following APIs:
+		 *
+		 * Properties:
+		 * * `currentTime` {Number} - Playback index of the media in seconds
+		 * * `duration` {Number} - Media's entire duration in seconds
+		 * * `error` {Boolean} - `true` if video playback has errored.
+		 * * `loading` {Boolean} - `true` if video playback is loading.
+		 * * `paused` {Boolean} - Playing vs paused state. `true` means the media is paused
+		 * * `playbackRate` {Number} - Current playback rate, as a number
+		 * * `proportionLoaded` {Number} - A value between `0` and `1`
+		 *	representing the proportion of the media that has loaded
+		 * * `proportionPlayed` {Number} - A value between `0` and `1` representing the
+		 *	proportion of the media that has already been shown
+		 *
+		 * Events:
+		 * * `onLoadStart` - Called when the video starts to load
+		 * * `onPlay` - Sent when playback of the media starts after having been paused
+		 * * `onUpdate` - Sent when any of the properties were updated
+		 *
+		 * Methods:
+		 * * `play()` - play video
+		 * * `pause()` - pause video
+		 * * `load()` - load video
+		 *
+		 * The {@link limestone/VideoPlayer.Video.source|source} property is passed to
+		 * the video component as a child node.
+		 *
+		 * @type {String|Component|Element}
+		 * @default 'video'
+		 * @public
+		 */
 		mediaComponent: EnactPropTypes.renderableOverride as PropTypes.Validator<EnactPropTypeShapes.renderableOverride | undefined>,
+
+		/**
+		 * The video source to be preloaded. Expects a `<source>` node.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		preloadSource:  PropTypes.node,
+
+		/**
+		 * Called with a reference to the active {@link ui/Media.Media|Media} component.
+		 *
+		 * @type {Function}
+		 * @private
+		 */
 		setMedia: PropTypes.func,
+
+		/**
+		 * The video source to be played.
+		 *
+		 * Any children `<source>` elements will be sent directly to the `mediaComponent` as video
+		 * sources.
+		 *
+		 * See: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/source
+		 *
+		 * @type {String|Node}
+		 * @public
+		 */
 		source: PropTypes.oneOfType([PropTypes.string, PropTypes.node])
 	};
 

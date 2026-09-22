@@ -31,9 +31,48 @@ const FeedbackContentBase = kind({
 	_propTypes: {} as FeedbackContentBaseProps,
 
 	propTypes: /** @lends limestone/VideoPlayer.Feedback.prototype */ {
+		/**
+		 * If the current `playbackState` allows the feedback component's visibility to be changed,
+		 * the feedback component will be hidden. If not, setting this property will have no effect.
+		 * All `playbackState`s respond to this property except the following:
+		 * `'rewind'`, `'fastForward'`.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		feedbackVisible: PropTypes.bool,
+
+		/**
+		 * Value of the feedback playback rate
+		 *
+		 * @type {String|Number}
+		 * @public
+		 */
 		playbackRate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+		/**
+		 * Refers to one of the following possible media playback states.
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'`,
+		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
+		 *
+		 * Each state understands where its related icon should be positioned and whether it should
+		 * respond to changes to the `visible` property.
+		 *
+		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.
+		 *
+		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
+		 * @public
+		 */
 		playbackState: PropTypes.oneOf(Object.keys(states)),
+
+		/**
+		 * The visibility of the component. When `false`, the component will be hidden.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 

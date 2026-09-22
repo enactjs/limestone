@@ -107,33 +107,160 @@ const AlertBase = kind({
 	_propTypes: {} as AlertBaseProps,
 
 	propTypes: /** @lends limestone/Alert.AlertBase.prototype */ {
+		/**
+		 * Sets the buttons layout direction.
+		 *
+		 * In `auto` mode, button direction follows UX defaults:
+		 * * `overlay` - horizontal when there are exactly 2 buttons
+		 * * `fullscreen` - horizontal when there are less than 3 buttons
+		 * * otherwise vertical
+		 *
+		 * @type {('auto'|'horizontal'|'vertical')}
+		 * @default 'auto'
+		 * @public
+		 */
 		buttonDirection: PropTypes.oneOf(['auto', 'horizontal', 'vertical']) as PropTypes.Validator<'auto' | 'horizontal' | 'vertical' | undefined>,
 
+		/**
+		 * Buttons to be included under the component.
+		 *
+		 * Typically, up to 3 buttons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
 		buttons: PropTypes.oneOfType([
 			PropTypes.element,
 			PropTypes.arrayOf(PropTypes.element)
 		]) as PropTypes.Validator<ReactElement | ReactElement[] | undefined>,
 
+		/**
+		 * The contents of the body of the component.
+		 *
+		 * Only shown when `type="overlay"`. If `children` is text-only, it will be wrapped with
+		 * {@link limestone/BodyText|BodyText}.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
 		children: PropTypes.node,
 
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `alert` - The root class name
+		 * * `content` - The content component class
+		 * * `fullscreen` - Applied to a `type='fullscreen'` alert
+		 * * `overlay` - Applied to a `type='overlay'` alert
+		 * * `title` - The title component class
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
+		/**
+		 * The `id` of Alert referred to when generating ids for `'title'` and `'buttons'`.
+		 *
+		 * @type {String}
+		 * @private
+		 */
 		id: PropTypes.string,
 
+		/**
+		 * Image to be included in the Alert component.
+		 *
+		 * It is recommended to use the `AlertImage` component.
+		 *
+		 * @type {Element}
+		 * @public
+		 */
 		image: PropTypes.element as PropTypes.Validator<ReactElement | undefined>,
 
+		/**
+		 * Called when the user requests to close the Alert.
+		 *
+		 * This also includes pressing the cancel key.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onClose: PropTypes.func,
 
+		/**
+		 * Called after the transition to hide the Alert has finished.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onHide: PropTypes.func,
 
+		/**
+		 * Opens the Alert.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		open: PropTypes.bool,
 
+		/**
+		 * Position of the Alert when type=`overlay`.
+		 *
+		 * There are five types:
+		 *
+		 * * `center` - Popup in the center of the screen
+		 * * `bottom left` - Popup in the bottom left of the screen
+		 * * `bottom right` - Popup in the bottom right of the screen
+		 * * `top left` - Popup in the top left of the screen
+		 * * `top right` - Popup in the top right of the screen
+		 *
+		 * @type {('bottom left'|'bottom right'|'center'|'top left'|'top right')}
+		 * @default 'center'
+		 * @public
+		 */
 		overlayPosition: PropTypes.oneOf(['bottom left', 'bottom right', 'center', 'top left', 'top right']) as PropTypes.Validator<'bottom left' | 'bottom right' | 'center' | 'top left' | 'top right' | undefined>,
 
+		/**
+		 * Size of the Alert when `type="overlay"`.
+		 *
+		 * * `small` - narrow width
+		 * * `medium` - medium width
+		 * * `large` - wide width, supports title
+		 *
+		 * When omitted, defaults to `medium` when there are exactly 2 buttons, otherwise `small`.
+		 *
+		 * @type {('small'|'medium'|'large')}
+		 * @default 'medium'
+		 * @public
+		 */
 		size: PropTypes.oneOf(['small', 'medium', 'large']) as PropTypes.Validator<'small' | 'medium' | 'large' | undefined>,
 
+		/**
+		 * The primary text displayed.
+		 *
+		 * Only shown when `type="fullscreen"`.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		title: PropTypes.string,
 
+		/**
+		 * Type of popup.
+		 *
+		 * There are two types:
+		 *
+		 * * `fullscreen` - Full screen popup
+		 * * `overlay` - Popup in the center of the screen
+		 *
+		 * @type {('fullscreen'|'overlay')}
+		 * @default 'fullscreen'
+		 * @public
+		 */
 		type: PropTypes.oneOf(['fullscreen', 'overlay']) as PropTypes.Validator<'fullscreen' | 'overlay' | undefined>
 	},
 

@@ -31,9 +31,41 @@ const MediaSliderBase = kind({
 	_propTypes: {} as MediaSliderBaseProps,
 
 	propTypes: /** @lends limestone/MediaPlayer.MediaSlider.prototype */ {
+
+		/**
+		 * When `true`, the knob will expand. Note that Slider is a controlled
+		 * component. Changing the value would only affect pressed visual and
+		 * not the state.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		forcePressed: PropTypes.bool,
+
+		/**
+		 * Allow moving the knob via pointer or 5-way without emitting `onChange` events
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		preview: PropTypes.bool,
+
+		/**
+		 * The position of the knob when in `preview` mode
+		 *
+		 * @type {Number}
+		 * @public
+		 */
 		previewProportion: PropTypes.number,
+
+		/**
+		 * The visibility of the component. When `false`, the component will be hidden.
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 

@@ -44,16 +44,113 @@ const FeedbackTooltipBase = kind({
 	_propTypes: {} as FeedbackTooltipBaseProps,
 
 	propTypes: /** @lends limestone/VideoPlayer.FeedbackTooltip.prototype */ {
+		/**
+		 * Invoke action to display or hide tooltip.
+		 *
+		 * @type {('focus'|'blur'|'idle')}
+		 * @default 'idle'
+		 */
 		action: PropTypes.oneOf(['focus', 'blur', 'idle']) as PropTypes.Validator<'focus' | 'blur' | 'idle' | undefined>,
+
+		/**
+		 * Duration of the current media in seconds
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
 		duration: PropTypes.number,
+
+		/**
+		 * Instance of `NumFmt` to format the time
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		formatter: PropTypes.object as PropTypes.Validator<DurationFmt | undefined>,
+
+		/**
+		 * If the current `playbackState` allows this component's visibility to be changed,
+		 * this component will be hidden. If not, setting this property will have no effect.
+		 * All `playbackState`s respond to this property except the following:
+		 * `'rewind'`, `'fastForward'`.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		hidden: PropTypes.bool,
+
+		/**
+		 * Part of the API required by `ui/Slider` but not used by FeedbackTooltip which only
+		 * supports horizontal orientation
+		 *
+		 * @type {String}
+		 * @private
+		 */
 		orientation: PropTypes.string,
+
+		/**
+		 * Value of the feedback playback rate
+		 *
+		 * @type {String|Number}
+		 * @public
+		 */
 		playbackRate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+		/**
+		 * Refers to one of the following possible media playback states.
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,
+		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
+		 *
+		 * Each state understands where its related icon should be positioned, and whether it should
+		 * respond to changes to the `visible` property.
+		 *
+		 * This string feeds directly into {@link limestone/FeedbackIcon.FeedbackIcon}.
+		 *
+		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
+		 * @public
+		 */
 		playbackState: PropTypes.oneOf(Object.keys(states)),
+
+		/**
+		 * This component will be used instead of the built-in version. The internal thumbnail style
+		 * will be applied to this component. This component follows the same rules as the built-in
+		 * version; hiding and showing according to the state of `action`.
+		 *
+		 * This can be a tag name as a string, a rendered DOM node, a component, or a component
+		 * instance.
+		 *
+		 * @type {String|Component|Element}
+		 * @public
+		 */
 		thumbnailComponent: EnactPropTypes.renderableOverride as PropTypes.Validator<EnactPropTypeShapes.renderableOverride | undefined>,
+
+		/**
+		 * `true` if Slider knob is scrubbing.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		thumbnailDeactivated: PropTypes.bool,
+
+		/**
+		 * Set a thumbnail image source to show on VideoPlayer's Slider knob. This is a standard
+		 * {@link limestone/Image} component so it supports all the same options for the `src`
+		 * property. If no `thumbnailSrc` is set, no tooltip will display.
+		 *
+		 * @type {String|Object}
+		 * @public
+		 */
 		thumbnailSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
+
+		/**
+		 * Required by the interface for limestone/Slider.tooltip but not used here
+		 *
+		 * @type {Boolean}
+		 * @default true
+		 * @public
+		 */
 		visible: PropTypes.bool
 	},
 

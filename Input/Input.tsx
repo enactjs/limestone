@@ -91,37 +91,285 @@ const InputPopupBase = kind({
 	_propTypes: {} as InputPopupBaseProps,
 
 	propTypes: /** @lends limestone/Input.InputPopupBase.prototype */ {
+		/**
+		 * Passed by AnnounceDecorator for accessibility.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		announce: PropTypes.func,
+
+		/**
+		 * Sets the hint string read when focusing the back button.
+		 *
+		 * @type {String}
+		 * @default 'go to previous'
+		 * @public
+		 */
 		backButtonAriaLabel: PropTypes.string,
+
+		/**
+		 * Buttons to be included under the component.
+		 *
+		 * Typically, up to 3 buttons are used.
+		 *
+		 * @type {Element|Element[]}
+		 * @public
+		 */
 		buttons: PropTypes.oneOfType([
 			PropTypes.element,
 			PropTypes.arrayOf(PropTypes.element)
 		]) as PropTypes.Validator<ReactElement | ReactElement[] | undefined>,
+
+		/**
+		 * Customize component style
+		 *
+		 * @type {Object}
+		 * @public
+		 */
 		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		/**
+		 * Initial value of the input.
+		 *
+		 * This value is used for setting the `defaultValue` of the `InputField`.
+		 * @see {@link limestone/Input.InputField}
+		 * @type {String|Number}
+		 * @public
+		 */
 		defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) as PropTypes.Validator<string | number | undefined>,
+
+		/**
+		 * Disables the input popup.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Sets spotlightId to InputField.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		inputFieldSpotlightId: PropTypes.string,
+
+		/**
+		 * Indicates the value is invalid and shows
+		 * {@link limestone/Input.InputPopupBase.invalidMessage|invalidMessage}, if set.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		invalid: PropTypes.bool,
+
+		/**
+		 * The tooltip text to be displayed when the input is
+		 * {@link limestone/Input.InputPopupBase.invalid|invalid}.
+		 *
+		 * If this value is *falsy*, the tooltip will be shown with the default message.
+		 *
+		 * @type {String}
+		 * @default 'Please enter a valid value.'
+		 * @public
+		 */
 		invalidMessage: PropTypes.string,
+
+		/**
+		 * Set the length of number input field.
+		 *
+		 * Sets the amount of numbers this field will collect. Any number between 1 and 6
+		 * (inclusive) will render individual number cells, greater than 6 will render a single box
+		 * with numbers in it. This only has an effect on `'number'` and `'passwordnumber'` `type`
+		 * and when `numberInputField` is `'auto'`.
+		 *
+		 * This value will override `minLength` and `maxLength`.
+		 *
+		 * @type {Number}
+		 * @public
+		 */
 		length: PropTypes.number,
+
+		/**
+		 * Wraps the `InputField`'s value display in a marquee.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
 		marqueeInputField: PropTypes.bool,
+
+		/**
+		 * The maximum length of number input fields.
+		 *
+		 * Overridden by `length` value.
+		 *
+		 * @type {Number}
+		 * @default 4
+		 * @public
+		 */
 		maxLength: PropTypes.number,
+
+		/**
+		 * The minimum length of number input fields.
+		 *
+		 * Overridden by `length` value.
+		 *
+		 * Defaults to the `maxLength` value. The submit button is disabled while the value is
+		 * shorter than `minLength`.
+		 *
+		 * @type {Number}
+		 * @public
+		 */
 		minLength: PropTypes.number,
+
+		/**
+		 * Omits the back button.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noBackButton: PropTypes.bool,
+
+		/**
+		 * Omits the submit button.
+		 *
+		 * When `true` for separated number inputs where `minLength` equals `maxLength`, the input
+		 * auto-submits when the length reaches `maxLength`.
+		 *
+		 * Only use this when auto-submit applies (a separated number input whose `minLength` equals
+		 * `maxLength`); otherwise the input cannot be submitted, as there is neither a submit button
+		 * nor auto-submit.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		noSubmitButton: PropTypes.bool,
+
+		/**
+		 * The type of numeric input to use.
+		 *
+		 * The default is to display separated digits when `length` is less than `7`. If `field` is
+		 * set, a standard `InputField` will be used instead of the normal number input.
+		 *
+		 * This has no effect on other {@link limestone/Input.InputPopupBase.type|types}.
+		 *
+		 * @type {('auto'|'separated'|'joined'|'field')}
+		 * @default 'auto'
+		 * @public
+		 */
 		numberInputField: PropTypes.oneOf(['auto', 'separated', 'joined', 'field']) as PropTypes.Validator<'auto' | 'separated' | 'joined' | 'field' | undefined>,
+
+		/**
+		 * Called before the input value is changed.
+		 *
+		 * The change can be prevented by calling `preventDefault` on the event.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onBeforeChange: PropTypes.func,
+
+		/**
+		 * Called when the input value is changed.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onChange: PropTypes.func,
+
+		/**
+		 * Called when the popup is closed.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onClose: PropTypes.func,
+
+		/**
+		 * Called when input is complete.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onComplete: PropTypes.func,
+
+		/**
+		 * Called when the popup is opened.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
 		onOpenPopup: PropTypes.func,
+
+		/**
+		 * Opens the popup.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		open: PropTypes.bool,
+
+		/**
+		 * Text displayed when value is not set.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		placeholder: PropTypes.string,
+
+		/**
+		 * The "aria-label" for the popup when opened.
+		 *
+		 * @type {String}
+		 * @public
+		 */
 		popupAriaLabel: PropTypes.string,
+
+		/**
+		 * Type of popup.
+		 *
+		 * @type {('fullscreen'|'overlay')}
+		 * @default 'fullscreen'
+		 * @public
+		 */
 		popupType: PropTypes.oneOf(['fullscreen', 'overlay']) as PropTypes.Validator<'fullscreen' | 'overlay' | undefined>,
+
+		/**
+		 * Size of the input field.
+		 *
+		 * @type {('large'|'small')}
+		 * @default 'small'
+		 * @public
+		 */
 		size: PropTypes.oneOf(['small', 'large']) as PropTypes.Validator<'small' | 'large' | undefined>,
+
+		/**
+		 * Subtitle below the title of popup.
+		 *
+		 * @type {String}
+		 * @default ''
+		 * @public
+		 */
 		subtitle: PropTypes.string,
+
+		/**
+		 * Title text of popup.
+		 *
+		 * @type {String}
+		 * @default ''
+		 * @public
+		 */
 		title: PropTypes.string,
+
+		/**
+		 * Type of the input.
+		 *
+		 * @type {('text'|'password'|'number'|'passwordnumber'|'url'|'tel'|'passwordtel')}
+		 * @default 'text'
+		 * @public
+		 */
 		type: PropTypes.oneOf(['text', 'password', 'number', 'passwordnumber', 'url', 'tel', 'passwordtel']) as PropTypes.Validator<InputType | undefined>
 	},
 
@@ -340,11 +588,56 @@ const InputBase = kind({
 	_propTypes: {} as InputBaseProps,
 
 	propTypes: /** @lends limestone/Input.InputBase.prototype */ {
+		/**
+		 * Disables the button that activates the input popup.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
 		announce: PropTypes.func,
+
+		/**
+		 * Disables the button that activates the input popup.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
 		disabled: PropTypes.bool,
+
+		/**
+		 * Text displayed when value is not set.
+		 *
+		 * @type {String}
+		 * @default '-'
+		 * @public
+		 */
 		placeholder: PropTypes.string,
+
+		/**
+		 * The size of the input field.
+		 *
+		 * @type {('large'|'small')}
+		 * @default 'small'
+		 * @public
+		 */
 		size: PropTypes.oneOf(['small', 'large']) as PropTypes.Validator<'small' | 'large' | undefined>,
+
+		/**
+		 * Type of the input.
+		 *
+		 * @type {('text'|'password'|'number'|'passwordnumber'|'url'|'tel'|'passwordtel')}
+		 * @default 'text'
+		 * @public
+		 */
 		type: PropTypes.oneOf(['text', 'password', 'number', 'passwordnumber', 'url', 'tel', 'passwordtel']) as PropTypes.Validator<InputType | undefined>,
+
+		/**
+		 * The value of the input.
+		 *
+		 * @see {@link limestone/Input.InputField}
+		 * @type {String|Number}
+		 * @public
+		 */
 		value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]) as PropTypes.Validator<string | number | undefined>
 	},
 
