@@ -68,10 +68,10 @@ describe('KeyGuide Specs', () => {
 				</KeyGuide>
 			</FloatingLayerController>
 		);
-		const item = screen.getByRole('list').children.item(0);
+		const item = screen.getByRole('list').children.item(0)!;
 
 		const expected = 'red';
-		const actual = item.children.item(1).children.item(0);
+		const actual = item.children.item(1)!.children.item(0);
 
 		expect(actual).toHaveClass(expected);
 	});
@@ -99,9 +99,9 @@ describe('KeyGuide Specs', () => {
 				</KeyGuide>
 			</FloatingLayerController>
 		);
-		const item = screen.getByRole('list').children.item(0);
+		const item = screen.getByRole('list').children.item(0)!;
 		const expected = 'icon';
-		const actual = item.children.item(1).children.item(0);
+		const actual = item.children.item(1)!.children.item(0);
 
 		expect(actual).not.toHaveClass(expected);
 	});
@@ -109,7 +109,7 @@ describe('KeyGuide Specs', () => {
 	test('should have `image` if children has `imageSrc`', () => {
 		render(
 			<FloatingLayerController>
-				<KeyGuide open type="image">
+				<KeyGuide {...({open: true, type: 'image'} as any)}>
 					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
 				</KeyGuide>
 			</FloatingLayerController>
@@ -122,7 +122,7 @@ describe('KeyGuide Specs', () => {
 	test('should have `imageGuide` className if children has `imageSrc`', () => {
 		render(
 			<FloatingLayerController>
-				<KeyGuide data-testid="keyguide" open type="image">
+				<KeyGuide {...({'data-testid': 'keyguide', open: true, type: 'image'} as any)}>
 					{{imageSrc: 'https://dummyimage.com/64/e048e0/0011ff', children: 'a'}}
 				</KeyGuide>
 			</FloatingLayerController>

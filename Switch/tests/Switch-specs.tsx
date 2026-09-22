@@ -44,7 +44,7 @@ describe('Switch Specs', () => {
 	test('toggle Switch', async () => {
 		const handleToggle = jest.fn();
 		const user = userEvent.setup();
-		render(<Switch onToggle={handleToggle} />);
+		render(<Switch {...({onToggle: handleToggle} as Record<string, any>)} />);
 
 		const actual = screen.getByRole('button');
 

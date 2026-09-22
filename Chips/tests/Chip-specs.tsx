@@ -9,7 +9,7 @@ describe('Chip', () => {
 		render(<ChipBase data-testid="chip" icon={icon} id="minimal-chip">Chip</ChipBase>);
 
 		const expected = 983080; // decimal converted charCode of Unicode 'star' character
-		const actual = screen.getByTestId('chip').textContent.codePointAt();
+		const actual = screen.getByTestId('chip').textContent.codePointAt(0);
 
 		expect(actual).toBe(expected);
 	});
@@ -164,7 +164,7 @@ describe('Chip', () => {
 		expect(chipText).toBeInTheDocument();
 
 		const expected = 983080; // decimal converted charCode of Unicode 'star' character
-		const actual = screen.getByTestId('chip').textContent.codePointAt();
+		const actual = screen.getByTestId('chip').textContent.codePointAt(0);
 		expect(actual).toBe(expected);
 	});
 

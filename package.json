@@ -65,6 +65,9 @@
   "devDependencies": {
     "@enact/docs-utils": "enactjs/docs-utils#feature/typescript",
     "@enact/ui-test-utils": "^4.0.5",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/invariant": "^2.2.4",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.0.0",

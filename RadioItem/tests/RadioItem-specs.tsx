@@ -10,7 +10,7 @@ describe('RadioItem Specs', () => {
 		const radioItemElement = screen.getByRole('checkbox');
 
 		const expected = 983489;
-		const actual = radioItemElement.children.item(1).textContent.codePointAt();
+		const actual = radioItemElement.children.item(1)!.textContent!.codePointAt(0);
 
 		expect(actual).toBe(expected);
 	});
@@ -24,7 +24,7 @@ describe('RadioItem Specs', () => {
 	});
 
 	test('should render a disabled RadioItem when `disabled` is true', () => {
-		render(<RadioItemBase disabled>Hello RadioItem</RadioItemBase>);
+		render(<RadioItemBase {...({disabled: true} as any)}>Hello RadioItem</RadioItemBase>);
 		const radioItem = screen.getByRole('checkbox');
 
 		expect(radioItem).toHaveAttribute('disabled');
@@ -50,7 +50,7 @@ describe('RadioItem Specs', () => {
 	});
 
 	test('should not select RadioItem with click when disabled', () => {
-		render(<RadioItem disabled>Hello RadioItem</RadioItem>);
+		render(<RadioItem {...({disabled: true} as any)}>Hello RadioItem</RadioItem>);
 		const radioItem = screen.getAllByRole('checkbox');
 
 		fireEvent.click(radioItem[0]);
