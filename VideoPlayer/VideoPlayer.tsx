@@ -167,6 +167,44 @@ let warnedOnJumpForward = false;
 let warnedOnWillJumpBackward = false;
 let warnedOnWillJumpForward = false;
 
+/**
+ * Every callback sent by {@link limestone/VideoPlayer|VideoPlayer} receives a status package,
+ * which includes an object with the following key/value pairs as the first argument:
+ *
+ * @typedef {Object} videoStatus
+ * @memberof limestone/VideoPlayer
+ * @property {String} type - Type of event that triggered this callback
+ * @property {Number} currentTime - Playback index of the media in seconds
+ * @property {Number} duration - Media's entire duration in seconds
+ * @property {Boolean} paused - Playing vs paused state. `true` means the media is paused
+ * @property {Number} playbackRate - Current playback rate, as a number
+ * @property {Number} proportionLoaded - A value between `0` and `1` representing the proportion of the media that has loaded
+ * @property {Number} proportionPlayed - A value between `0` and `1` representing the proportion of the media that has already been shown
+ *
+ * @public
+ */
+
+/**
+ * A set of playback rates when media fast forwards, rewinds, slow-forwards, or slow-rewinds.
+ *
+ * The number used for each operation is proportional to the normal playing speed, 1. If the rate
+ * is less than 1, it will play slower than normal speed, and, if it is larger than 1, it will play
+ * faster. If it is negative, it will play backward.
+ *
+ * The order of numbers represents the incremental order of rates that will be used for each
+ * operation. Note that rates can be expressed as decimals, strings, and fractions.
+ * (e.g.: `0.5`, `'0.5'`, `'1/2'`).
+ *
+ * @typedef {Object} playbackRateHash
+ * @memberof limestone/VideoPlayer
+ * @property {[]} fastForward - An array of playback rates when media fast forwards
+ * @property {[]} rewind - An array of playback rates when media rewinds
+ * @property {[]} slowForward - An array of playback rates when media slow-forwards
+ * @property {[]} slowRewind - An array of playback rates when media slow-rewinds
+ *
+ * @public
+ */
+
 export interface PlaybackRateHash {
 	fastForward?: (string | number)[];
 	rewind?: (string | number)[];

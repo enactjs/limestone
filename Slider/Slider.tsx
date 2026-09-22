@@ -690,6 +690,19 @@ const SliderDecorator = compose(
  * @ui
  * @public
  */
+
+/**
+ * Overrides the `aria-valuetext` for the slider.
+ *
+ * By default, `aria-valuetext` is set to the current value. This should only be used when
+ * the parent controls the value of the slider directly through the props.
+ *
+ * @name aria-valuetext
+ * @memberof limestone/Slider.Slider.prototype
+ * @type {String|Number}
+ * @public
+ */
+
 const Slider = SliderDecorator(SliderBase) as ComponentType<SliderBaseProps & {defaultValue?: number; onChange?: (...args: any[]) => any}> & {defaultPropValues?: Record<string, any>};
 
 Slider.defaultPropValues = sliderDefaultProps;

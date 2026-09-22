@@ -133,6 +133,15 @@ const MediaControlsBase = kind({
 	_propTypes: {} as MediaControlsBaseProps,
 
 	propTypes: /** @lends limestone/MediaPlayer.MediaControls.prototype */ {
+		/**
+		 * DOM id for the component.
+		 *
+		 * This child component `ActionGuide`'s id is generated from the id.
+		 *
+		 * @type {String}
+		 * @required
+		 * @public
+		 */
 		id: PropTypes.string.isRequired,
 
 		/**

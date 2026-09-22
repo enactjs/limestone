@@ -468,6 +468,88 @@ const InputFieldDecorator = compose(
  */
 const InputField = InputFieldDecorator(InputFieldBase) as ComponentType<InputFieldBaseProps & {defaultValue?: string | number; autoFocus?: boolean; onActivate?: (...args: any[]) => any; onDeactivate?: (...args: any[]) => any; onSpotlightDisappear?: (...args: any[]) => any; spotlightDisabled?: boolean}>;
 
+/**
+ * Focuses the internal input when the component gains 5-way focus.
+ *
+ * By default, the internal input is not editable when the component is focused via 5-way and must
+ * be selected to become interactive. In pointer mode, the input will be editable when clicked.
+ *
+ * @name autoFocus
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Boolean}
+ * @default false
+ * @public
+ */
+
+/**
+ * Applies a disabled style and prevents interacting with the component.
+ *
+ * @name disabled
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Boolean}
+ * @default false
+ * @public
+ */
+
+/**
+ * Sets the initial value.
+ *
+ * @name defaultValue
+ * @memberof limestone/Input.InputField.prototype
+ * @type {String}
+ * @public
+ */
+
+/**
+ * Blurs the input when the "enter" key is pressed.
+ *
+ * @name dismissOnEnter
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Boolean}
+ * @default false
+ * @public
+ */
+
+/**
+ * Called when the internal input is focused.
+ *
+ * @name onActivate
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Function}
+ * @param {Object} event
+ * @public
+ */
+
+/**
+ * Called when the internal input loses focus.
+ *
+ * @name onDeactivate
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Function}
+ * @param {Object} event
+ * @public
+ */
+
+/**
+ * Called when the component is removed when it had focus.
+ *
+ * @name onSpotlightDisappear
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Function}
+ * @param {Object} event
+ * @public
+ */
+
+/**
+ * Disables spotlight navigation into the component.
+ *
+ * @name spotlightDisabled
+ * @memberof limestone/Input.InputField.prototype
+ * @type {Boolean}
+ * @default false
+ * @public
+ */
+
 export default InputField;
 export {
 	InputField,

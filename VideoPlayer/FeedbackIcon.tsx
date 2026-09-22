@@ -26,6 +26,14 @@ const FeedbackIconBase = kind({
 	_propTypes: {} as FeedbackIconBaseProps,
 
 	propTypes: /** @lends limestone/VideoPlayer.FeedbackIcon.prototype */ {
+		/**
+		 * Refers to one of the following possible media playback states.
+		 * `'play'`, `'pause'`, `'rewind'`, `'fastForward'` ,
+		 * `'jumpBackward'`, `'jumpForward'`, `'jumpToStart'`, `'jumpToEnd'`, `'stop'`.
+		 *
+		 * @type {('play'|'pause'|'rewind'|'fastForward'|'jumpBackward'|'jumpForward'|'jumpToStart'|'jumpToEnd'|'stop')}
+		 * @public
+		 */
 		children: PropTypes.oneOf(Object.keys(iconMap)) as PropTypes.Validator<string | undefined>
 	},
 
