@@ -1,0 +1,274 @@
+/**
+ * Provides Limestone-themed indeterminate progress indicator (spinner) components and behaviors.
+ *
+ * Used for indicating to the user that something is busy and interaction is temporarily suspended.
+ *
+ * @example
+ * <Spinner>Loading message...</Spinner>
+ *
+ * @module limestone/Spinner
+ * @exports Spinner
+ * @exports SpinnerBase
+ * @exports SpinnerDecorator
+ */
+import kind from '@enact/core/kind';
+import hoc from '@enact/core/hoc';
+import {checkPropTypes} from '@enact/core/util';
+import Spotlight from '@enact/spotlight';
+import Pause from '@enact/spotlight/Pause';
+import Pure from '@enact/ui/internal/Pure';
+import UiSpinnerBase from '@enact/ui/Spinner';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+import {useEffect, useMemo} from 'react';
+import type {ComponentType, ReactNode} from 'react';
+
+import $L from '../internal/$L';
+import Marquee from '../Marquee';
+import Skinnable from '../Skinnable';
+
+import componentCss from './Spinner.module.less';
+
+export interface SpinnerCoreProps {
+	'aria-label'?: string;
+	children?: ReactNode;
+	css?: Record<string, string>;
+}
+
+/**
+ * A component that shows spinning balls, with optional text as children.
+ *
+ * @class SpinnerCore
+ * @memberof limestone/Spinner
+ * @ui
+ * @private
+ */
+const SpinnerCore = kind({
+	name: 'SpinnerCore',
+
+	_propTypes: {} as SpinnerCoreProps,
+
+	propTypes: {
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>
+	},
+
+	styles: {
+		css: componentCss
+	},
+
+	computed: {
+		'aria-label': ({['aria-label']: aria, children}) => {
+			if (aria) {
+				return aria;
+			} else if (!children) {
+				return $L('Loading');
+			}
+		}
+	},
+
+	render: ({children, css, ...rest}) => (
+		<div aria-live="off" role="alert" {...rest}>
+			<div className={css!.bg}>
+				<div className={css!.decorator}>
+					<div className={css!.fan1} />
+					<div className={css!.fan2} />
+					<div className={css!.fan3} />
+					<div className={css!.fan4} />
+					<div className={css!.cap} />
+				</div>
+			</div>
+			{children ?
+				<Marquee className={css!.client} marqueeOn="render" alignment="center">
+					{children}
+				</Marquee> :
+				null
+			}
+		</div>
+	)
+});
+
+export interface SpinnerBaseProps {
+	'aria-label'?: string;
+	blockClickOn?: 'screen' | 'container' | null;
+	centered?: boolean;
+	children?: ReactNode;
+	css?: Record<string, string>;
+	size?: 'medium' | 'small';
+	transparent?: boolean;
+}
+
+/**
+ * The base component, defining all the properties.
+ *
+ * @class SpinnerBase
+ * @memberof limestone/Spinner
+ * @extends ui/Spinner.SpinnerBase
+ * @ui
+ * @public
+ */
+const SpinnerBase = kind({
+	name: 'Spinner',
+
+	_propTypes: {} as SpinnerBaseProps,
+
+	propTypes: /** @lends limestone/Spinner.SpinnerBase.prototype */ {
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * * `spinner` - The root component class, unless there is a scrim. The scrim and floating
+		 *	layer can be a sibling or parent to this root "spinner" element.
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		/**
+		 * Customize the size of this component.
+		 *
+		 * Recommended usage is "medium" (default) for standalone and popup scenarios, while "small"
+		 * is best suited for use inside other elements, like {@link limestone/Item.Item}.
+		 *
+		 * @type {('medium'|'small')}
+		 * @default 'medium'
+		 * @public
+		 */
+		size: PropTypes.oneOf(['medium', 'small']) as PropTypes.Validator<'medium' | 'small' | undefined>,
+
+		/**
+		 * Removes the background color (making it transparent).
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		transparent: PropTypes.bool
+	},
+
+	defaultProps: {
+		size: 'medium',
+		transparent: false
+	},
+
+	styles: {
+		css: componentCss,
+		publicClassNames: 'spinner'
+	},
+
+	computed: {
+		className: ({children, size, transparent, styler}) => styler.append(
+			size,
+			{content: !!children, transparent}
+		)
+	},
+
+	render: ({children, css, ...rest}) => {
+		const restProps = rest as Record<string, any>;
+		delete restProps.transparent;
+
+		return (
+			<UiSpinnerBase
+				{...restProps}
+				css={css as any}
+				component={SpinnerCore as any}
+			>
+				{children}
+			</UiSpinnerBase>
+		);
+	}
+});
+
+/**
+ * A higher-order component that pauses spotlight when `blockClickOn` prop is `'screen'`.
+ *
+ * Resumes spotlight when unmounted. However, spotlight is not paused when `blockClickOn` prop is
+ * `'container'`. Blocking spotlight within the container is up to app implementation.
+ *
+ * @hoc
+ * @memberof limestone/Spinner
+ * @private
+ */
+const SpinnerSpotlightDecorator = hoc((config, Wrapped) => {
+	const SpinnerSpotlight = (props: Record<string, any>) => {
+		checkPropTypes(SpinnerSpotlight, props);
+
+		const paused = useMemo(() => new Pause('Spinner'), []);
+		const {blockClickOn} = props;
+		const current = Spotlight.getCurrent();
+
+		if (blockClickOn === 'screen') {
+			paused.pause();
+			if (current) {
+				(current as HTMLElement).blur();
+			}
+		}
+
+		useEffect(() => {
+			return () => {
+				if (blockClickOn === 'screen') {
+					Spotlight.focus();
+					paused.resume();
+				}
+			};
+		}, [blockClickOn, paused]);
+
+		return (
+			<Wrapped {...props} />
+		);
+	};
+
+	SpinnerSpotlight.displayName = 'SpinnerSpotlightDecorator';
+
+	SpinnerSpotlight.propTypes = /** @lends limestone/Spinner.Spinner.prototype */ {
+		/**
+		 * Determines how far the click-blocking should extend.
+		 *
+		 * It can be either `'screen'`, `'container'`, or `null`. `'screen'` pauses spotlight.
+		 * Changing this property to `'screen'` after creation is not supported.
+		 *
+		 * @type {('screen'|'container')}
+		 * @default null
+		 * @public
+		 */
+		blockClickOn: PropTypes.oneOf(['screen', 'container', null])
+	};
+
+	return SpinnerSpotlight;
+});
+
+/**
+ * Limestone-specific Spinner behaviors to apply to {@link limestone/Spinner.Spinner|Spinner}.
+ *
+ * @hoc
+ * @memberof limestone/Spinner
+ * @mixes limestone/Skinnable.Skinnable
+ * @public
+ */
+const SpinnerDecorator = compose(
+	Pure,
+	SpinnerSpotlightDecorator,
+	Skinnable
+);
+
+/**
+ * A Limestone-styled Spinner.
+ *
+ * @class Spinner
+ * @memberof limestone/Spinner
+ * @extends limestone/Spinner.SpinnerBase
+ * @mixes limestone/Spinner.SpinnerDecorator
+ * @ui
+ * @public
+ */
+const Spinner = SpinnerDecorator(SpinnerBase) as ComponentType<SpinnerBaseProps>;
+
+
+export default Spinner;
+export {
+	Spinner,
+	SpinnerBase,
+	SpinnerDecorator
+};
