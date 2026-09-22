@@ -31,7 +31,7 @@ const buttonSmokeTests = [
 		<Button shadowed icon="plus" minWidth={false} />,
 		<Button shadowed icon="minus" minWidth={false} />,
 		<Button shadowed backgroundOpacity="transparent" minWidth={false}>click me</Button>,
-		<Button disabled icon="forward" size="samll" tooltipText="tooltip" tooltipType="transparent">click me</Button>
+		<Button disabled icon="forward" size="small" tooltipText="tooltip" tooltipType="transparent">click me</Button>
 	])
 
 ];
