@@ -77,11 +77,6 @@ declare module '@enact/ui/internal/Pure' {
 	export default Pure;
 }
 
-declare module '@enact/ui/VirtualList/VirtualListBasic.js' {
-	export const itemSizesShape: any;
-	export const gridListItemSizeShape: any;
-}
-
 declare module '*.module.less' {
 	const classNames: {[key: string]: string};
 	export default classNames;
