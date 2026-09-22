@@ -1,6 +1,9 @@
 'use strict';
 
 /**
+ * Kept as .cjs so `enact pack --framework` does not glob it as an @enact entry
+ * (that would pull in docs-utils → shelljs → child_process).
+ *
  * `@enact/docs-utils` standalone mode only searches `*.js`. After the TypeScript
  * migration, module JSDoc also lives in `.ts`/`.tsx`, so those files must be
  * parsed or `@mixes`/`@extends`/`@link` targets resolve as invalid.
