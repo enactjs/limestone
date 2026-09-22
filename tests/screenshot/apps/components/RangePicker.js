@@ -128,10 +128,10 @@ const rangePickerFocusTests = [
 	// *************************************************************
 	// joined and focused
 	// *************************************************************
-	rangePickerJoinedTests[0],
-	rangePickerDisabledTests[4],
-	rangePickerJoinedTests[11],
-	rangePickerJoinedTests[4]
+	rangePickerJoinedTests[0],     // joined
+	rangePickerDisabledTests[4], // joined + disabled
+	rangePickerJoinedTests[13],  // joined + vertical
+	rangePickerJoinedTests[3]     // joined + width="medium"
 ];
 
 const rangePickerRtlNegativeTests = [
