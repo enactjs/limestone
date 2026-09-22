@@ -21,21 +21,42 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children} from 'react';
+import {Children, createElement} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import $L from '../internal/$L';
 import {CheckboxBase} from '../Checkbox';
 import {ItemBase, ItemDecorator} from '../Item';
+import type {ItemBaseProps} from '../Item';
 import Skinnable from '../Skinnable';
 
 import componentCss from './CheckboxItem.module.less';
 
-const hasChildren = (children) => (Children.toArray(children).filter(Boolean).length > 0);
+const hasChildren = (children: ReactNode) => (Children.toArray(children).filter(Boolean).length > 0);
 
-const Item = ItemDecorator(ItemBase);
+// `ItemDecorator` is a ramda `compose()` chain, which doesn't preserve `kind()`'s overloaded
+// factory typing through composition (a known ramda/TS limitation -- see Item.tsx's own final
+// export, which casts for the same reason). Cast here too rather than leaving `Item` untyped.
+const Item = ItemDecorator(ItemBase) as ComponentType<ItemBaseProps>;
+
+// `@enact/ui/Group`'s own final export isn't cast to a `ComponentType`, so it isn't usable as a
+// JSX component as-is; cast locally rather than reaching into the `ui` package for this.
+const GroupComponent = Group as ComponentType<any>;
 
 const Checkbox = Skinnable(CheckboxBase);
 Checkbox.displayName = 'Checkbox';
+
+export interface CheckboxItemBaseProps {
+	children?: ReactNode;
+	css?: Record<string, string>;
+	formCheckbox?: boolean;
+	icon?: string | Record<string, string>;
+	indeterminate?: boolean;
+	indeterminateIcon?: string | Record<string, string>;
+	label?: ReactNode;
+	selected?: boolean;
+	slotBefore?: ReactNode;
+}
 
 /**
  * A Limestone-styled item with a checkbox component.
@@ -63,6 +84,8 @@ Checkbox.displayName = 'Checkbox';
 const CheckboxItemBase = kind({
 	name: 'CheckboxItem',
 
+	_propTypes: {} as CheckboxItemBaseProps,
+
 	propTypes: /** @lends limestone/CheckboxItem.CheckboxItemBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -75,7 +98,7 @@ const CheckboxItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Enables the "formCheckbox" state.
@@ -101,7 +124,7 @@ const CheckboxItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Enables the "indeterminate" state.
@@ -130,7 +153,7 @@ const CheckboxItemBase = kind({
 		 * @type {String}
 		 * @public
 		 */
-		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * If true the checkbox will be selected.
@@ -160,35 +183,41 @@ const CheckboxItemBase = kind({
 	},
 
 	computed: {
-		className: ({formCheckbox, label, slotBefore, styler}) => styler.append({
+		className: ({formCheckbox, label, slotBefore, styler}: Record<string, any>) => styler.append({
 			formCheckbox: formCheckbox === true,
 			hasLabel: (label != null && label.length > 0),
 			hasSlotBefore: hasChildren(slotBefore)
 		}),
-		label: ({label}) => label != null && label.length > 0 ? label : null
+		label: ({label}: Record<string, any>) => label != null && label.length > 0 ? label : null
 	},
 
 	render: ({children, css, formCheckbox, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
 		<Item
-			data-webos-voice-intent="SelectCheckItem"
-			role="checkbox"
-			{...rest}
-			aria-checked={selected}
-			css={css}
-			selected={selected}
+			{...({
+				'data-webos-voice-intent': 'SelectCheckItem',
+				role: 'checkbox',
+				...rest,
+				'aria-checked': selected,
+				css,
+				selected
+			} as Record<string, any>)}
 		>
-			<slotBefore>
+			{/* `Slottable` (used by the decorator below) extracts this into the `slotBefore` prop by
+			  * matching the element's string `type`, exactly like a DOM tag -- but it isn't a real
+			  * intrinsic element, so it's built with `createElement` rather than JSX to avoid needing
+			  * a `slotBefore` entry in the global JSX namespace. */}
+			{createElement('slotBefore', null,
 				<Checkbox
-					className={slotBefore ? css.checkbox : null}
+					className={slotBefore ? css!.checkbox : null}
 					selected={selected}
 					indeterminate={indeterminate}
 					indeterminateIcon={indeterminateIcon}
 					standalone={formCheckbox}
 				>
 					{icon}
-				</Checkbox>
-				{slotBefore}
-			</slotBefore>
+				</Checkbox>,
+				slotBefore
+			)}
 			{children}
 		</Item>
 	)
@@ -225,7 +254,14 @@ const CheckboxItem = Pure(
 	CheckboxItemDecorator(
 		CheckboxItemBase
 	)
-);
+) as ComponentType<CheckboxItemBaseProps>;
+
+export interface CheckboxItemGroupProps {
+	children: any;
+	groupId?: string;
+	itemProps?: Record<string, any>;
+	[key: string]: any;
+}
 
 /**
  * A container that surrounds multiple CheckboxItems.
@@ -238,14 +274,14 @@ const CheckboxItem = Pure(
  * @ui
  * @public
  */
-const CheckboxItemGroup = (props) => {
+const CheckboxItemGroup = (props: CheckboxItemGroupProps) => {
 	checkPropTypes(CheckboxItemGroup, props);
 	const {children, groupId, itemProps, ...rest} = props;
 
 	if (typeof children[0] === 'string') {  // The case of multiple checkbox items are represented by string array instead of `CheckboxItem` components using `ui/Group`
 		return (
 			<div role="region" aria-labelledby={groupId || "checkboxItemGroup"}>
-				<Group
+				<GroupComponent
 					{...rest}
 					id={groupId || "checkboxItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
@@ -254,7 +290,7 @@ const CheckboxItemGroup = (props) => {
 					itemProps={{...itemProps}}
 				>
 					{children}
-				</Group>
+				</GroupComponent>
 			</div>
 		);
 	} else {  // The case of multiple checkbox items are represented by `CheckboxItem` components
@@ -266,7 +302,7 @@ const CheckboxItemGroup = (props) => {
 					id={groupId || "checkboxItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
 				>
-					{children.map((child, index) => {
+					{children.map((child: any, index: number) => {
 						const {children: itemValue, ...childRest} = child.props;
 						return <CheckboxItem key={index} {...childRest} {...itemProps}>{itemValue}</CheckboxItem>;
 					})}

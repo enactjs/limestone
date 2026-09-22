@@ -19,6 +19,12 @@ const hours12 = [
 	'12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'
 ];
 
+interface HourPickerProps {
+	hasMeridiem?: boolean;
+	value?: number;
+	[key: string]: any;
+}
+
 /**
  * {@link limestone/TimePicker/TimePickerBase.HourPicker} is a utility component to prevent the
  * animation of the picker when the display text doesn't change for 12-hour locales.
@@ -28,7 +34,7 @@ const hours12 = [
  * @ui
  * @private
  */
-const HourPicker = (props) => {
+const HourPicker = (props: HourPickerProps) => {
 	checkPropTypes(HourPicker, props);
 	const {hasMeridiem, value, ...rest} = props;
 	const hours = hasMeridiem ? hours12 : hours24;
@@ -37,7 +43,7 @@ const HourPicker = (props) => {
 	const [prevValue, setPrevValue] = useState(value);
 
 	if (prevValue !== value) {
-		setNoAnimation(hours[prevValue] === hours[value]);
+		setNoAnimation(hours[prevValue as number] === hours[value as number]);
 		setPrevValue(value);
 	}
 
@@ -53,6 +59,30 @@ HourPicker.propTypes = {
 	value: PropTypes.number
 };
 
+export interface TimePickerBaseProps {
+	hour: number;
+	meridiem: number;
+	minute: number;
+	order: ('h' | 'k' | 'm' | 'a')[];
+	'data-webos-voice-disabled'?: boolean;
+	disabled?: boolean;
+	hourAriaLabel?: string;
+	label?: string;
+	meridiemAriaLabel?: string;
+	meridiemLabel?: string;
+	meridiems?: string[];
+	minuteAriaLabel?: string;
+	noLabel?: boolean;
+	onChangeHour?: (...args: any[]) => any;
+	onChangeMeridiem?: (...args: any[]) => any;
+	onChangeMinute?: (...args: any[]) => any;
+	onSpotlightDisappear?: (...args: any[]) => any;
+	onSpotlightLeft?: (...args: any[]) => any;
+	onSpotlightRight?: (...args: any[]) => any;
+	rtl?: boolean;
+	spotlightDisabled?: boolean;
+}
+
 /**
 * {@link limestone/TimePicker.TimePickerBase} is the stateless functional time picker
 * component. Should not be used directly but may be composed within another component as it is
@@ -65,6 +95,8 @@ HourPicker.propTypes = {
 */
 const TimePickerBase = kind({
 	name: 'TimePickerBase',
+
+	_propTypes: {} as TimePickerBaseProps,
 
 	propTypes: /** @lends limestone/TimePicker.TimePickerBase.prototype */ {
 		/**
@@ -103,7 +135,7 @@ const TimePickerBase = kind({
 		 * @required
 		 * @public
 		 */
-		order: PropTypes.arrayOf(PropTypes.oneOf(['h', 'k', 'm', 'a'])).isRequired,
+		order: PropTypes.arrayOf(PropTypes.oneOf(['h', 'k', 'm', 'a'])).isRequired as PropTypes.Validator<('h' | 'k' | 'm' | 'a')[]>,
 
 		/**
 		 * Disables voice control.
@@ -167,7 +199,7 @@ const TimePickerBase = kind({
 		 * @required
 		 * @public
 		 */
-		meridiems: PropTypes.arrayOf(PropTypes.string),
+		meridiems: PropTypes.arrayOf(PropTypes.string) as PropTypes.Validator<string[] | undefined>,
 
 		/**
 		 * The "aria-label" for the minute picker.
@@ -269,7 +301,7 @@ const TimePickerBase = kind({
 
 	computed: {
 		hasMeridiem: ({order}) => order.indexOf('a') >= 0,
-		meridiemPickerWidth: ({meridiem, meridiems}) => meridiems?.[meridiem].length * 2
+		meridiemPickerWidth: ({meridiem, meridiems}) => meridiems?.[meridiem].length! * 2
 	},
 
 	render: ({
@@ -302,7 +334,7 @@ const TimePickerBase = kind({
 			minuteAccessibilityHint = $L('minute');
 
 		if (noLabel) {
-			delete rest.label;
+			delete (rest as Record<string, any>).label;
 		}
 
 		return (
@@ -341,7 +373,11 @@ const TimePickerBase = kind({
 										width={4}
 										wrap
 									/>
-									<span className={css.timeSeparator} disabled={disabled}>:</span>
+									{/* `disabled` isn't a real `<span>` attribute per React's DOM typings, but the
+									  * original markup renders it anyway (harmless at runtime, used for styling
+									  * hooks), so the props are folded into one object and cast rather than
+									  * dropping the attribute. */}
+									<span {...({className: css.timeSeparator, disabled} as Record<string, any>)}>:</span>
 								</Fragment>
 							);
 						case 'm':

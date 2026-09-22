@@ -17,19 +17,33 @@ import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children} from 'react';
+import {Children, createElement} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Skinnable from '../Skinnable';
 import {CheckboxBase} from '../Checkbox';
 import {ItemBase, ItemDecorator} from '../Item';
+import type {ItemBaseProps} from '../Item';
 
 import componentCss from './FormCheckboxItem.module.less';
 
-const Item = ItemDecorator(ItemBase);
+// See the identical note in CheckboxItem.tsx: ramda's compose() doesn't preserve kind()'s
+// overloaded factory typing through composition, so this needs an explicit cast.
+const Item = ItemDecorator(ItemBase) as ComponentType<ItemBaseProps>;
 
 const Checkbox = Skinnable(CheckboxBase);
 
-const hasChildren = (children) => (Children.toArray(children).filter(Boolean).length > 0);
+const hasChildren = (children: ReactNode) => (Children.toArray(children).filter(Boolean).length > 0);
+
+export interface FormCheckboxItemBaseProps {
+	children?: ReactNode;
+	css?: Record<string, string>;
+	icon?: string | Record<string, string>;
+	indeterminate?: boolean;
+	indeterminateIcon?: string | Record<string, string>;
+	selected?: boolean;
+	slotBefore?: ReactNode;
+}
 
 /**
  * A Limestone-styled form item with a checkbox component.
@@ -45,6 +59,8 @@ const hasChildren = (children) => (Children.toArray(children).filter(Boolean).le
 const FormCheckboxItemBase = kind({
 	name: 'FormCheckboxItem',
 
+	_propTypes: {} as FormCheckboxItemBaseProps,
+
 	propTypes: /** @lends limestone/FormCheckboxItem.FormCheckboxItemBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -57,7 +73,7 @@ const FormCheckboxItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * The icon content.
@@ -72,7 +88,7 @@ const FormCheckboxItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Enables the "indeterminate" state.
@@ -101,7 +117,7 @@ const FormCheckboxItemBase = kind({
 		 * @type {String}
 		 * @public
 		 */
-		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Controls the presence of the checkmark icon.
@@ -132,25 +148,29 @@ const FormCheckboxItemBase = kind({
 
 	render: ({children, css, icon, indeterminate, indeterminateIcon, selected, slotBefore, ...rest}) => (
 		<Item
-			data-webos-voice-intent="SelectCheckItem"
-			role="checkbox"
-			{...rest}
-			aria-checked={selected}
-			css={css}
-			selected={selected}
+			{...({
+				'data-webos-voice-intent': 'SelectCheckItem',
+				role: 'checkbox',
+				...rest,
+				'aria-checked': selected,
+				css,
+				selected
+			} as Record<string, any>)}
 		>
-			<slotBefore>
+			{/* See the identical note in CheckboxItem.tsx: built with `createElement` rather than
+			  * JSX since `slotBefore` is a `Slottable` slot name, not a real intrinsic element. */}
+			{createElement('slotBefore', null,
 				<Checkbox
-					className={css.checkbox}
+					className={css!.checkbox}
 					indeterminate={indeterminate}
 					indeterminateIcon={indeterminateIcon}
 					selected={selected}
 					standalone
 				>
 					{icon}
-				</Checkbox>
-				{slotBefore}
-			</slotBefore>
+				</Checkbox>,
+				slotBefore
+			)}
 			{children}
 		</Item>
 	)
@@ -187,7 +207,7 @@ const FormCheckboxItem = Pure(
 	FormCheckboxItemDecorator(
 		FormCheckboxItemBase
 	)
-);
+) as ComponentType<FormCheckboxItemBaseProps>;
 
 export default FormCheckboxItem;
 export {

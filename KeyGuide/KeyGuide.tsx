@@ -27,6 +27,7 @@ import {Cell, Row} from '@enact/ui/Layout';
 import Repeater from '@enact/ui/Repeater';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import type {ComponentType, ReactNode} from 'react';
 
 import BodyText from '../BodyText';
 import Icon from '../Icon';
@@ -39,15 +40,27 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = (props) => {
+const ImageItemBase = (props: {children?: ReactNode; imageSrc?: string}) => {
 	checkPropTypes(ImageItemBase, props);
 	const {children, imageSrc} = props;
 
 	return (
 		<Row className={componentCss.imageItem}>
-			<Cell shrink className={componentCss.image} src={imageSrc} component={Image} />
+			<Cell
+				{...({
+					className: componentCss.image,
+					component: Image,
+					shrink: true,
+					src: imageSrc
+				} as Record<string, any>)}
+			/>
 			<Cell shrink={false} className={componentCss.text}>
-				<BodyText className={componentCss.bodyText}>{children}</BodyText>
+				<BodyText
+					{...({
+						className: componentCss.bodyText,
+						children
+					} as Record<string, any>)}
+				/>
 			</Cell>
 		</Row>
 	);
@@ -57,6 +70,13 @@ ImageItemBase.propTypes = {
 	children: PropTypes.node,
 	imageSrc: PropTypes.string
 };
+
+export interface KeyGuideBaseProps {
+	arrowPosition?: 'bottom' | 'left' | 'right' | 'top' | 'none';
+	children?: any;
+	css?: Record<string, string>;
+	open?: boolean;
+}
 
 /**
  * A Key Guide component.
@@ -72,6 +92,8 @@ ImageItemBase.propTypes = {
 const KeyGuideBase = kind({
 	name: 'KeyGuide',
 
+	_propTypes: {} as KeyGuideBaseProps,
+
 	propTypes: /** @lends limestone/KeyGuide.KeyGuideBase.prototype */ {
 		/**
 		 * The direction of the arrow.
@@ -83,7 +105,7 @@ const KeyGuideBase = kind({
 		 * @public
 		 * @default 'none'
 		 */
-		arrowPosition: PropTypes.oneOf(['bottom', 'left', 'right', 'top', 'none']),
+		arrowPosition: PropTypes.oneOf(['bottom', 'left', 'right', 'top', 'none']) as PropTypes.Validator<'bottom' | 'left' | 'right' | 'top' | 'none' | undefined>,
 
 		/**
 		 * The items to be displayed in the `KeyGuide` when `open`.
@@ -108,7 +130,7 @@ const KeyGuideBase = kind({
 				children: EnactPropTypes.renderable.isRequired,
 				imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
 			})
-		]),
+		]) as PropTypes.Validator<any>,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -122,7 +144,7 @@ const KeyGuideBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Controls the visibility of the KeyGuide.
@@ -142,13 +164,13 @@ const KeyGuideBase = kind({
 			if (children?.imageSrc) {
 				return children;
 			} else {
-				return children ? children.map(({icon, ...child}) => {
+				return children ? children.map(({icon, ...child}: Record<string, any>) => {
 					const isColorKey = colorKeys.includes(icon);
 					return {
 						...child,
 						slotBefore: isColorKey ? (
-							<div className={css[icon]} />
-						) : <Icon className={css.icon} size="large" >{icon}</Icon>
+							<div className={css![icon]} />
+						) : <Icon className={css!.icon} size="large" >{icon}</Icon>
 					};
 				}) : [];
 			}
@@ -167,7 +189,8 @@ const KeyGuideBase = kind({
 	},
 
 	render: ({className, css, children, open, ...rest}) => {
-		delete rest.arrowPosition;
+		const restProps = rest as Record<string, any>;
+		delete restProps.arrowPosition;
 
 		return (
 			<FloatingLayer
@@ -177,7 +200,7 @@ const KeyGuideBase = kind({
 			>
 				{Array.isArray(children) ? (
 					<Repeater
-						{...rest}
+						{...restProps}
 						component="div"
 						className={className}
 						childComponent={ItemBase}
@@ -186,7 +209,7 @@ const KeyGuideBase = kind({
 						{children}
 					</Repeater>
 				) : (
-					<div {...rest} className={className}>
+					<div {...restProps} className={className}>
 						<ImageItemBase {...children} />
 					</div>
 				)}
@@ -235,7 +258,7 @@ const KeyGuideDecorator = compose(
  * @ui
  * @public
  */
-const KeyGuide = KeyGuideDecorator(KeyGuideBase);
+const KeyGuide = KeyGuideDecorator(KeyGuideBase) as ComponentType<KeyGuideBaseProps>;
 
 export default KeyGuide;
 export {

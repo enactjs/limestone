@@ -15,11 +15,22 @@ import Spottable from '@enact/spotlight/Spottable';
 import Touchable from '@enact/ui/Touchable';
 import Toggleable from '@enact/ui/Toggleable';
 import compose from 'ramda/src/compose';
+import type {ComponentType} from 'react';
 
 import Icon from '../Icon';
 import Skinnable from '../Skinnable';
 
 import componentCss from './Checkbox.module.less';
+
+export interface CheckboxBaseProps {
+	children?: string | Record<string, string>;
+	css?: Record<string, string>;
+	disabled?: boolean;
+	indeterminate?: boolean;
+	indeterminateIcon?: string | Record<string, string>;
+	selected?: boolean;
+	standalone?: boolean;
+}
 
 /**
  * A checkbox component, ready to use in Limestone applications.
@@ -41,6 +52,8 @@ import componentCss from './Checkbox.module.less';
 const CheckboxBase = kind({
 	name: 'Checkbox',
 
+	_propTypes: {} as CheckboxBaseProps,
+
 	propTypes: /** @lends limestone/Checkbox.CheckboxBase.prototype */ {
 		/**
 		 * The icon displayed when `selected`.
@@ -57,7 +70,7 @@ const CheckboxBase = kind({
 		 * @default	'checkmark'
 		 * @public
 		 */
-		children: PropTypes.string,
+		children: PropTypes.string as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -71,7 +84,7 @@ const CheckboxBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Disables Checkbox and becomes non-interactive.
@@ -111,7 +124,7 @@ const CheckboxBase = kind({
 		 * @default 'minus'
 		 * @public
 		 */
-		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		indeterminateIcon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Sets whether this control is in the 'on' or 'off' state. `true` for 'on', `false` for 'off'.
@@ -150,22 +163,23 @@ const CheckboxBase = kind({
 	},
 
 	render: ({children, css, disabled, selected, ...rest}) => {
-		delete rest.indeterminate;
-		delete rest.indeterminateIcon;
-		delete rest.standalone;
+		const restProps = rest as Record<string, any>;
+		delete restProps.indeterminate;
+		delete restProps.indeterminateIcon;
+		delete restProps.standalone;
 
 		return (
 			<div
-				{...rest}
+				{...restProps}
 				aria-checked={selected}
 				aria-disabled={disabled}
-				disabled={disabled}
+				{...({disabled} as any)}
 				role="checkbox"
 			>
-				<div className={css.bg} />
+				<div className={css!.bg} />
 				<Icon
 					size="tiny"
-					className={css.icon}
+					className={css!.icon}
 				>
 					{children}
 				</Icon>
@@ -205,7 +219,7 @@ const CheckboxDecorator = compose(
  * @ui
  * @public
  */
-const Checkbox = CheckboxDecorator(CheckboxBase);
+const Checkbox = CheckboxDecorator(CheckboxBase) as ComponentType<CheckboxBaseProps>;
 
 export default Checkbox;
 export {

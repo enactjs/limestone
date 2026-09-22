@@ -6,6 +6,7 @@ import DateFmt from 'ilib/lib/DateFmt';
 import LocaleInfo from 'ilib/lib/LocaleInfo';
 import PropTypes from 'prop-types';
 import {useCallback, useMemo} from 'react';
+import type {ComponentType} from 'react';
 
 import $L from '../internal/$L';
 
@@ -17,17 +18,25 @@ const SELECTED_DAY_TYPES = {
 	SELECTED_NONE: 4
 };
 
-function localizeDay (day, firstDayOfWeek) {
+interface LocaleState {
+	abbreviatedDayNames: string[];
+	firstDayOfWeek: number;
+	fullDayNames: string[];
+	weekendEnd: number;
+	weekendStart: number;
+}
+
+function localizeDay (day: number, firstDayOfWeek: number): number {
 	return ((day - firstDayOfWeek + 7) % 7);
 }
 
-function generalizeDay (day, firstDayOfWeek) {
+function generalizeDay (day: number, firstDayOfWeek: number): number {
 	return ((day + firstDayOfWeek) % 7);
 }
 
 // Accepts a localized array with "firstDayOfWeek" at index 0 and returns a
 // "Sunday at index 0" array.
-function generalizeSelected (selected, state) {
+function generalizeSelected (selected: number[] | undefined, state: LocaleState): number[] | undefined {
 	if (state.firstDayOfWeek === 0 || !selected) {
 		return selected;
 	}
@@ -37,7 +46,7 @@ function generalizeSelected (selected, state) {
 
 // Accepts a "Sunday at index 0" selected array or number and returns a
 // localized array or number.
-function localizeSelected (selected, state) {
+function localizeSelected (selected: number | number[] | undefined, state: LocaleState): number | number[] | undefined {
 	if (state.firstDayOfWeek === 0 || selected == null) {
 		return selected;
 	}
@@ -49,7 +58,7 @@ function localizeSelected (selected, state) {
 	return selected.map(v => localizeDay(v, state.firstDayOfWeek));
 }
 
-const memoLocaleState = memoize((key, dayNameLength) => {
+const memoLocaleState = memoize((key: string, dayNameLength: string): LocaleState => {
 	const df = new DateFmt({length: 'full'});
 	const sdf = new DateFmt({length: dayNameLength});
 	const li = new LocaleInfo(ilib.getLocale());
@@ -57,7 +66,7 @@ const memoLocaleState = memoize((key, dayNameLength) => {
 	const days = sdf.getDaysOfWeek();
 	const firstDayOfWeek = li.getFirstDayOfWeek();
 
-	const state = {
+	const state: LocaleState = {
 		abbreviatedDayNames: days,
 		firstDayOfWeek,
 		fullDayNames: daysOfWeek,
@@ -77,8 +86,8 @@ const memoLocaleState = memoize((key, dayNameLength) => {
 });
 
 // Accepts an array of names in "sunday at index 0" and returns a localized array
-function orderDays (names, state) {
-	const result = [];
+function orderDays (names: string[], state: LocaleState): string[] {
+	const result: string[] = [];
 	for (let i = 0; i < 7; i++) {
 		const index = generalizeDay(i, state.firstDayOfWeek);
 		result[i] = names[index];
@@ -87,7 +96,7 @@ function orderDays (names, state) {
 	return result;
 }
 
-function getLocaleState (dayNameLength, locale) {
+function getLocaleState (dayNameLength: string, locale: string): LocaleState {
 	if (typeof window === 'undefined') {
 		return {
 			abbreviatedDayNames: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
@@ -110,7 +119,7 @@ function getLocaleState (dayNameLength, locale) {
  *
  * @returns {Number}
  */
-function calcSelectedDayType (selected, state) {
+function calcSelectedDayType (selected: number[] | undefined, state: LocaleState): number {
 	if (selected == null || !Array.isArray(selected)) return SELECTED_DAY_TYPES.SELECTED_NONE;
 
 	let
@@ -151,7 +160,7 @@ function calcSelectedDayType (selected, state) {
  *
  * @returns {String} "Every Day", "Every Weekend", "Every Week", list of days or `noneText`
  */
-function getSelectedDayString (selected, noneText = '', dayNameLength = 'long') {
+function getSelectedDayString (selected?: number | number[] | null, noneText = '', dayNameLength = 'long'): string | undefined {
 	const
 		everyDayText = $L('Every Day'),
 		everyWeekdayText = $L('Every Weekday'),
@@ -160,12 +169,13 @@ function getSelectedDayString (selected, noneText = '', dayNameLength = 'long') 
 
 	const state = getLocaleState(dayNameLength, locale);
 
+	let selectedArr: number[] | undefined;
 	if (selected != null) {
-		selected = coerceArray(selected);
+		selectedArr = coerceArray(selected);
 	}
 
-	const type = calcSelectedDayType(selected, state);
-	const format = (list) => {
+	const type = calcSelectedDayType(selectedArr, state);
+	const format = (list: number[]) => {
 		let separator = locale === 'fa-IR' ? '، ' : ', ';
 
 		// sort the selected array with firstDayOfWeek first before mapping to text
@@ -184,7 +194,7 @@ function getSelectedDayString (selected, noneText = '', dayNameLength = 'long') 
 		case SELECTED_DAY_TYPES.EVERY_WEEKDAY :
 			return everyWeekdayText;
 		case SELECTED_DAY_TYPES.SELECTED_DAYS :
-			return format(selected);
+			return format(selectedArr!);
 		case SELECTED_DAY_TYPES.SELECTED_NONE :
 			return noneText;
 	}
@@ -194,6 +204,15 @@ const daySelectorDecoratorDefaultProps = {
 	dayNameLength: 'long',
 	disabled: false
 };
+
+interface DaySelectorDecoratorProps {
+	'aria-label'?: string;
+	dayNameLength?: 'short' | 'medium' | 'long' | 'full';
+	disabled?: boolean;
+	locale?: string;
+	onSelect?: (...args: any[]) => any;
+	selected?: number | number[];
+}
 
 /**
  * Applies Limestone specific behaviors to {@link limestone/DayPicker.DayPicker|DayPicker}.
@@ -207,19 +226,19 @@ const daySelectorDecoratorDefaultProps = {
  * @omit defaultValue
  * @private
  */
-const DaySelectorDecorator = hoc((config, Wrapped) => {
-	const DaySelector = (props) => {
+const DaySelectorDecorator = hoc((config: any, Wrapped: ComponentType<any>) => {
+	const DaySelector = (props: DaySelectorDecoratorProps) => {
 		const daySelectorDecoratorProps = useMemo(() => setDefaultProps(props, daySelectorDecoratorDefaultProps), [props]);
 		checkPropTypes(DaySelector, daySelectorDecoratorProps);
 
-		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps;
+		const {dayNameLength, locale, selected, ...rest} = daySelectorDecoratorProps as Required<Pick<DaySelectorDecoratorProps, 'dayNameLength'>> & DaySelectorDecoratorProps;
 
-		const state = useMemo(() => getLocaleState(dayNameLength, locale), [dayNameLength, locale]);
+		const state = useMemo(() => getLocaleState(dayNameLength, locale as string), [dayNameLength, locale]);
 		const localSelected = localizeSelected(selected, state);
 		const abbreviatedDayNames = orderDays(state.abbreviatedDayNames, state);
 		const fullDayNames = orderDays(state.fullDayNames, state);
 
-		const handleSelect = useCallback(({selected: selectedDay}) => {
+		const handleSelect = useCallback(({selected: selectedDay}: {selected: number[]}) => {
 			// adjust the selected value beforehand so getSelectedDayString always operates on the
 			// standard, "Sunday as index 0" format
 			const generalSelected = generalizeSelected(selectedDay, state);
@@ -263,7 +282,7 @@ const DaySelectorDecorator = hoc((config, Wrapped) => {
 		 * @default 'long'
 		 * @public
 		 */
-		dayNameLength: PropTypes.oneOf(['short', 'medium', 'long', 'full']),
+		dayNameLength: PropTypes.oneOf(['short', 'medium', 'long', 'full']) as PropTypes.Validator<'short' | 'medium' | 'long' | 'full' | undefined>,
 
 		/**
 		 * Applies a disabled style and prevents interacting with the component.
@@ -300,10 +319,10 @@ const DaySelectorDecorator = hoc((config, Wrapped) => {
 		 * @type {Number|Number[]}
 		 * @public
 		 */
-		selected: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)])
+		selected: PropTypes.oneOfType([PropTypes.number, PropTypes.arrayOf(PropTypes.number)]) as PropTypes.Validator<number | number[] | undefined>
 	};
 
-	DaySelector.defaultPropValues = daySelectorDecoratorDefaultProps;
+	(DaySelector as any).defaultPropValues = daySelectorDecoratorDefaultProps;
 
 	return DaySelector;
 });

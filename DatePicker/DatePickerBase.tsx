@@ -7,6 +7,32 @@ import DateTime from '../internal/DateTime';
 
 import css from './DatePicker.module.less';
 
+export interface DatePickerBaseProps {
+	day: number;
+	maxDays: number;
+	maxMonths: number;
+	month: number;
+	order: ('m' | 'd' | 'y')[];
+	year: number;
+	'data-webos-voice-disabled'?: boolean;
+	dayAriaLabel?: string;
+	disabled?: boolean;
+	label?: string;
+	maxYear?: number;
+	minYear?: number;
+	monthAriaLabel?: string;
+	noLabel?: boolean;
+	onChangeDate?: (...args: any[]) => any;
+	onChangeMonth?: (...args: any[]) => any;
+	onChangeYear?: (...args: any[]) => any;
+	onSpotlightDisappear?: (...args: any[]) => any;
+	onSpotlightLeft?: (...args: any[]) => any;
+	onSpotlightRight?: (...args: any[]) => any;
+	rtl?: boolean;
+	spotlightDisabled?: boolean;
+	yearAriaLabel?: string;
+}
+
 /**
  * A date selection component.
  *
@@ -20,6 +46,8 @@ import css from './DatePicker.module.less';
  */
 const DatePickerBase = kind({
 	name: 'DatePickerBase',
+
+	_propTypes: {} as DatePickerBaseProps,
 
 	propTypes:  /** @lends limestone/DatePicker.DatePickerBase.prototype */ {
 		/**
@@ -71,7 +99,7 @@ const DatePickerBase = kind({
 		 * @required
 		 * @public
 		 */
-		order: PropTypes.arrayOf(PropTypes.oneOf(['m', 'd', 'y'])).isRequired,
+		order: PropTypes.arrayOf(PropTypes.oneOf(['m', 'd', 'y'])).isRequired as PropTypes.Validator<('m' | 'd' | 'y')[]>,
 
 		/**
 		 * The `year` component of the Date.
@@ -278,7 +306,7 @@ const DatePickerBase = kind({
 			yearAccessibilityHint = $L('year');
 
 		if (noLabel) {
-			delete rest.label;
+			delete (rest as Record<string, any>).label;
 		}
 
 		return (

@@ -14,11 +14,13 @@ import Pure from '@enact/ui/internal/Pure';
 import DateFactory from 'ilib/lib/DateFactory';
 import DateFmt from 'ilib/lib/DateFmt';
 import LocaleInfo from 'ilib/lib/LocaleInfo';
+import type {ComponentType} from 'react';
 
 import {DateTimeDecorator} from '../internal/DateTime';
 import Skinnable from '../Skinnable';
 
 import TimePickerBase from './TimePickerBase';
+import type {TimePickerBaseProps} from './TimePickerBase';
 
 /*
  * Converts a string representation of time into minutes
@@ -28,7 +30,7 @@ import TimePickerBase from './TimePickerBase';
  * @returns	{Number}			Time in minute
  * @private
  */
-const toMinutes = (time) => {
+const toMinutes = (time: string): number => {
 	const colon = time.indexOf(':');
 	const hour = parseInt(time.substring(0, colon));
 	const minute = parseInt(time.substring(colon + 1));
@@ -46,7 +48,7 @@ const toMinutes = (time) => {
  * @returns	{Object}					Contains start and end time in minutes
  * @private
  */
-const calcMeridiemRange = ({start, end}) => ({
+const calcMeridiemRange = ({start, end}: {start: string; end: string}) => ({
 	start: toMinutes(start),
 	end: toMinutes(end)
 });
@@ -60,7 +62,7 @@ const calcMeridiemRange = ({start, end}) => ({
  * @returns {Number}				Index of `time` in `meridiems`
  * @private
  */
-const indexOfMeridiem = (time, meridiems) => {
+const indexOfMeridiem = (time: any, meridiems: {start: number; end: number}[]): number => {
 	const minutes = time.getHours() * 60 + time.getMinutes();
 	for (let i = 0; i < meridiems.length; i++) {
 		const m = meridiems[i];
@@ -81,8 +83,8 @@ const getLabelFormatter = () => new DateFmt({
 });
 
 const dateTimeConfig = {
-	customProps: function (i18n, value, {meridiemLabel}) {
-		let values = {
+	customProps: function (i18n: any, value: any, {meridiemLabel}: {meridiemLabel?: string}) {
+		const values: Record<string, any> = {
 			// i18n props
 			meridiems: i18n.meridiemLabels,
 			meridiemLabel,
@@ -113,7 +115,7 @@ const dateTimeConfig = {
 	},
 	defaultOrder: ['h', 'm', 'a'],
 	handlers: {
-		onChangeHour: function (ev, value) {
+		onChangeHour: function (ev: any, value: any) {
 			const currentTime = DateFactory(value).getTimeExtended();
 			const currentHour = value.hour;
 
@@ -129,12 +131,12 @@ const dateTimeConfig = {
 			return value;
 		},
 
-		onChangeMinute: function (ev, value) {
+		onChangeMinute: function (ev: any, value: any) {
 			value.minute = ev.value;
 			return value;
 		},
 
-		onChangeMeridiem: function (ev, value, i18n) {
+		onChangeMeridiem: function (ev: any, value: any, i18n: any) {
 			const {meridiemRanges} = i18n;
 			const meridiem = meridiemRanges[ev.value];
 
@@ -172,18 +174,18 @@ const dateTimeConfig = {
 		});
 		const meridiems = merFormatter.getMeridiemsRange();
 		const meridiemRanges = meridiems.map(calcMeridiemRange);
-		const meridiemLabels = meridiems.map(obj => obj.name);
+		const meridiemLabels = meridiems.map((obj: {name: string}) => obj.name);
 
 		// Picker ordering
 		const li = new LocaleInfo();
-		const clockPref = li.getClock();
+		const clockPref = (li as any).getClock();
 		const meridiemEnabled = clockPref === '12';
 
 		const filter = meridiemEnabled ? includeMeridiem : excludeMeridiem;
 		const order = getLabelFormatter().getTemplate()
 			.replace(/'.*?'/g, '')
-			.match(filter)
-			.map(s => s[0].toLowerCase());
+			.match(filter)!
+			.map((s: string) => s[0].toLowerCase());
 
 		return {
 			formatter: getLabelFormatter(),
@@ -229,7 +231,13 @@ const TimePicker = Pure(
 			TimePickerBase
 		)
 	)
-);
+) as ComponentType<Omit<TimePickerBaseProps, 'hour' | 'meridiem' | 'minute' | 'order'> & {
+	defaultValue?: Date;
+	locale?: string;
+	onComplete?: (...args: any[]) => any;
+	open?: boolean;
+	value?: Date;
+}>;
 
 /**
  * The selected date.
@@ -249,7 +257,7 @@ const TimePicker = Pure(
  * @param {Date} time `Date` to convert
  * @returns {String|null} Converted date or `null` if `date` is invalid
  */
-const timeToLocaleString = (time) => {
+const timeToLocaleString = (time: Date | null | undefined): string | null => {
 	if (!time) {
 		return null;
 	}

@@ -16,13 +16,14 @@
  * @exports ImageItemDecorator
  */
 
-import EnactPropTypes from '@enact/core/internal/prop-types';
+import EnactPropTypes, {EnactPropTypeShapes} from '@enact/core/internal/prop-types';
 import kind from '@enact/core/kind';
 import Spottable from '@enact/spotlight/Spottable';
-import {ImageItem as UiImageItem} from '@enact/ui/ImageItem';
+import {ImageItem as UnsafeUiImageItem} from '@enact/ui/ImageItem';
 import {Cell, Row} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import type {ComponentType, ReactNode} from 'react';
 
 import $L from '../internal/$L';
 import Icon from '../Icon';
@@ -33,12 +34,40 @@ import Skinnable from '../Skinnable';
 
 import componentCss from './ImageItem.module.less';
 
+// `@enact/ui/ImageItem`'s own final export isn't cast to a `ComponentType` (its `compose()` chain
+// loses `kind()`'s overloaded factory typing -- see Item.tsx's own final export for the same
+// ramda/TS limitation), so it isn't usable as a JSX component as-is; cast locally.
+const UiImageItem = UnsafeUiImageItem as ComponentType<any>;
+
 const
 	defaultPlaceholder =
 		'data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC' +
 	'9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHN0cm9rZT0iIzU1NSIgZmlsbD0iI2FhYSIg' +
 	'ZmlsbC1vcGFjaXR5PSIwLjIiIHN0cm9rZS1vcGFjaXR5PSIwLjgiIHN0cm9rZS13aWR0aD0iNiIgLz48L3N2Zz' +
 	'4NCg==';
+
+export interface ImageItemBaseProps {
+	'aria-label'?: string;
+	backgroundColor?: string;
+	backgroundSrc?: string | Record<string, string>;
+	centered?: boolean;
+	children?: string | ReactNode;
+	css?: Record<string, string>;
+	'data-index'?: number;
+	'data-webos-voice-intent'?: string;
+	disabled?: boolean;
+	imageIconComponent?: EnactPropTypeShapes.renderable;
+	imageIconSrc?: string | Record<string, string>;
+	label?: string | ReactNode;
+	orientation?: 'horizontal' | 'vertical';
+	placeholder?: string;
+	secondaryLabel?: string | ReactNode;
+	selected?: boolean;
+	selectionComponent?: ComponentType<any>;
+	showSelection?: boolean;
+	src?: string | Record<string, string>;
+	wideImage?: boolean;
+}
 
 /**
  * A Limestone styled base component for {@link limestone/ImageItem.ImageItem|ImageItem}.
@@ -51,6 +80,8 @@ const
  */
 const ImageItemBase = kind({
 	name: 'ImageItem',
+
+	_propTypes: {} as ImageItemBaseProps,
 
 	propTypes: /** @lends limestone/ImageItem.ImageItemBase.prototype */ {
 		/**
@@ -79,7 +110,7 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		backgroundSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		backgroundSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Centers the primary caption and label in vertical orientation.
@@ -95,7 +126,7 @@ const ImageItemBase = kind({
 		 * @type {String|Node}
 		 * @public
 		 */
-		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]) as PropTypes.Validator<string | ReactNode | undefined>,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -117,7 +148,7 @@ const ImageItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Used internally to render `children` asynchronously.
@@ -164,7 +195,7 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @private
 		 */
-		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * A secondary caption displayed with the image.
@@ -172,7 +203,7 @@ const ImageItemBase = kind({
 		 * @type {String|Node}
 		 * @public
 		 */
-		label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+		label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]) as PropTypes.Validator<string | ReactNode | undefined>,
 
 		/**
 		 * The layout orientation of the component.
@@ -181,7 +212,7 @@ const ImageItemBase = kind({
 		 * @default 'vertical'
 		 * @public
 		 */
-		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+		orientation: PropTypes.oneOf(['horizontal', 'vertical']) as PropTypes.Validator<'horizontal' | 'vertical' | undefined>,
 
 		/**
 		 * Placeholder image used while {@link limestone/ImageItem.ImageItemBase.src|src}
@@ -206,7 +237,7 @@ const ImageItemBase = kind({
 		 * @type {String|Node}
 		 * @public
 		 */
-		secondaryLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+		secondaryLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]) as PropTypes.Validator<string | ReactNode | undefined>,
 
 		/**
 		 * Applies a selected visual effect to the image, but only if `showSelection`
@@ -234,7 +265,7 @@ const ImageItemBase = kind({
 		 * @type {Function}
 		 * @public
 		 */
-		selectionComponent: PropTypes.func,
+		selectionComponent: PropTypes.func as PropTypes.Validator<ComponentType<any> | undefined>,
 
 		/**
 		 * Shows a selection component with a centered icon. When `selected` is true, a check mark is shown.
@@ -252,7 +283,7 @@ const ImageItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Changes the image from a scale `1:1` to `16:9` in horizontal orientation.
@@ -288,19 +319,21 @@ const ImageItemBase = kind({
 
 			const alignment = orientation === 'vertical' && centered ? {alignment: 'center'} : null;
 			const captions = (
-				<Row className={css.captions}>
+				<Row className={css!.captions}>
 					{hasImageIcon ? (
 						<Cell
-							className={css.imageIcon}
-							component={imageIconComponent}
-							shrink
-							src={imageIconSrc}
+							{...({
+								className: css!.imageIcon,
+								component: imageIconComponent,
+								shrink: true,
+								src: imageIconSrc
+							} as Record<string, any>)}
 						/>
 					) : null}
 					<Cell>
-						<Marquee {...alignment} className={css.caption} marqueeOn="hover">{children}</Marquee>
-						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{label}</Marquee> : null}
-						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
+						<Marquee {...(alignment as any)} className={css!.caption} marqueeOn="hover">{children}</Marquee>
+						{typeof label !== 'undefined' ? <Marquee {...(alignment as any)} className={css!.label} marqueeOn="hover">{label}</Marquee> : null}
+						{typeof secondaryLabel !== 'undefined' ? <Marquee {...(alignment as any)} className={css!.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
 					</Cell>
 				</Row>
 			);
@@ -309,9 +342,9 @@ const ImageItemBase = kind({
 				typeof index !== 'undefined' ?
 					<AsyncRenderChildren
 						fallback={<>
-							<div className={css.placeholderCaption} />
-							{typeof label !== 'undefined' ? <div className={css.placeholderLabel} /> : null}
-							{typeof secondaryLabel !== 'undefined' ? <div className={css.placeholderLabel} /> : null}
+							<div className={css!.placeholderCaption} />
+							{typeof label !== 'undefined' ? <div className={css!.placeholderLabel} /> : null}
+							{typeof secondaryLabel !== 'undefined' ? <div className={css!.placeholderLabel} /> : null}
 						</>}
 						index={index}
 					>
@@ -328,34 +361,39 @@ const ImageItemBase = kind({
 			if (SelectionComponent) {
 				return <SelectionComponent />;
 			} else {
-				return <Icon className={css.selectionIcon}>checkmark</Icon>;
+				return <Icon className={css!.selectionIcon}>checkmark</Icon>;
 			}
 		}
 	},
 
 	render: ({backgroundColor, backgroundSrc, css, disabled, orientation, selectionComponent: SelectionComponent, showSelection, ...rest}) => {
-		delete rest.centered;
-		delete rest.imageIconComponent;
-		delete rest.imageIconSrc;
-		delete rest.label;
-		delete rest.secondaryLabel;
-		delete rest.wideImage;
+		const restProps = rest as Record<string, any>;
+		delete restProps.centered;
+		delete restProps.imageIconComponent;
+		delete restProps.imageIconSrc;
+		delete restProps.label;
+		delete restProps.secondaryLabel;
+		delete restProps.wideImage;
 
 		return (
 			<UiImageItem
-				{...rest}
+				{...restProps}
 				aria-disabled={disabled}
-				css={css}
-				disabled={disabled}
+				{...({disabled} as any)}
+				css={css!}
 				orientation={orientation}
 				imageComponent={
-					<Image backgroundColor={backgroundColor} backgroundSrc={backgroundSrc}>
-						{showSelection ? (
-							<div className={css.selectionContainer}>
-								{SelectionComponent}
-							</div>
-						) : null}
-					</Image>
+					<Image
+						{...({
+							backgroundColor,
+							backgroundSrc,
+							children: showSelection ? (
+								<div className={css!.selectionContainer}>
+									{SelectionComponent}
+								</div>
+							) : null
+						} as Record<string, any>)}
+					/>
 				}
 			/>
 		);
@@ -401,7 +439,7 @@ const ImageItemDecorator = compose(
  * @ui
  * @public
  */
-const ImageItem = ImageItemDecorator(ImageItemBase);
+const ImageItem = ImageItemDecorator(ImageItemBase) as ComponentType<ImageItemBaseProps>;
 ImageItem.displayName = 'ImageItem';
 
 export default ImageItem;

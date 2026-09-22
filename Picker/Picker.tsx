@@ -18,6 +18,7 @@ import Changeable from '@enact/ui/Changeable';
 import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import {Children} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Heading from '../Heading';
 import PickerCore, {PickerItem} from '../internal/Picker';
@@ -36,8 +37,33 @@ import componentCss from './Picker.module.less';
  * @ui
  * @public
  */
+export interface PickerBaseProps {
+	children: ReactNode;
+	'aria-valuetext'?: string;
+	changedBy?: 'enter' | 'arrow';
+	css?: Record<string, string>;
+	'data-webos-voice-labels-ext'?: number[] | string[];
+	decrementIcon?: string;
+	disabled?: boolean;
+	incrementIcon?: string;
+	inlineTitle?: boolean;
+	joined?: boolean;
+	marqueeDisabled?: boolean;
+	noAnimation?: boolean;
+	onChange?: (...args: any[]) => any;
+	orientation?: 'horizontal' | 'vertical';
+	reverse?: boolean;
+	title?: string;
+	type?: 'number' | 'string';
+	value?: number;
+	width?: 'small' | 'medium' | 'large' | number | null;
+	wrap?: boolean;
+}
+
 const PickerBase = kind({
 	name: 'Picker',
+
+	_propTypes: {} as PickerBaseProps,
 
 	propTypes: /** @lends limestone/Picker.PickerBase.prototype */ {
 		/**
@@ -73,7 +99,7 @@ const PickerBase = kind({
 		 * @type {('enter'|'arrow')}
 		 * @public
 		 */
-		changedBy: PropTypes.oneOf(['enter', 'arrow']),
+		changedBy: PropTypes.oneOf(['enter', 'arrow']) as PropTypes.Validator<'enter' | 'arrow' | undefined>,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -87,7 +113,7 @@ const PickerBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * The voice control labels for the `children`.
@@ -100,7 +126,7 @@ const PickerBase = kind({
 		 * @memberof limestone/Picker.PickerBase.prototype
 		 * @public
 		 */
-		'data-webos-voice-labels-ext': PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.arrayOf(PropTypes.string)]),
+		'data-webos-voice-labels-ext': PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.number), PropTypes.arrayOf(PropTypes.string)]) as PropTypes.Validator<number[] | string[] | undefined>,
 
 		/**
 		 * A custom icon for the decrementer.
@@ -191,7 +217,7 @@ const PickerBase = kind({
 		 * @type {('horizontal'|'vertical')}
 		 * @public
 		 */
-		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+		orientation: PropTypes.oneOf(['horizontal', 'vertical']) as PropTypes.Validator<'horizontal' | 'vertical' | undefined>,
 
 		/**
 		 * When `true`, the picker buttons operate in the reverse direction such that pressing
@@ -235,7 +261,7 @@ const PickerBase = kind({
 		 * @default 'string'
 		 * @public
 		 */
-		type: PropTypes.oneOf(['number', 'string']),
+		type: PropTypes.oneOf(['number', 'string']) as PropTypes.Validator<'number' | 'string' | undefined>,
 
 		/**
 		 * Index of the selected child.
@@ -266,7 +292,7 @@ const PickerBase = kind({
 		width: PropTypes.oneOfType([
 			PropTypes.oneOf([null, 'small', 'medium', 'large']),
 			PropTypes.number
-		]),
+		]) as PropTypes.Validator<'small' | 'medium' | 'large' | number | null | undefined>,
 
 		/**
 		 * Allows picker to continue from the start of the list after it reaches the end and
@@ -289,14 +315,19 @@ const PickerBase = kind({
 	},
 
 	computed: {
-		max: ({children}) => children && children.length ? children.length - 1 : 0,
+		max: ({children}) => {
+			const kids = children as any[];
+			return kids && kids.length ? kids.length - 1 : 0;
+		},
 		reverse: ({orientation, reverse}) => (typeof reverse === 'boolean' ? reverse : orientation === 'vertical'),
 		children: ({children, disabled, joined, marqueeDisabled}) => Children.map(children, (child) => {
 			const focusOrHover = !disabled && joined ? 'focus' : 'hover';
 			return (
+				// `PickerItem`'s declared props don't include `marqueeOn` (it's forwarded through to
+				// the underlying `Marquee` at runtime via its own unchecked prop spread), so the
+				// attributes are folded into one object and cast, same as CheckboxItem.tsx's `<Item>`.
 				<PickerItem
-					marqueeDisabled={marqueeDisabled}
-					marqueeOn={focusOrHover}
+					{...({marqueeDisabled, marqueeOn: focusOrHover} as Record<string, any>)}
 				>
 					{child}
 				</PickerItem>
@@ -304,11 +335,12 @@ const PickerBase = kind({
 		}),
 		disabled: ({children, disabled}) => Children.count(children) > 1 ? disabled : true,
 		value: ({value, children}) => {
-			const max = children && children.length ? children.length - 1 : 0;
+			const kids = children as any[];
+			const max = kids && kids.length ? kids.length - 1 : 0;
 			if (__DEV__) {
-				validateRange(value, 0, max, 'Picker', 'value', 'min', 'max index');
+				validateRange(value as number, 0, max, 'Picker', 'value', 'min', 'max index');
 			}
-			return clamp(0, max, value);
+			return clamp(0, max, value as number);
 		},
 		voiceLabel: ({children, 'data-webos-voice-labels-ext': voiceLabelsExt}) => {
 			let voiceLabel;
@@ -324,10 +356,10 @@ const PickerBase = kind({
 	},
 
 	render: ({children, css, inlineTitle, max, title, value, voiceLabel, ...rest}) => {
-		delete rest.marqueeDisabled;
+		delete (rest as Record<string, any>).marqueeDisabled;
 		return (
 			<>
-				{title ? <Heading css={css} className={classnames(css.title, {[css.inlineTitle]: inlineTitle})} marqueeOn="hover">{title}</Heading> : null}
+				{title ? <Heading css={css} className={classnames(css!.title, {[css!.inlineTitle]: inlineTitle})} marqueeOn="hover">{title}</Heading> : null}
 				<PickerCore {...rest} data-webos-voice-labels-ext={voiceLabel} min={0} max={max} index={value} step={1} title={title} value={value}>
 					{children}
 				</PickerCore>
@@ -358,7 +390,7 @@ const Picker = Pure(
 			PickerBase
 		)
 	)
-);
+) as ComponentType<Omit<PickerBaseProps, 'value'> & {defaultValue?: number; value?: number}>;
 
 /**
  * Default index of the selected child.

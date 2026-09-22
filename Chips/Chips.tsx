@@ -8,12 +8,19 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {createContext, useCallback, useMemo, useRef} from 'react';
+import type {ReactNode} from 'react';
 
 import $L from '../internal/$L';
 
 import css from './Chips.module.less';
 
-export const ChipsContext = createContext({});
+export interface ChipsContextValue {
+	getNextTargetFromDeleteButton?: (direction: string, id: string) => any;
+	handleChipDelete?: (ev: any, id: string) => void;
+	registerChild?: (chipRef: any, id: string) => void;
+}
+
+export const ChipsContext = createContext<ChipsContextValue>({});
 
 const ChipsDefaultProps = {
 	orientation: 'vertical'
@@ -22,6 +29,13 @@ const ChipsDefaultProps = {
 const generateAriaId = () => {
 	return Math.random().toString(36).substring(2, 10);
 };
+
+export interface ChipsBaseProps {
+	children?: ReactNode;
+	className?: string;
+	orientation?: 'horizontal' | 'vertical';
+	[key: string]: any;
+}
 
 /**
  * A container that surrounds the chips.
@@ -44,27 +58,27 @@ const generateAriaId = () => {
  * @ui
  * @public
  */
-const ChipsBase = (props) => {
+const ChipsBase = (props: ChipsBaseProps) => {
 	const chipsProps = setDefaultProps(props, ChipsDefaultProps);
 	checkPropTypes(ChipsBase, chipsProps);
 	const {children, className, orientation, ...rest} = chipsProps;
 	const chipsClassName = classnames(css.chips, css[orientation], className);
-	const childRefs = useRef([]);
-	const containerRef = useRef(null);
+	const childRefs = useRef<any[]>([]);
+	const containerRef = useRef<any>(null);
 	const ariaLabel = new IString($L('{total} items in total')).format({total: children?.length});
 	const ariaId = useMemo(() => generateAriaId(), []);
 
-	const getPreviousChip = useCallback((id) => {
+	const getPreviousChip = useCallback((id: any) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
 		return currentIndex > 0 ? childRefs.current[currentIndex - 1] : null;
 	}, []);
 
-	const getNextChip = useCallback((id) => {
+	const getNextChip = useCallback((id: any) => {
 		const currentIndex = childRefs.current.findIndex((child) => child.id === id);
 		return currentIndex >= 0 && currentIndex < childRefs.current.length - 1 ? childRefs.current[currentIndex + 1] : null;
 	}, []);
 
-	const handleChipDelete = (ev, id) => {
+	const handleChipDelete = (ev: any, id: any) => {
 		const prevNode = getPreviousChip(id);
 		const nextNode = getNextChip(id);
 
@@ -92,7 +106,7 @@ const ChipsBase = (props) => {
 		childRefs.current = childRefs.current.filter((child) => child.id !== id);
 	};
 
-	const getNextTargetFromDeleteButton = useCallback((direction, id) => {
+	const getNextTargetFromDeleteButton = useCallback((direction: string, id: any) => {
 		let nextTarget = null;
 		if ((orientation === 'vertical' && direction === 'up') || (orientation === 'horizontal' && direction === 'left')) {
 			const prevChip = getPreviousChip(id);
@@ -105,14 +119,14 @@ const ChipsBase = (props) => {
 		return nextTarget;
 	}, [getNextChip, getPreviousChip, orientation]);
 
-	const registerChild = useCallback((chipRef, id) => {
+	const registerChild = useCallback((chipRef: any, id: any) => {
 		if (!childRefs.current.some(child => child.id === id)) {
 			childRefs.current.push({chipRef, id});
 
 			// Sort childRefs to match the order of children array
 			const childrenArray = Array.isArray(children) ? children : [];
 			const childrenIdOrder = childrenArray
-				.map(child => child && child.props && child.props.id)
+				.map((child: any) => child && child.props && child.props.id)
 				.filter(Boolean); // Remove null, undefined
 
 			childRefs.current.sort((a, b) => {
@@ -169,7 +183,7 @@ ChipsBase.propTypes = /** @lends limestone/Chips.Chips.prototype */ {
 	 * @default 'vertical'
 	 * @public
 	 */
-	orientation: PropTypes.oneOf(['horizontal', 'vertical'])
+	orientation: PropTypes.oneOf(['horizontal', 'vertical']) as PropTypes.Validator<'horizontal' | 'vertical' | undefined>
 };
 
 ChipsBase.displayName = 'Chips';
@@ -186,7 +200,7 @@ const ChipsDecorator = compose(
 	SpotlightContainerDecorator({
 		enterTo: 'default-element',
 		leaveFor: {up: '#right'},
-		navigableFilter: (node) => {
+		navigableFilter: (node: any) => {
 			if (!node) return false;
 			const rects = node.getBoundingClientRect();
 			return rects.width !== 0 && rects.height !== 0;
