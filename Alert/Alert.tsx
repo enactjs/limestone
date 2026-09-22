@@ -368,6 +368,29 @@ const AlertBase = kind({
 /**
  * A modal Alert component, ready to use in Limestone applications.
  *
+ * `Alert` may be used to interrupt a workflow to receive feedback from the user.
+ * The dialog consists of a title, a message, and an area for additional
+ * {@link limestone/Alert.Alert.buttons|buttons}.
+ *
+ * Usage:
+ * ```
+ * <Alert
+ *   open={this.state.open}
+ *   title="An Important Alert"
+ * >
+ *   <image>
+ *     <AlertImage src={this.state.src} type="thumbnail" />
+ *   </image>
+ *
+ *   Body text for alert. Components may also be used here for greater customizability.
+ *
+ *   <buttons>
+ *     <Button>Button 1</Button>
+ *     <Button>Button 2</Button>
+ *   </buttons>
+ * </Alert>
+ * ```
+ *
  * @class Alert
  * @memberof limestone/Alert
  * @extends limestone/Alert.AlertBase

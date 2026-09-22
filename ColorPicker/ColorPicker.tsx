@@ -214,6 +214,9 @@ export interface ColorPickerBaseProps {
 /**
  * The color picker base component which sets-up the component's structure.
  *
+ * This component is most often not used directly but may be composed within another component as it
+ * is within {@link limestone/ColorPicker|ColorPicker}.
+ *
  * @class ColorPickerBase
  * @memberof limestone/ColorPicker
  * @ui

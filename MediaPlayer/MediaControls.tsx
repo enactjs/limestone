@@ -1157,6 +1157,11 @@ const handleCancel = (ev: any, {onClose}: any) => {
 /**
  * A set of components for controlling media playback and rendering additional components.
  *
+ * This uses {@link ui/Slottable|Slottable} to accept the custom tags, `<bottomComponents>`
+ * to add components to the bottom of the media controls. Any additional children will be
+ * rendered into the "more" controls area. Showing the additional components is handled by
+ * `MediaControls` when the user navigates down from the media buttons.
+ *
  * @class MediaControls
  * @memberof limestone/MediaPlayer
  * @mixes ui/Cancelable.Cancelable

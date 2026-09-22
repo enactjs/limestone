@@ -2431,6 +2431,42 @@ const VideoPlayerBase = class extends Component<VideoPlayerBaseProps, Record<str
  * `<infoComponents>` for displaying additional information in the title area and `<MediaControls>`
  * for handling media playback controls and adding more controls.
  *
+ * Example usage:
+ * ```
+ *	<VideoPlayer title="Hilarious Cat Video" poster="https://my.cat.videos/boots-poster.jpg">
+ *		<source src="https://my.cat.videos/boots.mp4" type="video/mp4" />
+ *		<infoComponents>A video about my cat Boots, wearing boots.</infoComponents>
+ *		<MediaControls>
+ *			<leftComponents><Button backgroundOpacity="translucent" icon="star" /></leftComponents>
+ *			<rightComponents><Button backgroundOpacity="translucent" icon="notification" /></rightComponents>
+ *
+ *			<Button backgroundOpacity="translucent">Add To Favorites</Button>
+ *			<Button backgroundOpacity="translucent" icon="search" />
+ *		</MediaControls>
+ *	</VideoPlayer>
+ * ```
+ *
+ * To invoke methods (e.g.: `fastForward()`) or get the current state (`getMediaState()`), store a
+ * ref to the `VideoPlayer` within your component:
+ *
+ * ```
+ * 	...
+ *
+ * 	setVideoPlayer = (node) => {
+ * 		this.videoPlayer = node;
+ * 	}
+ *
+ * 	play () {
+ * 		this.videoPlayer.play();
+ * 	}
+ *
+ * 	render () {
+ * 		return (
+ * 			<VideoPlayer ref={this.setVideoPlayer} />
+ * 		);
+ * 	}
+ * ```
+ *
  * @class VideoPlayer
  * @memberof limestone/VideoPlayer
  * @mixes ui/Slottable.Slottable

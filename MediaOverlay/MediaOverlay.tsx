@@ -326,6 +326,13 @@ const MediaOverlayDecorator = compose(
 /**
  * A Limestone-styled `Media` component.
  *
+ * Usage:
+ * ```
+ * <MediaOverlay>
+ *     <source type='' src=''/>
+ * </MediaOverlay>
+ * ```
+ *
  * @class MediaOverlay
  * @memberof limestone/MediaOverlay
  * @extends limestone/MediaOverlay.MediaOverlayBase

@@ -736,6 +736,21 @@ const InputDecorator = compose(
 /**
  * Provides an input in the form of a popup.
  *
+ * Usage:
+ * ```
+ * <Input
+ *   onComplete={this.handleInputComplete}
+ *   placeholder="Placeholder"
+ *   subtitle="TitleBelow"
+ *   title="Title"
+ * />
+ * ```
+ *
+ * By default, `Input` maintains the state of its `value` property. Supply the `defaultValue`
+ * property to control its initial value. If you wish to directly control updates to the
+ * component, supply a value to `value` at creation time and update it in response to `onChange`
+ * events.
+ *
  * @class Input
  * @memberof limestone/Input
  * @extends limestone/Input.InputBase
@@ -746,6 +761,22 @@ const Input = InputDecorator(InputBase) as ComponentType<InputBaseProps & Omit<I
 
 /**
  * Provides an input popup without button.
+ *
+ * Usage:
+ * ```
+ * <InputPopup
+ *   open={this.state.open}
+ *   onComplete={this.handleInputPopupComplete}
+ *   placeholder="Placeholder"
+ *   subtitle="Subtitle"
+ *   title="Title"
+ * />
+ * ```
+ *
+ * By default, `InputPopup` maintains the state of its `value` property. Supply the `defaultValue`
+ * property to control its initial value. If you wish to directly control updates to the
+ * component, supply a value to `value` at creation time and update it in response to `onChange`
+ * events.
  *
  * @class InputPopup
  * @memberof limestone/Input

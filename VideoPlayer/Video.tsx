@@ -303,6 +303,27 @@ const VideoDecorator = compose(
 /**
  * Provides support for more advanced video configurations for `VideoPlayer`.
  *
+ * Custom Video Tag
+ *
+ * ```
+ * <VideoPlayer>
+ *   <Video mediaComponent="custom-video-element">
+ *     <source src="path/to/source.mp4" />
+ *   </Video>
+ * </VideoPlayer>
+ * ```
+ *
+ * Preload Video Source
+ *
+ * ```
+ * <VideoPlayer>
+ *   <Video>
+ *     <source src="path/to/source.mp4" />
+ *     <source src="path/to/preload-source.mp4" slot="preloadSource" />
+ *   </Video>
+ * </VideoPlayer>
+ * ```
+ *
  * @class Video
  * @mixes ui/Slottable.Slottable
  * @memberof limestone/VideoPlayer
