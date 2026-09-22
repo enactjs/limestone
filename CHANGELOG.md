@@ -6,6 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/CardSports` to display a sports match layout with team colors, logos, and score
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
 - `limestone/IconItem` prop `description`
 - `limestone/ImageItem` prop `secondaryLabel`
@@ -25,6 +26,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Chips.Chip` `deleteButton` positioning when `multiline` is `true`
 - `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
+- `limestone/ContextualPopupDecorator` hole punch scrim to reposition together with the popup when the wrapped component is updated
+- `limestone/VirtualList` long press scroll between multiple VirtualLists
 
 ## [1.11.0] - 2026-09-02
 

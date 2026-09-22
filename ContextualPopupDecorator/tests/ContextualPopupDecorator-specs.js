@@ -579,6 +579,64 @@ describe('ContextualPopupDecorator Specs', () => {
 		expect(popupContainerAfter.style.top).not.toBe('');
 	});
 
+	// Guard for the hole punch scrim staying aligned with the activator.
+	// The `holeBounds` were previously measured once, in an effect keyed on the (effectively
+	// constant) holepunch flag, so the scrim's hole never moved when the popup repositioned
+	// (e.g. after a wrapped-component update). `holeBounds` are now measured inside
+	// `positionContextualPopup` from the same rect used to position the popup, so the hole is
+	// re-applied on every reposition. This changes the activator's measured rect between the
+	// initial open and a wrapped-component update and asserts the scrim's `--hole-*` custom
+	// properties are recomputed from the new rect. With the old once-only measurement the
+	// values would stay at the initial rect and this test would fail.
+	test('should update the hole punch scrim hole to match the activator when the wrapped component is updated', () => {
+		// `--hole-*` are set via ri.unit(px, 'rem'); the rem factor is 12, so px/12 + 'rem'.
+		const toRem = (px) => `${px / 12}rem`;
+
+		// Distinct rects: the whole document uses `initialRect` until we swap it below.
+		const initialRect = {width: 1800, height: 1000, top: 500, left: 500, bottom: 1500, right: 2300};
+		const updatedRect = {width: 900, height: 400, top: 200, left: 300, bottom: 600, right: 1200};
+		let currentRect = initialRect;
+		global.Element.prototype.getBoundingClientRect = jest.fn(() => ({...currentRect}));
+
+		const Root = FloatingLayerDecorator('div');
+		const popup = () => <div><Button>Button</Button></div>;
+		const {rerender} = render(
+			<Root>
+				<ContextualButton scrimType="holepunch" open popupComponent={popup}>
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		const scrim = screen.getByRole('alert').previousElementSibling;
+
+		expect(scrim).toHaveClass('holePunchScrim');
+		// Hole matches the activator's initial rect.
+		expect(scrim.style.getPropertyValue('--hole-width')).toBe(toRem(initialRect.width));
+		expect(scrim.style.getPropertyValue('--hole-height')).toBe(toRem(initialRect.height));
+		expect(scrim.style.getPropertyValue('--hole-top')).toBe(toRem(initialRect.top));
+		expect(scrim.style.getPropertyValue('--hole-left')).toBe(toRem(initialRect.left));
+
+		// The activator now measures a different rect; updating the wrapped component runs the
+		// reposition effect, which must re-measure the hole.
+		currentRect = updatedRect;
+		rerender(
+			<Root>
+				<ContextualButton scrimType="holepunch" open popupComponent={popup}>
+					A much longer activator label
+				</ContextualButton>
+			</Root>
+		);
+
+		const scrimAfter = screen.getByRole('alert').previousElementSibling;
+
+		// Hole tracks the new activator rect rather than the stale initial one.
+		expect(scrimAfter.style.getPropertyValue('--hole-width')).toBe(toRem(updatedRect.width));
+		expect(scrimAfter.style.getPropertyValue('--hole-height')).toBe(toRem(updatedRect.height));
+		expect(scrimAfter.style.getPropertyValue('--hole-top')).toBe(toRem(updatedRect.top));
+		expect(scrimAfter.style.getPropertyValue('--hole-left')).toBe(toRem(updatedRect.left));
+	});
+
 	test('should create and observe with `ResizeObserver` when the popup opened and disconnect when the popup closed', () => {
 		const originalObserver = global.ResizeObserver;
 
