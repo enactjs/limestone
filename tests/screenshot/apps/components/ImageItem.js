@@ -107,8 +107,8 @@ const ImageItemTests = [
 	...withConfig({locale: 'ar-SA'}, imageItemSecondaryLabelCases),
 
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, [
-		<ImageItem src={img} style={verticalSecondaryLabelStyle} orientation="vertical" label="Focused Short" secondaryLabel="Focused Short">Focused Short</ImageItem>,
-		<ImageItem src={img} orientation="horizontal" label="Focused Short" secondaryLabel="Focused Short">Focused Short</ImageItem>
+		imageItemSecondaryLabelCases[1],
+		imageItemSecondaryLabelCases[4]
 	]),
 
 	...withTallglyphLocale(imageItemTallglyphTests)

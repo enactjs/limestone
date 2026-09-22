@@ -78,11 +78,11 @@ const checkboxItemLabelPositionTests = [
 
 const checkboxItemLargeTextTests = [
 	// Large text — smoke representatives
-	<CheckboxItem>Hello Focused CheckboxItem</CheckboxItem>,
-	<CheckboxItem selected>Hello Focused CheckboxItem</CheckboxItem>,
+	<CheckboxItem>Hello CheckboxItem</CheckboxItem>,
+	<CheckboxItem selected>Hello CheckboxItem</CheckboxItem>,
 	// [QWTC-1861]
-	<CheckboxItem selected disabled>Hello Focused CheckboxItem</CheckboxItem>,
-	<CheckboxItem inline>Hello Focused CheckboxItem</CheckboxItem>
+	<CheckboxItem selected disabled>Hello CheckboxItem</CheckboxItem>,
+	<CheckboxItem inline>Hello CheckboxItem</CheckboxItem>
 ];
 
 const checkboxItemRtlTests = [

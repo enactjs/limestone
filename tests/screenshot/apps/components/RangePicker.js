@@ -46,6 +46,7 @@ const rangePickerDisabledTests = [
 	<RangePicker min={-10} max={10} value={0} disabled />,
 	<RangePicker min={0} max={100} disabled />,
 	<RangePicker min={0} max={100} value={5} disabled />,
+	<RangePicker joined min={0} max={100} value={5} disabled />,
 	<RangePicker width="medium" min={0} max={5} disabled />,
 	<RangePicker orientation="vertical" min={-10} max={10} value={0} disabled />,
 	<RangePicker orientation="vertical" min={0} max={100} disabled />,
@@ -72,6 +73,7 @@ const rangePickerJoinedTests = [
 	<RangePicker min={0} max={5} joined />,
 	<RangePicker min={0} max={5} value={0} joined />,
 	<RangePicker min={0} max={5} value={5} joined />,
+	<RangePicker min={0} max={5} value={5} joined width="medium" />,
 	<RangePicker min={0} max={5} value={0} wrap joined />,
 	<RangePicker min={0} max={5} value={0} wrap joined disabled />,
 	<RangePicker min={0} max={5} value={0} wrap joined width="medium" />,
@@ -81,6 +83,7 @@ const rangePickerJoinedTests = [
 	<RangePicker min={0} max={5} value={0} wrap joined width={1} />,
 	<RangePicker min={0} max={5} value={0} wrap joined width={6} disabled />,
 	<RangePicker min={0} max={5} orientation="vertical" joined />,
+	<RangePicker min={0} max={5} orientation="vertical" value={0} joined />,
 	<RangePicker min={0} max={5} orientation="vertical" value={0} wrap joined />,
 	<RangePicker min={0} max={5} orientation="vertical" value={0} wrap joined disabled />,
 	<RangePicker min={0} max={5} orientation="vertical" value={0} wrap joined width="medium" />,
@@ -125,10 +128,10 @@ const rangePickerFocusTests = [
 	// *************************************************************
 	// joined and focused
 	// *************************************************************
-	<RangePicker joined min={10} max={15} value={12} />,
-	<RangePicker disabled joined min={10} max={15} value={12} />,
-	<RangePicker orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" joined min={10} max={15} value={12} />
+	rangePickerJoinedTests[0],
+	rangePickerDisabledTests[4],
+	rangePickerJoinedTests[11],
+	rangePickerJoinedTests[4]
 ];
 
 const rangePickerRtlNegativeTests = [
@@ -178,14 +181,6 @@ const rangePickerLargeTextTests = [
 	}
 ];
 
-const rangePickerRtlFocusTests = [
-	// joined and focused
-	<RangePicker joined min={10} max={15} value={12} />,
-	<RangePicker disabled joined min={10} max={15} value={12} />,
-	<RangePicker orientation="vertical" joined min={10} max={15} value={12} />,
-	<RangePicker width="medium" joined min={10} max={15} value={12} />
-];
-
 const rangePickerExtendedTests = [
 	...rangePickerDisabledTests,
 	...rangePickerWrapTests,
@@ -208,7 +203,7 @@ const RangePickerTests = [
 	...rangePickerLargeTextTests,
 	...withConfig({locale: 'ar-SA'}, rangePickerLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, rangePickerRtlTests),
-	...withConfig({focus: true, locale: 'ar-SA'}, rangePickerRtlFocusTests),
+	...withConfig({focus: true, locale: 'ar-SA'}, rangePickerFocusTests),
 	...withTallglyphLocale(rangePickerTallglyphTests)
 ];
 

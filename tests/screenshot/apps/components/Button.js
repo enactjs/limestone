@@ -27,13 +27,14 @@ const buttonSmokeTests = [
 		textSize: 'large',
 		component: <Button color="red">click me</Button>
 	},
+	<Button selected backgroundOpacity="transparent">click me</Button>, 	// [QWTC-1828]
+	<Button selected backgroundOpacity="opaque">click me</Button>,
 	...withConfig({wrapper: {light: true, padded: true}}, [
 		<Button shadowed icon="plus" minWidth={false} />,
 		<Button shadowed icon="minus" minWidth={false} />,
 		<Button shadowed backgroundOpacity="transparent" minWidth={false}>click me</Button>,
 		<Button disabled icon="forward" size="small" tooltipText="tooltip" tooltipType="transparent">click me</Button>
 	])
-
 ];
 
 const buttonExtendedTests = [

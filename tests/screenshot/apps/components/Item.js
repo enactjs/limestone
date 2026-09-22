@@ -104,17 +104,17 @@ const itemSmallTests = [
 	...rtlItemTests
 ];
 
-const itemCustomStyleTests = [
-	// Customized Item Style
+const customizedItemsTests = [
 	<Item label="label">Customized Item</Item>,
 	<Item label="label" slotBefore={<Icon>star</Icon>}>Customized Item</Item>,
 	<Item label="label" slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
-	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
+	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>
+];
 
-	...withConfig({focus: true}, [
-		<Item>Customized Focused Item</Item>,
-		<Item label='"label"' slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Focused Item</Item>
-	])
+const itemCustomStyleTests = [
+	// Customized Item Style
+	...customizedItemsTests,
+	...withConfig({focus: true}, customizedItemsTests)
 ];
 
 const itemExtendedTests = [
