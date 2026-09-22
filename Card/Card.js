@@ -34,6 +34,7 @@ import {Marquee, MarqueeController} from '../Marquee';
 import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
+import {getBadge} from './utils';
 import componentCss from './Card.module.less';
 
 const formatDuration = (duration) => {
@@ -52,22 +53,6 @@ const formatDuration = (duration) => {
 	}
 
 	return `${mm}:${ss}`;
-};
-
-const getBadge = (badge, size, className) => {
-	let element = <div>{badge}</div>;
-	let elementSize = {};
-
-	if (isValidElement(badge)) element = badge;
-	if (size) {
-		elementSize = typeof size === 'object' ? {
-			width: ri.scaleToRem(size.width), height: ri.scaleToRem(size.height)
-		} : {
-			fontSize: ri.scaleToRem(size)
-		};
-	}
-
-	return cloneElement(element, {className: className, style: {...elementSize}});
 };
 
 const getImageIcons = (images, key, className) => {
@@ -317,6 +302,14 @@ const CardBase = kind({
 		 * @public
 		 */
 		imageIconSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.element]),
+
+		/**
+		 * Nodes rendered inside the image, after badges and before the selection overlay.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		imageOverlay: PropTypes.node,
 
 		/**
 		 * The size of the image.
@@ -641,7 +634,7 @@ const CardBase = kind({
 		splitCaption: ({captionOverlay, captionOverlayOnFocus, splitCaption}) => (captionOverlay || captionOverlayOnFocus) && splitCaption
 	},
 
-	render: ({captionImageSize, css, disabled, icon, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
+	render: ({captionImageSize, css, disabled, icon, imageOverlay, imageSize, primaryBadge, primaryBadgeSize, secondaryBadge, secondaryBadgeSize, showDuration, duration, progress, showProgressBar, style, ...rest}) => {
 		delete rest.captionImageIconsSrc;
 		delete rest.captionOverflow;
 		delete rest.captionOverflowOnFocus;
@@ -677,6 +670,7 @@ const CardBase = kind({
 						{secondaryBadge ? (
 							getBadge(secondaryBadge, secondaryBadgeSize, css.secondaryBadge)
 						) : null}
+						{imageOverlay}
 						<div className={css.selectionContainer}>
 							<Icon className={css.selectionIcon}>{icon}</Icon>
 						</div>

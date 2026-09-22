@@ -133,6 +133,14 @@ const IconItemBase = kind({
 		'data-webos-voice-intent': PropTypes.string,
 
 		/**
+		 * Description text showing below the title. Requires `title` prop to be applied.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		description: PropTypes.string,
+
+		/**
 		 * Disable IconItem and becomes non-interactive.
 		 *
 		 * @type {Boolean}
@@ -236,9 +244,10 @@ const IconItemBase = kind({
 	},
 
 	computed: {
-		className: ({bordered, label, labelColor, labelOn, pressed, styler, title, titleOn}) => styler.append({
+		className: ({bordered, description, label, labelColor, labelOn, pressed, styler, title, titleOn}) => styler.append({
 			bordered,
 			pressed,
+			hasDescription: !!description,
 			hasLabel: !!label,
 			hasTitle: !!title,
 			labelOnFocus: labelOn === 'focus',
@@ -246,7 +255,7 @@ const IconItemBase = kind({
 			darkLabel: labelColor === 'dark'
 		}),
 
-		children: ({background, children, css, icon, image, label, labelOn, order, title}) => {
+		children: ({background, children, css, description, icon, image, label, labelOn, order, title}) => {
 			if (children) return children;
 
 			let imageComponent;
@@ -288,6 +297,14 @@ const IconItemBase = kind({
 					<Column>
 						{iconContent}
 						<Marquee alignment="center" className={css.title} marqueeOn="focus" order={order}>{title}</Marquee>
+						{description && <Marquee
+							alignment="center"
+							className={css.description}
+							marqueeOn="focus"
+							order={order}
+						>
+							{description}
+						</Marquee>}
 					</Column>
 				) : iconContent
 			);

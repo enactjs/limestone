@@ -2,6 +2,33 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/CardSports` to display a sports match layout with team colors, logos, and score
+- `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/IconItem` prop `description`
+- `limestone/ImageItem` prop `secondaryLabel`
+- `limestone/Item` prop `secondaryLabel`
+- `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
+- `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
+- `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
+- `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
+
+### Changed
+
+- `limestone/Chips.Chip` styling to match the latest GUI
+- `limestone/Chips.Chip` to not show the Delete Button when `disabled=true`
+- `limestone/Tooltip` styling to match the latest GUI
+
+### Fixed
+
+- `limestone/Chips.Chip` `deleteButton` positioning when `multiline` is `true`
+- `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
+- `limestone/ContextualPopupDecorator` hole punch scrim to reposition together with the popup when the wrapped component is updated
+- `limestone/VirtualList` long press scroll between multiple VirtualLists
+
 ## [1.11.0] - 2026-09-02
 
 ### Added
@@ -15,7 +42,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Alert` styling to match the latest GUI
 - `limestone/Card` styling to match the latest GUI
 - `limestone/Chips.Chip` styling to match the latest GUI
-- `limestone/Input` to show the submit button for separated number inputs by default
+- `limestone/Input` to show the Submit button for separated number inputs by default
 
 ### Fixed
 

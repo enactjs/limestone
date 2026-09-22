@@ -35,6 +35,33 @@ describe('TooltipDecorator', () => {
 
 			expect(tooltip).not.toHaveStyle({'text-align': unexpected});
 		});
+
+		test('should render the image before the text label by default', () => {
+			render(<TooltipLabel tooltipImage={src.hd}>Label</TooltipLabel>);
+
+			const expected = 'IMG';
+			const tooltip = screen.getByText('Label');
+
+			expect(tooltip.children[0].children[0].tagName).toBe(expected);
+		});
+
+		test('should apply `imageBelow` class when `tooltipImagePosition` is `below`', () => {
+			render(<TooltipLabel tooltipImage={src.hd} tooltipImagePosition="below">Label</TooltipLabel>);
+
+			const expected = 'imageBelow';
+			const tooltip = screen.getByText('Label');
+
+			expect(tooltip).toHaveClass(expected);
+		});
+
+		test('should not apply `imageBelow` class by default', () => {
+			render(<TooltipLabel tooltipImage={src.hd}>Label</TooltipLabel>);
+
+			const unexpected = 'imageBelow';
+			const tooltip = screen.getByText('Label');
+
+			expect(tooltip).not.toHaveClass(unexpected);
+		});
 	});
 
 	describe('TooltipDecorator', () => {

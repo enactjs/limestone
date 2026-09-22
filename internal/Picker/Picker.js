@@ -9,7 +9,7 @@ import ForwardRef from '@enact/ui/ForwardRef';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
-import {SlideLeftArranger, SlideTopArranger, ViewManager} from '@enact/ui/ViewManager';
+import {ViewManager} from '@enact/ui/ViewManager';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -21,6 +21,7 @@ import $L from '../$L';
 import {validateRange, validateStepped} from '../validators';
 import {extractVoiceProps, onlyUpdateForProps} from '../util';
 
+import {FastHorizontalCarouselArranger, FastVerticalCarouselArranger} from './Arrangers';
 import PickerButton from './PickerButton';
 import SpottablePicker from './SpottablePicker';
 
@@ -140,7 +141,7 @@ const PickerBase = (props) => {
 	const voiceLabelsExt = voiceProps['data-webos-voice-labels-ext'];
 
 	let Component;
-	let arranger = horizontal ? SlideLeftArranger : SlideTopArranger;
+	let arranger = horizontal ? FastHorizontalCarouselArranger : FastVerticalCarouselArranger;
 	let noAnimation = typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION || props.noAnimation || disabled;
 	let sizingPlaceholder = null;
 

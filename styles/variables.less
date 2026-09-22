@@ -156,6 +156,8 @@
 @lime-heading-subtitle-font-size:   #guide.header[standard-subtitle-font-size];
 @lime-heading-subtitle-font-size-large:   #guide.header[standard-subtitle-font-size-large];
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
+@lime-iconitem-description-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-description-font-size-large:     var(--primitive-font-size-50);
 @lime-iconitem-label-font-size:     var(--primitive-font-size-42);
 @lime-iconitem-label-font-size-large:     var(--primitive-font-size-50);
 @lime-iconitem-title-font-size:     var(--primitive-font-size-48);
@@ -318,6 +320,7 @@
 @lime-icon-other-font-family: "LG Icons";
 
 // IconItem
+@lime-iconitem-description-font-weight: var(--primitive-font-weight-semibold);
 @lime-iconitem-label-font-weight: var(--primitive-font-weight-semibold);
 @lime-iconitem-title-font-weight: var(--primitive-font-weight-semibold);
 
@@ -340,8 +343,8 @@
 @lime-item-label-font-weight: var(--primitive-font-weight-regular);
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
-@lime-item-label-line-height: 1.25em;
-@lime-item-label-line-height-large: 1.2em;
+@lime-item-label-line-height: 1.33em;
+@lime-item-label-line-height-large: 1.33em;
 @lime-item-small-font-weight: @lime-item-font-weight;
 @lime-item-small-label-font-weight: @lime-item-label-font-weight;
 @lime-item-small-line-height: @lime-common-line-height;
@@ -484,9 +487,16 @@
 @lime-card-badge-top: var(--primitive-spacing-24);
 @lime-card-badge-left: var(--primitive-spacing-24);
 @lime-card-badge-right: var(--primitive-spacing-24);
+@lime-card-team-logo-size: 108px;
+@lime-card-sports-logo-spacing: var(--primitive-spacing-48);
+@lime-card-sports-split-angle: 100deg;
+@lime-card-sports-split-feather: 6px;
 @lime-card-caption-line-height: 84px;
 @lime-card-caption-line-height-large: 100px;
 @lime-card-duration-border-radius: var(--primitive-radius-12);
+@lime-card-score-border-radius: var(--primitive-radius-999);
+@lime-card-score-padding: var(--primitive-spacing-6) var(--primitive-spacing-42);
+@lime-card-score-gap: var(--primitive-spacing-18);
 @lime-card-duration-line-height: 60px;
 @lime-card-duration-line-height-large: 70px;
 @lime-card-duration-padding: var(--primitive-spacing-6) var(--primitive-spacing-12);
@@ -526,8 +536,14 @@
 // Chip
 // ---------------------------------------
 @lime-chip-margin: 0;
+@lime-chip-padding-icon-left: var(--primitive-spacing-36);
+@lime-chip-border-radius: var(--semantic-radius-container);
 @lime-chip-button-spacing: var(--primitive-spacing-12);
+@lime-chip-line-height: 72px;
+@lime-chip-font-size: var(--primitive-font-size-54);
 @lime-chip-min-width: 108px;
+@lime-chip-multiline-padding: var(--primitive-spacing-18);
+@lime-chip-multiline-max-width: 1200px;
 @lime-chips-gap: var(--primitive-spacing-36);
 
 // ContextualMenu
@@ -752,6 +768,8 @@
 // ---------------------------------------
 @lime-iconitem-height: 256px;
 @lime-iconitem-width: 334px;
+@lime-iconitem-description-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~" + "@lime-iconitem-description-line-height ~" + 30px)"; // 24 margin title + 6 margin description
+@lime-iconitem-description-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~" + "@lime-iconitem-description-line-height-large ~" + 30px)"; // 24 margin title + 6 margin description
 @lime-iconitem-title-height: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height ~"+ 24px)";
 @lime-iconitem-title-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~"+ 24px)";
 @lime-iconitem-border-radius: var(--semantic-radius-container);
@@ -764,12 +782,15 @@
 @lime-iconitem-icon-width-large: @lime-iconitem-icon-height-large;
 @lime-iconitem-image-height: 230px;
 @lime-iconitem-image-width: @lime-iconitem-image-height;
+@lime-iconitem-description-margin: var(--primitive-spacing-6) 0 0 0;
 @lime-iconitem-label-image-height: ~"calc("@lime-iconitem-height ~"- "@lime-iconitem-label-line-height ~"- 24px)";
-@lime-iconitem-label-line-height: 54px;
-@lime-iconitem-label-line-height-large: 64px;
+@lime-iconitem-label-line-height: 56px;
+@lime-iconitem-label-line-height-large: 66px;
 @lime-iconitem-label-padding: 0 var(--primitive-spacing-12);
-@lime-iconitem-title-line-height: 60px;
-@lime-iconitem-title-line-height-large: 70px;
+@lime-iconitem-description-line-height: @lime-iconitem-label-line-height;
+@lime-iconitem-description-line-height-large: @lime-iconitem-label-line-height-large;
+@lime-iconitem-title-line-height: 64px;
+@lime-iconitem-title-line-height-large: 80px;
 @lime-iconitem-title-margin: var(--primitive-spacing-24) 0 0 0;
 @lime-iconitem-focus-transform: scale(1.2);
 @lime-iconitem-pressed-transform: scale(1.1);
@@ -780,10 +801,10 @@
 @lime-imageitem-margin: @lime-item-margin;
 @lime-imageitem-border-radius: var(--semantic-radius-button);
 @lime-imageitem-image-border-width: 6px;
-@lime-imageitem-caption-line-height: 84px;
+@lime-imageitem-caption-line-height: 80px;
 @lime-imageitem-caption-line-height-large: 100px;
-@lime-imageitem-label-line-height: 60px;
-@lime-imageitem-label-line-height-large: 70px;
+@lime-imageitem-label-line-height: 64px;
+@lime-imageitem-label-line-height-large: 78px;
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
 @lime-imageitem-horizontal-padding: var(--primitive-spacing-30);
@@ -800,7 +821,7 @@
 @lime-imageitem-vertical-full-image-border-width: 2px;
 @lime-imageitem-vertical-full-image-focus-border-width: 6px;
 @lime-imageitem-vertical-captions-margin-top: var(--primitive-spacing-30);
-@lime-imageitem-vertical-label-height: 60px;
+@lime-imageitem-vertical-label-height: 64px;
 @lime-imageitem-vertical-focus-image-transform: scale(1.1);
 @lime-imageitem-vertical-image-icon-margin: 0 var(--primitive-spacing-24) 0 0;
 @lime-imageitem-vertical-image-icon-size: 132px;
@@ -898,6 +919,7 @@
 @lime-item-height: 156px;
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
+@lime-item-withsecondlabel-height: 304px;
 @lime-item-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48);
 @lime-item-inline-max-width: 480px;
 @lime-item-border-radius: var(--semantic-radius-button);
@@ -908,6 +930,7 @@
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;
+@lime-item-small-withsecondlabel-height: 274px;
 
 // Keyguide
 // ---------------------------------------
@@ -1145,6 +1168,22 @@
 @lime-slider-bar-vertical-min-height: 240px;
 @lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
 @lime-slider-bar-padding: var(--primitive-spacing-60);
+@lime-slider-tick-width: 6px;
+@lime-slider-tick-height: 36px;
+@lime-slider-tick-border-radius: var(--primitive-radius-999);
+@lime-slider-tick-margin: var(--primitive-spacing-12);
+@lime-slider-tick-label-margin-top: var(--primitive-spacing-12);
+@lime-slider-tick-label-offset: ~"calc("@lime-slider-tick-label-margin-top ~"+" ((@lime-slider-tick-height - @lime-slider-bar-height) / 2) ~")";
+@lime-slider-tick-label-font-size: var(--primitive-font-size-48);
+@lime-slider-tick-label-font-size-large: var(--primitive-font-size-60);
+@lime-slider-tick-label-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-tick-label-line-height: 64px;
+@lime-slider-tick-label-line-height-large: 80px;
+@lime-slider-tick-label-letter-spacing: 0;
+@lime-slider-bar-ticks-padding-bottom: var(--primitive-spacing-36);
+@lime-slider-bar-tick-labels-padding-bottom: var(--primitive-spacing-100);
+@lime-slider-side-label-width: 360px;
+@lime-slider-side-label-gap: var(--primitive-spacing-36);
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;

@@ -78,6 +78,62 @@ describe('ImageItem', () => {
 		expect(actual).toHaveTextContent(expected);
 	});
 
+	test('should support `secondaryLabel` prop', () => {
+		const secondaryLabel = 'secondaryLabel';
+		render(<ImageItemBase orientation="horizontal" secondaryLabel={secondaryLabel} />);
+
+		const expected = secondaryLabel;
+		const actual = screen.getByText('secondaryLabel');
+
+		expect(actual).toHaveTextContent(expected);
+	});
+
+	test('should support `secondaryLabel` prop when \'data-index\' is set', () => {
+		const secondaryLabel = 'secondaryLabel';
+		render(<ImageItemBase data-index={0} orientation="horizontal" secondaryLabel={secondaryLabel} />);
+
+		const expected = secondaryLabel;
+		const actual = screen.getByText('secondaryLabel');
+
+		expect(actual).toHaveTextContent(expected);
+	});
+
+	test('should support `secondaryLabel` with vertical orientation', () => {
+		const secondaryLabel = 'secondaryLabel';
+		render(<ImageItemBase secondaryLabel={secondaryLabel} />);
+
+		const expected = secondaryLabel;
+		const actual = screen.getByText('secondaryLabel');
+
+		expect(actual).toHaveTextContent(expected);
+	});
+
+	test('should include `secondaryLabel` in `aria-label`', () => {
+		render(
+			<ImageItemBase
+				label="label"
+				orientation="horizontal"
+				secondaryLabel="secondaryLabel"
+			>
+				caption
+			</ImageItemBase>
+		);
+
+		const actual = screen.getByLabelText('caption label secondaryLabel');
+
+		expect(actual).toBeInTheDocument();
+	});
+
+	test('should support `centered` prop to secondaryLabel', () => {
+		const secondaryLabel = 'secondaryLabel';
+		render(<ImageItemBase centered secondaryLabel={secondaryLabel} />);
+
+		const expected = 'center';
+		const actual = screen.getByText('secondaryLabel').style;
+
+		expect(actual).toHaveProperty('textAlign', expected);
+	});
+
 	test('should support `imageIconSrc` prop when `orientation="vertical"`', () => {
 		const imageIconSrc = 'imageIconSrc';
 		render(<ImageItemBase imageIconSrc={imageIconSrc} orientation="vertical" />);

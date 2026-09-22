@@ -3,6 +3,8 @@ import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, number, range, object, select} from '@enact/storybook-utils/addons/controls';
 
+import css from './Slider.module.less';
+
 const SliderConfig = mergeComponentMetadata('Slider', SliderBase, Slider);
 const SliderTooltipConfig = mergeComponentMetadata('SliderTooltip', SliderTooltip);
 Slider.displayName = 'Slider';
@@ -35,10 +37,15 @@ export const _Slider = (args) => {
 		showAnchor: args['showAnchor'],
 		showMinMax: args['showMinMax'],
 		step: args['step'],
+		alignStepsWithTicks: args['alignStepsWithTicks'],
+		automaticLabels: args['automaticLabels'],
+		ticks: args['ticks'],
+		labels: args['labels'],
 		wheelInterval: args['wheelInterval']
 	};
 
-	return (
+	const isVertical = args['orientation'] === 'vertical';
+	const slider = (
 		<Slider
 			{...actions}
 			{...controls}
@@ -46,6 +53,16 @@ export const _Slider = (args) => {
 			{args['tooltip'] ? <SliderTooltip percent={args['percent']} position={args['position']} /> : null}
 		</Slider>
 	);
+
+	if (isVertical) {
+		return (
+			<div className={css.vertical}>
+				{slider}
+			</div>
+		);
+	}
+
+	return slider;
 };
 
 boolean('disabled', _Slider, SliderConfig);
@@ -100,6 +117,10 @@ range(
 boolean('showAnchor', _Slider, SliderConfig);
 boolean('showMinMax', _Slider, SliderConfig);
 number('step', _Slider, SliderConfig, 1);
+boolean('alignStepsWithTicks', _Slider, SliderConfig);
+boolean('automaticLabels', _Slider, SliderConfig);
+number('ticks', _Slider, SliderConfig);
+object('labels', _Slider, SliderConfig, []);
 number('wheelInterval', _Slider, SliderConfig);
 boolean('colorPicker', _Slider, SliderConfig);
 

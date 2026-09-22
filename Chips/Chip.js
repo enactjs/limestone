@@ -63,11 +63,11 @@ const ChipBase = (props) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
-	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, onClick, ref, ...rest} = chipProps;
+	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, multiline, onClick, ref, ...rest} = chipProps;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipClassName = classnames(className, deleteButton?.position);
+	const chipClassName = classnames(className, deleteButton?.position, css.content);
 	const chipRef = useRef(null);
 	const containerRef = useRef(null);
 	const deleteButtonRef = useRef(null);
@@ -132,10 +132,10 @@ const ChipBase = (props) => {
 	}, []);
 
 	const handleFocus = useCallback((ev) => {
-		if (ev.target === chipRef.current) {
+		if (ev.target === chipRef.current && !disabled) {
 			deleteButtonRef.current?.classList.add(css.focused);
 		}
-	}, [chipRef]);
+	}, [chipRef, disabled]);
 
 	const handleBlur = useCallback(() => {
 		if (Spotlight.getPointerMode() && !isHovering.current) {
@@ -189,6 +189,7 @@ const ChipBase = (props) => {
 				focusEffect="static"
 				icon={icon ? icon : ''}
 				iconComponent={iconComponent}
+				marqueeDisabled={multiline}
 				size="small"
 				onFocus={handleFocus}
 				onClick={onClick}
@@ -196,7 +197,7 @@ const ChipBase = (props) => {
 				role="checkbox"
 				roundBorder
 			>
-				{children}
+				{multiline ? <div className={css.multiline}>{children}</div> : children}
 			</Button>
 			{deleteButton &&
 				<div className={buttonClassName} ref={deleteButtonRef}>
@@ -287,7 +288,15 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @type {Boolean}
 	 * @public
 	 */
-	isImage: PropTypes.bool
+	isImage: PropTypes.bool,
+
+	/**
+	 * Wraps the chip label onto multiple lines instead of marquee-scrolling a single line.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	multiline: PropTypes.bool
 };
 
 ChipBase.displayName = 'Chip';
