@@ -78,7 +78,7 @@ const itemQwtcTests = [
 
 const itemFocusedLightWrapperTests = [
 	// Focused with light wrapper
-	<Item>Focused Item</Item>
+	itemSmokeTests[0]
 ];
 
 const itemCenteredTests = [

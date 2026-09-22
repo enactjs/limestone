@@ -57,9 +57,7 @@ const buttonExtendedTests = [
 	<Button backgroundOpacity="opaque">click me</Button>,
 
 	// Selected buttons
-	<Button selected backgroundOpacity="transparent">click me</Button>,
 	<Button selected backgroundOpacity="transparent" icon="plus" />,
-	<Button selected backgroundOpacity="opaque">click me</Button>,
 
 	// iconPosition = before (Default) + children has 1 letter +	minWidth = false
 	<Button minWidth={false}>H</Button>,
@@ -173,7 +171,6 @@ const buttonQwtcTests = [
 	<Button>{TallglyphKhmer}</Button>,
 	// end [QWTC-1837]
 
-	<Button selected backgroundOpacity="transparent">click me</Button>, // [QWTC-1828]
 	<Button selected backgroundOpacity="transparent" icon="plus" />,
 
 	// [QWTC-2257] - Color Underbar displays on Button (LTR)
@@ -246,8 +243,6 @@ const ButtonTests = [
 	// *************************************************************
 	// With customized button
 	// *************************************************************
-	// Note: When the file name of the test is too long, different tests may be recognized as the same test.
-	// So we changed the Button name of Focus prop tests.
 	...withProps({css: css}, [
 		// standard button
 		<Button>Customized button</Button>,

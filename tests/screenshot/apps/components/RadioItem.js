@@ -11,9 +11,6 @@ const radioItemSmokeTests = [
 	<RadioItem selected>RadioItem Checked</RadioItem>,
 
 	// [QWTC-2231]
-	<RadioItem disabled>RadioItem</RadioItem>,
-	<RadioItem inline>Inline RadioItem</RadioItem>,
-	<RadioItem selected>RadioItem Checked</RadioItem>,
 	<RadioItem><Icon slot="slotBefore">home</Icon>RadioItem</RadioItem>
 ];
 
