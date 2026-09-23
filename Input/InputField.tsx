@@ -378,12 +378,12 @@ const InputFieldBase = kind({
 		delete restProps.onBeforeChange;
 		delete restProps.rtl;
 		delete restProps.size;
+		restProps.disabled = disabled;
 
 		return (
 			<div
 				{...restProps}
 				aria-disabled={disabled}
-				{...({disabled} as any)}
 			>
 				<div className={css!.bg} />
 				<InputFieldDecoratorIcon className={css!.iconBefore} position="before" size="large">{iconBefore}</InputFieldDecoratorIcon>

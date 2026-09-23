@@ -5,25 +5,25 @@ import type {ReactElement} from 'react';
 import Icon from '../Icon';
 import {onlyUpdateForProps} from '../internal/util';
 
-export interface InputDecoratorIconBaseProps {
+export interface InputFieldDecoratorIconBaseProps {
 	position: 'before' | 'after';
 	children?: string | Record<string, string> | ReactElement;
 }
 
 /**
- * The stateless functional base component for {@link limestone/Input.InputDecoratorIcon}.
+ * The stateless functional base component for {@link limestone/Input.InputFieldDecoratorIcon}.
  *
- * @class InputDecoratorIconBase
+ * @class InputFieldDecoratorIconBase
  * @memberof limestone/Input
  * @ui
  * @private
  */
-const InputDecoratorIconBase = kind({
-	name: 'InputDecoratorIcon',
+const InputFieldDecoratorIconBase = kind({
+	name: 'InputFieldDecoratorIcon',
 
-	_propTypes: {} as InputDecoratorIconBaseProps,
+	_propTypes: {} as InputFieldDecoratorIconBaseProps,
 
-	propTypes: /** @lends limestone/Input.InputDecoratorIconBase.prototype */ {
+	propTypes: /** @lends limestone/Input.InputFieldDecoratorIconBase.prototype */ {
 		/**
 		 * Icon to be displayed.
 		 *
@@ -54,15 +54,15 @@ const InputDecoratorIconBase = kind({
 /**
  * An icon displayed either before or after the input field of an {@link limestone/Input.Input}.
  *
- * @class InputDecoratorIcon
+ * @class InputFieldDecoratorIcon
  * @memberof limestone/Input
  * @ui
  * @private
  */
-const InputDecoratorIcon = onlyUpdateForProps(InputDecoratorIconBase, ['children', 'size']);
+const InputFieldDecoratorIcon = onlyUpdateForProps(InputFieldDecoratorIconBase, ['children', 'size']);
 
-export default InputDecoratorIcon;
+export default InputFieldDecoratorIcon;
 export {
-	InputDecoratorIcon,
-	InputDecoratorIconBase
+	InputFieldDecoratorIcon,
+	InputFieldDecoratorIconBase
 };

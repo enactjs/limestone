@@ -32,7 +32,7 @@ import Skinnable from '../Skinnable';
 import componentCss from './MediaOverlay.module.less';
 
 export interface MediaOverlayBaseProps {
-	source: ReactNode;
+	source?: ReactNode;
 	caption?: ReactNode;
 	css?: Record<string, string>;
 	imageOverlay?: string | Record<string, string>;

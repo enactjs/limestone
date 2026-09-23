@@ -217,6 +217,7 @@ export interface VideoPlayerBaseProps {
 	autoCloseTimeout?: number;
 	backButtonAriaLabel?: string;
 	children?: ReactNode;
+	className?: string;
 	disabled?: boolean;
 	feedbackHideDelay?: number;
 	includeTimeHour?: boolean;
@@ -266,13 +267,13 @@ export interface VideoPlayerBaseProps {
 	source?: ReactNode;
 	spotlightDisabled?: boolean;
 	spotlightId?: string;
+	style?: Record<string, any>;
 	thumbnailComponent?: EnactPropTypeShapes.renderableOverride;
 	thumbnailSrc?: string | Record<string, string>;
 	thumbnailUnavailable?: boolean;
 	title?: string | ReactNode;
 	titleHideDelay?: number;
 	videoComponent?: EnactPropTypeShapes.componentOverride;
-	[key: string]: any;
 }
 
 /**
@@ -1111,7 +1112,7 @@ const VideoPlayerBase = class extends Component<VideoPlayerBaseProps, Record<str
 	mediaControlsSpotlightId: string;
 	jumpKeyPressed: any;
 	playerRef: any;
-	playbackRate: number;
+	playbackRate: string | number;
 	floatingLayerController: any;
 
 	//
@@ -1899,7 +1900,7 @@ const VideoPlayerBase = class extends Component<VideoPlayerBaseProps, Record<str
 		}
 
 		// Make sure rate is a string
-		this.playbackRate = String(rate) as any;
+		this.playbackRate = String(rate);
 		const pbNumber = calcNumberValueOfPlaybackRate(this.playbackRate);
 
 		if (platform.type !== 'webos') {
@@ -2504,7 +2505,7 @@ const VideoPlayer = ApiDecorator(
 			)
 		)
 	)
-) as ComponentType<any>;
+) as ComponentType<VideoPlayerBaseProps>;
 
 export default VideoPlayer;
 export {

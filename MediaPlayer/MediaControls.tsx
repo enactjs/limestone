@@ -1182,7 +1182,7 @@ const MediaControls = ApiDecorator(
 			)
 		)
 	)
-) as ComponentType<any>;
+) as ComponentType<MediaControlsBaseProps & MediaControlsDecoratorProps>;
 
 (MediaControls as any).defaultSlot = 'mediaControlsComponent';
 

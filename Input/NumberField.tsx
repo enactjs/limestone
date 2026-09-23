@@ -249,8 +249,9 @@ const NumberFieldBase = kind({
 				</Repeater>
 			);
 		} else {
+			restProps.disabled = disabled;
 			field = (
-				<div {...restProps} disabled={disabled} {...({} as any)}>
+				<div {...restProps}>
 					{password ? convertToPasswordFormat(String(value), '●') : value}
 				</div>
 			);

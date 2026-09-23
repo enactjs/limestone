@@ -660,7 +660,7 @@ const InputBase = kind({
 				return calcAriaLabel('', resolvedType!, type === 'number' ? String(value).split('').join(',') : value.toString());
 			}
 
-			return calcAriaLabel('', null as any, placeholder);
+			return calcAriaLabel('', null, placeholder);
 		},
 		buttonLabel: ({placeholder, type, value}) => {
 			if (value || value === 0) {

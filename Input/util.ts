@@ -21,7 +21,7 @@ const FULLSCREEN_JOINED_DIGITS_LIMIT = 25;
  * @returns {String}           `aria-label` value
  * @private
  */
-const calcAriaLabel = function (prefix: string, type: string, value: string | number = '') {
+const calcAriaLabel = function (prefix: string, type: string | null, value: string | number = '') {
 	const hint = $L('Input field');
 
 	if ((type === 'password' || type === 'passwordtel') && value) {

@@ -330,7 +330,7 @@ const VideoDecorator = compose(
  * @ui
  * @public
  */
-const Video = VideoDecorator(VideoBase) as ComponentType<any>;
+const Video = VideoDecorator(VideoBase) as ComponentType<VideoBaseProps>;
 (Video as any).defaultSlot = 'videoComponent';
 
 export default Video;

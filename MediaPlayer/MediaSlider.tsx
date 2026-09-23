@@ -6,6 +6,7 @@ import Slider from '../Slider';
 
 import MediaKnob from './MediaKnob';
 import MediaSliderDecorator from './MediaSliderDecorator';
+import type {MediaSliderDecoratorProps} from './MediaSliderDecorator';
 
 import css from './MediaSlider.module.less';
 
@@ -122,7 +123,7 @@ const MediaSliderBase = kind({
  * @ui
  * @public
  */
-const MediaSlider = MediaSliderDecorator(MediaSliderBase) as ComponentType<any>;
+const MediaSlider = MediaSliderDecorator(MediaSliderBase) as ComponentType<MediaSliderBaseProps & MediaSliderDecoratorProps>;
 
 export default MediaSlider;
 export {
