@@ -198,7 +198,7 @@ ScrollbarTrack.propTypes = /** @lends limestone/useScroll.ScrollbarTrack.prototy
 	 * @type {Object}
 	 * @public
 	 */
-	scrollbarTrackCss: PropTypes.object,
+	scrollbarTrackCss: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 	/**
 	 * `true` if vertical scroll, `false` if horizontal scroll.

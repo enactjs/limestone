@@ -171,7 +171,7 @@ let VirtualList: ComponentType<VirtualListProps> = (props: VirtualListProps) => 
 	return (
 		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...themeScrollContainerProps} {...scrollContentWrapperRest}>
-				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
+				<UiVirtualListBasic {...({...themeScrollContentProps, ref: scrollContentHandle} as any)} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}
@@ -690,7 +690,7 @@ let VirtualGridList: ComponentType<VirtualGridListProps> = (props: VirtualGridLi
 	return (
 		<ResizeContext {...resizeContextProps}>
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
-				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
+				<UiVirtualListBasic {...({...themeScrollContentProps, ref: scrollContentHandle} as any)} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 				{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}

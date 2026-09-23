@@ -169,7 +169,7 @@ const HeaderBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
          * Informs Header that it is part of a Popup.

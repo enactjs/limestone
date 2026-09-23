@@ -174,10 +174,10 @@ let Scroller: ComponentType<ScrollerProps> = (props: ScrollerProps) => {
 				<ScrollBody {...focusableBodyProps}>
 					{rest.focusableScrollbar ? <ScrollbarPlaceholder /> : null}
 					<UiScrollerBasic {...themeScrollContentProps} aria-label={ariaLabel} id={id} ref={scrollContentHandle}>
-						{(editable && direction === 'horizontal') ?
+						{((editable && direction === 'horizontal') ?
 							<EditableWrapper {...editableWrapperProps} /> :
 							children
-						}
+						) as any}
 					</UiScrollerBasic>
 					{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 					{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
@@ -486,7 +486,7 @@ Scroller.propTypes = /** @lends limestone/Scroller.Scroller.prototype */ {
 	 * @type {Object}
 	 * @public
 	 */
-	scrollbarTrackCss: PropTypes.object,
+	scrollbarTrackCss: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 	/**
 	 * Specifies how to scroll.

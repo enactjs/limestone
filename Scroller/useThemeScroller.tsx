@@ -289,7 +289,7 @@ const useSpottable = (props: Record<string, any>, instances: Pick<ScrollInstance
 		const
 			{rtl, stickTo} = props,
 			// For Chrome 85+ or Safari that use negative coordinate system for RTL
-			coordinateCoefficient = rtl && !(platform.chrome < 85) ? -1 : 1,
+			coordinateCoefficient = rtl && !((platform.chrome as number) < 85) ? -1 : 1,
 			{clientWidth, maxLeft} = scrollContentHandle!.current.scrollBounds,
 			rtlDirection = rtl ? -1 : 1,
 			{left: containerLeft} = scrollContentNode.getBoundingClientRect(),

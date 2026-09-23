@@ -124,7 +124,7 @@ const PopupTabLayoutBase = kind({
 		 * @type {Object}
 		 * @private
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Specify dimensions for the layout areas.

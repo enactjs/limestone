@@ -66,7 +66,7 @@ const EditableShape = PropTypes.shape({
 	onComplete: PropTypes.func.isRequired,
 	blurItemFuncRef: EnactPropTypes.ref,
 	centered: PropTypes.bool,
-	css: PropTypes.object,
+	css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 	focusItemFuncRef: EnactPropTypes.ref,
 	hideItemFuncRef: EnactPropTypes.ref,
 	removeItemFuncRef: EnactPropTypes.ref,

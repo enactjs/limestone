@@ -49,7 +49,7 @@ const TabBase = kind<TabBaseProps>({
 	propTypes: {
 		buttonSize: PropTypes.string,
 		collapsed: PropTypes.bool,
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 		icon: PropTypes.string,
 		index: PropTypes.number,
 		noIcons: PropTypes.bool,
@@ -193,7 +193,7 @@ export interface TabGroupBaseProps {
 	orientation?: string;
 	primaryIndex?: number | null;
 	scrollPosition?: {x: number; y: number};
-	selectedIndex?: number;
+	selectedIndex?: number | null;
 	size?: string;
 	spotlightDisabled?: boolean;
 	spotlightId?: string;
@@ -220,7 +220,7 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 	propTypes: /** @lends limestone/TabGroup.TabGroup.prototype */ {
 		tabs: PropTypes.array.isRequired,
 		collapsed: PropTypes.bool,
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 		id: PropTypes.string,
 		onBlur: PropTypes.func,
 		onBlurList: PropTypes.func,

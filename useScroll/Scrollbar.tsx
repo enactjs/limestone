@@ -133,7 +133,7 @@ ScrollbarBase.propTypes = /** @lends limestone/useScroll.Scrollbar.prototype */ 
 	 * @type {Object}
 	 * @public
 	 */
-	css: PropTypes.object,
+	css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 	/**
 	 * The minimum size of the thumb.
@@ -156,7 +156,7 @@ ScrollbarBase.propTypes = /** @lends limestone/useScroll.Scrollbar.prototype */ 
 	 * @type {Object}
 	 * @public
 	 */
-	scrollbarTrackCss: PropTypes.object,
+	scrollbarTrackCss: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 	/**
 	 * The scrollbar will be oriented vertically.

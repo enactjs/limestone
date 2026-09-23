@@ -207,7 +207,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		'data-spotlight-id': PropTypes.string,
 
