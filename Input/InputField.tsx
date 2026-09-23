@@ -25,7 +25,7 @@ import {calcAriaLabel, extractInputProps} from './util';
 
 import componentCss from './InputField.module.less';
 
-const MarqueeText: any = MarqueeDecorator({css: {
+const MarqueeText: ComponentType<any> = MarqueeDecorator({css: {
 	text: componentCss.marqueeTextInner,
 	animate: componentCss.marqueeTextAnimate,
 	willAnimate: componentCss.marqueeTextWillAnimate

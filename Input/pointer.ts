@@ -33,7 +33,7 @@ const handleTap = handle(
 	stop,						// prevent the click event from propagating
 	preventDefault,				// prevent touchend from triggering a click after releasing lock
 	setCapturing(false),		// clear the capturing flag
-	() => active?.blur()		// and blur the active node
+	() => active!.blur()		// and blur the active node
 );
 
 const handleTouchStart = handle(

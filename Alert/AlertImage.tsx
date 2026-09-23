@@ -14,7 +14,7 @@ export interface AlertImageProps {
 /**
  * An image for use in an Alert.
  *
- * @class
+ * @class AlertImage
  * @memberof limestone/Alert
  * @ui
  * @public

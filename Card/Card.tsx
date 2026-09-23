@@ -642,7 +642,7 @@ const CardBase = kind({
 					<Cell className={css!.captions}>
 						<Marquee {...alignment} className={css!.caption} marqueeOn="hover">{children}</Marquee>
 					</Cell>
-					<Cell >
+					<Cell>
 						{typeof label !== 'undefined' ? <Marquee {...alignment} className={css!.label} marqueeOn="hover">{label}</Marquee> : null}
 						{typeof secondaryLabel !== 'undefined' ? <Marquee {...alignment} className={css!.label} marqueeOn="hover">{secondaryLabel}</Marquee> : null}
 					</Cell>

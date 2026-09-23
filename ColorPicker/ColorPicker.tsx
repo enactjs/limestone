@@ -18,6 +18,7 @@
  */
 
 import kind from '@enact/core/kind';
+import type {EnactPropTypeShapes} from '@enact/core/internal/prop-types';
 import {checkPropTypes} from '@enact/core/util';
 import Spottable from '@enact/spotlight/Spottable';
 import {Cell, Column, Row} from '@enact/ui/Layout';
@@ -95,11 +96,11 @@ const PopupContent = (props: PopupContentProps) => {
 	}, []);
 
 	const handleClick = useCallback((ev: any) => {
-		colorHandler?.(ev.target.offsetParent.id);
+		colorHandler!(ev.target.offsetParent.id);
 	}, [colorHandler]);
 
 	const onSliderValueChange = useCallback(() => {
-		colorHandler?.(HSLToHex(hue, saturation, lightness));
+		colorHandler!(HSLToHex(hue, saturation, lightness));
 	}, [colorHandler, hue, lightness, saturation]);
 
 	return (
@@ -355,7 +356,7 @@ const ColorPickerBase = kind({
 							<BodyText className={css!.colorPopupHeader} css={css} noWrap>{text}</BodyText>
 						</Cell>
 						<Cell align="right" shrink>
-							<Button className={css!.closeButton} css={css} iconComponent={CloseIcon as any} icon="closex" onClick={handleClosePopup} size="small" />
+							<Button className={css!.closeButton} css={css} iconComponent={CloseIcon as EnactPropTypeShapes.componentOverride} icon="closex" onClick={handleClosePopup} size="small" />
 						</Cell>
 					</Row>
 					<PopupContent color={color} colorHandler={colorHandler} css={css} presetColors={presetColors} />

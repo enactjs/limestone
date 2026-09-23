@@ -24,6 +24,22 @@ import AlertImage from './AlertImage';
 
 import componentCss from './Alert.module.less';
 
+// Resolves the effective button layout direction, expanding `'auto'` based on the button count,
+// alert type, and size, per the UX defaults documented on `buttonDirection`.
+const resolveButtonDirection = (
+		buttonDirection: 'auto' | 'horizontal' | 'vertical' | undefined,
+		buttonCount: number,
+		type: string | undefined,
+		size: string | undefined
+): 'horizontal' | 'vertical' => {
+	if (buttonDirection !== 'auto') {
+		return buttonDirection as 'horizontal' | 'vertical';
+	}
+
+	const useHorizontal = (type === 'overlay' && buttonCount === 2 && size !== 'small') || (type === 'fullscreen' && buttonCount < 4);
+	return useHorizontal ? 'horizontal' : 'vertical';
+};
+
 const measure = (contentId: string) => {
 	const contentElement = document.getElementById(contentId);
 	if (!contentElement) return;
@@ -296,25 +312,20 @@ const AlertBase = kind({
 		className: ({buttons, buttonDirection, image, size, type, styler}) => {
 			const buttonCount = Children.toArray(buttons).filter(Boolean).length;
 			const resolvedSize = size || (buttonDirection !== 'vertical' && buttonCount === 2 ? 'medium' : 'small');
-			let resolvedButtonDirection = buttonDirection;
-			if (buttonDirection === 'auto') {
-				const useHorizontal = (type === 'overlay' && buttonCount === 2 && resolvedSize !== 'small') || (type === 'fullscreen' && buttonCount < 4);
-				resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
-			}
+			const resolvedButtonDirection = resolveButtonDirection(buttonDirection, buttonCount, type, resolvedSize);
 			return styler.append({noImage: !image}, resolvedSize, type, resolvedButtonDirection);
+		},
+		resolvedButtonDirection: ({buttons, buttonDirection, type, size}) => {
+			const buttonCount = Children.toArray(buttons).filter(Boolean).length;
+			return resolveButtonDirection(buttonDirection, buttonCount, type, size);
 		}
 	},
 
-	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, size, title, type, style, ...rest}) => {
+	render: ({buttonDirection, buttons, contentComponent, children, css, id, image, overlayPosition, resolvedButtonDirection, size, title, type, style, ...rest}) => {
 		const fullscreen = (type === 'fullscreen');
 		const position = (type === 'overlay' ? overlayPosition : type);
 		const buttonCount = Children.toArray(buttons).filter(Boolean).length;
 		const showTitle = ((fullscreen || size === 'large') && title);
-		let resolvedButtonDirection = buttonDirection;
-		if (buttonDirection === 'auto') {
-			const useHorizontal = (type === 'overlay' && buttonCount === 2 && size !== 'small') || (type === 'fullscreen' && buttonCount < 4);
-			resolvedButtonDirection = useHorizontal ? 'horizontal' : 'vertical';
-		}
 		const overlayHorizontalButtons = (
 			type === 'overlay' &&
 			resolvedButtonDirection === 'horizontal'
@@ -351,7 +362,7 @@ const AlertBase = kind({
 							<Cell shrink className={css!.buttonContainer}>
 								<Layout
 									align="center center"
-									orientation={resolvedButtonDirection as 'horizontal' | 'vertical'}
+									orientation={resolvedButtonDirection}
 									id={`${id}_buttons`}
 								>
 									{buttons}

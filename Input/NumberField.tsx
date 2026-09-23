@@ -224,7 +224,8 @@ const NumberFieldBase = kind({
 
 		let field;
 		if (separated) {
-			const values = String(value).split('');
+			const stringValue = String(value);
+			const values = stringValue.split('');
 			const items = new Array(maxLength).fill('');
 			const repeaterProps: any = {
 				...restProps,
@@ -237,7 +238,7 @@ const NumberFieldBase = kind({
 					{...repeaterProps}
 				>
 					{items.map((_, index) => ({
-						active: index === String(value).length,
+						active: index === stringValue.length,
 						children: values[index],
 						component: NumberCell,
 						disabled,

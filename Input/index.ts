@@ -8,6 +8,8 @@
  * @exports InputField
  * @exports InputFieldBase
  * @exports InputFieldDecorator
+ * @exports InputPopup
+ * @exports InputPopupBase
  */
 
 import {Input, InputBase, InputPopup, InputPopupBase, InputDecorator} from './Input';
