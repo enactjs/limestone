@@ -104,7 +104,7 @@ const PopupBase = kind({
 		 * @type {Object}
 		 * @private
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Support accessibility options.

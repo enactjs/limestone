@@ -69,7 +69,7 @@ const TooltipBase = kind({
 			top: PropTypes.number
 		}) as PropTypes.Validator<{bottom?: number; left?: number; right?: number; top?: number} | undefined>,
 		relative: PropTypes.bool,
-		tooltipCss: PropTypes.object,
+		tooltipCss: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 		tooltipImagePosition: PropTypes.oneOf(['above', 'below']),
 		tooltipImageSize: PropTypes.shape({
