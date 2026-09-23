@@ -215,7 +215,8 @@ const Icon = IconDecorator(IconBase) as ComponentType<any>;
 /**
  * An object whose keys can be used as the child of an {@link limestone/Icon.Icon|Icon} component.
  *
- * @name iconList
+ * @see {@link limestone/Icon.IconList}
+ * @name icons
  * @memberof limestone/Icon
  * @constant
  * @type {Object}

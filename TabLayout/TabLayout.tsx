@@ -9,7 +9,7 @@
  * @exports Tab
  */
 
-import handle, {forward, forwardCustom, forProp, not} from '@enact/core/handle';
+import handle, {forward, forwardCustom, forwardWithPrevent, forProp, not} from '@enact/core/handle';
 import {is} from '@enact/core/keymap';
 import kind from '@enact/core/kind';
 import {cap, mapAndFilterChildren} from '@enact/core/util';
@@ -40,7 +40,6 @@ import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.
 const LayoutComponent = Layout as ComponentType<any>;
 const CellComponent = Cell as ComponentType<any>;
 const TouchableCell = Touchable(Cell) as ComponentType<any>;
-const forwardWithPrevent = (handle as any).forwardWithPrevent;
 
 const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
 const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 6;
