@@ -42,7 +42,8 @@
 			border: @lime-button-border-width solid transparent;
 			box-sizing: border-box;
 			will-change: transform;
-			.lime-slider-focus-out-motion();
+			&:not(:global(.hwTier-low)) { .lime-slider-focus-out-high-motion(); }
+			&:global(.hwTier-low) { .lime-slider-focus-out-low-motion(); }
 		}
 	}
 
@@ -395,7 +396,8 @@
 		:global(.spotlight-input-mouse) & {
 			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
 				.knob::before {
-					.lime-slider-focus-in-motion();
+					&:not(:global(.hwTier-low)) { .lime-slider-focus-in-high-motion(); }
+					&:global(.hwTier-low) { .lime-slider-focus-in-low-motion(); }
 				}
 			}
 
@@ -422,25 +424,29 @@
 					background-color: @lime-slider-handle-focused-color;
 					border-color: @lime-slider-handle-focused-border-color;
 					box-shadow: @lime-slider-handle-focused-shadow;
-					.lime-slider-focus-in-motion();
+					&:not(:global(.hwTier-low)) { .lime-slider-focus-in-high-motion(); }
+					&:global(.hwTier-low) { .lime-slider-focus-in-low-motion(); }
 				}
 
 				&:active,
 				&.pressed {
 					.knob::before {
-						.lime-slider-press-motion();
+						&:not(:global(.hwTier-low)) { .lime-slider-press-high-motion(); }
+						&:global(.hwTier-low) { .lime-slider-press-low-motion(); }
 					}
 				}
 
 				&:not(.pressed) {
 					.knob::before {
-						.lime-slider-release-motion();
+						&:not(:global(.hwTier-low)) { .lime-slider-release-high-motion(); }
+						&:global(.hwTier-low) { .lime-slider-release-low-motion(); }
 					}
 				}
 
 				.disabled({
 					.knob::before {
-						.lime-slider-focus-out-motion();
+						&:not(:global(.hwTier-low)) { .lime-slider-focus-out-high-motion(); }
+						&:global(.hwTier-low) { .lime-slider-focus-out-low-motion(); }
 					}
 				});
 			}
@@ -462,7 +468,8 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-handle-focused-shadow;
-				.lime-slider-focus-in-motion();
+				&:not(:global(.hwTier-low)) { .lime-slider-focus-in-high-motion(); }
+				&:global(.hwTier-low) { .lime-slider-focus-in-low-motion(); }
 			}
 		}
 
