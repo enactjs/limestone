@@ -60,7 +60,7 @@ const CheckboxBase = kind({
 		 *
 		 * May be specified as either:
 		 *
-		 * * A string that represents an icon from the {@link limestone/Icon.iconList|iconList},
+		 * * A string that represents an icon from the {@link limestone/Icon.icons|icons},
 		 * * An HTML entity string, Unicode reference or hex value (in the form '0x...'),
 		 * * A URL specifying path to an icon image, or
 		 * * An object representing a resolution independent resource (See {@link ui/resolution})
@@ -115,7 +115,7 @@ const CheckboxBase = kind({
 		 *
 		 * May be specified as either:
 		 *
-		 * * A string that represents an icon from the {@link limestone/Icon.Icon.iconList|iconList},
+		 * * A string that represents an icon from the {@link limestone/Icon.icons|icons},
 		 * * An HTML entity string, Unicode reference or hex value (in the form '0x...'),
 		 * * A URL specifying path to an icon image, or
 		 * * An object representing a resolution independent resource (See {@link ui/resolution})
