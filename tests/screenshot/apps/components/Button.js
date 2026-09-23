@@ -7,6 +7,7 @@ import css from './Button.module.less';
 // One representative scenario per visually distinct configuration (LTR).
 const buttonSmokeTests = [
 	<Button>click me</Button>,
+	<Button disabled>click me</Button>,
 	<Button>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Button>,
 	{
 		textSize: 'large',
@@ -17,6 +18,7 @@ const buttonSmokeTests = [
 	<Button icon="minus" iconPosition="after" />,
 	<Button icon="plus" iconPosition="before">click me</Button>,
 	<Button icon="minus" iconPosition="after">click me</Button>,
+	<Button icon="rotate">click me</Button>,
 	<Button selected>click me</Button>,
 	<Button selected icon="plus" />,
 	<Button color="red">click me</Button>,
@@ -25,11 +27,14 @@ const buttonSmokeTests = [
 		textSize: 'large',
 		component: <Button color="red">click me</Button>
 	},
+	<Button selected backgroundOpacity="transparent">click me</Button>, 	// [QWTC-1828]
+	<Button selected backgroundOpacity="opaque">click me</Button>,
 	...withConfig({wrapper: {light: true, padded: true}}, [
 		<Button shadowed icon="plus" minWidth={false} />,
-		<Button shadowed backgroundOpacity="transparent" minWidth={false}>click me</Button>
+		<Button shadowed icon="minus" minWidth={false} />,
+		<Button shadowed backgroundOpacity="transparent" minWidth={false}>click me</Button>,
+		<Button disabled icon="forward" size="small" tooltipText="tooltip" tooltipType="transparent">click me</Button>
 	])
-
 ];
 
 const buttonExtendedTests = [
@@ -52,9 +57,7 @@ const buttonExtendedTests = [
 	<Button backgroundOpacity="opaque">click me</Button>,
 
 	// Selected buttons
-	<Button selected backgroundOpacity="transparent">click me</Button>,
 	<Button selected backgroundOpacity="transparent" icon="plus" />,
-	<Button selected backgroundOpacity="opaque">click me</Button>,
 
 	// iconPosition = before (Default) + children has 1 letter +	minWidth = false
 	<Button minWidth={false}>H</Button>,
@@ -168,7 +171,6 @@ const buttonQwtcTests = [
 	<Button>{TallglyphKhmer}</Button>,
 	// end [QWTC-1837]
 
-	<Button selected backgroundOpacity="transparent">click me</Button>, // [QWTC-1828]
 	<Button selected backgroundOpacity="transparent" icon="plus" />,
 
 	// [QWTC-2257] - Color Underbar displays on Button (LTR)
@@ -183,27 +185,6 @@ const buttonQwtcTests = [
 
 	// [QWTC-1831]
 	<Button icon="rotate">click me</Button>
-];
-
-// Focused with light wrapper — smoke representatives + QWTC focus cases
-const buttonFocusTests = [
-	// [QWTC-2232]
-	<Button>Focused button</Button>,
-	<Button disabled>Focused button</Button>,
-	// [QWTC-2232] end
-	<Button icon="plus" iconPosition="before">Focused button</Button>,
-	<Button icon="minus" iconPosition="after">Focused button</Button>,
-	<Button selected>Focused button</Button>,
-	<Button color="red">Focused button</Button>,
-	<Button roundBorder>Focused button</Button>,
-	<Button selected backgroundOpacity="transparent">Focused button</Button>, 	// [QWTC-1828]
-	<Button selected backgroundOpacity="opaque">Focused button</Button>,
-	// [QWTC-1831]
-	<Button icon="rotate">Focused button</Button>,
-	// [QWTC-2531]
-	<Button disabled icon="forward" size="samll" tooltipText="tooltip" tooltipType="transparent">Focused button</Button>,
-	<Button shadowed icon="minus" minWidth={false} />,
-	<Button shadowed backgroundOpacity="transparent" minWidth={false}>Focused button</Button>
 ];
 
 // RTL: smoke representatives + QWTC RTL cases (not a full LTR mirror).
@@ -246,7 +227,7 @@ const ButtonTests = [
 	...buttonQwtcTests,
 	...buttonExtendedTests,
 
-	...withConfig({focus: true, wrapper: {light: true, padded: true}}, buttonFocusTests),
+	...withConfig({focus: true}, buttonSmokeTests),
 
 	// Tallglyph validation
 	...withTallglyphLocale(buttonTallglyphViTests),
@@ -262,8 +243,6 @@ const ButtonTests = [
 	// *************************************************************
 	// With customized button
 	// *************************************************************
-	// Note: When the file name of the test is too long, different tests may be recognized as the same test.
-	// So we changed the Button name of Focus prop tests.
 	...withProps({css: css}, [
 		// standard button
 		<Button>Customized button</Button>,

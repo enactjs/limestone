@@ -84,14 +84,6 @@ const progressButtonRtlTests = [
 	<ProgressButton size="large" showProgress progress={0.5}>Update</ProgressButton>
 ];
 
-const progressButtonFocusTests = [
-	<ProgressButton>Focused Update</ProgressButton>,
-	<ProgressButton disabled>Focused Update</ProgressButton>,
-	<ProgressButton showProgress progress={0.5}>Focused Update</ProgressButton>,
-	<ProgressButton color="red">Focused Update</ProgressButton>,
-	<ProgressButton size="large" showProgress progress={0.5}>Focused Update</ProgressButton>
-];
-
 const progressButtonExtendedTests = [
 	...progressButtonSizeLargeTests,
 	...progressButtonOpaqueTests,
@@ -106,7 +98,7 @@ const progressButtonTallglyphTests = [
 const ProgressButtonTests = [
 	...progressButtonSmokeTests,
 	...progressButtonExtendedTests,
-	...withConfig({focus: true}, progressButtonFocusTests),
+	...withConfig({focus: true}, progressButtonSmokeTests),
 	...withConfig({locale: 'ar-SA'}, progressButtonRtlTests),
 	...withTallglyphLocale(progressButtonTallglyphTests)
 ];

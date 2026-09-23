@@ -5,6 +5,7 @@ import {withConfig} from './utils';
 const defaultDate = new Date(2009, 5, 6);
 
 const timePickerSmokeTests = [
+	<TimePicker defaultValue={defaultDate} />,
 	<TimePicker defaultValue={defaultDate} disabled />,
 	<TimePicker defaultValue={defaultDate} noLabel />
 
@@ -40,15 +41,6 @@ const timePickerRtlTests = [
 	<TimePicker defaultValue={defaultDate} disabled />
 ];
 
-const timePickerFocusTests = [
-	// *************************************************************
-	// focused
-	// *************************************************************
-	<TimePicker defaultValue={new Date(2009, 5, 7)} />,
-	<TimePicker defaultValue={new Date(2009, 5, 7)} disabled />,
-	<TimePicker defaultValue={new Date(2009, 5, 7)} noLabel />
-];
-
 const TimePickerTests = [
 	...timePickerSmokeTests,
 	...timePickerQwtcTests,
@@ -60,7 +52,7 @@ const TimePickerTests = [
 		component: <TimePicker defaultValue={defaultDate} />
 	},
 
-	...withConfig({focus: true}, timePickerFocusTests),
+	...withConfig({focus: true}, timePickerSmokeTests),
 	// with largeText [QWTC-2100]
 	...withConfig({textSize: 'large'}, [
 		<TimePicker defaultValue={new Date(2009, 5, 7)} />

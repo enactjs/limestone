@@ -2,7 +2,7 @@ import {scaleToRem} from '@enact/ui/resolution';
 
 import Dropdown from '../../../../Dropdown';
 
-import {withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
+import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
 const children = (itemCount) => (new Array(itemCount)).fill().map((i, index) => `Option ${index + 1}`);
 
@@ -67,7 +67,7 @@ const dropdownExtendedTests = [
 
 const dropdownFocusTests = [
 	// size="large" — smoke representatives
-	...withProps({focus: true}, [
+	...withConfig({focus: true}, [
 		Widths[0],
 		Widths[2]
 	])

@@ -41,19 +41,6 @@ const chipsSmokeTests = [
 	</Chips>
 ];
 
-const chipsFocusTests = [
-	<Chips>
-		<Chip deleteButton>Focused Chip 1</Chip>
-		<Chip deleteButton>Chip 2</Chip>
-		<Chip deleteButton>Chip 3</Chip>
-	</Chips>,
-	<Chips orientation="horizontal">
-		<Chip>Focused Chip 1</Chip>
-		<Chip>Chip 2</Chip>
-		<Chip>Chip 3</Chip>
-	</Chips>
-];
-
 const chipsTallglyphTests = [
 	<Chips>
 		<Chip>{TallglyphMultiScript}</Chip>
@@ -63,7 +50,7 @@ const chipsTallglyphTests = [
 
 const ChipsTests = [
 	...chipsSmokeTests,
-	...withConfig({focus: true}, chipsFocusTests),
+	...withConfig({focus: true}, chipsSmokeTests),
 	...withTallglyphLocale(chipsTallglyphTests)
 ];
 

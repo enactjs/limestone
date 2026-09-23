@@ -46,7 +46,6 @@ const pickerSmokeTests = [
 	<Picker title="Title">{['Hello', 'Hello']}</Picker>,
 	<Picker inlineTitle title="Title">{['Hello', 'Hello']}</Picker>,
 	<Picker css={css} inlineTitle title="Title">{['Hello', 'Hello']}</Picker>
-
 ];
 
 const pickerQwtcTests = [
@@ -170,8 +169,8 @@ const pickerVerticalTests = [
 ];
 
 const pickerFocusTests = [
-	<Picker joined>{pickerList.airports}</Picker>,
-	<Picker orientation="vertical" joined>{pickerList.airports}</Picker>
+	pickerVegetablesTests[4],
+	pickerVerticalTests[5]
 ];
 
 const pickerRtlQwtc2198Tests = [

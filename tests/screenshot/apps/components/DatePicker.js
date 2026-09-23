@@ -4,7 +4,6 @@ import DatePicker from '../../../../DatePicker';
 
 import {withConfig} from './utils';
 
-const jan30 = generateDate('2019-01-30');
 const jan31 = generateDate('2019-01-31');
 const maxYear = generateDate('2099-01-30');
 const minYear = generateDate('1900-01-30');
@@ -43,19 +42,10 @@ const datePickerLargeTextTests = [
 	}
 ];
 
-const datePickerFocusTests = [
-	// *************************************************************
-	// focused
-	// *************************************************************
-	<DatePicker defaultValue={jan30} />,
-	<DatePicker defaultValue={jan30} disabled />,
-	<DatePicker defaultValue={jan30} noLabel />
-];
-
 const DatePickerTests = [
 	...datePickerSmokeTests,
 	...datePickerQwtcTests,
-	...withConfig({focus: true}, datePickerFocusTests),
+	...withConfig({focus: true}, datePickerSmokeTests),
 	...datePickerLargeTextTests,
 	...datePickerRtlTests
 ];
