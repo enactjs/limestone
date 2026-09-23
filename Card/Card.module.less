@@ -38,8 +38,8 @@
 
 	.image {
 		position: relative;
-		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
-		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
+		:not(:global(.hwTier-low)) & { .lime-focus-out-large-high-motion(1); }
+		:global(.hwTier-low) & { .lime-focus-out-large-low-motion(1); }
 	}
 
 	.selectionContainer {
@@ -201,8 +201,8 @@
 	&.vertical {
 		width: var(--card-image-width);
 		height: auto;
-		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
-		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
+		:not(:global(.hwTier-low)) & { .lime-focus-out-large-high-motion(1); }
+		:global(.hwTier-low) & { .lime-focus-out-large-low-motion(1); }
 
 		.captionImageIconsContainer {
 			margin-top: @lime-card-caption-image-icon-margin;
@@ -323,8 +323,8 @@
 	&.horizontal {
 		width: @lime-card-horizontal-width;
 		height: @lime-card-horizontal-height;
-		&:not(:global(.hwTier-low)) { .lime-focus-out-large-high-motion(1); }
-		&:global(.hwTier-low) { .lime-focus-out-large-low-motion(1); }
+		:not(:global(.hwTier-low)) & { .lime-focus-out-large-high-motion(1); }
+		:global(.hwTier-low) & { .lime-focus-out-large-low-motion(1); }
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
@@ -365,8 +365,8 @@
 
 	.focus({
 		&.hasContainer {
-			&:not(:global(.hwTier-low)) { .lime-focus-in-large-high-motion(1.1); }
-			&:global(.hwTier-low) { .lime-focus-in-large-low-motion(1.1); }
+			:not(:global(.hwTier-low)) & { .lime-focus-in-large-high-motion(1.1); }
+			:global(.hwTier-low) & { .lime-focus-in-large-low-motion(1.1); }
 
 			&.roundedImage::before {
 				border-radius: @lime-card-border-radius;
@@ -395,12 +395,12 @@
 			&.hasContainer {
 				&.pressed,
 				&:active {
-					&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
-					&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
+					:not(:global(.hwTier-low)) & { .lime-press-large-high-motion(1.05); }
+					:global(.hwTier-low) & { .lime-press-large-low-motion(1.05); }
 				}
 				&:not(.pressed) {
-					&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
-					&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
+					:not(:global(.hwTier-low)) & { .lime-release-large-high-motion(1.1); }
+					:global(.hwTier-low) & { .lime-release-large-low-motion(1.1); }
 				}
 			}
 		});
@@ -411,8 +411,8 @@
 			&.vertical {
 				&:not(.captionOverlay):not(.hasContainer) .image,
 				&.captionOverlay {
-					&:not(:global(.hwTier-low)) { .lime-focus-in-large-high-motion(1.1); }
-					&:global(.hwTier-low) { .lime-focus-in-large-low-motion(1.1); }
+					:not(:global(.hwTier-low)) & { .lime-focus-in-large-high-motion(1.1); }
+					:global(.hwTier-low) & { .lime-focus-in-large-low-motion(1.1); }
 				}
 			}
 		});
@@ -423,22 +423,22 @@
 					&.captionOverlay {
 						&.pressed,
 						&:active {
-							&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
-							&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
+							:not(:global(.hwTier-low)) & { .lime-press-large-high-motion(1.05); }
+							:global(.hwTier-low) & { .lime-press-large-low-motion(1.05); }
 						}
 						&:not(.pressed) {
-							&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
-							&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
+							:not(:global(.hwTier-low)) & { .lime-release-large-high-motion(1.1); }
+							:global(.hwTier-low) & { .lime-release-large-low-motion(1.1); }
 						}
 					}
 
 					&:not(.captionOverlay):not(.hasContainer).pressed .image {
-						&:not(:global(.hwTier-low)) { .lime-press-large-high-motion(1.05); }
-						&:global(.hwTier-low) { .lime-press-large-low-motion(1.05); }
+						:not(:global(.hwTier-low)) & { .lime-press-large-high-motion(1.05); }
+						:global(.hwTier-low) & { .lime-press-large-low-motion(1.05); }
 					}
 					&:not(.captionOverlay):not(.hasContainer):not(.pressed) .image {
-						&:not(:global(.hwTier-low)) { .lime-release-large-high-motion(1.1); }
-						&:global(.hwTier-low) { .lime-release-large-low-motion(1.1); }
+						:not(:global(.hwTier-low)) & { .lime-release-large-high-motion(1.1); }
+						:global(.hwTier-low) & { .lime-release-large-low-motion(1.1); }
 					}
 				}
 			});
