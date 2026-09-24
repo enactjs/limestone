@@ -46,7 +46,7 @@ describe('Popup specs', () => {
 	test('should allow role to be overridden', () => {
 		render(
 			<FloatingLayerController>
-				<Popup open role="dialog"><div>popup</div></Popup>
+				<Popup open {...({role: 'dialog'} as Record<string, any>)}><div>popup</div></Popup>
 			</FloatingLayerController>
 		);
 

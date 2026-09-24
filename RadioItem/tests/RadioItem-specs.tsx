@@ -10,7 +10,7 @@ describe('RadioItem Specs', () => {
 		const radioItemElement = screen.getByRole('checkbox');
 
 		const expected = 983489;
-		const actual = radioItemElement.children.item(1).textContent.codePointAt();
+		const actual = radioItemElement.children.item(1)!.textContent!.codePointAt(0);
 
 		expect(actual).toBe(expected);
 	});

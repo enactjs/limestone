@@ -21,7 +21,7 @@ describe('useTooltip', () => {
 			Object.assign(tooltipRestProps, {children: [children, tooltip]});
 		}
 
-		return <Button {...tooltipRestProps} {...handlers} />;
+		return <Button {...({...tooltipRestProps, ...handlers} as any)} />;
 	};
 
 	describe('Tooltip', () => {

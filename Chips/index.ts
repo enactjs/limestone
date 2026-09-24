@@ -34,7 +34,7 @@ import Chips, {ChipsBase, ChipsDecorator} from './Chips';
  * @static
  * @memberof limestone/Chips.Chips
  */
-Chips.Chip = Chip;
+(Chips as any).Chip = Chip;
 
 export default Chips;
 export {

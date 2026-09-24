@@ -74,3 +74,78 @@ declare module 'ilib/lib/ResBundle' {
 
 	export default ResBundle;
 }
+
+declare module 'ilib/lib/IString' {
+	/**
+	 * An ilib internationalized string -- a `String`-like wrapper supporting locale-aware
+	 * formatting (`format`, `formatChoice`) and plural rules. Constructor and the methods used in
+	 * this codebase (`format`, `toString`) verified against the real ilib@14.22.0 source
+	 * (`lib/IString.js`) -- not guessed; the rest of its large `String`-mirroring API (`charAt`,
+	 * `slice`, `trim`, etc.) is covered loosely via the index signature since callers here only
+	 * construct an instance and immediately `format()`/stringify it.
+	 */
+	class IString {
+		constructor(string?: string | IString);
+
+		/** Replaces each `{param}` placeholder in the string with the matching value from `params`. */
+		format(params?: Record<string, any>): string;
+
+		toString(): string;
+
+		[key: string]: any;
+	}
+
+	export default IString;
+}
+
+declare module 'ilib/lib/DateFmt' {
+	/**
+	 * An ilib date formatter. Constructor and `getDaysOfWeek` (the only method used in this
+	 * codebase) verified against the real ilib@14.22.0 source (`lib/DateFmt.js`) -- not guessed;
+	 * the rest of its large formatting API (`format`, `formatRelative`, etc.) is covered loosely
+	 * via the index signature.
+	 */
+	class DateFmt {
+		/** `options.length` is one of `'short'|'medium'|'long'|'full'`, among other formatting options. */
+		constructor(options?: Record<string, any>);
+
+		/**
+		 * Returns the (Sunday-first) names of the days of the week, in this formatter's length
+		 * (or `options.length`, if given), for the current locale.
+		 */
+		getDaysOfWeek(options?: Record<string, any>): string[];
+
+		[key: string]: any;
+	}
+
+	export default DateFmt;
+}
+
+declare module 'ilib/lib/LocaleInfo' {
+	/**
+	 * ilib's locale metadata (first day of week, weekend bounds, etc.) for a given locale.
+	 * Constructor and the methods used in this codebase (`getFirstDayOfWeek`, `getWeekEndStart`,
+	 * `getWeekEndEnd`, `getClock`) verified against the real ilib@14.22.0 source
+	 * (`lib/LocaleInfo.js`) -- not guessed; the rest of its large metadata API is covered loosely
+	 * via the index signature.
+	 */
+	class LocaleInfo {
+		constructor(locale?: string | Record<string, any>);
+
+		/** The 0-indexed (Sunday = 0) first day of the week for this locale. */
+		getFirstDayOfWeek(): number;
+
+		/** The 0-indexed (Sunday = 0) day the weekend starts on for this locale. */
+		getWeekEndStart(): number;
+
+		/** The 0-indexed (Sunday = 0) day the weekend ends on for this locale. */
+		getWeekEndEnd(): number;
+
+		/** The clock format for this locale, `'12'` or `'24'`. */
+		getClock(): string;
+
+		[key: string]: any;
+	}
+
+	export default LocaleInfo;
+}

@@ -251,7 +251,7 @@ describe('Button', () => {
 			const handleClick = jest.fn();
 			const user = userEvent.setup();
 
-			render(<Button onClick={handleClick}>I am not a disabled Button</Button>);
+			render(<Button {...({onClick: handleClick} as any)}>I am not a disabled Button</Button>);
 			const button = screen.getByText('I am not a disabled Button');
 
 			await user.click(button);
@@ -263,7 +263,7 @@ describe('Button', () => {
 			const handleClick = jest.fn();
 			const user = userEvent.setup();
 
-			render(<Button disabled onClick={handleClick}>I am a disabled Button</Button>);
+			render(<Button {...({disabled: true, onClick: handleClick} as any)}>I am a disabled Button</Button>);
 			const button = screen.getByText('I am a disabled Button');
 
 			await user.click(button);

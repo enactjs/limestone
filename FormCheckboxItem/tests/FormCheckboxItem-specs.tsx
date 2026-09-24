@@ -10,7 +10,7 @@ describe('FormCheckboxItem Specs', () => {
 		render(<FormCheckboxItemBase icon="trash">Hello FormCheckboxItem</FormCheckboxItemBase>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox');
 
-		const actual = formCheckboxItemElement[1].textContent.codePointAt();
+		const actual = formCheckboxItemElement[1].textContent!.codePointAt(0);
 		const expected = 983077; // decimal converted charCode of Unicode 'trash' character
 
 		expect(actual).toBe(expected);
@@ -49,7 +49,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should be disabled when `disabled` prop is true', () => {
-		render(<FormCheckboxItem disabled>Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({disabled: true} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0];
 
 		const expected = 'disabled';
@@ -89,7 +89,7 @@ describe('FormCheckboxItem Specs', () => {
 			</FormCheckboxItemBase>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox');
 
-		const actual = formCheckboxItemElement[1].textContent.codePointAt();
+		const actual = formCheckboxItemElement[1].textContent!.codePointAt(0);
 		const expected = 983077; // decimal converted charCode of Unicode 'trash' character
 
 		expect(actual).toBe(expected);
@@ -97,7 +97,7 @@ describe('FormCheckboxItem Specs', () => {
 
 	test('should support slotBefore', () => {
 		render(<FormCheckboxItem slotBefore={<Icon>minus</Icon>}>Hello FormCheckboxItem</FormCheckboxItem>);
-		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].children.item(1).children;
+		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].children.item(1)!.children;
 
 		const expected = 2;
 
@@ -105,7 +105,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should have inline class when `inline` prop is true', () => {
-		render(<FormCheckboxItem inline>Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({inline: true} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItem = screen.getAllByRole('checkbox')[0];
 
 		const expected = 'inline';
@@ -114,8 +114,8 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should support label', () => {
-		render(<FormCheckboxItem label="LabelText">Hello FormCheckboxItem</FormCheckboxItem>);
-		const label = screen.getByText('LabelText').parentElement.parentElement;
+		render(<FormCheckboxItem {...({label: 'LabelText'} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
+		const label = screen.getByText('LabelText').parentElement!.parentElement;
 
 		const expectedClass = 'label';
 
@@ -124,7 +124,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should have label default position `below`', () => {
-		render(<FormCheckboxItem label="LabelText">Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({label: 'LabelText'} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].lastElementChild;
 
 		const expectedClass = 'labelBelow';
@@ -133,7 +133,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should have class labelAfter when position is set to `after`', () => {
-		render(<FormCheckboxItem label="LabelText" labelPosition="after">Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({label: 'LabelText', labelPosition: 'after'} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].lastElementChild;
 
 		const expectedClass = 'labelAfter';
@@ -142,7 +142,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should have class labelAbove when position is set to `above`', () => {
-		render(<FormCheckboxItem label="LabelText" labelPosition="above">Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({label: 'LabelText', labelPosition: 'above'} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].lastElementChild;
 
 		const expectedClass = 'labelAbove';
@@ -151,7 +151,7 @@ describe('FormCheckboxItem Specs', () => {
 	});
 
 	test('should have class labelBefore when position is set to `before`', () => {
-		render(<FormCheckboxItem label="LabelText" labelPosition="before">Hello FormCheckboxItem</FormCheckboxItem>);
+		render(<FormCheckboxItem {...({label: 'LabelText', labelPosition: 'before'} as any)}>Hello FormCheckboxItem</FormCheckboxItem>);
 		const formCheckboxItemElement = screen.getAllByRole('checkbox')[0].lastElementChild;
 
 		const expectedClass = 'labelBefore';

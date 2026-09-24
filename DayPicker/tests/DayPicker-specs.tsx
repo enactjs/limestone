@@ -115,7 +115,7 @@ describe('DayPicker', () => {
 
 			const handleSelect = jest.fn();
 			const user = userEvent.setup();
-			render(<DayPicker defaultSelected={[0]} locale="es-ES" onSelect={handleSelect} />);
+			render(<DayPicker locale="es-ES" onSelect={handleSelect} {...({defaultSelected: [0]} as any)} />);
 
 			// select Lunes (Monday) which is the first day of the week for es-ES
 			const item = screen.getAllByRole('checkbox')[0];

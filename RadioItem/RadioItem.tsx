@@ -18,14 +18,33 @@ import Toggleable from '@enact/ui/Toggleable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {createElement} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import Icon from '../Icon';
 import $L from '../internal/$L';
 import {ItemBase, ItemDecorator} from '../Item';
+import type {ItemBaseProps} from '../Item';
 
 import componentCss from './RadioItem.module.less';
 
-const Item = ItemDecorator(ItemBase);
+// `ItemDecorator` is a ramda `compose()` chain, which doesn't preserve `kind()`'s overloaded
+// factory typing through composition (a known ramda/TS limitation -- see Item.tsx's own final
+// export, which casts for the same reason). Cast here too rather than leaving `Item` untyped.
+const Item = ItemDecorator(ItemBase) as ComponentType<ItemBaseProps>;
+
+// `@enact/ui/Group`'s own final export isn't cast to a `ComponentType`, so it isn't usable as a
+// JSX component as-is; cast locally rather than reaching into the `ui` package for this.
+const GroupComponent = Group as ComponentType<any>;
+
+export interface RadioItemBaseProps {
+	children?: ReactNode;
+	css?: Record<string, string>;
+	disabled?: boolean;
+	icon?: string;
+	selected?: boolean;
+	slotBefore?: ReactNode;
+}
 
 /**
  * An item component with a radio toggle icon.
@@ -42,6 +61,8 @@ const Item = ItemDecorator(ItemBase);
 const RadioItemBase = kind({
 	name: 'RadioItem',
 
+	_propTypes: {} as RadioItemBaseProps,
+
 	propTypes: /** @lends limestone/RadioItem.RadioItem.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -54,7 +75,7 @@ const RadioItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * The icon to display when selected.
@@ -95,17 +116,23 @@ const RadioItemBase = kind({
 	render: ({children, css, icon, selected, slotBefore, ...rest}) => {
 		return (
 			<Item
-				data-webos-voice-intent="SelectRadioItem"
-				role="checkbox"
-				{...rest}
-				aria-checked={selected}
-				css={css}
-				selected={selected}
+				{...({
+					'data-webos-voice-intent': 'SelectRadioItem',
+					role: 'checkbox',
+					...rest,
+					'aria-checked': selected,
+					css,
+					selected
+				} as Record<string, any>)}
 			>
-				<slotBefore>
-					<Icon className={css.icon} size="tiny">{icon}</Icon>
-					{slotBefore}
-				</slotBefore>
+				{/* `Slottable` (used by the decorator below) extracts this into the `slotBefore` prop by
+				  * matching the element's string `type`, exactly like a DOM tag -- but it isn't a real
+				  * intrinsic element, so it's built with `createElement` rather than JSX to avoid needing
+				  * a `slotBefore` entry in the global JSX namespace. */}
+				{createElement('slotBefore', null,
+					<Icon className={css!.icon} size="tiny">{icon}</Icon>,
+					slotBefore
+				)}
 				{children}
 			</Item>
 		);
@@ -139,7 +166,17 @@ const RadioItem = Pure(
 	RadioItemDecorator(
 		RadioItemBase
 	)
-);
+) as ComponentType<RadioItemBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
+
+export interface RadioItemGroupProps {
+	children: any;
+	groupId?: string;
+	itemProps?: Record<string, any>;
+	[key: string]: any;
+}
 
 /**
  * A container that surrounds multiple RadioItems.
@@ -152,14 +189,14 @@ const RadioItem = Pure(
  * @ui
  * @public
  */
-const RadioItemGroup = (props) => {
+const RadioItemGroup = (props: RadioItemGroupProps) => {
 	checkPropTypes(RadioItemGroup, props);
 	const {children, groupId, itemProps, ...rest} = props;
 
 	if (typeof children[0] === 'string') {  // The case of multiple radio items are represented by string array instead of `RadioItem` components using `ui/Group`
 		return (
 			<div role="region" aria-labelledby={groupId || "radioItemGroup"}>
-				<Group
+				<GroupComponent
 					{...rest}
 					id={groupId || "radioItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
@@ -168,7 +205,7 @@ const RadioItemGroup = (props) => {
 					itemProps={{...itemProps}}
 				>
 					{children}
-				</Group>
+				</GroupComponent>
 			</div>
 		);
 	} else {  // The case of multiple radio items are represented by `RadioItem` components
@@ -180,7 +217,7 @@ const RadioItemGroup = (props) => {
 					id={groupId || "radioItemGroup"}
 					aria-label={new IString($L('{total} items in total')).format({'total': children.length})}
 				>
-					{children.map((child, index) => {
+					{children.map((child: any, index: number) => {
 						const {children: itemValue, ...childRest} = child.props;
 						return <RadioItem key={index} {...childRest} {...itemProps}>{itemValue}</RadioItem>;
 					})}

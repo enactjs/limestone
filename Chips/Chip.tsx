@@ -26,16 +26,37 @@ import css from './Chip.module.less';
  * @property {('top'|'bottom'|'right')} position The position of the delete button relative to the chip.
  * @public
  */
+export interface ChipDeleteButtonShapeProps {
+	icon?: string | Record<string, string>;
+	onDelete?: (...args: any[]) => any;
+	position?: 'top' | 'bottom' | 'right';
+}
+
 const chipDeleteButtonShape = PropTypes.shape({
 	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 	onDelete: PropTypes.func,
 	position: PropTypes.oneOf(['top', 'bottom', 'right'])
-});
+}) as PropTypes.Validator<ChipDeleteButtonShapeProps | undefined>;
 
 const ChipDefaultProps = {
 	disabled: false,
 	imageSize: 24
 };
+
+export interface ChipBaseProps {
+	checked?: boolean;
+	children: string;
+	className?: string;
+	deleteButton?: ChipDeleteButtonShapeProps | boolean;
+	disabled?: boolean;
+	icon?: string | Record<string, string>;
+	id: string;
+	imageSize?: number;
+	isImage?: boolean;
+	multiline?: boolean;
+	onClick?: (...args: any[]) => any;
+	ref?: any;
+}
 
 /**
  * Provides Limestone styled Chip component and behaviors.
@@ -59,18 +80,19 @@ const ChipDefaultProps = {
  * @ui
  * @public
  */
-const ChipBase = (props) => {
+const ChipBase = (props: ChipBaseProps) => {
 	const {handleChipDelete, getNextTargetFromDeleteButton, registerChild} = use(ChipsContext);
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, multiline, onClick, ref, ...rest} = chipProps;
+	const deleteConfig = typeof deleteButton === 'object' ? deleteButton : null;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
-	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipClassName = classnames(className, deleteButton?.position, css.content);
-	const chipRef = useRef(null);
-	const containerRef = useRef(null);
-	const deleteButtonRef = useRef(null);
+	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteConfig?.position || 'right']);
+	const chipClassName = classnames(className, deleteConfig?.position, css.content);
+	const chipRef = useRef<any>(null);
+	const containerRef = useRef<any>(null);
+	const deleteButtonRef = useRef<any>(null);
 
 	const isHovering = useRef(false);
 
@@ -87,7 +109,7 @@ const ChipBase = (props) => {
 	}, [chipRef, registerChild, id]);
 
 	useEffect(() => {
-		const handleDocumentClick = (ev) => {
+		const handleDocumentClick = (ev: any) => {
 			if (containerRef.current && !containerRef.current.contains(ev.target)) {
 				deleteButtonRef.current?.classList.remove(css.focused);
 			}
@@ -99,7 +121,7 @@ const ChipBase = (props) => {
 		};
 	}, []);
 
-	const handleKeyDown = useCallback((ev) => {
+	const handleKeyDown = useCallback((ev: any) => {
 		const {keyCode, target} = ev;
 		const direction = getDirection(keyCode);
 		if (direction) {
@@ -125,13 +147,13 @@ const ChipBase = (props) => {
 		}
 	}, [chipRef, getNextTargetFromDeleteButton, id]);
 
-	const handleMouseLeave = useCallback((ev) => {
+	const handleMouseLeave = useCallback((ev: any) => {
 		if (containerRef.current.contains(ev.target)) {
 			deleteButtonRef.current?.classList.remove(css.focused);
 		}
 	}, []);
 
-	const handleFocus = useCallback((ev) => {
+	const handleFocus = useCallback((ev: any) => {
 		if (ev.target === chipRef.current && !disabled) {
 			deleteButtonRef.current?.classList.add(css.focused);
 		}
@@ -151,19 +173,19 @@ const ChipBase = (props) => {
 		isHovering.current = false;
 	}, []);
 
-	const handleDelete = useCallback((ev) => {
+	const handleDelete = useCallback((ev: any) => {
 		if (handleChipDelete) {
 			handleChipDelete(ev, id);
 		}
-		if (deleteButton?.onDelete) {
-			deleteButton.onDelete(ev);
+		if (deleteConfig?.onDelete) {
+			deleteConfig.onDelete(ev);
 		}
-	}, [deleteButton, handleChipDelete, id]);
+	}, [deleteConfig, handleChipDelete, id]);
 
-	const iconComponent = useCallback(({children: childComponent, ...iconProps}) => {
+	const iconComponent = useCallback(({children: childComponent, ...iconProps}: Record<string, any>) => {
 		return <>
 			{checked && <Icon {...iconProps}>checkmark</Icon>}
-			{isImage && <Image {...iconProps} src={childComponent} style={{borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} />}
+			{isImage && <Image {...iconProps} src={childComponent} {...({style: {borderRadius: '999px', width: `${imageSize}px`, height: `${imageSize}px`}} as Record<string, any>)} />}
 			{!isImage && childComponent && (childComponent !== 'check') && (childComponent !== 'checkmark') && <Icon {...iconProps}>{childComponent}</Icon>}
 		</>;
 	}, [checked, imageSize, isImage]);
@@ -180,37 +202,41 @@ const ChipBase = (props) => {
 			ref={containerRef}
 		>
 			<Button
-				aria-label={ariaLabel}
-				aria-checked={checked}
-				css={css}
-				className={chipClassName}
-				data-chip-index={id}
-				disabled={disabled}
-				focusEffect="static"
-				icon={icon ? icon : ''}
-				iconComponent={iconComponent}
-				marqueeDisabled={multiline}
-				size="small"
-				onFocus={handleFocus}
-				onClick={onClick}
-				ref={chipRef}
-				role="checkbox"
-				roundBorder
+				{...({
+					'aria-label': ariaLabel,
+					'aria-checked': checked,
+					css,
+					className: chipClassName,
+					'data-chip-index': id,
+					disabled,
+					focusEffect: 'static',
+					icon: icon ? icon : '',
+					iconComponent,
+					marqueeDisabled: multiline,
+					size: 'small',
+					onFocus: handleFocus,
+					onClick,
+					ref: chipRef,
+					role: 'checkbox',
+					roundBorder: true
+				} as Record<string, any>)}
 			>
 				{multiline ? <div className={css.multiline}>{children}</div> : children}
 			</Button>
 			{deleteButton &&
 				<div className={buttonClassName} ref={deleteButtonRef}>
 					<Button
-						aria-label={children + ' ' + $L("Delete")}
-						css={css}
-						backgroundOpacity="transparent"
-						disabled={disabled}
-						icon={deleteButton?.icon || 'closex'}
-						size="small"
-						onClick={handleDelete}
-						role="button"
-						roundBorder
+						{...({
+							'aria-label': children + ' ' + $L("Delete"),
+							css,
+							backgroundOpacity: 'transparent',
+							disabled,
+							icon: deleteConfig?.icon || 'closex',
+							size: 'small',
+							onClick: handleDelete,
+							role: 'button',
+							roundBorder: true
+						} as Record<string, any>)}
 					/>
 				</div>
 			}
@@ -254,7 +280,7 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	deleteButton: PropTypes.oneOfType([
 		chipDeleteButtonShape,
 		PropTypes.bool
-	]),
+	]) as PropTypes.Validator<ChipDeleteButtonShapeProps | boolean | undefined>,
 
 	/**
 	 * Disables Chip and becomes non-interactive.
@@ -272,7 +298,7 @@ ChipBase.propTypes = /** @lends limestone/Chips.Chip.prototype */ {
 	 * @type {String|Object}
 	 * @public
 	 */
-	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 	/**
 	 * Sets the size of the image passed to the component.

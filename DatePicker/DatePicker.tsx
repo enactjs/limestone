@@ -13,11 +13,13 @@
 import Pure from '@enact/ui/internal/Pure';
 import DateFactory from 'ilib/lib/DateFactory';
 import DateFmt from 'ilib/lib/DateFmt';
+import type {ComponentType} from 'react';
 
 import {DateTimeDecorator} from '../internal/DateTime';
 import Skinnable from '../Skinnable';
 
 import DatePickerBase from './DatePickerBase';
+import type {DatePickerBaseProps} from './DatePickerBase';
 
 const getLabelFormatter = () => new DateFmt({
 	date: 'dmwy',
@@ -27,8 +29,8 @@ const getLabelFormatter = () => new DateFmt({
 });
 
 const dateTimeConfig = {
-	customProps: function (i18n, value, props) {
-		const values = {
+	customProps: function (i18n: any, value: any, props: any) {
+		const values: Record<string, any> = {
 			maxMonths: 12,
 			maxDays: 31,
 			year: 1900,
@@ -42,25 +44,25 @@ const dateTimeConfig = {
 			values.day = value.getDays();
 			values.maxMonths = i18n.formatter.cal.getNumMonths(values.year);
 			values.maxDays = i18n.formatter.cal.getMonLength(values.month, values.year);
-			values.maxYear = i18n.toLocalYear(props.maxYear || DatePickerBase.defaultProps.maxYear);
-			values.minYear = i18n.toLocalYear(props.minYear || DatePickerBase.defaultProps.minYear);
+			values.maxYear = i18n.toLocalYear(props.maxYear || DatePickerBase.defaultProps!.maxYear);
+			values.minYear = i18n.toLocalYear(props.minYear || DatePickerBase.defaultProps!.minYear);
 		}
 
 		return values;
 	},
 	defaultOrder: ['d', 'm', 'y'],
 	handlers: {
-		onChangeDate: (ev, value) => {
+		onChangeDate: (ev: any, value: any) => {
 			value.day = ev.value;
 			return value;
 		},
 
-		onChangeMonth: (ev, value) => {
+		onChangeMonth: (ev: any, value: any) => {
 			value.month = ev.value;
 			return value;
 		},
 
-		onChangeYear: (ev, value) => {
+		onChangeYear: (ev: any, value: any) => {
 			value.year = ev.value;
 			return value;
 		}
@@ -68,8 +70,8 @@ const dateTimeConfig = {
 	i18n: function () {
 		const order = getLabelFormatter().getTemplate()
 			.replace(/'.*?'/g, '')
-			.match(/([mdy]+)/ig)
-			.map(s => s[0].toLowerCase());
+			.match(/([mdy]+)/ig)!
+			.map((s: string) => s[0].toLowerCase());
 
 		/*
 		 * Converts a gregorian year to local year
@@ -78,7 +80,7 @@ const dateTimeConfig = {
 		 *
 		 * @returns	{Number}		local year
 		 */
-		const toLocalYear = (year) => {
+		const toLocalYear = (year: number) => {
 			return DateFactory({
 				julianday: DateFactory({
 					year,
@@ -135,7 +137,14 @@ const DatePicker = Pure(
 			DatePickerBase
 		)
 	)
-);
+) as ComponentType<Omit<DatePickerBaseProps, 'day' | 'maxDays' | 'maxMonths' | 'month' | 'order' | 'year'> & {
+	defaultValue?: Date;
+	locale?: string;
+	onChange?: (...args: any[]) => any;
+	onComplete?: (...args: any[]) => any;
+	open?: boolean;
+	value?: Date;
+}>;
 
 /**
  * The initial value used when `value` is not set.
@@ -163,7 +172,7 @@ const DatePicker = Pure(
  * @param {Date} date `Date` to convert
  * @returns {String|null} Converted date or `null` if `date` is invalid
  */
-const dateToLocaleString = (date) => {
+const dateToLocaleString = (date: Date | null | undefined): string | null => {
 	if (!date) {
 		return null;
 	}

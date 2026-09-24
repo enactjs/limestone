@@ -43,7 +43,7 @@ describe('Image', () => {
 	});
 
 	test('should render image with sizing \'fit\'', () => {
-		render(<Image src={src} sizing="fit" />);
+		render(<Image src={src} {...({sizing: 'fit'} as any)} />);
 		const image = screen.getAllByRole('img')[0];
 
 		const expected = "image fit";
@@ -52,7 +52,7 @@ describe('Image', () => {
 	});
 
 	test('should render image with sizing \'none\'', () => {
-		render(<Image src={src} sizing="none" />);
+		render(<Image src={src} {...({sizing: 'none'} as any)} />);
 		const image = screen.getAllByRole('img')[0];
 
 		const expected = "image";

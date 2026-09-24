@@ -24,6 +24,7 @@ import Spottable from '@enact/spotlight/Spottable';
 import {Cell, Column} from '@enact/ui/Layout';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import type {ComponentType} from 'react';
 
 import Icon from '../Icon';
 import Image from '../Image';
@@ -48,7 +49,15 @@ import Touchable from '@enact/ui/Touchable';
  *  a specific screenSize.
  * @public
  */
-const ImageShape = PropTypes.shape({
+export interface ImageShape {
+	size: {
+		height: number | string;
+		width: number | string;
+	};
+	src: string | Record<string, string>;
+}
+
+const ImageShapePropType = PropTypes.shape({
 	size: PropTypes.shape({
 		height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 		width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired
@@ -56,13 +65,32 @@ const ImageShape = PropTypes.shape({
 	src: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired
 });
 
-const MarqueeBase = ({...rest}) => {
+const MarqueeBase = ({...rest}: Record<string, any>) => {
 	delete rest.order;
 
 	return <div {...rest} />;
 };
 
 const Marquee = MarqueeDecorator({invalidateProps: ['remeasure', 'order']}, MarqueeBase);
+
+export interface IconItemBaseProps {
+	background?: string;
+	bordered?: boolean;
+	children?: any;
+	css?: Record<string, string>;
+	'data-webos-voice-intent'?: string;
+	description?: string;
+	disabled?: boolean;
+	icon?: string | Record<string, string>;
+	image?: ImageShape;
+	label?: string;
+	labelColor?: 'dark' | 'light';
+	labelOn?: 'focus' | 'render';
+	order?: number;
+	pressed?: boolean;
+	title?: string;
+	titleOn?: 'focus' | 'render';
+}
 
 /**
  * A Limestone styled base component for {@link limestone/IconItem.IconItem|IconItem}.
@@ -74,6 +102,8 @@ const Marquee = MarqueeDecorator({invalidateProps: ['remeasure', 'order']}, Marq
  */
 const IconItemBase = kind({
 	name: 'IconItem',
+
+	_propTypes: {} as IconItemBaseProps,
 
 	propTypes: /** @lends limestone/IconItem.IconItemBase.prototype */ {
 		/**
@@ -121,7 +151,7 @@ const IconItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * The voice control intent.
@@ -156,7 +186,7 @@ const IconItemBase = kind({
 		 * @type {String|Object}
 		 * @public
 		 */
-		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		icon: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Source and size for the image.
@@ -165,7 +195,7 @@ const IconItemBase = kind({
 		 * @type {limestone/IconItem.ImageShape}
 		 * @public
 		 */
-		image: ImageShape,
+		image: ImageShapePropType as PropTypes.Validator<ImageShape | undefined>,
 
 		/**
 		 * A label displayed in the content.
@@ -182,7 +212,7 @@ const IconItemBase = kind({
 		 * @default 'light'
 		 * @public
 		 */
-		labelColor: PropTypes.oneOf(['dark', 'light']),
+		labelColor: PropTypes.oneOf(['dark', 'light']) as PropTypes.Validator<'dark' | 'light' | undefined>,
 
 		/**
 		 * Determines what triggers the label to show.
@@ -191,7 +221,7 @@ const IconItemBase = kind({
 		 * @default 'render'
 		 * @public
 		 */
-		labelOn: PropTypes.oneOf(['focus', 'render']),
+		labelOn: PropTypes.oneOf(['focus', 'render']) as PropTypes.Validator<'focus' | 'render' | undefined>,
 
 		/**
 		 * The order of the item.
@@ -226,7 +256,7 @@ const IconItemBase = kind({
 		 * @default 'render'
 		 * @public
 		 */
-		titleOn: PropTypes.oneOf(['focus', 'render'])
+		titleOn: PropTypes.oneOf(['focus', 'render']) as PropTypes.Validator<'focus' | 'render' | undefined>
 	},
 
 	defaultProps: {
@@ -261,16 +291,18 @@ const IconItemBase = kind({
 			let imageComponent;
 
 			if (icon) {
-				imageComponent = <Icon className={css.icon} size="large">{icon}</Icon>;
+				imageComponent = <Icon className={css!.icon} size="large">{icon}</Icon>;
 			} else if (image) {
 				imageComponent = (
 					<Image
-						className={css.image}
-						src={image?.src}
-						style={{
-							width: image?.size?.width,
-							height: image?.size?.height
-						}}
+						{...({
+							className: css!.image,
+							src: image?.src,
+							style: {
+								width: image?.size?.width,
+								height: image?.size?.height
+							}
+						} as Record<string, any>)}
 					/>
 				);
 			}
@@ -280,13 +312,13 @@ const IconItemBase = kind({
 			let align = label && labelOn === 'render' ? 'center' : 'center center';
 
 			const iconContent = (
-				<Column align={align} className={css.content} style={{background}}>
+				<Column align={align} className={css!.content} style={{background}}>
 					<Cell shrink>
 						{imageComponent ? imageComponent : null}
 					</Cell>
 					{label ? (
-						<Cell shrink className={css.labelContainer}>
-							<Marquee alignment="center" className={css.label} marqueeOn="focus" order={order}>{label}</Marquee>
+						<Cell shrink className={css!.labelContainer}>
+							<Marquee alignment="center" className={css!.label} marqueeOn="focus" order={order}>{label}</Marquee>
 						</Cell>
 					) : null}
 				</Column>
@@ -296,10 +328,10 @@ const IconItemBase = kind({
 				title ? (
 					<Column>
 						{iconContent}
-						<Marquee alignment="center" className={css.title} marqueeOn="focus" order={order}>{title}</Marquee>
+						<Marquee alignment="center" className={css!.title} marqueeOn="focus" order={order}>{title}</Marquee>
 						{description && <Marquee
 							alignment="center"
-							className={css.description}
+							className={css!.description}
 							marqueeOn="focus"
 							order={order}
 						>
@@ -312,22 +344,23 @@ const IconItemBase = kind({
 	},
 
 	render: ({children, disabled, ...rest}) => {
-		delete rest.background;
-		delete rest.bordered;
-		delete rest.icon;
-		delete rest.image;
-		delete rest.label;
-		delete rest.labelColor;
-		delete rest.labelOn;
-		delete rest.pressed;
-		delete rest.title;
-		delete rest.titleOn;
+		const restProps = rest as Record<string, any>;
+		delete restProps.background;
+		delete restProps.bordered;
+		delete restProps.icon;
+		delete restProps.image;
+		delete restProps.label;
+		delete restProps.labelColor;
+		delete restProps.labelOn;
+		delete restProps.pressed;
+		delete restProps.title;
+		delete restProps.titleOn;
 
 		return (
 			<div
-				{...rest}
+				{...restProps}
 				aria-disabled={disabled}
-				disabled={disabled}
+				{...({disabled} as any)}
 			>
 				{children}
 			</div>
@@ -373,7 +406,7 @@ const IconItemDecorator = compose(
  * @ui
  * @public
  */
-const IconItem = IconItemDecorator(IconItemBase);
+const IconItem = IconItemDecorator(IconItemBase) as ComponentType<IconItemBaseProps>;
 IconItem.displayName = 'IconItem';
 
 export default IconItem;

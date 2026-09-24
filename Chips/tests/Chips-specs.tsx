@@ -8,7 +8,7 @@ describe('Chips', () => {
 	const mockDeleteHandler = jest.fn();
 
 	const defaultProps = {
-		orientation: 'vertical',
+		orientation: 'vertical' as const,
 		children: [
 			<ChipBase
 				key="chip1"
@@ -26,11 +26,11 @@ describe('Chips', () => {
 			</ChipBase>
 		]
 	};
-	function getAllDeleteButtons () {
+	function getAllDeleteButtons (): Element[] {
 		// Look for buttons that are inside deleteButtonContainer
 		const container = document.querySelector('.chips');
 		const deleteButtonContainers = container?.querySelectorAll('.deleteButtonContainer') || [];
-		const deleteButtons = [];
+		const deleteButtons: Element[] = [];
 
 		deleteButtonContainers.forEach(buttonContainer => {
 			const button = buttonContainer.querySelector('[role="button"]');
@@ -44,14 +44,14 @@ describe('Chips', () => {
 
 	it('should render correctly with default props', () => {
 		const {container} = render(<ChipsBase {...defaultProps} />);
-		expect(container.firstChild.firstChild).toHaveClass('chips');
-		expect(container.firstChild.firstChild).toHaveClass('vertical');
+		expect(container.firstChild!.firstChild).toHaveClass('chips');
+		expect(container.firstChild!.firstChild).toHaveClass('vertical');
 	});
 
 	it('should focus the correct chip on navigation', () => {
 		render(<ChipsBase {...defaultProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]') as HTMLElement;
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]') as HTMLElement;
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -85,21 +85,21 @@ describe('Chips', () => {
 	it('should render correctly with horizontal orientation', () => {
 		const horizontalProps = {
 			...defaultProps,
-			orientation: 'horizontal'
+			orientation: 'horizontal' as const
 		};
 		const {container} = render(<ChipsBase {...horizontalProps} />);
-		expect(container.firstChild.firstChild).toHaveClass('chips');
-		expect(container.firstChild.firstChild).toHaveClass('horizontal');
+		expect(container.firstChild!.firstChild).toHaveClass('chips');
+		expect(container.firstChild!.firstChild).toHaveClass('horizontal');
 	});
 
 	it('should handle navigation in horizontal orientation', () => {
 		const horizontalProps = {
 			...defaultProps,
-			orientation: 'horizontal'
+			orientation: 'horizontal' as const
 		};
 		render(<ChipsBase {...horizontalProps} />);
-		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]') as HTMLElement;
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]') as HTMLElement;
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -118,7 +118,7 @@ describe('Chips', () => {
 
 	it('should render chips without delete buttons', () => {
 		const propsWithoutDelete = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase key="chip1" id="chip1">Chip 1</ChipBase>,
 				<ChipBase key="chip2" id="chip2">Chip 2</ChipBase>
@@ -135,7 +135,7 @@ describe('Chips', () => {
 
 	it('should handle chips with different delete button positions', () => {
 		const mixedPositionProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase
 					key="chip1"
@@ -168,7 +168,7 @@ describe('Chips', () => {
 	it('should handle click events on chip buttons', () => {
 		const mockOnClick = jest.fn();
 		const clickableProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase key="chip1" id="chip1" onClick={mockOnClick}>
 					Chip 1
@@ -178,14 +178,14 @@ describe('Chips', () => {
 		render(<ChipsBase {...clickableProps} />);
 
 		const chipButton = screen.getByText('Chip 1').closest('[role="checkbox"]');
-		fireEvent.click(chipButton);
+		fireEvent.click(chipButton!);
 
 		expect(mockOnClick).toHaveBeenCalledTimes(1);
 	});
 
 	it('should render chips with icons', () => {
 		const iconProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase key="chip1" id="chip1" icon="star">
 					Chip with Star
@@ -203,7 +203,7 @@ describe('Chips', () => {
 
 	it('should handle disabled chips', () => {
 		const disabledProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase key="chip1" id="chip1" disabled>
 					Disabled Chip
@@ -228,7 +228,7 @@ describe('Chips', () => {
 
 	it('should handle single chip rendering', () => {
 		const singleChipProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase
 					key="chip1"
@@ -248,13 +248,13 @@ describe('Chips', () => {
 
 	it('should handle empty children', () => {
 		const emptyProps = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: []
 		};
 		const {container} = render(<ChipsBase {...emptyProps} />);
 
-		expect(container.firstChild.firstChild).toHaveClass('chips');
-		expect(container.firstChild.firstChild).toHaveClass('vertical');
+		expect(container.firstChild!.firstChild).toHaveClass('chips');
+		expect(container.firstChild!.firstChild).toHaveClass('vertical');
 		const buttons = screen.queryAllByRole('checkbox');
 		expect(buttons).toHaveLength(0);
 	});
@@ -266,20 +266,20 @@ describe('Chips', () => {
 		};
 		const {container} = render(<ChipsBase {...customProps} />);
 
-		expect(container.firstChild.firstChild).toHaveClass('chips');
-		expect(container.firstChild.firstChild).toHaveClass('vertical');
-		expect(container.firstChild.firstChild).toHaveClass('custom-chips-class');
+		expect(container.firstChild!.firstChild).toHaveClass('chips');
+		expect(container.firstChild!.firstChild).toHaveClass('vertical');
+		expect(container.firstChild!.firstChild).toHaveClass('custom-chips-class');
 	});
 
 	it('should handle keyboard navigation with mixed orientations', () => {
 		const verticalProps = {
 			...defaultProps,
-			orientation: 'vertical'
+			orientation: 'vertical' as const
 		};
 		render(<ChipsBase {...verticalProps} />);
 
-		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
-		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
+		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]') as HTMLElement;
+		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]') as HTMLElement;
 
 		chip1.setAttribute('tabIndex', '0');
 		chip2.setAttribute('tabIndex', '0');
@@ -299,7 +299,7 @@ describe('Chips', () => {
 	it('should call onDelete with correct parameters', () => {
 		const mockDeleteWithParams = jest.fn();
 		const propsWithParams = {
-			orientation: 'vertical',
+			orientation: 'vertical' as const,
 			children: [
 				<ChipBase
 					key="chip1"

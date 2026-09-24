@@ -1,3 +1,4 @@
+// @ts-expect-error - no type declarations available for 'ilib'
 import ilib from 'ilib';
 import '@testing-library/jest-dom';
 import {act, fireEvent, render, screen} from '@testing-library/react';
@@ -168,7 +169,7 @@ describe('TimePicker', () => {
 		render(
 			<TimePicker value={time} locale="en-US" />
 		);
-		const header = screen.getByText(timeToLocaleString(time), {collapseWhitespace: false}).parentElement.parentElement;
+		const header = screen.getByText(timeToLocaleString(time)!, {collapseWhitespace: false}).parentElement!.parentElement;
 
 		const expected = 'heading';
 
@@ -181,7 +182,7 @@ describe('TimePicker', () => {
 		render(
 			<TimePicker value={time} locale="ar-SA" />
 		);
-		const header = screen.getByText(timeToLocaleString(time), {collapseWhitespace: false}).parentElement.parentElement;
+		const header = screen.getByText(timeToLocaleString(time)!, {collapseWhitespace: false}).parentElement!.parentElement;
 
 		const expected = 'heading';
 
@@ -194,7 +195,7 @@ describe('TimePicker', () => {
 		render(
 			<TimePicker value={time} locale="en-US" noLabel />
 		);
-		const header = screen.queryByText(timeToLocaleString(time), {collapseWhitespace: false});
+		const header = screen.queryByText(timeToLocaleString(time)!, {collapseWhitespace: false});
 
 		expect(header).toBeNull();
 	});

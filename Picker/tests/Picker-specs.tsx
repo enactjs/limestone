@@ -10,7 +10,7 @@ describe('Picker Specs', () => {
 				{[1, 2, 3, 4]}
 			</Picker>
 		);
-		const pickerText = screen.getByText('2').parentElement.parentElement;
+		const pickerText = screen.getByText('2').parentElement!.parentElement;
 
 		const expected = 'item';
 
@@ -75,7 +75,7 @@ describe('Picker Specs', () => {
 		const heading = screen.getByText('title text');
 
 		const expected = 'heading';
-		const actual = heading.parentElement.parentElement;
+		const actual = heading.parentElement!.parentElement;
 
 		expect(heading).toBeInTheDocument();
 		expect(actual).toHaveClass(expected);
@@ -91,7 +91,7 @@ describe('Picker Specs', () => {
 
 		const expectedInline = 'inlineTitle';
 		const expectedHeader = 'heading';
-		const actual = heading.parentElement.parentElement;
+		const actual = heading.parentElement!.parentElement;
 
 		expect(heading).toBeInTheDocument();
 		expect(actual).toHaveClass(expectedInline);

@@ -17,17 +17,30 @@ import compose from 'ramda/src/compose';
 import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import Toggleable from '@enact/ui/Toggleable';
+import {createElement} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import {ItemBase, ItemDecorator} from '../Item';
+import type {ItemBaseProps} from '../Item';
 import Skinnable from '../Skinnable';
 import {SwitchBase} from '../Switch';
 
 import componentCss from './SwitchItem.module.less';
 
-const Item = ItemDecorator(ItemBase);
+// `ItemDecorator` is a ramda `compose()` chain, which doesn't preserve `kind()`'s overloaded
+// factory typing through composition (a known ramda/TS limitation -- see Item.tsx's own final
+// export, which casts for the same reason). Cast here too rather than leaving `Item` untyped.
+const Item = ItemDecorator(ItemBase) as ComponentType<ItemBaseProps>;
 
 const Switch = Skinnable(SwitchBase);
 Switch.displayName = 'Switch';
+
+export interface SwitchItemBaseProps {
+	children?: ReactNode;
+	css?: Record<string, string>;
+	selected?: boolean;
+	slotAfter?: ReactNode;
+}
 
 /**
  * Renders an item with a {@link limestone/Switch|Switch}.
@@ -42,6 +55,8 @@ Switch.displayName = 'Switch';
 const SwitchItemBase = kind({
 	name: 'SwitchItem',
 
+	_propTypes: {} as SwitchItemBaseProps,
+
 	propTypes: /** @lends limestone/SwitchItem.SwitchItemBase.prototype */ {
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -54,7 +69,7 @@ const SwitchItemBase = kind({
 		 * @type {Object}
 		 * @public
 		 */
-		css: PropTypes.object,
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * If true the switch will be selected.
@@ -86,18 +101,24 @@ const SwitchItemBase = kind({
 
 	render: ({children, css, selected, slotAfter, ...rest}) => (
 		<Item
-			data-webos-voice-intent="SetToggleItem"
-			role="button"
-			{...rest}
-			aria-pressed={selected}
-			css={css}
-			selected={selected}
+			{...({
+				'data-webos-voice-intent': 'SetToggleItem',
+				role: 'button',
+				...rest,
+				'aria-pressed': selected,
+				css,
+				selected
+			} as Record<string, any>)}
 		>
 			{children}
-			<slotAfter>
-				{slotAfter}
+			{/* `Slottable` (used by the decorator below) extracts this into the `slotAfter` prop by
+			  * matching the element's string `type`, exactly like a DOM tag -- but it isn't a real
+			  * intrinsic element, so it's built with `createElement` rather than JSX to avoid needing
+			  * a `slotAfter` entry in the global JSX namespace. */}
+			{createElement('slotAfter', null,
+				slotAfter,
 				<Switch selected={selected} css={css} />
-			</slotAfter>
+			)}
 		</Item>
 	)
 });
@@ -133,7 +154,10 @@ const SwitchItem = Pure(
 	SwitchItemDecorator(
 		SwitchItemBase
 	)
-);
+) as ComponentType<SwitchItemBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
 
 export default SwitchItem;
 export {

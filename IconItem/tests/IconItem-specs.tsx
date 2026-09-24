@@ -9,7 +9,7 @@ describe('IconItem', () => {
 		render(<IconItemBase background={background} data-testid="iconitem" icon="star" />);
 
 		const expected = 'rgb(255, 255, 255)';
-		const actual = screen.getByTestId('iconitem').children[0].style;
+		const actual = (screen.getByTestId('iconitem').children[0] as HTMLElement).style;
 
 		expect(actual).toHaveProperty('background', expected);
 	});
@@ -38,7 +38,7 @@ describe('IconItem', () => {
 		render(<IconItemBase data-testid="iconitem" icon={icon} />);
 
 		const expected = 983080; // decimal converted charCode of Unicode 'star' character
-		const actual = screen.getByTestId('iconitem').textContent.codePointAt();
+		const actual = screen.getByTestId('iconitem').textContent.codePointAt(0);
 
 		expect(actual).toBe(expected);
 	});

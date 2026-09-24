@@ -20,6 +20,7 @@ import Group from '@enact/ui/Group';
 import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import type {ComponentType} from 'react';
 
 import CheckboxItem from '../CheckboxItem';
 import Skinnable from '../Skinnable';
@@ -28,7 +29,18 @@ import {DaySelectorDecorator, getSelectedDayString} from './DaySelectorDecorator
 
 import css from './DayPicker.module.less';
 
-const CheckboxItemComponent = (props) => <CheckboxItem css={css} {...props} />;
+// `@enact/ui/Group`'s own final export isn't cast to a `ComponentType` -- see the identical note
+// in CheckboxItem.tsx.
+const GroupComponent = Group as ComponentType<any>;
+
+const CheckboxItemComponent = (props: Record<string, any>) => <CheckboxItem css={css} {...props} />;
+
+export interface DayPickerBaseProps {
+	children?: any;
+	disabled?: boolean;
+	onSelect?: (...args: any[]) => any;
+	selected?: number | number[];
+}
 
 /**
  * A day of the week selection component.
@@ -45,6 +57,8 @@ const CheckboxItemComponent = (props) => <CheckboxItem css={css} {...props} />;
  */
 const DayPickerBase = kind({
 	name: 'DayPicker',
+
+	_propTypes: {} as DayPickerBaseProps,
 
 	propTypes: /** @lends limestone/DayPicker.DayPicker.prototype */ {
 		/**
@@ -77,7 +91,7 @@ const DayPickerBase = kind({
 		selected: PropTypes.oneOfType([
 			PropTypes.number,
 			PropTypes.arrayOf(PropTypes.number)
-		])
+		]) as PropTypes.Validator<number | number[] | undefined>
 	},
 
 	styles: {
@@ -86,12 +100,12 @@ const DayPickerBase = kind({
 	},
 
 	computed: {
-		children: ({children}) => children.map(child => child['aria-label'])
+		children: ({children}: Record<string, any>) => children.map((child: Record<string, any>) => child['aria-label'])
 	},
 
 	render: ({disabled, ...rest}) => {
 		return (
-			<Group
+			<GroupComponent
 				{...rest}
 				childComponent={CheckboxItemComponent}
 				component="div"
@@ -138,7 +152,10 @@ const DayPickerDecorator = compose(
  * @ui
  * @public
  */
-const DayPicker = DayPickerDecorator(DayPickerBase);
+const DayPicker = DayPickerDecorator(DayPickerBase) as ComponentType<DayPickerBaseProps & {
+	dayNameLength?: 'short' | 'medium' | 'long' | 'full';
+	locale?: string;
+}>;
 
 /**
  * The "aria-label" for the component.

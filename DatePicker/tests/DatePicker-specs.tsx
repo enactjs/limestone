@@ -1,3 +1,4 @@
+// @ts-expect-error - no type declarations available for 'ilib'
 import ilib from 'ilib';
 import '@testing-library/jest-dom';
 import {act, fireEvent, render, screen} from '@testing-library/react';
@@ -169,7 +170,7 @@ describe('DatePicker', () => {
 	test('should format a date the same as the label', () => {
 		const date = new Date(2000, 0, 1);
 		render(<DatePicker value={date} locale="en-US" />);
-		const header = screen.getByText(dateToLocaleString(date)).parentElement.parentElement;
+		const header = screen.getByText(dateToLocaleString(date)!).parentElement!.parentElement;
 
 		const expected = 'heading';
 
@@ -180,7 +181,7 @@ describe('DatePicker', () => {
 		ilib.setLocale('ar-SA');
 		const date = new Date(2000, 0, 1);
 		render(<DatePicker value={date} locale="ar-SA" />);
-		const header = screen.getByText(dateToLocaleString(date)).parentElement.parentElement;
+		const header = screen.getByText(dateToLocaleString(date)!).parentElement!.parentElement;
 
 		const expected = 'heading';
 
@@ -190,7 +191,7 @@ describe('DatePicker', () => {
 	test('should not display Heading', () => {
 		const date = new Date(2000, 0, 1);
 		render(<DatePicker value={date} locale="en-US" noLabel />);
-		const header = screen.queryByText(dateToLocaleString(date));
+		const header = screen.queryByText(dateToLocaleString(date)!);
 
 		expect(header).toBeNull();
 	});
