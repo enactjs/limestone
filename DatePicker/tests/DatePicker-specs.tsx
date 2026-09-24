@@ -12,7 +12,7 @@ describe('DatePicker', () => {
 	test('should emit an onChange event with type when changing the day', async () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
-		render(<DatePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15)} locale="en-US" />);
+		render(<DatePicker onChange={handleChange} value={new Date(2000, 6, 15)} locale="en-US" />);
 		const dayPickerUp = screen.getAllByText('▲')[1];
 
 		await user.click(dayPickerUp);
@@ -28,7 +28,7 @@ describe('DatePicker', () => {
 	test('should emit an onChange event with type when changing the month', async () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
-		render(<DatePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15)} locale="en-US" />);
+		render(<DatePicker onChange={handleChange} value={new Date(2000, 6, 15)} locale="en-US" />);
 		const monthPickerUp = screen.getAllByText('▲')[0];
 
 		await user.click(monthPickerUp);
@@ -44,7 +44,7 @@ describe('DatePicker', () => {
 	test('should emit an onChange event with type when changing the year', async () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
-		render(<DatePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15)} locale="en-US" />);
+		render(<DatePicker onChange={handleChange} value={new Date(2000, 6, 15)} locale="en-US" />);
 		const yearPickerUp = screen.getAllByText('▲')[2];
 
 		await user.click(yearPickerUp);

@@ -50,7 +50,7 @@ describe('RadioItem Specs', () => {
 	});
 
 	test('should not select RadioItem with click when disabled', () => {
-		render(<RadioItem {...({disabled: true} as any)}>Hello RadioItem</RadioItem>);
+		render(<RadioItem disabled>Hello RadioItem</RadioItem>);
 		const radioItem = screen.getAllByRole('checkbox');
 
 		fireEvent.click(radioItem[0]);

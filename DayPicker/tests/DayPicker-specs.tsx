@@ -56,7 +56,7 @@ describe('DayPicker', () => {
 	test('should include \'content\' in onSelect event payload which respects dayNameLength', async () => {
 		const handleSelect = jest.fn();
 		const user = userEvent.setup();
-		render(<DayPicker onSelect={handleSelect} {...({dayNameLength: 'short'} as any)} />);
+		render(<DayPicker onSelect={handleSelect} dayNameLength="short" />);
 
 		// select Monday
 		const item = screen.getByText('Monday');

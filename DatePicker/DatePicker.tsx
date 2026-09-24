@@ -140,6 +140,7 @@ const DatePicker = Pure(
 ) as ComponentType<Omit<DatePickerBaseProps, 'day' | 'maxDays' | 'maxMonths' | 'month' | 'order' | 'year'> & {
 	defaultValue?: Date;
 	locale?: string;
+	onChange?: (...args: any[]) => any;
 	onComplete?: (...args: any[]) => any;
 	open?: boolean;
 	value?: Date;
