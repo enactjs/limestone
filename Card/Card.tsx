@@ -795,6 +795,8 @@ const CardDecorator = compose(
  */
 const Card = CardDecorator(CardBase) as ComponentType<CardBaseProps>;
 
+Card.displayName = 'Card';
+
 export default Card;
 export {
 	Card,
