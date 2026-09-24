@@ -85,7 +85,7 @@ const ChipBase = (props: ChipBaseProps) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, multiline, onClick, ref, ...rest} = chipProps;
-	const deleteConfig = typeof deleteButton === 'object' ? deleteButton : undefined;
+	const deleteConfig = typeof deleteButton === 'object' ? deleteButton : null;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
 	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteConfig?.position || 'right']);
