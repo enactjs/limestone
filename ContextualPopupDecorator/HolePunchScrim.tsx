@@ -32,7 +32,7 @@ const HolePunchScrimBase = kind({
 			right: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 			top: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 			width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-		})
+		}) as PropTypes.Validator<HolePunchScrimBaseProps['holeBounds'] | undefined>
 	},
 
 	defaultProps: {
@@ -57,9 +57,10 @@ const HolePunchScrimBase = kind({
 	},
 
 	render: ({...rest}) => {
-		delete rest.holeBounds;
+		const restProps = rest as Record<string, any>;
+		delete restProps.holeBounds;
 		return (
-			<div {...rest} />
+			<div {...restProps} />
 		);
 	}
 });

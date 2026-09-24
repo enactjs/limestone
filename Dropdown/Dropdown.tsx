@@ -158,7 +158,7 @@ const DropdownBase = kind({
 				children: EnactPropTypes.renderable.isRequired,
 				key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 			}))
-		]),
+		]) as PropTypes.Validator<string[] | DropdownChildObject[] | undefined>,
 
 		/**
 		 * Placement of the Dropdown.
@@ -167,7 +167,7 @@ const DropdownBase = kind({
 		 * @default 'below'
 		 * @public
 		 */
-		direction: PropTypes.oneOf(['above', 'below']),
+		direction: PropTypes.oneOf(['above', 'below']) as PropTypes.Validator<'above' | 'below' | undefined>,
 
 		/**
 		 * Disables Dropdown, making it non-interactive.
@@ -256,7 +256,7 @@ const DropdownBase = kind({
 		 * @default 'large'
 		 * @public
 		 */
-		size: PropTypes.oneOf(['large', 'small']),
+		size: PropTypes.oneOf(['large', 'small']) as PropTypes.Validator<'large' | 'small' | undefined>,
 
 		/**
 		 * Primary title text of the Dropdown.
@@ -276,7 +276,7 @@ const DropdownBase = kind({
 		width: PropTypes.oneOfType([
 			PropTypes.oneOf(['tiny', 'small', 'medium', 'large', 'x-large', 'huge']),
 			PropTypes.number
-		])
+		]) as PropTypes.Validator<'tiny' | 'small' | 'medium' | 'large' | 'x-large' | 'huge' | number | undefined>
 	},
 
 	defaultProps: {

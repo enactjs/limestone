@@ -122,7 +122,7 @@ const DropdownListBase = kind({
 				children: EnactPropTypes.renderable.isRequired,
 				key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 			}))
-		]),
+		]) as PropTypes.Validator<DropdownListChildren | undefined>,
 
 		/**
 		 * The `id` of DropdownList referred to when setting aria-labelledby
@@ -170,7 +170,7 @@ const DropdownListBase = kind({
 		width: PropTypes.oneOfType([
 			PropTypes.oneOf(['tiny', 'small', 'medium', 'large', 'x-large', 'huge']),
 			PropTypes.number
-		])
+		]) as PropTypes.Validator<'tiny' | 'small' | 'medium' | 'large' | 'x-large' | 'huge' | number | undefined>
 	},
 
 	styles: {

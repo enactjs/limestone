@@ -138,7 +138,7 @@ const HeaderBase = kind({
 		children: PropTypes.oneOfType([
 			PropTypes.element,
 			PropTypes.arrayOf(PropTypes.element)
-		]),
+		]) as PropTypes.Validator<ReactElement | ReactElement[] | undefined>,
 
 		/**
 		 * Hint string read when focusing the application close button.
@@ -334,7 +334,7 @@ const HeaderBase = kind({
 		subtitle: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.arrayOf(PropTypes.string)
-		]),
+		]) as PropTypes.Validator<string | string[] | undefined>,
 
 		/**
 		 * Subtitle id of the header.
@@ -363,7 +363,7 @@ const HeaderBase = kind({
 		title: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.arrayOf(PropTypes.string)
-		]),
+		]) as PropTypes.Validator<string | string[] | undefined>,
 
 		/**
 		 * Title id of the header.

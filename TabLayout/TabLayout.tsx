@@ -239,7 +239,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 				collapsed: PropTypes.number,
 				normal: PropTypes.number
 			}).isRequired
-		}),
+		}) as PropTypes.Validator<TabLayoutDimensions | undefined>,
 
 		/**
 		 * The currently selected tab.
@@ -335,7 +335,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 		 * @default {x: 0, y: 0}
 		 * @private
 		 */
-		scrollPosition: PropTypes.object,
+		scrollPosition: PropTypes.object as PropTypes.Validator<{x: number; y: number} | undefined>,
 
 		/**
 		 * The size of the horizontal tab.

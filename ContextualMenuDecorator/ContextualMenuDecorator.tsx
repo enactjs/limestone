@@ -139,7 +139,7 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
 					children: PropTypes.string.isRequired,
 					key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
 				}))
-			]),
+			]) as PropTypes.Validator<string[] | MenuItemObject[] | undefined>,
 
 			/**
 			 * Offset from the activator to apply to the position of the popup.

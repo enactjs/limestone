@@ -119,7 +119,7 @@ const ContextualPopupBase = kind({
 			left: PropTypes.number,
 			right: PropTypes.number,
 			top: PropTypes.number
-		}),
+		}) as PropTypes.Validator<CSSProperties | undefined>,
 
 		/**
 		 * Style object for container position.
@@ -133,7 +133,7 @@ const ContextualPopupBase = kind({
 			right: PropTypes.number,
 			top: PropTypes.number,
 			width: PropTypes.number
-		}),
+		}) as PropTypes.Validator<(CSSProperties & {width?: number}) | undefined>,
 
 		/**
 		 * Called with the reference to the container node.

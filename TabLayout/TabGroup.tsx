@@ -229,7 +229,7 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 		onScrollStop: PropTypes.func,
 		onSelect: PropTypes.func,
 		orientation: PropTypes.string,
-		scrollPosition: PropTypes.object,
+		scrollPosition: PropTypes.object as PropTypes.Validator<{x: number; y: number} | undefined>,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
 		spotlightDisabled: PropTypes.bool,
