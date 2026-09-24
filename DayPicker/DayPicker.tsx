@@ -152,7 +152,10 @@ const DayPickerDecorator = compose(
  * @ui
  * @public
  */
-const DayPicker = DayPickerDecorator(DayPickerBase) as ComponentType<DayPickerBaseProps & {locale?: string}>;
+const DayPicker = DayPickerDecorator(DayPickerBase) as ComponentType<DayPickerBaseProps & {
+	dayNameLength?: 'short' | 'medium' | 'long' | 'full';
+	locale?: string;
+}>;
 
 /**
  * The "aria-label" for the component.

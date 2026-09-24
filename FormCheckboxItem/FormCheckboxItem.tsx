@@ -207,7 +207,10 @@ const FormCheckboxItem = Pure(
 	FormCheckboxItemDecorator(
 		FormCheckboxItemBase
 	)
-) as ComponentType<FormCheckboxItemBaseProps>;
+) as ComponentType<FormCheckboxItemBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
 
 export default FormCheckboxItem;
 export {

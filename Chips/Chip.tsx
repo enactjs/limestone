@@ -85,10 +85,11 @@ const ChipBase = (props: ChipBaseProps) => {
 	const chipProps = setDefaultProps(props, ChipDefaultProps);
 	checkPropTypes(ChipBase, chipProps);
 	const {checked, children, className, deleteButton, disabled, icon, id, imageSize, isImage, multiline, onClick, ref, ...rest} = chipProps;
+	const deleteConfig = typeof deleteButton === 'object' ? deleteButton : undefined;
 
 	const ariaLabel = children + ' ' + $L('Chip') + ' ' + $L('button');
-	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteButton?.position || 'right']);
-	const chipClassName = classnames(className, deleteButton?.position, css.content);
+	const buttonClassName = classnames(css.deleteButtonContainer, css[deleteConfig?.position || 'right']);
+	const chipClassName = classnames(className, deleteConfig?.position, css.content);
 	const chipRef = useRef<any>(null);
 	const containerRef = useRef<any>(null);
 	const deleteButtonRef = useRef<any>(null);
@@ -176,10 +177,10 @@ const ChipBase = (props: ChipBaseProps) => {
 		if (handleChipDelete) {
 			handleChipDelete(ev, id);
 		}
-		if (deleteButton?.onDelete) {
-			deleteButton.onDelete(ev);
+		if (deleteConfig?.onDelete) {
+			deleteConfig.onDelete(ev);
 		}
-	}, [deleteButton, handleChipDelete, id]);
+	}, [deleteConfig, handleChipDelete, id]);
 
 	const iconComponent = useCallback(({children: childComponent, ...iconProps}: Record<string, any>) => {
 		return <>
@@ -230,7 +231,7 @@ const ChipBase = (props: ChipBaseProps) => {
 							css,
 							backgroundOpacity: 'transparent',
 							disabled,
-							icon: deleteButton?.icon || 'closex',
+							icon: deleteConfig?.icon || 'closex',
 							size: 'small',
 							onClick: handleDelete,
 							role: 'button',

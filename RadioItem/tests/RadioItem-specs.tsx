@@ -24,7 +24,7 @@ describe('RadioItem Specs', () => {
 	});
 
 	test('should render a disabled RadioItem when `disabled` is true', () => {
-		render(<RadioItemBase {...({disabled: true} as any)}>Hello RadioItem</RadioItemBase>);
+		render(<RadioItemBase disabled>Hello RadioItem</RadioItemBase>);
 		const radioItem = screen.getByRole('checkbox');
 
 		expect(radioItem).toHaveAttribute('disabled');

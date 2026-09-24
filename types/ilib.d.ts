@@ -125,8 +125,9 @@ declare module 'ilib/lib/LocaleInfo' {
 	/**
 	 * ilib's locale metadata (first day of week, weekend bounds, etc.) for a given locale.
 	 * Constructor and the methods used in this codebase (`getFirstDayOfWeek`, `getWeekEndStart`,
-	 * `getWeekEndEnd`) verified against the real ilib@14.22.0 source (`lib/LocaleInfo.js`) -- not
-	 * guessed; the rest of its large metadata API is covered loosely via the index signature.
+	 * `getWeekEndEnd`, `getClock`) verified against the real ilib@14.22.0 source
+	 * (`lib/LocaleInfo.js`) -- not guessed; the rest of its large metadata API is covered loosely
+	 * via the index signature.
 	 */
 	class LocaleInfo {
 		constructor(locale?: string | Record<string, any>);
@@ -139,6 +140,9 @@ declare module 'ilib/lib/LocaleInfo' {
 
 		/** The 0-indexed (Sunday = 0) day the weekend ends on for this locale. */
 		getWeekEndEnd(): number;
+
+		/** The clock format for this locale, `'12'` or `'24'`. */
+		getClock(): string;
 
 		[key: string]: any;
 	}

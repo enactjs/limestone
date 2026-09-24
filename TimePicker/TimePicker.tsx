@@ -178,7 +178,7 @@ const dateTimeConfig = {
 
 		// Picker ordering
 		const li = new LocaleInfo();
-		const clockPref = (li as any).getClock();
+		const clockPref = li.getClock();
 		const meridiemEnabled = clockPref === '12';
 
 		const filter = meridiemEnabled ? includeMeridiem : excludeMeridiem;
@@ -234,6 +234,7 @@ const TimePicker = Pure(
 ) as ComponentType<Omit<TimePickerBaseProps, 'hour' | 'meridiem' | 'minute' | 'order'> & {
 	defaultValue?: Date;
 	locale?: string;
+	onChange?: (...args: any[]) => any;
 	onComplete?: (...args: any[]) => any;
 	open?: boolean;
 	value?: Date;

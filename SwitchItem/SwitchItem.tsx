@@ -154,7 +154,10 @@ const SwitchItem = Pure(
 	SwitchItemDecorator(
 		SwitchItemBase
 	)
-) as ComponentType<SwitchItemBaseProps>;
+) as ComponentType<SwitchItemBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
 
 export default SwitchItem;
 export {

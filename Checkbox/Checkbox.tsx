@@ -70,7 +70,7 @@ const CheckboxBase = kind({
 		 * @default	'checkmark'
 		 * @public
 		 */
-		children: PropTypes.string as PropTypes.Validator<string | Record<string, string> | undefined>,
+		children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]) as PropTypes.Validator<string | Record<string, string> | undefined>,
 
 		/**
 		 * Customizes the component by mapping the supplied collection of CSS class names to the
@@ -219,7 +219,10 @@ const CheckboxDecorator = compose(
  * @ui
  * @public
  */
-const Checkbox = CheckboxDecorator(CheckboxBase) as ComponentType<CheckboxBaseProps>;
+const Checkbox = CheckboxDecorator(CheckboxBase) as ComponentType<CheckboxBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
 
 export default Checkbox;
 export {

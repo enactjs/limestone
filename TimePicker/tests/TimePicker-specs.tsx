@@ -16,7 +16,7 @@ describe('TimePicker', () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
 		render(
-			<TimePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
+			<TimePicker onChange={handleChange} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
 		);
 		const hourPicker = screen.getAllByText('▲')[0];
 
@@ -34,7 +34,7 @@ describe('TimePicker', () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
 		render(
-			<TimePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
+			<TimePicker onChange={handleChange} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
 		);
 		const minutePicker = screen.getAllByText('▲')[1];
 
@@ -52,7 +52,7 @@ describe('TimePicker', () => {
 		const handleChange = jest.fn();
 		const user = userEvent.setup();
 		render(
-			<TimePicker {...({onChange: handleChange} as any)} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
+			<TimePicker onChange={handleChange} value={new Date(2000, 6, 15, 3, 30)} locale="en-US" />
 		);
 		const meridiemPicker = screen.getAllByText('▲')[2];
 

@@ -40,6 +40,7 @@ const GroupComponent = Group as ComponentType<any>;
 export interface RadioItemBaseProps {
 	children?: ReactNode;
 	css?: Record<string, string>;
+	disabled?: boolean;
 	icon?: string;
 	selected?: boolean;
 	slotBefore?: ReactNode;
@@ -165,7 +166,10 @@ const RadioItem = Pure(
 	RadioItemDecorator(
 		RadioItemBase
 	)
-) as ComponentType<RadioItemBaseProps>;
+) as ComponentType<RadioItemBaseProps & {
+	className?: string;
+	onToggle?: (...args: any[]) => any;
+}>;
 
 export interface RadioItemGroupProps {
 	children: any;

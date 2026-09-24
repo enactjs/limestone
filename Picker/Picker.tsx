@@ -316,8 +316,8 @@ const PickerBase = kind({
 
 	computed: {
 		max: ({children}) => {
-			const kids = children as any[];
-			return kids && kids.length ? kids.length - 1 : 0;
+			const kids = Children.toArray(children);
+			return kids.length ? kids.length - 1 : 0;
 		},
 		reverse: ({orientation, reverse}) => (typeof reverse === 'boolean' ? reverse : orientation === 'vertical'),
 		children: ({children, disabled, joined, marqueeDisabled}) => Children.map(children, (child) => {
@@ -335,8 +335,8 @@ const PickerBase = kind({
 		}),
 		disabled: ({children, disabled}) => Children.count(children) > 1 ? disabled : true,
 		value: ({value, children}) => {
-			const kids = children as any[];
-			const max = kids && kids.length ? kids.length - 1 : 0;
+			const kids = Children.toArray(children);
+			const max = kids.length ? kids.length - 1 : 0;
 			if (__DEV__) {
 				validateRange(value as number, 0, max, 'Picker', 'value', 'min', 'max index');
 			}

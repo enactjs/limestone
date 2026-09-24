@@ -40,7 +40,7 @@ import componentCss from './KeyGuide.module.less';
 
 const colorKeys = ['red', 'green', 'yellow', 'blue'];
 
-const ImageItemBase = (props: {children?: ReactNode; imageSrc?: string}) => {
+const ImageItemBase = (props: {children?: ReactNode; imageSrc?: string | Record<string, string>}) => {
 	checkPropTypes(ImageItemBase, props);
 	const {children, imageSrc} = props;
 
@@ -68,7 +68,7 @@ const ImageItemBase = (props: {children?: ReactNode; imageSrc?: string}) => {
 
 ImageItemBase.propTypes = {
 	children: PropTypes.node,
-	imageSrc: PropTypes.string
+	imageSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };
 
 export interface KeyGuideBaseProps {
