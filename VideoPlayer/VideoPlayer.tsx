@@ -32,7 +32,7 @@ import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
 import PropTypes from 'prop-types';
 import {cloneElement, Component, createRef, isValidElement} from 'react';
-import type {ComponentType, ReactElement, ReactNode} from 'react';
+import type {ComponentType, HTMLAttributes, ReactElement, ReactNode} from 'react';
 
 import $L from '../internal/$L';
 import Button from '../Button';
@@ -74,9 +74,8 @@ const calcNumberValueOfPlaybackRate = (rate: string | number) => {
 	return (pbArray.length > 1) ? parseInt(pbArray[0]) / parseInt(pbArray[1]) : parseFloat(rate as string);
 };
 
-interface RootComponentProps {
+interface RootComponentProps extends HTMLAttributes<HTMLDivElement> {
 	playerRef?: EnactPropTypeShapes.ref;
-	[key: string]: any;
 }
 
 const RootComponent = (props: RootComponentProps) => {
