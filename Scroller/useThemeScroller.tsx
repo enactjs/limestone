@@ -1,4 +1,5 @@
 import {adaptEvent, forward, handle} from '@enact/core/handle';
+import type {HandlerFunction} from '@enact/core/types';
 import {is} from '@enact/core/keymap';
 import platform from '@enact/core/platform';
 import Spotlight from '@enact/spotlight';
@@ -25,7 +26,8 @@ const getFocusableBodyProps = (scrollContainerRef: any, contentId: any, isScroll
 	let spotlightId = scrollContainerRef.current && scrollContainerRef.current.dataset.spotlightId;
 	let consumeKeyUpTarget: any = null;
 
-	const setNavigableFilter = ({filterTarget}: {filterTarget?: string | null}) => {
+	const setNavigableFilter = (ev: Event | null) => {
+		const {filterTarget} = (ev ?? {}) as {filterTarget?: string | null};
 		spotlightId = scrollContainerRef.current && scrollContainerRef.current.dataset.spotlightId;
 
 		if (spotlightId && filterTarget) {
@@ -107,16 +109,16 @@ const getFocusableBodyProps = (scrollContainerRef: any, contentId: any, isScroll
 		className: css.focusableBody,
 		onFocus: handle(
 			forward('onFocus'),
-			adaptEvent(getNavigableFilterTarget, setNavigableFilter)
+			adaptEvent(getNavigableFilterTarget, setNavigableFilter) as HandlerFunction
 		),
 		onBlur: handle(
 			// Focus out to external element.
 			forward('onBlur'),
-			adaptEvent(getNavigableFilterTarget, setNavigableFilter)
+			adaptEvent(getNavigableFilterTarget, setNavigableFilter) as HandlerFunction
 		),
 		onKeyDown: handle(
 			forward('onKeyDown'),
-			adaptEvent(getNavigableFilterTarget, setNavigableFilter),
+			adaptEvent(getNavigableFilterTarget, setNavigableFilter) as HandlerFunction,
 			consumeEventKeyDownWithFocus
 		),
 		onKeyUp: handle(

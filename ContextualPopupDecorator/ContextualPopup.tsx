@@ -58,10 +58,10 @@ const ContextualPopupArrow = kind<ContextualPopupArrowProps>({
 	},
 
 	computed: {
-		className: ({direction, styler}: Record<string, any>) => styler.append(direction, css.arrow)
+		className: ({direction, styler}) => styler.append(direction, css.arrow)
 	},
 
-	render: (props: Record<string, any>) => (
+	render: (props) => (
 		<svg {...props} viewBox="0 0 30 30">
 			<path d="M0 20 L15 2 L30 20" className={css.arrowFill} />
 		</svg>
@@ -182,11 +182,11 @@ const ContextualPopupBase = kind({
 	},
 
 	computed: {
-		arrowDirection: ({direction}: Record<string, any>) => {
+		arrowDirection: ({direction}) => {
 			const [arrowDirection] = direction.split(' ');
 			return arrowDirection;
 		},
-		className: ({direction, offset, styler}: Record<string, any>) => styler.append(
+		className: ({direction, offset, styler}) => styler.append(
 			{
 				fixedSize: direction === 'above' || direction === 'below'
 			},
@@ -196,8 +196,8 @@ const ContextualPopupBase = kind({
 		)
 	},
 
-	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, showArrow, ...rest}: Record<string, any>) => {
-		delete rest.direction;
+	render: ({arrowDirection, arrowPosition, className, containerPosition, containerRef, children, direction, showArrow, ...rest}) => {
+		void direction;
 
 		return (
 			<ContextualPopupRoot aria-live="off" role="alert" {...rest} className={css.contextualPopup}>

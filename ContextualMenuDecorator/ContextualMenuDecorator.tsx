@@ -9,7 +9,7 @@ import {handle, forward, forProp} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import Repeater from '@enact/ui/Repeater';
-import Toggleable from '@enact/ui/Toggleable';
+import Toggleable, {type DynamicToggleableProps} from '@enact/ui/Toggleable';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
 import type {ComponentType} from 'react';
@@ -88,8 +88,21 @@ export interface ContextualMenuDecoratorBaseProps {
 	popupWidth?: 'auto' | 'large' | 'small';
 	scrimType?: 'holepunch' | 'translucent' | 'transparent' | 'none';
 	spotlightRestrict?: 'none' | 'self-first' | 'self-only';
-	[key: string]: any;
 }
+
+// Props added by the `Toggleable` configuration applied in `ContextualMenuDecorator` below
+// (`prop: 'open'`, no toggle handler). `onOpen`/`onClose` are already in the base props.
+export type ContextualMenuDecoratorProps = ContextualMenuDecoratorBaseProps & DynamicToggleableProps<'open', 'defaultOpen', never>;
+
+// The config is spread into `ContextualPopupDecorator`, so any of its config keys (and those of the
+// decorators it composes, e.g. `tooltipDestinationProp`) may be passed through as well.
+export type ContextualMenuDecoratorConfig = Partial<typeof defaultConfig> & {[key: string]: any};
+
+// The `Toggleable` wrapper is outermost in the `compose()` chain, so only the `(Wrapped)` and
+// `(config, Wrapped)` call forms are supported; the curried `(config)(Wrapped)` form is not.
+export type ContextualMenuDecoratorHOC = <P extends object>(
+	...args: [Wrapped: ComponentType<P>] | [config: ContextualMenuDecoratorConfig, Wrapped: ComponentType<P>]
+) => ComponentType<P & ContextualMenuDecoratorProps>;
 
 const ScrollingRepeater = ({className, ...rest}: Record<string, any>) => (
 	<Scroller className={className}>
@@ -250,9 +263,9 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
 			// expect we'll be able to drop this when we add the private popupComponent
 			// implementation with the Repeater for the items since the popup class could be set
 			// on the component by itself
-			popupClassName: ({menuItems, popupWidth, popupClassName, styler}: Record<string, any>) => {
+			popupClassName: ({menuItems, popupWidth, popupClassName, styler}) => {
 				const sizeClass = popupWidth !== 'auto' && popupWidth;
-				const verticalScrollbar = menuItems.length > MAX_VISIBLE_MENU_ITEMS;
+				const verticalScrollbar = (menuItems?.length ?? 0) > MAX_VISIBLE_MENU_ITEMS;
 				return styler.join(
 					'popup',
 					'container',
@@ -261,8 +274,8 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
 					verticalScrollbar ? 'verticalScrollbar' : null
 				);
 			},
-			popupComponent: ({menuItems}: Record<string, any>) => (menuItems && menuItems.length > MAX_VISIBLE_MENU_ITEMS ? ScrollingRepeater : Repeater),
-			popupProps: ({menuItems, popupProps}: Record<string, any>) => ({
+			popupComponent: ({menuItems}) => (menuItems && menuItems.length > MAX_VISIBLE_MENU_ITEMS ? ScrollingRepeater : Repeater),
+			popupProps: ({menuItems, popupProps}) => ({
 				'aria-live': null,
 				children: menuItems,
 				childComponent: Item,
@@ -274,10 +287,8 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
 			})
 		},
 
-		render: ({onOpen, popupProps, ...rest}: Record<string, any>) => {
-			delete rest.menuItems;
-			delete rest.onOpen;
-			delete rest.popupWidth;
+		render: ({menuItems, onOpen, popupProps, popupWidth, ...rest}) => {
+			void [menuItems, popupWidth];
 
 			return (
 				<Component
@@ -300,8 +311,8 @@ const ContextualMenuDecoratorBase = hoc(defaultConfig, (config: typeof defaultCo
  * @mixes limestone/ContextualPopupDecorator.ContextualPopupDecorator
  * @public
  */
-const ContextualMenuDecorator = (compose as any)(
-	(Toggleable as any)({
+const ContextualMenuDecorator: ContextualMenuDecoratorHOC = compose(
+	Toggleable({
 		activate: 'onOpen',
 		deactivate: 'onClose',
 		prop: 'open',

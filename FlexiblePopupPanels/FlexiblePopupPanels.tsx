@@ -2,7 +2,7 @@ import kind from '@enact/core/kind';
 import {mapAndFilterChildren} from '@enact/core/util';
 import {I18nContextDecorator} from "@enact/i18n/I18nDecorator";
 import PropTypes from 'prop-types';
-import {cloneElement} from 'react';
+import {Children, cloneElement} from 'react';
 import type {ComponentType, ReactElement, ReactNode} from 'react';
 
 import {FadeAndSlideArranger, PopupDecorator, Viewport} from '../internal/Panels';
@@ -123,7 +123,7 @@ const FlexiblePopupPanelsBase = kind({
 	},
 
 	computed: {
-		children: ({children, nextButtonVisibility, onChange, onNextClick, onPrevClick, prevButtonVisibility}: any) => mapAndFilterChildren(children, (child: ReactElement) => {
+		children: ({children, nextButtonVisibility, onChange, onNextClick, onPrevClick, prevButtonVisibility}) => mapAndFilterChildren(children, (child: ReactElement) => {
 			const props = {
 				nextButtonVisibility,
 				onChange,
@@ -134,10 +134,11 @@ const FlexiblePopupPanelsBase = kind({
 
 			return cloneElement(child, props);
 		}),
-		onBack: ({onChange}: any) => onChange,
-		className: ({children, nextButtonVisibility, prevButtonVisibility, rtl, styler}: any) => {
-			const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && children?.length > 1));
-			const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && children?.length > 1));
+		onBack: ({onChange}) => onChange,
+		className: ({children, nextButtonVisibility, prevButtonVisibility, rtl, styler}) => {
+			const childCount = Children.count(children);
+			const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && childCount > 1));
+			const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && childCount > 1));
 
 			return styler.append(
 				{
@@ -147,12 +148,8 @@ const FlexiblePopupPanelsBase = kind({
 		}
 	},
 
-	render: ({noAnimation, ...props}: any) => {
-		delete props.nextButtonVisibility;
-		delete props.onChange;
-		delete props.onNextClick;
-		delete props.onPrevClick;
-		delete props.prevButtonVisibility;
+	render: ({nextButtonVisibility, noAnimation, onChange, onNextClick, onPrevClick, prevButtonVisibility, ...props}) => {
+		void [nextButtonVisibility, onChange, onNextClick, onPrevClick, prevButtonVisibility];
 
 		return (<ViewportComponent {...props} noAnimation={(typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation} />);
 	}

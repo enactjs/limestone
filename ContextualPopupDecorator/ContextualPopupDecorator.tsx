@@ -11,6 +11,7 @@
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
 import {on, off} from '@enact/core/dispatcher';
 import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core/handle';
+import type {HandlerFunction} from '@enact/core/types';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
@@ -128,6 +129,14 @@ const defaultConfig = {
 	openProp: 'selected'
 };
 
+// `ApiDecorator` and `I18nContextDecorator` are applied already-configured, so callers only see the
+// `(Wrapped)` and `(config, Wrapped)` forms of the underlying `hoc`.
+export type ContextualPopupDecoratorConfig = Partial<typeof defaultConfig>;
+
+export type ContextualPopupDecoratorHOC = <P extends object>(
+	...args: [Wrapped: ComponentType<P>] | [config: ContextualPopupDecoratorConfig, Wrapped: ComponentType<P>]
+) => ComponentType<P & ContextualPopupDecoratorProps>;
+
 const contextualPopupDecoratorDefaultProps = {
 	'data-webos-voice-exclusive': true,
 	direction: 'below center',
@@ -172,7 +181,9 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 		const keyDownRef = useRef<any>(null);
 		const keyUpRef = useRef<any>(null);
 
-		const containerId = useMemo(() => Spotlight.add(componentProps.popupSpotlightId as any), [componentProps.popupSpotlightId]);
+		const containerId = useMemo(() => (
+			componentProps.popupSpotlightId ? Spotlight.add(componentProps.popupSpotlightId) : Spotlight.add()
+		), [componentProps.popupSpotlightId]);
 
 		if (componentProps.setApiProvider) {
 			componentProps.setApiProvider();
@@ -484,8 +495,8 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 		const spotPopupContent = useCallback(() => {
 			const {spotlightRestrict: localSpotlightRestrict} = componentProps;
 			const spottableDescendants = Spotlight.getSpottableDescendants(containerId);
-			const currentSpot = Spotlight.getCurrent() as any;
-			if (localSpotlightRestrict === 'self-only' && spottableDescendants.length && currentSpot) {
+			const currentSpot = Spotlight.getCurrent();
+			if (localSpotlightRestrict === 'self-only' && spottableDescendants.length && currentSpot instanceof HTMLElement) {
 				currentSpot.blur();
 			}
 
@@ -497,7 +508,7 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 		const handleKeyUp = useCallback(() => {
 			return handle(
 				forProp('open', true),
-				forKey('enter'),
+				forKey('enter') as HandlerFunction,
 				() => Spotlight.getCurrent() === activator,
 				stop,
 				forwardCustom('onClose')
@@ -522,7 +533,7 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 		}, [updateLeaveFor]);
 
 		const handleDismiss = useCallback(() => {
-			(forwardCustom('onClose') as any)(null, componentProps);
+			forwardCustom('onClose')(null, componentProps);
 		}, [componentProps]);
 
 		const handleDirectionalKey = useCallback((ev: any) => {
@@ -567,9 +578,9 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 			handleDirectionalKey(ev);
 
 			// if focus moves outside the popup's container, issue the `onClose` event
-			const currentNode = Spotlight.getCurrent() as any;
-			if (Spotlight.move(localDirection) && containerNode.current && !containerNode.current.contains(currentNode)) {
-				(forwardCustom('onClose') as any)(null, componentProps);
+			const currentNode = Spotlight.getCurrent();
+			if (Spotlight.move(localDirection) && containerNode.current && !containerNode.current.contains(currentNode ?? null)) {
+				forwardCustom('onClose')(null, componentProps);
 			}
 		}, [componentProps, handleDirectionalKey]);
 
@@ -593,7 +604,7 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 			};
 
 			if (prevProps.current.open && !componentProps.open) {
-				const current = Spotlight.getCurrent() as any;
+				const current = Spotlight.getCurrent();
 				localSnapshot.shouldSpotActivator = (
 					// isn't set
 					!current ||
@@ -980,9 +991,9 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
  * @memberof limestone/ContextualPopupDecorator
  * @public
  */
-const ContextualPopupDecorator = (compose as any)(
-	(ApiDecorator as any)({api: ['positionContextualPopup']}),
-	(I18nContextDecorator as any)({rtlProp: 'rtl'}),
+const ContextualPopupDecorator: ContextualPopupDecoratorHOC = compose(
+	ApiDecorator({api: ['positionContextualPopup']}),
+	I18nContextDecorator({rtlProp: 'rtl'}),
 	Decorator
 );
 

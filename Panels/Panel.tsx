@@ -152,15 +152,15 @@ const PanelBase = kind({
 	},
 
 	computed: {
-		children: ({children, hideChildren}: any) => hideChildren ? null : children,
-		bodyClassName: ({css, header, hideChildren, styler}: any) => styler.join(css.body, {
+		children: ({children, hideChildren}) => hideChildren ? null : children,
+		bodyClassName: ({css = componentCss, header, hideChildren, styler}) => styler.join(css.body, {
 			noHeader: !header,
 			visible: !hideChildren
 		}),
 		// nulling headerId prevents the aria-labelledby relationship which is necessary to allow
 		// aria-label to take precedence
 		// (see https://www.w3.org/TR/wai-aria/states_and_properties#aria-labelledby)
-		ids: ({'aria-label': label, panelType}: any) => {
+		ids: ({'aria-label': label, panelType}) => {
 			if (label) {
 				return {};
 			} else if (panelType === 'wizard') {
@@ -187,18 +187,19 @@ const PanelBase = kind({
 		bodyClassName,
 		children,
 		componentRef,
-		css,
+		css = componentCss,
 		floatingLayerId,
 		header,
+		hideChildren,
 		ids: {headerId = null, labelledby, subtitleId = null, titleId = null},
+		panelType,
 		...rest
-	}: any) => {
-		delete rest.hideChildren;
-		delete rest.panelType;
+	}) => {
+		void [hideChildren, panelType];
 
 		return (
 			<article role="region" {...rest} aria-owns={floatingLayerId} {...(labelledby ? {'aria-labelledby': labelledby} : {})} ref={componentRef}>
-				<div className={css.header} id={headerId}>
+				<div className={css.header} {...(headerId ? {id: headerId} : null)}>
 					<ComponentOverrideAny
 						component={header}
 						data-index={rest['data-index']}

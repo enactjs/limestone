@@ -239,7 +239,7 @@ const PanelsBase = kind({
 	},
 
 	computed: {
-		viewportId: ({id}: any) => id && `${id}-viewport`
+		viewportId: ({id}) => id && `${id}-viewport`
 	},
 
 	handlers: {
@@ -251,7 +251,7 @@ const PanelsBase = kind({
 	render: ({
 		arranger,
 		children,
-		css,
+		css = componentCss,
 		generateId,
 		id,
 		index,
@@ -261,7 +261,7 @@ const PanelsBase = kind({
 		onWillTransition,
 		viewportId,
 		...rest
-	}: any) => {
+	}) => {
 		const sharedProps = getSharedProps(rest);
 		deleteSharedProps(rest);
 		return (

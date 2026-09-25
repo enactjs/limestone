@@ -52,7 +52,7 @@ const Page = kind({
 		publicClassNames: true
 	},
 
-	render: ({children, ...rest}: any) => {
+	render: ({children, ...rest}) => {
 		return (
 			<div {...rest}>
 				{children}

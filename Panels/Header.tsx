@@ -10,7 +10,7 @@ import Slottable from '@enact/ui/Slottable';
 import ViewManager, {shape} from '@enact/ui/ViewManager';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, use, useEffect, useRef, useState} from 'react';
+import {Children, isValidElement, use, useEffect, useRef, useState} from 'react';
 import type {ComponentType, ReactElement, ReactNode} from 'react';
 
 import Button from '../Button';
@@ -397,7 +397,7 @@ const HeaderBase = kind({
 	},
 
 	computed: {
-		className: ({backButtonAvailable, centered, children, isPopupHeader, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}: any) => styler.append(
+		className: ({backButtonAvailable, centered, children, isPopupHeader, noBackButton, noCloseButton, noSubtitle, type, shadowed, slotAfter, slotBefore, styler, subtitle}) => styler.append(
 			{
 				centered,
 				isPopupHeader,
@@ -411,8 +411,10 @@ const HeaderBase = kind({
 			},
 			type
 		),
-		titleCell: ({arranger, centered, css, marqueeOn, noSubtitle, slotSize, subtitle, subtitleId, title, titleId, type}: any) => {
-			const direction = isRtlText(title) || isRtlText(subtitle) ? 'rtl' : 'ltr';
+		titleCell: ({arranger, centered, css = componentCss, marqueeOn, noSubtitle, slotSize, subtitle, subtitleId, title, titleId, type}) => {
+			const titleText = typeof title === 'string' ? title : '';
+			const subtitleText = typeof subtitle === 'string' ? subtitle : '';
+			const direction = isRtlText(titleText) || isRtlText(subtitleText) ? 'rtl' : 'ltr';
 
 			const titleHeading = (
 				<HeadingComponent
@@ -448,7 +450,7 @@ const HeaderBase = kind({
 			if (arranger && type === 'wizard') {
 				return (
 					<CellLayout className={css.titleCell} component={ViewManager} arranger={arranger} duration={500} index={0}>
-						<div className={css.titleContainer} key={title + subtitle}>
+						<div className={css.titleContainer} key={(title as string) + (subtitle as string)}>
 							{titleHeading}
 							{noSubtitle ? null : subtitleHeading}
 						</div>
@@ -478,7 +480,7 @@ const HeaderBase = kind({
 		children,
 		closeButtonAriaLabel,
 		closeButtonBackgroundOpacity,
-		css,
+		css = componentCss,
 		noBackButton,
 		noCloseButton,
 		onBack,
@@ -490,18 +492,19 @@ const HeaderBase = kind({
 		slotBefore,
 		slotBeforeRef,
 		slotSize,
+		subtitle,
+		subtitleId,
+		title,
+		titleId,
+		arranger,
+		isPopupHeader,
+		marqueeOn,
+		noSubtitle,
 		titleCell,
 		type,
 		...rest
-	}: any) => {
-		delete rest.arranger;
-		delete rest.isPopupHeader;
-		delete rest.marqueeOn;
-		delete rest.noSubtitle;
-		delete rest.subtitle;
-		delete rest.subtitleId;
-		delete rest.title;
-		delete rest.titleId;
+	}) => {
+		void [arranger, isPopupHeader, marqueeOn, noSubtitle, subtitle, subtitleId, title, titleId];
 
 		// Set up the back button
 		const backButton = (backButtonAvailable && !noBackButton ? (
@@ -548,7 +551,7 @@ const HeaderBase = kind({
 							{backButton}{slotBefore}
 						</span>
 					</CellLayout>
-					{(type === 'wizard' && (slotBefore?.props?.visible || slotAfter?.props?.visible) && slotSize === '0rem') ? null : titleCell}
+					{(type === 'wizard' && ((isValidElement<{visible?: boolean}>(slotBefore) && slotBefore.props.visible) || (isValidElement<{visible?: boolean}>(slotAfter) && slotAfter.props.visible)) && slotSize === '0rem') ? null : titleCell}
 					<CellLayout className={css.slotAfter} shrink={!syncCellSize} size={syncCellSize} style={hideSlots}>
 						<span ref={slotAfterRef} className={css.slotSizer}>
 							{slotAfter}{closeButton}

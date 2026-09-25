@@ -70,17 +70,14 @@ const DropdownButtonBase = kind({
 		forwardRef: EnactPropTypes.ref
 	},
 
-	render: ({forwardRef, ...props}: Record<string, any>) => {
-		const ButtonComponent = Button as ComponentType<any>;
-		return (
-			<ButtonComponent
-				{...props}
-				css={css}
-				ref={forwardRef}
-				iconPosition="after"
-			/>
-		);
-	}
+	render: ({forwardRef, ...props}) => (
+		<Button
+			{...props}
+			css={css}
+			ref={forwardRef}
+			iconPosition="after"
+		/>
+	)
 });
 
 const DropdownButton = (ContextualPopupDecorator as any)(
@@ -306,8 +303,8 @@ const DropdownBase = kind({
 	},
 
 	computed: {
-		ariaLabelledBy: ({id, title}: Record<string, any>) => (title ? `${id}_title` : void 0),
-		children: ({children, selected}: Record<string, any>) => {
+		ariaLabelledBy: ({id, title}) => (title ? `${id}_title` : void 0),
+		children: ({children, selected}) => {
 			if (!Array.isArray(children)) return [];
 
 			return children.map((child, i) => {
@@ -337,34 +334,33 @@ const DropdownBase = kind({
 				};
 			});
 		},
-		className: ({styler, title, width}: Record<string, any>) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
-		direction: ({direction}: Record<string, any>) => `${direction} center`,
+		className: ({styler, title, width}) => styler.append(typeof width === 'string' ? `${width}Width` : null, {hasTitle: Boolean(title)}),
+		direction: ({direction}) => `${direction} center`,
 		handleSpotlightPause: () => (pauseSpotlight),
-		placeholder: ({children, placeholder = $L('No Selection'), selected}: Record<string, any>) => {
-			if (isSelectedValid({children, selected})) {
+		placeholder: ({children, placeholder = $L('No Selection'), selected}) => {
+			if (isSelectedValid({children, selected}) && Array.isArray(children) && selected != null) {
 				const child = children[selected];
 				return typeof child === 'object' ? child.children : child;
 			}
 
 			return placeholder;
 		},
-		title: ({id, title, width}: Record<string, any>) => {
-			const HeadingComponent = Heading as ComponentType<any>;
+		title: ({id, title, width}) => {
 			return title && (
-				<HeadingComponent
+				<Heading
 					className={css.title}
 					id={`${id}_title`}
 					size="tiny"
 					spacing="small"
-					style={{width: typeof width === 'number' ? ri.scaleToRem(width) : null}}
+					{...(typeof width === 'number' ? {style: {width: ri.scaleToRem(width)}} : null)}
 				>
 					{title}
-				</HeadingComponent>
+				</Heading>
 			);
 		}
 	},
 
-	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}: Record<string, any>) => {
+	render: ({'aria-label': ariaLabel, ariaLabelledBy, children, direction, disabled, handleSpotlightPause, onClose, onOpen, onSelect, open, placeholder, selected, size, title, width, ...rest}) => {
 		delete rest.rtl;
 
 		const ariaProps = extractAriaProps(rest);
@@ -422,7 +418,7 @@ const DropdownBase = kind({
  * @omit onChange
  * @public
  */
-const DropdownDecorator = (compose as any)(
+const DropdownDecorator = compose(
 	(Pure as any)({
 		propComparators: {
 			children: compareChildren

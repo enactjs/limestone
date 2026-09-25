@@ -13,13 +13,14 @@ import type {ScrollInteractionParams, ScrollbarTrackProps} from './types';
 import css from './ScrollbarTrack.module.less';
 
 const nop = () => {};
+const keyIs = (name: string, keyCode: number) => (is(name) as (keyCode: number) => boolean)(keyCode);
 const
-	isDown = is('down'),
-	isLeft = is('left'),
-	isPageUp = is('pageUp'),
-	isPageDown = is('pageDown'),
-	isRight = is('right'),
-	isUp = is('up');
+	isDown = (keyCode: number) => keyIs('down', keyCode),
+	isLeft = (keyCode: number) => keyIs('left', keyCode),
+	isPageUp = (keyCode: number) => keyIs('pageUp', keyCode),
+	isPageDown = (keyCode: number) => keyIs('pageDown', keyCode),
+	isRight = (keyCode: number) => keyIs('right', keyCode),
+	isUp = (keyCode: number) => keyIs('up', keyCode);
 
 const scrollStopWaiting = 500; // Wait for finishing scroll animation.
 

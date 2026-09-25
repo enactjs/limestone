@@ -173,12 +173,18 @@ let Scroller: ComponentType<ScrollerProps> = (props: ScrollerProps) => {
 			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
 				<ScrollBody {...focusableBodyProps}>
 					{rest.focusableScrollbar ? <ScrollbarPlaceholder /> : null}
-					<UiScrollerBasic {...themeScrollContentProps} aria-label={ariaLabel} id={id} ref={scrollContentHandle}>
-						{((editable && direction === 'horizontal') ?
-							<EditableWrapper {...editableWrapperProps} /> :
-							children
-						) as any}
-					</UiScrollerBasic>
+					<UiScrollerBasic
+						{...({
+							...themeScrollContentProps,
+							'aria-label': ariaLabel,
+							id,
+							ref: scrollContentHandle,
+							children: ((editable && direction === 'horizontal') ?
+								<EditableWrapper {...editableWrapperProps} /> :
+								children
+							)
+						} as any)}
+					/>
 					{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 					{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
 					{hoverToScroll ? <HoverToScroll {...hoverToScrollProps} /> : null}

@@ -20,7 +20,7 @@ import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {HeadingBase as UiHeadingBase} from '@enact/ui/Heading';
-import type {ComponentType, ReactNode} from 'react';
+import type {ComponentType, CSSProperties, ReactNode} from 'react';
 
 import {MarqueeDecorator} from '../Marquee';
 import Skinnable from '../Skinnable';
@@ -31,6 +31,8 @@ export interface HeadingBaseProps {
 	children?: ReactNode;
 	className?: string;
 	css?: Record<string, string>;
+	id?: string;
+	style?: CSSProperties;
 	marqueeOn?: 'hover' | 'render';
 	showLine?: boolean;
 	size?: 'large' | 'medium' | 'small' | 'tiny' | 'title' | 'subtitle';

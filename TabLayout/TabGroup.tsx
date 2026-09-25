@@ -31,7 +31,7 @@ interface TabBaseProps {
 	noIcons?: boolean;
 	onFocusTab?: (...args: any[]) => any;
 	onTabClick?: (...args: any[]) => any;
-	orientation?: string;
+	orientation?: 'horizontal' | 'vertical';
 	selected?: boolean;
 	sprite?: Record<string, any>;
 	stopped?: boolean;
@@ -55,7 +55,7 @@ const TabBase = kind<TabBaseProps>({
 		noIcons: PropTypes.bool,
 		onFocusTab: PropTypes.func,
 		onTabClick: PropTypes.func,
-		orientation: PropTypes.string,
+		orientation: PropTypes.oneOf(['horizontal', 'vertical']) as PropTypes.Validator<'horizontal' | 'vertical' | undefined>,
 		selected: PropTypes.bool,
 		sprite: PropTypes.object,
 		stopped: PropTypes.bool
@@ -135,6 +135,8 @@ const TabBase = kind<TabBaseProps>({
 					/>
 				);
 			}
+			default:
+				return null;
 		}
 	}
 });
@@ -190,7 +192,7 @@ export interface TabGroupBaseProps {
 	onFocusTab?: (...args: any[]) => any;
 	onScrollStop?: (...args: any[]) => any;
 	onSelect?: (...args: any[]) => any;
-	orientation?: string;
+	orientation?: 'horizontal' | 'vertical';
 	primaryIndex?: number | null;
 	scrollPosition?: {x: number; y: number};
 	selectedIndex?: number | null;
@@ -228,7 +230,7 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 		onFocusTab: PropTypes.func,
 		onScrollStop: PropTypes.func,
 		onSelect: PropTypes.func,
-		orientation: PropTypes.string,
+		orientation: PropTypes.oneOf(['horizontal', 'vertical']) as PropTypes.Validator<'horizontal' | 'vertical' | undefined>,
 		scrollPosition: PropTypes.object as PropTypes.Validator<{x: number; y: number} | undefined>,
 		selectedIndex: PropTypes.number,
 		size: PropTypes.string,
@@ -358,7 +360,7 @@ const TabGroupBase = kind<TabGroupBaseProps>({
 	}
 });
 
-const TabGroupDecorator = (compose as any)(
+const TabGroupDecorator = compose(
 	DebounceDecorator({cancel: 'onBlur', debounce: 'onFocusTab', delay: 300}),
 	IdProvider({
 		generateProp: null,

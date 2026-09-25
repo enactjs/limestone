@@ -20,7 +20,7 @@ import Pure from '@enact/ui/internal/Pure';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
 import {Children} from 'react';
-import type {ComponentType, ReactNode} from 'react';
+import type {ComponentType, ReactNode, Ref} from 'react';
 
 import Icon from '../Icon';
 import {MarqueeDecorator} from '../Marquee';
@@ -367,7 +367,7 @@ const ButtonDecorator = compose(
  * @ui
  * @public
  */
-const Button = ButtonDecorator(ButtonBase) as ComponentType<ButtonBaseProps>;
+const Button = ButtonDecorator(ButtonBase) as ComponentType<ButtonBaseProps & {ref?: Ref<any>}>;
 
 export default Button;
 export {

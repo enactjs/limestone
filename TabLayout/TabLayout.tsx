@@ -405,7 +405,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 			const {collapsed, orientation, 'data-spotlight-id': spotlightId} = props;
 			const direction = getDirection(keyCode);
 
-			if (forwardWithPrevent('onKeyDown', ev, props) && direction && collapsed && orientation === 'vertical' && document.querySelector(`[data-spotlight-id='${spotlightId}']`)!.contains(target) && target.tagName !== 'INPUT') {
+			if ((forwardWithPrevent as (name: string, ev: any, props: any) => boolean)('onKeyDown', ev, props) && direction && collapsed && orientation === 'vertical' && document.querySelector(`[data-spotlight-id='${spotlightId}']`)!.contains(target) && target.tagName !== 'INPUT') {
 				Spotlight.setPointerMode(false);
 				ev.preventDefault();
 
@@ -430,7 +430,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 			const tabLayoutContentRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${componentCss.content}`);
 			const tabsExpandedSpotlightId = `${spotlightId}-tabs-expanded`;
 
-			if (forwardWithPrevent('onKeyUp', ev, props) && is('cancel')(keyCode)) {
+			if ((forwardWithPrevent as (name: string, ev: any, props: any) => boolean)('onKeyUp', ev, props) && is('cancel')(keyCode)) {
 				if ((type === 'popup' && popupPanelRef?.contains(target) && (popupPanelRef as HTMLElement).dataset.index === '0') || (type === 'normal' && !Spotlight.getPointerMode() && tabLayoutContentRef?.contains(target))) {
 					if (collapsed) {
 						forward('onExpand', ev, props);
@@ -472,10 +472,10 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 		onScrollStop: handle(
 			forProp('collapsed', false),
 			forProp('orientation', 'vertical'),
-			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}) => ({scrollPosition: {x: scrollLeft, y: scrollTop}}))
+			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}: any) => ({scrollPosition: {x: scrollLeft, y: scrollTop}}))
 		),
 		onSelect: handle(
-			forwardCustom('onSelect', ({selected}) => ({index: selected}))
+			forwardCustom('onSelect', ({selected}: any) => ({index: selected}))
 		),
 		handleTabsTransitionEnd: handle(
 			forward('onTransitionEnd'),
@@ -635,7 +635,7 @@ const TabLayoutBase = kind<TabLayoutBaseProps>({
 	}
 });
 
-const TabLayoutDecorator = (compose as any)(
+const TabLayoutDecorator = compose(
 	(Toggleable as any)({prop: 'collapsed', activate: 'onCollapse', deactivate: 'onExpand'}),
 	(Changeable as any)({prop: 'index', change: 'onSelect'}),
 	(Changeable as any)({prop: 'scrollPosition', change: 'onScrollStop'}),

@@ -182,8 +182,8 @@ const PanelBase = kind({
 	},
 
 	computed: {
-		className: ({size, styler}: any) => styler.append(size),
-		contentCellSize: ({size}: any) => {
+		className: ({size, styler}) => styler.append(size),
+		contentCellSize: ({size}) => {
 			// These values must be kept in sync with their LESS variable counterparts
 			switch (size) {
 				case 'small': return 600;
@@ -202,13 +202,14 @@ const PanelBase = kind({
 		prevButton,
 		prevButtonVisibility,
 		contentCellSize,
+		onChange,
+		size,
 		...rest
-	}: any, {count}: any) => {
+	}, {count}: any) => {
+		void [onChange, size];
+
 		const isPrevButtonVisible = Boolean(prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && count > 1));
 		const isNextButtonVisible = Boolean(nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && count > 1));
-
-		delete rest.onChange;
-		delete rest.size;
 
 		return (
 			<DefaultPanel {...rest} css={css}>

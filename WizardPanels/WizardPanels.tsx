@@ -380,13 +380,13 @@ const WizardPanelsBase = kind({
 			const step = noSteps ? '' : new IString($L('Step {current} of {total}')).format({current: stepNum, total: totalNum});
 			return `${step}${title} ${subtitle}`;
 		},
-		className: ({noSteps, noSubtitle, styler}: any) => styler.append(
+		className: ({noSteps, noSubtitle, styler}) => styler.append(
 			{
 				noSteps,
 				noSubtitle
 			}
 		),
-		steps: ({current, index, noSteps, total, totalPanels}: any) => {
+		steps: ({current, index, noSteps, total, totalPanels}) => {
 			const currentStep = (noSteps && 1) || ((typeof current === 'number' && current > 0) ? current : (index + 1));
 			const totalSteps = (noSteps && 1) || ((typeof total === 'number' && total > 0) ? total : totalPanels);
 
@@ -399,7 +399,7 @@ const WizardPanelsBase = kind({
 				/>
 			);
 		},
-		noAnimation: ({noAnimation}: any) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation
+		noAnimation: ({noAnimation}) => (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) || noAnimation
 	},
 
 	render: ({
@@ -422,12 +422,13 @@ const WizardPanelsBase = kind({
 		steps,
 		subtitle,
 		title,
-		totalPanels,
+		current,
+		noSteps,
+		total,
+		totalPanels = 0,
 		...rest
-	}: any) => {
-		delete rest.current;
-		delete rest.noSteps;
-		delete rest.total;
+	}) => {
+		void [current, noSteps, total];
 
 		const isPrevButtonVisible = prevButton !== false && (prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0));
 		const isNextButtonVisible = nextButton !== false && (nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1));

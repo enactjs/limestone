@@ -10,6 +10,7 @@
  */
 
 import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} from '@enact/core/handle';
+import type {HandlerFunction} from '@enact/core/types';
 import useHandlers from '@enact/core/useHandlers';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
@@ -59,7 +60,7 @@ const fixedPopupPanelsHandlers = {
 		forward('onKeyDown'),
 		({target}: any) => (target.tagName !== 'INPUT'),
 		forProp('rtl', false),
-		forKey('left'),
+		forKey('left') as HandlerFunction,
 		(ev: any, {index}: any) => (index > 0),
 		({target}: any) => (document.querySelector(`section.${css.body}`)?.contains(target as Node)),
 		({target}: any) => (getTargetByDirectionFromElement('left', target) === null),

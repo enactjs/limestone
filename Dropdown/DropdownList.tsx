@@ -1,5 +1,6 @@
 import kind from '@enact/core/kind';
 import {forward} from '@enact/core/handle';
+import type {HandlerFunction} from '@enact/core/types';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import {WithRef} from '@enact/core/internal/WithRef';
@@ -179,7 +180,7 @@ const DropdownListBase = kind({
 	},
 
 	handlers: {
-		itemRenderer: ({index, ...rest}: Record<string, any>, props: Record<string, any>) => {
+		itemRenderer: (function itemRenderer ({index, ...rest}: Record<string, any>, props: Record<string, any>) {
 			const {children, selected} = props;
 			const isSelected = index === selected;
 			const slotAfter = isSelected ? (<Icon>check</Icon>) : null;
@@ -204,42 +205,40 @@ const DropdownListBase = kind({
 					size="large"
 				/>
 			);
-		}
+		} as HandlerFunction)
 	},
 
 	computed: {
-		className: ({children, styler, width}: Record<string, any>) => styler.append(
+		className: ({children, styler, width}): string => styler.append(
 			typeof width === 'string' ? width : null,
-			{verticalScrollbar: children?.length > 5}
+			{verticalScrollbar: (children?.length ?? 0) > 5}
 		),
-		dataSize: ({children}: Record<string, any>) => children ? children.length : 0,
+		dataSize: ({children}): number => children?.length ?? 0,
 		// Note: Retaining this in case we need to support different item sizes for large text mode:
 		// itemSize: ({skinVariants}) => ri.scale(skinVariants && skinVariants.largeText ? 156 : 156)
 		itemSize: () => 156,
-		maxItems: ({children}: Record<string, any>) => children?.length > 5
+		maxItems: ({children}) => (children?.length ?? 0) > 5
 	},
 
-	render: ({dataSize, id, itemSize, maxItems, scrollTo, width, ...rest}: Record<string, any>) => {
-		delete rest.children;
-		delete rest.onSelect;
-		delete rest.selected;
-		delete rest.skinVariants;
-		delete rest.width;
+	render: ({children, className, dataSize, id, itemSize, maxItems, onSelect, scrollTo, selected, skinVariants, width, ...rest}) => {
+		void [children, onSelect, selected, skinVariants];
+		const itemCount = dataSize as number;
 
 		return (
 			<div role="region" aria-labelledby={`${id}_dropdownlist`}>
-				<div id={`${id}_dropdownlist`} aria-label={`${$L('Dropdown list opened')} ${new IString($L('{total} items in total')).format({total: dataSize})}`} />
+				<div id={`${id}_dropdownlist`} aria-label={`${$L('Dropdown list opened')} ${new IString($L('{total} items in total')).format({total: itemCount})}`} />
 				<VirtualList
 					{...rest}
 					cbScrollTo={scrollTo}
-					dataSize={dataSize}
+					className={className as string}
+					dataSize={itemCount}
 					itemSize={ri.scale(itemSize)}
 					role="group"
 					scrollbarTrackCss={css}
 					style={{
 						backgroundColor: 'transparent',
-						height: !maxItems ? ri.scaleToRem((itemSize * dataSize) + 36) : null,
-						width: typeof width === 'number' ? ri.scaleToRem(width) : null
+						...(!maxItems ? {height: ri.scaleToRem((itemSize * itemCount) + 36)} : null),
+						...(typeof width === 'number' ? {width: ri.scaleToRem(width)} : null)
 					}}
 				/>
 			</div>
@@ -387,7 +386,7 @@ const DropdownListSpotlightDecorator = (hoc as any)((config: Record<string, any>
 	return DropdownListSpotlightDecorator;
 });
 
-const DropdownListDecorator = (compose as any)(
+const DropdownListDecorator = compose(
 	DropdownListSpotlightDecorator,
 	(IdProvider as any)({
 		generateProp: null,

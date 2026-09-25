@@ -77,17 +77,17 @@ const HeaderBase = kind({
 	},
 
 	computed: {
-		backButtonAriaLabel: ({closeButtonAriaLabel}: any) => closeButtonAriaLabel == null ? $L('Exit app') : closeButtonAriaLabel,
-		backButtonBackgroundOpacity: ({closeButtonBackgroundOpacity}: any) => closeButtonBackgroundOpacity,
-		className: ({noCloseButton, styler}: any, {count}: any) => styler.append({'showBack': (count > 1 && noCloseButton)}),
-		noBackButton: ({noCloseButton}: any) => noCloseButton
+		backButtonAriaLabel: ({closeButtonAriaLabel}) => closeButtonAriaLabel == null ? $L('Exit app') : closeButtonAriaLabel,
+		backButtonBackgroundOpacity: ({closeButtonBackgroundOpacity}) => closeButtonBackgroundOpacity,
+		className: ({noCloseButton, styler}, {count}) => styler.append({'showBack': (count > 1 && noCloseButton)}),
+		noBackButton: ({noCloseButton}) => noCloseButton
 	},
 
 	handlers: {
 		onBack: forwardCustom('onClose')
 	},
 
-	render: (props: any) => (
+	render: (props) => (
 		<DefaultHeader
 			type="mini"
 			{...props}

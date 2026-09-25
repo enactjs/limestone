@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {Children, isValidElement} from 'react';
 import type {ComponentType, ReactNode} from 'react';
 
 import Button from '../Button';
@@ -350,8 +351,8 @@ const PageViewsBase = kind({
 	},
 
 	computed: {
-		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}: any) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
-		renderFooterButtons: ({bannerMode, css, footerCloseLabel, index, onFooterCloseClick, onFooterNextClick, showFooterButtons, totalIndex, uniqueId}: any) => {
+		className: ({fullContents, pageIndicatorPosition, pageIndicatorType, styler}) => styler.append({fullContents}, `indicator${cap(pageIndicatorPosition)}`, pageIndicatorType),
+		renderFooterButtons: ({bannerMode, css = componentCss, footerCloseLabel, index = 0, onFooterCloseClick, onFooterNextClick, showFooterButtons, totalIndex = 0, uniqueId}) => {
 			if (!showFooterButtons || bannerMode) return null;
 
 			const isLastPage = index >= totalIndex - 1;
@@ -377,7 +378,7 @@ const PageViewsBase = kind({
 				</RowLayout>
 			);
 		},
-		renderNextButton: ({css, onNextClick, index, totalIndex}: any) => {
+		renderNextButton: ({css = componentCss, onNextClick, index = 0, totalIndex = 0}) => {
 			const isNextButtonVisible = index < totalIndex - 1;
 
 			return (
@@ -386,7 +387,7 @@ const PageViewsBase = kind({
 				</CellLayout>
 			);
 		},
-		renderPrevButton: ({css, index, onPrevClick}: any) => {
+		renderPrevButton: ({css = componentCss, index = 0, onPrevClick}) => {
 			const isPrevButtonVisible = index !== 0;
 			return (
 				<CellLayout className={css.navButtonCell} shrink>
@@ -394,7 +395,7 @@ const PageViewsBase = kind({
 				</CellLayout>
 			);
 		},
-		renderViewManager: ({arranger, bannerMode, css, index, noAnimation, onTransition, onWillTransition, reverseTransition, uniqueId, children}: any) => {
+		renderViewManager: ({arranger, bannerMode, css = componentCss, index, noAnimation, onTransition, onWillTransition, reverseTransition, uniqueId, children}) => {
 			const CellComponent = bannerMode ? SpottableCell : CellLayout;
 			const props: Record<string, any> = {};
 			if (bannerMode) props.spotlightId = "banner-view-manager" + uniqueId;
@@ -416,11 +417,13 @@ const PageViewsBase = kind({
 				</CellComponent>
 			);
 		},
-		stepHintAriaLabel: ({children, index, totalIndex}: any) => {
+		stepHintAriaLabel: ({children, index = 0, totalIndex}) => {
 			const pageHint = new IString($L('Page {current} out of {total}')).format({current: index + 1, total: totalIndex});
-			return `${pageHint} ${children?.[index]?.props['aria-label'] || ''}`;
+			const page = Children.toArray(children)[index];
+			const ariaLabel = isValidElement<{['aria-label']?: string}>(page) ? page.props['aria-label'] : '';
+			return `${pageHint} ${ariaLabel || ''}`;
 		},
-		steps: ({bannerMode, css, index, onNextClick, onPrevClick, onStepsClick, pageIndicatorType, totalIndex}: any) => {
+		steps: ({bannerMode, css = componentCss, index = 0, onNextClick, onPrevClick, onStepsClick, pageIndicatorType, totalIndex = 0}) => {
 			const isPrevButtonVisible = index !== 0;
 			const isNextButtonVisible = index < totalIndex - 1;
 			const isStepVisible = totalIndex !== 1;
@@ -452,37 +455,38 @@ const PageViewsBase = kind({
 	},
 
 	render: ({
-		css,
+		arranger,
+		bannerMode,
+		children,
+		css = componentCss,
 		componentRef,
+		footerCloseLabel,
 		fullContents,
-		index,
+		index = 0,
+		noAnimation,
+		onFooterCloseClick,
+		onFooterNextClick,
+		onNextClick,
+		onPrevClick,
+		onStepsClick,
+		onTransition,
+		onWillTransition,
 		pageIndicatorPosition,
 		pageIndicatorType,
 		renderFooterButtons,
 		renderNextButton,
 		renderPrevButton,
 		renderViewManager,
+		reverseTransition,
+		rtl,
+		showFooterButtons,
 		stepHintAriaLabel,
 		steps,
+		totalIndex,
 		uniqueId,
 		...rest
-	}: any) => {
-		delete rest.arranger;
-		delete rest.bannerMode;
-		delete rest.children;
-		delete rest.footerCloseLabel;
-		delete rest.noAnimation;
-		delete rest.onFooterCloseClick;
-		delete rest.onFooterNextClick;
-		delete rest.onNextClick;
-		delete rest.onStepsClick;
-		delete rest.onPrevClick;
-		delete rest.onTransition;
-		delete rest.onWillTransition;
-		delete rest.reverseTransition;
-		delete rest.rtl;
-		delete rest.showFooterButtons;
-		delete rest.totalIndex;
+	}) => {
+		void [arranger, bannerMode, children, footerCloseLabel, noAnimation, onFooterCloseClick, onFooterNextClick, onNextClick, onPrevClick, onStepsClick, onTransition, onWillTransition, reverseTransition, rtl, showFooterButtons, totalIndex];
 
 		return (
 			<div role="region" aria-labelledby={`pageViews_index_${index}`} ref={componentRef} {...rest}>

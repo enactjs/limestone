@@ -10,6 +10,7 @@
  */
 
 import {forKey, forProp, forward, forwardCustom, handle, preventDefault, stop} from '@enact/core/handle';
+import type {HandlerFunction} from '@enact/core/types';
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import useHandlers from '@enact/core/useHandlers';
@@ -447,7 +448,7 @@ const OptimizedFocusDecorator = hoc({}, (config: Record<string, any>, Wrapped: C
  * @hoc
  * @public
  */
-const PopupTabLayoutDecorator = (compose as any)(
+const PopupTabLayoutDecorator = compose(
 	IdProvider({idProp: 'spotlightId', prefix: 'lime-popuptablayout-', generateProp: null}),
 	OptimizedFocusDecorator,
 	Skinnable
@@ -520,15 +521,16 @@ export interface TabPanelsBaseProps {
 const tabPanelsHandlers = {
 	onTransition: handle(
 		forward('onTransition'),
-		(ev: any, props: TabPanelsBaseProps, {onTransition}: {onTransition?: (...args: any[]) => any}) => {
+		((ev: any, props: TabPanelsBaseProps, {onTransition}: {onTransition?: (...args: any[]) => any}) => {
+			void props;
 			(onTransition as (...args: any[]) => any)(ev);
-		}
+		}) as HandlerFunction
 	),
 	onKeyDown: handle(
 		forward('onKeyDown'),
 		({target}: any) => (target.tagName !== 'INPUT'),
 		forProp('rtl', false),
-		forKey('left'),
+		forKey('left') as HandlerFunction,
 		(ev: any, {index}: TabPanelsBaseProps) => (index! > 0),
 		({target}: any) => {
 			const next = getTargetByDirectionFromElement('left', target);

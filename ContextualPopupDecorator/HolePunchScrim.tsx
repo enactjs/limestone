@@ -45,7 +45,7 @@ const HolePunchScrimBase = kind({
 	},
 
 	computed: {
-		style: ({holeBounds: {top = 0, left = 0, width = 0, height = 0}, style}: Record<string, any>) => {
+		style: ({holeBounds: {top = 0, left = 0, width = 0, height = 0}, style}) => {
 			return {
 				...style,
 				'--hole-height': autoUnit(height),
@@ -65,7 +65,7 @@ const HolePunchScrimBase = kind({
 	}
 });
 
-const HolePunchScrimDecorator = (compose as any)(
+const HolePunchScrimDecorator = compose(
 	Skinnable
 );
 

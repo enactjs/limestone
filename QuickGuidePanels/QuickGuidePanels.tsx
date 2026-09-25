@@ -11,7 +11,7 @@ import ViewManager from '@enact/ui/ViewManager';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import type {ComponentType} from 'react';
+import type {ComponentType, ReactNode} from 'react';
 
 import $L from '../internal/$L';
 import Button from '../Button';
@@ -31,6 +31,7 @@ const StepsComponent = Steps as ComponentType<any>;
 
 export interface QuickGuidePanelsBaseProps {
 	'aria-label'?: string;
+	children?: ReactNode;
 	closeButtonAriaLabel?: string;
 	componentRef?: EnactPropTypeShapes.ref;
 	current?: number;
@@ -306,13 +307,13 @@ const QuickGuidePanelsBase = kind({
 	},
 
 	computed: {
-		stepHintAriaLabel: ({'aria-label': label, current, index, totalPanels}: any) => {
+		stepHintAriaLabel: ({'aria-label': label, current, index, totalPanels}) => {
 			const stepNum = (typeof current === 'number' && current > 0) ? current : (index + 1);
 			const step = new IString($L('Page {current} out of {total}')).format({current: stepNum, total: totalPanels}) + ' ';
 
 			return `${step} ${label || ''}`;
 		},
-		closeButton: ({closeButtonAriaLabel, onClose, totalPanels}: any) => {
+		closeButton: ({closeButtonAriaLabel, onClose, totalPanels}) => {
 			return (
 				totalPanels ? <ButtonComponent
 					aria-label={closeButtonAriaLabel == null ? $L('Exit Quick Guide') : closeButtonAriaLabel}
@@ -323,7 +324,7 @@ const QuickGuidePanelsBase = kind({
 				/> : null
 			);
 		},
-		nextNavigationButton: ({index, nextButton, nextButtonVisibility, onNextClick, totalPanels}: any) => {
+		nextNavigationButton: ({index, nextButton, nextButtonVisibility, onNextClick, totalPanels = 0}) => {
 			const isNextButtonVisible = nextButtonVisibility === 'always' || (nextButtonVisibility === 'auto' && index < totalPanels - 1);
 
 			return (
@@ -343,7 +344,7 @@ const QuickGuidePanelsBase = kind({
 				/>
 			);
 		},
-		prevNavigationButton: ({index, onPrevClick, prevButton, prevButtonVisibility}: any) => {
+		prevNavigationButton: ({index, onPrevClick, prevButton, prevButtonVisibility}) => {
 			const isPrevButtonVisible = prevButtonVisibility === 'always' || (prevButtonVisibility === 'auto' && index !== 0);
 
 			return (
@@ -361,7 +362,7 @@ const QuickGuidePanelsBase = kind({
 				/>
 			);
 		},
-		steps: ({current, index, total, totalPanels}: any) => {
+		steps: ({current, index, total, totalPanels}) => {
 			const currentStep = (typeof current === 'number' && current > 0) ? current : (index + 1);
 			const totalSteps = (typeof total === 'number' && total > 0) ? total : totalPanels;
 
@@ -385,22 +386,23 @@ const QuickGuidePanelsBase = kind({
 		onWillTransition,
 		prevNavigationButton,
 		stepHintAriaLabel,
+		'aria-label': ariaLabel,
+		closeButtonAriaLabel,
+		current,
+		hideChildren,
+		nextButton,
+		nextButtonVisibility,
+		onClose,
+		onNextClick,
+		onPrevClick,
+		prevButton,
+		prevButtonVisibility,
 		steps,
+		total,
+		totalPanels,
 		...rest
-	}: any) => {
-		delete rest['aria-label'];
-		delete rest.closeButtonAriaLabel;
-		delete rest.current;
-		delete rest.nextButton;
-		delete rest.nextButtonVisibility;
-		delete rest.onClose;
-		delete rest.onNextClick;
-		delete rest.onPrevClick;
-		delete rest.prevButton;
-		delete rest.prevButtonVisibility;
-		delete rest.total;
-		delete rest.totalPanels;
-		delete rest.hideChildren;
+	}) => {
+		void [ariaLabel, closeButtonAriaLabel, current, hideChildren, nextButton, nextButtonVisibility, onClose, onNextClick, onPrevClick, prevButton, prevButtonVisibility, total, totalPanels];
 
 		return (
 			<article role="region" aria-labelledby={`quickguidepanel_index_${index}`} ref={rest.componentRef}>
