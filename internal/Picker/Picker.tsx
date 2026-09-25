@@ -766,7 +766,7 @@ PickerBase.propTypes = /** @lends limestone/internal/Picker.Picker.prototype */ 
 	 * @type {Object}
 	 * @private
 	 */
-	css: PropTypes.object,
+	css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 	/**
 	 * Disables voice control.

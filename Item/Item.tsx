@@ -77,7 +77,7 @@ ItemContent.displayName = 'ItemContent';
 ItemContent.propTypes = {
 	componentRef: EnactPropTypes.ref,
 	content: PropTypes.any,
-	css: PropTypes.object,
+	css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 	label: PropTypes.any,
 	labelPosition: PropTypes.any,
 	secondaryLabel: PropTypes.any

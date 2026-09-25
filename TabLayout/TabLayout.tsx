@@ -1,0 +1,675 @@
+/**
+ * Provides a Limestone-themed TabLayout.
+ *
+ * @module limestone/TabLayout
+ * @exports TabLayout
+ * @exports TabLayoutBase
+ * @exports TabLayoutContext
+ * @exports TabLayoutDecorator
+ * @exports Tab
+ */
+
+import handle, {forward, forwardCustom, forwardWithPrevent, forProp, not} from '@enact/core/handle';
+import {is} from '@enact/core/keymap';
+import kind from '@enact/core/kind';
+import {cap, mapAndFilterChildren} from '@enact/core/util';
+import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
+import Spotlight, {getDirection} from '@enact/spotlight';
+import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
+import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
+import {Changeable} from '@enact/ui/Changeable';
+import {Cell, Layout} from '@enact/ui/Layout';
+import ri, {scaleToRem} from '@enact/ui/resolution';
+import Toggleable from '@enact/ui/Toggleable';
+import Touchable from '@enact/ui/Touchable';
+import ViewManager from '@enact/ui/ViewManager';
+import PropTypes from 'prop-types';
+import compose from 'ramda/src/compose';
+import {createContext, Fragment} from 'react';
+import type {ComponentType, ReactNode} from 'react';
+
+import {getLastInputType} from '../ThemeDecorator';
+
+import RefocusDecorator, {getNavigableFilter, getTabsSpotlightId} from './RefocusDecorator';
+import TabGroup from './TabGroup';
+import Tab from './Tab';
+
+import componentCss from './TabLayout.module.less';
+import popupTabLayoutComponentCss from '../PopupTabLayout/PopupTabLayout.module.less';
+
+const LayoutComponent = Layout as ComponentType<any>;
+const CellComponent = Cell as ComponentType<any>;
+const TouchableCell = Touchable(Cell) as ComponentType<any>;
+
+const MAX_TABS_BEFORE_VERTICAL_SCROLLING = 8;
+const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING = 6;
+const MAX_TABS_BEFORE_HORIZONTAL_SCROLLING_SMALL = 7;
+const TAB_SPACING = 48;
+
+type TabLayoutContextValue = ((ev: any, props?: any) => void) | null;
+
+const TabLayoutContext = createContext<TabLayoutContextValue>(null);
+
+const isTouchMode = () => (getLastInputType() === 'touch');
+
+const getHorizontalTabWidth = (dataSize: number, size: string, tabSize?: number | null) => {
+	let widths;
+
+	if (tabSize) {
+		return tabSize;
+	}
+
+	if (size === 'small') {
+		widths = [540, 420, 420];
+	} else {
+		widths = [852, 672, 552];
+	}
+
+	if (dataSize < 5) {
+		return widths[0];
+	} else if (dataSize < 6) {
+		return widths[1];
+	} else {
+		return widths[2];
+	}
+};
+
+const isHorizontalScrollableTabs = (dataSize: number, offset: number, size: string, tabSize?: number | null) => {
+	if (size === 'large' && dataSize > MAX_TABS_BEFORE_HORIZONTAL_SCROLLING) return true;
+	if (size === 'small' && dataSize > MAX_TABS_BEFORE_HORIZONTAL_SCROLLING_SMALL) return true;
+
+	const totalTabsWidth = dataSize * getHorizontalTabWidth(dataSize, size, tabSize) + TAB_SPACING * (dataSize - 1) + 2 * offset;
+
+	return (typeof window !== 'undefined' && window?.innerWidth) ? window.innerWidth < ri.scale(totalTabsWidth) : false;
+};
+
+export interface TabLayoutDimensions {
+	tabs: {
+		collapsed: number;
+		normal: number;
+	};
+	content: {
+		expanded: number | null;
+		normal: number | null;
+	};
+}
+
+export interface TabLayoutBaseProps {
+	anchorTo?: 'left' | 'right' | 'start' | 'end';
+	blockCollapseOnPortrait?: boolean;
+	blockExpandOnLandscape?: boolean;
+	children?: ReactNode;
+	collapsed?: boolean;
+	css?: Record<string, string>;
+	'data-spotlight-id'?: string;
+	dimensions?: TabLayoutDimensions;
+	index?: number | null;
+	offset?: number;
+	onCollapse?: (...args: any[]) => any;
+	onExpand?: (...args: any[]) => any;
+	onSelect?: (...args: any[]) => any;
+	onTabAnimationEnd?: (...args: any[]) => any;
+	orientation?: 'horizontal' | 'vertical';
+	primaryIndex?: number | null;
+	rtl?: boolean;
+	scrollPosition?: {x: number; y: number};
+	size?: 'small' | 'large';
+	tabSize?: number;
+	type?: 'normal' | 'popup';
+	[key: string]: any;
+}
+
+/**
+ * Tabbed Layout component.
+ *
+ * Example:
+ *
+ * ```jsx
+ * 	<TabLayout>
+ * 		<Tab title="Tab One">
+ * 			<Item>Hello</Item>
+ * 		</Tab>
+ * 		<Tab title="Tab Two">
+ * 			<Item>Goodbye</Item>
+ * 		</Tab>
+ * 	</TabLayout>
+ * ```
+ *
+ * @class TabLayout
+ * @memberof limestone/TabLayout
+ * @ui
+ * @public
+ */
+const TabLayoutBase = kind<TabLayoutBaseProps>({
+	name: 'TabLayout',
+
+	_propTypes: {} as TabLayoutBaseProps,
+
+	propTypes: /** @lends limestone/TabLayout.TabLayout.prototype */ {
+		/**
+		 * Sets where this component should attach its tabs and animations.
+		 *
+		 * "left" and "right" represent true screen left and screen right, while "start" represents
+		 * screen left in LTR and screen right in RTL. "end" is the reverse: screen right for LTR
+		 * and screen left for RTL.
+		 *
+		 * @type {('left'|'right'|'start'|'end')}
+		 * @default 'start'
+		 * @private
+		 */
+		anchorTo: PropTypes.oneOf(['left', 'right', 'start', 'end']),
+
+		/**
+		 * Prevents the tab list from automatically collapsing when the screen orientation changes to portrait mode.
+		 *
+		 * Only applies to `orientation="vertical".
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		blockCollapseOnPortrait: PropTypes.bool,
+
+		/**
+		 * Prevents the tab list from automatically expand when the screen orientation changes to landscape mode.
+		 *
+		 * Only applies to `orientation="vertical".
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		blockExpandOnLandscape: PropTypes.bool,
+
+		/**
+		 * Collection of {@link limestone/TabLayout.Tab|Tabs} to render.
+		 *
+		 * @type {Node}
+		 * @public
+		 */
+		children: PropTypes.node,
+
+		/**
+		 * Collapses the vertical tab list into icons only.
+		 *
+		 * Only applies to `orientation="vertical"`.  If the tabs do not include icons, a single
+		 * collapsed icon will be shown.
+		 *
+		 * @type {Boolean}
+		 * @public
+		 */
+		collapsed: PropTypes.bool,
+
+		/**
+		 * Customizes the component by mapping the supplied collection of CSS class names to the
+		 * corresponding internal elements and states of this component.
+		 *
+		 * The following classes are supported:
+		 *
+		 * @type {Object}
+		 * @public
+		 */
+		css: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
+
+		'data-spotlight-id': PropTypes.string,
+
+		/**
+		 * Specify dimensions for the layout areas.
+		 *
+		 * All 4 combinations must be supplied: each of the elements, tabs and content in both
+		 * collapsed and expanded state.
+		 *
+		 * @type {{tabs: {collapsed: Number, normal: Number}, content: {expanded: number, normal: number}}}
+		 * @default {
+		 * 	tabs: {
+		 * 		collapsed: 228,
+		 * 		normal: 882
+		 * 	},
+		 * 	content: {
+		 * 		expanded: null,
+		 * 		normal: null
+		 * 	}
+		 * }
+		 * @private
+		 */
+		dimensions: PropTypes.shape({
+			content: PropTypes.shape({
+				expanded: PropTypes.number,
+				normal: PropTypes.number
+			}).isRequired,
+			tabs: PropTypes.shape({
+				collapsed: PropTypes.number,
+				normal: PropTypes.number
+			}).isRequired
+		}) as PropTypes.Validator<TabLayoutDimensions | undefined>,
+
+		/**
+		 * The currently selected tab.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
+		index: PropTypes.number,
+
+		/**
+		 * The offset of the tabs area from the left and right edges of the screen.
+		 * This option is only applicable when `orientation` is set to `horizontal`.
+		 * The default value set to `36` to have the right position of the tabs in the normal panel.
+		 * If the tabs are supposed to scroll, this value should be set to `132` and the panel should have no padding.
+		 *
+		 * @type {Number}
+		 * @default 36
+		 * @public
+		 */
+		offset: PropTypes.number,
+
+		/**
+		 * Called when the tabs are collapsed.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onCollapse: PropTypes.func,
+
+		/**
+		 * Called when the tabs are expanded.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onExpand: PropTypes.func,
+
+		/**
+		 * Called when a tab is selected
+		 *
+		 * @type {Function}
+		 * @public
+		*/
+		onSelect: PropTypes.func,
+
+		/**
+		 * Called when the tab collapse or expand animation completes.
+		 *
+		 * Event payload includes:
+		 * * `type` - Always set to "onTabAnimationEnd"
+		 * * `collapsed` - `true` when the tabs are collapsed
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onTabAnimationEnd: PropTypes.func,
+
+		/**
+		 * Orientation of the tabs.
+		 *
+		 * @type {('horizontal'|'vertical')}
+		 * @default 'vertical'
+		 * @public
+		 */
+		orientation: PropTypes.oneOf(['horizontal', 'vertical']),
+
+		/**
+		 * The index of the primary tab.
+		 * When this prop is set, the initial focus will be on the primary tab when rendered.
+		 * Also, when pressing the back key from other tabs, the focus will be moved to the primary tab.
+		 * If the `primaryIndex` is not provided, the initial focus will default to the first tab during the initial render.
+		 *
+		 * @type {Number}
+		 * @default null
+		 * @public
+		 */
+		primaryIndex: PropTypes.number,
+
+		/**
+		 * Indicates the content's text direction is right-to-left.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		rtl: PropTypes.bool,
+
+		/**
+		 * The scroll position of the tab list.
+		 * This property maintains the vertical scroll position of the tabs when they are scrollable and collapsed.
+		 *
+		 * @type {{x: number, y: number}}
+		 * @default {x: 0, y: 0}
+		 * @private
+		 */
+		scrollPosition: PropTypes.object as PropTypes.Validator<{x: number; y: number} | undefined>,
+
+		/**
+		 * The size of the horizontal tab.
+		 *
+		 * @type {('small'|'large')}
+		 * @default 'large'
+		 * @public
+		 */
+		size: PropTypes.oneOf(['small', 'large']),
+
+		/**
+		 * Assign a custom size to horizontal tabs.
+		 *
+		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
+		 * Leave this prop blank to use the default auto-sizing behavior.
+		 * Tabs may also be set to a finite width using this property. This accepts numeric pixel
+		 * values. Be mindful of the value you provide as values that are too wide will run off the
+		 * edge of the screen.
+		 *
+		 * Only applies to `orientation="horizontal"` at this time.
+		 *
+		 * @type {Number}
+		 * @public
+		 */
+		tabSize: PropTypes.number,
+
+		/**
+		 * Type of TabLayout.
+		 *
+		 * @type {('normal'|'popup')}
+		 * @default 'normal'
+		 * @private
+		 */
+		type: PropTypes.oneOf(['normal', 'popup'])
+	},
+
+	defaultProps: {
+		anchorTo: 'start',
+		dimensions: {
+			tabs: {
+				collapsed: 216,
+				normal: 888
+			},
+			content: {
+				expanded: null,
+				normal: null
+			}
+		},
+		index: null,
+		primaryIndex: null,
+		offset: 36,
+		orientation: 'vertical',
+		scrollPosition: {x: 0, y: 0},
+		size: 'large',
+		type: 'normal'
+	},
+
+	styles: {
+		css: componentCss,
+		className: 'tabLayout',
+		publicClassNames: ['bg', 'button', 'client', 'collapsed', 'content', 'icon', 'selected', 'tab', 'tabGroup', 'tabLayout', 'tabs', 'tabsExpanded', 'vertical']
+	},
+
+	handlers: {
+		onKeyDown: (ev: any, props: TabLayoutBaseProps) => {
+			const {keyCode, target} = ev;
+			const {collapsed, orientation, 'data-spotlight-id': spotlightId} = props;
+			const direction = getDirection(keyCode);
+
+			if ((forwardWithPrevent as (name: string, ev: any, props: any) => boolean)('onKeyDown', ev, props) && direction && collapsed && orientation === 'vertical' && document.querySelector(`[data-spotlight-id='${spotlightId}']`)!.contains(target) && target.tagName !== 'INPUT') {
+				Spotlight.setPointerMode(false);
+				ev.preventDefault();
+
+				Spotlight.set(spotlightId!, {navigableFilter: null});
+				const nextTarget = getTargetByDirectionFromElement(direction, target);
+				const isNextTargetInTabs = nextTarget && document.querySelector(`.${componentCss.tabs}`)!.contains(nextTarget);
+				Spotlight.set(spotlightId!, {navigableFilter: getNavigableFilter(spotlightId!, collapsed!)});
+
+				if (!isNextTargetInTabs && Spotlight.move(direction)) {
+					ev.stopPropagation();
+				} else if (isNextTargetInTabs && document.querySelector(`[data-spotlight-id='${spotlightId}'] .${componentCss.content}`)!.contains(target)) {
+					forward('onExpand', ev, props);
+				}
+			} else if (is('enter')(keyCode) && !collapsed && document.querySelector(`[data-spotlight-id='${spotlightId}-tabs-expanded']`)!.contains(target) && target.tagName !== 'INPUT') {
+				ev.stopPropagation();
+			}
+		},
+		onKeyUp: (ev: any, props: TabLayoutBaseProps) => {
+			const {keyCode, target} = ev;
+			const {anchorTo, collapsed, orientation, primaryIndex, 'data-spotlight-id': spotlightId, rtl, type} = props;
+			const popupPanelRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${popupTabLayoutComponentCss.panel}`);
+			const tabLayoutContentRef = document.querySelector(`[data-spotlight-id='${spotlightId}'] .${componentCss.content}`);
+			const tabsExpandedSpotlightId = `${spotlightId}-tabs-expanded`;
+
+			if ((forwardWithPrevent as (name: string, ev: any, props: any) => boolean)('onKeyUp', ev, props) && is('cancel')(keyCode)) {
+				if ((type === 'popup' && popupPanelRef?.contains(target) && (popupPanelRef as HTMLElement).dataset.index === '0') || (type === 'normal' && !Spotlight.getPointerMode() && tabLayoutContentRef?.contains(target))) {
+					if (collapsed) {
+						forward('onExpand', ev, props);
+					}
+					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}']`);
+					ev.stopPropagation();
+				} else if (primaryIndex !== null) {
+					Spotlight.focus(`[data-spotlight-id='${tabsExpandedSpotlightId}-primary-tab']`);
+					ev.stopPropagation();
+				}
+			} else if (is('enter')(keyCode) && !collapsed && document.querySelector(`[data-spotlight-id='${tabsExpandedSpotlightId}']`)!.contains(target) && target.tagName !== 'INPUT') {
+				Spotlight.setPointerMode(false);
+
+				let moveTo: string | undefined;
+				if (orientation === 'vertical') {
+					if (anchorTo === 'left') {
+						moveTo = 'right';
+					} else if (anchorTo === 'right') {
+						moveTo = 'left';
+					} else if (anchorTo === 'start') {
+						if (rtl) {
+							moveTo = 'left';
+						} else {
+							moveTo = 'right';
+						}
+					} else if (anchorTo === 'end') {
+						if (!rtl) {
+							moveTo = 'left';
+						} else {
+							moveTo = 'right';
+						}
+					}
+				} else {
+					moveTo = 'down';
+				}
+				Spotlight.move(moveTo!);
+			}
+		},
+		onScrollStop: handle(
+			forProp('collapsed', false),
+			forProp('orientation', 'vertical'),
+			forwardCustom('onScrollStop', ({scrollLeft, scrollTop}: any) => ({scrollPosition: {x: scrollLeft, y: scrollTop}}))
+		),
+		onSelect: handle(
+			forwardCustom('onSelect', ({selected}: any) => ({index: selected}))
+		),
+		handleTabsTransitionEnd: handle(
+			forward('onTransitionEnd'),
+			forProp('orientation', 'vertical'),
+			// Validate the transition is from the root node
+			(ev: any) => ev.target.classList.contains(componentCss.tabs),
+			forwardCustom('onTabAnimationEnd', (ev, {collapsed}) => ({collapsed: Boolean(collapsed)}))
+		),
+		handleFlick: ({direction, velocityX}: any, {collapsed, onCollapse, onExpand}: TabLayoutBaseProps) => {
+			// See the global class 'spotlight-input-touch' to check the input type is touch
+			if (isTouchMode() && direction === 'horizontal') {
+				if (!collapsed && velocityX < 0) {
+					(onCollapse as (...args: any[]) => any)();
+				} else if (collapsed && velocityX > 0) {
+					(onExpand as (...args: any[]) => any)();
+				}
+			}
+		},
+		handleClick: handle(
+			isTouchMode,
+			forward('onExpand')
+		),
+		handleFocus: handle(
+			not(isTouchMode),
+			forward('onExpand')
+		),
+		handleEnter: (ev: any, props: TabLayoutBaseProps) => {
+			const {index, previousIndex} = ev;
+
+			if (index > previousIndex) {
+				forward('onCollapse', ev, props);
+			}
+		}
+	},
+
+	computed: {
+		children: ({children}: TabLayoutBaseProps) => mapAndFilterChildren(children, (child: any) => (
+			<Fragment>{child.props.children}</Fragment>
+		)),
+		className: ({collapsed, anchorTo, orientation, styler}) => styler.append(
+			{collapsed: orientation === 'vertical' && collapsed},
+			`anchor${cap(anchorTo!)}`,
+			orientation
+		),
+		scrollable: ({children, offset, orientation, size, tabSize}: TabLayoutBaseProps) => {
+			const isVertical = orientation === 'vertical';
+			const childList = children as any[];
+			return isVertical ?
+				(childList.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(childList.length, offset!, size!, tabSize);
+		},
+		style: ({children, dimensions, offset, orientation, size, style, tabSize}: TabLayoutBaseProps) => {
+			const childList = children as any[];
+			const isVertical = orientation === 'vertical';
+			const scrollable = isVertical ?
+				(childList.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
+				isHorizontalScrollableTabs(childList.length, offset!, size!, tabSize);
+			const tabSizeValue = !isVertical ? getHorizontalTabWidth(childList.length, size!, tabSize) : null;
+			const totalTabsWidth = ri.scaleToRem(tabSizeValue! * childList.length + TAB_SPACING * (childList.length - 1));
+
+			return {
+				...style,
+				'--offset': scaleToRem(offset!),
+				'--scrollable': scrollable ? '1' : '0',
+				'--tabs-width': !isVertical ? totalTabsWidth : '100%',
+				'--tab-width': scaleToRem(tabSizeValue!),
+				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions!.tabs.normal - dimensions!.tabs.collapsed) : 0)
+			};
+		},
+		index: ({index, primaryIndex}: TabLayoutBaseProps) => {
+			// If `index` is not provided, it defaults to `primaryIndex` or 0.
+			return index ?? primaryIndex ?? 0;
+		},
+		tabOrientation: ({orientation}: TabLayoutBaseProps) => orientation === 'vertical' ? 'horizontal' : 'vertical',
+		tabs: ({children}: TabLayoutBaseProps) => {
+			const tabs = mapAndFilterChildren(children, (child: any) => (
+				Object.keys(child.props)
+					.filter((prop) => prop !== 'children' && prop !== 'id')
+					.reduce((obj, key) => ({...obj, [key]: child.props[key]}), {})
+			));
+			return tabs;
+		}
+	},
+
+	render: ({children, collapsed, css, 'data-spotlight-id': spotlightId, primaryIndex, dimensions, handleClick, handleEnter, handleFlick, handleFocus, handleTabsTransitionEnd, index, onCollapse, onScrollStop, onSelect, orientation, scrollable, scrollPosition, size, tabOrientation, tabs, type, ...rest}) => {
+		delete rest.anchorTo;
+		delete rest.blockCollapseOnPortrait;
+		delete rest.blockExpandOnLandscape;
+		delete rest.onExpand;
+		delete rest.offset;
+		delete rest.onTabAnimationEnd;
+		delete rest.rtl;
+		delete rest.tabSize;
+
+		const contentSize = (collapsed ? dimensions!.content.expanded : dimensions!.content.normal);
+		const isVertical = orientation === 'vertical';
+		const ContentCell = isVertical ? TouchableCell : CellComponent;
+		const contentCellProps = isVertical ? {onFlick: handleFlick} : null;
+
+		// Props that are shared between both of the rendered TabGroup components
+		const tabGroupProps = {
+			css,
+			primaryIndex,
+			onClick: (collapsed ? handleClick : null),
+			onFocus: (collapsed ? handleFocus : null),
+			onFocusTab: onSelect,
+			onSelect,
+			orientation,
+			selectedIndex: index,
+			tabs
+		};
+
+		// In vertical orientation, render two sets of tabs, one just icons, one with icons and text.
+		return (
+			<TabLayoutContext value={handleEnter}>
+				<LayoutComponent {...rest} orientation={tabOrientation} data-spotlight-id={spotlightId}>
+					<CellComponent className={css!.tabs} shrink onTransitionEnd={handleTabsTransitionEnd}>
+						<TabGroup
+							{...tabGroupProps}
+							collapsed={isVertical}
+							scrollPosition={scrollPosition}
+							scrollable={scrollable}
+							size={size}
+							spotlightDisabled={!collapsed && isVertical}
+							spotlightId={getTabsSpotlightId(spotlightId!, isVertical)}
+						/>
+					</CellComponent>
+					{isVertical ? <CellComponent
+						className={css!.tabs + ' ' + css!.tabsExpanded}
+						size={dimensions!.tabs.normal}
+					>
+						<TabGroup
+							{...tabGroupProps}
+							onScrollStop={onScrollStop}
+							scrollable={scrollable}
+							spotlightDisabled={collapsed}
+							spotlightId={getTabsSpotlightId(spotlightId!, false)}
+						/>
+					</CellComponent> : null}
+					<ContentCell
+						{...{
+							size: isVertical ? contentSize : null,
+							className: css!.content,
+							component: ViewManager,
+							index,
+							noAnimation: true,
+							onFocus: (type === 'normal' && !collapsed) ? onCollapse : null,
+							orientation,
+							...contentCellProps
+						} as any}
+					>
+						{children}
+					</ContentCell>
+				</LayoutComponent>
+			</TabLayoutContext>
+		);
+	}
+});
+
+const TabLayoutDecorator = compose(
+	(Toggleable as any)({prop: 'collapsed', activate: 'onCollapse', deactivate: 'onExpand'}),
+	(Changeable as any)({prop: 'index', change: 'onSelect'}),
+	(Changeable as any)({prop: 'scrollPosition', change: 'onScrollStop'}),
+	RefocusDecorator,
+	(SpotlightContainerDecorator as any)({
+		// using last-focused so we return to the last focused if it exists but fall through to
+		// default element if no focus has occurred yet (e.g. on mount)
+		enterTo: 'last-focused',
+		// favor the content when collapsed and the tabs otherwise
+		defaultElement: [`.${componentCss.horizontal} .${componentCss.tabs} *`, `.${componentCss.collapsed} .${componentCss.content} *`, `.${componentCss.tabsExpanded} *`]
+	}),
+	(I18nContextDecorator as any)({rtlProp: 'rtl'})
+);
+
+type TabLayoutComponent = ComponentType<TabLayoutBaseProps> & {Tab: typeof Tab};
+
+// Currently not documenting the base output since it's not exported
+const TabLayout = TabLayoutDecorator(TabLayoutBase) as TabLayoutComponent;
+
+/**
+ * A shortcut to access {@link limestone/TabLayout.Tab}
+ *
+ * @name Tab
+ * @type {limestone/TabLayout.Tab}
+ * @static
+ * @memberof limestone/TabLayout.TabLayout
+ */
+TabLayout.Tab = Tab;
+
+export default TabLayout;
+export {
+	TabLayout,
+	TabLayoutBase,
+	TabLayoutContext,
+	TabLayoutDecorator,
+	Tab
+};

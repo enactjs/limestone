@@ -125,7 +125,7 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @type {Object}
 		 * @public
 		 */
-		tooltipCss: PropTypes.object,
+		tooltipCss: PropTypes.object as PropTypes.Validator<Record<string, string> | undefined>,
 
 		/**
 		 * Time to wait (in milliseconds) before showing tooltip on hover.

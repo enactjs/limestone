@@ -1,14 +1,3 @@
-/**
- * Provides Limestone-themed input components and behaviors.
- *
- * @module limestone/Input
- * @exports Input
- * @exports InputBase
- * @exports InputPopup
- * @exports InputPopupBase
- * @exports InputDecorator
- */
-
 import {handle, forKey, forward, forwardCustom} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import {extractAriaProps, mapAndFilterChildren} from '@enact/core/util';
