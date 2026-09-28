@@ -218,7 +218,7 @@ const useSpottable = (props: Record<string, any>, instances: ScrollInstances) =>
 			cancelled = true;
 			window.clearTimeout(timer);
 		};
-	}); // eslint-disable-line react-hooks/exhaustive-deps
+	});
 
 	if (props.dataSize !== mutableRef.current.dataSize) {
 		const current = (Spotlight.getCurrent() as any);
