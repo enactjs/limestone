@@ -1,6 +1,7 @@
 import Spotlight, {getDirection} from '@enact/spotlight';
 import Accelerator from '@enact/spotlight/Accelerator';
 import Pause from '@enact/spotlight/Pause';
+import {getContainersForNode, rootContainerId} from '@enact/spotlight/src/container';
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {Spottable} from '@enact/spotlight/Spottable';
 import ri from '@enact/ui/resolution';
@@ -147,6 +148,40 @@ const useSpottable = (props: Record<string, any>, instances: ScrollInstances) =>
 			setContainerDisabled(false);
 		};
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+	const claimedInitialFocus = useRef(false);
+
+	// Items are created after the list measures itself. Autofocus that runs before that either
+	// focuses nothing or a sibling such as a panel header, and later 5-way entry restores that node.
+	useEffect(() => {
+		if (claimedInitialFocus.current || props.spotlightDisabled) return;
+
+		const scrollContainer = scrollContainerRef.current;
+		if (!scrollContainer || !scrollContentHandle.current) return;
+
+		const itemNode = getItemNode(0);
+		if (!itemNode) return;
+
+		claimedInitialFocus.current = true;
+
+		setTimeout(() => {
+			if (Spotlight.getPointerMode() || Spotlight.isPaused()) return;
+
+			const current = Spotlight.getCurrent() as HTMLElement | null;
+			if (current && scrollContainer.contains(current)) return;
+
+			if (!current) {
+				Spotlight.focus(itemNode);
+				return;
+			}
+
+			const listContainerIds = getContainersForNode(scrollContainer).filter((id) => id !== rootContainerId);
+			const currentContainerIds = getContainersForNode(current);
+			if (listContainerIds.some((id) => currentContainerIds.includes(id))) {
+				Spotlight.focus(itemNode);
+			}
+		}, 0);
+	});
 
 	if (props.dataSize !== mutableRef.current.dataSize) {
 		const current = (Spotlight.getCurrent() as any);

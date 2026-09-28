@@ -577,9 +577,9 @@ const Decorator = hoc(defaultConfig, (config: typeof defaultConfig, Wrapped: Com
 
 			handleDirectionalKey(ev);
 
-			// if focus moves outside the popup's container, issue the `onClose` event
-			const currentNode = Spotlight.getCurrent();
-			if (Spotlight.move(localDirection) && containerNode.current && !containerNode.current.contains(currentNode ?? null)) {
+			// Read the focused node after the move. Capturing it first keeps the node inside
+			// the popup, so `onClose` never runs and the popup stays open.
+			if (Spotlight.move(localDirection) && containerNode.current && !containerNode.current.contains(Spotlight.getCurrent() as Node)) {
 				forwardCustom('onClose')(null, componentProps);
 			}
 		}, [componentProps, handleDirectionalKey]);

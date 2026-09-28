@@ -38,12 +38,19 @@ function useAutoFocus ({autoFocus = 'last-focused', hideChildren}: {autoFocus?: 
 		// In order to spot the body components, we defer spotting until !hideChildren. If the
 		// Panel opts out of hideChildren support by explicitly setting it to false, it'll spot
 		// on first render.
-		if (!hideChildren && autoFocus !== 'none' && !Spotlight.getCurrent() && !Spotlight.isPaused()) {
+		if (!hideChildren && autoFocus !== 'none' && !Spotlight.isPaused()) {
 			// For the purpose of imperatively focusing the Panel contents, we find the target
 			// within the panel using a (currently) private Spotlight API with the enterTo parameter
 			// to influence which configuration is used to find said target.
 			const enterTo = isSelector(autoFocus) || autoFocus === 'default-element' ? 'default-element' : 'last-focused';
-			Spotlight.focus(spotlightId, {enterTo});
+			// VirtualList renders its items after measuring in componentDidMount. Focusing during
+			// this ref callback runs before that, so the only spottable is often a header button
+			// and that node is saved as the container's last-focused target.
+			setTimeout(() => {
+				if (!Spotlight.getCurrent() && !Spotlight.isPaused()) {
+					Spotlight.focus(spotlightId, {enterTo});
+				}
+			}, 0);
 		}
 	}, [autoFocus, hideChildren, ref]);
 }
