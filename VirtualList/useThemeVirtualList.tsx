@@ -150,38 +150,75 @@ const useSpottable = (props: Record<string, any>, instances: ScrollInstances) =>
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const claimedInitialFocus = useRef(false);
+	const claimAttempts = useRef(0);
 
 	// Items are created after the list measures itself. Autofocus that runs before that either
 	// focuses nothing or a sibling such as a panel header, and later 5-way entry restores that node.
+	// The claim has to wait out Spotlight pauses and item measurement; latching early leaves the
+	// header as the panel's last-focused target when navigating back.
 	useEffect(() => {
 		if (claimedInitialFocus.current || props.spotlightDisabled) return;
 
-		const scrollContainer = scrollContainerRef.current;
-		if (!scrollContainer || !scrollContentHandle.current) return;
+		let timer = 0;
+		let cancelled = false;
 
-		const itemNode = getItemNode(0);
-		if (!itemNode) return;
+		const claimInitialFocus = () => {
+			if (cancelled || claimedInitialFocus.current) return;
 
-		claimedInitialFocus.current = true;
+			const scrollContainer = scrollContainerRef.current;
+			const itemNode = scrollContainer && scrollContentHandle.current ? getItemNode(0) : null;
+			if (!scrollContainer || !itemNode || !itemNode.isConnected) return;
 
-		setTimeout(() => {
-			if (Spotlight.getPointerMode() || Spotlight.isPaused()) return;
+			if (Spotlight.getPointerMode()) {
+				claimedInitialFocus.current = true;
+				return;
+			}
+
+			const retry = () => {
+				if (claimAttempts.current >= 20) return;
+
+				claimAttempts.current += 1;
+				timer = window.setTimeout(claimInitialFocus, 50);
+			};
+
+			// Panel transitions pause Spotlight. Retry instead of giving up for this mount.
+			if (Spotlight.isPaused()) {
+				retry();
+				return;
+			}
 
 			const current = Spotlight.getCurrent() as HTMLElement | null;
-			if (current && scrollContainer.contains(current)) return;
-
-			if (!current) {
-				Spotlight.focus(itemNode);
+			const connectedCurrent = current && current.isConnected ? current : null;
+			if (connectedCurrent && scrollContainer.contains(connectedCurrent)) {
+				claimedInitialFocus.current = true;
 				return;
 			}
 
 			const listContainerIds = getContainersForNode(scrollContainer).filter((id) => id !== rootContainerId);
-			const currentContainerIds = getContainersForNode(current);
-			if (listContainerIds.some((id) => currentContainerIds.includes(id))) {
-				Spotlight.focus(itemNode);
+			const currentContainerIds = connectedCurrent ? getContainersForNode(connectedCurrent) : [];
+			const sharesContainer = listContainerIds.some((id) => currentContainerIds.includes(id));
+
+			if (connectedCurrent && !sharesContainer) {
+				claimedInitialFocus.current = true;
+				return;
 			}
-		}, 0);
-	});
+
+			if (Spotlight.focus(itemNode) && scrollContainer.contains(Spotlight.getCurrent() as Node)) {
+				mutableRef.current.lastFocusedIndex = 0;
+				claimedInitialFocus.current = true;
+				return;
+			}
+
+			retry();
+		};
+
+		timer = window.setTimeout(claimInitialFocus, 0);
+
+		return () => {
+			cancelled = true;
+			window.clearTimeout(timer);
+		};
+	}); // eslint-disable-line react-hooks/exhaustive-deps
 
 	if (props.dataSize !== mutableRef.current.dataSize) {
 		const current = (Spotlight.getCurrent() as any);
