@@ -235,7 +235,6 @@ const PageViewsBase = kind({
 
 	defaultProps: {
 		arranger: BasicArranger,
-		noAnimation: true,
 		pageIndicatorPosition: 'bottom',
 		pageIndicatorType: 'dot',
 		showFooterButtons: false
