@@ -45,7 +45,6 @@ function prepareTest (componentName, testId) {
 	const componentMetadata = components[componentName][testId];
 	let component;
 
-	// If test wants focus, set mode to 5-way so autofocus works
 	if (componentMetadata.focus) {
 		spotlight.setPointerMode(false);
 	}
