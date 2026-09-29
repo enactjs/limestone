@@ -21,10 +21,10 @@ import {getLastContainer} from '@enact/spotlight/src/container';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
+import {use, useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
 import warning from 'warning';
 
-import Skinnable from '../Skinnable';
+import Skinnable, {TierContext} from '../Skinnable';
 
 import componentCss from './Popup.module.less';
 
@@ -231,10 +231,11 @@ const PopupBase = kind({
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `role` will be usually `alert`.
 		role: ({noAlertRole, role}) => ((typeof role !== 'undefined') ? role : (!noAlertRole && 'alert' || null)),
-		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '))
+		transitionContainerClassName: ({animationTier, css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '), animationTier && `animationTier-${animationTier}`)
 	},
 
 	render: ({children, css, direction, noAnimation, onHide, onShow, open, position, spotlightId, spotlightRestrict, transitionContainerClassName, ...rest}) => {
+		delete rest.animationTier;
 		delete rest.noAlertRole;
 		delete rest.noOutline;
 
@@ -243,7 +244,6 @@ const PopupBase = kind({
 				className={transitionContainerClassName}
 				css={css}
 				direction={direction}
-				duration="short"
 				noAnimation={position === 'fullscreen' ? true : noAnimation}
 				onHide={onHide}
 				onShow={onShow}
@@ -263,8 +263,14 @@ const PopupBase = kind({
 	}
 });
 
+const PopupBaseWithTier = (props) => {
+	const animationTier = use(TierContext);
+
+	return <PopupBase animationTier={animationTier} {...props} />;
+};
+
 const SkinnedPopupBase = Skinnable(
-	PopupBase
+	PopupBaseWithTier
 );
 
 // Deprecate using scrimType 'none' with spotlightRestrict of 'self-only'
