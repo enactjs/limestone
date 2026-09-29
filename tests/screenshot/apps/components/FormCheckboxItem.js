@@ -3,37 +3,29 @@ import FormCheckboxItem from '../../../../FormCheckboxItem';
 
 import {withConfig, withProps, withTallglyphLocale, TallglyphLatin, TallglyphMultiScript} from './utils';
 
-const basicFormCheckboxItemTests = (prefix) => {
-	const normalName = prefix + 'FormCheckboxItem';
-	const checkedName = prefix + 'FormCheckboxItem Checked';
-	return [
-		<FormCheckboxItem>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem inline>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled inline>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem selected>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem selected disabled>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem selected inline>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem selected disabled inline>{checkedName}</FormCheckboxItem>
-	];
-};
+const basicFormCheckboxItemTests = [
+	<FormCheckboxItem>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem disabled>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem inline>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem disabled inline>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem selected>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem selected disabled>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem selected inline>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem selected disabled inline>FormCheckboxItem Checked</FormCheckboxItem>
+];
 
-const slotBeforeFormCheckboxItemTests = (prefix) => {
-	const normalName = prefix + 'FormCheckboxItem';
-	const checkedName = prefix + 'FormCheckboxItem Checked';
-	return [
-		<FormCheckboxItem><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem inline><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled inline><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem selected><Icon slot="slotBefore">home</Icon>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled selected><Icon slot="slotBefore">home</Icon>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem selected inline><Icon slot="slotBefore">home</Icon>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled selected inline><Icon slot="slotBefore">home</Icon>{checkedName}</FormCheckboxItem>,
-		<FormCheckboxItem indeterminate><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>,
-		<FormCheckboxItem disabled indeterminate><Icon slot="slotBefore">home</Icon>{normalName}</FormCheckboxItem>
-	];
-};
+const slotBeforeFormCheckboxItemTests = [
+	<FormCheckboxItem><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem disabled><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem inline><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem disabled inline><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem selected><Icon slot="slotBefore">home</Icon>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem disabled selected><Icon slot="slotBefore">home</Icon>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem selected inline><Icon slot="slotBefore">home</Icon>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem disabled selected inline><Icon slot="slotBefore">home</Icon>FormCheckboxItem Checked</FormCheckboxItem>,
+	<FormCheckboxItem indeterminate><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>,
+	<FormCheckboxItem disabled indeterminate><Icon slot="slotBefore">home</Icon>FormCheckboxItem</FormCheckboxItem>
+];
 
 const formCheckboxItemSmokeTests = [
 	// Basic
@@ -43,16 +35,16 @@ const formCheckboxItemSmokeTests = [
 
 // [QWTC-2120] start
 const formCheckboxItemQwtcTests = [
-	...basicFormCheckboxItemTests(''),
-	...withConfig({focus: true}, basicFormCheckboxItemTests('Focused ')),
-	...withProps({indeterminate: true}, basicFormCheckboxItemTests(''))
+	...basicFormCheckboxItemTests,
+	...withConfig({focus: true}, basicFormCheckboxItemTests),
+	...withProps({indeterminate: true}, basicFormCheckboxItemTests)
 ];
 // [QWTC-2120] end
 
 const formCheckboxItemSlotBeforeTests = [
 	// Icon slotBefore
-	...slotBeforeFormCheckboxItemTests(''),
-	...withConfig({focus: true}, slotBeforeFormCheckboxItemTests('Focused '))
+	...slotBeforeFormCheckboxItemTests,
+	...withConfig({focus: true}, slotBeforeFormCheckboxItemTests)
 ];
 
 const formCheckboxItemCenteredTests = [

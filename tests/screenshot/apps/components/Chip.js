@@ -39,16 +39,6 @@ const chipSmokeTests = [
 	<Chip multiline icon="home" deleteButton={{icon: 'closex', position: 'bottom'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at consequatur illum magnam omnis possimus, quas ratione rerum? Atque corporis magni nulla numquam odio officia quas quisquam vero! Repellat, vitae.</Chip>
 ];
 
-const chipFocusTests = [
-	// Focused — smoke representatives
-	<Chip>Focused Default Chip</Chip>,
-	<Chip icon="home">Focused Chip with Icon</Chip>,
-	<Chip checked>Checked and Focused Chip</Chip>,
-	<Chip disabled deleteButton={{icon: 'closex', position: 'right'}}>Disabled and Focused Chip</Chip>,
-	<Chip deleteButton={{icon: 'closex', position: 'right'}}>Focused Chip with Delete Button (Right)</Chip>,
-	<Chip multiline>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet at consequatur illum magnam omnis possimus, quas ratione rerum? Atque corporis magni nulla numquam odio officia quas quisquam vero! Repellat.</Chip>
-];
-
 const chipLargeTextTests = [
 	// Large Text — smoke representatives
 	<Chip>Default Chip</Chip>,
@@ -65,7 +55,7 @@ const chipTallglyphTests = [
 
 const ChipTests = [
 	...chipSmokeTests,
-	...withConfig({focus: true}, chipFocusTests),
+	...withConfig({focus: true}, chipSmokeTests),
 	...withConfig({skinVariants: ['largeText']}, chipLargeTextTests),
 	...withTallglyphLocale(chipTallglyphTests)
 ];

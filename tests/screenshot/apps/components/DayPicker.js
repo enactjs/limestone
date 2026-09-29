@@ -56,15 +56,11 @@ const dayPickerQwtcTests = [
 	}
 ];
 
-const dayPickerFocusTests = [
-	<DayPicker selected={2} />
-];
-
 const DayPickerTests = [
 	...dayPickerSmokeTests,
 	...dayPickerQwtcTests,
 	...dayPickerRtlTests,
-	...withConfig({focus: true}, dayPickerFocusTests)
+	...withConfig({focus: true}, dayPickerSmokeTests)
 ];
 
 export default DayPickerTests;
