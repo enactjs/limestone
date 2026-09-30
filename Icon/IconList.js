@@ -336,5 +336,6 @@ export default {
 	filter            : 0x0F020B, // filter
 	ezsetting         : 0x0F020C, // ez_setting
 	fitness           : 0x0F020D, // Fitness
-	auracast2         : 0x0F020E  // Auracast
+	auracast2         : 0x0F020E, // auracast2
+	iclinkaccount     : 0x0F020F  // ic_link_account
 };
