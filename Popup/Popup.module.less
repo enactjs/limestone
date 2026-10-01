@@ -151,29 +151,29 @@
 	}
 
 	&.shown {
-		&:global(.animationTier-high) .inner { .lime-enter-small-high-motion(); }
-		&:global(.animationTier-low) .inner { .lime-enter-small-low-motion(); }
+		&:is(:global(.animationTier-high) *) .inner { .lime-enter-small-high-motion(); }
+		&:is(:global(.animationTier-low) *) .inner { .lime-enter-small-low-motion(); }
 
 		// Alert Fullscreen
 		&.fullscreen .inner { .lime-enter-none-motion(); }
 	}
 
 	&.hidden {
-		&.bottom:global(.animationTier-high) .inner { .lime-exit-small-high-motion(0, 336px); }
-		&.bottom:global(.animationTier-low) .inner { .lime-exit-small-low-motion(0, 336px); }
+		&.bottom:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, 336px); }
+		&.bottom:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, 336px); }
 
-		&.top:global(.animationTier-high) .inner { .lime-exit-small-high-motion(0, -336px); }
-		&.top:global(.animationTier-low) .inner { .lime-exit-small-low-motion(0, -336px); }
+		&.top:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, -336px); }
+		&.top:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, -336px); }
 
-		&.left:global(.animationTier-high) .inner { .lime-exit-small-high-motion(-336px, 0); }
-		&.left:global(.animationTier-low) .inner { .lime-exit-small-low-motion(-336px, 0); }
+		&.left:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(-336px, 0); }
+		&.left:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(-336px, 0); }
 
-		&.right:global(.animationTier-high) .inner { .lime-exit-small-high-motion(336px, 0); }
-		&.right:global(.animationTier-low) .inner { .lime-exit-small-low-motion(336px, 0); }
+		&.right:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(336px, 0); }
+		&.right:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(336px, 0); }
 
 		// Alert Overlay
-		&.center:global(.animationTier-high) .inner { .lime-exit-small-high-motion(0, 32px); }
-		&.center:global(.animationTier-low) .inner { .lime-exit-small-low-motion(0, 32px); }
+		&.center:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, 32px); }
+		&.center:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, 32px); }
 	}
 
 	:global(.noAnimation) & {

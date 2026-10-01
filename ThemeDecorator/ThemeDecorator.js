@@ -292,7 +292,7 @@ const ThemeDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);
 
 		return (
-			<App {...rest} animationTier={animationTier} skin={skinName} className={className} />
+			<App {...rest} skin={skinName} className={className} />
 		);
 	};
 

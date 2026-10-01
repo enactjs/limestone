@@ -21,10 +21,10 @@ import {getLastContainer} from '@enact/spotlight/src/container';
 import FloatingLayer from '@enact/ui/FloatingLayer';
 import Transition from '@enact/ui/Transition';
 import PropTypes from 'prop-types';
-import {use, useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState} from 'react';
 import warning from 'warning';
 
-import Skinnable, {TierContext} from '../Skinnable';
+import Skinnable from '../Skinnable';
 
 import componentCss from './Popup.module.less';
 
@@ -231,11 +231,10 @@ const PopupBase = kind({
 		// If `noAlertRole` is true, alert role and aria-live will be removed. Contents of the popup won't be read automatically when opened.
 		// Otherwise, `role` will be usually `alert`.
 		role: ({noAlertRole, role}) => ((typeof role !== 'undefined') ? role : (!noAlertRole && 'alert' || null)),
-		transitionContainerClassName: ({animationTier, css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '), animationTier && `animationTier-${animationTier}`)
+		transitionContainerClassName: ({css, position, styler}) => styler.join(css.popupTransitionContainer, position.split(' '))
 	},
 
 	render: ({children, css, direction, noAnimation, onHide, onShow, open, position, spotlightId, spotlightRestrict, transitionContainerClassName, ...rest}) => {
-		delete rest.animationTier;
 		delete rest.noAlertRole;
 		delete rest.noOutline;
 
@@ -263,14 +262,8 @@ const PopupBase = kind({
 	}
 });
 
-const PopupBaseWithTier = (props) => {
-	const animationTier = use(TierContext);
-
-	return <PopupBase animationTier={animationTier} {...props} />;
-};
-
 const SkinnedPopupBase = Skinnable(
-	PopupBaseWithTier
+	PopupBase
 );
 
 // Deprecate using scrimType 'none' with spotlightRestrict of 'self-only'
@@ -470,6 +463,8 @@ const Popup = (props) => {
 	}, [componentProps]);
 
 	const handlePopupHide = useCallback((ev) => {
+		if (ev.propertyName && ev.propertyName !== 'transform') return;
+
 		forwardHide(ev, componentProps);
 
 		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
@@ -480,6 +475,8 @@ const Popup = (props) => {
 	}, [componentProps, containerId, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
+		if (ev.propertyName && ev.propertyName !== 'transform') return;
+
 		forwardShow(ev, componentProps);
 
 		dispatch({popupOpen: OpenState.OPEN});

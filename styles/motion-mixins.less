@@ -33,19 +33,19 @@ Global Motion Mixins
 
 /* focus-out */
 .lime-focus-out-fast-motion(@scale-to: 1) {
-	transform: scale(@scale-to);
+	transform: if((@scale-to = 1), none, scale(@scale-to));
 	transition: transform var(--lime-motion-medium2-duration) 0ms var(--lime-EO-motion-easing-function);
 }
 .lime-focus-out-default-motion(@scale-to: 1) {
-	transform: scale(@scale-to);
+	transform: if((@scale-to = 1), none, scale(@scale-to));
 	transition: transform var(--lime-motion-long2-duration) 0ms var(--lime-EO-motion-easing-function);
 }
 .lime-focus-out-slow-motion(@scale-to: 1) {
-	transform: scale(@scale-to);
+	transform: if((@scale-to = 1), none, scale(@scale-to));
 	transition: transform var(--lime-motion-long4-duration) 0ms var(--lime-EO-motion-easing-function);
 }
 .lime-focus-out-none-motion(@scale-to: 1) {
-	transform: scale(@scale-to);
+	transform: if((@scale-to = 1), none, scale(@scale-to));
 	transition: transform 0ms 0ms var(--lime-EO-motion-easing-function);
 }
 
@@ -299,19 +299,19 @@ Global Motion Mixins
 /* scroll */
 .lime-scroll-fast-motion(@translateX-to: 0, @translateY-to: 0) {
 	transform: translate(@translateX-to, @translateY-to);
-	transition: transform var(--lime-motion-long2-duration) 0ms var(--lime-EIO-motion-easing-function);
+	transition: transform var(--lime-motion-long2-duration) 0ms var(--lime-EOC-motion-easing-function);
 }
 .lime-scroll-default-motion(@translateX-to: 0, @translateY-to: 0) {
 	transform: translate(@translateX-to, @translateY-to);
-	transition: transform var(--lime-motion-long4-duration) 0ms var(--lime-EIO-motion-easing-function);
+	transition: transform var(--lime-motion-long4-duration) 0ms var(--lime-EOC-motion-easing-function);
 }
 .lime-scroll-slow-motion(@translateX-to: 0, @translateY-to: 0) {
 	transform: translate(@translateX-to, @translateY-to);
-	transition: transform var(--lime-motion-extra1-duration) 0ms var(--lime-EIO-motion-easing-function);
+	transition: transform var(--lime-motion-extra1-duration) 0ms var(--lime-EOC-motion-easing-function);
 }
 .lime-scroll-none-motion(@translateX-to: 0, @translateY-to: 0) {
 	transform: translate(@translateX-to, @translateY-to);
-	transition: transform 0ms 0ms var(--lime-EIO-motion-easing-function);
+	transition: transform 0ms 0ms var(--lime-EOC-motion-easing-function);
 }
 
 .lime-scroll-high-motion(@translateX-to: 0, @translateY-to: 0) { .lime-scroll-default-motion(@translateX-to, @translateY-to); }
