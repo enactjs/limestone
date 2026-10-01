@@ -18,6 +18,7 @@ const TooltipButton = TooltipDecorator({tooltipDestinationProp: 'decoration'}, B
 
 const prop = {
 	icons: ['', ...iconNames],
+	tooltipImagePosition: ['above', 'below'],
 	tooltipPosition: [
 		'above',
 		'above center',
@@ -50,6 +51,7 @@ export const _TooltipDecorator = (args) => {
 		noArrow: args['noArrow'],
 		tooltipDelay: args['tooltipDelay'],
 		tooltipImage: args['hasImage'] && args['tooltipImage'],
+		tooltipImagePosition: args['tooltipImagePosition'],
 		tooltipImageSize: args['hasImage'] && args['tooltipImageSize'],
 		tooltipMarquee: args['tooltipMarquee'],
 		tooltipPosition: args['tooltipPosition'],
@@ -73,6 +75,7 @@ export const _TooltipDecorator = (args) => {
 boolean('disabled', _TooltipDecorator, Config);
 boolean('hasImage', _TooltipDecorator, Config);
 select('icon', _TooltipDecorator, prop.icons, Config);
+select('tooltipImagePosition', _TooltipDecorator, prop.tooltipImagePosition, Config, prop.tooltipImagePosition[0]);
 boolean('noArrow', _TooltipDecorator, Config);
 number('tooltipDelay', _TooltipDecorator, Config, 500);
 boolean('tooltipMarquee', _TooltipDecorator, Config);

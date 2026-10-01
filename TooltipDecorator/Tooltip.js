@@ -163,6 +163,15 @@ const TooltipBase = kind({
 		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
+		 * Position of the image in relation to the text label.
+		 *
+		 * @type {('above'|'below')}
+		 * @default 'above'
+		 * @public
+		 */
+		tooltipImagePosition: PropTypes.oneOf(['above', 'below']),
+
+		/**
 		 * The size of the image.
 		 *
 		 * The following properties should be provided:
@@ -219,6 +228,7 @@ const TooltipBase = kind({
 
 	defaultProps: {
 		tooltipCss: {},
+		tooltipImagePosition: 'above',
 		type: 'balloon',
 		labelOffset: 0
 	},
@@ -245,7 +255,7 @@ const TooltipBase = kind({
 		}
 	},
 
-	render: ({arrowAnchor, children, css, tooltipImage, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}) => {
+	render: ({arrowAnchor, children, css, tooltipImage, tooltipImagePosition, noArrow, tooltipCss, tooltipImageSize, tooltipRef, width, labelOffset, marquee, ...rest}) => {
 		delete rest.labelOffset;
 		delete rest.direction;
 		delete rest.position;
@@ -262,6 +272,7 @@ const TooltipBase = kind({
 					<TooltipLabel
 						className={mergedCss.tooltipLabel}
 						tooltipImage={tooltipImage}
+						tooltipImagePosition={tooltipImagePosition}
 						marquee={marquee}
 						noArrow={noArrow}
 						centered={arrowAnchor === 'center'}

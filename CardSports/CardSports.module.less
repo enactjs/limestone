@@ -1,0 +1,81 @@
+// CardSports.module.less
+//
+@import '../styles/mixins.less';
+@import '../styles/variables.less';
+@import '../styles/skin.less';
+
+.cardSports {
+	.sportsBackground {
+		pointer-events: none;
+		position: absolute;
+		.position(0);
+		background: linear-gradient(
+			@lime-card-sports-split-angle,
+			var(--card-left-team-color, transparent) calc(50% - @lime-card-sports-split-feather),
+			var(--card-right-team-color, transparent) calc(50% + @lime-card-sports-split-feather)
+		);
+		border-radius: inherit;
+		z-index: 0;
+	}
+
+	.sportsOverlay {
+		pointer-events: none;
+		position: absolute;
+		.position(0);
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		direction: ltr;
+		z-index: 1;
+	}
+
+	.teamSide {
+		display: flex;
+		align-items: center;
+
+		&:first-child {
+			justify-content: flex-end;
+			padding-inline-end: @lime-card-sports-logo-spacing;
+		}
+
+		&:last-child {
+			justify-content: flex-start;
+			padding-inline-start: @lime-card-sports-logo-spacing;
+		}
+	}
+
+	.teamLogo {
+		height: @lime-card-team-logo-size;
+		width: @lime-card-team-logo-size;
+		margin: 0;
+	}
+
+	.score {
+		align-items: center;
+		display: flex;
+		font-size: @lime-card-duration-font-size;
+		gap: @lime-card-score-gap;
+		height: fit-content;
+		justify-content: center;
+		line-height: @lime-card-duration-line-height;
+		font-weight: @lime-card-duration-font-weight;
+		padding: @lime-card-score-padding;
+		border-radius: @lime-card-score-border-radius;
+		width: fit-content;
+		white-space: nowrap;
+	}
+
+	.lime-custom-text({
+		.score {
+			font-size: @lime-card-duration-font-size-large;
+			line-height: @lime-card-duration-line-height-large;
+		}
+	});
+
+	.applySkins({
+		.score {
+			background-color: @lime-card-score-bg-color;
+			color: @lime-card-label-main-color;
+		}
+	});
+}

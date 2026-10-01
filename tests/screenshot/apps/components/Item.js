@@ -14,7 +14,9 @@ const commonItemTests = [
 	<Item label="Item label">Default Item with label</Item>,
 	<Item disabled label="Item label">Disabled Item with label</Item>,
 	<Item inline label="Item label">Inline Item with label</Item>,
-	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>
+	<Item inline disabled label="Item label">Disabled Inline Item with label</Item>,
+	<Item label="Item label" secondaryLabel="Secondary Item label">Item with label and secondary label</Item>,
+	<Item inline label="Item label" secondaryLabel="Secondary Item label">Item Inline with label and secondary label</Item>
 ];
 
 const itemSmokeTests = [
@@ -74,17 +76,9 @@ const itemQwtcTests = [
 	...tallglyphItemTests
 ];
 
-const itemFocusTests = [
-	// Focused
-	<Item>Focused Item</Item>,
-	<Item slotBefore={<Icon>star</Icon>}>Focused Item</Item>,
-	<Item slotAfter={<Icon>star</Icon>}>Focused Item</Item>,
-	<Item slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Focused Item</Item>
-];
-
 const itemFocusedLightWrapperTests = [
 	// Focused with light wrapper
-	<Item>Focused Item</Item>
+	itemSmokeTests[0]
 ];
 
 const itemCenteredTests = [
@@ -110,17 +104,17 @@ const itemSmallTests = [
 	...rtlItemTests
 ];
 
-const itemCustomStyleTests = [
-	// Customized Item Style
+const customizedItemsTests = [
 	<Item label="label">Customized Item</Item>,
 	<Item label="label" slotBefore={<Icon>star</Icon>}>Customized Item</Item>,
 	<Item label="label" slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
-	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>,
+	<Item label="label" slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Item</Item>
+];
 
-	...withConfig({focus: true}, [
-		<Item>Customized Focused Item</Item>,
-		<Item label='"label"' slotBefore={<Icon>star</Icon>} slotAfter={<Icon>star</Icon>}>Customized Focused Item</Item>
-	])
+const itemCustomStyleTests = [
+	// Customized Item Style
+	...customizedItemsTests,
+	...withConfig({focus: true}, customizedItemsTests)
 ];
 
 const itemExtendedTests = [
@@ -190,7 +184,7 @@ const ItemTests = [
 	...itemSmokeTests,
 	...itemQwtcTests,
 	...itemExtendedTests,
-	...withConfig({focus: true}, itemFocusTests),
+	...withConfig({focus: true}, itemSmokeTests),
 	...withConfig({focus: true, wrapper: {light: true, padded: true}}, itemFocusedLightWrapperTests),
 	...withConfig({textSize: 'large'}, itemLargeTextTests),
 	...withConfig({locale: 'ar-SA'}, itemRtlTests),

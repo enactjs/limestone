@@ -24,6 +24,13 @@
 		border-style: @lime-iconitem-border-style;
 	}
 
+	.description {
+		font-size: @lime-iconitem-description-font-size;
+		font-weight: @lime-iconitem-description-font-weight;
+		line-height: @lime-iconitem-description-line-height;
+		margin: @lime-iconitem-description-margin;
+	}
+
 	&.hasLabel {
 		.image {
 			height: @lime-iconitem-label-image-height;
@@ -32,6 +39,10 @@
 
 	&.hasTitle {
 		height: @lime-iconitem-title-height;
+
+		&.hasDescription {
+			height: @lime-iconitem-description-height;
+		}
 	}
 
 	.image {
@@ -108,6 +119,15 @@
 	.lime-custom-text({
 		&.hasTitle {
 			height: @lime-iconitem-title-height-large;
+
+			&.hasDescription {
+				height: @lime-iconitem-description-height-large;
+			}
+		}
+
+		.description {
+			font-size: @lime-iconitem-description-font-size-large;
+			line-height: @lime-iconitem-description-line-height-large;
 		}
 
 		.icon {
@@ -135,6 +155,10 @@
 
 		.content {
 			background-color: @lime-iconitem-inner-container-color;
+		}
+
+		.description {
+			color: @lime-iconitem-outer-label-sub-color;
 		}
 
 		.icon {

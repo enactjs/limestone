@@ -4,6 +4,7 @@ import Alert from '../../../Alert';
 import BodyText from '../../../BodyText';
 import Button from '../../../Button';
 import Card from '../../../Card';
+import CardSports from '../../../CardSports';
 import Checkbox from '../../../Checkbox';
 import CheckboxItem from '../../../CheckboxItem';
 import Chips, {Chip} from '../../../Chips';
@@ -53,6 +54,7 @@ const components = {
 	BodyText,
 	Button,
 	Card,
+	CardSports,
 	Checkbox,
 	CheckboxItem,
 	Chip,

@@ -1,4 +1,4 @@
-import {BasicArranger, CrossFadeArranger, FadeAndSlideArranger} from './Arrangers';
+import {BasicArranger, CrossFadeArranger, FadeAndSlideArranger, FadeArranger} from './Arrangers';
 import CancelDecorator from './CancelDecorator';
 import FloatingLayerIdProvider from './FloatingLayerIdProvider';
 import NavigationButton from './NavigationButton';
@@ -18,6 +18,7 @@ export {
 	CancelDecorator,
 	CrossFadeArranger,
 	FadeAndSlideArranger,
+	FadeArranger,
 	FloatingLayerIdProvider,
 	NavigationButton,
 	PanelsRouter,

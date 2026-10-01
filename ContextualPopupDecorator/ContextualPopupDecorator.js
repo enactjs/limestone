@@ -117,6 +117,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const snapshot = useRef(null);
 		const resizeObserver = useRef(null);
 		const findClientSiblingRef = useRef(null);
+		const holepunchScrimRef = useRef(false);
 
 		const keyDownRef = useRef(null);
 		const keyUpRef = useRef(null);
@@ -377,8 +378,22 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const positionContextualPopup = useCallback(() => {
 			if (containerNode.current && clientSiblingRef?.current) {
 				const localContainerNode = containerNode.current.getBoundingClientRect();
-				const {top, left, bottom, right, width, height} = clientSiblingRef.current.getBoundingClientRect();
+				const clientRect = clientSiblingRef.current.getBoundingClientRect();
+				const {top, left, bottom, right, width, height} = clientRect;
 				const clientNode = {top, left, bottom, right, width, height};
+
+				// Keep the hole punch scrim's hole aligned with the activator. The hole is
+				// measured from the same rect used for popup positioning, so it stays in sync
+				// whenever the activator moves or resizes (e.g. observer-driven repositions or a
+				// wrapped-component update), not just on the initial open. Bail out when the
+				// bounds are unchanged so observer ticks don't trigger needless re-renders.
+				if (holepunchScrimRef.current) {
+					setHoleBounds((prev) => (
+						prev && prev.top === top && prev.left === left && prev.width === width && prev.height === height ?
+							prev :
+							clientRect
+					));
+				}
 
 				clientNode.left = componentProps.rtl ? window.innerWidth - right : left;
 				clientNode.right = componentProps.rtl ? window.innerWidth - left : right;
@@ -601,14 +616,21 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
 		useEffect(() => {
-			snapshot.current = getSnapshotBeforeUpdate();
+			// `snapshot.current` holds the previous cycle's measurements (from the prior
+			// commit). In the class component these were captured in getSnapshotBeforeUpdate
+			// (pre-commit, i.e. the old DOM) and compared in componentDidUpdate against the new
+			// DOM. There is no hook that runs pre-commit, so we instead persist the previous
+			// measurements across renders and compare the current (post-render) DOM against them.
+			const prevSnapshot = snapshot.current;
+			const currentClientSiblingWidth = getClientSiblingNodeWidth();
+			const currentContainerWidth = getContainerNodeWidth();
 
-			if (snapshot.current.clientSiblingWidth !== getClientSiblingNodeWidth()) {
+			if (prevSnapshot && prevSnapshot.clientSiblingWidth !== currentClientSiblingWidth) {
 				clientSiblingRef.current = findClientSiblingRef.current();
 			}
 
 			if (prevProps.current.direction !== componentProps.direction ||
-                snapshot.current.containerWidth !== getContainerNodeWidth() ||
+                (prevSnapshot && prevSnapshot.containerWidth !== currentContainerWidth) ||
                 (prevProps.current.open && componentProps.open)) {
 				adjustedDirection.current = componentProps.direction;
 				// NOTE: `setState` is called and will cause re-render
@@ -621,10 +643,19 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			} else if (!componentProps.open && prevProps.current.open) {
 				off('keydown', keyDownRef.current);
 				off('keyup', keyUpRef.current);
-				if (snapshot.current && snapshot.current.shouldSpotActivator) {
+				// shouldSpotActivator depends on the open->closed transition, evaluated here
+				// against the (still-current) prevProps before it is advanced below.
+				const closingSnapshot = getSnapshotBeforeUpdate();
+				if (closingSnapshot && closingSnapshot.shouldSpotActivator) {
 					spotActivator(activator);
 				}
 			}
+
+			// Store this cycle's measurements to compare against on the next update.
+			snapshot.current = {
+				clientSiblingWidth: currentClientSiblingWidth,
+				containerWidth: currentContainerWidth
+			};
 
 			prevProps.current = componentProps;
 		}, [activator, componentProps, getContainerNodeWidth, getClientSiblingNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
@@ -661,6 +692,8 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}
 
 		useEffect(() => {
+			holepunchScrimRef.current = holepunchScrim;
+
 			if (clientSiblingRef?.current && holepunchScrim) {
 				setHoleBounds(clientSiblingRef.current.getBoundingClientRect());
 			}

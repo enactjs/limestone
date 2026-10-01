@@ -147,6 +147,15 @@ const TooltipDecorator = hoc(defaultConfig, (config, Wrapped) => {
 		tooltipImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 
 		/**
+		 * Position of the image in relation to the text label.
+		 *
+		 * @type {('above'|'below')}
+		 * @default 'above'
+		 * @public
+		 */
+		tooltipImagePosition: PropTypes.oneOf(['above', 'below']),
+
+		/**
 		 * The size of the image.
 		 *
 		 * The following properties should be provided:

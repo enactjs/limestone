@@ -6,6 +6,7 @@ import Alert from './components/Alert';
 import BodyText from './components/BodyText';
 import Button from './components/Button';
 import Card from './components/Card';
+import CardSports from './components/CardSports';
 import Checkbox from './components/Checkbox';
 import CheckboxItem from './components/CheckboxItem';
 import Chip from './components/Chip';
@@ -32,7 +33,6 @@ import Layout from './components/Layout';
 import Marquee from './components/Marquee';
 import MediaOverlay from './components/MediaOverlay';
 import PageViews from './components/PageViews';
-import Panel from './components/Panel';
 import Panels from './components/Panels';
 import Picker from './components/Picker';
 import Popup from './components/Popup';
@@ -64,6 +64,7 @@ const components = {
 	BodyText,
 	Button,
 	Card,
+	CardSports,
 	Checkbox,
 	CheckboxItem,
 	Chip,
@@ -90,7 +91,6 @@ const components = {
 	Marquee,
 	MediaOverlay,
 	PageViews,
-	Panel,
 	Panels,
 	Picker,
 	Popup,

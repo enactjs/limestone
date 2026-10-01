@@ -38,6 +38,7 @@ export const _IconItem = (args) => {
 	const controls = {
 		background: args['background'],
 		bordered: args['bordered'],
+		description: args['description'],
 		disabled: args['disabled'],
 		icon: args['icon'],
 		label: args['label'],
@@ -64,6 +65,7 @@ export const _IconItem = (args) => {
 
 color('background', _IconItem, Config, '#26282b');
 boolean('bordered', _IconItem, Config, true);
+text('description', _IconItem, Config);
 boolean('disabled', _IconItem, Config);
 select('icon', _IconItem, ['', ...iconNames], Config, 'usb');
 object('image', _IconItem, Config, imageObj);

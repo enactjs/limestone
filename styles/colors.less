@@ -107,6 +107,7 @@
 @lime-card-label-sub-color: var(--semantic-color-on-background-sub);
 @lime-card-label-main-focused-color: var(--semantic-color-on-surface-main-focused);
 @lime-card-label-sub-focused-color: var(--semantic-color-on-surface-sub-focused);
+@lime-card-score-bg-color: ~"color(from" var(--semantic-color-on-surface-black) ~"srgb r g b / 0.5)";
 
 // Checkbox
 // ---------------------------------------
@@ -195,6 +196,7 @@
 @lime-iconitem-inner-label-color: var(--semantic-color-on-surface-white);
 @lime-iconitem-inner-label-dark-color: var(--semantic-color-on-surface-main-focused);
 @lime-iconitem-outer-label-main-color: var(--semantic-color-on-background-main);
+@lime-iconitem-outer-label-sub-color: var(--semantic-color-on-background-sub);
 @lime-iconitem-inner-border-color: var(--semantic-color-stroke-white);
 @lime-iconitem-inner-icon-color: var(--semantic-color-on-surface-white);
 @lime-iconitem-inner-container-color: var(--semantic-color-surface-default-placeholder);
@@ -369,6 +371,8 @@
 // ---------------------------------------
 @lime-slider-min-max-color: var(--semantic-color-on-background-sub);
 @lime-slider-track-color: ~"color(from" var(--semantic-color-surface-default-track) ~"srgb r g b / 0.7)";
+@lime-slider-tick-color: @lime-slider-track-color;
+@lime-slider-tick-label-color: @lime-slider-min-max-color;
 @lime-slider-track-buffer-color: ~"color(from" var(--semantic-color-surface-white) ~"srgb r g b / 0.5)";
 @lime-slider-track-active-color: var(--semantic-color-surface-white);
 @lime-slider-track-active-focused-color: var(--semantic-color-surface-white);
@@ -380,6 +384,7 @@
 @lime-slider-handle-disabled-color: transparent;
 @lime-slider-handle-focused-shadow: 0 24px 36px @lime-shadow-color;
 @lime-slider-disabled-bar-opacity: 0.3;
+@lime-slider-tick-hover-opacity: 0.4;
 
 // Spinner
 // ---------------------------------------
