@@ -174,7 +174,7 @@ const useEventKey = (props, instances, context) => {
 		spottable.current.animateOnFocus = true;
 
 		if (!repeat && hasFocus()) {
-			let direction = null;
+			let direction;
 
 			if (isPageUp(keyCode) || isPageDown(keyCode)) {
 				if (props.direction === 'vertical' || props.direction === 'both') {
@@ -209,7 +209,7 @@ const useEventKey = (props, instances, context) => {
 			directionFactor = isUp ? -1 : 1,
 			pageDistance = directionFactor * bounds.clientHeight * paginationPageMultiplier;
 		let direction = pageKeyDirection;
-		let scrollPossible = false;
+		let scrollPossible;
 
 		if (scrollMode === 'translate') {
 			scrollPossible = isUp ? scrollTop > 0 : bounds.maxTop > scrollTop;
@@ -235,7 +235,7 @@ const useEventKey = (props, instances, context) => {
 						clientRect = focusedItem.getBoundingClientRect(),
 						yAdjust = isUp ? 1 : -1,
 						x = clamp(contentRect.left, contentRect.right, (clientRect.right + clientRect.left) / 2);
-					let y = 0;
+					let y;
 
 					if (bounds.maxTop - epsilon < scrollTop + pageDistance || epsilon > scrollTop + pageDistance) {
 						y = contentRect[isUp ? 'top' : 'bottom'] + yAdjust;
