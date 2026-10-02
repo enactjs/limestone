@@ -243,7 +243,6 @@ const PopupBase = kind({
 				className={transitionContainerClassName}
 				css={css}
 				direction={direction}
-				duration="short"
 				noAnimation={position === 'fullscreen' ? true : noAnimation}
 				onHide={onHide}
 				onShow={onShow}
@@ -464,6 +463,8 @@ const Popup = (props) => {
 	}, [componentProps]);
 
 	const handlePopupHide = useCallback((ev) => {
+		if (ev.propertyName && ev.propertyName !== 'transform') return;
+
 		forwardHide(ev, componentProps);
 
 		if (!ev.currentTarget || ev.currentTarget.getAttribute('data-spotlight-id') === containerId) {
@@ -474,6 +475,8 @@ const Popup = (props) => {
 	}, [componentProps, containerId, spotActivator]);
 
 	const handlePopupShow = useCallback((ev) => {
+		if (ev.propertyName && ev.propertyName !== 'transform') return;
+
 		forwardShow(ev, componentProps);
 
 		dispatch({popupOpen: OpenState.OPEN});

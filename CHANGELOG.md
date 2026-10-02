@@ -15,7 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
 - `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
 - `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
-- `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
+- `limestone/ThemeDecorator` prop `animationTier` to set the animation tier of the device
 
 ### Changed
 
