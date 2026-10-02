@@ -2,12 +2,13 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.12.0] - 2026-10-01
 
 ### Added
 
 - `limestone/CardSports` to display a sports match layout with team colors, logos, and score
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/Icon` supported icon list, adding new icon `iclinkaccount`
 - `limestone/IconItem` prop `description`
 - `limestone/ImageItem` prop `secondaryLabel`
 - `limestone/Item` prop `secondaryLabel`
@@ -28,6 +29,19 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
 - `limestone/ContextualPopupDecorator` hole punch scrim to reposition together with the popup when the wrapped component is updated
 - `limestone/VirtualList` long press scroll between multiple VirtualLists
+
+## [1.11.2] - 2026-09-16
+
+### Fixed
+
+- `limestone/ContextualPopupDecorator` hole punch scrim to reposition together with the popup when the wrapped component is updated
+- `limestone/VirtualList` long press scroll between multiple VirtualLists
+
+## [1.11.1] - 2026-09-09
+
+### Fixed
+
+- `limestone/ContextualPopupDecorator` to update popup position properly when the wrapped component is updated, which regressed during the functional component conversion
 
 ## [1.11.0] - 2026-09-02
 
@@ -132,7 +146,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/Scroller` to set initial focus on the scrollbar thumb when navigating between panels with `focusableScrollbar`
-
 
 ## [1.10.0] - 2026-05-08
 
