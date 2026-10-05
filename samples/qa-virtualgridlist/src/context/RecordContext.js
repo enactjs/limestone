@@ -148,7 +148,6 @@ export default function recordReducer (state, action) {
 				const addedKey = Object.keys(state.data).length;
 
 				newData = Object.assign({}, state.data);
-				newDataOrder = state.dataOrder;
 
 				newData[addedKey] = action.item;
 				newDataOrder = state.dataOrder.concat(addedKey);

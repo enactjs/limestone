@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-
 import kind from '@enact/core/kind';
 import Button from '@enact/limestone/Button';
 import Region from '@enact/limestone/Region';
