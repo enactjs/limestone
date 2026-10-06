@@ -54,6 +54,11 @@ const skins = {
 	'Game': 'game'
 };
 
+const animationTiers = {
+	'High': 'high',
+	'Low': 'low'
+};
+
 configureActions();
 
 export const parameters = {
@@ -81,6 +86,7 @@ export const globalTypes = {
 	'high contrast': getBooleanType('high contrast'),
 	'focus ring':getBooleanType('focus ring'),
 	'skin': getObjectType('skin', 'neutral', skins),
+	'animation tier': getObjectType('animation tier', 'high', animationTiers),
 	'background': getObjectType('background', 'default', backgrounds),
 	'debug aria': getBooleanType('debug aria'),
 	'debug layout': getBooleanType('debug layout'),

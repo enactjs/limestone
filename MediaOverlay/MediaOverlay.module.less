@@ -21,27 +21,26 @@
 
 	.mediaContainer {
 		position: relative;
-		.lime-focus-out-motion();
 	}
 
+	&:is(:global(.animationTier-high) *) .mediaContainer { .lime-focus-out-medium-high-motion(1); }
+	&:is(:global(.animationTier-low) *) .mediaContainer { .lime-focus-out-medium-low-motion(1); }
+
 	.focus({
-		.mediaContainer {
-			.lime-focus-in-motion();
-		}
+		&:is(:global(.animationTier-high) *) .mediaContainer { .lime-focus-in-medium-high-motion(1.1); }
+		&:is(:global(.animationTier-low) *) .mediaContainer { .lime-focus-in-medium-low-motion(1.1); }
 	});
 
 	&:not([disabled]) {
 		.focus({
 			&.pressed,
 			&:active {
-				.mediaContainer {
-					.lime-press-motion();
-				}				
+				&:is(:global(.animationTier-high) *) .mediaContainer { .lime-press-medium-high-motion(1.05); }
+				&:is(:global(.animationTier-low) *) .mediaContainer { .lime-press-medium-low-motion(1.05); }
 			}
 			&:not(.pressed) {
-				.mediaContainer {
-					.lime-release-motion();
-				}
+				&:is(:global(.animationTier-high) *) .mediaContainer { .lime-release-medium-high-motion(1.1); }
+				&:is(:global(.animationTier-low) *) .mediaContainer { .lime-release-medium-low-motion(1.1); }
 			}
 		});
 	}
