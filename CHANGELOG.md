@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/VerticalMarquee` proof of concept that vertically scrolls overflowing multi-line text
+
 ## [1.12.0] - 2026-10-01
 
 ### Added

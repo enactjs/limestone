@@ -1,0 +1,65 @@
+// VerticalMarquee.module.less
+//
+
+@import "../styles/mixins.less";
+@import "../styles/variables.less";
+
+.verticalMarquee {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	min-width: 0;
+	.lime-body-text();
+	.locale-japanese-line-break();
+
+	.enact-locale-rtl({
+		text-align: right;
+	});
+
+	.track {
+		transition-property: transform;
+		transition-timing-function: linear;
+	}
+
+	.content {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: var(--vertical-marquee-lines);
+		overflow: hidden;
+		white-space: normal;
+		overflow-wrap: break-word;
+	}
+
+	&.animate {
+		/* Applied while the text is scrolling */
+	}
+
+	&.willAnimate .content {
+		display: block;
+		-webkit-line-clamp: unset;
+		overflow: visible;
+	}
+
+	&.willAnimate .track {
+		will-change: transform;
+	}
+
+	.spacing {
+		height: calc(1px * var(--vertical-marquee-spacing, 0));
+	}
+
+	.measurer {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: auto;
+		visibility: hidden;
+		pointer-events: none;
+		overflow: visible;
+		display: block;
+		white-space: normal;
+		overflow-wrap: break-word;
+		-webkit-line-clamp: unset;
+	}
+}
