@@ -35,9 +35,11 @@ export const _VerticalMarquee = (args) => {
 		marqueeSpeed: args['marqueeSpeed']
 	};
 
+	const blockWidth = {width: ri.scaleToRem(800)};
 	const frameStyle = {
-		marginBottom: ri.scaleToRem(48),
-		width: ri.scaleToRem(640)
+		...blockWidth,
+		flexShrink: 0,
+		marginBottom: ri.scaleToRem(48)
 	};
 
 	return (
@@ -48,13 +50,13 @@ export const _VerticalMarquee = (args) => {
 			</p>
 			<div style={frameStyle}>
 				<p className={css.note}>Overflows maxLines</p>
-				<FocusableVerticalMarquee {...controls}>
+				<FocusableVerticalMarquee {...controls} style={blockWidth}>
 					{args['children']}
 				</FocusableVerticalMarquee>
 			</div>
 			<div style={frameStyle}>
 				<p className={css.note}>Fits in maxLines</p>
-				<FocusableVerticalMarquee {...controls}>
+				<FocusableVerticalMarquee {...controls} style={blockWidth}>
 					Short text.
 				</FocusableVerticalMarquee>
 			</div>
