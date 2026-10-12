@@ -17,6 +17,7 @@ export const _Star = (args) => {
 
     const controls = {
         active: args['active'],
+        highlighted: args['highlighted'],
         value: args['value']
     };
 
@@ -30,6 +31,7 @@ export const _Star = (args) => {
 }
 
 boolean('active', _Star, StarConfig);
+boolean('highlighted', _Star, StarConfig);
 range('value', _Star, StarConfig, {min: 0, max: 1, step: 0.01});
 
 _Star.storyName = 'Star';
