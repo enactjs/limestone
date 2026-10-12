@@ -35,28 +35,26 @@ export const _VerticalMarquee = (args) => {
 		marqueeSpeed: args['marqueeSpeed']
 	};
 
-	const blockWidth = {width: ri.scaleToRem(800)};
 	const frameStyle = {
-		...blockWidth,
-		flexShrink: 0,
-		marginBottom: ri.scaleToRem(48)
+		marginBottom: ri.scaleToRem(48),
+		width: '100%'
 	};
 
 	return (
 		<section>
 			<p className={css.note}>
 				The text scrolls one full cycle, like the horizontal Marquee, then pauses and repeats.
-				Give the block a bounded width so the text wraps. Focus it when marqueeOn is focus.
+				Focus it when marqueeOn is focus.
 			</p>
 			<div style={frameStyle}>
 				<p className={css.note}>Overflows maxLines</p>
-				<FocusableVerticalMarquee {...controls} style={blockWidth}>
+				<FocusableVerticalMarquee {...controls}>
 					{args['children']}
 				</FocusableVerticalMarquee>
 			</div>
 			<div style={frameStyle}>
 				<p className={css.note}>Fits in maxLines</p>
-				<FocusableVerticalMarquee {...controls} style={blockWidth}>
+				<FocusableVerticalMarquee {...controls}>
 					Short text.
 				</FocusableVerticalMarquee>
 			</div>
