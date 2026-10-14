@@ -150,6 +150,30 @@ const getTickAlignedStep = (min, max, tickCount) => {
 	return (max - min) / (tickCount - 1);
 };
 
+/**
+ * Index of the tick closest to the slider value.
+ *
+ * Ticks are equally spaced from `min` to `max`. Values outside the range clamp to the end ticks.
+ *
+ * @param {Number} value Current slider value
+ * @param {Number} min   Minimum slider value
+ * @param {Number} max   Maximum slider value
+ * @param {Number} count Number of ticks, or `2` when only start and end labels are shown
+ *
+ * @returns {Number} Nearest tick index, or `-1` when a tick cannot be resolved
+ * @private
+ */
+const getFocusedTickIndex = (value, min = 0, max = 100, count = 0) => {
+	if (!(count >= 2) || !(max > min) || !Number.isFinite(value)) {
+		return -1;
+	}
+
+	const clamped = Math.min(max, Math.max(min, value));
+	const index = ((clamped - min) / (max - min)) * (count - 1);
+
+	return Math.round(index);
+};
+
 const hueGradient = (orientation) =>  `linear-gradient(${orientation === 'horizontal' ? 'to right' : 'to top'}, 
 	hsla(0, 100%, 50%, 1),
 	hsla(10, 100%, 50%, 1),
@@ -351,6 +375,7 @@ export {
 	forwardSpotlightEvents,
 	emitChange,
 	getAutomaticTickLabels,
+	getFocusedTickIndex,
 	getTickAlignedStep,
 	getTickConfig,
 	handleDecrement,
