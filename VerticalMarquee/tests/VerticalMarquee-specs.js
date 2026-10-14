@@ -266,6 +266,31 @@ describe('VerticalMarquee Specs', () => {
 			expect(track.style.transform).toBe('translateY(-120px)');
 		});
 
+		test('should scroll the block height when it is taller than the glyph boxes', () => {
+			const view = setup({
+				contentHeight: 200,
+				lineHeight: 30,
+				lineRects: [
+					{bottom: 30, height: 30, left: 0, right: 100, top: 0, width: 100},
+					{bottom: 60, height: 30, left: 0, right: 100, top: 30, width: 100},
+					{bottom: 90, height: 30, left: 0, right: 100, top: 60, width: 100},
+					{bottom: 120, height: 30, left: 0, right: 100, top: 90, width: 100}
+				],
+				marqueeDelay: 0,
+				marqueeSpacing: '0%',
+				marqueeSpeed: 30,
+				maxLines: 3
+			});
+
+			fireEvent.focus(view);
+			act(() => {
+				jest.advanceTimersByTime(0);
+			});
+
+			expect(view.style.maxHeight).toBe('90px');
+			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-200px)');
+		});
+
 		test('should not scroll line boxes that fit in maxLines', () => {
 			const view = setup({
 				contentHeight: 300,

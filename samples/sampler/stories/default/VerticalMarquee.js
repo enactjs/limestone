@@ -10,7 +10,7 @@ import css from './VerticalMarquee.module.less';
 const Config = mergeComponentMetadata('VerticalMarquee', VerticalMarquee);
 const FocusableVerticalMarquee = Spottable(Skinnable(VerticalMarquee));
 
-const longText = 'Vertical marquee proof of concept. This block is clipped to a few lines. When it receives focus and the text is taller than that area, it scrolls upward through the full content, pauses briefly, then repeats the cycle. The quick brown fox jumped over the lazy dog. The bean bird flies at sundown.';
+const longText = 'Vertical marquee proof of concept. This block is clipped to a few lines. When it receives focus and the text is taller than that area, it scrolls upward through the full content, pauses briefly, then repeats the cycle. The quick brown fox jumped over the lazy dog. The bean bird flies at sundown. '.repeat(4);
 
 export default {
 	title: 'Limestone/Marquee vertical',

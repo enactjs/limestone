@@ -117,7 +117,11 @@ const measureNode = (node, maxLines) => {
 	const boxes = lineBoxes(node);
 
 	if (boxes.length > 0) {
-		const contentHeight = round2(boxes[boxes.length - 1].bottom - boxes[0].top);
+		const glyphHeight = round2(boxes[boxes.length - 1].bottom - boxes[0].top);
+		// Glyph boxes omit the line-height above the first line and below the last.
+		// The block is taller, and the duplicate is placed from that layout height.
+		const blockHeight = round2(node.getBoundingClientRect().height);
+		const contentHeight = blockHeight > glyphHeight ? blockHeight : glyphHeight;
 		const visibleCount = Math.min(maxLines, boxes.length);
 		const clipHeight = round2(boxes[visibleCount - 1].bottom - boxes[0].top);
 		const lineHeight = round2(boxes[0].bottom - boxes[0].top);
@@ -166,7 +170,7 @@ const getSpacing = (visibleHeight, marqueeSpacing) => {
  *
  * The component needs a bounded width so the text wraps. When the wrapped text is
  * taller than `maxLines`, and the marquee trigger is active, the text scrolls
- * upward by its full height plus `marqueeSpacing` (one cycle), pauses, then repeats.
+ * upward by the laid-out block height plus `marqueeSpacing` (one cycle), pauses, then repeats.
  *
  * @class VerticalMarquee
  * @memberof limestone/VerticalMarquee
@@ -236,6 +240,13 @@ const VerticalMarquee = ({
 	const travelDistance = useCallback(() => {
 		const current = metricsRef.current;
 		if (!current.overflows) return 0;
+
+		const contentNode = contentRef.current;
+		const duplicateNode = duplicateRef.current;
+		if (contentNode && duplicateNode) {
+			const laidOut = round2(duplicateNode.offsetTop - contentNode.offsetTop);
+			if (laidOut > 0) return laidOut;
+		}
 
 		const clip = current.clipHeight > 0 ? current.clipHeight : current.lineHeight * lines;
 		const gap = clip > 0 ? getSpacing(clip, configRef.current.marqueeSpacing) : 0;
