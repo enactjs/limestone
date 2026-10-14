@@ -4,8 +4,8 @@ import {fireEvent, render, screen} from '@testing-library/react';
 import {SliderExtras, Ticks} from '../Ticks';
 
 jest.mock('../../Marquee', () => {
-	const Marquee = ({children, marqueeDisabled, marqueeOn}) => (
-		<div data-marquee-disabled={marqueeDisabled ? 'true' : 'false'} data-marquee-on={marqueeOn}>
+	const Marquee = ({children, className, marqueeDisabled, marqueeOn}) => (
+		<div className={className} data-marquee-disabled={marqueeDisabled ? 'true' : 'false'} data-marquee-on={marqueeOn}>
 			{children}
 		</div>
 	);
@@ -122,22 +122,31 @@ describe('SliderExtras', () => {
 		expect(screen.getByText('Max')).toBeInTheDocument();
 	});
 
-	test('should marquee only the side label for the focused end', () => {
+	test('should marquee both side labels while focused', () => {
 		render(
 			<SliderExtras
-				count={5}
 				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
 				endLabel="End"
 				focused
-				max={100}
-				min={0}
 				startLabel="Start"
-				value={100}
 			/>
 		);
 
-		expect(getMarqueeOn(document.querySelector('.startLabel'))).toBe('off');
+		expect(getMarqueeOn(document.querySelector('.startLabel'))).toBe('render');
 		expect(getMarqueeOn(document.querySelector('.endLabel'))).toBe('render');
+	});
+
+	test('should marquee side labels on hover when the slider is not focused', () => {
+		render(
+			<SliderExtras
+				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
+				endLabel="End"
+				startLabel="Start"
+			/>
+		);
+
+		expect(getMarqueeOn(document.querySelector('.startLabel'))).toBe('hover');
+		expect(getMarqueeOn(document.querySelector('.endLabel'))).toBe('hover');
 	});
 
 	test('should marquee only the tick label that matches the value', () => {
@@ -178,56 +187,4 @@ describe('SliderExtras', () => {
 		expect(labels.map(getMarqueeOn)).toEqual(['off', 'render', 'off']);
 	});
 
-	test('should marquee the side label under the pointer when moving between ends', () => {
-		render(
-			<SliderExtras
-				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
-				endLabel="End"
-				focused
-				max={100}
-				min={0}
-				startLabel="Start"
-				value={0}
-			/>
-		);
-
-		const start = document.querySelector('.startLabel');
-		const end = document.querySelector('.endLabel');
-
-		expect(getMarqueeOn(start)).toBe('render');
-		expect(getMarqueeOn(end)).toBe('off');
-
-		// React turns this mouseout into leave on the start label and enter on the end label.
-		fireEvent.mouseOut(start, {relatedTarget: end});
-
-		expect(getMarqueeOn(start)).toBe('off');
-		expect(getMarqueeOn(end)).toBe('render');
-	});
-
-	test('should marquee the knob side label again after the pointer leaves', () => {
-		render(
-			<SliderExtras
-				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
-				endLabel="End"
-				focused
-				max={100}
-				min={0}
-				startLabel="Start"
-				value={0}
-			/>
-		);
-
-		const start = document.querySelector('.startLabel');
-		const end = document.querySelector('.endLabel');
-
-		fireEvent.mouseEnter(end);
-
-		expect(getMarqueeOn(start)).toBe('off');
-		expect(getMarqueeOn(end)).toBe('render');
-
-		fireEvent.mouseLeave(end);
-
-		expect(getMarqueeOn(start)).toBe('render');
-		expect(getMarqueeOn(end)).toBe('off');
-	});
 });

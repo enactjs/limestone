@@ -5,18 +5,14 @@ import {useCallback, useState} from 'react';
 import Marquee from '../Marquee';
 import {getFocusedTickIndex} from './utils';
 
-const labelMarqueeStyle = {
+// `marqueeDisabled` drops Marquee's alignment, so centering has to live in the style.
+const tickLabelMarqueeStyle = {
 	display: 'block',
 	overflow: 'hidden',
+	textAlign: 'center',
 	textOverflow: 'ellipsis',
 	whiteSpace: 'nowrap',
 	width: '100%'
-};
-
-// `marqueeDisabled` drops Marquee's alignment, so the same alignment has to live in the style.
-const tickLabelMarqueeStyle = {
-	...labelMarqueeStyle,
-	textAlign: 'center'
 };
 
 /**
@@ -100,18 +96,15 @@ const Ticks = ({
 	);
 };
 
-const SideLabel = ({active, alignment, className, onMouseEnter, onMouseLeave, value, ...rest}) => (
+const SideLabel = ({alignment, className, focused, value}) => (
 	value != null && value !== '' ? (
-		<div {...rest} className={className} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-			<Marquee
-				alignment={alignment}
-				marqueeDisabled={!active}
-				marqueeOn="render"
-				style={{...labelMarqueeStyle, textAlign: alignment}}
-			>
-				{value}
-			</Marquee>
-		</div>
+		<Marquee
+			alignment={alignment}
+			className={className}
+			marqueeOn={focused ? 'render' : 'hover'}
+		>
+			{value}
+		</Marquee>
 	) : null
 );
 
@@ -137,34 +130,16 @@ const SliderExtras = ({
 	startLabel,
 	value
 }) => {
-	const [hoveredKey, setHoveredKey] = useState(null);
 	const vertical = orientation === 'vertical';
 	const currentValue = Number.isFinite(value) ? value : min;
-	// Two labels sit on the ends of the track; three or more sit on the tick marks.
-	const labelPositions = count >= 3 ? count : 2;
-	const focusedIndex = focused ? getFocusedTickIndex(currentValue, min, max, labelPositions) : -1;
-	const activeKey = hoveredKey != null ? hoveredKey : focusedIndex;
-	const handleSideEnter = useCallback((ev) => setHoveredKey(Number(ev.currentTarget.dataset.sliderSide)), []);
-	const handleSideLeave = useCallback((ev) => {
-		const next = ev.relatedTarget;
-
-		// Moving from one end label to the other should not fall back to the knob tick in between.
-		if (next && typeof next.nodeType === 'number' && next.closest('[data-slider-side]')) {
-			return;
-		}
-
-		setHoveredKey(null);
-	}, []);
+	const focusedIndex = focused && count >= 3 ? getFocusedTickIndex(currentValue, min, max, count) : -1;
 
 	return (
 		<div className={css.extras}>
 			<SideLabel
-				active={activeKey === 0}
 				alignment={vertical ? 'center' : 'right'}
 				className={css.startLabel}
-				data-slider-side={0}
-				onMouseEnter={handleSideEnter}
-				onMouseLeave={handleSideLeave}
+				focused={focused}
 				value={startLabel}
 			/>
 			{count >= 3 ? (
@@ -177,12 +152,9 @@ const SliderExtras = ({
 				/>
 			) : null}
 			<SideLabel
-				active={activeKey === labelPositions - 1}
 				alignment={vertical ? 'center' : 'left'}
 				className={css.endLabel}
-				data-slider-side={labelPositions - 1}
-				onMouseEnter={handleSideEnter}
-				onMouseLeave={handleSideLeave}
+				focused={focused}
 				value={endLabel}
 			/>
 			{showMinMax ? (

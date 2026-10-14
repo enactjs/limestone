@@ -425,7 +425,9 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 *
 	 * Ignored when {@link limestone/Slider.SliderBase.automaticLabels|automaticLabels} is set.
 	 *
-	 * Labels are displayed on a single line. Overflowing text marquees for one label at a time:
+	 * Labels are displayed on a single line. Overflowing text is marqueed.
+	 *
+	 * When three or more labels are shown on tick marks, only one label marquees at a time:
 	 * the hovered label, or, while the slider is focused, the label of the tick closest to the
 	 * current value.
 	 *

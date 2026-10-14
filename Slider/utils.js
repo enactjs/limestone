@@ -158,7 +158,7 @@ const getTickAlignedStep = (min, max, tickCount) => {
  * @param {Number} value Current slider value
  * @param {Number} min   Minimum slider value
  * @param {Number} max   Maximum slider value
- * @param {Number} count Number of ticks, or `2` when only start and end labels are shown
+ * @param {Number} count Number of ticks
  *
  * @returns {Number} Nearest tick index, or `-1` when a tick cannot be resolved
  * @private
