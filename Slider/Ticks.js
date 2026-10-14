@@ -5,21 +5,11 @@ import {useCallback, useState} from 'react';
 import Marquee from '../Marquee';
 import {getFocusedTickIndex} from './utils';
 
-// `marqueeDisabled` drops Marquee's alignment, so centering has to live in the style.
-const tickLabelMarqueeStyle = {
-	display: 'block',
-	overflow: 'hidden',
-	textAlign: 'center',
-	textOverflow: 'ellipsis',
-	whiteSpace: 'nowrap',
-	width: '100%'
-};
-
 /**
  * Renders equally spaced slider tick marks and optional labels.
  *
- * Only one label marquees: the hovered label, or, while the slider is focused, the label of the
- * tick closest to the knob.
+ * While a tick is focused, only that label marquees. Hover applies only when no tick is focused,
+ * because the tick boxes cover the track and a hidden pointer may not emit mouseleave.
  *
  * @private
  */
@@ -32,29 +22,28 @@ const Ticks = ({
 	orientation
 }) => {
 	const [hoveredIndex, setHoveredIndex] = useState(-1);
+	const [seenFocus, setSeenFocus] = useState(focusedIndex);
 	const vertical = orientation === 'vertical';
 	const positionProp = vertical ? 'bottom' : 'left';
 	const hasTickMarks = count >= 3;
-	const activeIndex = hoveredIndex >= 0 ? hoveredIndex : focusedIndex;
-	const handleTicksOver = useCallback((ev) => {
-		const tick = ev.target.closest('[data-tick-index]');
+	let resolvedHover = hoveredIndex;
 
-		if (!tick || !ev.currentTarget.contains(tick)) {
-			return;
-		}
-
-		const index = Number(tick.dataset.tickIndex);
-		setHoveredIndex((current) => current === index ? current : index);
-	}, []);
-	const handleTicksLeave = useCallback((ev) => {
-		const next = ev.relatedTarget;
-
-		if (next && typeof next.nodeType === 'number' && ev.currentTarget.contains(next)) {
-			return;
-		}
-
+	// Drop a hover that survived a hidden pointer when focus or the focused tick changes.
+	if (seenFocus !== focusedIndex) {
+		setSeenFocus(focusedIndex);
 		setHoveredIndex(-1);
+		resolvedHover = -1;
+	}
+
+	const activeIndex = focusedIndex >= 0 ? focusedIndex : resolvedHover;
+	const handleTicksOver = useCallback((ev) => {
+		const index = Number(ev.target.closest('[data-tick-index]')?.dataset.tickIndex);
+
+		if (!Number.isNaN(index)) {
+			setHoveredIndex(index);
+		}
 	}, []);
+	const handleTicksLeave = useCallback(() => setHoveredIndex(-1), []);
 
 	return (
 		<div
@@ -76,14 +65,12 @@ const Ticks = ({
 					>
 						<span className={css.tickMark} />
 						{!vertical && label != null && label !== '' ? (
-							<div
-								className={css.tickLabel}
-							>
+							<div className={css.tickLabel}>
 								<Marquee
 									alignment="center"
+									className={css.tickLabelMarquee}
 									marqueeDisabled={activeIndex !== index}
 									marqueeOn="render"
-									style={tickLabelMarqueeStyle}
 								>
 									{label}
 								</Marquee>
@@ -96,11 +83,12 @@ const Ticks = ({
 	);
 };
 
-const SideLabel = ({alignment, className, focused, value}) => (
+const SideLabel = ({active, alignment, className, focused, value}) => (
 	value != null && value !== '' ? (
 		<Marquee
 			alignment={alignment}
 			className={className}
+			marqueeDisabled={focused && !active}
 			marqueeOn={focused ? 'render' : 'hover'}
 		>
 			{value}
@@ -133,10 +121,12 @@ const SliderExtras = ({
 	const vertical = orientation === 'vertical';
 	const currentValue = Number.isFinite(value) ? value : min;
 	const focusedIndex = focused && count >= 3 ? getFocusedTickIndex(currentValue, min, max, count) : -1;
+	const sideIndex = focused ? getFocusedTickIndex(currentValue, min, max, 2) : -1;
 
 	return (
 		<div className={css.extras}>
 			<SideLabel
+				active={sideIndex === 0}
 				alignment={vertical ? 'center' : 'right'}
 				className={css.startLabel}
 				focused={focused}
@@ -152,6 +142,7 @@ const SliderExtras = ({
 				/>
 			) : null}
 			<SideLabel
+				active={sideIndex === 1}
 				alignment={vertical ? 'center' : 'left'}
 				className={css.endLabel}
 				focused={focused}

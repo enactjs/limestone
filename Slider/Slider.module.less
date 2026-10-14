@@ -143,6 +143,7 @@
 		max-width: 100%;
 		overflow: hidden;
 		pointer-events: auto;
+		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 
@@ -150,6 +151,17 @@
 		position: absolute;
 		top: 100%;
 		margin-top: @lime-slider-tick-label-offset;
+		width: 100%;
+		text-align: center;
+	}
+
+	// Beats `.marquee { width: auto; text-align: left }` so a disabled label stays centered on its tick.
+	.tick .tickLabelMarquee {
+		display: block;
+		overflow: hidden;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		width: 100%;
 	}
 
@@ -219,11 +231,13 @@
 
 			.startLabel {
 				left: ~"calc("@h-gap ~"-" @lime-slider-side-label-gap ~"-" @lime-slider-side-label-width ~")";
+				text-align: right;
 			}
 
 			.endLabel {
 				left: ~"calc(100% - "@h-gap ~"+" @lime-slider-side-label-gap ~")";
 				right: auto;
+				text-align: left;
 			}
 		}
 
@@ -284,6 +298,7 @@
 				width: max-content;
 				max-width: @lime-slider-side-label-width;
 				left: 50%;
+				text-align: center;
 				transform: translateX(-50%);
 			}
 

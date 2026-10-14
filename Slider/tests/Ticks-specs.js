@@ -3,24 +3,7 @@ import {fireEvent, render, screen} from '@testing-library/react';
 
 import {SliderExtras, Ticks} from '../Ticks';
 
-jest.mock('../../Marquee', () => {
-	const Marquee = ({children, className, marqueeDisabled, marqueeOn}) => (
-		<div className={className} data-marquee-disabled={marqueeDisabled ? 'true' : 'false'} data-marquee-on={marqueeOn}>
-			{children}
-		</div>
-	);
-
-	return {
-		__esModule: true,
-		default: Marquee
-	};
-});
-
-const getMarqueeOn = (node) => {
-	const marquee = node.matches('[data-marquee-on]') ? node : node.querySelector('[data-marquee-on]');
-
-	return marquee && marquee.getAttribute('data-marquee-disabled') === 'true' ? 'off' : marquee.getAttribute('data-marquee-on');
-};
+const hasMarquee = (node) => node.classList.contains('marquee') || Boolean(node.querySelector('.marquee'));
 
 describe('Ticks', () => {
 	test('should render tick marks using default styles', () => {
@@ -57,9 +40,9 @@ describe('Ticks', () => {
 
 		const labels = document.querySelectorAll('.tickLabel');
 
-		expect(getMarqueeOn(labels[0])).toBe('off');
-		expect(getMarqueeOn(labels[1])).toBe('render');
-		expect(getMarqueeOn(labels[2])).toBe('off');
+		expect(hasMarquee(labels[0])).toBe(false);
+		expect(hasMarquee(labels[1])).toBe(true);
+		expect(hasMarquee(labels[2])).toBe(false);
 	});
 
 	test('should not marquee tick labels when none is focused or hovered', () => {
@@ -67,28 +50,44 @@ describe('Ticks', () => {
 
 		const labels = [...document.querySelectorAll('.tickLabel')];
 
-		expect(labels.map(getMarqueeOn)).toEqual(['off', 'off', 'off']);
+		expect(labels.map(hasMarquee)).toEqual([false, false, false]);
 	});
 
-	test('should marquee the hovered tick instead of the knob tick', () => {
-		render(<Ticks count={3} css={{tick: 'tick', tickLabel: 'tickLabel'}} focusedIndex={0} labels={['Low', 'Mid', 'High']} />);
+	test('should marquee the hovered tick when the slider is not focused', () => {
+		render(<Ticks count={3} css={{tick: 'tick', tickLabel: 'tickLabel'}} labels={['Low', 'Mid', 'High']} />);
 
 		const labels = [...document.querySelectorAll('.tickLabel')];
 		const ticks = [...document.querySelectorAll('.tick')];
 
-		expect(labels.map(getMarqueeOn)).toEqual(['render', 'off', 'off']);
-
 		fireEvent.mouseOver(ticks[1]);
 
-		expect(labels.map(getMarqueeOn)).toEqual(['off', 'render', 'off']);
+		expect(labels.map(hasMarquee)).toEqual([false, true, false]);
 
 		fireEvent.mouseOver(labels[1]);
 
-		expect(labels.map(getMarqueeOn)).toEqual(['off', 'render', 'off']);
+		expect(labels.map(hasMarquee)).toEqual([false, true, false]);
 
 		fireEvent.mouseLeave(ticks[0].parentElement);
 
-		expect(labels.map(getMarqueeOn)).toEqual(['render', 'off', 'off']);
+		expect(labels.map(hasMarquee)).toEqual([false, false, false]);
+	});
+
+	test('should keep the focused tick label while the pointer is over another tick', () => {
+		const props = {count: 3, css: {tick: 'tick', tickLabel: 'tickLabel'}, labels: ['Low', 'Mid', 'High']};
+		const {rerender} = render(<Ticks {...props} focusedIndex={0} />);
+		const marquee = () => [...document.querySelectorAll('.tickLabel')].map(hasMarquee);
+
+		fireEvent.mouseOver(document.querySelectorAll('.tick')[1]);
+
+		expect(marquee()).toEqual([true, false, false]);
+
+		rerender(<Ticks {...props} focusedIndex={2} />);
+
+		expect(marquee()).toEqual([false, false, true]);
+
+		rerender(<Ticks {...props} />);
+
+		expect(marquee()).toEqual([false, false, false]);
 	});
 });
 
@@ -122,18 +121,36 @@ describe('SliderExtras', () => {
 		expect(screen.getByText('Max')).toBeInTheDocument();
 	});
 
-	test('should marquee both side labels while focused', () => {
-		render(
+	test('should marquee only the side label closest to the value while focused', () => {
+		const {rerender} = render(
 			<SliderExtras
 				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
 				endLabel="End"
 				focused
+				max={100}
+				min={0}
 				startLabel="Start"
+				value={0}
 			/>
 		);
 
-		expect(getMarqueeOn(document.querySelector('.startLabel'))).toBe('render');
-		expect(getMarqueeOn(document.querySelector('.endLabel'))).toBe('render');
+		expect(hasMarquee(document.querySelector('.startLabel'))).toBe(true);
+		expect(hasMarquee(document.querySelector('.endLabel'))).toBe(false);
+
+		rerender(
+			<SliderExtras
+				css={{startLabel: 'startLabel', endLabel: 'endLabel'}}
+				endLabel="End"
+				focused
+				max={100}
+				min={0}
+				startLabel="Start"
+				value={100}
+			/>
+		);
+
+		expect(hasMarquee(document.querySelector('.startLabel'))).toBe(false);
+		expect(hasMarquee(document.querySelector('.endLabel'))).toBe(true);
 	});
 
 	test('should marquee side labels on hover when the slider is not focused', () => {
@@ -145,8 +162,8 @@ describe('SliderExtras', () => {
 			/>
 		);
 
-		expect(getMarqueeOn(document.querySelector('.startLabel'))).toBe('hover');
-		expect(getMarqueeOn(document.querySelector('.endLabel'))).toBe('hover');
+		expect(hasMarquee(document.querySelector('.startLabel'))).toBe(true);
+		expect(hasMarquee(document.querySelector('.endLabel'))).toBe(true);
 	});
 
 	test('should marquee only the tick label that matches the value', () => {
@@ -164,9 +181,9 @@ describe('SliderExtras', () => {
 
 		const labels = document.querySelectorAll('.tickLabel');
 
-		expect(getMarqueeOn(labels[0])).toBe('off');
-		expect(getMarqueeOn(labels[1])).toBe('render');
-		expect(getMarqueeOn(labels[2])).toBe('off');
+		expect(hasMarquee(labels[0])).toBe(false);
+		expect(hasMarquee(labels[1])).toBe(true);
+		expect(hasMarquee(labels[2])).toBe(false);
 	});
 
 	test('should marquee the tick label closest to the value', () => {
@@ -184,7 +201,7 @@ describe('SliderExtras', () => {
 
 		const labels = [...document.querySelectorAll('.tickLabel')];
 
-		expect(labels.map(getMarqueeOn)).toEqual(['off', 'render', 'off']);
+		expect(labels.map(hasMarquee)).toEqual([false, true, false]);
 	});
 
 });
