@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.11.3] - 2026-10-15
+
+### Fixed
+
+- `limestone/Alert` Button width for overlay type
+
 ## [1.11.2] - 2026-09-16
 
 ### Fixed
