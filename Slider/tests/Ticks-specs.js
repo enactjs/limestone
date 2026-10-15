@@ -3,6 +3,19 @@ import {fireEvent, render, screen} from '@testing-library/react';
 
 import {SliderExtras, Ticks} from '../Ticks';
 
+jest.mock('../../Marquee', () => {
+	const Marquee = ({children, className, marqueeDisabled, marqueeOn}) => (
+		<div className={className} data-marquee-on={marqueeOn}>
+			{marqueeDisabled ? children : <div className="marquee">{children}</div>}
+		</div>
+	);
+
+	return {
+		__esModule: true,
+		default: Marquee
+	};
+});
+
 const hasMarquee = (node) => node.classList.contains('marquee') || Boolean(node.querySelector('.marquee'));
 
 describe('Ticks', () => {
@@ -164,6 +177,8 @@ describe('SliderExtras', () => {
 
 		expect(hasMarquee(document.querySelector('.startLabel'))).toBe(true);
 		expect(hasMarquee(document.querySelector('.endLabel'))).toBe(true);
+		expect(document.querySelector('.startLabel')).toHaveAttribute('data-marquee-on', 'hover');
+		expect(document.querySelector('.endLabel')).toHaveAttribute('data-marquee-on', 'hover');
 	});
 
 	test('should marquee only the tick label that matches the value', () => {

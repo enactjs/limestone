@@ -152,10 +152,9 @@
 		top: 100%;
 		margin-top: @lime-slider-tick-label-offset;
 		width: 100%;
-		text-align: center;
 	}
 
-	// Beats `.marquee { width: auto; text-align: left }` so a disabled label stays centered on its tick.
+	// A disabled Marquee drops `alignment`, so center and ellipsize the plain label here.
 	.tick .tickLabelMarquee {
 		display: block;
 		overflow: hidden;
