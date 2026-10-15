@@ -14,6 +14,8 @@ const isScrolling = (view) => {
 	return Boolean(track && track.style.transform.startsWith('translateY(-'));
 };
 
+const marqueeNode = (view) => view.querySelector('[data-vertical-marquee]');
+
 const longText = 'A long piece of text that is measured as overflowing the visible line count.';
 
 add('pointerHide', 1537);
@@ -100,7 +102,7 @@ describe('VerticalMarquee Specs', () => {
 		const view = screen.getByTestId('vertical-marquee');
 
 		const expected = '4';
-		const actual = view.style.getPropertyValue('--vertical-marquee-lines');
+		const actual = marqueeNode(view).style.getPropertyValue('--vertical-marquee-lines');
 
 		expect(actual).toBe(expected);
 	});
@@ -118,7 +120,7 @@ describe('VerticalMarquee Specs', () => {
 		render(<VerticalMarquee data-testid="vertical-marquee" maxLines={0}>Lines</VerticalMarquee>);
 		const view = screen.getByTestId('vertical-marquee');
 
-		expect(view.style.getPropertyValue('--vertical-marquee-lines')).toBe('1');
+		expect(marqueeNode(view).style.getPropertyValue('--vertical-marquee-lines')).toBe('1');
 	});
 
 	test('should apply custom css classes', () => {
@@ -222,7 +224,7 @@ describe('VerticalMarquee Specs', () => {
 			fireEvent.blur(view);
 
 			expect(isScrolling(view)).toBe(false);
-			expect(view).not.toHaveClass(css.willAnimate);
+			expect(marqueeNode(view).hasAttribute('data-will-animate')).toBe(false);
 			expect(view.querySelectorAll('[data-vertical-marquee-content]')).toHaveLength(1);
 		});
 
@@ -268,7 +270,7 @@ describe('VerticalMarquee Specs', () => {
 
 			const track = view.querySelector('[data-vertical-marquee-track]');
 
-			expect(view.style.maxHeight).toBe('90px');
+			expect(marqueeNode(view).style.maxHeight).toBe('90px');
 			expect(track.style.transform).toBe('translateY(-10px)');
 		});
 
@@ -293,7 +295,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view.style.maxHeight).toBe('90px');
+			expect(marqueeNode(view).style.maxHeight).toBe('90px');
 			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-200px)');
 		});
 
@@ -342,7 +344,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view.style.maxHeight).toBe('90px');
+			expect(marqueeNode(view).style.maxHeight).toBe('90px');
 		});
 
 		test('should not scroll line boxes that fit in maxLines', () => {
@@ -364,7 +366,7 @@ describe('VerticalMarquee Specs', () => {
 			});
 
 			expect(isScrolling(view)).toBe(false);
-			expect(view.style.maxHeight).toBe('300px');
+			expect(marqueeNode(view).style.maxHeight).toBe('300px');
 		});
 
 		test('should use font size when line-height is not a length', () => {
@@ -408,7 +410,7 @@ describe('VerticalMarquee Specs', () => {
 				maxLines: 3
 			});
 
-			expect(view.style.getPropertyValue('--vertical-marquee-spacing')).toBe(String(scale(48)));
+			expect(marqueeNode(view).style.getPropertyValue('--vertical-marquee-spacing')).toBe(String(scale(48)));
 		});
 
 		test('should ignore a spacing value that is not a number or percentage', () => {
@@ -419,7 +421,7 @@ describe('VerticalMarquee Specs', () => {
 				maxLines: 3
 			});
 
-			expect(view.style.getPropertyValue('--vertical-marquee-spacing')).toBe('0');
+			expect(marqueeNode(view).style.getPropertyValue('--vertical-marquee-spacing')).toBe('0');
 		});
 
 		test('should not scroll when the user prefers reduced motion', () => {
@@ -764,7 +766,7 @@ describe('VerticalMarquee Specs', () => {
 			);
 
 			expect(isScrolling(view)).toBe(false);
-			expect(view).not.toHaveClass(css.willAnimate);
+			expect(marqueeNode(view).hasAttribute('data-will-animate')).toBe(false);
 		});
 
 		test('should forward focus handlers while disabled and not resume a scroll', () => {
@@ -816,7 +818,7 @@ describe('VerticalMarquee Specs', () => {
 			});
 
 			expect(isScrolling(view)).toBe(false);
-			expect(view).not.toHaveClass(css.willAnimate);
+			expect(marqueeNode(view).hasAttribute('data-will-animate')).toBe(false);
 		});
 	});
 });
