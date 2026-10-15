@@ -154,6 +154,9 @@
 		&:is(:global(.animationTier-high) *) .inner { .lime-enter-small-high-motion(); }
 		&:is(:global(.animationTier-low) *) .inner { .lime-enter-small-low-motion(); }
 
+		&.center:is(:global(.animationTier-high) *) .inner { .lime-enter-medium-high-motion(); }
+		&.center:is(:global(.animationTier-low) *) .inner { .lime-enter-medium-low-motion(); }
+
 		// Alert Fullscreen
 		&.fullscreen .inner { .lime-enter-none-motion(); }
 	}
@@ -172,8 +175,8 @@
 		&.right:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(336px, 0); }
 
 		// Alert Overlay
-		&.center:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, 32px); }
-		&.center:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, 32px); }
+		&.center:is(:global(.animationTier-high) *) .inner { .lime-exit-medium-high-motion(0, 32px); }
+		&.center:is(:global(.animationTier-low) *) .inner { .lime-exit-medium-low-motion(0, 32px); }
 	}
 
 	:global(.noAnimation) & {
