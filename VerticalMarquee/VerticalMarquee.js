@@ -115,28 +115,34 @@ const lineBoxes = (node) => {
 
 const measureNode = (node, maxLines) => {
 	const boxes = lineBoxes(node);
+	// Glyph boxes omit the half-leading, or overhang the block when the line-height is tight.
+	// The duplicate is placed after the laid-out block, so the cycle uses that height.
+	const blockHeight = round2(node.getBoundingClientRect().height);
 
 	if (boxes.length > 0) {
-		const glyphHeight = round2(boxes[boxes.length - 1].bottom - boxes[0].top);
-		// Glyph boxes omit the line-height above the first line and below the last.
-		// The block is taller, and the duplicate is placed from that layout height.
-		const blockHeight = round2(node.getBoundingClientRect().height);
-		const contentHeight = blockHeight > glyphHeight ? blockHeight : glyphHeight;
-		const visibleCount = Math.min(maxLines, boxes.length);
-		const clipHeight = round2(boxes[visibleCount - 1].bottom - boxes[0].top);
-		const lineHeight = round2(boxes[0].bottom - boxes[0].top);
+		const overflows = boxes.length > maxLines;
+		const glyphHeight = round2(boxes[0].bottom - boxes[0].top);
+		const gap = boxes.length > 1 ? round2(boxes[1].top - boxes[0].top) : 0;
+		const lineHeight = gap > 0 ? gap : glyphHeight;
+		// The next line's top is the bottom of the last visible line, including its descenders.
+		// Text that fits uses the block height so the last line is not clipped.
+		let clipHeight = blockHeight;
+		if (overflows) {
+			const nextTop = boxes[maxLines] ? round2(boxes[maxLines].top - boxes[0].top) : 0;
+			clipHeight = nextTop > 0 ? nextTop : round2(lineHeight * maxLines);
+		}
 
 		return {
 			clipHeight,
-			contentHeight,
+			contentHeight: blockHeight,
 			lineHeight,
 			measured: clipHeight > 0,
-			overflows: boxes.length > maxLines
+			overflows
 		};
 	}
 
 	const fallbackLineHeight = readLineHeight(node);
-	const fallbackContentHeight = round2(node.getBoundingClientRect().height);
+	const fallbackContentHeight = blockHeight;
 	const fallbackClipHeight = round2(fallbackLineHeight * maxLines);
 
 	return {
@@ -206,7 +212,6 @@ const VerticalMarquee = ({
 	const [animating, setAnimating] = useState(false);
 	const [cycleDistance, setCycleDistance] = useState(0);
 
-	const rootRef = useRef(null);
 	const contentRef = useRef(null);
 	const duplicateRef = useRef(null);
 	const measurerRef = useRef(null);
@@ -240,13 +245,6 @@ const VerticalMarquee = ({
 	const travelDistance = useCallback(() => {
 		const current = metricsRef.current;
 		if (!current.overflows) return 0;
-
-		const contentNode = contentRef.current;
-		const duplicateNode = duplicateRef.current;
-		if (contentNode && duplicateNode) {
-			const laidOut = round2(duplicateNode.offsetTop - contentNode.offsetTop);
-			if (laidOut > 0) return laidOut;
-		}
 
 		const clip = current.clipHeight > 0 ? current.clipHeight : current.lineHeight * lines;
 		const gap = clip > 0 ? getSpacing(clip, configRef.current.marqueeSpacing) : 0;
@@ -360,11 +358,17 @@ const VerticalMarquee = ({
 		const measurer = measurerRef.current;
 		if (!content || !measurer) return;
 
-		// Measurement and the cycle copy are DOM clones. React children stay in the visible node.
-		cloneContentInto(content, measurer);
-
+		// The measurer holds a clone only while measuring, so textContent is not doubled.
 		const update = () => {
-			const next = measureNode(measurer, lines);
+			cloneContentInto(content, measurer);
+
+			let next;
+			try {
+				next = measureNode(measurer, lines);
+			} finally {
+				measurer.replaceChildren();
+			}
+
 			const prev = metricsRef.current;
 			const changed = prev.measured !== next.measured ||
 				prev.lineHeight !== next.lineHeight ||
@@ -384,13 +388,23 @@ const VerticalMarquee = ({
 		update();
 
 		let observer = null;
-		if (measurer && typeof ResizeObserver === 'function') {
+		if (typeof ResizeObserver === 'function') {
 			observer = new ResizeObserver(() => update());
-			observer.observe(measurer);
+			observer.observe(content);
+		}
+
+		let removeFonts = null;
+		const fonts = typeof document !== 'undefined' ? document.fonts : null;
+		if (fonts && typeof fonts.addEventListener === 'function') {
+			const onFonts = () => update();
+			fonts.addEventListener('loadingdone', onFonts);
+			removeFonts = () => fonts.removeEventListener('loadingdone', onFonts);
 		}
 
 		return () => {
 			if (observer) observer.disconnect();
+			if (removeFonts) removeFonts();
+			measurer.replaceChildren();
 		};
 	}, [children, lines, marqueeDisabled, syncToMetrics]);
 
@@ -415,15 +429,19 @@ const VerticalMarquee = ({
 	}, [clearTimers]);
 
 	useEffect(() => {
+		if (marqueeDisabled) end();
+	}, [end, marqueeDisabled]);
+
+	useEffect(() => {
+		if (marqueeOn !== 'hover') return;
+
 		const handleKeyDown = (ev) => {
-			if (configRef.current.marqueeOn === 'hover' && is('pointerHide', ev.keyCode)) {
-				end();
-			}
+			if (is('pointerHide', ev.keyCode)) end();
 		};
 
 		on('keydown', handleKeyDown, document);
 		return () => off('keydown', handleKeyDown, document);
-	}, [end]);
+	}, [end, marqueeOn]);
 
 	const handleFocus = useCallback((ev) => {
 		const config = configRef.current;
@@ -472,7 +490,16 @@ const VerticalMarquee = ({
 
 	if (marqueeDisabled) {
 		return (
-			<div {...rest} className={classNames(mergedCss.verticalMarquee, className)} style={style} tabIndex={tabIndex}>
+			<div
+				{...rest}
+				className={classNames(mergedCss.verticalMarquee, className)}
+				onBlur={handleBlur}
+				onFocus={handleFocus}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
+				style={style}
+				tabIndex={tabIndex}
+			>
 				{children}
 			</div>
 		);
@@ -505,14 +532,12 @@ const VerticalMarquee = ({
 		<div
 			{...rest}
 			className={classNames(mergedCss.verticalMarquee, className, {
-				[mergedCss.animate]: animating,
 				[mergedCss.willAnimate]: promoted
 			})}
 			onBlur={handleBlur}
 			onFocus={handleFocus}
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
-			ref={rootRef}
 			style={rootStyle}
 			tabIndex={tabIndex}
 		>
@@ -570,7 +595,6 @@ VerticalMarquee.propTypes = /** @lends limestone/VerticalMarquee.VerticalMarquee
 	 * * `track` - The translating content wrapper
 	 * * `content` - Each copy of the children
 	 * * `spacing` - The gap between the children and the duplicate copy
-	 * * `animate` - Applied while the text is scrolling
 	 * * `willAnimate` - Applied shortly before and between scroll cycles
 	 *
 	 * @type {Object}

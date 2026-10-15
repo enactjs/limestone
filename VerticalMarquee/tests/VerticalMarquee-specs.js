@@ -9,6 +9,11 @@ import VerticalMarquee from '../VerticalMarquee';
 
 import css from '../VerticalMarquee.module.less';
 
+const isScrolling = (view) => {
+	const track = view.querySelector('[data-vertical-marquee-track]');
+	return Boolean(track && track.style.transform.startsWith('translateY(-'));
+};
+
 const longText = 'A long piece of text that is measured as overflowing the visible line count.';
 
 add('pointerHide', 1537);
@@ -77,7 +82,8 @@ describe('VerticalMarquee Specs', () => {
 		const measurer = view.querySelector('[data-vertical-marquee-measurer]');
 
 		expect(view.querySelectorAll('#marquee-child')).toHaveLength(1);
-		expect(measurer).toHaveTextContent('Hello');
+		expect(view.textContent).toBe('Hello');
+		expect(measurer.textContent).toBe('');
 		expect(measurer.querySelector('#marquee-child')).toBeNull();
 	});
 
@@ -85,7 +91,7 @@ describe('VerticalMarquee Specs', () => {
 		render(<VerticalMarquee data-testid="vertical-marquee">Hello Vertical Marquee</VerticalMarquee>);
 		const view = screen.getByTestId('vertical-marquee');
 
-		expect(view).toHaveTextContent('Hello Vertical Marquee');
+		expect(view.textContent).toBe('Hello Vertical Marquee');
 		expect(view).toHaveClass(css.verticalMarquee);
 	});
 
@@ -165,7 +171,7 @@ describe('VerticalMarquee Specs', () => {
 
 			const track = view.querySelector('[data-vertical-marquee-track]');
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(track.style.transform).toBe('translateY(-300px)');
 			expect(view.querySelectorAll('[data-vertical-marquee-content]')).toHaveLength(2);
 		});
@@ -188,7 +194,7 @@ describe('VerticalMarquee Specs', () => {
 			});
 			fireEvent.transitionEnd(track());
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 			expect(track().style.transform).toBe('translateY(0)');
 			expect(view.querySelectorAll('[data-vertical-marquee-content]')).toHaveLength(2);
 
@@ -196,7 +202,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(2000);
 			});
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(track().style.transform).toBe('translateY(-300px)');
 		});
 
@@ -215,7 +221,7 @@ describe('VerticalMarquee Specs', () => {
 			});
 			fireEvent.blur(view);
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 			expect(view).not.toHaveClass(css.willAnimate);
 			expect(view.querySelectorAll('[data-vertical-marquee-content]')).toHaveLength(1);
 		});
@@ -233,7 +239,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(1000);
 			});
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 			expect(view.querySelectorAll('[data-vertical-marquee-content]')).toHaveLength(1);
 		});
 
@@ -263,7 +269,7 @@ describe('VerticalMarquee Specs', () => {
 			const track = view.querySelector('[data-vertical-marquee-track]');
 
 			expect(view.style.maxHeight).toBe('90px');
-			expect(track.style.transform).toBe('translateY(-120px)');
+			expect(track.style.transform).toBe('translateY(-10px)');
 		});
 
 		test('should scroll the block height when it is taller than the glyph boxes', () => {
@@ -291,6 +297,54 @@ describe('VerticalMarquee Specs', () => {
 			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-200px)');
 		});
 
+		test('should scroll the block height when the glyph boxes overhang it', () => {
+			const view = setup({
+				contentHeight: 100,
+				lineHeight: 25,
+				lineRects: [
+					{bottom: 30, height: 30, left: 0, right: 100, top: 0, width: 100},
+					{bottom: 55, height: 30, left: 0, right: 100, top: 25, width: 100},
+					{bottom: 80, height: 30, left: 0, right: 100, top: 50, width: 100},
+					{bottom: 105, height: 30, left: 0, right: 100, top: 75, width: 100}
+				],
+				marqueeDelay: 0,
+				marqueeSpacing: '0%',
+				marqueeSpeed: 30,
+				maxLines: 3
+			});
+
+			fireEvent.focus(view);
+			act(() => {
+				jest.advanceTimersByTime(0);
+			});
+
+			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-100px)');
+		});
+
+		test('should size the clip from line tops so the last visible line is not cut off', () => {
+			const view = setup({
+				contentHeight: 200,
+				lineHeight: 30,
+				lineRects: [
+					{bottom: 20, height: 20, left: 0, right: 100, top: 0, width: 100},
+					{bottom: 50, height: 20, left: 0, right: 100, top: 30, width: 100},
+					{bottom: 80, height: 20, left: 0, right: 100, top: 60, width: 100},
+					{bottom: 110, height: 20, left: 0, right: 100, top: 90, width: 100}
+				],
+				marqueeDelay: 0,
+				marqueeSpacing: '0%',
+				marqueeSpeed: 30,
+				maxLines: 3
+			});
+
+			fireEvent.focus(view);
+			act(() => {
+				jest.advanceTimersByTime(0);
+			});
+
+			expect(view.style.maxHeight).toBe('90px');
+		});
+
 		test('should not scroll line boxes that fit in maxLines', () => {
 			const view = setup({
 				contentHeight: 300,
@@ -309,8 +363,8 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view).not.toHaveClass(css.animate);
-			expect(view.style.maxHeight).toBe('60px');
+			expect(isScrolling(view)).toBe(false);
+			expect(view.style.maxHeight).toBe('300px');
 		});
 
 		test('should use font size when line-height is not a length', () => {
@@ -384,7 +438,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(1000);
 			});
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 			window.matchMedia = originalMatchMedia;
 		});
 
@@ -410,13 +464,13 @@ describe('VerticalMarquee Specs', () => {
 			});
 
 			expect(onMouseEnter).toHaveBeenCalled();
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 
 			fireEvent.keyDown(document, {keyCode: 1});
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 
 			fireEvent.keyDown(document, {keyCode: 1537});
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 
 			fireEvent.mouseEnter(view);
 			act(() => {
@@ -425,7 +479,7 @@ describe('VerticalMarquee Specs', () => {
 			fireEvent.mouseLeave(view);
 
 			expect(onMouseLeave).toHaveBeenCalled();
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 		});
 
 		test('should treat a disabled focus marquee as hover', () => {
@@ -450,21 +504,21 @@ describe('VerticalMarquee Specs', () => {
 			});
 
 			expect(onFocus).toHaveBeenCalled();
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 
 			fireEvent.mouseEnter(view);
 			act(() => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 
 			fireEvent.blur(view);
 			expect(onBlur).toHaveBeenCalled();
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 
 			fireEvent.mouseLeave(view);
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 		});
 
 		test('should start when marqueeOn is render and stop on unmount', () => {
@@ -488,7 +542,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(500);
 			});
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 
 			unmount();
 		});
@@ -509,8 +563,9 @@ describe('VerticalMarquee Specs', () => {
 			});
 			fireEvent.focus(view);
 			fireEvent.mouseLeave(view);
+			fireEvent.keyDown(document, {keyCode: 1537});
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-300px)');
 		});
 
@@ -531,7 +586,7 @@ describe('VerticalMarquee Specs', () => {
 			});
 			fireEvent.mouseEnter(view);
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 		});
 
 		test('should fall back when the document cannot create a range', () => {
@@ -577,7 +632,7 @@ describe('VerticalMarquee Specs', () => {
 			Object.defineProperty(ignored, 'propertyName', {value: 'opacity'});
 			track().dispatchEvent(ignored);
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(track().style.transform).toBe('translateY(-300px)');
 		});
 
@@ -621,7 +676,7 @@ describe('VerticalMarquee Specs', () => {
 				</VerticalMarquee>
 			);
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(track().style.transform).toBe('translateY(-300px)');
 		});
 
@@ -657,7 +712,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
 
 			contentHeight = 300;
 			rerender(
@@ -669,7 +724,7 @@ describe('VerticalMarquee Specs', () => {
 				jest.advanceTimersByTime(0);
 			});
 
-			expect(view).toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(true);
 			expect(view.querySelector('[data-vertical-marquee-track]').style.transform).toBe('translateY(-300px)');
 		});
 
@@ -708,7 +763,59 @@ describe('VerticalMarquee Specs', () => {
 				</VerticalMarquee>
 			);
 
-			expect(view).not.toHaveClass(css.animate);
+			expect(isScrolling(view)).toBe(false);
+			expect(view).not.toHaveClass(css.willAnimate);
+		});
+
+		test('should forward focus handlers while disabled and not resume a scroll', () => {
+			jest.useFakeTimers();
+			mockBox({contentHeight: 300, lineHeight: 30});
+			const onBlur = jest.fn();
+			const onFocus = jest.fn();
+			const props = {
+				'data-testid': 'vertical-marquee',
+				marqueeDelay: 1000,
+				marqueeSpacing: '0%',
+				marqueeSpeed: 30,
+				maxLines: 3,
+				onBlur,
+				onFocus
+			};
+			const {rerender} = render(
+				<VerticalMarquee {...props}>
+					{longText}
+				</VerticalMarquee>
+			);
+			const view = screen.getByTestId('vertical-marquee');
+
+			fireEvent.focus(view);
+			act(() => {
+				jest.advanceTimersByTime(0);
+			});
+
+			rerender(
+				<VerticalMarquee {...props} marqueeDisabled>
+					{longText}
+				</VerticalMarquee>
+			);
+
+			fireEvent.focus(view);
+			fireEvent.blur(view);
+
+			expect(onFocus).toHaveBeenCalledTimes(2);
+			expect(onBlur).toHaveBeenCalledTimes(1);
+			expect(view.querySelector('[data-vertical-marquee-track]')).toBeNull();
+
+			rerender(
+				<VerticalMarquee {...props}>
+					{longText}
+				</VerticalMarquee>
+			);
+			act(() => {
+				jest.advanceTimersByTime(5000);
+			});
+
+			expect(isScrolling(view)).toBe(false);
 			expect(view).not.toHaveClass(css.willAnimate);
 		});
 	});
