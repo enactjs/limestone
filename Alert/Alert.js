@@ -306,7 +306,6 @@ const AlertBase = kind({
 				<Popup
 					{...rest}
 					id={id}
-					noAnimation
 					aria-labelledby={ariaLabelledBy}
 					css={css}
 					position={position}

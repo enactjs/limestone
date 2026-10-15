@@ -38,6 +38,7 @@ describe('Alert', () => {
 		it('should spot the cancel button', async () => {
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
+			await browser.waitUntil(() => components.alertOverlay.buttonOK.isFocused(), {timeout: 2000});
 			await Page.spotlightDown();
 
 			expect(await components.alertOverlay.buttonCancel.isFocused()).toBe(true);
@@ -46,9 +47,10 @@ describe('Alert', () => {
 		it('should close the overlay alert using the close button', async () => {
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
+			await browser.waitUntil(() => components.alertOverlay.buttonOK.isFocused(), {timeout: 2000});
 			await Page.spotlightDown();
 			await Page.spotlightSelect();
-			browser.pause(100);
+			await browser.waitUntil(() => alertCommon.buttonOverlay.isFocused(), {timeout: 2000});
 
 			expect(await alertCommon.buttonOverlay.isFocused()).toBe(true);
 		});
@@ -56,7 +58,9 @@ describe('Alert', () => {
 		it('should close the overlay alert using the back key', async () => {
 			await Page.spotlightRight();
 			await Page.spotlightSelect();
+			await browser.waitUntil(() => components.alertOverlay.buttonOK.isFocused(), {timeout: 2000});
 			await Page.backKey();
+			await browser.waitUntil(() => alertCommon.buttonOverlay.isFocused(), {timeout: 2000});
 
 			expect(await alertCommon.buttonOverlay.isFocused()).toBe(true);
 		});

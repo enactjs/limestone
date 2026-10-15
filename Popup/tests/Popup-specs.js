@@ -1,6 +1,6 @@
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {createEvent, fireEvent, render, screen, waitFor} from '@testing-library/react';
 
 import {Popup} from '../Popup';
 
@@ -407,6 +407,87 @@ describe('Popup specs', () => {
 		);
 
 		expect(handleHide).toHaveBeenCalled();
+	});
+
+	describe('transition end events', () => {
+		const renderOpenPopup = (props) => render(
+			<FloatingLayerController>
+				<Popup open {...props}>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		const getTransitionInner = () => screen.getByRole('alert').parentElement;
+
+		const fireTransitionEnd = (propertyName) => {
+			const node = getTransitionInner();
+			const event = createEvent.transitionEnd(node);
+			Object.defineProperty(event, 'propertyName', {value: propertyName});
+			fireEvent(node, event);
+		};
+
+		test('should call onShow once when the `transform` transition ends', () => {
+			const handleShow = jest.fn();
+			renderOpenPopup({onShow: handleShow});
+
+			fireTransitionEnd('transform');
+
+			expect(handleShow).toHaveBeenCalledTimes(1);
+		});
+
+		test('should not call onShow when a non-`transform` transition ends', () => {
+			const handleShow = jest.fn();
+			renderOpenPopup({onShow: handleShow});
+
+			fireTransitionEnd('opacity');
+
+			expect(handleShow).not.toHaveBeenCalled();
+		});
+
+		test('should call onShow only once when both `transform` and `opacity` transitions end', () => {
+			const handleShow = jest.fn();
+			renderOpenPopup({onShow: handleShow});
+
+			fireTransitionEnd('opacity');
+			fireTransitionEnd('transform');
+
+			expect(handleShow).toHaveBeenCalledTimes(1);
+		});
+
+		test('should call onHide once when the `transform` transition ends after closing', () => {
+			const handleHide = jest.fn();
+			const {rerender} = renderOpenPopup({onHide: handleHide});
+
+			rerender(
+				<FloatingLayerController>
+					<Popup onHide={handleHide}>
+						<div>popup</div>
+					</Popup>
+				</FloatingLayerController>
+			);
+
+			fireTransitionEnd('transform');
+
+			expect(handleHide).toHaveBeenCalledTimes(1);
+		});
+
+		test('should not call onHide when a non-`transform` transition ends after closing', () => {
+			const handleHide = jest.fn();
+			const {rerender} = renderOpenPopup({onHide: handleHide});
+
+			rerender(
+				<FloatingLayerController>
+					<Popup onHide={handleHide}>
+						<div>popup</div>
+					</Popup>
+				</FloatingLayerController>
+			);
+
+			fireTransitionEnd('opacity');
+
+			expect(handleHide).not.toHaveBeenCalled();
+		});
 	});
 
 	test('should apply `hidden` class when popup closes', () => {
