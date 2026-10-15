@@ -6,29 +6,29 @@ import {boolean, range} from '@enact/storybook-utils/addons/controls';
 const StarConfig = mergeComponentMetadata('Star', Star, StarBase);
 
 export default {
-    title: 'Limestone/StarRatings',
-    component: 'Star'
+	title: 'Limestone/StarRatings',
+	component: 'Star'
 };
 
 export const _Star = (args) => {
-    const actions = {
-        onClick: action('onClick'),
-    };
+	const actions = {
+		onClick: action('onClick')
+	};
 
-    const controls = {
-        active: args['active'],
-        highlighted: args['highlighted'],
-        value: args['value']
-    };
+	const controls = {
+		active: args['active'],
+		highlighted: args['highlighted'],
+		value: args['value']
+	};
 
-    return (<>
-        <Star
-            {...actions}
-            {...controls}
-            id='star'
-        />
-    </>);
-}
+	return (<>
+		<Star
+			{...actions}
+			{...controls}
+			id="star"
+		/>
+	</>);
+};
 
 boolean('active', _Star, StarConfig);
 boolean('highlighted', _Star, StarConfig);

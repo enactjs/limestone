@@ -12,105 +12,105 @@ import css from './Star.module.less';
 const SpottableIcon = Spottable(Icon);
 
 const StarBase = kind({
-    name: 'Star',
+	name: 'Star',
 
-    propTypes: {
-        /**
+	propTypes: {
+		/**
          * Unique identifier for the star.
          *
          * @type {String}
          * @required
          * @public
          */
-        id: PropTypes.string.isRequired,
+		id: PropTypes.string.isRequired,
 
-        /**
+		/**
          * When `true`, the star is focusable and clickable.
          *
          * @type {Boolean}
          * @default false
          * @public
          */
-        active: PropTypes.bool,
+		active: PropTypes.bool,
 
-        /**
+		/**
          * When `true`, the star glows while its row has focus.
          *
          * @type {Boolean}
          * @default false
          * @public
          */
-        highlighted: PropTypes.bool,
+		highlighted: PropTypes.bool,
 
-        /**
+		/**
          * Fill amount from 0 to 1, rounded to 10% steps.
          *
          * @type {Number}
          * @default 0
          * @public
          */
-        value: PropTypes.number
-    },
+		value: PropTypes.number
+	},
 
-    defaultProps: {
-        active: false,
-        highlighted: false,
-        value: 0
-    },
+	defaultProps: {
+		active: false,
+		highlighted: false,
+		value: 0
+	},
 
-    styles: {
-        css,
-        className: 'star'
-    },
+	styles: {
+		css,
+		className: 'star'
+	},
 
-    handlers: {
-        onClick: handle(
-            forProp('active', true),
-            adaptEvent(
-                (ev, {id}) => ({id, ev}),
-                forward('onClick')
-            )
-        )
-    },
+	handlers: {
+		onClick: handle(
+			forProp('active', true),
+			adaptEvent(
+				(ev, {id}) => ({id, ev}),
+				forward('onClick')
+			)
+		)
+	},
 
-    computed: {
-        className: ({highlighted, styler}) => styler.append({highlighted}),
-        style: ({style, value}) => {
-            const percent = Math.round(value * 10) * 10;
-            return {...style, '--star-fill': percent + '%'};
-        }
-    },
+	computed: {
+		className: ({highlighted, styler}) => styler.append({highlighted}),
+		style: ({style, value}) => {
+			const percent = Math.round(value * 10) * 10;
+			return {...style, '--star-fill': percent + '%'};
+		}
+	},
 
-    render: ({active, className, id, onClick, style, ...rest}) => {
-        delete rest.highlighted;
-        delete rest.value;
+	render: ({active, className, id, onClick, style, ...rest}) => {
+		delete rest.highlighted;
+		delete rest.value;
 
-        const IconComponent = active ? SpottableIcon : Icon;
+		const IconComponent = active ? SpottableIcon : Icon;
 
-        return (
-            <IconComponent
-                {...rest}
-                className={className}
-                id={id}
-                onClick={onClick}
-                style={style}
-                size={180}
-            >
-                star
-            </IconComponent>
-        );
-    }
+		return (
+			<IconComponent
+				{...rest}
+				className={className}
+				id={id}
+				onClick={onClick}
+				style={style}
+				size={180}
+			>
+				star
+			</IconComponent>
+		);
+	}
 });
 
 const StarDecorator = compose(
-    Skinnable
+	Skinnable
 );
 
 const Star = StarDecorator(StarBase);
 
 export default Star;
 export {
-    Star,
-    StarBase,
-    StarDecorator
+	Star,
+	StarBase,
+	StarDecorator
 };
