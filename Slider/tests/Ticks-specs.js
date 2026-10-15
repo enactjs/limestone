@@ -3,12 +3,10 @@ import {fireEvent, render, screen} from '@testing-library/react';
 
 import {SliderExtras, Ticks} from '../Ticks';
 
+// Wraps the real Marquee and exposes `marqueeOn`, which the rendered DOM does not reveal.
 jest.mock('../../Marquee', () => {
-	const Marquee = ({children, className, marqueeDisabled, marqueeOn}) => (
-		<div className={className} data-marquee-on={marqueeOn}>
-			{marqueeDisabled ? children : <div className="marquee">{children}</div>}
-		</div>
-	);
+	const {default: ActualMarquee} = jest.requireActual('../../Marquee');
+	const Marquee = (props) => <ActualMarquee {...props} data-marquee-on={props.marqueeOn} />;
 
 	return {
 		__esModule: true,
