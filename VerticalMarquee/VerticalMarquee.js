@@ -61,7 +61,7 @@ const VerticalMarquee = ({className, css, ...rest}) => (
 
 VerticalMarquee.displayName = 'VerticalMarquee';
 
-VerticalMarquee.propTypes = {
+VerticalMarquee.propTypes = /** @lends limestone/VerticalMarquee.VerticalMarquee.prototype */ {
 	/**
 	 * The text to scroll.
 	 *
