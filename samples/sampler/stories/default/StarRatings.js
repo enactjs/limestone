@@ -3,7 +3,7 @@ import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range} from '@enact/storybook-utils/addons/controls';
 import StarRatings, {StarRatingsBase} from '../../../../StarRatings/StarRatings';
 
-const StarRatingsConfig = mergeComponentMetadata('Star', StarRatings, StarRatingsBase);
+const StarRatingsConfig = mergeComponentMetadata('StarRatings', StarRatings, StarRatingsBase);
 
 export default {
 	title: 'Limestone/StarRatings',
