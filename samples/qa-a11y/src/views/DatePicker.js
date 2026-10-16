@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import DatePicker, {dateToLocaleString} from '@enact/limestone/DatePicker';
 import {FixedPopupPanels, Header, Panel} from '@enact/limestone/FixedPopupPanels';
