@@ -2,18 +2,27 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/Alert` Button width for overlay type
+- `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
+
 ## [1.12.0] - 2026-10-01
 
 ### Added
 
 - `limestone/CardSports` to display a sports match layout with team colors, logos, and score
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/Icon` supported icon list, adding new icon `iclinkaccount`
 - `limestone/IconItem` prop `description`
 - `limestone/ImageItem` prop `secondaryLabel`
 - `limestone/Item` prop `secondaryLabel`
 - `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
 - `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
 - `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
+- `limestone/ThemeDecorator` prop `animationTier` to set the animation tier of the device
 - `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
 
 ### Changed
