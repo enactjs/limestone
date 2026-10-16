@@ -14,23 +14,12 @@
  * @exports VerticalMarquee
  */
 
-import hoc from '@enact/core/hoc';
-import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
-import {MarqueeBase, MarqueeDecorator as UiMarqueeDecorator} from '@enact/ui/Marquee';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-import componentCss from './VerticalMarquee.module.less';
+import {MarqueeBase, MarqueeDecorator} from '../Marquee';
 
-const MarqueeDecorator = hoc((config, Wrapped) => {
-	return I18nContextDecorator(
-		{rtlProp: 'rtl', localeProp: 'locale'},
-		UiMarqueeDecorator(
-			config,
-			Wrapped
-		)
-	);
-});
+import componentCss from './VerticalMarquee.module.less';
 
 const Marquee = MarqueeDecorator({component: MarqueeBase}, 'div');
 
@@ -51,10 +40,13 @@ const Marquee = MarqueeDecorator({component: MarqueeBase}, 'div');
  * @ui
  * @public
  */
-const VerticalMarquee = ({className, css, ...rest}) => (
+const VerticalMarquee = ({className, css, marqueeSpeed = 30, maxLines = 3, ...rest}) => (
 	<Marquee
 		{...rest}
 		className={classNames(componentCss.verticalMarquee, css && css.verticalMarquee, className)}
+		css={css}
+		marqueeSpeed={marqueeSpeed}
+		maxLines={maxLines}
 		orientation="vertical"
 	/>
 );
@@ -81,7 +73,15 @@ VerticalMarquee.propTypes = /** @lends limestone/VerticalMarquee.VerticalMarquee
 	/**
 	 * Custom CSS classes.
 	 *
-	 * `verticalMarquee` is applied to the root.
+	 * The following classes are supported:
+	 *
+	 * * `verticalMarquee` - The root
+	 * * `marquee` - The marquee root
+	 * * `text` - The track
+	 * * `content` - The text block
+	 * * `spacing` - The space between the text and its duplicate
+	 * * `animate` - Applied while the text is scrolling
+	 * * `willAnimate` - Applied shortly before scrolling
 	 *
 	 * @type {Object}
 	 * @public
@@ -89,7 +89,9 @@ VerticalMarquee.propTypes = /** @lends limestone/VerticalMarquee.VerticalMarquee
 	css: PropTypes.object,
 
 	/**
-	 * When `true` and `marqueeOn` is `'focus'`, the marquee follows the pointer instead of focus.
+	 * Passed through to the wrapped component.
+	 *
+	 * A `marqueeOn="focus"` marquee still starts on focus, the same as `limestone/Marquee`.
 	 *
 	 * @type {Boolean}
 	 * @default false
@@ -168,13 +170,6 @@ VerticalMarquee.propTypes = /** @lends limestone/VerticalMarquee.VerticalMarquee
 	 * @public
 	 */
 	maxLines: PropTypes.number
-};
-
-VerticalMarquee.defaultProps = {
-	...Marquee.defaultProps,
-	marqueeSpeed: 30,
-	maxLines: 3,
-	orientation: 'vertical'
 };
 
 export default VerticalMarquee;
