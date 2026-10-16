@@ -143,13 +143,26 @@
 		line-height: @lime-slider-tick-label-line-height;
 		letter-spacing: @lime-slider-tick-label-letter-spacing;
 		max-width: 100%;
+		overflow: hidden;
 		pointer-events: auto;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.tickLabel {
 		position: absolute;
 		top: 100%;
 		margin-top: @lime-slider-tick-label-offset;
+		width: 100%;
+	}
+
+	// A disabled Marquee drops `alignment`, so center and ellipsize the plain label here.
+	.tick .tickLabelMarquee {
+		display: block;
+		overflow: hidden;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		width: 100%;
 	}
 
@@ -219,11 +232,13 @@
 
 			.startLabel {
 				left: ~"calc("@h-gap ~"-" @lime-slider-side-label-gap ~"-" @lime-slider-side-label-width ~")";
+				text-align: right;
 			}
 
 			.endLabel {
 				left: ~"calc(100% - "@h-gap ~"+" @lime-slider-side-label-gap ~")";
 				right: auto;
+				text-align: left;
 			}
 		}
 
@@ -284,6 +299,7 @@
 				width: max-content;
 				max-width: @lime-slider-side-label-width;
 				left: 50%;
+				text-align: center;
 				transform: translateX(-50%);
 			}
 
