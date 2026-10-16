@@ -1,0 +1,16 @@
+.starRatings {
+	display: inline-flex;
+	align-items: center;
+	-webkit-user-select: none;
+	user-select: none;
+
+	// In edit mode, horizontal finger movement drives the rating
+	// instead of scrolling; vertical page scrolling still works
+	&.active {
+		touch-action: pan-y;
+	}
+
+	> * {
+		margin: 0 12px;
+	}
+}

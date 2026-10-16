@@ -1,0 +1,31 @@
+@import "../styles/mixins.less";
+@import "../styles/variables.less";
+@import "../styles/skin.less";
+
+.star {
+	transition: filter 200ms ease-out;
+
+	// Touch handling
+	touch-action: manipulation;               // no double-tap-zoom delay
+	-webkit-tap-highlight-color: transparent; // no grey flash on tap
+	-webkit-user-select: none;                // a long press won't select the glyph
+	user-select: none;
+	-webkit-touch-callout: none;              // no long-press context menu
+
+	.applySkins({
+		background: linear-gradient(
+			to right,
+			var(--semantic-color-on-surface-main) var(--star-fill, 0%),
+			var(--semantic-color-surface-toggle) var(--star-fill, 0%)
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	});
+}
+
+// When any star in the row has focus (remote, tap or drag),
+// every highlighted star glows
+:focus-within > .star.highlighted {
+	filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.8));
+}
