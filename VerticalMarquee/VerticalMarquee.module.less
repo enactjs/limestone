@@ -1,0 +1,16 @@
+// VerticalMarquee.module.less
+//
+
+@import "../styles/mixins.less";
+@import "../styles/variables.less";
+
+.verticalMarquee {
+	width: 100%;
+	min-width: 0;
+	.lime-body-text();
+	.locale-japanese-line-break();
+
+	.enact-locale-rtl({
+		text-align: right;
+	});
+}
