@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import {Picker, PickerBase} from '../Picker';
 
@@ -110,5 +111,20 @@ describe('Picker Specs', () => {
 		const expected = "[\"Option 1\",\"The second one\",\"This is the third option\",\"4\"]";
 
 		expect(picker).toHaveAttribute('data-webos-voice-labels-ext', expected);
+	});
+
+	test('should show the next item after incrementing', async () => {
+		const user = userEvent.setup();
+		render(
+			<Picker defaultValue={1}>
+				{['A', 'B', 'C']}
+			</Picker>
+		);
+		const incrementButton = screen.getAllByRole('button')[0];
+
+		await user.click(incrementButton);
+
+		expect(await screen.findByText('C')).toBeInTheDocument();
+		expect(screen.queryByText('B')).not.toBeInTheDocument();
 	});
 });
