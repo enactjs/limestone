@@ -84,7 +84,6 @@ const TabBase = kind({
 
 		const commonProps = {
 			backgroundOpacity: 'transparent',
-			children,
 			collapsable: true,
 			css,
 			focusEffect: 'static',
@@ -102,7 +101,9 @@ const TabBase = kind({
 						size={buttonSize}
 						{...rest}
 						{...commonProps}
-					/>
+					>
+						{children}
+					</Button>
 				);
 			}
 			case 'vertical': {
@@ -111,7 +112,9 @@ const TabBase = kind({
 					<Button
 						{...rest}
 						{...commonProps}
-					/>
+					>
+						{children}
+					</Button>
 				);
 			}
 		}

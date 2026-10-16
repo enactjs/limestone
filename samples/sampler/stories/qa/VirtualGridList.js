@@ -106,7 +106,7 @@ class MyVirtualList extends Component {
 
 	renderItem = ({index, ...rest}) => {
 		return (
-			/* eslint-disable react/jsx-no-bind */
+			/* eslint-disable enact/jsx-no-bind */
 			<Item {...rest} onClick={() => this.closePopup(index)}>
 				{itemList[index]}
 			</Item>

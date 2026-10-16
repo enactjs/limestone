@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import {add, is} from '@enact/core/keymap';
 import {checkPropTypes} from '@enact/core/util';

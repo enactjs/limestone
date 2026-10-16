@@ -85,7 +85,7 @@ const ExpandableDifferentHeightItem = (props) => {
 				<div style={{height: oneLineSize * 2, ...textStyleDefault}}>
 					{children}
 				</div>
-				<Button data-index={dataIndex} style={buttonStyleDefault} onClick={() => updateItemStatus(index, true)/* eslint-disable-line react/jsx-no-bind */}>
+				<Button data-index={dataIndex} style={buttonStyleDefault} onClick={() => updateItemStatus(index, true)/* eslint-disable-line enact/jsx-no-bind */}>
 					Open<Icon>arrowsmalldown</Icon>
 				</Button>
 				<Button data-index={dataIndex} icon="closex" style={iconButtonStyleDefault} />
@@ -99,7 +99,7 @@ const ExpandableDifferentHeightItem = (props) => {
 				<div>
 					{children}
 				</div>
-				<Button data-index={dataIndex} style={buttonStyleDefault} onClick={() => updateItemStatus(index, false)/* eslint-disable-line react/jsx-no-bind */}>
+				<Button data-index={dataIndex} style={buttonStyleDefault} onClick={() => updateItemStatus(index, false)/* eslint-disable-line enact/jsx-no-bind */}>
 					Close<Icon>arrowsmallup</Icon>
 				</Button>
 				<Button data-index={dataIndex} icon="closex" style={iconButtonStyleDefault} />

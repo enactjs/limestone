@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 import Button from '@enact/limestone/Button';
 import Chips, {ChipsBase, Chip} from '@enact/limestone/Chips';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
