@@ -1,7 +1,8 @@
 /**
  * A vertical marquee for multi-line text that overflows its visible area.
  *
- * Wraps {@link ui/Marquee.Marquee|ui/Marquee} with `orientation="vertical"`. The text scrolls
+ * Uses {@link ui/Marquee.MarqueeDecorator|ui/Marquee.MarqueeDecorator} configured with
+ * `orientation: 'vertical'`. The text scrolls
  * through one full pass, pauses, then repeats while the trigger (focus, hover, or render)
  * is active.
  *
@@ -21,7 +22,7 @@ import {MarqueeBase, MarqueeDecorator} from '../Marquee';
 
 import componentCss from './VerticalMarquee.module.less';
 
-const Marquee = MarqueeDecorator({component: MarqueeBase}, 'div');
+const Marquee = MarqueeDecorator({component: MarqueeBase, orientation: 'vertical'}, 'div');
 
 /**
  * Vertically scrolls children that overflow `maxLines`.
@@ -45,9 +46,8 @@ const VerticalMarquee = ({className, css, marqueeSpeed = 30, maxLines = 3, ...re
 		{...rest}
 		className={classNames(componentCss.verticalMarquee, css && css.verticalMarquee, className)}
 		css={css}
+		marqueeMaxLines={maxLines}
 		marqueeSpeed={marqueeSpeed}
-		maxLines={maxLines}
-		orientation="vertical"
 	/>
 );
 

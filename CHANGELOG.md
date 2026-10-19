@@ -6,7 +6,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
-- `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee` `orientation="vertical"`
+- `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
 ### Fixed
 

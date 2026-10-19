@@ -63,14 +63,14 @@ export const _VerticalMarquee = (args) => {
 };
 
 boolean('disabled', _VerticalMarquee, Config, false);
-number('maxLines', _VerticalMarquee, Config);
+number('maxLines', _VerticalMarquee, Config, 3);
 number('marqueeDelay', _VerticalMarquee, Config, 1000);
 boolean('marqueeDisabled', _VerticalMarquee, Config, false);
 select('marqueeOn', _VerticalMarquee, ['focus', 'hover', 'render'], Config, 'focus');
 number('marqueeOnRenderDelay', _VerticalMarquee, Config, 1000);
 number('marqueeResetDelay', _VerticalMarquee, Config, 1000);
 text('marqueeSpacing', _VerticalMarquee, Config, '50%');
-number('marqueeSpeed', _VerticalMarquee, Config);
+number('marqueeSpeed', _VerticalMarquee, Config, 30);
 text('children', _VerticalMarquee, Config, longText);
 
 _VerticalMarquee.storyName = 'Marquee vertical';
