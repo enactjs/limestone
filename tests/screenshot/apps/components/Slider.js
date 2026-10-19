@@ -70,6 +70,38 @@ const sliderQwtcTests = [
 	}
 ];
 
+const tickLabels = ['Long Text Long', 'Short Text', 'Long Text Long', 'Short Text', 'Long Text Long'];
+
+const sliderFocusedLabelTests = [
+	// Only the label of the tick closest to the knob marquees
+	{
+		component: <Slider ticks={5} labels={tickLabels} value={0} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider ticks={5} labels={tickLabels} value={50} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider ticks={5} labels={tickLabels} value={100} />,
+		...padded,
+		focus: true
+	},
+	// Only the side label at the nearer end marquees
+	{
+		component: <Slider ticks={5} labels={['Short Text', 'Long Text Long']} value={0} />,
+		...padded,
+		focus: true
+	},
+	{
+		component: <Slider ticks={5} labels={['Long Text Long', 'Short Text']} value={100} />,
+		...padded,
+		focus: true
+	}
+];
+
 const sliderCustomizedStyleTests = [
 	// Customized style
 	<Slider css={css} orientation="vertical" value={50} />,
@@ -152,6 +184,7 @@ const sliderRtlTests = [
 ];
 
 const sliderExtendedTests = [
+	...sliderFocusedLabelTests,
 	...sliderCustomizedStyleTests,
 	...sliderColorPickerTests,
 	...sliderTooltipTests,

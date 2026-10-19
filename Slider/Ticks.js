@@ -1,10 +1,15 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import {useCallback, useState} from 'react';
 
 import Marquee from '../Marquee';
+import {getFocusedTickIndex} from './utils';
 
 /**
  * Renders equally spaced slider tick marks and optional labels.
+ *
+ * While a tick is focused, only that label marquees. Hover applies only when no tick is focused,
+ * because the tick boxes cover the track and a hidden pointer may not emit mouseleave.
  *
  * @private
  */
@@ -12,18 +17,39 @@ const Ticks = ({
 	className,
 	count = 0,
 	css = {},
-	focused,
+	focusedIndex = -1,
 	labels,
 	orientation
 }) => {
+	const [hoveredIndex, setHoveredIndex] = useState(-1);
+	const [seenFocus, setSeenFocus] = useState(focusedIndex);
 	const vertical = orientation === 'vertical';
-	const marqueeOn = focused ? 'render' : 'hover';
 	const positionProp = vertical ? 'bottom' : 'left';
 	const hasTickMarks = count >= 3;
+	let resolvedHover = hoveredIndex;
+
+	// Drop a hover that survived a hidden pointer when focus or the focused tick changes.
+	if (seenFocus !== focusedIndex) {
+		setSeenFocus(focusedIndex);
+		setHoveredIndex(-1);
+		resolvedHover = -1;
+	}
+
+	const activeIndex = focusedIndex >= 0 ? focusedIndex : resolvedHover;
+	const handleTicksOver = useCallback((ev) => {
+		const index = Number(ev.target.closest('[data-tick-index]')?.dataset.tickIndex);
+
+		if (!Number.isNaN(index)) {
+			setHoveredIndex(index);
+		}
+	}, []);
+	const handleTicksLeave = useCallback(() => setHoveredIndex(-1), []);
 
 	return (
 		<div
 			className={classnames(css.ticks, className)}
+			onMouseLeave={handleTicksLeave}
+			onMouseOver={handleTicksOver}
 			style={hasTickMarks ? {'--lime-slider-tick-count': count} : null}
 		>
 			{hasTickMarks ? Array.from({length: count}, (_, index) => {
@@ -33,18 +59,22 @@ const Ticks = ({
 					<div
 						aria-hidden="true"
 						className={css.tick}
+						data-tick-index={index}
 						key={index}
 						style={{[positionProp]: `${(index / (count - 1)) * 100}%`}}
 					>
 						<span className={css.tickMark} />
 						{!vertical && label != null && label !== '' ? (
-							<Marquee
-								alignment="center"
-								className={css.tickLabel}
-								marqueeOn={marqueeOn}
-							>
-								{label}
-							</Marquee>
+							<div className={css.tickLabel}>
+								<Marquee
+									alignment="center"
+									className={css.tickLabelMarquee}
+									marqueeDisabled={activeIndex !== index}
+									marqueeOn="render"
+								>
+									{label}
+								</Marquee>
+							</div>
 						) : null}
 					</div>
 				);
@@ -53,11 +83,12 @@ const Ticks = ({
 	);
 };
 
-const SideLabel = ({alignment, className, focused, value}) => (
+const SideLabel = ({active, alignment, className, focused, value}) => (
 	value != null && value !== '' ? (
 		<Marquee
 			alignment={alignment}
 			className={className}
+			marqueeDisabled={focused && !active}
 			marqueeOn={focused ? 'render' : 'hover'}
 		>
 			{value}
@@ -84,13 +115,18 @@ const SliderExtras = ({
 	min,
 	orientation,
 	showMinMax,
-	startLabel
+	startLabel,
+	value
 }) => {
 	const vertical = orientation === 'vertical';
+	const currentValue = Number.isFinite(value) ? value : min;
+	const focusedIndex = focused && count >= 3 ? getFocusedTickIndex(currentValue, min, max, count) : -1;
+	const sideIndex = focused ? getFocusedTickIndex(currentValue, min, max, 2) : -1;
 
 	return (
 		<div className={css.extras}>
 			<SideLabel
+				active={sideIndex === 0}
 				alignment={vertical ? 'center' : 'right'}
 				className={css.startLabel}
 				focused={focused}
@@ -100,12 +136,13 @@ const SliderExtras = ({
 				<Ticks
 					count={count}
 					css={css}
-					focused={focused}
+					focusedIndex={focusedIndex}
 					labels={labels}
 					orientation={orientation}
 				/>
 			) : null}
 			<SideLabel
+				active={sideIndex === 1}
 				alignment={vertical ? 'center' : 'left'}
 				className={css.endLabel}
 				focused={focused}
@@ -127,7 +164,7 @@ Ticks.propTypes = {
 	className: PropTypes.string,
 	count: PropTypes.number,
 	css: PropTypes.object,
-	focused: PropTypes.bool,
+	focusedIndex: PropTypes.number,
 	labels: PropTypes.arrayOf(PropTypes.node),
 	orientation: PropTypes.string
 };
@@ -145,7 +182,8 @@ SliderExtras.propTypes = {
 	min: PropTypes.number,
 	orientation: PropTypes.string,
 	showMinMax: PropTypes.bool,
-	startLabel: PropTypes.node
+	startLabel: PropTypes.node,
+	value: PropTypes.number
 };
 
 export default Ticks;

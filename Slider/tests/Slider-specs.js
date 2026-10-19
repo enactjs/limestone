@@ -800,7 +800,7 @@ describe('Slider', () => {
 		expect(slider.querySelector('.tickLabel')).toBeNull();
 	});
 
-	test('should marquee tick labels while focused', () => {
+	test('should keep side labels when focused', () => {
 		render(<Slider labels={['Short Text', 'Long Text']} ticks={5} />);
 		const slider = screen.getByRole('slider');
 
