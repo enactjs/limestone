@@ -12,12 +12,12 @@ export default {
 };
 
 export const _StarRatings = (args) => {
-	const [defaultValue, setDefaultValue] = useState(0);
+	const [defaultValue, setDefaultValue] = useState(0); // eslint-disable-line react-hooks/rules-of-hooks
 
 	const handleValue = useCallback((event) => {
 		action('onChange');
 		setDefaultValue(event.value);
-	}, []);
+	}, []); // eslint-disable-line react-hooks/rules-of-hooks
 
 	const controls = {
 		value: args['readOnly'] ? args['value'] : defaultValue,
