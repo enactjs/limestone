@@ -4,9 +4,9 @@
 	-webkit-user-select: none;
 	user-select: none;
 
-	// In edit mode, horizontal finger movement drives the rating
+	// While selecting, horizontal finger movement drives the rating
 	// instead of scrolling; vertical page scrolling still works
-	&.active {
+	&:not(.readOnly) {
 		touch-action: pan-y;
 	}
 

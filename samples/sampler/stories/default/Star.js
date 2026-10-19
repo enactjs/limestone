@@ -6,7 +6,7 @@ import {boolean, range} from '@enact/storybook-utils/addons/controls';
 const StarConfig = mergeComponentMetadata('Star', Star, StarBase);
 
 export default {
-	title: 'Limestone/StarRatings',
+	title: 'Limestone/Star',
 	component: 'Star'
 };
 

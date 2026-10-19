@@ -13,8 +13,9 @@
 	-webkit-touch-callout: none;              // no long-press context menu
 
 	.applySkins({
+		// Partial stars fill from the reading direction's start (flipped for RTL below)
 		background: linear-gradient(
-			to right,
+			var(--star-direction, to right),
 			var(--semantic-color-on-surface-main) var(--star-fill, 0%),
 			var(--semantic-color-surface-toggle) var(--star-fill, 0%)
 		);
@@ -22,6 +23,12 @@
 		background-clip: text;
 		color: transparent;
 	});
+}
+
+// RTL locales: the row of stars is already mirrored by flex,
+// so partial stars must also fill from the right
+:global(.enact-locale-right-to-left) .star {
+	--star-direction: to left;
 }
 
 // When any star in the row has focus (remote, tap or drag),

@@ -1,6 +1,7 @@
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range} from '@enact/storybook-utils/addons/controls';
+import {useCallback, useState} from 'react';
 import StarRatings, {StarRatingsBase} from '../../../../StarRatings/StarRatings';
 
 const StarRatingsConfig = mergeComponentMetadata('StarRatings', StarRatings, StarRatingsBase);
@@ -11,25 +12,28 @@ export default {
 };
 
 export const _StarRatings = (args) => {
-	const actions = {
-		onChange: action('onChange')
-	};
+	const [defaultValue, setDefaultValue] = useState(0);
+
+	const handleValue = useCallback((event) => {
+		action('onChange');
+		setDefaultValue(event.value);
+	}, []);
 
 	const controls = {
-		active: args['active'],
-		displayValue: args['displayValue']
+		value: args['readOnly'] ? args['value'] : defaultValue,
+		readOnly: args['readOnly']
 	};
 
 	return (<>
 		<StarRatings
-			{...actions}
+			onChange={handleValue}
 			{...controls}
 			id="user-rating"
 		/>
 	</>);
 };
 
-boolean('active', _StarRatings, StarRatingsConfig);
-range('displayValue', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01});
+boolean('readOnly', _StarRatings, StarRatingsConfig);
+range('value', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01});
 
 _StarRatings.storyName = 'StarRatings';
