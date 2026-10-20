@@ -16,8 +16,10 @@ export const _Star = (args) => {
 	};
 
 	const controls = {
-		active: args['active'],
+		disabled: args['disabled'],
 		highlighted: args['highlighted'],
+		overlayMode: args['overlayMode'],
+		readOnly: args['readOnly'],
 		value: args['value']
 	};
 
@@ -30,8 +32,10 @@ export const _Star = (args) => {
 	</>);
 };
 
-boolean('active', _Star, StarConfig);
+boolean('disabled', _Star, StarConfig);
 boolean('highlighted', _Star, StarConfig);
+boolean('overlayMode', _Star, StarConfig);
+boolean('readOnly', _Star, StarConfig);
 range('value', _Star, StarConfig, {min: 0, max: 1, step: 0.01});
 
 _Star.storyName = 'Star';

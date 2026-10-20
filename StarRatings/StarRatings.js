@@ -61,7 +61,7 @@ const getStarFromTouch = (ev, id) => {
 const getStarNumber = (starId, id) => Number(starId.slice(`${id}-star-`.length));
 
 /**
- * Moves focus to a star, which shows the focus glow on the row.
+ * Moves focus to a star, which shows its focus outline.
  *
  * Uses Spotlight so remote navigation continues from this star, and falls back to native focus
  * if Spotlight declines.
@@ -123,6 +123,11 @@ const toTenths = (value, max, readOnly) => {
  *   `max`, starting at 3 stars when no value is given. The user selects a star with the
  *   remote, a click, a tap or a touch drag, and `onChange` is called with the star's number.
  *
+ * `disabled` works in both modes: the rating is still shown, at 30% opacity, but cannot be
+ * changed. `overlayMode` switches the color of the empty parts for light overlay surfaces.
+ *
+ * Laid out as a 990 × 240 row (UHD px) with a 60px gap between 108px stars, sized for 5 stars.
+ *
  * @class StarRatingsBase
  * @memberof limestone/StarRatings
  * @ui
@@ -145,7 +150,23 @@ const StarRatingsBase = kind({
 		id: PropTypes.string.isRequired,
 
 		/**
+		 * Disables StarRatings and makes it non-interactive.
+		 *
+		 * The rating is still shown, at 30% opacity. No star can be selected and `onChange` is not
+		 * called. Like other disabled Limestone controls, the stars can still receive focus with
+		 * the remote while selecting, so the user can see the rating.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		disabled: PropTypes.bool,
+
+		/**
 		 * The number of stars.
+		 *
+		 * The row has a fixed 990px width (UHD px), designed for 5 stars; with more stars they
+		 * overflow it.
 		 *
 		 * @type {Number}
 		 * @default 5
@@ -158,7 +179,7 @@ const StarRatingsBase = kind({
 		 *
 		 * Receives an object whose `value` is the number of the selected star, from `1` to `max`.
 		 * During a touch drag, it is called whenever the finger moves onto a star other than the
-		 * current `value`. Never called while `readOnly` is `true`.
+		 * current `value`. Never called while `disabled` or `readOnly` is `true`.
 		 *
 		 * @type {Function}
 		 * @public
@@ -166,11 +187,23 @@ const StarRatingsBase = kind({
 		onChange: PropTypes.func,
 
 		/**
+		 * Colors the empty (unselected) part of the stars for the surface behind them.
+		 *
+		 * * `false`: `#FFFFFF33` (white at 20%), for dark backgrounds.
+		 * * `true`: `#1111111A` (near-black at 10%), for light overlay surfaces.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @public
+		 */
+		overlayMode: PropTypes.bool,
+
+		/**
 		 * Displays the rating without letting the user change it.
 		 *
 		 * * `true`: the stars cannot be focused or selected, and `value` keeps one decimal place.
-		 * * `false`: the user can select a star, `value` is shown as whole stars, and the filled
-		 *   stars glow while the row has focus.
+		 * * `false`: the user can select a star, `value` is shown as whole stars, and the focused
+		 *   star shows a white outline and a drop shadow that follow its shape.
 		 *
 		 * @type {Boolean}
 		 * @default false
@@ -181,8 +214,8 @@ const StarRatingsBase = kind({
 		/**
 		 * The rating.
 		 *
-		 * * Read-only: rounded half-up to one decimal place and clamped to `0`–`max`. When not
-		 *   set or `NaN`, no star is filled.
+		 * * Read-only: rounded half-up to one decimal place and clamped to `0`–`max`. Each tenth
+		 *   of a star fills an equal share of its area. When not set or `NaN`, no star is filled.
 		 * * Selecting: rounded half-up to a whole star and clamped to `1`–`max`, so `0` shows 1
 		 *   star. When neither `value` nor `defaultValue` is set (or the value is `NaN`), shows
 		 *   3 stars, the spec's recommended default.
@@ -197,7 +230,9 @@ const StarRatingsBase = kind({
 	},
 
 	defaultProps: {
+		disabled: false,
 		max: 5,
+		overlayMode: false,
 		readOnly: false
 	},
 
@@ -209,6 +244,7 @@ const StarRatingsBase = kind({
 	handlers: {
 		// Star forwards {id, ev}; turn it into {value} for onChange
 		onStarClick: handle(
+			forProp('disabled', false),
 			forProp('readOnly', false),
 			adaptEvent(
 				({id: starId}, {id}) => ({value: getStarNumber(starId, id)}),
@@ -216,9 +252,10 @@ const StarRatingsBase = kind({
 			)
 		),
 
-		// Glow starts as soon as the finger touches a star
+		// The touched star gets focus (and its focus outline) as soon as the finger lands
 		onTouchStart: handle(
 			forward('onTouchStart'),
+			forProp('disabled', false),
 			forProp('readOnly', false),
 			(ev, {id}) => {
 				focusStar(getStarFromTouch(ev, id));
@@ -229,6 +266,7 @@ const StarRatingsBase = kind({
 		// Drag across the stars to change the rating
 		onTouchMove: handle(
 			forward('onTouchMove'),
+			forProp('disabled', false),
 			forProp('readOnly', false),
 			(ev, {id, onChange, value}) => {
 				const star = getStarFromTouch(ev, id);
@@ -246,17 +284,29 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
-		className: ({readOnly, styler}) => styler.append({readOnly}),
+		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		tenths: ({max, readOnly, value}) => toTenths(value, max, readOnly)
 	},
 
-	render: ({id, max, onStarClick, onTouchMove, onTouchStart, readOnly, tenths, ...rest}) => {
+	render: ({
+				 disabled,
+				 id,
+				 max,
+				 onStarClick,
+				 onTouchMove,
+				 onTouchStart,
+				 overlayMode,
+				 readOnly,
+				 tenths,
+				 ...rest
+			 }) => {
 		delete rest.onChange;
 		delete rest.value;
 
 		return (
 			<div
 				{...rest}
+				aria-disabled={disabled}
 				id={id}
 				onTouchMove={onTouchMove}
 				onTouchStart={onTouchStart}
@@ -268,7 +318,8 @@ const StarRatingsBase = kind({
 						<Star
 							key={i}
 							id={`${id}-star-${i + 1}`}
-							highlighted={!readOnly && starValue > 0}
+							disabled={disabled}
+							overlayMode={overlayMode}
 							readOnly={readOnly}
 							value={starValue}
 							onClick={onStarClick}

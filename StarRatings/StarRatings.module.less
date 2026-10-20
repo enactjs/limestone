@@ -1,16 +1,17 @@
+// Sizes are design px (UHD); Enact converts them to rem.
 .starRatings {
 	display: inline-flex;
 	align-items: center;
+	justify-content: center; // 5 stars + 4 gaps = 780px, centered in the 990px row
+	width: 990px;
+	height: 240px;
+	gap: 60px;
 	-webkit-user-select: none;
 	user-select: none;
 
-	// While selecting, horizontal finger movement drives the rating
-	// instead of scrolling; vertical page scrolling still works
-	&:not(.readOnly) {
+	// While selecting (and not disabled), horizontal finger movement drives the
+	// rating instead of scrolling; vertical page scrolling still works
+	&:not(.readOnly):not(.disabled) {
 		touch-action: pan-y;
-	}
-
-	> * {
-		margin: 0 12px;
 	}
 }

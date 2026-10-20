@@ -1,7 +1,8 @@
 import '@testing-library/jest-dom';
 import {fireEvent, render} from '@testing-library/react';
 
-import StarRatings from '../StarRatings';
+import {FILL_STEPS} from '../Star';
+import StarRatings, {StarRatingsBase} from '../StarRatings';
 
 const ID = 'rating';
 
@@ -12,8 +13,13 @@ const getStars = () => Array.from(document.querySelectorAll(`[id^="${ID}-star-"]
 // Fill of each star as rendered, e.g. ['100%', '100%', '50%', '0%', '0%']
 const getFills = () => getStars().map((star) => star.style.getPropertyValue('--star-fill'));
 
-// Total number of stars filled, e.g. 2.5 (sums whole percents to avoid float error)
-const getFilledTotal = () => getFills().reduce((sum, fill) => sum + parseInt(fill), 0) / 100;
+// Total number of stars filled, e.g. 2.5: each star's fill position is mapped back to its tenth
+// (sums whole tenths to avoid float error)
+const getFilledTotal = () => getFills().reduce((sum, fill) => {
+	const tenths = FILL_STEPS.indexOf(parseInt(fill));
+	if (tenths < 0) throw new Error(`unexpected --star-fill ${fill}`);
+	return sum + tenths;
+}, 0) / 10;
 
 describe('StarRatings', () => {
 	describe('read-only rounding (spec: half-up to one decimal place)', () => {
@@ -28,7 +34,7 @@ describe('StarRatings', () => {
 		test('should fill 2.6 stars for 2.55', () => {
 			render(<StarRatings id={ID} readOnly value={2.55} />);
 
-			expect(getFills()).toEqual(['100%', '100%', '60%', '0%', '0%']);
+			expect(getFills()).toEqual(['100%', '100%', '55%', '0%', '0%']);
 			expect(getFilledTotal()).toBe(2.6);
 		});
 
@@ -146,6 +152,19 @@ describe('StarRatings', () => {
 			expect(getStars()).toHaveLength(5);
 		});
 
+		test('should not use `overlayMode` on the stars by default', () => {
+			render(<StarRatings id={ID} />);
+
+			getStars().forEach((star) => expect(star).not.toHaveClass('overlayMode'));
+		});
+
+		test('should pass `overlayMode` to every star', () => {
+			render(<StarRatings id={ID} overlayMode readOnly value={2.5} />);
+
+			getStars().forEach((star) => expect(star).toHaveClass('overlayMode'));
+			expect(document.getElementById(ID)).not.toHaveAttribute('overlaymode');
+		});
+
 		test('should render `max` stars', () => {
 			render(<StarRatings id={ID} max={10} readOnly value={7.5} />);
 
@@ -173,12 +192,6 @@ describe('StarRatings', () => {
 			getStars().forEach((star) => expect(star).not.toHaveClass('spottable'));
 		});
 
-		test('should not highlight any star', () => {
-			render(<StarRatings id={ID} readOnly value={3} />);
-
-			getStars().forEach((star) => expect(star).not.toHaveClass('highlighted'));
-		});
-
 		test('should not call `onChange` or change the value on click', () => {
 			const handleChange = jest.fn();
 			render(<StarRatings id={ID} readOnly defaultValue={3} onChange={handleChange} />);
@@ -195,16 +208,6 @@ describe('StarRatings', () => {
 			render(<StarRatings id={ID} />);
 
 			getStars().forEach((star) => expect(star).toHaveClass('spottable'));
-		});
-
-		test('should highlight only filled stars', () => {
-			render(<StarRatings id={ID} value={3} />);
-
-			expect(getStar(1)).toHaveClass('highlighted');
-			expect(getStar(2)).toHaveClass('highlighted');
-			expect(getStar(3)).toHaveClass('highlighted');
-			expect(getStar(4)).not.toHaveClass('highlighted');
-			expect(getStar(5)).not.toHaveClass('highlighted');
 		});
 
 		test('should call `onChange` with the number of the clicked star', () => {
@@ -232,6 +235,59 @@ describe('StarRatings', () => {
 			fireEvent.click(getStar(4));
 
 			expect(handleChange).toHaveBeenCalledWith(expect.objectContaining({value: 4}));
+			expect(getFilledTotal()).toBe(2);
+		});
+	});
+
+	describe('disabled', () => {
+		test('should not be disabled by default', () => {
+			render(<StarRatings id={ID} />);
+
+			expect(document.getElementById(ID)).not.toHaveClass('disabled');
+			getStars().forEach((star) => expect(star).not.toHaveAttribute('disabled'));
+		});
+
+		test('should mark the component and every star as disabled', () => {
+			render(<StarRatings id={ID} disabled />);
+
+			const row = document.getElementById(ID);
+			expect(row).toHaveClass('disabled');
+			expect(row).toHaveAttribute('aria-disabled', 'true');
+			getStars().forEach((star) => expect(star).toHaveAttribute('disabled'));
+		});
+
+		test('should still show the rating', () => {
+			render(<StarRatings id={ID} disabled value={4} />);
+
+			expect(getFilledTotal()).toBe(4);
+		});
+
+		test('should still show decimals when also read-only', () => {
+			render(<StarRatings id={ID} disabled readOnly value={2.55} />);
+
+			expect(getFilledTotal()).toBe(2.6);
+		});
+
+		// Limestone convention: disabled controls can still receive focus
+		test('should keep the stars focusable while selecting', () => {
+			render(<StarRatings id={ID} disabled />);
+
+			getStars().forEach((star) => expect(star).toHaveClass('spottable'));
+		});
+
+		test('should not make the stars focusable when also read-only', () => {
+			render(<StarRatings id={ID} disabled readOnly value={3} />);
+
+			getStars().forEach((star) => expect(star).not.toHaveClass('spottable'));
+		});
+
+		test('should not call `onChange` or change the value on click', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} disabled defaultValue={2} onChange={handleChange} />);
+
+			fireEvent.click(getStar(4));
+
+			expect(handleChange).not.toHaveBeenCalled();
 			expect(getFilledTotal()).toBe(2);
 		});
 	});
@@ -280,6 +336,42 @@ describe('StarRatings', () => {
 
 			expect(handleChange).toHaveBeenCalledTimes(1);
 			expect(getFilledTotal()).toBe(3);
+		});
+
+		test('should not call `onChange` when disabled', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} disabled defaultValue={2} onChange={handleChange} />);
+
+			touchMoveOver(getStar(4));
+
+			expect(handleChange).not.toHaveBeenCalled();
+			expect(getFilledTotal()).toBe(2);
+		});
+
+		// Changeable also blocks `onChange` when disabled, so test the base component on its own
+		test('should not call `onChange` from `StarRatingsBase` when disabled', () => {
+			const handleChange = jest.fn();
+			render(<StarRatingsBase id={ID} disabled value={2} onChange={handleChange} />);
+
+			touchMoveOver(getStar(4));
+
+			expect(handleChange).not.toHaveBeenCalled();
+		});
+
+		test('should not move focus to the touched star when disabled', () => {
+			render(<StarRatings id={ID} disabled />);
+
+			touchMoveOver(getStar(4));
+
+			expect(getStar(4)).not.toHaveFocus();
+		});
+
+		test('should move focus to the touched star while selecting', () => {
+			render(<StarRatings id={ID} />);
+
+			touchMoveOver(getStar(4));
+
+			expect(getStar(4)).toHaveFocus();
 		});
 
 		test('should not call `onChange` when read-only', () => {
