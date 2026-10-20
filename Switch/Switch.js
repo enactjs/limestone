@@ -35,8 +35,6 @@ const SwitchBase = kind({
 	name: 'Switch',
 
 	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
-		css: PropTypes.object,
-
 		/**
 		 * Applies the bounce animation to the switch handle.
 		 *
@@ -49,6 +47,8 @@ const SwitchBase = kind({
 		 * @private
 		 */
 		bouncing: PropTypes.bool,
+
+		css: PropTypes.object,
 
 		/**
 		 * Disables Switch and becomes non-interactive.
