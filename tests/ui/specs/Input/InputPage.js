@@ -20,11 +20,11 @@ class InputInterface {
 	}
 
 	get numberButton () {
-		return element('.Input_Input_key', browser);
+		return element('.Input_Input_keypad > .Input_Input_key:first-child', browser);
 	}
 
 	get numberCell () {
-		return element('.Input_Input_numberCell', browser);
+		return element('.Input_Input_numberCell:first-child', browser);
 	}
 
 	get submitButton () {

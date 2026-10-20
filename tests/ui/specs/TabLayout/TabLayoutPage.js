@@ -42,7 +42,7 @@ class TabLayoutInterface {
 	}
 	async tabs () {
 		if (await this.isCollapsed) {
-			return await $(`#${this.id} .TabLayout_TabLayout_tabs`);
+			return await $(`#${this.id} .TabLayout_TabLayout_tabs:not(.TabLayout_TabLayout_tabsExpanded)`);
 		}
 
 		return await $(`#${this.id} .TabLayout_TabLayout_tabsExpanded`);
