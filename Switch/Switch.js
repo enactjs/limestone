@@ -9,9 +9,11 @@
  * @exports SwitchBase
  */
 
+import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {useCallback, useState} from 'react';
 
 import Spottable from '@enact/spotlight/Spottable';
 import Touchable from '@enact/ui/Touchable';
@@ -34,6 +36,19 @@ const SwitchBase = kind({
 
 	propTypes: /** @lends limestone/Switch.SwitchBase.prototype */ {
 		css: PropTypes.object,
+
+		/**
+		 * Applies the bounce animation to the switch handle.
+		 *
+		 * This is set only for the render that follows an `off`-to-`on` toggle, so the handle
+		 * bounces when the user turns the switch on but not when a selected switch merely mounts
+		 * or re-mounts. It is managed by {@link limestone/Switch.BounceOnToggle|BounceOnToggle}.
+		 *
+		 * @type {Boolean}
+		 * @default false
+		 * @private
+		 */
+		bouncing: PropTypes.bool,
 
 		/**
 		 * Disables Switch and becomes non-interactive.
@@ -64,6 +79,7 @@ const SwitchBase = kind({
 	},
 
 	defaultProps: {
+		bouncing: false,
 		noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION,
 		selected: false
 	},
@@ -75,13 +91,15 @@ const SwitchBase = kind({
 	},
 
 	computed: {
-		className: ({noAnimation, selected, styler}) => styler.append({
+		className: ({bouncing, noAnimation, selected, styler}) => styler.append({
 			animated: !noAnimation,
+			bouncing: bouncing && !noAnimation,
 			selected
 		})
 	},
 
 	render: ({css, disabled, selected, ...rest}) => {
+		delete rest.bouncing;
 		delete rest.noAnimation;
 
 		return (
@@ -102,6 +120,64 @@ const SwitchBase = kind({
 });
 
 /**
+ * Plays the handle bounce animation only when `selected` transitions from `false` to `true`.
+ *
+ * The bounce is a CSS `animation`, which the browser replays every time the animated element is
+ * mounted (or revealed from `display: none`). A `selected` switch that re-mounts — e.g. when a
+ * panel it lives in is navigated away from and back — would therefore bounce even though the user
+ * never toggled it (QEVENTTH-15000). This decorator tracks the previous `selected` value and sets
+ * the `bouncing` prop for the single render that follows an `off`-to-`on` toggle, clearing it once
+ * the animation ends, so the bounce plays on a real toggle but never on mount or re-mount.
+ *
+ * @class BounceOnToggle
+ * @memberof limestone/Switch
+ * @hoc
+ * @private
+ */
+const BounceOnToggle = hoc((config, Wrapped) => {
+	// eslint-disable-next-line no-shadow
+	function BounceOnToggle ({selected = false, ...rest}) {
+		// Track the previous `selected` as state (not a ref) so the transition can be detected
+		// during render — the React-recommended "adjust state while rendering" pattern — which
+		// keeps the bounce class present on the first render after a toggle and absent on the
+		// initial mount or a re-mount. (`core/util.usePrevious` can't be used here: it holds the
+		// pre-change value until the *next* change, so it would re-trigger the bounce after the
+		// animation ends while `selected` stays on.)
+		const [prevSelected, setPrevSelected] = useState(selected);
+		const [bouncing, setBouncing] = useState(false);
+
+		if (selected !== prevSelected) {
+			setPrevSelected(selected);
+			// Bounce only on the off-to-on transition.
+			setBouncing(selected);
+		}
+
+		const handleAnimationEnd = useCallback((ev) => {
+			setBouncing(false);
+			if (rest.onAnimationEnd) {
+				rest.onAnimationEnd(ev);
+			}
+		}, [rest]);
+
+		return (
+			<Wrapped
+				{...rest}
+				bouncing={bouncing}
+				onAnimationEnd={handleAnimationEnd}
+				selected={selected}
+			/>
+		);
+	}
+
+	BounceOnToggle.propTypes = /** @lends limestone/Switch.BounceOnToggle.prototype */ {
+		onAnimationEnd: PropTypes.func,
+		selected: PropTypes.bool
+	};
+
+	return BounceOnToggle;
+});
+
+/**
  * Adds interactive functionality to `Switch`.
  *
  * @class SwitchDecorator
@@ -115,7 +191,8 @@ const SwitchDecorator = compose(
 	Toggleable({toggleProp: 'onClick'}),
 	Touchable,
 	Spottable,
-	Skinnable
+	Skinnable,
+	BounceOnToggle
 );
 
 /**
@@ -135,6 +212,7 @@ const Switch = SwitchDecorator(SwitchBase);
 
 export default Switch;
 export {
+	BounceOnToggle,
 	Switch,
 	SwitchBase,
 	SwitchDecorator
