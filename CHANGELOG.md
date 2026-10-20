@@ -2,6 +2,10 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.11.4] - 2026-10-20
+
+- Update dependencies including ilib updates.
+
 ## [1.11.3] - 2026-10-15
 
 ### Fixed
