@@ -136,7 +136,7 @@ const SwitchBase = kind({
  */
 const BounceOnToggle = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
-	function BounceOnToggle ({selected = false, ...rest}) {
+	function BounceOnToggle ({onAnimationEnd, selected = false, ...rest}) {
 		// Track the previous `selected` as state (not a ref) so the transition can be detected
 		// during render — the React-recommended "adjust state while rendering" pattern — which
 		// keeps the bounce class present on the first render after a toggle and absent on the
@@ -154,10 +154,10 @@ const BounceOnToggle = hoc((config, Wrapped) => {
 
 		const handleAnimationEnd = useCallback((ev) => {
 			setBouncing(false);
-			if (rest.onAnimationEnd) {
-				rest.onAnimationEnd(ev);
+			if (onAnimationEnd) {
+				onAnimationEnd(ev);
 			}
-		}, [rest]);
+		}, [onAnimationEnd]);
 
 		return (
 			<Wrapped
