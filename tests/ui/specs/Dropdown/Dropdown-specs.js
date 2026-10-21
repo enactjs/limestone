@@ -45,6 +45,30 @@ describe('Dropdown', function () {
 		});
 	});
 
+	describe('scrollbar', function () {
+		beforeEach(async function () {
+			await Page.open();
+		});
+
+		it('should not render a vertical scrollbar when there is only one item', async function () {
+			const dropdown = Page.components.dropdownSingle;
+
+			await Page.openDropdown(dropdown);
+			await browser.pause(500);
+
+			expect(await dropdown.verticalScrollbar.isExisting()).toBe(false);
+		});
+
+		it('should render a vertical scrollbar when there are more than 5 items', async function () {
+			const dropdown = Page.components.dropdownMoreChildren;
+
+			await Page.openDropdown(dropdown);
+			await browser.pause(500);
+
+			expect(await dropdown.verticalScrollbar.isExisting()).toBe(true);
+		});
+	});
+
 	describe('5-way', function () {
 		beforeEach(async function () {
 			await Page.open();
