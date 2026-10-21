@@ -4,6 +4,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- new component `StarRatings` 
+
+
 ### Fixed
 
 - `limestone/Alert` Button width for overlay type

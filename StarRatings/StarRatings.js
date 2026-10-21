@@ -289,17 +289,17 @@ const StarRatingsBase = kind({
 	},
 
 	render: ({
-				 disabled,
-				 id,
-				 max,
-				 onStarClick,
-				 onTouchMove,
-				 onTouchStart,
-				 overlayMode,
-				 readOnly,
-				 tenths,
-				 ...rest
-			 }) => {
+		disabled,
+		id,
+		max,
+		onStarClick,
+		onTouchMove,
+		onTouchStart,
+		overlayMode,
+		readOnly,
+		tenths,
+		...rest
+	}) => {
 		delete rest.onChange;
 		delete rest.value;
 
