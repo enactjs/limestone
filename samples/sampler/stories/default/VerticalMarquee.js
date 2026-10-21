@@ -1,6 +1,5 @@
 import Spottable from '@enact/spotlight/Spottable';
 import VerticalMarquee from '@enact/limestone/VerticalMarquee';
-import Skinnable from '@enact/limestone/Skinnable';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {boolean, number, select, text} from '@enact/storybook-utils/addons/controls';
 import ri from '@enact/ui/resolution';
@@ -8,7 +7,7 @@ import ri from '@enact/ui/resolution';
 import css from './VerticalMarquee.module.less';
 
 const Config = mergeComponentMetadata('VerticalMarquee', VerticalMarquee);
-const FocusableVerticalMarquee = Spottable(Skinnable(VerticalMarquee));
+const FocusableVerticalMarquee = Spottable(VerticalMarquee);
 
 const longText = 'Vertical marquee proof of concept. This block is clipped to a few lines. When it receives focus and the text is taller than that area, it scrolls upward through the full content, pauses briefly, then repeats the cycle. The quick brown fox jumped over the lazy dog. The bean bird flies at sundown. '.repeat(4);
 
@@ -46,6 +45,11 @@ export const _VerticalMarquee = (args) => {
 				The text scrolls one full cycle, like the horizontal Marquee, then pauses and repeats.
 				Focus it when marqueeOn is focus.
 			</p>
+			{controls.disabled ? (
+				<p className={css.note}>
+					<sup>*</sup>Marquee does not visually respond to <code>disabled</code> state.
+				</p>
+			) : null}
 			<div style={frameStyle}>
 				<p className={css.note}>Overflows maxLines</p>
 				<FocusableVerticalMarquee {...controls}>
