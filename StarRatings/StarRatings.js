@@ -205,11 +205,18 @@ const ShownValueDecorator = (Wrapped) => {
 };
 
 /**
- * Tracks which star has focus and passes its number to `StarRatingsBase` as `focusedStar`, so
- * the stars up to and including the focused one are filled as a preview.
+ * Handles focus for the stars:
  *
- * Only the fill changes: `value` and `onChange` are untouched until the user selects the star.
- * When focus leaves the row, `focusedStar` is cleared and the selected rating shows again.
+ * * Preview: passes the focused star's number to `StarRatingsBase` as `focusedStar`, so the
+ *   stars up to and including it are filled. Only the fill changes: `value` and `onChange` are
+ *   untouched until the user selects the star. When focus leaves the row, the selected rating
+ *   shows again.
+ * * Pointer: while the pointer is inside the row, focus stays on the last star that received it,
+ *   until another star receives it. Spotlight blurs the focused element whenever the pointer is
+ *   over something that is not spottable (the gaps between stars, or the edge of a star on some
+ *   platforms); that blur is undone right away, before anything is painted, and is not passed
+ *   on to `onBlur`/`onFocus`. Leaving the row blurs as usual. Pointer events are not stopped, so
+ *   Spotlight and other listeners still see every move.
  *
  * @hoc
  * @param {Component} Wrapped The component to wrap.
@@ -217,29 +224,70 @@ const ShownValueDecorator = (Wrapped) => {
  * @private
  */
 const FocusPreviewDecorator = (Wrapped) => {
-	const FocusPreview = ({onBlur, onFocus, ...rest}) => {
+	const FocusPreview = ({onBlur, onFocus, onMouseEnter, onMouseLeave, ...rest}) => {
 		const {id} = rest;
 		const [focusedStar, setFocusedStar] = useState(null);
+		const pointerInside = useRef(false);
+		const restoring = useRef(false);
+
+		const isOwnStar = useCallback((node) => (
+			Boolean(node && typeof node.id === 'string' && node.id.startsWith(`${id}-star-`))
+		), [id]);
+
+		const handleMouseEnter = useCallback((ev) => {
+			pointerInside.current = true;
+			if (onMouseEnter) onMouseEnter(ev);
+		}, [onMouseEnter]);
+
+		// `mouseleave` fires before the `mousemove` Spotlight blurs on, so leaving is not undone
+		const handleMouseLeave = useCallback((ev) => {
+			pointerInside.current = false;
+			if (onMouseLeave) onMouseLeave(ev);
+		}, [onMouseLeave]);
 
 		const handleFocus = useCallback((ev) => {
-			if (onFocus) onFocus(ev);
-
 			// Focus events bubble from the stars; anything else in the row is ignored
-			const starId = ev.target && ev.target.id;
-			const isStar = typeof starId === 'string' && starId.startsWith(`${id}-star-`);
-			setFocusedStar(isStar ? getStarNumber(starId, id) || null : null);
-		}, [id, onFocus]);
+			setFocusedStar(isOwnStar(ev.target) ? getStarNumber(ev.target.id, id) || null : null);
+
+			if (restoring.current) return; // the star got its focus back; nothing changed
+			if (onFocus) onFocus(ev);
+		}, [id, isOwnStar, onFocus]);
 
 		const handleBlur = useCallback((ev) => {
+			const star = ev.target;
+
+			// Blurred to nothing (not to another element) while the pointer is still inside: keep
+			// focus on this star. Not while the window itself loses focus.
+			const to = ev.relatedTarget;
+			const toNothing = !to || to === document || to === document.body;
+			if (pointerInside.current && toNothing && isOwnStar(star) && document.hasFocus()) {
+				restoring.current = true;
+				try {
+					focusStar(star);
+				} finally {
+					restoring.current = false;
+				}
+				if (document.activeElement === star) return;
+			}
+
 			if (onBlur) onBlur(ev);
 
 			// Moving between stars fires blur then focus; only clear when focus leaves the row
 			if (!ev.relatedTarget || !ev.currentTarget.contains(ev.relatedTarget)) {
 				setFocusedStar(null);
 			}
-		}, [onBlur]);
+		}, [isOwnStar, onBlur]);
 
-		return <Wrapped {...rest} focusedStar={focusedStar} onBlur={handleBlur} onFocus={handleFocus} />;
+		return (
+			<Wrapped
+				{...rest}
+				focusedStar={focusedStar}
+				onBlur={handleBlur}
+				onFocus={handleFocus}
+				onMouseEnter={handleMouseEnter}
+				onMouseLeave={handleMouseLeave}
+			/>
+		);
 	};
 
 	return FocusPreview;
@@ -258,7 +306,8 @@ const FocusPreviewDecorator = (Wrapped) => {
  *   with `onChange` when it differs from `value`, and enters the row at the selected star, so
  *   pressing Enter or Done keeps the rating the user sees. While a star has focus, the stars
  *   up to and including it are filled as a preview (`value` changes only on selection); the
- *   selected rating shows again when focus leaves the row.
+ *   selected rating shows again when focus leaves the row. With a pointer, focus stays on the
+ *   last hovered star while the pointer is between stars, until it leaves the row.
  *
  * `disabled` works in both modes: the rating is still shown, at 30% opacity, but cannot be
  * changed. `overlayMode` switches the color of the empty parts for light overlay surfaces.

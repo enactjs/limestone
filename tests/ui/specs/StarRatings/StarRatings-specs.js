@@ -163,6 +163,49 @@ describe('StarRatings', function () {
 		});
 
 		describe('pointer', function () {
+			it('should focus and fill up to the hovered star', async function () {
+				await starRatingsDefault.star(5).moveTo();
+
+				expect(await starRatingsDefault.star(5).isFocused()).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(5);
+				expect(await Page.lastChange).toBe('none');
+			});
+
+			// Regression: the gaps are not spottable, so Spotlight used to blur the star there
+			it('should keep focus on the last hovered star while the pointer is between stars', async function () {
+				// Middle of the gap after star 2: half the distance between two stars' centers
+				const gap = (await starRatingsDefault.starLeft(3) - await starRatingsDefault.starLeft(2)) / 2;
+
+				await starRatingsDefault.star(2).moveTo();
+				await starRatingsDefault.star(2).moveTo({xOffset: gap});
+
+				expect(await starRatingsDefault.star(2).isFocused()).toBe(true);
+				expect(await starRatingsDefault.hasFocusOutline(2)).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(2);
+			});
+
+			it('should keep a star focused at every step from one star to another', async function () {
+				// Steps of a quarter of the distance between two stars' centers, from star 5 to star 1
+				const pitch = await starRatingsDefault.starLeft(2) - await starRatingsDefault.starLeft(1);
+				const focused = [];
+
+				for (let step = 0; step <= 16; step++) {
+					await starRatingsDefault.star(5).moveTo({xOffset: -step * pitch / 4});
+					focused.push(await Page.focusedId);
+				}
+
+				expect(focused.filter((id) => !/^starRatingsDefault-star-/.test(id || ''))).toEqual([]);
+				expect(focused[focused.length - 1]).toBe('starRatingsDefault-star-1');
+			});
+
+			it('should leave the stars when the pointer leaves the row', async function () {
+				await starRatingsDefault.star(2).moveTo();
+				await $('#lastChange').moveTo();
+
+				expect(await Page.focusedId).not.toMatch(/^starRatingsDefault-star-/);
+				expect(await starRatingsDefault.filledStars()).toBe(3);
+			});
+
 			it('should select the clicked star', async function () {
 				await starRatingsDefault.star(5).click();
 

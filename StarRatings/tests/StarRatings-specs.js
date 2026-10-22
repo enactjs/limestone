@@ -445,6 +445,119 @@ describe('StarRatings', () => {
 		});
 	});
 
+	// Spotlight blurs the focused star when the pointer is over anything that is not spottable
+	describe('pointer inside the row', () => {
+		const focus = (el) => act(() => el.focus());
+		const blur = (el) => act(() => el.blur());
+		const row = () => document.getElementById(ID);
+
+		// jsdom's document never has focus; a real page does while the user interacts with it
+		beforeEach(() => {
+			jest.spyOn(document, 'hasFocus').mockReturnValue(true);
+		});
+
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		test('should blur when the window loses focus', () => {
+			document.hasFocus.mockReturnValue(false);
+			render(<StarRatings id={ID} />);
+			fireEvent.mouseEnter(row());
+			focus(getStar(2));
+
+			blur(getStar(2));
+
+			expect(getStar(2)).not.toHaveFocus();
+		});
+
+		const renderWithOutside = (props) => render(
+			<div>
+				<StarRatings id={ID} {...props} />
+				<button id="outside">outside</button>
+			</div>
+		);
+
+		test('should keep focus on the last star while the pointer is inside', () => {
+			render(<StarRatings id={ID} defaultValue={3} />);
+			fireEvent.mouseEnter(row());
+			focus(getStar(4));
+
+			blur(getStar(4)); // what Spotlight does over a gap
+
+			expect(getStar(4)).toHaveFocus();
+			expect(getFilledTotal()).toBe(4);
+		});
+
+		test('should not report the undone blur', () => {
+			const handleBlur = jest.fn();
+			const handleFocus = jest.fn();
+			render(<StarRatings id={ID} onBlur={handleBlur} onFocus={handleFocus} />);
+			fireEvent.mouseEnter(row());
+			focus(getStar(2));
+
+			blur(getStar(2));
+
+			expect(handleFocus).toHaveBeenCalledTimes(1);
+			expect(handleBlur).not.toHaveBeenCalled();
+		});
+
+		test('should move focus to the next star the pointer reaches', () => {
+			render(<StarRatings id={ID} />);
+			fireEvent.mouseEnter(row());
+			focus(getStar(2));
+			blur(getStar(2));
+
+			focus(getStar(5));
+
+			expect(getStar(5)).toHaveFocus();
+			expect(getFilledTotal()).toBe(5);
+		});
+
+		test('should blur when the pointer has left the row', () => {
+			render(<StarRatings id={ID} defaultValue={3} />);
+			fireEvent.mouseEnter(row());
+			focus(getStar(5));
+			fireEvent.mouseLeave(row());
+
+			blur(getStar(5));
+
+			expect(getStar(5)).not.toHaveFocus();
+			expect(getFilledTotal()).toBe(3);
+		});
+
+		test('should blur when the pointer never entered the row', () => {
+			render(<StarRatings id={ID} />);
+			focus(getStar(5));
+
+			blur(getStar(5));
+
+			expect(getStar(5)).not.toHaveFocus();
+		});
+
+		test('should let focus move to another element while the pointer is inside', () => {
+			renderWithOutside({});
+			fireEvent.mouseEnter(row());
+			focus(getStar(2));
+
+			focus(document.getElementById('outside')); // e.g. 5-way to a button
+
+			expect(document.getElementById('outside')).toHaveFocus();
+		});
+
+		test('should forward `onMouseEnter` and `onMouseLeave`', () => {
+			const handleEnter = jest.fn();
+			const handleLeave = jest.fn();
+			render(<StarRatings id={ID} onMouseEnter={handleEnter} onMouseLeave={handleLeave} />);
+
+			fireEvent.mouseEnter(row());
+			fireEvent.mouseLeave(row());
+
+			expect(handleEnter).toHaveBeenCalledTimes(1);
+			expect(handleLeave).toHaveBeenCalledTimes(1);
+		});
+	});
+
 	// Spotlight enters the row at this star, so Enter keeps the shown rating
 	describe('selected star', () => {
 		const getSelected = () => getStars().filter((star) => star.hasAttribute('data-star-selected'));
