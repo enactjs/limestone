@@ -4,6 +4,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ## [unreleased]
 
+### Added
+
+- `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
+
 ### Fixed
 
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
