@@ -1,3 +1,4 @@
+import Alert from '@enact/limestone/Alert';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, range} from '@enact/storybook-utils/addons/controls';
@@ -26,13 +27,24 @@ export const _StarRatings = (args) => {
 		value: args['readOnly'] ? args['value'] : defaultValue
 	};
 
-	return (<>
-		<StarRatings
-			onChange={handleValue}
-			{...controls}
-			id="user-rating"
-		/>
-	</>);
+	return (
+		!args.overlayMode ?
+			<StarRatings
+				onChange={handleValue}
+				{...controls}
+				id="user-rating"
+			/>		:
+			<Alert
+				open
+				type="overlay"
+			>
+				<StarRatings
+					onChange={handleValue}
+					{...controls}
+					id="user-rating"
+				/>
+			</Alert>
+	);
 };
 
 boolean('disabled', _StarRatings, StarRatingsConfig);
