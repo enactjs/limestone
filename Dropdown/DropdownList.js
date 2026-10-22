@@ -193,6 +193,7 @@ const DropdownListBase = kind({
 					cbScrollTo={scrollTo}
 					dataSize={dataSize}
 					itemSize={ri.scale(itemSize)}
+					noAffordance
 					role="group"
 					scrollbarTrackCss={css}
 					style={{
