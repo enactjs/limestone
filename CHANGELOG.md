@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
+- `limestone/VirtualList` scrollthumb not to cut off
 
 ## [1.12.0] - 2026-10-01
 
