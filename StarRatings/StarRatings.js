@@ -25,6 +25,7 @@ import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
 import PropTypes from 'prop-types';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import clamp from 'ramda/src/clamp';
 import compose from 'ramda/src/compose';
 
@@ -114,6 +115,137 @@ const toTenths = (value, max, readOnly) => {
 };
 
 /**
+ * Selects the star under the finger: focuses it and, if it differs from the rating shown, calls
+ * `onChange` with its number. Shared by `touchstart` (spec: pressing a star selects it right
+ * away) and `touchmove` (dragging updates the rating).
+ *
+ * Compares with the shown rating rather than `value`, so a missing value (3 stars shown) or a
+ * clamped one does not fire `onChange` for the star that is already shown.
+ *
+ * @param {TouchEvent} ev The touch event.
+ * @param {Object} props The `StarRatingsBase` props.
+ * @returns {Boolean} `false` when the finger is not over a star, so the last value is kept.
+ * @private
+ */
+const selectTouchedStar = (ev, {id, max, onChange, readOnly, value}) => {
+	const star = getStarFromTouch(ev, id);
+	if (!star) return false; // outside the row: keep the last value and focus
+
+	focusStar(star);
+
+	const shown = toTenths(value, max, readOnly) / 10;
+	const starNumber = getStarNumber(star.id, id);
+	if (onChange && starNumber && starNumber !== shown) {
+		onChange({value: starNumber});
+	}
+	return true;
+};
+
+/**
+ * Selector of the selected star, which Spotlight focuses when the row is entered for the first
+ * time, so pressing Enter right away keeps the rating that is shown.
+ *
+ * @type {String}
+ * @private
+ */
+const SELECTED_STAR_SELECTOR = '[data-star-selected]';
+
+/**
+ * Tells the app about the rating the stars show, when it differs from `value`.
+ *
+ * While selecting, the stars show a whole rating from 1 to `max`, so a missing value (3 stars),
+ * `0` (1 star), a value above `max` (`max` stars) or a fraction (rounded) would show a rating
+ * the app does not have. In that case `onChange` is called once with `{value: shown, normalized:
+ * true}`, so the app (and `Changeable`) holds what the user sees, and pressing Done in a popup
+ * submits it. `normalized` lets an app that acts on each selection (e.g. a popup that closes on
+ * selection) ignore this call.
+ *
+ * Skipped while read-only (no rating is chosen) or disabled (`Changeable` ignores changes then);
+ * it runs again when either becomes `false`.
+ *
+ * @param {Object} props The `StarRatings` props.
+ * @returns {undefined}
+ * @private
+ */
+const useSyncShownValue = ({disabled = false, max = 5, onChange, readOnly = false, value}) => {
+	const synced = useRef(null);
+	const shown = toTenths(value, max, readOnly) / 10;
+
+	useEffect(() => {
+		if (readOnly || disabled || !onChange || value === shown) {
+			synced.current = null;
+			return;
+		}
+
+		// Calls once per mismatch, even if the app ignores it or the effect runs twice (Strict Mode)
+		const key = `${value}:${shown}`;
+		if (synced.current === key) return;
+		synced.current = key;
+
+		onChange({value: shown, normalized: true});
+	}, [disabled, onChange, readOnly, shown, value]);
+};
+
+/**
+ * Applies `useSyncShownValue`. Placed inside `Changeable`, so the reported rating is stored.
+ *
+ * @hoc
+ * @param {Component} Wrapped The component to wrap.
+ * @returns {Component} The wrapped component.
+ * @private
+ */
+const ShownValueDecorator = (Wrapped) => {
+	const ShownValue = (props) => {
+		useSyncShownValue(props);
+
+		return <Wrapped {...props} />;
+	};
+
+	return ShownValue;
+};
+
+/**
+ * Tracks which star has focus and passes its number to `StarRatingsBase` as `focusedStar`, so
+ * the stars up to and including the focused one are filled as a preview.
+ *
+ * Only the fill changes: `value` and `onChange` are untouched until the user selects the star.
+ * When focus leaves the row, `focusedStar` is cleared and the selected rating shows again.
+ *
+ * @hoc
+ * @param {Component} Wrapped The component to wrap.
+ * @returns {Component} The wrapped component.
+ * @private
+ */
+const FocusPreviewDecorator = (Wrapped) => {
+	const FocusPreview = ({onBlur, onFocus, ...rest}) => {
+		const {id} = rest;
+		const [focusedStar, setFocusedStar] = useState(null);
+
+		const handleFocus = useCallback((ev) => {
+			if (onFocus) onFocus(ev);
+
+			// Focus events bubble from the stars; anything else in the row is ignored
+			const starId = ev.target && ev.target.id;
+			const isStar = typeof starId === 'string' && starId.startsWith(`${id}-star-`);
+			setFocusedStar(isStar ? getStarNumber(starId, id) || null : null);
+		}, [id, onFocus]);
+
+		const handleBlur = useCallback((ev) => {
+			if (onBlur) onBlur(ev);
+
+			// Moving between stars fires blur then focus; only clear when focus leaves the row
+			if (!ev.relatedTarget || !ev.currentTarget.contains(ev.relatedTarget)) {
+				setFocusedStar(null);
+			}
+		}, [onBlur]);
+
+		return <Wrapped {...rest} focusedStar={focusedStar} onBlur={handleBlur} onFocus={handleFocus} />;
+	};
+
+	return FocusPreview;
+};
+
+/**
  * A star rating component, without any behaviors applied.
  *
  * Has two modes, set by `readOnly`:
@@ -122,11 +254,18 @@ const toTenths = (value, max, readOnly) => {
  * * Selecting (`readOnly` is `false`, the default): shows `value` as whole stars, from 1 to
  *   `max`, starting at 3 stars when no value is given. The user selects a star with the
  *   remote, a click, a tap or a touch drag, and `onChange` is called with the star's number.
+ *   [StarRatings]{@link limestone/StarRatings.StarRatings} also reports the shown rating
+ *   with `onChange` when it differs from `value`, and enters the row at the selected star, so
+ *   pressing Enter or Done keeps the rating the user sees. While a star has focus, the stars
+ *   up to and including it are filled as a preview (`value` changes only on selection); the
+ *   selected rating shows again when focus leaves the row.
  *
  * `disabled` works in both modes: the rating is still shown, at 30% opacity, but cannot be
  * changed. `overlayMode` switches the color of the empty parts for light overlay surfaces.
  *
- * Laid out as a 990 × 240 row (UHD px) with a 60px gap between 108px stars, sized for 5 stars.
+ * Laid out as a row of 108px stars with a 60px gap (UHD px). The row is as wide as its stars,
+ * for any `max`; space around it, such as the design's 990 × 240 area in a popup, is up to the
+ * surrounding layout.
  *
  * @class StarRatingsBase
  * @memberof limestone/StarRatings
@@ -163,10 +302,22 @@ const StarRatingsBase = kind({
 		disabled: PropTypes.bool,
 
 		/**
+		 * The number of the focused star, set by
+		 * [StarRatingsDecorator]{@link limestone/StarRatings.StarRatingsDecorator}.
+		 *
+		 * While selecting (and not disabled), the stars up to and including this one are filled
+		 * as a preview, up or down from the selected rating. `value` does not change until the
+		 * user selects the star.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		focusedStar: PropTypes.number,
+
+		/**
 		 * The number of stars.
 		 *
-		 * The row has a fixed 990px width (UHD px), designed for 5 stars; with more stars they
-		 * overflow it.
+		 * Set it for each scenario. The row grows or shrinks with the number of stars.
 		 *
 		 * @type {Number}
 		 * @default 5
@@ -178,8 +329,18 @@ const StarRatingsBase = kind({
 		 * Called when the user selects a star.
 		 *
 		 * Receives an object whose `value` is the number of the selected star, from `1` to `max`.
-		 * During a touch drag, it is called whenever the finger moves onto a star other than the
-		 * current `value`. Never called while `disabled` or `readOnly` is `true`.
+		 * With touch, it is called as soon as the finger lands on a star other than the one
+		 * shown, and again whenever a drag moves it onto another star. Lifting the finger, or
+		 * moving it off the stars, keeps the last value.
+		 *
+		 * With [StarRatings]{@link limestone/StarRatings.StarRatings} (not `StarRatingsBase`),
+		 * also called once, with `{value, normalized: true}`, when the rating shown while
+		 * selecting differs from `value`: when no value is set (3), for `0` (1), above `max`
+		 * (`max`) or for a fraction (rounded). This way the app holds the rating the user sees,
+		 * e.g. to submit it with a popup's Done button. An app that acts on every selection,
+		 * such as a popup that closes on selection, can ignore events with `normalized` set.
+		 *
+		 * Never called while `disabled` or `readOnly` is `true`.
 		 *
 		 * @type {Function}
 		 * @public
@@ -218,7 +379,8 @@ const StarRatingsBase = kind({
 		 *   of a star fills an equal share of its area. When not set or `NaN`, no star is filled.
 		 * * Selecting: rounded half-up to a whole star and clamped to `1`–`max`, so `0` shows 1
 		 *   star. When neither `value` nor `defaultValue` is set (or the value is `NaN`), shows
-		 *   3 stars, the spec's recommended default.
+		 *   3 stars, the spec's recommended default. If the shown rating differs from `value`,
+		 *   `onChange` reports it (see `onChange`).
 		 *
 		 * If not set, the component keeps its own value and updates it on each selection; use
 		 * `defaultValue` to set where it starts.
@@ -252,15 +414,12 @@ const StarRatingsBase = kind({
 			)
 		),
 
-		// The touched star gets focus (and its focus outline) as soon as the finger lands
+		// Spec: pressing a star selects it right away (focus outline and fill together)
 		onTouchStart: handle(
 			forward('onTouchStart'),
 			forProp('disabled', false),
 			forProp('readOnly', false),
-			(ev, {id}) => {
-				focusStar(getStarFromTouch(ev, id));
-				return true;
-			}
+			selectTouchedStar
 		),
 
 		// Drag across the stars to change the rating
@@ -268,16 +427,17 @@ const StarRatingsBase = kind({
 			forward('onTouchMove'),
 			forProp('disabled', false),
 			forProp('readOnly', false),
-			(ev, {id, onChange, value}) => {
-				const star = getStarFromTouch(ev, id);
-				if (!star) return false; // outside the row: keep the last value and focus
+			selectTouchedStar
+		),
 
-				focusStar(star);
-
-				const starNumber = getStarNumber(star.id, id);
-				if (onChange && starNumber && starNumber !== value) {
-					onChange({value: starNumber});
-				}
+		// The touch already selected the star, so cancel the click the browser would send on
+		// release; otherwise `onChange` would be called a second time for the same star
+		onTouchEnd: handle(
+			forward('onTouchEnd'),
+			forProp('disabled', false),
+			forProp('readOnly', false),
+			(ev) => {
+				if (ev.cancelable) ev.preventDefault();
 				return true;
 			}
 		)
@@ -285,7 +445,13 @@ const StarRatingsBase = kind({
 
 	computed: {
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
-		tenths: ({max, readOnly, value}) => toTenths(value, max, readOnly)
+		// The selected rating, which Spotlight enters the row at
+		selected: ({max, readOnly, value}) => (readOnly ? null : toTenths(value, max, readOnly) / 10),
+		// What the stars show: the focus preview while selecting, otherwise `value`
+		tenths: ({disabled, focusedStar, max, readOnly, value}) => {
+			const preview = !readOnly && !disabled && focusedStar;
+			return toTenths(preview ? focusedStar : value, max, readOnly);
+		}
 	},
 
 	render: ({
@@ -293,13 +459,16 @@ const StarRatingsBase = kind({
 		id,
 		max,
 		onStarClick,
+		onTouchEnd,
 		onTouchMove,
 		onTouchStart,
 		overlayMode,
 		readOnly,
+		selected,
 		tenths,
 		...rest
 	}) => {
+		delete rest.focusedStar;
 		delete rest.onChange;
 		delete rest.value;
 
@@ -308,6 +477,7 @@ const StarRatingsBase = kind({
 				{...rest}
 				aria-disabled={disabled}
 				id={id}
+				onTouchEnd={onTouchEnd}
 				onTouchMove={onTouchMove}
 				onTouchStart={onTouchStart}
 			>
@@ -317,6 +487,7 @@ const StarRatingsBase = kind({
 					return (
 						<Star
 							key={i}
+							data-star-selected={i + 1 === selected ? true : null}
 							id={`${id}-star-${i + 1}`}
 							disabled={disabled}
 							overlayMode={overlayMode}
@@ -335,8 +506,11 @@ const StarRatingsBase = kind({
  * Applies Limestone specific behaviors to
  * [StarRatingsBase]{@link limestone/StarRatings.StarRatingsBase} components.
  *
- * Stores the rating itself when `value` is not set (see `defaultValue`), groups the stars for
- * Spotlight navigation (focus returns to the last focused star) and applies the current skin.
+ * Stores the rating itself when `value` is not set (see `defaultValue`), reports the shown
+ * rating with `onChange` when it differs from `value` (see `onChange`), groups the stars for
+ * Spotlight navigation (focus enters at the selected star the first time, then returns to the
+ * last focused star), fills the stars up to the focused one as a preview while selecting, and
+ * applies the current skin.
  *
  * @hoc
  * @memberof limestone/StarRatings
@@ -347,7 +521,13 @@ const StarRatingsBase = kind({
  */
 const StarRatingsDecorator = compose(
 	Changeable,
-	SpotlightContainerDecorator({enterTo: 'last-focused'}),
+	ShownValueDecorator,
+	FocusPreviewDecorator,
+	SpotlightContainerDecorator({
+		// Entering for the first time focuses the selected star, then the last focused one
+		defaultElement: SELECTED_STAR_SELECTOR,
+		enterTo: 'last-focused'
+	}),
 	Skinnable
 );
 

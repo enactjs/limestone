@@ -17,12 +17,19 @@ const starRatingsSmokeTests = [
 	<StarRatings id="starRatings" disabled readOnly value={3.5} />
 ];
 
+// The row sizes itself to the number of stars
+const starRatingsMaxTests = [
+	<StarRatings id="starRatings" max={3} />,
+	<StarRatings id="starRatings" max={7} value={6} />,
+	<StarRatings id="starRatings" max={3} readOnly value={1.5} />
+];
+
 // Every tenth of a star, to check the fill steps
 const starRatingsFillStepTests = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9].map((value) => (
 	<StarRatings id="starRatings" max={1} readOnly value={value} />
 ));
 
-// Focus lands on the first star. Values differ from the smoke tests so each screenshot is unique.
+// Focus lands on the selected star. Values differ from the smoke tests so each screenshot is unique.
 const starRatingsFocusTests = [
 	<StarRatings id="starRatings" value={2} />,
 	<StarRatings id="starRatings" value={4} />,
@@ -42,6 +49,7 @@ const starRatingsRtlTests = [
 
 const StarRatingsTests = [
 	...starRatingsSmokeTests,
+	...starRatingsMaxTests,
 	...starRatingsFillStepTests,
 	...withConfig({focus: true}, starRatingsFocusTests),
 	...withConfig({wrapper: {light: true}}, starRatingsOverlayModeTests),

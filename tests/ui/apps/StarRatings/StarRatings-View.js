@@ -10,9 +10,15 @@ spotlight.setPointerMode(false);
 
 const App = (props) => {
 	const [lastChange, setLastChange] = useState('none');
+	const [lastNormalized, setLastNormalized] = useState('none');
 
-	const handleChange = useCallback(({value}) => {
-		setLastChange(String(value));
+	// User selections and normalized values (e.g. the default 3) are shown separately
+	const handleChange = useCallback(({normalized, value}) => {
+		if (normalized) {
+			setLastNormalized(String(value));
+		} else {
+			setLastChange(String(value));
+		}
 	}, []);
 
 	return (
@@ -39,7 +45,16 @@ const App = (props) => {
 					onChange={handleChange}
 				/>
 			</div>
+			<div>
+				<StarRatings
+					defaultValue={2}
+					id="starRatingsMax3"
+					max={3}
+					onChange={handleChange}
+				/>
+			</div>
 			<div id="lastChange">{lastChange}</div>
+			<div id="lastNormalized">{lastNormalized}</div>
 		</div>
 	);
 };

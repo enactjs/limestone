@@ -12,7 +12,7 @@ export default {
 };
 
 export const _StarRatings = (args) => {
-	const [defaultValue, setDefaultValue] = useState(0); // eslint-disable-line react-hooks/rules-of-hooks
+	const [defaultValue, setDefaultValue] = useState(3); // eslint-disable-line react-hooks/rules-of-hooks
 
 	const handleValue = useCallback((event) => { // eslint-disable-line react-hooks/rules-of-hooks
 		action('onChange')(event);
@@ -38,6 +38,6 @@ export const _StarRatings = (args) => {
 boolean('disabled', _StarRatings, StarRatingsConfig);
 boolean('readOnly', _StarRatings, StarRatingsConfig);
 boolean('overlayMode', _StarRatings, StarRatingsConfig);
-range('value', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01});
+range('value', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01}, 0);
 
 _StarRatings.storyName = 'StarRatings';

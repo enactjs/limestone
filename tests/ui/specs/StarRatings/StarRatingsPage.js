@@ -47,6 +47,15 @@ class StarRatingsInterface {
 	async starLeft (number) {
 		return (await this.star(number).getLocation()).x;
 	}
+
+	// {left, right, width} of the row, or of one of its stars
+	async rect (number) {
+		const el = number ? await this.star(number) : await this.self;
+		return await browser.execute((node) => {
+			const {left, right, width} = node.getBoundingClientRect();
+			return {left, right, width};
+		}, el);
+	}
 }
 
 class StarRatingsPage extends Page {
@@ -56,17 +65,24 @@ class StarRatingsPage extends Page {
 		const starRatingsDefault = new StarRatingsInterface('starRatingsDefault');
 		const starRatingsReadOnly = new StarRatingsInterface('starRatingsReadOnly');
 		const starRatingsDisabled = new StarRatingsInterface('starRatingsDisabled');
+		const starRatingsMax3 = new StarRatingsInterface('starRatingsMax3');
 
 		this.components = {
 			starRatingsDefault,
 			starRatingsReadOnly,
-			starRatingsDisabled
+			starRatingsDisabled,
+			starRatingsMax3
 		};
 	}
 
 	// Value from the last `onChange` call, or 'none'
 	get lastChange () {
 		return $('#lastChange').getText();
+	}
+
+	// Value from the last `onChange` call with `normalized` set, or 'none'
+	get lastNormalized () {
+		return $('#lastNormalized').getText();
 	}
 
 	get focusedId () {

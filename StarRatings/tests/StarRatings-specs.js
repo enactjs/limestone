@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {fireEvent, render} from '@testing-library/react';
+import {act, fireEvent, render} from '@testing-library/react';
 
 import {FILL_STEPS} from '../Star';
 import StarRatings, {StarRatingsBase} from '../StarRatings';
@@ -212,12 +212,13 @@ describe('StarRatings', () => {
 
 		test('should call `onChange` with the number of the clicked star', () => {
 			const handleChange = jest.fn();
-			render(<StarRatings id={ID} onChange={handleChange} />);
+			render(<StarRatings id={ID} defaultValue={1} onChange={handleChange} />);
 
 			fireEvent.click(getStar(3));
 
 			expect(handleChange).toHaveBeenCalledTimes(1);
 			expect(handleChange).toHaveBeenCalledWith(expect.objectContaining({value: 3}));
+			expect(handleChange.mock.calls[0][0].normalized).toBeUndefined();
 		});
 
 		test('should remember the clicked star when `value` is not set', () => {
@@ -236,6 +237,242 @@ describe('StarRatings', () => {
 
 			expect(handleChange).toHaveBeenCalledWith(expect.objectContaining({value: 4}));
 			expect(getFilledTotal()).toBe(2);
+		});
+	});
+
+	// Spec: selecting starts at 3 stars; the app must hold the rating the user sees
+	describe('shown value sync', () => {
+		test('should report the default 3 stars when no value is set', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledTimes(1);
+			expect(handleChange).toHaveBeenCalledWith({value: 3, normalized: true});
+			expect(getFilledTotal()).toBe(3);
+		});
+
+		test.each([
+			['0', {value: 0}, 1],
+			['a value above max', {value: 7}, 5],
+			['a fraction', {value: 2.6}, 3],
+			['NaN', {value: NaN}, 3],
+			['a default value of 0', {defaultValue: 0}, 1],
+			['the default above a smaller max', {max: 2}, 2]
+		])('should report the shown rating for %s', (_, props, expected) => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} {...props} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledTimes(1);
+			expect(handleChange).toHaveBeenCalledWith({value: expected, normalized: true});
+		});
+
+		test('should store the reported rating when `value` is not set', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={9} onChange={handleChange} />);
+
+			fireEvent.click(getStar(5));
+
+			// 9 was stored as 5, so selecting star 5 is still reported, and nothing loops
+			expect(handleChange).toHaveBeenCalledTimes(2);
+			expect(getFilledTotal()).toBe(5);
+		});
+
+		test.each([
+			['a whole value', {value: 4}],
+			['a whole default value', {defaultValue: 2}],
+			['read-only', {readOnly: true}],
+			['read-only with a fraction', {readOnly: true, value: 2.5}],
+			['disabled', {disabled: true}]
+		])('should not call `onChange` for %s', (_, props) => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} {...props} onChange={handleChange} />);
+
+			expect(handleChange).not.toHaveBeenCalled();
+		});
+
+		test('should report once when a controlled parent ignores it', () => {
+			const handleChange = jest.fn();
+			const {rerender} = render(<StarRatings id={ID} value={0} onChange={handleChange} />);
+			rerender(<StarRatings id={ID} value={0} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledTimes(1);
+		});
+
+		test('should report again when the shown rating changes', () => {
+			const handleChange = jest.fn();
+			const {rerender} = render(<StarRatings id={ID} value={0} onChange={handleChange} />);
+			rerender(<StarRatings id={ID} value={8} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenLastCalledWith({value: 5, normalized: true});
+			expect(handleChange).toHaveBeenCalledTimes(2);
+		});
+
+		test('should report again after the app goes back to the same value', () => {
+			const handleChange = jest.fn();
+			const {rerender} = render(<StarRatings id={ID} value={0} onChange={handleChange} />);
+			rerender(<StarRatings id={ID} value={4} onChange={handleChange} />);
+			rerender(<StarRatings id={ID} value={0} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledTimes(2);
+		});
+
+		test('should report when leaving read-only mode', () => {
+			const handleChange = jest.fn();
+			const {rerender} = render(<StarRatings id={ID} readOnly value={2.5} onChange={handleChange} />);
+			rerender(<StarRatings id={ID} value={2.5} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledWith({value: 3, normalized: true});
+		});
+
+		test('should report when enabled', () => {
+			const handleChange = jest.fn();
+			const {rerender} = render(<StarRatings id={ID} disabled onChange={handleChange} />);
+			rerender(<StarRatings id={ID} onChange={handleChange} />);
+
+			expect(handleChange).toHaveBeenCalledWith({value: 3, normalized: true});
+		});
+
+		test('should not report from `StarRatingsBase`', () => {
+			const handleChange = jest.fn();
+			render(<StarRatingsBase id={ID} onChange={handleChange} />);
+
+			expect(handleChange).not.toHaveBeenCalled();
+		});
+	});
+
+	// While selecting, the stars up to and including the focused one are filled as a preview
+	describe('focus preview', () => {
+		const focus = (el) => act(() => el.focus());
+
+		const renderWithOutside = (props) => render(
+			<div>
+				<StarRatings id={ID} {...props} />
+				<button id="outside">outside</button>
+			</div>
+		);
+
+		test('should fill up to a higher focused star without changing the value', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={3} onChange={handleChange} />);
+
+			focus(getStar(5));
+
+			expect(getFilledTotal()).toBe(5);
+			expect(handleChange).not.toHaveBeenCalled();
+		});
+
+		test('should fill only up to a lower focused star', () => {
+			render(<StarRatings id={ID} defaultValue={4} />);
+
+			focus(getStar(2));
+
+			expect(getFills()).toEqual(['100%', '100%', '0%', '0%', '0%']);
+		});
+
+		test('should follow focus from star to star', () => {
+			render(<StarRatings id={ID} defaultValue={3} />);
+
+			focus(getStar(5));
+			focus(getStar(1));
+
+			expect(getFilledTotal()).toBe(1);
+		});
+
+		test('should show the selected rating again when focus leaves the row', () => {
+			renderWithOutside({defaultValue: 3});
+
+			focus(getStar(5));
+			focus(document.getElementById('outside'));
+
+			expect(getFilledTotal()).toBe(3);
+		});
+
+		test('should select the previewed star on click', () => {
+			const handleChange = jest.fn();
+			renderWithOutside({defaultValue: 3, onChange: handleChange});
+
+			focus(getStar(4));
+			fireEvent.click(getStar(4));
+			focus(document.getElementById('outside'));
+
+			expect(handleChange).toHaveBeenCalledWith({value: 4});
+			expect(getFilledTotal()).toBe(4);
+		});
+
+		test('should keep the selected star marked while previewing', () => {
+			render(<StarRatings id={ID} defaultValue={3} />);
+
+			focus(getStar(5));
+
+			expect(getStar(3)).toHaveAttribute('data-star-selected');
+			expect(getStar(5)).not.toHaveAttribute('data-star-selected');
+		});
+
+		test('should not preview when disabled', () => {
+			render(<StarRatings id={ID} disabled defaultValue={2} />);
+
+			focus(getStar(5));
+
+			expect(getStar(5)).toHaveFocus();
+			expect(getFilledTotal()).toBe(2);
+		});
+
+		test('should forward `onFocus` and `onBlur`', () => {
+			const handleFocus = jest.fn();
+			const handleBlur = jest.fn();
+			renderWithOutside({onBlur: handleBlur, onFocus: handleFocus});
+
+			focus(getStar(2));
+			focus(document.getElementById('outside'));
+
+			expect(handleFocus).toHaveBeenCalledTimes(1);
+			expect(handleBlur).toHaveBeenCalledTimes(1);
+		});
+
+		test('should fill up to `focusedStar` in `StarRatingsBase`', () => {
+			render(<StarRatingsBase id={ID} focusedStar={4} value={2} />);
+
+			expect(getFilledTotal()).toBe(4);
+		});
+
+		test.each([
+			['read-only', {readOnly: true, value: 2.5}, 2.5],
+			['disabled', {disabled: true, value: 2}, 2]
+		])('should ignore `focusedStar` when %s', (_, props, expected) => {
+			render(<StarRatingsBase id={ID} focusedStar={4} {...props} />);
+
+			expect(getFilledTotal()).toBe(expected);
+		});
+	});
+
+	// Spotlight enters the row at this star, so Enter keeps the shown rating
+	describe('selected star', () => {
+		const getSelected = () => getStars().filter((star) => star.hasAttribute('data-star-selected'));
+
+		test('should mark star 3 when no value is set', () => {
+			render(<StarRatings id={ID} />);
+
+			expect(getSelected()).toEqual([getStar(3)]);
+		});
+
+		test('should mark the clamped value', () => {
+			render(<StarRatings id={ID} value={0} />);
+
+			expect(getSelected()).toEqual([getStar(1)]);
+		});
+
+		test('should follow the selection', () => {
+			render(<StarRatings id={ID} />);
+
+			fireEvent.click(getStar(5));
+
+			expect(getSelected()).toEqual([getStar(5)]);
+		});
+
+		test('should not mark a star when read-only', () => {
+			render(<StarRatings id={ID} readOnly value={3} />);
+
+			expect(getSelected()).toEqual([]);
 		});
 	});
 
@@ -307,6 +544,90 @@ describe('StarRatings', () => {
 			});
 		};
 
+		const touchStartOn = (star) => {
+			document.elementFromPoint = jest.fn(() => star);
+			fireEvent.touchStart(document.getElementById(ID), {
+				touches: [{clientX: 0, clientY: 0}]
+			});
+		};
+
+		// Spec (touch drag, step 1 to 2): with 3 stars, pressing star 4 selects 4 right away
+		test('should select the pressed star as soon as the finger lands', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={3} onChange={handleChange} />);
+
+			touchStartOn(getStar(4));
+
+			expect(handleChange).toHaveBeenCalledTimes(1);
+			expect(handleChange).toHaveBeenCalledWith({value: 4});
+			expect(getFilledTotal()).toBe(4);
+			expect(getStar(4)).toHaveFocus();
+		});
+
+		test('should not call `onChange` when pressing the shown star', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} onChange={handleChange} />);
+			handleChange.mockClear(); // the mount sync of the default 3
+
+			touchStartOn(getStar(3));
+
+			expect(handleChange).not.toHaveBeenCalled();
+			expect(getStar(3)).toHaveFocus();
+		});
+
+		test('should keep updating while dragging after the press', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={3} onChange={handleChange} />);
+
+			touchStartOn(getStar(4));
+			touchMoveOver(getStar(5));
+			touchMoveOver(document.body);
+
+			expect(handleChange.mock.calls.map(([ev]) => ev.value)).toEqual([4, 5]);
+			expect(getFilledTotal()).toBe(5);
+		});
+
+		test('should keep the value when the press is outside the stars', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={2} onChange={handleChange} />);
+
+			touchStartOn(document.body);
+
+			expect(handleChange).not.toHaveBeenCalled();
+			expect(getFilledTotal()).toBe(2);
+		});
+
+		test.each([
+			['disabled', {disabled: true}],
+			['read-only', {readOnly: true}]
+		])('should not select on press when %s', (_, props) => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} defaultValue={2} {...props} onChange={handleChange} />);
+
+			touchStartOn(getStar(4));
+
+			expect(handleChange).not.toHaveBeenCalled();
+			expect(getFilledTotal()).toBe(2);
+		});
+
+		// The press already selected the star, so the click on release would call `onChange` again
+		test('should cancel the click that follows the touch', () => {
+			render(<StarRatings id={ID} defaultValue={3} />);
+
+			touchStartOn(getStar(4));
+
+			expect(fireEvent.touchEnd(document.getElementById(ID))).toBe(false);
+		});
+
+		test.each([
+			['disabled', {disabled: true}],
+			['read-only', {readOnly: true}]
+		])('should not cancel the touch end when %s', (_, props) => {
+			render(<StarRatings id={ID} {...props} />);
+
+			expect(fireEvent.touchEnd(document.getElementById(ID))).toBe(true);
+		});
+
 		test('should call `onChange` with the star under the finger', () => {
 			const handleChange = jest.fn();
 			render(<StarRatings id={ID} onChange={handleChange} />);
@@ -319,7 +640,7 @@ describe('StarRatings', () => {
 
 		test('should not call `onChange` again while staying on the same star', () => {
 			const handleChange = jest.fn();
-			render(<StarRatings id={ID} onChange={handleChange} />);
+			render(<StarRatings id={ID} defaultValue={1} onChange={handleChange} />);
 
 			touchMoveOver(getStar(2));
 			touchMoveOver(getStar(2));
@@ -329,13 +650,33 @@ describe('StarRatings', () => {
 
 		test('should keep the last value when the finger leaves the row', () => {
 			const handleChange = jest.fn();
-			render(<StarRatings id={ID} onChange={handleChange} />);
+			render(<StarRatings id={ID} defaultValue={1} onChange={handleChange} />);
 
 			touchMoveOver(getStar(3));
 			touchMoveOver(document.body);
 
 			expect(handleChange).toHaveBeenCalledTimes(1);
 			expect(getFilledTotal()).toBe(3);
+		});
+
+		// Regression: the star was compared with the raw `value` (undefined), not the 3 shown
+		test('should not call `onChange` when moving on the shown default star', () => {
+			const handleChange = jest.fn();
+			render(<StarRatings id={ID} onChange={handleChange} />);
+			handleChange.mockClear(); // the mount sync, covered in "shown value sync"
+
+			touchMoveOver(getStar(3));
+
+			expect(handleChange).not.toHaveBeenCalled();
+		});
+
+		test('should compare with the clamped value in `StarRatingsBase`', () => {
+			const handleChange = jest.fn();
+			render(<StarRatingsBase id={ID} value={7} onChange={handleChange} />);
+
+			touchMoveOver(getStar(5));
+
+			expect(handleChange).not.toHaveBeenCalled();
 		});
 
 		test('should not call `onChange` when disabled', () => {

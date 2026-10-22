@@ -5,7 +5,8 @@ describe('StarRatings', function () {
 	const {
 		starRatingsDefault,
 		starRatingsReadOnly,
-		starRatingsDisabled
+		starRatingsDisabled,
+		starRatingsMax3
 	} = Page.components;
 
 	describe('LTR locale', function () {
@@ -14,12 +15,17 @@ describe('StarRatings', function () {
 		});
 
 		describe('default', function () {
-			it('should focus the first star on load', async function () {
-				expect(await starRatingsDefault.star(1).isFocused()).toBe(true);
+			it('should focus the selected star on load', async function () {
+				expect(await starRatingsDefault.star(3).isFocused()).toBe(true);
 			});
 
 			it('should show 3 stars when no value is set', async function () {
 				expect(await starRatingsDefault.filledStars()).toBe(3);
+			});
+
+			it('should report the default 3 stars to the app', async function () {
+				expect(await Page.lastNormalized).toBe('3');
+				expect(await Page.lastChange).toBe('none');
 			});
 
 			it('should show a half star in read-only mode', async function () {
@@ -33,8 +39,23 @@ describe('StarRatings', function () {
 				expect(await starRatingsDefault.isDisabled).toBe(false);
 			});
 
+			// The row sizes itself, so its pointer/touch area matches the stars for any `max`
+			it('should size the row to its stars', async function () {
+				const row = await starRatingsMax3.rect();
+				const first = await starRatingsMax3.rect(1);
+				const last = await starRatingsMax3.rect(3);
+
+				expect(Math.abs(row.left - first.left)).toBeLessThan(1);
+				expect(Math.abs(row.right - last.right)).toBeLessThan(1);
+				expect(await starRatingsMax3.star(4).isExisting()).toBe(false);
+			});
+
+			it('should make a longer row for more stars', async function () {
+				expect((await starRatingsDefault.rect()).width).toBeGreaterThan((await starRatingsMax3.rect()).width);
+			});
+
 			it('should show the focus outline only on the focused star', async function () {
-				expect(await starRatingsDefault.hasFocusOutline(1)).toBe(true);
+				expect(await starRatingsDefault.hasFocusOutline(3)).toBe(true);
 				expect(await starRatingsDefault.hasFocusOutline(2)).toBe(false);
 			});
 		});
@@ -43,14 +64,20 @@ describe('StarRatings', function () {
 			it('should move focus to the next star', async function () {
 				await Page.spotlightRight();
 
-				expect(await starRatingsDefault.star(2).isFocused()).toBe(true);
-				expect(await starRatingsDefault.hasFocusOutline(2)).toBe(true);
-				expect(await starRatingsDefault.hasFocusOutline(1)).toBe(false);
+				expect(await starRatingsDefault.star(4).isFocused()).toBe(true);
+				expect(await starRatingsDefault.hasFocusOutline(4)).toBe(true);
+				expect(await starRatingsDefault.hasFocusOutline(3)).toBe(false);
+			});
+
+			// Spec: pressing Enter right away keeps the default 3 stars
+			it('should keep the shown rating when selecting right away', async function () {
+				await Page.spotlightSelect();
+
+				expect(await starRatingsDefault.filledStars()).toBe(3);
+				expect(await Page.lastChange).toBe('3');
 			});
 
 			it('should select the focused star', async function () {
-				await Page.spotlightRight();
-				await Page.spotlightRight();
 				await Page.spotlightRight();
 				await Page.spotlightSelect();
 
@@ -59,19 +86,45 @@ describe('StarRatings', function () {
 			});
 
 			it('should select a lower star', async function () {
+				await Page.spotlightLeft();
+				await Page.spotlightLeft();
 				await Page.spotlightSelect();
 
 				expect(await starRatingsDefault.filledStars()).toBe(1);
 				expect(await Page.lastChange).toBe('1');
 			});
 
-			it('should not change the fill when focusing an empty star', async function () {
-				await Page.spotlightRight();
+			// Focus preview: stars up to and including the focused one fill, the value does not change
+			it('should fill up to a higher focused star without selecting it', async function () {
 				await Page.spotlightRight();
 				await Page.spotlightRight();
 
-				expect(await starRatingsDefault.star(4).isFocused()).toBe(true);
-				expect(await starRatingsDefault.fill(4)).toBe('0%');
+				expect(await starRatingsDefault.star(5).isFocused()).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(5);
+				expect(await Page.lastChange).toBe('none');
+			});
+
+			it('should fill only up to a lower focused star', async function () {
+				await Page.spotlightLeft();
+
+				expect(await starRatingsDefault.fills()).toEqual(['100%', '100%', '0%', '0%', '0%']);
+				expect(await Page.lastChange).toBe('none');
+			});
+
+			it('should show the selected rating again when focus leaves the row', async function () {
+				await Page.spotlightRight();
+				await Page.spotlightDown();
+
+				expect(await starRatingsDefault.filledStars()).toBe(3);
+			});
+
+			it('should not fill up to the focused star of a disabled rating', async function () {
+				await Page.spotlightDown();
+				await Page.spotlightRight();
+				await Page.spotlightRight();
+
+				expect(await starRatingsDisabled.star(4).isFocused()).toBe(true);
+				expect(await starRatingsDisabled.filledStars()).toBe(2);
 			});
 
 			it('should skip the read-only rating and focus the disabled one', async function () {
@@ -89,15 +142,14 @@ describe('StarRatings', function () {
 			});
 
 			it('should return to the last focused star', async function () {
-				await Page.spotlightRight();
-				await Page.spotlightRight();
+				await Page.spotlightLeft();
+				await Page.spotlightLeft();
 				await Page.spotlightDown();
 
-				// A rating entered for the first time starts at its first star
-				expect(await starRatingsDisabled.star(1).isFocused()).toBe(true);
+				// A rating entered for the first time starts at its selected star (defaultValue 2)
+				expect(await starRatingsDisabled.star(2).isFocused()).toBe(true);
 
-				// Move to the far end, so only "last focused" (not position) leads back to star 3
-				await Page.spotlightRight();
+				// Move to the far end, so only "last focused" (not position) leads back to star 1
 				await Page.spotlightRight();
 				await Page.spotlightRight();
 				await Page.spotlightRight();
@@ -106,7 +158,7 @@ describe('StarRatings', function () {
 
 				await Page.spotlightUp();
 
-				expect(await starRatingsDefault.star(3).isFocused()).toBe(true);
+				expect(await starRatingsDefault.star(1).isFocused()).toBe(true);
 			});
 		});
 
@@ -144,11 +196,11 @@ describe('StarRatings', function () {
 		});
 
 		it('should move focus to the next star with the left key', async function () {
-			expect(await starRatingsDefault.star(1).isFocused()).toBe(true);
+			expect(await starRatingsDefault.star(3).isFocused()).toBe(true);
 
 			await Page.spotlightLeft();
 
-			expect(await starRatingsDefault.star(2).isFocused()).toBe(true);
+			expect(await starRatingsDefault.star(4).isFocused()).toBe(true);
 		});
 
 		it('should fill a partial star from the right', async function () {

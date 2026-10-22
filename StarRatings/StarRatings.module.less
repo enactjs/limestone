@@ -2,9 +2,8 @@
 .starRatings {
 	display: inline-flex;
 	align-items: center;
-	justify-content: center; // 5 stars + 4 gaps = 780px, centered in the 990px row
-	width: 990px;
-	height: 240px;
+	// Sized by its stars, so the row (and its pointer/touch area) matches what is shown for any
+	// `max`. The design's 990 × 240 area for the rating is left to the surrounding layout.
 	gap: 60px;
 	-webkit-user-select: none;
 	user-select: none;
