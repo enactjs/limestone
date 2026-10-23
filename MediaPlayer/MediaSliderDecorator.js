@@ -5,7 +5,7 @@ import useHandlers from '@enact/core/useHandlers';
 import {calcProportion} from '@enact/ui/Slider/utils';
 import clamp from 'ramda/src/clamp';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
 const STEP = 0.05;
 
@@ -85,7 +85,7 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 		});
 
 		// Equivalent of componentDidUpdate: notify onKnobMove when x changes (not on mount)
-		useEffect(() => {
+		useLayoutEffect(() => {
 			if (prevXRef.current !== x) {
 				prevXRef.current = x;
 				forwardCustom('onKnobMove', ev => ev)({value: x, proportion: x}, propsRef.current);
@@ -120,11 +120,15 @@ const MediaSliderDecorator = hoc((config, Wrapped) => {
 		}, []);
 
 		const decrement = useCallback(() => {
-			setX(prevX => (trackingRef.current && prevX > 0 ? Math.max(0, prevX - STEP) : prevX));
+			if (trackingRef.current) {
+				setX(prevX => Math.max(0, prevX - STEP));
+			}
 		}, []);
 
 		const increment = useCallback(() => {
-			setX(prevX => (trackingRef.current && prevX < 1 ? Math.min(1, prevX + STEP) : prevX));
+			if (trackingRef.current) {
+				setX(prevX => Math.min(1, prevX + STEP));
+			}
 		}, []);
 
 		const isTracking = useCallback(() => trackingRef.current, []);
