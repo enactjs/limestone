@@ -9,7 +9,7 @@ const SelectableImageItem = (props) => {
 	const [checked, setChecked] = useState(false);
 	const handleClick = () => !props.disabled && setChecked(!checked);
 
-	return <ImageItem {...props} onClick={handleClick} selected={checked} />; // eslint-disable-line react/jsx-no-bind
+	return <ImageItem {...props} onClick={handleClick} selected={checked} />; // eslint-disable-line enact/jsx-no-bind
 };
 
 const svgGenerator = (width, height, bgColor, textColor, customText) => (
