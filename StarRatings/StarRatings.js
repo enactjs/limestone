@@ -604,8 +604,7 @@ const StarRatingsBase = kind({
  * Stores the rating itself when `value` is not set (see `defaultValue`), reports the shown
  * rating with `onChange` when it differs from `value` (see `onChange`), groups the stars for
  * Spotlight navigation (5-way focus always enters at the selected star, not the last focused or
- * hovered one),
- * fills the stars up to the focused one as a preview while selecting, and
+ * hovered one),  fills the stars up to the focused one as a preview while selecting, and
  * applies the current skin.
  *
  * @hoc
