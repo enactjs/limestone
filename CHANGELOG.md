@@ -8,6 +8,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
+### Changed
+
+- `limestone/WizardPanels` prop `noContentAnimation` to be removed
+
 ### Fixed
 
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
@@ -29,6 +33,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
 - `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
 - `limestone/ThemeDecorator` prop `animationTier` to set the animation tier of the device
+- `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
 
 ### Changed
 
