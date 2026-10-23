@@ -3,6 +3,8 @@ import ri from '@enact/ui/resolution';
 import Item from '../../../../Item';
 import VirtualList from '../../../../VirtualList';
 
+import css from './VirtualList.module.less';
+
 const renderItem = () => ({index, ...rest}) => { // eslint-disable-line enact/display-name
 	const items = ['Item 000', 'Item 001', 'Item 002', 'Item 003', 'Item 004', 'Item 005', 'Item 006', 'Item 007', 'Item 008', 'Item 009'];
 	const itemStyle = {
@@ -33,6 +35,16 @@ const VirtualListTests = [
 			horizontalScrollbar="visible"
 			itemSize={ri.scale( 144)}
 			itemRenderer={renderItem(ri.scale(144))}
+			verticalScrollbar="visible"
+		/>
+	</div>,
+	<div>
+		<VirtualList
+			dataSize={10}
+			horizontalScrollbar="visible"
+			itemSize={ri.scale(144)}
+			itemRenderer={renderItem(ri.scale(144))}
+			scrollbarTrackCss={css}
 			verticalScrollbar="visible"
 		/>
 	</div>
