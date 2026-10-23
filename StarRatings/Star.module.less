@@ -1,0 +1,147 @@
+@import "../styles/mixins.less";
+@import "../styles/variables.less";
+@import "../styles/skin.less";
+
+@star-active-color: #FFCA28;              // filled part of a star
+@star-inactive-color: #FFFFFF33;          // empty part of a star (white at 20%)
+@star-inactive-color-overlay: #1111111A;  // empty part with `overlayMode` (near-black at 10%)
+
+// Focus sizes are in `em`, relative to the star's size (Icon sets font-size to the icon size), so
+// they keep the mockup's proportions at any star size and resolution. They were measured on the
+// focus mockup with the star at 180px: `(17 * @star-px)` is 17px on a 180px star, ~10px on 108px.
+@star-px: (1em / 180);
+
+// Focus: white outline fully outside the star, and a soft shadow (matched to the design mockup)
+@star-focus-outline-color: #FFFFFF;
+@star-focus-outline-width: (17 * @star-px);
+@star-focus-shadow: drop-shadow(0 (24 * @star-px) (10 * @star-px) rgba(0, 0, 0, 0.3));
+
+// Room around the glyph for the outline layer, so its mask does not cut off the outline or shadow
+@star-focus-layer-space: (40 * @star-px);
+@star-focus-layer-space-bottom: (72 * @star-px); // the shadow falls downwards
+
+// The outline layer draws its own glyph in this key color; the knockout filter below turns every
+// pixel of that color transparent, leaving only the outline outside the star (and its shadow).
+@star-knockout-key: #FF0000;
+
+// SVG filter: red key pixels become transparent; white (outline) and black (shadow) are kept.
+// Color matrix: R' = G' = B' = R, A' = A - R + G. It expects a white outline color.
+// (A filter is used instead of a CSS mask because `-webkit-mask-clip: text` does not survive the
+// CSS re-serialization Storybook's pseudo-states addon does; a `url()` filter does.)
+@star-knockout-filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='knockout' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 -1 1 0 1 0'/%3E%3C/filter%3E%3C/svg%3E#knockout");
+
+// A round outline made of 16 copies of the glyph, moved @w in every direction around a circle
+.star-outline-shadows(@w; @color) {
+	text-shadow:
+		@w 0 0 @color,
+			(@w * 0.9239) (@w * 0.3827) 0 @color,
+			(@w * 0.7071) (@w * 0.7071) 0 @color,
+			(@w * 0.3827) (@w * 0.9239) 0 @color,
+		0 @w 0 @color,
+			(@w * -0.3827) (@w * 0.9239) 0 @color,
+			(@w * -0.7071) (@w * 0.7071) 0 @color,
+			(@w * -0.9239) (@w * 0.3827) 0 @color,
+		-@w 0 0 @color,
+			(@w * -0.9239) (@w * -0.3827) 0 @color,
+			(@w * -0.7071) (@w * -0.7071) 0 @color,
+			(@w * -0.3827) (@w * -0.9239) 0 @color,
+			0 -@w 0 @color,
+			(@w * 0.3827) (@w * -0.9239) 0 @color,
+			(@w * 0.7071) (@w * -0.7071) 0 @color,
+			(@w * 0.9239) (@w * -0.3827) 0 @color;
+}
+
+// How a star is drawn:
+// - the element's own glyph is transparent (it only sets the size and position);
+// - `::after` draws the fill on top: the same glyph, colored by the fill gradient;
+// - while focused, `::before` draws the outline and its shadow behind the fill. A filter cuts the
+//   glyph's own shape out of that layer, so the fill's colors look the same with or without focus.
+.star {
+	// Empty-part color, switched by the `overlayMode` prop
+	--star-inactive-color: @star-inactive-color;
+
+	&.overlayMode {
+		--star-inactive-color: @star-inactive-color-overlay;
+	}
+
+	// Touch handling
+	touch-action: manipulation;               // no double-tap-zoom delay
+	-webkit-tap-highlight-color: transparent; // no grey flash on tap
+	-webkit-user-select: none;                // a long press won't select the glyph
+	user-select: none;
+	-webkit-touch-callout: none;              // no long-press context menu
+
+	// Inside applySkins so these beat Icon's own `.icon` rules regardless of CSS load order
+	.applySkins({
+		// Design: a 108px box (size={108} in Star.js) with 4px/2px padding inside it.
+		// The visible layers are positioned on the padding box, so the glyph stays centered.
+		box-sizing: border-box;
+		// 2px is written in rem: Enact pins px values this small to a fixed 1px at every resolution
+		padding: 4px (2rem / 48);
+		margin: 0; // Icon's own margin would add to the row's 60px gap
+		position: relative;
+		overflow: visible; // Icon clips by default; the focus outline extends past the glyph's box
+		color: transparent;
+		// The star's own glyph must never paint: `-webkit-text-fill-color` wins over any `color`
+		// a theme sets on focused elements (that would show through the translucent empty color)
+		-webkit-text-fill-color: transparent;
+
+		// Fill layer: partial stars fill from the reading direction's start (flipped for RTL below)
+		&::after {
+			content: attr(data-glyph);
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background: linear-gradient(
+				var(--star-direction, to right),
+				@star-active-color var(--star-fill, 0%),
+				var(--star-inactive-color) var(--star-fill, 0%)
+			);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+
+		// Focused star only (remote, pointer, tap or drag)
+		&:focus {
+			outline: none; // no browser focus ring around the box
+		}
+
+		// While focused, the fill reaches 0.5px past the glyph's edge (a transparent stroke is still
+		// painted by the clipped background), covering the outline's anti-aliased inner edge.
+		// Otherwise the background shows through as a thin dark seam around a filled star.
+		&:focus::after {
+			-webkit-text-stroke: 1px transparent;
+		}
+
+		// Outline layer: a larger box, padded so its glyph sits exactly where the star's glyph is
+		&:focus::before {
+			content: attr(data-glyph);
+			position: absolute;
+			top: -@star-focus-layer-space;
+			right: -@star-focus-layer-space;
+			bottom: -@star-focus-layer-space-bottom;
+			left: -@star-focus-layer-space;
+			padding: @star-focus-layer-space @star-focus-layer-space @star-focus-layer-space-bottom;
+			color: @star-knockout-key;
+			-webkit-text-fill-color: @star-knockout-key;
+			.star-outline-shadows(@star-focus-outline-width; @star-focus-outline-color);
+			// Shadow first (from the whole shape), then remove the glyph's own shape. The shadow
+			// under the glyph is removed with it, so nothing changes inside the star.
+			filter: @star-focus-shadow @star-knockout-filter;
+		}
+
+		// Disabled: 30% opacity (Limestone's @lime-disabled-opacity), also while focused
+		.disabled({
+			.lime-disabled-colors();
+		});
+	});
+}
+
+// RTL locales: the row of stars is already mirrored by flex,
+// so partial stars must also fill from the right
+:global(.enact-locale-right-to-left) .star {
+	--star-direction: to left;
+}
