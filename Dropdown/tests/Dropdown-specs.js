@@ -13,6 +13,18 @@ const placeholder = 'Dropdown select';
 const title = 'Options';
 
 describe('Dropdown', () => {
+	test('should not render a withref marker', () => {
+		render(
+			<FloatingLayerController>
+				<DropdownBase open title={title}>
+					{children}
+				</DropdownBase>
+			</FloatingLayerController>
+		);
+
+		expect(document.querySelector('[data-withref-referrer="DropdownList"]')).toBeNull();
+	});
+
 	test('should have default `placeholder` when a value is not provided', () => {
 		render(
 			<DropdownBase>
