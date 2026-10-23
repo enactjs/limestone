@@ -62,6 +62,15 @@ const getStarFromTouch = (ev, id) => {
 const getStarNumber = (starId, id) => Number(starId.slice(`${id}-star-`.length));
 
 /**
+ * `true` while a touch focuses a star (see `selectTouchedStar`), so that focus is not redirected
+ * to the selected star.
+ *
+ * @type {Boolean}
+ * @private
+ */
+let touchFocusing = false;
+
+/**
  * Moves focus to a star, which shows its focus outline.
  *
  * Uses Spotlight so remote navigation continues from this star, and falls back to native focus
@@ -131,7 +140,12 @@ const selectTouchedStar = (ev, {id, max, onChange, readOnly, value}) => {
 	const star = getStarFromTouch(ev, id);
 	if (!star) return false; // outside the row: keep the last value and focus
 
-	focusStar(star);
+	touchFocusing = true;
+	try {
+		focusStar(star);
+	} finally {
+		touchFocusing = false;
+	}
 
 	const shown = toTenths(value, max, readOnly) / 10;
 	const starNumber = getStarNumber(star.id, id);
@@ -142,8 +156,9 @@ const selectTouchedStar = (ev, {id, max, onChange, readOnly, value}) => {
 };
 
 /**
- * Selector of the selected star, which Spotlight focuses when the row is entered for the first
- * time, so pressing Enter right away keeps the rating that is shown.
+ * Selector of the selected star, which Spotlight focuses whenever 5-way navigation enters the
+ * row. A star that was only focused (previewed) and not selected is not remembered, so coming
+ * back shows and focuses the saved rating, and pressing Enter right away keeps it.
  *
  * @type {String}
  * @private
@@ -217,6 +232,9 @@ const ShownValueDecorator = (Wrapped) => {
  *   platforms); that blur is undone right away, before anything is painted, and is not passed
  *   on to `onBlur`/`onFocus`. Leaving the row blurs as usual. Pointer events are not stopped, so
  *   Spotlight and other listeners still see every move.
+ * * 5-way return: when 5-way focus comes back to the row from outside, it goes to the selected
+ *   star, even when Spotlight would restore a star that was only hovered or focused, or move from
+ *   the pointer's last position. Only the selected star's focus is passed on to `onFocus`.
  *
  * @hoc
  * @param {Component} Wrapped The component to wrap.
@@ -229,6 +247,7 @@ const FocusPreviewDecorator = (Wrapped) => {
 		const [focusedStar, setFocusedStar] = useState(null);
 		const pointerInside = useRef(false);
 		const restoring = useRef(false);
+		const redirecting = useRef(false);
 
 		const isOwnStar = useCallback((node) => (
 			Boolean(node && typeof node.id === 'string' && node.id.startsWith(`${id}-star-`))
@@ -246,6 +265,30 @@ const FocusPreviewDecorator = (Wrapped) => {
 		}, [onMouseLeave]);
 
 		const handleFocus = useCallback((ev) => {
+			const star = ev.target;
+			const fromOutside = !(ev.relatedTarget && ev.currentTarget.contains(ev.relatedTarget));
+
+			// 5-way focus coming back to the row from outside goes to the selected star. Spotlight
+			// enters the row there itself, but when nothing has focus (e.g. after the pointer left)
+			// a key either restores the last focused star or moves from the pointer's position,
+			// which can land on any star. Pointer and touch focus the star under them instead.
+			if (
+				fromOutside && isOwnStar(star) && !restoring.current && !redirecting.current &&
+				!pointerInside.current && !touchFocusing && !Spotlight.getPointerMode()
+			) {
+				const selected = ev.currentTarget.querySelector(SELECTED_STAR_SELECTOR);
+				if (selected && selected !== star) {
+					redirecting.current = true;
+					try {
+						focusStar(selected);
+					} finally {
+						redirecting.current = false;
+					}
+					// The selected star's own focus event already updated the preview and onFocus
+					if (document.activeElement === selected) return;
+				}
+			}
+
 			// Focus events bubble from the stars; anything else in the row is ignored
 			setFocusedStar(isOwnStar(ev.target) ? getStarNumber(ev.target.id, id) || null : null);
 
@@ -255,6 +298,9 @@ const FocusPreviewDecorator = (Wrapped) => {
 
 		const handleBlur = useCallback((ev) => {
 			const star = ev.target;
+
+			// Leaving the star that `handleFocus` redirected from: focus never really arrived there
+			if (redirecting.current) return;
 
 			// Blurred to nothing (not to another element) while the pointer is still inside: keep
 			// focus on this star. Not while the window itself loses focus.
@@ -557,8 +603,9 @@ const StarRatingsBase = kind({
  *
  * Stores the rating itself when `value` is not set (see `defaultValue`), reports the shown
  * rating with `onChange` when it differs from `value` (see `onChange`), groups the stars for
- * Spotlight navigation (focus enters at the selected star the first time, then returns to the
- * last focused star), fills the stars up to the focused one as a preview while selecting, and
+ * Spotlight navigation (5-way focus always enters at the selected star, not the last focused or
+ * hovered one),
+ * fills the stars up to the focused one as a preview while selecting, and
  * applies the current skin.
  *
  * @hoc
@@ -573,9 +620,10 @@ const StarRatingsDecorator = compose(
 	ShownValueDecorator,
 	FocusPreviewDecorator,
 	SpotlightContainerDecorator({
-		// Entering for the first time focuses the selected star, then the last focused one
+		// Always enter at the selected star: a star focused without being selected is a preview
+		// only, so returning to the row goes back to the saved rating
 		defaultElement: SELECTED_STAR_SELECTOR,
-		enterTo: 'last-focused'
+		enterTo: 'default-element'
 	}),
 	Skinnable
 );

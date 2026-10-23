@@ -141,24 +141,51 @@ describe('StarRatings', function () {
 				expect(await Page.lastChange).toBe('none');
 			});
 
-			it('should return to the last focused star', async function () {
+			it('should enter a rating at its selected star', async function () {
 				await Page.spotlightLeft();
 				await Page.spotlightLeft();
 				await Page.spotlightDown();
 
-				// A rating entered for the first time starts at its selected star (defaultValue 2)
+				// defaultValue 2, not star 1 below the focused star
 				expect(await starRatingsDisabled.star(2).isFocused()).toBe(true);
+			});
 
-				// Move to the far end, so only "last focused" (not position) leads back to star 1
+			// Default 3, 5-way to star 5 without selecting, leave the row and come back: the saved
+			// rating (3) is focused again, not the previewed star 5
+			it('should return to the selected star when the focused star was not selected', async function () {
 				await Page.spotlightRight();
 				await Page.spotlightRight();
-				await Page.spotlightRight();
 
-				expect(await starRatingsDisabled.star(5).isFocused()).toBe(true);
+				expect(await starRatingsDefault.star(5).isFocused()).toBe(true);
 
+				await Page.spotlightDown();
 				await Page.spotlightUp();
 
-				expect(await starRatingsDefault.star(1).isFocused()).toBe(true);
+				expect(await starRatingsDefault.star(3).isFocused()).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(3);
+				expect(await Page.lastChange).toBe('none');
+			});
+
+			it('should return to a newly selected star', async function () {
+				await Page.spotlightRight();
+				await Page.spotlightRight();
+				await Page.spotlightSelect();
+				await Page.spotlightLeft();
+				await Page.spotlightDown();
+				await Page.spotlightUp();
+
+				expect(await starRatingsDefault.star(5).isFocused()).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(5);
+			});
+
+			it('should return to the selected star of a disabled rating', async function () {
+				await Page.spotlightDown();
+				await Page.spotlightRight();
+				await Page.spotlightRight();
+				await Page.spotlightUp();
+				await Page.spotlightDown();
+
+				expect(await starRatingsDisabled.star(2).isFocused()).toBe(true);
 			});
 		});
 
@@ -204,6 +231,40 @@ describe('StarRatings', function () {
 
 				expect(await Page.focusedId).not.toMatch(/^starRatingsDefault-star-/);
 				expect(await starRatingsDefault.filledStars()).toBe(3);
+			});
+
+			// Hybrid: hover a star (preview only), move the pointer away, then use 5-way. Focus
+			// returns to the saved rating, not the hovered star Spotlight remembers.
+			it('should return to the selected star after hovering another one', async function () {
+				await starRatingsDefault.star(5).moveTo();
+				await $('#lastChange').moveTo();
+
+				expect(await Page.focusedId).not.toMatch(/^starRatingsDefault-star-/);
+
+				await Page.spotlightRight();
+
+				expect(await starRatingsDefault.star(3).isFocused()).toBe(true);
+				expect(await starRatingsDefault.filledStars()).toBe(3);
+
+				await Page.spotlightSelect();
+
+				expect(await Page.lastChange).toBe('3');
+			});
+
+			it('should enter a rating at its selected star when 5-way starts from the pointer', async function () {
+				// Up from the pointer's position below the ratings reaches the disabled one first
+				await starRatingsDisabled.star(5).moveTo();
+				await $('#lastChange').moveTo();
+				await Page.spotlightUp();
+
+				expect(await starRatingsDisabled.star(2).isFocused()).toBe(true);
+			});
+
+			it('should continue from the hovered star when 5-way is used without leaving', async function () {
+				await starRatingsDefault.star(5).moveTo();
+				await Page.spotlightLeft();
+
+				expect(await starRatingsDefault.star(4).isFocused()).toBe(true);
 			});
 
 			it('should select the clicked star', async function () {

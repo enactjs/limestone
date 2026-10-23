@@ -1,6 +1,8 @@
 import '@testing-library/jest-dom';
 import {act, fireEvent, render} from '@testing-library/react';
 
+import Spotlight from '@enact/spotlight';
+
 import {FILL_STEPS} from '../Star';
 import StarRatings, {StarRatingsBase} from '../StarRatings';
 
@@ -555,6 +557,98 @@ describe('StarRatings', () => {
 
 			expect(handleEnter).toHaveBeenCalledTimes(1);
 			expect(handleLeave).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	// When nothing has focus (e.g. after the pointer left), Spotlight's first 5-way key restores
+	// the last focused star or moves from the pointer's position; focus goes to the selected star
+	describe('5-way focus returning to the row', () => {
+		const focus = (el) => act(() => el.focus());
+		const originalElementFromPoint = document.elementFromPoint;
+
+		beforeEach(() => {
+			Spotlight.setPointerMode(false);
+		});
+
+		afterEach(() => {
+			Spotlight.setPointerMode(true);
+			document.elementFromPoint = originalElementFromPoint;
+		});
+
+		test('should focus the selected star instead of another star', () => {
+			render(<StarRatings id={ID} />);
+
+			focus(getStar(5));
+
+			expect(getStar(3)).toHaveFocus();
+			expect(getFilledTotal()).toBe(3);
+		});
+
+		test('should report only the selected star\'s focus', () => {
+			const handleFocus = jest.fn();
+			const handleBlur = jest.fn();
+			render(<StarRatings id={ID} onBlur={handleBlur} onFocus={handleFocus} />);
+
+			focus(getStar(5));
+
+			expect(handleFocus).toHaveBeenCalledTimes(1);
+			expect(handleFocus.mock.calls[0][0].target).toBe(getStar(3));
+			expect(handleBlur).not.toHaveBeenCalled();
+		});
+
+		test('should focus a newly selected star', () => {
+			render(<StarRatings id={ID} />);
+			fireEvent.click(getStar(5));
+
+			focus(getStar(1));
+
+			expect(getStar(5)).toHaveFocus();
+		});
+
+		test('should focus the selected star of a disabled rating', () => {
+			render(<StarRatings id={ID} disabled defaultValue={2} />);
+
+			focus(getStar(5));
+
+			expect(getStar(2)).toHaveFocus();
+		});
+
+		test('should move freely between stars inside the row', () => {
+			render(<StarRatings id={ID} />);
+			focus(getStar(3));
+
+			focus(getStar(5));
+
+			expect(getStar(5)).toHaveFocus();
+			expect(getFilledTotal()).toBe(5);
+		});
+
+		test('should keep a star the pointer focuses', () => {
+			Spotlight.setPointerMode(true);
+			render(<StarRatings id={ID} />);
+
+			focus(getStar(5));
+
+			expect(getStar(5)).toHaveFocus();
+		});
+
+		test('should keep a star focused while the pointer is inside the row', () => {
+			render(<StarRatings id={ID} />);
+			fireEvent.mouseEnter(document.getElementById(ID));
+
+			focus(getStar(5));
+
+			expect(getStar(5)).toHaveFocus();
+		});
+
+		test('should keep a star focused by touch', () => {
+			render(<StarRatings id={ID} />);
+			document.elementFromPoint = jest.fn(() => getStar(4));
+
+			fireEvent.touchStart(document.getElementById(ID), {touches: [{clientX: 0, clientY: 0}]});
+
+			expect(getStar(4)).toHaveFocus();
+			expect(getFilledTotal()).toBe(4);
 		});
 	});
 
