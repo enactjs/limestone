@@ -62,15 +62,10 @@
 		}
 	}
 
+	// Holds the current item. Item changes animate as view transitions (see the end of this file).
 	.viewManager {
 		overflow: hidden;
 		height: 100%;
-
-		> .item:nth-child(2) {
-			// the second element in the ViewManager should be offset by the container height
-			// so the transition can position two relative views next to each other safely.
-			top: -100%;
-		}
 	}
 
 	.incrementer,
@@ -316,4 +311,104 @@
 			}
 		}
 	});
+}
+
+// Item change animation. `PickerViewTransition.js` gives each item a pair of global View Transition
+// Classes: `lime-picker-vt-item` plus `lime-picker-vt-<orientation>-<direction>`. The browser
+// matches them literally, so they are wrapped in `:global()`; the keyframes stay local and are
+// renamed together with the `animation` declarations. The keyframes and timing reproduce the
+// carousel animation the Picker used with Enact's `ViewManager`.
+//
+// Each item fills the value area, so clipping an item's own group to its box keeps the sliding
+// snapshot inside the Picker's value area.
+//
+// The snapshots also ignore the pointer, so clicks and pointer moves over the value area reach the
+// Picker during the animation (otherwise they hit `<html>` and Spotlight blurs the Picker).
+::view-transition-group(:global(.lime-picker-vt-item)) {
+	overflow: clip;
+	pointer-events: none;
+}
+
+::view-transition-image-pair(:global(.lime-picker-vt-item)),
+::view-transition-old(:global(.lime-picker-vt-item)),
+::view-transition-new(:global(.lime-picker-vt-item)) {
+	pointer-events: none;
+}
+
+@lime-picker-vt-h-amount: 270px;
+@lime-picker-vt-v-amount: 165px;
+
+// Entering item: position 470ms (30ms delay), opacity 380ms (120ms delay), both ease-out.
+.lime-picker-vt-enter(@from) {
+	animation:
+		@from 470ms ease-out 30ms both,
+		lime-picker-vt-fade-in 380ms ease-out 120ms both;
+}
+
+// Leaving item: position 500ms, opacity 250ms, both ease-in-out.
+.lime-picker-vt-leave(@to) {
+	animation:
+		@to 500ms ease-in-out both,
+		lime-picker-vt-fade-out 250ms ease-in-out both;
+}
+
+::view-transition-new(:global(.lime-picker-vt-horizontal-forward)) {
+	.lime-picker-vt-enter(lime-picker-vt-from-x-end);
+}
+::view-transition-old(:global(.lime-picker-vt-horizontal-forward)) {
+	.lime-picker-vt-leave(lime-picker-vt-to-x-start);
+}
+::view-transition-new(:global(.lime-picker-vt-horizontal-backward)) {
+	.lime-picker-vt-enter(lime-picker-vt-from-x-start);
+}
+::view-transition-old(:global(.lime-picker-vt-horizontal-backward)) {
+	.lime-picker-vt-leave(lime-picker-vt-to-x-end);
+}
+::view-transition-new(:global(.lime-picker-vt-vertical-forward)) {
+	.lime-picker-vt-enter(lime-picker-vt-from-y-start);
+}
+::view-transition-old(:global(.lime-picker-vt-vertical-forward)) {
+	.lime-picker-vt-leave(lime-picker-vt-to-y-end);
+}
+::view-transition-new(:global(.lime-picker-vt-vertical-backward)) {
+	.lime-picker-vt-enter(lime-picker-vt-from-y-end);
+}
+::view-transition-old(:global(.lime-picker-vt-vertical-backward)) {
+	.lime-picker-vt-leave(lime-picker-vt-to-y-start);
+}
+
+@keyframes lime-picker-vt-fade-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+@keyframes lime-picker-vt-fade-out {
+	to { opacity: 0; }
+}
+@keyframes lime-picker-vt-from-x-end {
+	from { transform: translateX(@lime-picker-vt-h-amount); }
+	to { transform: translateX(0); }
+}
+@keyframes lime-picker-vt-from-x-start {
+	from { transform: translateX(-@lime-picker-vt-h-amount); }
+	to { transform: translateX(0); }
+}
+@keyframes lime-picker-vt-to-x-start {
+	to { transform: translateX(-@lime-picker-vt-h-amount); }
+}
+@keyframes lime-picker-vt-to-x-end {
+	to { transform: translateX(@lime-picker-vt-h-amount); }
+}
+@keyframes lime-picker-vt-from-y-start {
+	from { transform: translateY(-@lime-picker-vt-v-amount); }
+	to { transform: translateY(0); }
+}
+@keyframes lime-picker-vt-from-y-end {
+	from { transform: translateY(@lime-picker-vt-v-amount); }
+	to { transform: translateY(0); }
+}
+@keyframes lime-picker-vt-to-y-start {
+	to { transform: translateY(-@lime-picker-vt-v-amount); }
+}
+@keyframes lime-picker-vt-to-y-end {
+	to { transform: translateY(@lime-picker-vt-v-amount); }
 }

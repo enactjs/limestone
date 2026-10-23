@@ -9,7 +9,6 @@ import ForwardRef from '@enact/ui/ForwardRef';
 import IdProvider from '@enact/ui/internal/IdProvider';
 import Layout, {Cell} from '@enact/ui/Layout';
 import Touchable from '@enact/ui/Touchable';
-import {ViewManager} from '@enact/ui/ViewManager';
 import Spotlight, {getDirection} from '@enact/spotlight';
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -21,8 +20,8 @@ import $L from '../$L';
 import {validateRange, validateStepped} from '../validators';
 import {extractVoiceProps, onlyUpdateForProps} from '../util';
 
-import {FastHorizontalCarouselArranger, FastVerticalCarouselArranger} from './Arrangers';
 import PickerButton from './PickerButton';
+import PickerViewTransitionBase from './PickerViewTransition';
 import SpottablePicker from './SpottablePicker';
 
 import componentCss from './Picker.module.less';
@@ -59,7 +58,7 @@ DivComponent.propTypes = {
 const Div = Touchable(DivComponent);
 const SpottableDiv = Touchable(ForwardRef({prop: 'containerRef'}, SpottablePicker));
 
-const PickerViewManager = onlyUpdateForProps(ViewManager, ['index', 'children']);
+const PickerViewTransition = onlyUpdateForProps(PickerViewTransitionBase, ['index', 'children', 'noAnimation', 'orientation']);
 
 const wrapRange = (min, max, value) => {
 	if (value > max) {
@@ -141,9 +140,9 @@ const PickerBase = (props) => {
 	const voiceLabelsExt = voiceProps['data-webos-voice-labels-ext'];
 
 	let Component;
-	let arranger = horizontal ? FastHorizontalCarouselArranger : FastVerticalCarouselArranger;
 	let noAnimation = typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION || props.noAnimation || disabled;
 	let sizingPlaceholder = null;
+
 
 	const clearPressedState = useCallback(() => {
 		pickerButtonPressed.current = 0;
@@ -616,17 +615,17 @@ const PickerBase = (props) => {
 				shrink
 			>
 				{sizingPlaceholder}
-				<PickerViewManager
+				<PickerViewTransition
 					aria-hidden
-					arranger={arranger}
 					className={css.viewManager}
-					duration={100}
 					index={index}
 					noAnimation={noAnimation}
+					orientation={orientation}
+					pickerRef={containerRef}
 					reverseTransition={reverseTransition.current}
 				>
 					{children}
-				</PickerViewManager>
+				</PickerViewTransition>
 				{showIndicators && (
 					<Steps {...voiceProps} css={css} highlightCurrentOnly current={index + 1} total={children.length} />
 				)}
@@ -660,7 +659,7 @@ const PickerBase = (props) => {
 PickerBase.displayName = 'Picker';
 PickerBase.propTypes = /** @lends limestone/internal/Picker.Picker.prototype */ {
 	/**
-	 * Index for internal ViewManager
+	 * Index of the child to display
 	 *
 	 * @type {Number}
 	 * @required

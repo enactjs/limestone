@@ -523,9 +523,9 @@ describe('Picker Specs', () => {
 		);
 		const picker = screen.getByLabelText('0 press ok button to change the value');
 
-		const expected = 2; // there is a dummy sibling by Spottable
-		// The indicator will be a child of picker's children
-		// With it there will be 2 child elements
+		const expected = 1; // only the item container
+		// The indicator would be a child of picker's children
+		// With it there would be 2 child elements
 		const actual = picker.children.item(0).children.length;
 
 		expect(actual).toBe(expected);
@@ -539,9 +539,9 @@ describe('Picker Specs', () => {
 		);
 		const picker = screen.getByRole('spinbutton', {hidden: true});
 
-		const expected = 2; // there is a dummy sibling by Spottable
-		// The indicator will be a child of picker's children
-		// With it there will be 2 child elements
+		const expected = 1; // only the item container
+		// The indicator would be a child of picker's children
+		// With it there would be 2 child elements
 		const actual = picker.children.length;
 
 		expect(actual).toBe(expected);
@@ -558,7 +558,7 @@ describe('Picker Specs', () => {
 		const picker = screen.getByRole('spinbutton', {hidden: true});
 
 		const expected = 3;
-		const actual = picker.children.item(2).children.length; // there is a dummy sibling by Spottable
+		const actual = picker.children.item(1).children.length; // the indicator follows the item container
 
 		expect(actual).toBe(expected);
 	});
@@ -758,6 +758,57 @@ describe('Picker Specs', () => {
 			const expectedAttribute = 'aria-label';
 
 			expect(picker).toHaveAttribute(expectedAttribute, titleText + ' ' + customLabel);
+		});
+
+		test('should render only the selected item', () => {
+			render(
+				<Picker index={2} max={3} min={0} value={2}>
+					<PickerItem>1</PickerItem>
+					<PickerItem>2</PickerItem>
+					<PickerItem>3</PickerItem>
+					<PickerItem>4</PickerItem>
+				</Picker>
+			);
+
+			expect(screen.getByText('3')).toBeInTheDocument();
+			expect(screen.queryByText('2')).not.toBeInTheDocument();
+		});
+
+		test('should show the new item when \'index\' changes', async () => {
+			const {rerender} = render(
+				<Picker index={0} max={1} min={0} value={0}>
+					<PickerItem>A</PickerItem>
+					<PickerItem>B</PickerItem>
+				</Picker>
+			);
+
+			rerender(
+				<Picker index={1} max={1} min={0} value={1}>
+					<PickerItem>A</PickerItem>
+					<PickerItem>B</PickerItem>
+				</Picker>
+			);
+
+			expect(await screen.findByText('B')).toBeInTheDocument();
+			expect(screen.queryByText('A')).not.toBeInTheDocument();
+		});
+
+		test('should show the new item when a range picker\'s keyed child changes', async () => {
+			// Range pickers (e.g. in DatePicker) keep `index` at 0 and swap one child keyed by value
+			const {rerender} = render(
+				<Picker index={0} max={31} min={1} value={5}>
+					<PickerItem key={5}>5</PickerItem>
+				</Picker>
+			);
+
+			rerender(
+				<Picker index={0} max={31} min={1} value={6}>
+					<PickerItem key={6}>6</PickerItem>
+				</Picker>
+			);
+
+			expect(await screen.findByText('6')).toBeInTheDocument();
+			expect(screen.queryByText('5')).not.toBeInTheDocument();
 		});
 
 		test('should set \'aria-label\' to joined picker', () => {
