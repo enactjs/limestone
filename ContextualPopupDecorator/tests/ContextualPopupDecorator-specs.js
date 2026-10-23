@@ -2,6 +2,7 @@ import * as dispatcher from '@enact/core/dispatcher';
 import {getPointerMode} from '@enact/spotlight/src/pointer';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
+import {createRef, Fragment} from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -16,16 +17,71 @@ const leftKeyDown = keyDown(37);
 
 describe('ContextualPopupDecorator Specs', () => {
 	beforeEach(() => {
-		global.Element.prototype.getBoundingClientRect = jest.fn(() => {
-			return {
-				width: 1800,
-				height: 1000,
-				top: 500,
-				left: 500,
-				bottom: 0,
-				right: 0
-			};
-		});
+		const rect = {
+			width: 1800,
+			height: 1000,
+			top: 500,
+			left: 500,
+			bottom: 0,
+			right: 0
+		};
+		// Popup container measurement still uses getBoundingClientRect. The activator is a
+		// fragment ref, so its box comes from getClientRects.
+		global.Element.prototype.getBoundingClientRect = jest.fn(() => ({...rect}));
+		global.Element.prototype.getClientRects = jest.fn(() => [{...rect}]);
+	});
+
+	test('should not render a withref marker', () => {
+		const Root = FloatingLayerDecorator('div');
+		render(
+			<Root>
+				<ContextualButton open popupComponent={() => 'goodbye'}>
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		expect(document.querySelector('[data-withref-referrer="ContextualPopup"]')).toBeNull();
+	});
+
+	test('should position from a zero box when the activator has no client rects', () => {
+		global.Element.prototype.getClientRects = jest.fn(() => []);
+		const Root = FloatingLayerDecorator('div');
+
+		render(
+			<Root>
+				<ContextualButton open popupComponent={() => 'goodbye'}>
+					Hello
+				</ContextualButton>
+			</Root>
+		);
+
+		expect(screen.getByText('goodbye')).toBeInTheDocument();
+	});
+
+	test('should leave the popup unpositioned when the activator fragment cannot be measured', () => {
+		const probe = createRef();
+		const view = render(<Fragment ref={probe}><div /></Fragment>);
+		const fragmentPrototype = Object.getPrototypeOf(probe.current);
+		const originalGetClientRects = fragmentPrototype.getClientRects;
+		delete fragmentPrototype.getClientRects;
+		view.unmount();
+
+		const Root = FloatingLayerDecorator('div');
+
+		try {
+			render(
+				<Root>
+					<ContextualButton open popupComponent={() => 'goodbye'}>
+						Hello
+					</ContextualButton>
+				</Root>
+			);
+
+			expect(screen.getByText('goodbye')).toBeInTheDocument();
+		} finally {
+			fragmentPrototype.getClientRects = originalGetClientRects;
+		}
 	});
 
 	test('should emit onOpen event with type when opening', () => {
@@ -537,16 +593,9 @@ describe('ContextualPopupDecorator Specs', () => {
 	});
 
 	// Guard for WRR-21642 / NXT-19858.
-	// #270 converted the decorator to a functional component and collapsed
-	// getSnapshotBeforeUpdate/componentDidUpdate into a single post-render effect. The fix
-	// persists the previous render's measurements in a ref and compares the current DOM
-	// against them so the popup still repositions when the wrapped component is updated.
-	// A fully isolated assertion of the reset is impractical here: `getClientSiblingNodeWidth`
-	// reads through the same ref that goes stale, and the sampler `WithChangingComponent`
-	// story is what exercises the real re-resolution. This guard exercises the effect on a
-	// rerender while open (where the collapsed logic lives) with a wrapped component whose
-	// output changes, asserting the effect runs without throwing and the popup stays open and
-	// positioned. It would fail if the snapshot logic threw (e.g. reading a null snapshot).
+	// The activator is measured through a fragment ref, which stays current when the wrapped
+	// component updates. This exercises the post-render reposition while open and would fail
+	// if that effect threw or stopped positioning the popup.
 	test('should keep the popup rendered and positioned when the wrapped component is updated', () => {
 		const Root = FloatingLayerDecorator('div');
 		const popup = () => <div><Button>Button</Button></div>;
@@ -597,6 +646,7 @@ describe('ContextualPopupDecorator Specs', () => {
 		const updatedRect = {width: 900, height: 400, top: 200, left: 300, bottom: 600, right: 1200};
 		let currentRect = initialRect;
 		global.Element.prototype.getBoundingClientRect = jest.fn(() => ({...currentRect}));
+		global.Element.prototype.getClientRects = jest.fn(() => [{...currentRect}]);
 
 		const Root = FloatingLayerDecorator('div');
 		const popup = () => <div><Button>Button</Button></div>;

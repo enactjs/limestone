@@ -13,7 +13,6 @@ import {on, off} from '@enact/core/dispatcher';
 import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {WithRef} from '@enact/core/internal/WithRef';
 import {checkPropTypes, extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
@@ -22,12 +21,57 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Fragment, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
 import HolePunchScrim from './HolePunchScrim';
 
 import css from './ContextualPopupDecorator.module.less';
+
+const emptyFragmentRect = {
+	bottom: 0,
+	height: 0,
+	left: 0,
+	right: 0,
+	top: 0,
+	width: 0
+};
+
+// Union of the fragment's first-level client rects. Matches Element#getBoundingClientRect
+// for a single host child, which is what the activator renders. An empty list (jsdom, or a
+// host child that is not rendered) is a zero box, same as getBoundingClientRect.
+const getFragmentBoundingClientRect = (fragment) => {
+	if (!fragment || typeof fragment.getClientRects !== 'function') {
+		return null;
+	}
+
+	const rects = fragment.getClientRects();
+	if (!rects || rects.length === 0) {
+		return {...emptyFragmentRect};
+	}
+
+	let top = Infinity;
+	let right = -Infinity;
+	let bottom = -Infinity;
+	let left = Infinity;
+
+	for (let i = 0; i < rects.length; i++) {
+		const rect = rects[i];
+		top = Math.min(top, rect.top);
+		right = Math.max(right, rect.right);
+		bottom = Math.max(bottom, rect.bottom);
+		left = Math.min(left, rect.left);
+	}
+
+	return {
+		bottom,
+		height: bottom - top,
+		left,
+		right,
+		top,
+		width: right - left
+	};
+};
 
 const PositionToDirection = {
 	above: 'up',
@@ -94,7 +138,6 @@ const ContextualPopupContainer = SpotlightContainerDecorator(
 
 const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {noArrow, noSkin, openProp} = config;
-	const WrappedWithRef = WithRef(Wrapped);
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
@@ -116,7 +159,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const prevProps = useRef(componentProps);
 		const snapshot = useRef(null);
 		const resizeObserver = useRef(null);
-		const findClientSiblingRef = useRef(null);
 		const holepunchScrimRef = useRef(false);
 
 		const keyDownRef = useRef(null);
@@ -376,9 +418,12 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @returns {undefined}
 		 */
 		const positionContextualPopup = useCallback(() => {
-			if (containerNode.current && clientSiblingRef?.current) {
+			if (containerNode.current && clientSiblingRef.current) {
 				const localContainerNode = containerNode.current.getBoundingClientRect();
-				const clientRect = clientSiblingRef.current.getBoundingClientRect();
+				const clientRect = getFragmentBoundingClientRect(clientSiblingRef.current);
+				if (!clientRect) {
+					return;
+				}
 				const {top, left, bottom, right, width, height} = clientRect;
 				const clientNode = {top, left, bottom, right, width, height};
 
@@ -541,7 +586,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);
 
 		const getClientSiblingNodeWidth = useCallback(() => {
-			return clientSiblingRef.current && clientSiblingRef.current.getBoundingClientRect().width || 0;
+			return getFragmentBoundingClientRect(clientSiblingRef.current)?.width || 0;
 		}, []);
 
 		const getSnapshotBeforeUpdate = useCallback(() => {
@@ -622,12 +667,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			// DOM. There is no hook that runs pre-commit, so we instead persist the previous
 			// measurements across renders and compare the current (post-render) DOM against them.
 			const prevSnapshot = snapshot.current;
-			const currentClientSiblingWidth = getClientSiblingNodeWidth();
 			const currentContainerWidth = getContainerNodeWidth();
-
-			if (prevSnapshot && prevSnapshot.clientSiblingWidth !== currentClientSiblingWidth) {
-				clientSiblingRef.current = findClientSiblingRef.current();
-			}
 
 			if (prevProps.current.direction !== componentProps.direction ||
                 (prevSnapshot && prevSnapshot.containerWidth !== currentContainerWidth) ||
@@ -653,12 +693,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			// Store this cycle's measurements to compare against on the next update.
 			snapshot.current = {
-				clientSiblingWidth: currentClientSiblingWidth,
 				containerWidth: currentContainerWidth
 			};
 
 			prevProps.current = componentProps;
-		}, [activator, componentProps, getContainerNodeWidth, getClientSiblingNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
+		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
 
 		const {
 			'data-webos-voice-exclusive': voiceExclusive,
@@ -694,8 +733,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		useEffect(() => {
 			holepunchScrimRef.current = holepunchScrim;
 
-			if (clientSiblingRef?.current && holepunchScrim) {
-				setHoleBounds(clientSiblingRef.current.getBoundingClientRect());
+			const clientRect = getFragmentBoundingClientRect(clientSiblingRef.current);
+			if (clientRect && holepunchScrim) {
+				setHoleBounds(clientRect);
 			}
 		}, [holepunchScrim]);
 
@@ -740,7 +780,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 						</ContextualPopupContainer>
 					</div>
 				</FloatingLayer>
-				<WrappedWithRef {...rest} outermostRef={clientSiblingRef} findOutermostRef={findClientSiblingRef} referrerName="ContextualPopup" />
+				<Fragment ref={clientSiblingRef}>
+					<Wrapped {...rest} />
+				</Fragment>
 			</div>
 		);
 	};
