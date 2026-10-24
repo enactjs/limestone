@@ -285,7 +285,7 @@ class FocusedAndDisabled extends Component {
 				<Button onClick={this.handleClear}>Enable All</Button>
 				{this.tests.map((comp, index) => (
 					<div key={`row-${index}`}>
-						{/* eslint-disable-next-line react/jsx-no-bind */}
+						{/* eslint-disable-next-line enact/jsx-no-bind */}
 						<Button icon="arrowlargeright" onClick={() => this.select(index)} />
 						{cloneElement(comp, {
 							disabled: this.state.index === index,
