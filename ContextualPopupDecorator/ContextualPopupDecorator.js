@@ -9,6 +9,7 @@
  */
 
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
+import {getFragmentBoundingClientRect} from '@enact/core/internal/fragmentHost';
 import {on, off} from '@enact/core/dispatcher';
 import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
@@ -27,51 +28,6 @@ import {ContextualPopup} from './ContextualPopup';
 import HolePunchScrim from './HolePunchScrim';
 
 import css from './ContextualPopupDecorator.module.less';
-
-const emptyFragmentRect = {
-	bottom: 0,
-	height: 0,
-	left: 0,
-	right: 0,
-	top: 0,
-	width: 0
-};
-
-// Union of the fragment's first-level client rects. Matches Element#getBoundingClientRect
-// for a single host child, which is what the activator renders. An empty list (jsdom, or a
-// host child that is not rendered) is a zero box, same as getBoundingClientRect.
-const getFragmentBoundingClientRect = (fragment) => {
-	if (!fragment || typeof fragment.getClientRects !== 'function') {
-		return null;
-	}
-
-	const rects = fragment.getClientRects();
-	if (!rects || rects.length === 0) {
-		return {...emptyFragmentRect};
-	}
-
-	let top = Infinity;
-	let right = -Infinity;
-	let bottom = -Infinity;
-	let left = Infinity;
-
-	for (let i = 0; i < rects.length; i++) {
-		const rect = rects[i];
-		top = Math.min(top, rect.top);
-		right = Math.max(right, rect.right);
-		bottom = Math.max(bottom, rect.bottom);
-		left = Math.min(left, rect.left);
-	}
-
-	return {
-		bottom,
-		height: bottom - top,
-		left,
-		right,
-		top,
-		width: right - left
-	};
-};
 
 const PositionToDirection = {
 	above: 'up',
