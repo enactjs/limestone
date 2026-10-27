@@ -151,32 +151,96 @@
 	}
 
 	&.shown {
-		&:is(:global(.animationTier-high) *) .inner { .lime-enter-small-high-motion(); }
-		&:is(:global(.animationTier-low) *) .inner { .lime-enter-small-low-motion(); }
+		.applyMotions({
+			.inner {
+				.lime-enter-small-high-motion();
+			}
+		}, high, is);
+		.applyMotions({
+			.inner {
+				.lime-enter-small-low-motion();
+			}
+		}, low, is);
 
-		&.center:is(:global(.animationTier-high) *) .inner { .lime-enter-medium-high-motion(); }
-		&.center:is(:global(.animationTier-low) *) .inner { .lime-enter-medium-low-motion(); }
+		&.center {
+			.applyMotions({
+				.inner { .lime-enter-medium-high-motion(); }
+			}, high, is);
+			.applyMotions({
+				.inner { .lime-enter-medium-low-motion(); }
+			}, low, is);
+		}
 
 		// Alert Fullscreen
 		&.fullscreen .inner { .lime-enter-none-motion(); }
 	}
 
 	&.hidden {
-		&.bottom:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, 336px); }
-		&.bottom:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, 336px); }
+		&.bottom {
+			.applyMotions({
+				.inner {
+					.lime-exit-small-high-motion(0, 336px);
+				}
+			}, high, is);
+			.applyMotions({
+				.inner {
+					.lime-exit-small-low-motion(0, 336px);
+				}
+			}, low, is);
+		}
 
-		&.top:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, -336px); }
-		&.top:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, -336px); }
+		&.top {
+			.applyMotions({
+				.inner {
+					.lime-exit-small-high-motion(0, -336px);
+				}
+			}, high, is);
+			.applyMotions({
+				.inner {
+					.lime-exit-small-low-motion(0, -336px);
+				}
+			}, low, is);
+		}
 
-		&.left:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(-336px, 0); }
-		&.left:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(-336px, 0); }
+		&.left {
+			.applyMotions({
+				.inner {
+					.lime-exit-small-high-motion(-336px, 0);
+				}
+			}, high, is);
+			.applyMotions({
+				.inner {
+					.lime-exit-small-low-motion(-336px, 0);
+				}
+			}, low, is);
+		}
 
-		&.right:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(336px, 0); }
-		&.right:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(336px, 0); }
+		&.right {
+			.applyMotions({
+				.inner {
+					.lime-exit-small-high-motion(336px, 0);
+				}
+			}, high, is);
+			.applyMotions({
+				.inner {
+					.lime-exit-small-low-motion(336px, 0);
+				}
+			}, low, is);
+		}
 
 		// Alert Overlay
-		&.center:is(:global(.animationTier-high) *) .inner { .lime-exit-medium-high-motion(0, 32px); }
-		&.center:is(:global(.animationTier-low) *) .inner { .lime-exit-medium-low-motion(0, 32px); }
+		&.center {
+			.applyMotions({
+				.inner {
+					.lime-exit-medium-high-motion(0, 32px);
+				}
+			}, high, is);
+			.applyMotions({
+				.inner {
+					.lime-exit-medium-low-motion(0, 32px);
+				}
+			}, low, is);
+		}
 	}
 
 	:global(.noAnimation) & {

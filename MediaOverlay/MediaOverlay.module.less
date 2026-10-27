@@ -23,24 +23,56 @@
 		position: relative;
 	}
 
-	&:where(:global(.animationTier-high) *) .mediaContainer { .lime-focus-out-medium-high-motion(1); }
-	&:where(:global(.animationTier-low) *) .mediaContainer { .lime-focus-out-medium-low-motion(1); }
+	.applyMotions({
+		.mediaContainer {
+			.lime-focus-out-medium-high-motion(1);
+		}
+	}, high);
+	.applyMotions({
+		.mediaContainer {
+			.lime-focus-out-medium-low-motion(1);
+		}
+	}, low);
 
 	.focus({
-		&:where(:global(.animationTier-high) *) .mediaContainer { .lime-focus-in-medium-high-motion(1.1); }
-		&:where(:global(.animationTier-low) *) .mediaContainer { .lime-focus-in-medium-low-motion(1.1); }
+		.applyMotions({
+			.mediaContainer {
+				.lime-focus-in-medium-high-motion(1.1);
+			}
+		}, high);
+		.applyMotions({
+			.mediaContainer {
+				.lime-focus-in-medium-low-motion(1.1);
+			}
+		}, low);
 	});
 
 	&:not([disabled]) {
 		.focus({
 			&.pressed,
 			&:active {
-				&:where(:global(.animationTier-high) *) .mediaContainer { .lime-press-medium-high-motion(1.05); }
-				&:where(:global(.animationTier-low) *) .mediaContainer { .lime-press-medium-low-motion(1.05); }
+				.applyMotions({
+					.mediaContainer {
+						.lime-press-medium-high-motion(1.05);
+					}
+				}, high);
+				.applyMotions({
+					.mediaContainer {
+						.lime-press-medium-low-motion(1.05);
+					}
+				}, low);
 			}
 			&:not(.pressed) {
-				&:where(:global(.animationTier-high) *) .mediaContainer { .lime-release-medium-high-motion(1.1); }
-				&:where(:global(.animationTier-low) *) .mediaContainer { .lime-release-medium-low-motion(1.1); }
+				.applyMotions({
+					.mediaContainer {
+						.lime-release-medium-high-motion(1.1);
+					}
+				}, high);
+				.applyMotions({
+					.mediaContainer {
+						.lime-release-medium-low-motion(1.1);
+					}
+				}, low);
 			}
 		});
 	}
