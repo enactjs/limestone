@@ -20,13 +20,15 @@ import Toggleable from '@enact/ui/Toggleable';
 
 import {ItemBase, ItemDecorator} from '../Item';
 import Skinnable from '../Skinnable';
-import {SwitchBase} from '../Switch';
+import {BounceOnToggle, SwitchBase} from '../Switch';
 
 import componentCss from './SwitchItem.module.less';
 
 const Item = ItemDecorator(ItemBase);
 
-const Switch = Skinnable(SwitchBase);
+// `BounceOnToggle` keeps the handle bounce tied to an actual off-to-on toggle, so a selected
+// switch does not bounce when the SwitchItem re-mounts (QEVENTTH-15000).
+const Switch = BounceOnToggle(Skinnable(SwitchBase));
 Switch.displayName = 'Switch';
 
 /**
