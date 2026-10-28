@@ -1,8 +1,8 @@
 import kind from '@enact/core/kind';
 import {forward} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
+import {fragmentContains} from '@enact/core/internal/fragmentHost';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {WithRef} from '@enact/core/internal/WithRef';
 import {checkPropTypes} from '@enact/core/util';
 import Spotlight from '@enact/spotlight';
 import IdProvider from '@enact/ui/internal/IdProvider';
@@ -10,7 +10,7 @@ import ri from '@enact/ui/resolution';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {useCallback, useEffect, useReducer, useRef} from 'react';
+import {Fragment, useCallback, useEffect, useReducer, useRef} from 'react';
 
 import $L from '../internal/$L';
 import {compareChildren} from '../internal/util';
@@ -207,7 +207,6 @@ const DropdownListBase = kind({
 });
 
 const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
-	const WrappedWithRef = WithRef(Wrapped);
 
 	// eslint-disable-next-line no-shadow
 	const DropdownListSpotlightDecorator = (props) => {
@@ -291,10 +290,10 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 
 		const handleFocus = useCallback((ev) => {
 			const current = ev.target;
-			const dropdownListNode = clientSiblingRef?.current;
+			const dropdownListNode = clientSiblingRef.current;
 
 			if (state.ready === ReadyState.DONE && !Spotlight.getPointerMode() &&
-				current.dataset['index'] != null && dropdownListNode.contains(current)
+				current.dataset['index'] != null && fragmentContains(dropdownListNode, current)
 			) {
 				const focusedIndex = Number(current.dataset['index']);
 				lastFocusedKey.current = getKey({children: props.children, selected: focusedIndex});
@@ -309,7 +308,9 @@ const DropdownListSpotlightDecorator = hoc((config, Wrapped) => {
 		delete wrappedComponentProps.handleSpotlightPause;
 
 		return (
-			<WrappedWithRef {...wrappedComponentProps} onFocus={handleFocus} outermostRef={clientSiblingRef} referrerName="DropdownList" scrollTo={setScrollTo} />
+			<Fragment ref={clientSiblingRef}>
+				<Wrapped {...wrappedComponentProps} onFocus={handleFocus} scrollTo={setScrollTo} />
+			</Fragment>
 		);
 	};
 

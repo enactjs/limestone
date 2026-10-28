@@ -537,16 +537,9 @@ describe('ContextualPopupDecorator Specs', () => {
 	});
 
 	// Guard for WRR-21642 / NXT-19858.
-	// #270 converted the decorator to a functional component and collapsed
-	// getSnapshotBeforeUpdate/componentDidUpdate into a single post-render effect. The fix
-	// persists the previous render's measurements in a ref and compares the current DOM
-	// against them so the popup still repositions when the wrapped component is updated.
-	// A fully isolated assertion of the reset is impractical here: `getClientSiblingNodeWidth`
-	// reads through the same ref that goes stale, and the sampler `WithChangingComponent`
-	// story is what exercises the real re-resolution. This guard exercises the effect on a
-	// rerender while open (where the collapsed logic lives) with a wrapped component whose
-	// output changes, asserting the effect runs without throwing and the popup stays open and
-	// positioned. It would fail if the snapshot logic threw (e.g. reading a null snapshot).
+	// The activator is measured through a fragment ref, which stays current when the wrapped
+	// component updates. This exercises the post-render reposition while open and would fail
+	// if that effect threw or stopped positioning the popup.
 	test('should keep the popup rendered and positioned when the wrapped component is updated', () => {
 		const Root = FloatingLayerDecorator('div');
 		const popup = () => <div><Button>Button</Button></div>;
@@ -597,6 +590,7 @@ describe('ContextualPopupDecorator Specs', () => {
 		const updatedRect = {width: 900, height: 400, top: 200, left: 300, bottom: 600, right: 1200};
 		let currentRect = initialRect;
 		global.Element.prototype.getBoundingClientRect = jest.fn(() => ({...currentRect}));
+		global.Element.prototype.getClientRects = jest.fn(() => [{...currentRect}]);
 
 		const Root = FloatingLayerDecorator('div');
 		const popup = () => <div><Button>Button</Button></div>;
