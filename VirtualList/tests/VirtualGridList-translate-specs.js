@@ -347,7 +347,7 @@ describe('VirtualGridList with translate \'scrollMode\'', () => {
 
 		test('should scroll to the given \'align\' with scrollTo', (done) => {
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = Math.ceil(dataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight + 30;
+				const expected = Math.ceil(dataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -372,7 +372,7 @@ describe('VirtualGridList with translate \'scrollMode\'', () => {
 			const newDataSize = 50;
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = Math.ceil(newDataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight + 30;
+				const expected = Math.ceil(newDataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -409,7 +409,7 @@ describe('VirtualGridList with translate \'scrollMode\'', () => {
 			const newItemSize = {minWidth: 300, minHeight: 270};
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = Math.ceil(dataSize / 4) * (newItemSize.minHeight + 18) - clientSize.clientHeight + 30;
+				const expected = Math.ceil(dataSize / 4) * (newItemSize.minHeight + 18) - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -446,7 +446,7 @@ describe('VirtualGridList with translate \'scrollMode\'', () => {
 			const newSpacing = 6;
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = Math.ceil(dataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight + 30 + 94; // Cannot calculate the exact length after applying spacing.
+				const expected = Math.ceil(dataSize / 4) * (itemSize.minHeight + 16) - clientSize.clientHeight + 94; // Cannot calculate the exact length after applying spacing.
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);

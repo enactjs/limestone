@@ -327,7 +327,7 @@ describe('VirtualList with translate \'scrollMode\'', () => {
 
 		test('should scroll to the given \'align\' with scrollTo', (done) => {
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = dataSize * itemSize - clientSize.clientHeight + 30;
+				const expected = dataSize * itemSize - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -352,7 +352,7 @@ describe('VirtualList with translate \'scrollMode\'', () => {
 			const newDataSize = 50;
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = newDataSize * itemSize - clientSize.clientHeight + 30;
+				const expected = newDataSize * itemSize - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -389,7 +389,7 @@ describe('VirtualList with translate \'scrollMode\'', () => {
 			const newItemSize = 50;
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = dataSize * newItemSize - clientSize.clientHeight + 30;
+				const expected = dataSize * newItemSize - clientSize.clientHeight;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
@@ -426,7 +426,7 @@ describe('VirtualList with translate \'scrollMode\'', () => {
 			const newSpacing = 30;
 
 			const onScrollStop = handlerOnScrollStop(done, () => {
-				const expected = dataSize * (itemSize + newSpacing) - clientSize.clientHeight - newSpacing + 30;
+				const expected = dataSize * (itemSize + newSpacing) - clientSize.clientHeight - newSpacing;
 				const actual = resultScrollTop;
 
 				expect(actual).toBe(expected);
