@@ -59,6 +59,15 @@ describe('Dropdown', function () {
 			expect(await dropdown.verticalScrollbar.isExisting()).toBe(false);
 		});
 
+		it('should not render a vertical scrollbar when there are exactly 5 items', async function () {
+			const dropdown = Page.components.dropdownDefault;
+
+			await Page.openDropdown(dropdown);
+			await browser.pause(500);
+
+			expect(await dropdown.verticalScrollbar.isExisting()).toBe(false);
+		});
+
 		it('should render a vertical scrollbar when there are more than 5 items', async function () {
 			const dropdown = Page.components.dropdownMoreChildren;
 
