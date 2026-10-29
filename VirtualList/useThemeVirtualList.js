@@ -419,6 +419,11 @@ const useThemeVirtualList = (props) => {
 
 	props.setThemeScrollContentHandle(handle);
 
+	function getAffordance () {
+		// To add space for the last item margin bottom
+		return props.noAffordance ? 0 : ri.scale(30);
+	}
+
 	// Render
 
 	const {
@@ -446,6 +451,7 @@ const useThemeVirtualList = (props) => {
 			'data-webos-voice-group-label': voiceGroupLabel,
 			'data-webos-voice-disabled': voiceDisabled
 		},
+		getAffordance,
 		itemRenderer: ({index, ...itemRest}) => (
 			itemRenderer({
 				...itemRest,
