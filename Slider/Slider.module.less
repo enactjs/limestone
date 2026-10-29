@@ -413,7 +413,7 @@
 		}
 
 		:global(.spotlight-input-mouse) & {
-			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) .knob::before {
+			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
 				.applyMotions(
 					{ .knob::before {.lime-slider-focus-in-high-motion(); }},
 					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
@@ -458,10 +458,10 @@
 					);
 				}
 
-				&:not(.pressed) .knob::before {
+				&:not(.pressed) {
 					.applyMotions(
-						{ .knob::before { .lime-slider-release-high-motion()}},
-						{ .knob::before { .lime-slider-release-low-motion()}}
+						{ .knob::before { .lime-slider-release-high-motion(); }},
+						{ .knob::before { .lime-slider-release-low-motion(); }}
 					);
 				}
 
@@ -490,8 +490,12 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-handle-focused-shadow;
-				.applyMotions(.lime-slider-focus-in-high-motion(), .lime-slider-focus-in-low-motion());
 			}
+
+			.applyMotions(
+				{ .knob::before { .lime-slider-focus-in-high-motion(); }},
+				{ .knob::before { .lime-slider-focus-in-low-motion(); }}
+			);
 		}
 
 		:global(.noAnimation) & {
