@@ -5,7 +5,7 @@ import kind from '@enact/core/kind';
 import hoc from '@enact/core/hoc';
 import deprecate from '@enact/core/internal/deprecate';
 import {is} from '@enact/core/keymap';
-import {Job} from '@enact/core/util';
+import {checkPropTypes, Job, setDefaultProps} from '@enact/core/util';
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import Spotlight from '@enact/spotlight';
@@ -14,7 +14,7 @@ import {SpotlightContainerDecorator, spotlightDefaultClass} from '@enact/spotlig
 import Cancelable from '@enact/ui/Cancelable';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
-import {Component, createRef} from 'react';
+import {useCallback, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import ActionGuide from '../ActionGuide';
 import Button from '../Button';
@@ -584,6 +584,168 @@ const MediaControlsBase = kind({
 	})
 });
 
+const mediaControlsDecoratorDefaultProps = {
+	initialJumpDelay: 400,
+	jumpDelay: 200
+};
+
+const mediaControlsDecoratorPropTypes = /** @lends limestone/MediaPlayer.MediaControlsDecorator.prototype */ {
+	/**
+	 * The label for the action guide.
+	 *
+	 * @type {String}
+	 * @public
+	 */
+	actionGuideLabel: PropTypes.string,
+
+	/**
+	 * These components are placed below the children. Typically, these will be media playlist items.
+	 *
+	 * @type {Node}
+	 * @public
+	 */
+	bottomComponents: PropTypes.node,
+
+	/**
+	 * The number of milliseconds that the player will pause before firing the
+	 * first jump event on a right or left pulse.
+	 *
+	 * @type {Number}
+	 * @default 400
+	 * @public
+	 */
+	initialJumpDelay: PropTypes.number,
+
+	/**
+	 * The number of milliseconds that the player will throttle before firing a
+	 * jump event on a right or left pulse.
+	 *
+	 * @type {Number}
+	 * @default 200
+	 * @public
+	 */
+	jumpDelay: PropTypes.number,
+
+	/**
+	 * Disables the media buttons.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	mediaDisabled: PropTypes.bool,
+
+	/**
+	 * Disables showing more components.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	moreActionDisabled: PropTypes.bool,
+
+	/**
+	 * Setting this to `true` will disable left and right keys for seeking.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	no5WayJump: PropTypes.bool,
+
+	/**
+	 * Called when media fast forwards.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onFastForward: PropTypes.func,
+
+	/**
+	 * Called when media jumps.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onJump: PropTypes.func,
+
+	/**
+	 * Called when media gets paused.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onPause: PropTypes.func,
+
+	/**
+	 * Called when media starts playing.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onPlay: PropTypes.func,
+
+	/**
+	 * Called when media rewinds.
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onRewind: PropTypes.func,
+
+	/**
+	 * Called when the visibility of more components is changed
+	 *
+	 * Event payload includes:
+	 *
+	 * * `type` - Type of event, `'onToggleMore'`
+	 * * `showMoreComponents` - `true` when the components are visible`
+	 * * `liftDistance` - The distance, in pixels, the component animates
+	 *
+	 * @type {Function}
+	 * @public
+	 */
+	onToggleMore: PropTypes.func,
+
+	/**
+	 * The video pause state.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	paused: PropTypes.bool,
+
+	/**
+	 * Disables state on the media "play"/"pause" button
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	playPauseButtonDisabled: PropTypes.bool,
+
+	/**
+	 * Disables the media playback-rate control via rewind and fast-forward keys
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	rateChangeDisabled: PropTypes.bool,
+
+	/**
+	 * Registers the MediaControls component with an
+	 * {@link core/internal/ApiDecorator.ApiDecorator|ApiDecorator}.
+	 *
+	 * @type {Function}
+	 * @private
+	 */
+	setApiProvider: PropTypes.func,
+
+	/**
+	 * The visibility of the component. When `false`, the component will be hidden.
+	 *
+	 * @type {Boolean}
+	 * @public
+	 */
+	visible: PropTypes.bool
+};
+
 /**
  * Media control behaviors to apply to {@link limestone/MediaPlayer.MediaControlsBase|MediaControlsBase}.
  * Provides built-in support for showing more components and key handling for basic playback
@@ -595,467 +757,333 @@ const MediaControlsBase = kind({
  * @hoc
  * @private
  */
-const MediaControlsDecorator = hoc((config, Wrapped) => {
-	class MediaControlsDecoratorHOC extends Component {
-		static displayName = 'MediaControlsDecorator';
+const useMediaControlsDecorator = (componentProps) => {
+	const [showMore, setShowMore] = useState(false);
+	const [moreComponentsRendered, setMoreComponentsRendered] = useState(false);
+	const showMoreActive = componentProps.visible ? showMore : false;
 
-		static propTypes = /** @lends limestone/MediaPlayer.MediaControlsDecorator.prototype */ {
-			/**
-			 * The label for the action guide.
-			 *
-			 * @type {String}
-			 * @public
-			 */
-			actionGuideLabel: PropTypes.string,
+	// `visible={false}` forces the more-components panel closed, matching getDerivedStateFromProps.
+	if (!componentProps.visible && showMore) {
+		setShowMore(false);
+	}
 
-			/**
-			 * These components are placed below the children. Typically, these will be media playlist items.
-			 *
-			 * @type {Node}
-			 * @public
-			 */
-			bottomComponents: PropTypes.node,
+	const actionGuideHeightRef = useRef(0);
+	const animationRef = useRef(null);
+	const bottomComponentsHeightRef = useRef(0);
+	const committedRef = useRef(null);
+	const keyLoopRef = useRef(null);
+	const mediaControlsNodeRef = useRef(null);
+	const mediaControlsRef = useRef(null);
+	const moreComponentsNodeRef = useRef(null);
+	const propsRef = useRef(componentProps);
+	const handlePulseRef = useRef(null);
+	const pulsingKeyCodeRef = useRef(null);
+	const pulsingRef = useRef(null);
+	const showMoreRef = useRef(showMoreActive);
 
-			/**
-			 * The number of milliseconds that the player will pause before firing the
-			 * first jump event on a right or left pulse.
-			 *
-			 * @type {Number}
-			 * @default 400
-			 * @public
-			 */
-			initialJumpDelay: PropTypes.number,
+	const paused = useMemo(() => new Pause('MediaPlayer'), []);
+	const moreComponentsRenderingJob = useMemo(() => new Job(() => {
+		setMoreComponentsRendered(true);
+	}), [setMoreComponentsRendered]);
 
-			/**
-			 * The number of milliseconds that the player will throttle before firing a
-			 * jump event on a right or left pulse.
-			 *
-			 * @type {Number}
-			 * @default 200
-			 * @public
-			 */
-			jumpDelay: PropTypes.number,
+	const moreComponentsSpotlightId = 'moreComponents';
 
-			/**
-			 * Disables the media buttons.
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			mediaDisabled: PropTypes.bool,
+	const stopListeningForPulses = useCallback(() => {
+		pulsingRef.current = false;
+		if (keyLoopRef.current) {
+			clearTimeout(keyLoopRef.current);
+			keyLoopRef.current = null;
+		}
+	}, []);
 
-			/**
-			 * Disables showing more components.
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			moreActionDisabled: PropTypes.bool,
+	const handlePulse = useCallback(() => {
+		forward('onJump', {keyCode: pulsingKeyCodeRef.current}, propsRef.current);
+		keyLoopRef.current = setTimeout(() => handlePulseRef.current(), propsRef.current.jumpDelay);
+	}, []);
 
-			/**
-			 * Setting this to `true` will disable left and right keys for seeking.
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			no5WayJump: PropTypes.bool,
+	const startListeningForPulses = useCallback((keyCode) => {
+		// Ignore new pulse calls if key code is same, otherwise start new series if we're pulsing
+		if (pulsingRef.current && keyCode !== pulsingKeyCodeRef.current) {
+			stopListeningForPulses();
+		}
+		if (!pulsingRef.current) {
+			pulsingKeyCodeRef.current = keyCode;
+			pulsingRef.current = true;
+			keyLoopRef.current = setTimeout(handlePulse, propsRef.current.initialJumpDelay);
+			forward('onJump', {keyCode}, propsRef.current);
+		}
+	}, [handlePulse, stopListeningForPulses]);
 
-			/**
-			 * Called when media fast forwards.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onFastForward: PropTypes.func,
+	const handleKeyDown = useCallback((ev) => {
+		const {
+			mediaDisabled,
+			no5WayJump,
+			visible
+		} = propsRef.current;
 
-			/**
-			 * Called when media jumps.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onJump: PropTypes.func,
+		const current = Spotlight.getCurrent();
 
-			/**
-			 * Called when media gets paused.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onPause: PropTypes.func,
+		if (!no5WayJump &&
+				!visible &&
+				!mediaDisabled &&
+				!current &&
+				(is('left', ev.keyCode) || is('right', ev.keyCode))) {
+			paused.pause();
+			startListeningForPulses(ev.keyCode);
+		}
+	}, [paused, startListeningForPulses]);
 
-			/**
-			 * Called when media starts playing.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onPlay: PropTypes.func,
+	const handleKeyUp = useCallback((ev) => {
+		const {
+			mediaDisabled,
+			no5WayJump,
+			rateChangeDisabled,
+			playPauseButtonDisabled
+		} = propsRef.current;
 
-			/**
-			 * Called when media rewinds.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onRewind: PropTypes.func,
+		if (mediaDisabled) return;
 
-			/**
-			 * Called when the visibility of more components is changed
-			 *
- 			 * Event payload includes:
-			 *
-			 * * `type` - Type of event, `'onToggleMore'`
-			 * * `showMoreComponents` - `true` when the components are visible`
-			 * * `liftDistance` - The distance, in pixels, the component animates
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onToggleMore: PropTypes.func,
-
-			/**
-			 * The video pause state.
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			paused: PropTypes.bool,
-
-			/**
-			 * Disables state on the media "play"/"pause" button
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			playPauseButtonDisabled: PropTypes.bool,
-
-			/**
-			 * Disables the media playback-rate control via rewind and fast-forward keys
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			rateChangeDisabled: PropTypes.bool,
-
-			/**
-			 * Registers the MediaControls component with an
-			 * {@link core/internal/ApiDecorator.ApiDecorator|ApiDecorator}.
-			 *
-			 * @type {Function}
-			 * @private
-			 */
-			setApiProvider: PropTypes.func,
-
-			/**
-			 * The visibility of the component. When `false`, the component will be hidden.
-			 *
-			 * @type {Boolean}
-			 * @public
-			 */
-			visible: PropTypes.bool
-		};
-
-		static defaultProps = {
-			initialJumpDelay: 400,
-			jumpDelay: 200
-		};
-
-		constructor (props) {
-			super(props);
-			this.mediaControlsNode = null;
-			this.moreComponentsNode = null;
-
-			this.actionGuideHeight = 0;
-			this.animation = null;
-			this.bottomComponentsHeight = 0;
-			this.moreComponentsSpotlightId = 'moreComponents';
-			this.keyLoop = null;
-			this.pulsingKeyCode = null;
-			this.pulsing = null;
-			this.paused = new Pause('MediaPlayer');
-			this.mediaControlsRef = createRef();
-
-			this.state = {
-				showMoreComponents: false,
-				moreComponentsRendered: false
-			};
-
-			if (props.setApiProvider) {
-				props.setApiProvider(this);
+		if (!playPauseButtonDisabled) {
+			if (is('play', ev.keyCode)) {
+				forward('onPlay', ev, propsRef.current);
+			} else if (is('pause', ev.keyCode)) {
+				forward('onPause', ev, propsRef.current);
 			}
 		}
 
-		static getDerivedStateFromProps (props) {
-			if (!props.visible) {
-				return {
-					showMoreComponents: false
-				};
+		if (!no5WayJump && (is('left', ev.keyCode) || is('right', ev.keyCode))) {
+			stopListeningForPulses();
+			paused.resume();
+		}
+
+		if (!rateChangeDisabled) {
+			if (is('rewind', ev.keyCode)) {
+				forward('onRewind', ev, propsRef.current);
+			} else if (is('fastForward', ev.keyCode)) {
+				forward('onFastForward', ev, propsRef.current);
 			}
-			return null;
+		}
+	}, [paused, stopListeningForPulses]);
+
+	const handleBlur = useCallback(() => {
+		stopListeningForPulses();
+		paused.resume();
+	}, [paused, stopListeningForPulses]);
+
+	const showMoreComponents = useCallback(() => {
+		setShowMore(true);
+	}, []);
+
+	const hideMoreComponents = useCallback(() => {
+		setShowMore(false);
+	}, []);
+
+	const areMoreComponentsAvailable = useCallback(() => showMoreRef.current, []);
+
+	const handleActionGuideClick = useCallback(() => {
+		if (!showMoreRef.current) {
+			showMoreComponents();
+		}
+	}, [showMoreComponents]);
+
+	const handlePlayButtonClick = useCallback((ev) => {
+		forward('onPlayButtonClick', ev, propsRef.current);
+		if (propsRef.current.paused) {
+			forward('onPlay', ev, propsRef.current);
+		} else {
+			forward('onPause', ev, propsRef.current);
+		}
+	}, []);
+
+	const handleClose = useCallback((ev) => {
+		if (propsRef.current.visible) {
+			forward('onClose', ev, propsRef.current);
+		}
+	}, []);
+
+	const getMediaControls = useCallback((node) => {
+		if (!node) {
+			actionGuideHeightRef.current = 0;
+			return;
+		}
+		mediaControlsNodeRef.current = mediaControlsRef.current;
+
+		const guideElement = mediaControlsNodeRef.current.querySelector(`.${css.actionGuide}`);
+		actionGuideHeightRef.current = guideElement ? guideElement.scrollHeight : 0;
+	}, []);
+
+	const calculateMoreComponentsHeight = () => {
+		if (!mediaControlsNodeRef.current) {
+			bottomComponentsHeightRef.current = 0;
+			return;
 		}
 
-		componentDidMount () {
-			on('keydown', this.handleKeyDown, document);
-			on('keyup', this.handleKeyUp, document);
-			on('blur', this.handleBlur, window);
+		const bottomElement = mediaControlsNodeRef.current.querySelector(`.${css.moreComponents}`);
+		bottomComponentsHeightRef.current = bottomElement ? bottomElement.scrollHeight : 0;
+	};
+
+	useLayoutEffect(() => {
+		on('keydown', handleKeyDown, document);
+		on('keyup', handleKeyUp, document);
+		on('blur', handleBlur, window);
+
+		return () => {
+			off('keydown', handleKeyDown, document);
+			off('keyup', handleKeyUp, document);
+			off('blur', handleBlur, window);
+			stopListeningForPulses();
+			moreComponentsRenderingJob.stop();
+			if (animationRef.current) {
+				animationRef.current.cancel();
+			}
+		};
+	}, [handleBlur, handleKeyDown, handleKeyUp, moreComponentsRenderingJob, stopListeningForPulses]);
+
+	useLayoutEffect(() => {
+		propsRef.current = componentProps;
+		showMoreRef.current = showMoreActive;
+		handlePulseRef.current = handlePulse;
+
+		if (componentProps.setApiProvider) {
+			componentProps.setApiProvider({
+				areMoreComponentsAvailable,
+				showMoreComponents,
+				hideMoreComponents
+			});
 		}
 
-		componentDidUpdate (prevProps, prevState) {
+		const prev = committedRef.current;
+		const next = {
+			bottomComponents: componentProps.bottomComponents,
+			children: componentProps.children,
+			mediaDisabled: componentProps.mediaDisabled,
+			moreComponentsRendered,
+			showMore: showMoreActive,
+			visible: componentProps.visible
+		};
+
+		if (prev) {
 			// Need to render `moreComponents` to show it. For performance, render `moreComponents` if it is actually shown.
-			if (!prevState.showMoreComponents && this.state.showMoreComponents && !this.state.moreComponentsRendered) {
-				this.moreComponentsRenderingJob.startRafAfter();
-			} else if (prevState.showMoreComponents && !this.state.showMoreComponents) {
-				this.moreComponentsRenderingJob.stop();
+			if (!prev.showMore && next.showMore && !next.moreComponentsRendered) {
+				moreComponentsRenderingJob.startRafAfter();
+			} else if (prev.showMore && !next.showMore) {
+				moreComponentsRenderingJob.stop();
 			}
 
-			if (!prevState.moreComponentsRendered && this.state.moreComponentsRendered ||
-				this.state.moreComponentsRendered && prevProps.bottomComponents !== this.props.bottomComponents ||
-				!compareChildren(this.props.children, prevProps.children)
+			if ((!prev.moreComponentsRendered && next.moreComponentsRendered) ||
+				(next.moreComponentsRendered && prev.bottomComponents !== next.bottomComponents) ||
+				!compareChildren(next.children, prev.children)
 			) {
-				this.calculateMoreComponentsHeight();
+				calculateMoreComponentsHeight();
 			}
 
-			if (this.state.showMoreComponents && !prevState.moreComponentsRendered && this.state.moreComponentsRendered ||
-				this.state.moreComponentsRendered && prevState.showMoreComponents !== this.state.showMoreComponents
+			if ((next.showMore && !prev.moreComponentsRendered && next.moreComponentsRendered) ||
+				(next.moreComponentsRendered && prev.showMore !== next.showMore)
 			) {
 				forwardToggleMore({
 					type: 'onToggleMore',
-					showMoreComponents: this.state.showMoreComponents,
-					liftDistance: this.bottomComponentsHeight - this.actionGuideHeight
-				}, this.props);
+					showMoreComponents: next.showMore,
+					liftDistance: bottomComponentsHeightRef.current - actionGuideHeightRef.current
+				}, componentProps);
 
-				if (this.state.showMoreComponents) {
-					this.moreComponentsNode = this.moreComponentsNode || this.mediaControlsNode.querySelector(`.${css.moreComponents}`);
-					this.paused.pause();
-					this.animation = this.moreComponentsNode.animate([
+				if (next.showMore) {
+					moreComponentsNodeRef.current = moreComponentsNodeRef.current || mediaControlsNodeRef.current.querySelector(`.${css.moreComponents}`);
+					paused.pause();
+					animationRef.current = moreComponentsNodeRef.current.animate([
 						{transform: 'none', opacity: 0, offset: 0},
-						{transform: `translateY(${-this.actionGuideHeight}px)`, opacity: 1, offset: 1}
+						{transform: `translateY(${-actionGuideHeightRef.current}px)`, opacity: 1, offset: 1}
 					], {
 						duration: (typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION) ? 0 : animationDuration,
 						fill: 'forwards'
 					});
-					this.animation.onfinish = this.handleFinish;
-					this.animation.oncancel = this.handleCancel;
-				} else if (this.animation != null) {
-					this.animation.cancel();
+					animationRef.current.onfinish = () => {
+						if (showMoreRef.current) {
+							paused.resume();
+							if (!Spotlight.getPointerMode()) {
+								Spotlight.focus(moreComponentsSpotlightId);
+							}
+						}
+					};
+					animationRef.current.oncancel = () => {
+						paused.resume();
+					};
+				} else if (animationRef.current != null) {
+					animationRef.current.cancel();
 				}
 			}
 
 			// if media controls disabled, reset key loop
-			if (!prevProps.mediaDisabled && this.props.mediaDisabled || !prevProps.visible && this.props.visible) {
-				this.stopListeningForPulses();
-				this.paused.resume();
+			if (!prev.mediaDisabled && next.mediaDisabled || !prev.visible && next.visible) {
+				stopListeningForPulses();
+				paused.resume();
 			}
 		}
 
-		componentWillUnmount () {
-			off('keydown', this.handleKeyDown, document);
-			off('keyup', this.handleKeyUp, document);
-			off('blur', this.handleBlur, window);
-			this.stopListeningForPulses();
-			this.moreComponentsRenderingJob.stop();
-			if (this.animation) {
-				this.animation.cancel();
-			}
-		}
+		committedRef.current = next;
+	});
 
-		moreComponentsRenderingJob = new Job(() => {
-			this.setState({
-				moreComponentsRendered: true
-			});
-		});
+	return {
+		getMediaControls,
+		handleActionGuideClick,
+		handleClose,
+		handlePlayButtonClick,
+		mediaControlsRef,
+		moreComponentsRendered,
+		moreComponentsSpotlightId,
+		showMoreActive
+	};
+};
 
-		calculateMoreComponentsHeight = () => {
-			if (!this.mediaControlsNode) {
-				this.bottomComponentsHeight = 0;
-				return;
-			}
+const MediaControlsDecorator = hoc((config, Wrapped) => {
+	// eslint-disable-next-line no-shadow
+	const MediaControlsDecorator = (props) => {
+		const componentProps = setDefaultProps(props, mediaControlsDecoratorDefaultProps);
+		checkPropTypes(MediaControlsDecorator, componentProps);
+		const {
+			getMediaControls,
+			handleActionGuideClick,
+			handleClose,
+			handlePlayButtonClick,
+			mediaControlsRef,
+			moreComponentsRendered,
+			moreComponentsSpotlightId,
+			showMoreActive
+		} = useMediaControlsDecorator(componentProps);
 
-			const bottomElement = this.mediaControlsNode.querySelector(`.${css.moreComponents}`);
-			this.bottomComponentsHeight = bottomElement ? bottomElement.scrollHeight : 0;
-		};
+		const wrappedProps = Object.assign({}, componentProps);
+		delete wrappedProps.initialJumpDelay;
+		delete wrappedProps.jumpDelay;
+		delete wrappedProps.moreActionDisabled;
+		delete wrappedProps.no5WayJump;
+		delete wrappedProps.onFastForward;
+		delete wrappedProps.onJump;
+		delete wrappedProps.onPause;
+		delete wrappedProps.onPlay;
+		delete wrappedProps.onRewind;
+		delete wrappedProps.onToggleMore;
+		delete wrappedProps.rateChangeDisabled;
+		delete wrappedProps.setApiProvider;
 
-		handleKeyDown = (ev) => {
-			const {
-				mediaDisabled,
-				no5WayJump,
-				visible
-			} = this.props;
+		return (
+			<Wrapped
+				{...wrappedProps}
+				mediaControlsRef={mediaControlsRef}
+				actionGuideDisabled={componentProps.moreActionDisabled}
+				moreComponentsRendered={moreComponentsRendered}
+				moreComponentsSpotlightId={moreComponentsSpotlightId}
+				onActionGuideClick={handleActionGuideClick}
+				onClose={handleClose}
+				onPlayButtonClick={handlePlayButtonClick}
+				ref={getMediaControls}
+				showMoreComponents={showMoreActive}
+			/>
+		);
+	};
 
-			const current = Spotlight.getCurrent();
+	MediaControlsDecorator.displayName = 'MediaControlsDecorator';
+	MediaControlsDecorator.propTypes = mediaControlsDecoratorPropTypes;
 
-			if (!no5WayJump &&
-					!visible &&
-					!mediaDisabled &&
-					!current &&
-					(is('left', ev.keyCode) || is('right', ev.keyCode))) {
-				this.paused.pause();
-				this.startListeningForPulses(ev.keyCode);
-			}
-		};
-
-		handleKeyUp = (ev) => {
-			const {
-				mediaDisabled,
-				no5WayJump,
-				rateChangeDisabled,
-				playPauseButtonDisabled
-			} = this.props;
-
-			if (mediaDisabled) return;
-
-			if (!playPauseButtonDisabled) {
-				if (is('play', ev.keyCode)) {
-					forward('onPlay', ev, this.props);
-				} else if (is('pause', ev.keyCode)) {
-					forward('onPause', ev, this.props);
-				}
-			}
-
-			if (!no5WayJump && (is('left', ev.keyCode) || is('right', ev.keyCode))) {
-				this.stopListeningForPulses();
-				this.paused.resume();
-			}
-
-			if (!rateChangeDisabled) {
-				if (is('rewind', ev.keyCode)) {
-					forward('onRewind', ev, this.props);
-				} else if (is('fastForward', ev.keyCode)) {
-					forward('onFastForward', ev, this.props);
-				}
-			}
-		};
-
-		handleBlur = () => {
-			this.stopListeningForPulses();
-			this.paused.resume();
-		};
-
-		handleActionGuideClick = () => {
-			if (!this.state.showMoreComponents) {
-				this.showMoreComponents();
-			}
-		};
-
-		startListeningForPulses = (keyCode) => {
-			// Ignore new pulse calls if key code is same, otherwise start new series if we're pulsing
-			if (this.pulsing && keyCode !== this.pulsingKeyCode) {
-				this.stopListeningForPulses();
-			}
-			if (!this.pulsing) {
-				this.pulsingKeyCode = keyCode;
-				this.pulsing = true;
-				this.keyLoop = setTimeout(this.handlePulse, this.props.initialJumpDelay);
-				forward('onJump', {keyCode}, this.props);
-			}
-		};
-
-		handlePulse = () => {
-			forward('onJump', {keyCode: this.pulsingKeyCode}, this.props);
-			this.keyLoop = setTimeout(this.handlePulse, this.props.jumpDelay);
-		};
-
-		handlePlayButtonClick = (ev) => {
-			forward('onPlayButtonClick', ev, this.props);
-			if (this.props.paused) {
-				forward('onPlay', ev, this.props);
-			} else {
-				forward('onPause', ev, this.props);
-			}
-		};
-
-		stopListeningForPulses () {
-			this.pulsing = false;
-			if (this.keyLoop) {
-				clearTimeout(this.keyLoop);
-				this.keyLoop = null;
-			}
-		}
-
-		getMediaControls = (node) => {
-			if (!node) {
-				this.actionGuideHeight = 0;
-				return;
-			}
-			this.mediaControlsNode = this.mediaControlsRef.current;
-
-			const guideElement = this.mediaControlsNode.querySelector(`.${css.actionGuide}`);
-			this.actionGuideHeight = guideElement ? guideElement.scrollHeight : 0;
-		};
-
-		areMoreComponentsAvailable = () => {
-			return this.state.showMoreComponents;
-		};
-
-		showMoreComponents = () => {
-			this.setState({showMoreComponents: true});
-		};
-
-		hideMoreComponents = () => {
-			this.setState({showMoreComponents: false});
-		};
-
-		toggleMoreComponents () {
-			this.setState((prevState) => {
-				return {
-					showMoreComponents: !prevState.showMoreComponents
-				};
-			});
-		}
-
-		handleClose = (ev) => {
-			if (this.props.visible) {
-				forward('onClose', ev, this.props);
-			}
-		};
-
-		handleFinish = () => {
-			if (this.state.showMoreComponents) {
-				this.paused.resume();
-				if (!Spotlight.getPointerMode()) {
-					Spotlight.focus(this.moreComponentsSpotlightId);
-				}
-			}
-		};
-
-		handleCancel = () => {
-			this.paused.resume();
-		};
-
-		render () {
-			const props = Object.assign({}, this.props);
-			delete props.initialJumpDelay;
-			delete props.jumpDelay;
-			delete props.moreActionDisabled;
-			delete props.no5WayJump;
-			delete props.onFastForward;
-			delete props.onJump;
-			delete props.onPause;
-			delete props.onPlay;
-			delete props.onRewind;
-			delete props.onToggleMore;
-			delete props.rateChangeDisabled;
-			delete props.setApiProvider;
-
-			return (
-				<Wrapped
-					{...props}
-					mediaControlsRef={this.mediaControlsRef}
-					actionGuideDisabled={this.props.moreActionDisabled}
-					moreComponentsRendered={this.state.moreComponentsRendered}
-					moreComponentsSpotlightId={this.moreComponentsSpotlightId}
-					onActionGuideClick={this.handleActionGuideClick}
-					onClose={this.handleClose}
-					onPlayButtonClick={this.handlePlayButtonClick}
-					ref={this.getMediaControls}
-					showMoreComponents={this.state.showMoreComponents}
-				/>
-			);
-		}
-	}
-
-	return Slottable({slots: ['bottomComponents']}, MediaControlsDecoratorHOC);
+	return Slottable({slots: ['bottomComponents']}, MediaControlsDecorator);
 });
 
 const handleCancel = (ev, {onClose}) => {
