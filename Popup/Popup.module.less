@@ -151,24 +151,12 @@
 	}
 
 	&.shown {
-		.applyMotions({
-			.inner {
-				.lime-enter-small-high-motion();
-			}
-		}, high, is);
-		.applyMotions({
-			.inner {
-				.lime-enter-small-low-motion();
-			}
-		}, low, is);
+		.inner {
+			.applyMotions(.lime-enter-small-high-motion(), .lime-enter-small-low-motion(), is);
+		}
 
-		&.center {
-			.applyMotions({
-				.inner { .lime-enter-medium-high-motion(); }
-			}, high, is);
-			.applyMotions({
-				.inner { .lime-enter-medium-low-motion(); }
-			}, low, is);
+		&.center .inner {
+			.applyMotions(.lime-enter-medium-high-motion(), .lime-enter-medium-low-motion(), is);
 		}
 
 		// Alert Fullscreen
@@ -176,70 +164,25 @@
 	}
 
 	&.hidden {
-		&.bottom {
-			.applyMotions({
-				.inner {
-					.lime-exit-small-high-motion(0, 336px);
-				}
-			}, high, is);
-			.applyMotions({
-				.inner {
-					.lime-exit-small-low-motion(0, 336px);
-				}
-			}, low, is);
+		&.bottom .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, 336px), .lime-exit-small-low-motion(0, 336px), is);
 		}
 
-		&.top {
-			.applyMotions({
-				.inner {
-					.lime-exit-small-high-motion(0, -336px);
-				}
-			}, high, is);
-			.applyMotions({
-				.inner {
-					.lime-exit-small-low-motion(0, -336px);
-				}
-			}, low, is);
+		&.top .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, -336px), .lime-exit-small-low-motion(0, -336px), is);
 		}
 
-		&.left {
-			.applyMotions({
-				.inner {
-					.lime-exit-small-high-motion(-336px, 0);
-				}
-			}, high, is);
-			.applyMotions({
-				.inner {
-					.lime-exit-small-low-motion(-336px, 0);
-				}
-			}, low, is);
+		&.left .inner {
+			.applyMotions(.lime-exit-small-high-motion(-336px, 0), .lime-exit-small-low-motion(-336px, 0), is);
 		}
 
-		&.right {
-			.applyMotions({
-				.inner {
-					.lime-exit-small-high-motion(336px, 0);
-				}
-			}, high, is);
-			.applyMotions({
-				.inner {
-					.lime-exit-small-low-motion(336px, 0);
-				}
-			}, low, is);
+		&.right .inner {
+			.applyMotions(.lime-exit-small-high-motion(336px, 0), .lime-exit-small-low-motion(336px, 0), is);
 		}
 
 		// Alert Overlay
-		&.center {
-			.applyMotions({
-				.inner {
-					.lime-exit-medium-high-motion(0, 32px);
-				}
-			}, high, is);
-			.applyMotions({
-				.inner {
-					.lime-exit-medium-low-motion(0, 32px);
-				}
-			}, low, is);
+		&.center .inner {
+			.applyMotions(.lime-exit-medium-high-motion(0, 32px), .lime-exit-medium-low-motion(0, 32px), is);
 		}
 	}
 

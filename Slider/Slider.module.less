@@ -42,19 +42,9 @@
 			border: @lime-button-border-width solid transparent;
 			box-sizing: border-box;
 			will-change: transform;
+			.applyMotions(.lime-slider-focus-out-high-motion(), .lime-slider-focus-out-low-motion());
 		}
 	}
-
-	.applyMotions({
-		.knob::before {
-			.lime-slider-focus-out-high-motion();
-		}
-	}, high);
-	.applyMotions({
-		.knob::before {
-			.lime-slider-focus-out-low-motion();
-		}
-	}, low);
 
 	&.showAnchor {
 		.knob {
@@ -419,17 +409,8 @@
 		}
 
 		:global(.spotlight-input-mouse) & {
-			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
-				.applyMotions({
-					.knob::before {
-						.lime-slider-focus-in-high-motion();
-					}
-				}, high);
-				.applyMotions({
-					.knob::before {
-						.lime-slider-focus-in-low-motion();
-					}
-				}, low);
+			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) .knob::before {
+				.applyMotions(.lime-slider-focus-in-high-motion(), .lime-slider-focus-in-low-motion());
 			}
 
 			&:not([disabled]):not(.colorPicker, .pressed) {
@@ -455,56 +436,24 @@
 					background-color: @lime-slider-handle-focused-color;
 					border-color: @lime-slider-handle-focused-border-color;
 					box-shadow: @lime-slider-handle-focused-shadow;
+					.applyMotions(.lime-slider-focus-in-high-motion(), .lime-slider-focus-in-low-motion());
 				}
-				.applyMotions({
-					.knob::before {
-						.lime-slider-focus-in-high-motion();
-					}
-				}, high);
-				.applyMotions({
-					.knob::before {
-						.lime-slider-focus-in-low-motion();
-					}
-				}, low);
 
 				&:active,
 				&.pressed {
-					.applyMotions({
-						.knob::before {
-							.lime-slider-press-high-motion();
-						}
-					}, high);
-					.applyMotions({
-						.knob::before {
-							.lime-slider-press-low-motion();
-						}
-					}, low);
+					.knob::before {
+						.applyMotions(.lime-slider-press-high-motion(), .lime-slider-press-low-motion());
+					}
 				}
 
-				&:not(.pressed) {
-					.applyMotions({
-						.knob::before {
-							.lime-slider-release-high-motion();
-						}
-					}, high);
-					.applyMotions({
-						.knob::before {
-							.lime-slider-release-low-motion();
-						}
-					}, low);
+				&:not(.pressed) .knob::before {
+					.applyMotions(.lime-slider-release-high-motion(), .lime-slider-release-low-motion());
 				}
 
 				.disabled({
-					.applyMotions({
-						.knob::before {
-							.lime-slider-focus-out-high-motion();
-						}
-					}, high);
-					.applyMotions({
-						.knob::before {
-							.lime-slider-focus-out-low-motion();
-						}
-					}, low);
+					.knob::before {
+						.applyMotions(.lime-slider-focus-out-high-motion(), .lime-slider-focus-out-low-motion());
+					}
 				});
 			}
 
@@ -525,18 +474,8 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-handle-focused-shadow;
+				.applyMotions(.lime-slider-focus-in-high-motion(), .lime-slider-focus-in-low-motion());
 			}
-
-			.applyMotions({
-				.knob::before {
-					.lime-slider-focus-in-high-motion();
-				}
-			}, high);
-			.applyMotions({
-				.knob::before {
-					.lime-slider-focus-in-low-motion();
-				}
-			}, low);
 		}
 
 		:global(.noAnimation) & {

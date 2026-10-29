@@ -21,58 +21,27 @@
 
 	.mediaContainer {
 		position: relative;
+		.applyMotions(.lime-focus-out-medium-high-motion(1), .lime-focus-out-medium-low-motion(1));
 	}
 
-	.applyMotions({
-		.mediaContainer {
-			.lime-focus-out-medium-high-motion(1);
-		}
-	}, high);
-	.applyMotions({
-		.mediaContainer {
-			.lime-focus-out-medium-low-motion(1);
-		}
-	}, low);
-
 	.focus({
-		.applyMotions({
-			.mediaContainer {
-				.lime-focus-in-medium-high-motion(1.1);
-			}
-		}, high);
-		.applyMotions({
-			.mediaContainer {
-				.lime-focus-in-medium-low-motion(1.1);
-			}
-		}, low);
+		.mediaContainer {
+			.applyMotions(.lime-focus-in-medium-high-motion(1.1), .lime-focus-in-medium-low-motion(1.1));
+		}
 	});
 
 	&:not([disabled]) {
 		.focus({
 			&.pressed,
 			&:active {
-				.applyMotions({
-					.mediaContainer {
-						.lime-press-medium-high-motion(1.05);
-					}
-				}, high);
-				.applyMotions({
-					.mediaContainer {
-						.lime-press-medium-low-motion(1.05);
-					}
-				}, low);
+				.mediaContainer {
+					.applyMotions(.lime-press-medium-high-motion(1.05), .lime-press-medium-low-motion(1.05));
+				}
 			}
 			&:not(.pressed) {
-				.applyMotions({
-					.mediaContainer {
-						.lime-release-medium-high-motion(1.1);
-					}
-				}, high);
-				.applyMotions({
-					.mediaContainer {
-						.lime-release-medium-low-motion(1.1);
-					}
-				}, low);
+				.mediaContainer {
+					.applyMotions(.lime-release-medium-high-motion(1.1), .lime-release-medium-low-motion(1.1));
+				}
 			}
 		});
 	}

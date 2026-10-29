@@ -7,24 +7,6 @@ Global Motion Mixins
 ------------------------------------------ */
 
 /**
- * Applies a single ruleset to both animation tiers (high and low).
- *
- * @param {Ruleset} @componentMotion  - CSS rules to apply.
- * @param {string}  [@selector=where] - Pseudo-class selector type ('where' | 'is').
- *
- * @example
- * .applyMotions({
- *     .bg { .lime-focus-out-small-high-motion(); }
- * });
- */
-.applyMotions(@componentMotion, @selector: where) when (isruleset(@componentMotion)) and ((@selector = where) or (@selector = is)) {
-	&:@{selector}(:global(.animationTier-high) *),
-	&:@{selector}(:global(.animationTier-low) *) {
-		@componentMotion();
-	}
-}
-
-/**
  * Applies a ruleset to a specific animation tier ('high' or 'low').
  * Useful for applying motion mixins to a specific tier, or targeting
  * specific nested classes within those tiers.
@@ -38,7 +20,7 @@ Global Motion Mixins
  *     .bg { .lime-focus-in-small-high-motion(1.1); }
  * }, high);
  */
-.applyMotions(@componentMotion, @tier, @selector: where) when (isruleset(@componentMotion)) and ((@tier = low) or (@tier = high)) {
+.applyMotions(@componentMotion, @tier, @selector: where) when (isruleset(@componentMotion)) and ((@tier = low) or (@tier = high)) and ((@selector = where) or (@selector = is)) {
 	&:@{selector}(:global(.animationTier-@{tier}) *) {
 		@componentMotion();
 	}
@@ -58,7 +40,7 @@ Global Motion Mixins
  *     .lime-focus-out-small-low-motion(1)
  * );
  */
-.applyMotions(@highTierMotion, @lowTierMotion, @selector: where) when (isruleset(@highTierMotion)) and (isruleset(@lowTierMotion)) {
+.applyMotions(@highTierMotion, @lowTierMotion, @selector: where) when (isruleset(@highTierMotion)) and (isruleset(@lowTierMotion)) and ((@selector = where) or (@selector = is)) {
 	each(high low, {
 		@currentMotion: if((@value = high), @highTierMotion, @lowTierMotion);
 
@@ -66,6 +48,10 @@ Global Motion Mixins
 			@currentMotion();
 		}
 	});
+}
+
+.applyMotions(@a, @b: null, @c: null) when (default()) {
+	.applyMotions-invalid-arguments();
 }
 
 /* focus-in */

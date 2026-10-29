@@ -343,18 +343,8 @@
 			border-style: @lime-button-bg-border-style;
 			border-color: @lime-button-outline-border-color;
 			border-radius: @lime-button-border-radius;
+			.applyMotions(.lime-focus-out-small-high-motion(1), .lime-focus-out-small-low-motion(1));
 		}
-
-		.applyMotions({
-			.bg {
-				.lime-focus-out-small-high-motion(1);
-			}
-		}, high);
-		.applyMotions({
-			.bg {
-				.lime-focus-out-small-low-motion(1) ;
-			}
-		}, low);
 
 		&.bordered {
 			.bg {
@@ -513,17 +503,8 @@
 				}
 			}
 
-			&.focusExpand {
-				.applyMotions({
-					.bg {
-						.lime-focus-in-small-high-motion(1.1);
-					}
-				}, high);
-				.applyMotions({
-					.bg {
-						.lime-focus-in-small-low-motion(1.1);
-					}
-				}, low);
+			&.focusExpand .bg {
+				.applyMotions(.lime-focus-in-small-high-motion(1.1), .lime-focus-in-small-low-motion(1.1));
 			}
 		});
 
@@ -535,29 +516,13 @@
 				&.focusExpand {
 					&.pressed,
 					&:active {
-						.applyMotions({
-							.bg {
-								.lime-press-small-high-motion(1.05);
-							}
-						}, high);
-						.applyMotions({
-							.bg {
-								.lime-press-small-low-motion(1.05);
-							}
-						}, low);
+						.bg {
+							.applyMotions(.lime-press-small-high-motion(1.05), .lime-press-small-low-motion(1.05));
+						}
 					}
 
-					&:not(.pressed) {
-						.applyMotions({
-							.bg {
-								.lime-release-small-high-motion(1.1);
-							}
-						}, high);
-						.applyMotions({
-							.bg {
-								.lime-release-small-low-motion(1.1);
-							}
-						}, low);
+					&:not(.pressed) .bg {
+						.applyMotions(.lime-release-small-high-motion(1.1), .lime-release-small-low-motion(1.1));
 					}
 				}
 			});
