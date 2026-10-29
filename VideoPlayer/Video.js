@@ -91,8 +91,9 @@ const VideoBase = (props) => {
 		ev.stopPropagation();
 	}, []);
 
-	// Changing `setMedia` makes React call the previous ref callback with `null` (clearing the
-	// previous `setMedia`) and the new one with the node, as `componentDidUpdate` did.
+	// React calls the ref callback with `null` when the video is removed or unmounted, and when
+	// `setMedia` changes, so the previous `setMedia` is always cleared, as `componentDidUpdate` and
+	// `componentWillUnmount` did.
 	const setVideoRef = useCallback((node) => {
 		videoRef.current = node;
 
@@ -107,13 +108,6 @@ const VideoBase = (props) => {
 		}
 		preloadVideoRef.current = node;
 	}, []);
-
-	// Equivalent of componentWillUnmount
-	useLayoutEffect(() => () => {
-		if (setMedia) {
-			setMedia(null);
-		}
-	}, [setMedia]);
 
 	// Equivalent of componentDidUpdate. A layout effect keeps the class timing.
 	useLayoutEffect(() => {
