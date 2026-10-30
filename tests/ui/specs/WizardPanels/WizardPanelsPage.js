@@ -30,10 +30,10 @@ class WizardPanelsInterface {
 	}
 
 	async nextButton () {
-		return await $('.Panels_Header_slotAfter > span > div');
+		return await $('.Panels_Header_slotAfter > span > [role="button"]');
 	}
 	async prevButton () {
-		return await $('.Panels_Header_slotBefore > span > div');
+		return await $('.Panels_Header_slotBefore > span > [role="button"]');
 	}
 
 	get view1 () {
