@@ -415,7 +415,7 @@
 		:global(.spotlight-input-mouse) & {
 			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
 				.applyMotions(
-					{ .knob::before {.lime-slider-focus-in-high-motion(); }},
+					{ .knob::before { .lime-slider-focus-in-high-motion(); }},
 					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
 				);
 			}
