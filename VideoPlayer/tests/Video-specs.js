@@ -409,6 +409,46 @@ describe('VideoPlayer.Video', () => {
 			expect(HTMLMediaElement.prototype.load.mock.contexts).toContain(preload);
 		});
 
+		test('should discard the cached `onLoadStart` when `preloadSource` changes to a different value', () => {
+			const handleLoadStart = jest.fn();
+			const handleUpdate = jest.fn();
+
+			const {rerender} = render(
+				<Video autoPlay data-testid="video-id" onLoadStart={handleLoadStart} onUpdate={handleUpdate} preloadSource="def.mp4" source="abc.mp4" />
+			);
+
+			const video = screen.getByTestId('video-id');
+			const preload = video.nextElementSibling;
+
+			// cache the `loadstart` of the first preload source
+			fireEvent(preload, new Event('loadstart'));
+
+			rerender(
+				<Video autoPlay data-testid="video-id" onLoadStart={handleLoadStart} onUpdate={handleUpdate} preloadSource="ghi.mp4" source="abc.mp4" />
+			);
+
+			// changing only the preload keeps both video elements and does not touch the active video
+			expect(screen.getByTestId('video-id')).toBe(video);
+			expect(video.nextElementSibling).toBe(preload);
+			expect(preload.querySelector('source')).toHaveAttribute('src', 'ghi.mp4');
+			expect(handleLoadStart).not.toHaveBeenCalled();
+			expect(handleUpdate).not.toHaveBeenCalled();
+			expect(playSpy).not.toHaveBeenCalled();
+
+			// promote the new preload before it started loading
+			rerender(
+				<Video autoPlay data-testid="video-id" onLoadStart={handleLoadStart} onUpdate={handleUpdate} source="ghi.mp4" />
+			);
+
+			// the `loadstart` cached for the previous preload source is not re-emitted
+			expect(handleLoadStart).not.toHaveBeenCalled();
+			expect(handleUpdate).toHaveBeenCalledTimes(1);
+			expect(handleUpdate).toHaveBeenCalledWith({type: 'onUpdate'});
+			expect(playSpy).toHaveBeenCalledTimes(1);
+			expect(playSpy.mock.contexts[0]).toBe(preload);
+			expect(screen.getByTestId('video-id')).toBe(preload);
+		});
+
 		test('should not forward `onLoadStart` when the preload video starts loading', () => {
 			const handleLoadStart = jest.fn();
 

@@ -63,8 +63,9 @@ const VideoBase = (props) => {
 	const preloadLoadStartRef = useRef(null);
 	const prevPropsRef = useRef(null);
 
-	// Keys from the previous render. They replace the instance fields the class mutated in
-	// `getKeys()`. State is only updated during render when the sources change.
+	// The React keys of the source and preload videos, and the source keys they were last given
+	// for. When a source moves between the two slots its key moves with it, so React keeps the
+	// same video element. Updated during render only when the sources change.
 	const [keyState, setKeyState] = useState(initialKeyState);
 	const nextKeyState = getKeys(source, preloadSource, keyState);
 	const keysChanged = (
@@ -91,9 +92,9 @@ const VideoBase = (props) => {
 		ev.stopPropagation();
 	}, []);
 
-	// React calls the ref callback with `null` when the video is removed or unmounted, and when
-	// `setMedia` changes, so the previous `setMedia` is always cleared, as `componentDidUpdate` and
-	// `componentWillUnmount` did.
+	// Passes the active video node to `setMedia`. React calls this with `null` when the video is
+	// removed or unmounted, and when `setMedia` changes, so the previous `setMedia` is always
+	// cleared.
 	const setVideoRef = useCallback((node) => {
 		videoRef.current = node;
 
@@ -109,12 +110,16 @@ const VideoBase = (props) => {
 		preloadVideoRef.current = node;
 	}, []);
 
-	// Equivalent of componentDidUpdate. A layout effect keeps the class timing.
+	// Responds to source changes: when the preload video becomes the source, re-emits its cached
+	// `onLoadStart` and emits `onUpdate`; when the source changes, plays it if `autoPlay` is set;
+	// when `preloadSource` changes, reloads the preload video. It is a layout effect so this runs
+	// right after the swapped video elements are committed, before the browser paints, so
+	// VideoPlayer receives these events and playback starts before the new frame is shown.
 	useLayoutEffect(() => {
 		const prevProps = prevPropsRef.current;
 		prevPropsRef.current = {source, preloadSource};
 
-		// componentDidUpdate does not run on mount
+		// skip the initial mount; only react to changes
 		if (!prevProps) return;
 
 		const {source: prevSource, preloadSource: prevPreloadSource} = prevProps;
