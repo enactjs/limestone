@@ -151,32 +151,39 @@
 	}
 
 	&.shown {
-		&:is(:global(.animationTier-high) *) .inner { .lime-enter-small-high-motion(); }
-		&:is(:global(.animationTier-low) *) .inner { .lime-enter-small-low-motion(); }
+		.inner {
+			.applyMotions(.lime-enter-small-high-motion(), .lime-enter-small-low-motion(), is);
+		}
 
-		&.center:is(:global(.animationTier-high) *) .inner { .lime-enter-medium-high-motion(); }
-		&.center:is(:global(.animationTier-low) *) .inner { .lime-enter-medium-low-motion(); }
+		&.center .inner {
+			.applyMotions(.lime-enter-medium-high-motion(), .lime-enter-medium-low-motion(), is);
+		}
 
 		// Alert Fullscreen
 		&.fullscreen .inner { .lime-enter-none-motion(); }
 	}
 
 	&.hidden {
-		&.bottom:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, 336px); }
-		&.bottom:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, 336px); }
+		&.bottom .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, 336px), .lime-exit-small-low-motion(0, 336px), is);
+		}
 
-		&.top:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(0, -336px); }
-		&.top:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(0, -336px); }
+		&.top .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, -336px), .lime-exit-small-low-motion(0, -336px), is);
+		}
 
-		&.left:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(-336px, 0); }
-		&.left:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(-336px, 0); }
+		&.left .inner {
+			.applyMotions(.lime-exit-small-high-motion(-336px, 0), .lime-exit-small-low-motion(-336px, 0), is);
+		}
 
-		&.right:is(:global(.animationTier-high) *) .inner { .lime-exit-small-high-motion(336px, 0); }
-		&.right:is(:global(.animationTier-low) *) .inner { .lime-exit-small-low-motion(336px, 0); }
+		&.right .inner {
+			.applyMotions(.lime-exit-small-high-motion(336px, 0), .lime-exit-small-low-motion(336px, 0), is);
+		}
 
 		// Alert Overlay
-		&.center:is(:global(.animationTier-high) *) .inner { .lime-exit-medium-high-motion(0, 32px); }
-		&.center:is(:global(.animationTier-low) *) .inner { .lime-exit-medium-low-motion(0, 32px); }
+		&.center .inner {
+			.applyMotions(.lime-exit-medium-high-motion(0, 32px), .lime-exit-medium-low-motion(0, 32px), is);
+		}
 	}
 
 	:global(.noAnimation) & {
