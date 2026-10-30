@@ -80,7 +80,7 @@ const VideoBase = (props) => {
 	const {keys, prevPreloadKey: currentPreloadKey} = nextKeyState;
 
 	// if preload is unset, clear the key so we don't render that media node at all
-	const [sourceKey, preloadKey] = currentPreloadKey ? keys : keys.slice(0, 1);
+	const [sourceSlotKey, preloadSlotKey] = currentPreloadKey ? keys : keys.slice(0, 1);
 
 	const handlePreloadLoadStart = useCallback((ev) => {
 		// persist the event so we can cache it to re-emit when the preload becomes active
@@ -116,9 +116,9 @@ const VideoBase = (props) => {
 	// VideoPlayer receives these events and playback starts before the new frame is shown.
 	useLayoutEffect(() => {
 		const key = getKeyFromSource(source);
-		const preloadKeyFromSource = getKeyFromSource(preloadSource);
+		const preloadKey = getKeyFromSource(preloadSource);
 		const prevKeys = prevKeysRef.current;
-		prevKeysRef.current = {key, preloadKey: preloadKeyFromSource};
+		prevKeysRef.current = {key, preloadKey};
 
 		// skip the initial mount; only react to changes
 		if (!prevKeys) return;
@@ -140,7 +140,7 @@ const VideoBase = (props) => {
 		};
 
 		if (source) {
-			if (key === prevPreloadKey && preloadKeyFromSource !== prevPreloadKey) {
+			if (key === prevPreloadKey && preloadKey !== prevPreloadKey) {
 				// if there's source and it was the preload source
 
 				// if the preloaded video didn't error, notify VideoPlayer it is ready to reset
@@ -159,7 +159,7 @@ const VideoBase = (props) => {
 			}
 		}
 
-		if (preloadSource && preloadKeyFromSource !== prevPreloadKey) {
+		if (preloadSource && preloadKey !== prevPreloadKey) {
 			preloadLoadStartRef.current = null;
 
 			// In the case that the previous source equalled the previous preload (causing the
@@ -173,12 +173,12 @@ const VideoBase = (props) => {
 
 	return (
 		<>
-			{sourceKey ? (
+			{sourceSlotKey ? (
 				<Media
 					{...rest}
 					className={css.video}
 					controls={false}
-					key={sourceKey}
+					key={sourceSlotKey}
 					mediaComponent={mediaComponent}
 					preload="none"
 					ref={setVideoRef}
@@ -187,12 +187,12 @@ const VideoBase = (props) => {
 					)}
 				/>
 			) : null}
-			{preloadKey ? (
+			{preloadSlotKey ? (
 				<Media
 					autoPlay={false}
 					className={css.preloadVideo}
 					controls={false}
-					key={preloadKey}
+					key={preloadSlotKey}
 					mediaComponent={mediaComponent}
 					onLoadStart={handlePreloadLoadStart}
 					preload="none"
