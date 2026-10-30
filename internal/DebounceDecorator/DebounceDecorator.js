@@ -6,9 +6,9 @@
  */
 
 import hoc from '@enact/core/hoc';
-import {Job} from '@enact/core/util';
+import {checkPropTypes, Job} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {Component} from 'react';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
 
 /**
  * Default config for {@link limestone/internal/DebounceDecorator.DebounceDecorator}.
@@ -60,66 +60,72 @@ const defaultConfig = {
 const DebounceDecorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {cancel, debounce, delay} = config;
 
-	return class extends Component {
-		static displayName = 'DebounceDecorator';
+	// eslint-disable-next-line no-shadow
+	const DebounceDecorator = (props) => {
+		checkPropTypes(DebounceDecorator, props);
 
-		static propTypes = /** @lends limestone/internal/DebounceDecorator.DebounceDecorator.prototype */ {
-			/**
-			 * Handler for `onChange` events
-			 *
-			 * `'onChange'` can be changed to a different prop name by specifying the `debounce`
-			 * config option.
-			 *
-			 * @see {@link limestone/internal/DebounceDecorator.DebounceDecorator.defaultConfig#debounce}
-			 * @name onChange
-			 * @memberof limestone/internal/DebounceDecorator.DebounceDecorator.prototype
-			 * @type {Function}
-			 * @public
-			 */
-			[debounce]: PropTypes.func
-		};
+		// The debounced event is emitted after a delay so it must use the latest props
+		const propsRef = useRef(props);
 
-		constructor (props) {
-			super(props);
-			this.job = new Job(this.emitEvent.bind(this), delay);
-		}
+		const job = useMemo(() => new Job((ev) => {
+			const {[debounce]: onDebounce} = propsRef.current;
 
-		componentWillUnmount () {
-			this.job.stop();
-		}
-
-		emitEvent (ev) {
-			if (this.props[debounce]) {
-				this.props[debounce](ev);
+			if (onDebounce) {
+				onDebounce(ev);
 			}
-		}
+		}, delay), []);
 
-		handleEvent = (ev) => {
-			this.job.start(ev);
-		};
+		useEffect(() => {
+			propsRef.current = props;
+		});
 
-		handleCancel = (ev) => {
-			if (this.props[cancel]) {
-				this.props[cancel](ev);
+		useEffect(() => {
+			return () => {
+				job.stop();
+			};
+		}, [job]);
+
+		const handleEvent = useCallback((ev) => {
+			job.start(ev);
+		}, [job]);
+
+		const handleCancel = useCallback((ev) => {
+			const {[cancel]: onCancel} = propsRef.current;
+
+			if (onCancel) {
+				onCancel(ev);
 			}
-			this.job.stop();
-		};
+			job.stop();
+		}, [job]);
 
-		render () {
-			let props = this.props;
+		const handlers = {};
+		if (debounce) handlers[debounce] = handleEvent;
+		if (cancel) handlers[cancel] = handleCancel;
 
-			if (debounce || cancel) {
-				props = {...props};
-
-				if (debounce) props[debounce] = this.handleEvent;
-				if (cancel) props[cancel] = this.handleCancel;
-			}
-
-			return (
-				<Wrapped {...props} />
-			);
-		}
+		return (
+			<Wrapped {...props} {...handlers} />
+		);
 	};
+
+	DebounceDecorator.displayName = 'DebounceDecorator';
+
+	DebounceDecorator.propTypes = /** @lends limestone/internal/DebounceDecorator.DebounceDecorator.prototype */ {
+		/**
+		 * Handler for `onChange` events
+		 *
+		 * `'onChange'` can be changed to a different prop name by specifying the `debounce`
+		 * config option.
+		 *
+		 * @see {@link limestone/internal/DebounceDecorator.DebounceDecorator.defaultConfig#debounce}
+		 * @name onChange
+		 * @memberof limestone/internal/DebounceDecorator.DebounceDecorator.prototype
+		 * @type {Function}
+		 * @public
+		 */
+		[debounce]: PropTypes.func
+	};
+
+	return DebounceDecorator;
 });
 
 export default DebounceDecorator;
