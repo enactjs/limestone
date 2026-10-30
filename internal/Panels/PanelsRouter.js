@@ -15,8 +15,8 @@ const reducer = (state, action) => {
 	return {
 		prevIndex: action.index,
 		prevReverse: action.reverse
-	}
-}
+	};
+};
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
