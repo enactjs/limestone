@@ -1,9 +1,9 @@
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
 import useChainRefs from '@enact/core/useChainRefs';
-import {checkPropTypes, setDefaultProps, usePrevious} from '@enact/core/util';
+import {checkPropTypes, setDefaultProps} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {Children, createContext, useCallback, useState} from 'react';
+import {Children, createContext, useCallback, useEffect, useReducer, useState} from 'react';
 
 import useAutoFocus from './useAutoFocus';
 import useFocusOnTransition from './useFocusOnTransition';
@@ -11,18 +11,26 @@ import useToggleRole from './useToggleRole';
 
 const PanelsContext = createContext(null);
 
+const reducer = (state, action) => {
+	return {
+		prevIndex: action.index,
+		prevReverse: action.reverse
+	}
+}
 // single-index ViewManagers need some help knowing when the transition direction needs to change
 // because the index is always 0 from its perspective.
 function useReverseTransition (index = -1, rtl) {
-	const prevIndex = usePrevious(index);
+	const [state, dispatch] = useReducer(reducer, {prevIndex: index, prevReverse: rtl});
 
 	// If the index was changed, the panel transition occurs on the next cycle by `Panel`
-	if (prevIndex !== index) {
-		const reverse = rtl ? (index > prevIndex) : (index < prevIndex);
-		return {reverseTransition: reverse, prevIndex: index};
-	}
+	useEffect(() => {
+		if (state.prevIndex !== index) {
+			const reverse = rtl ? (index > state.prevIndex) : (index < state.prevIndex);
+			dispatch({index, reverse});
+		}
+	}, [index, rtl, state.prevIndex]);
 
-	return {reverseTransition: rtl, prevIndex: index};
+	return {reverseTransition: state.prevReverse, prevIndex: state.prevIndex};
 }
 
 const defaultConfig = {
