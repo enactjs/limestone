@@ -61,7 +61,7 @@ const VideoBase = (props) => {
 	const videoRef = useRef(null);
 	const preloadVideoRef = useRef(null);
 	const preloadLoadStartRef = useRef(null);
-	const prevPropsRef = useRef(null);
+	const prevKeysRef = useRef(null);
 
 	// The React keys of the source and preload videos, and the source keys they were last given
 	// for. When a source moves between the two slots its key moves with it, so React keeps the
@@ -74,11 +74,10 @@ const VideoBase = (props) => {
 	);
 
 	if (keysChanged) {
-		// cache the previous keys so we know if the sources change the next time
 		setKeyState(nextKeyState);
 	}
 
-	const {keys, prevPreloadKey: currentPreloadKey} = keysChanged ? nextKeyState : keyState;
+	const {keys, prevPreloadKey: currentPreloadKey} = nextKeyState;
 
 	// if preload is unset, clear the key so we don't render that media node at all
 	const [sourceKey, preloadKey] = currentPreloadKey ? keys : keys.slice(0, 1);
@@ -116,18 +115,15 @@ const VideoBase = (props) => {
 	// right after the swapped video elements are committed, before the browser paints, so
 	// VideoPlayer receives these events and playback starts before the new frame is shown.
 	useLayoutEffect(() => {
-		const prevProps = prevPropsRef.current;
-		prevPropsRef.current = {source, preloadSource};
+		const key = getKeyFromSource(source);
+		const preloadKeyFromSource = getKeyFromSource(preloadSource);
+		const prevKeys = prevKeysRef.current;
+		prevKeysRef.current = {key, preloadKey: preloadKeyFromSource};
 
 		// skip the initial mount; only react to changes
-		if (!prevProps) return;
+		if (!prevKeys) return;
 
-		const {source: prevSource, preloadSource: prevPreloadSource} = prevProps;
-
-		const key = getKeyFromSource(source);
-		const prevKey = getKeyFromSource(prevSource);
-		const preloadKeyFromSource = getKeyFromSource(preloadSource);
-		const prevPreloadKey = getKeyFromSource(prevPreloadSource);
+		const {key: prevKey, preloadKey: prevPreloadKey} = prevKeys;
 
 		const autoPlay = () => {
 			if (!props.autoPlay) return;
