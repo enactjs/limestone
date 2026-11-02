@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import {render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {DropdownBase} from '../Dropdown';
+import Dropdown, {DropdownBase} from '../Dropdown';
 import DropdownList from '../DropdownList';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
@@ -307,6 +307,96 @@ describe('Dropdown', () => {
 		await user.click(firstItem);
 
 		expect(handleSelect).toHaveBeenCalledWith({data: 'option1', selected: 0, type: 'onSelect'});
+	});
+
+	test('should update the open list when options are added, removed, or renamed', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Dropdown open title={title}>
+					{children}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Dropdown open title={title}>
+					{children.slice(0, -1)}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getByRole('group').children).toHaveLength(2);
+		expect(screen.queryByText('option3')).not.toBeInTheDocument();
+
+		rerender(
+			<FloatingLayerController>
+				<Dropdown open title={title}>
+					{['option1', 'renamed', 'option3']}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getByText('renamed')).toBeInTheDocument();
+		expect(screen.queryByText('option2')).not.toBeInTheDocument();
+
+		rerender(
+			<FloatingLayerController>
+				<Dropdown open title={title}>
+					{children.concat('option4')}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getAllByRole('checkbox')[0]).toHaveAttribute('aria-setsize', '4');
+	});
+
+	test('should keep the selection when re-rendered with the same options', () => {
+		const options = ['option1', 'option2', 'option3'];
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Dropdown open selected={1} title={title}>
+					{options}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		const selected = screen.getByRole('checkbox', {checked: true});
+
+		rerender(
+			<FloatingLayerController>
+				<Dropdown open selected={1} title={title}>
+					{[...options]}
+				</Dropdown>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getByRole('checkbox', {checked: true})).toBe(selected);
+		expect(selected).toHaveTextContent('option2');
+		expect(screen.getByRole('button')).toHaveTextContent('option2');
+	});
+
+	test('should show selected, disabled, and title changes', () => {
+		const {rerender} = render(
+			<Dropdown selected={0} title="First title">
+				{children}
+			</Dropdown>
+		);
+
+		expect(screen.getByRole('button')).toHaveTextContent('option1');
+		expect(screen.getByText('First title')).toBeInTheDocument();
+		expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'false');
+
+		rerender(
+			<Dropdown disabled selected={2} title="Next title">
+				{children}
+			</Dropdown>
+		);
+
+		expect(screen.getByRole('button')).toHaveTextContent('option3');
+		expect(screen.getByText('Next title')).toBeInTheDocument();
+		expect(screen.queryByText('First title')).not.toBeInTheDocument();
+		expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
 	});
 
 	describe('DropdownList', () => {
