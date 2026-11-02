@@ -7,17 +7,15 @@
  * @exports VideoPlayerBase
  */
 
+import {off, on} from '@enact/core/dispatcher';
+import {forKey, forward, forwardCustom, forwardWithPrevent, handle, preventDefault, returnsTrue, stopImmediate} from '@enact/core/handle';
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
-import {on, off} from '@enact/core/dispatcher';
 import deprecate from '@enact/core/internal/deprecate';
-import {memoize} from '@enact/core/util';
-
-import {forKey, forward, forwardCustom, forwardWithPrevent, handle, preventDefault, stopImmediate, returnsTrue} from '@enact/core/handle';
+import EnactPropTypes from '@enact/core/internal/prop-types';
 import {is} from '@enact/core/keymap';
 import {platform} from '@enact/core/platform';
-import EnactPropTypes from '@enact/core/internal/prop-types';
-import {checkPropTypes, perfNow, Job, setDefaultProps, shallowEqual} from '@enact/core/util';
 import useHandlers from '@enact/core/useHandlers';
+import {checkPropTypes, Job, memoize, perfNow, setDefaultProps, shallowEqual} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import {toUpperCase} from '@enact/i18n/util';
 import {getDirection, Spotlight} from '@enact/spotlight';
@@ -32,23 +30,23 @@ import Slottable from '@enact/ui/Slottable';
 import Touchable from '@enact/ui/Touchable';
 import DurationFmt from 'ilib/lib/DurationFmt';
 import PropTypes from 'prop-types';
-import {cloneElement, isValidElement, memo, useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {cloneElement, isValidElement, memo, useContext, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState} from 'react';
 
-import $L from '../internal/$L';
 import Button from '../Button';
-import Skinnable from '../Skinnable';
-import Spinner from '../Spinner';
+import $L from '../internal/$L';
 import {
 	MediaControls,
 	MediaSlider,
 	secondsToTime,
 	Times
 } from '../MediaPlayer';
+import Skinnable from '../Skinnable';
+import Spinner from '../Spinner';
 
-import Overlay from './Overlay';
-import MediaTitle from './MediaTitle';
 import FeedbackContent from './FeedbackContent';
 import FeedbackTooltip from './FeedbackTooltip';
+import MediaTitle from './MediaTitle';
+import Overlay from './Overlay';
 import Video from './Video';
 
 import css from './VideoPlayer.module.less';
@@ -687,7 +685,7 @@ VideoPlayerView.propTypes = {
  * @ui
  * @public
  */
-const VideoPlayerBase = (rawProps) => {
+const VideoPlayerBase = ({ref, ...rawProps}) => {
 	checkPropTypes(VideoPlayerBase, rawProps);
 
 	const componentProps = setDefaultProps(rawProps, videoPlayerBaseDefaultProps);
@@ -1817,6 +1815,9 @@ const VideoPlayerBase = (rawProps) => {
 		}
 	}, [api, setApiProvider]);
 
+	// Exposes the API methods to a ref passed directly to VideoPlayerBase
+	useImperativeHandle(ref, () => api, [api]);
+
 	// Equivalent of componentDidMount and componentWillUnmount
 	useLayoutEffect(() => {
 		const {handleGlobalKeyDown} = eventHandlers;
@@ -2413,6 +2414,18 @@ VideoPlayerBase.propTypes = /** @lends limestone/VideoPlayer.VideoPlayerBase.pro
 	}),
 
 	/**
+	 * Receives the player's API methods, such as `play()`, `pause()`, `seek()` and
+	 * `showControls()`.
+	 *
+	 * Only needed when using `VideoPlayerBase` directly. `VideoPlayer` provides the same methods
+	 * through its own `ref`.
+	 *
+	 * @type {Object|Function}
+	 * @public
+	 */
+	ref: EnactPropTypes.ref,
+
+	/**
 	 * Disables seek function.
 	 *
 	 * Note that jump by arrow keys will also be disabled when `true`.
@@ -2565,6 +2578,8 @@ VideoPlayerBase.propTypes = /** @lends limestone/VideoPlayer.VideoPlayerBase.pro
 	 */
 	videoComponent: EnactPropTypes.componentOverride
 };
+
+VideoPlayerBase.defaultPropValues = videoPlayerBaseDefaultProps;
 
 /**
  * A standard HTML5 video player for Limestone. It behaves, responds to, and operates like a

@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import {act, createEvent, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {createRef} from 'react';
 
-import VideoPlayer from '../VideoPlayer';
+import VideoPlayer, {VideoPlayerBase} from '../VideoPlayer';
 import {Button} from '../../Button';
 import {MediaControls} from '../../MediaPlayer';
 
@@ -184,5 +185,60 @@ describe('VideoPlayer', () => {
 		expect(titleFrame).toHaveClass('hidden');
 
 		jest.useRealTimers();
+	});
+});
+
+describe('VideoPlayerBase', () => {
+	test('should expose the API methods through a ref passed directly to it', () => {
+		const ref = createRef();
+
+		render(
+			<VideoPlayerBase data-testid="videoplayer-id" ref={ref} />
+		);
+
+		expect(ref.current).toEqual(expect.objectContaining({
+			areControlsVisible: expect.any(Function),
+			getMediaState: expect.any(Function),
+			hideControls: expect.any(Function),
+			pause: expect.any(Function),
+			play: expect.any(Function),
+			seek: expect.any(Function),
+			showControls: expect.any(Function)
+		}));
+		expect(ref.current).not.toBeInstanceOf(window.HTMLElement);
+		expect(ref.current.getMediaState()).toHaveProperty('paused');
+	});
+
+	test('should control the player through the ref methods', () => {
+		const ref = createRef();
+
+		render(
+			<VideoPlayerBase data-testid="videoplayer-id" ref={ref} />
+		);
+
+		expect(ref.current.areControlsVisible()).toBe(false);
+
+		act(() => ref.current.showControls());
+
+		expect(ref.current.areControlsVisible()).toBe(true);
+	});
+
+	test('should expose the API methods through a `ref` on `VideoPlayerBase`', () => {
+		const ref = createRef();
+
+		render(
+			<VideoPlayerBase data-testid="videoplayer-id" ref={ref} />
+		);
+
+		// the `ref` must not replace the one used for the video
+		expect(screen.getByTestId('videoplayer-id').tagName).toBe('VIDEO');
+
+		expect(ref.current.areControlsVisible()).toBe(false);
+		expect(ref.current.getMediaState()).toMatchObject({currentTime: 0, playbackRate: 1});
+		expect(ref.current.getVideoNode().paused).toBe(true);
+
+		act(() => ref.current.showControls());
+
+		expect(ref.current.areControlsVisible()).toBe(true);
 	});
 });
