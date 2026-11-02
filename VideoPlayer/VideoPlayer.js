@@ -373,8 +373,10 @@ const handlers = {
 	)
 };
 
-// Equivalent of the class's `shouldComponentUpdate()`. Returns `true` to skip re-rendering. `prev`
-// holds the props and state of the last commit, like `this.props` and `this.state` in the class.
+// Returns `true` when a render can be skipped: the props are shallowly equal, the mini feedback and
+// the media slider are hidden, loading has not changed, and only the playback progress changed.
+// This avoids re-rendering the whole player on every `timeupdate` while nothing shows the progress.
+// `prev` holds the props and state of the last commit.
 const isRenderSkippable = ({componentProps: prevProps, state: prevState}, {componentProps: nextProps, state: nextState}) => (
 	// Use shallow props compare instead of source comparison to support possible changes
 	// from mediaComponent.
@@ -389,8 +391,9 @@ const isRenderSkippable = ({componentProps: prevProps, state: prevState}, {compo
 	)
 );
 
-// Compares the next render with the last commit (not the last render of the view) so renders are
-// skipped exactly when the class's `shouldComponentUpdate()` returned `false`
+// Compares the next render with the player's last commit, not with the view's last render. The last
+// commit is updated even when the view skips rendering, so each update is compared with the one
+// right before it.
 const isViewRenderSkippable = (prevViewProps, nextViewProps) => {
 	const {lastCommit} = nextViewProps.instanceRef.current;
 
@@ -414,8 +417,8 @@ const getControlsAriaProps = (announce, id) => {
 	return null;
 };
 
-// Renders the player. It is memoized with `isViewRenderSkippable()` to keep the class's
-// `shouldComponentUpdate()` behavior.
+// Renders the player. It is memoized with `isViewRenderSkippable()` so updates that only change the
+// playback progress do not re-render it while nothing shows the progress.
 const VideoPlayerView = memo(({api, componentProps, eventHandlers, hasNextHandler, hasPreviousHandler, id, playerRef, refCallbacks, state}) => {
 	const {setAnnounceRef, setTitleRef, setVideoRef} = refCallbacks;
 	const {
@@ -691,7 +694,7 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 	const componentProps = setDefaultProps(rawProps, videoPlayerBaseDefaultProps);
 	const floatingLayerContext = useContext(FloatingLayerContext);
 
-	// Instance values. Equivalent of the class's instance fields.
+	// Values the methods read and write without re-rendering
 	const instance = useRef({
 		announceRef: null,
 		firstPlayReadFlag: false,
@@ -751,7 +754,7 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 	const [id] = useState(generateId);
 
 	// The `onNext` and `onPrevious` handlers are only created when one of their callbacks is
-	// provided on mount, matching the class's instance fields.
+	// provided on mount. Adding one later has no effect.
 	const [hasNextHandler] = useState(() => Boolean(componentProps.onWillNext || componentProps.onNext));
 	const [hasPreviousHandler] = useState(() => Boolean(componentProps.onWillPrevious || componentProps.onPrevious));
 
@@ -761,7 +764,8 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 
 	const mediaControlsSpotlightId = componentProps.spotlightId + '_mediaControls';
 
-	// Merges a partial state (or the result of an updater) like the class's `setState()`.
+	// Merges a partial state (or the result of an updater) into the state. Nothing is updated when
+	// none of the values changed.
 	const setState = (update) => {
 		setReactState((prevState) => {
 			const partial = typeof update === 'function' ? update(prevState) : update;
@@ -791,9 +795,7 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 	};
 
 	const startAutoCloseTimeout = () => {
-		// If this.state.more is used as a reference for when this function should fire, timing for
-		// detection of when "more" is pressed vs when the state is updated is mismatched. Using an
-		// instance variable that's only set and used for this express purpose seems cleanest.
+		// Only auto-close while the media controls are visible
 		if (componentProps.autoCloseTimeout && state.mediaControlsVisible) {
 			jobs.autoClose.startAfter(componentProps.autoCloseTimeout);
 		}
@@ -1178,7 +1180,6 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 			setPlaybackRate(1);
 		}
 		// must happen before send() to ensure feedback uses the right value
-		// TODO: refactor into this.state member
 		setRenderedValues({
 			prevCommand: 'play',
 			speedIndex: 0
@@ -1207,7 +1208,6 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 			setPlaybackRate(1);
 		}
 		// must happen before send() to ensure feedback uses the right value
-		// TODO: refactor into this.state member
 		setRenderedValues({
 			prevCommand: 'pause',
 			speedIndex: 0
@@ -1786,7 +1786,7 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 		};
 	});
 
-	// Warn once about deprecated callbacks. The class did this during render.
+	// Warn once about each deprecated callback
 	const {onJumpBackward, onJumpForward, onWillJumpBackward, onWillJumpForward} = componentProps;
 	useEffect(() => {
 		if (!warnedOnJumpBackward && onJumpBackward) {
@@ -1807,7 +1807,7 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 		}
 	}, [onJumpBackward, onJumpForward, onWillJumpBackward, onWillJumpForward]);
 
-	// Equivalent of the constructor's call to `setApiProvider`
+	// Registers the API with `ApiDecorator`, which exposes these methods on `VideoPlayer`
 	const {setApiProvider} = componentProps;
 	useLayoutEffect(() => {
 		if (setApiProvider) {
@@ -1818,7 +1818,8 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 	// Exposes the API methods to a ref passed directly to VideoPlayerBase
 	useImperativeHandle(ref, () => api, [api]);
 
-	// Equivalent of componentDidMount and componentWillUnmount
+	// Listens for user activity and global key presses and registers with the floating layer. On
+	// unmount, removes the listeners, stops the pending jobs and unregisters.
 	useLayoutEffect(() => {
 		const {handleGlobalKeyDown} = eventHandlers;
 
@@ -1855,12 +1856,14 @@ const VideoPlayerBase = ({ref, ...rawProps}) => {
 		};
 	}, [api, eventHandlers, floatingLayerContext, jobs]);
 
-	// Equivalent of componentDidUpdate
+	// After each rendered update, closes floating layers when the controls or slider hide, forwards
+	// `onControlsAvailable` and moves focus when the media controls show or hide, and shows the
+	// controls once the bottom controls have rendered
 	useLayoutEffect(() => {
 		const {lastCommit} = instance.current;
 		instance.current.lastCommit = {componentProps, state};
 
-		// componentDidUpdate does not run on mount or when `shouldComponentUpdate()` skipped the update
+		// skip the initial mount and the updates `isRenderSkippable()` skips rendering for
 		if (!lastCommit || isRenderSkippable(lastCommit, {componentProps, state})) return;
 
 		const prevState = lastCommit.state;
