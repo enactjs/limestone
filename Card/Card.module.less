@@ -38,8 +38,7 @@
 
 	.image {
 		position: relative;
-		&:where(:global(.animationTier-high) *) { .lime-focus-out-large-high-motion(1); }
-		&:where(:global(.animationTier-low) *) { .lime-focus-out-large-low-motion(1); }
+		.applyMotions(.lime-focus-out-large-high-motion(1), .lime-focus-out-large-low-motion(1));
 	}
 
 	.selectionContainer {
@@ -201,8 +200,7 @@
 	&.vertical {
 		width: var(--card-image-width);
 		height: auto;
-		&:where(:global(.animationTier-high) *) { .lime-focus-out-large-high-motion(1); }
-		&:where(:global(.animationTier-low) *) { .lime-focus-out-large-low-motion(1); }
+		.applyMotions(.lime-focus-out-large-high-motion(1), .lime-focus-out-large-low-motion(1));
 
 		.captionImageIconsContainer {
 			margin-top: @lime-card-caption-image-icon-margin;
@@ -323,8 +321,7 @@
 	&.horizontal {
 		width: @lime-card-horizontal-width;
 		height: @lime-card-horizontal-height;
-		&:where(:global(.animationTier-high) *) { .lime-focus-out-large-high-motion(1); }
-		&:where(:global(.animationTier-low) *) { .lime-focus-out-large-low-motion(1); }
+		.applyMotions(.lime-focus-out-large-high-motion(1), .lime-focus-out-large-low-motion(1));
 
 		.captions {
 			padding: @lime-card-horizontal-captions-padding;
@@ -365,8 +362,7 @@
 
 	.focus({
 		&.hasContainer {
-			&:where(:global(.animationTier-high) *) { .lime-focus-in-large-high-motion(1.1); }
-			&:where(:global(.animationTier-low) *) { .lime-focus-in-large-low-motion(1.1); }
+			.applyMotions(.lime-focus-in-large-high-motion(1.1), .lime-focus-in-large-low-motion(1.1));
 
 			&.roundedImage::before {
 				border-radius: @lime-card-border-radius;
@@ -395,12 +391,10 @@
 			&.hasContainer {
 				&.pressed,
 				&:active {
-					&:where(:global(.animationTier-high) *) { .lime-press-large-high-motion(1.05); }
-					&:where(:global(.animationTier-low) *) { .lime-press-large-low-motion(1.05); }
+					.applyMotions(.lime-press-large-high-motion(1.05), .lime-press-large-low-motion(1.05));
 				}
 				&:not(.pressed) {
-					&:where(:global(.animationTier-high) *) { .lime-release-large-high-motion(1.1); }
-					&:where(:global(.animationTier-low) *) { .lime-release-large-low-motion(1.1); }
+					.applyMotions(.lime-release-large-high-motion(1.1), .lime-release-large-low-motion(1.1));
 				}
 			}
 		});
@@ -411,8 +405,7 @@
 			&.vertical {
 				&:not(.captionOverlay):not(.hasContainer) .image,
 				&.captionOverlay {
-					&:where(:global(.animationTier-high) *) { .lime-focus-in-large-high-motion(1.1); }
-					&:where(:global(.animationTier-low) *) { .lime-focus-in-large-low-motion(1.1); }
+					.applyMotions(.lime-focus-in-large-high-motion(1.1), .lime-focus-in-large-low-motion(1.1));
 				}
 			}
 		});
@@ -423,22 +416,18 @@
 					&.captionOverlay {
 						&.pressed,
 						&:active {
-							&:where(:global(.animationTier-high) *) { .lime-press-large-high-motion(1.05); }
-							&:where(:global(.animationTier-low) *) { .lime-press-large-low-motion(1.05); }
+							.applyMotions(.lime-press-large-high-motion(1.05), .lime-press-large-low-motion(1.05));
 						}
 						&:not(.pressed) {
-							&:where(:global(.animationTier-high) *) { .lime-release-large-high-motion(1.1); }
-							&:where(:global(.animationTier-low) *) { .lime-release-large-low-motion(1.1); }
+							.applyMotions(.lime-release-large-high-motion(1.1), .lime-release-large-low-motion(1.1));
 						}
 					}
 
 					&:not(.captionOverlay):not(.hasContainer).pressed .image {
-						&:where(:global(.animationTier-high) *) { .lime-press-large-high-motion(1.05); }
-						&:where(:global(.animationTier-low) *) { .lime-press-large-low-motion(1.05); }
+						.applyMotions(.lime-press-large-high-motion(1.05), .lime-press-large-low-motion(1.05));
 					}
 					&:not(.captionOverlay):not(.hasContainer):not(.pressed) .image {
-						&:where(:global(.animationTier-high) *) { .lime-release-large-high-motion(1.1); }
-						&:where(:global(.animationTier-low) *) { .lime-release-large-low-motion(1.1); }
+						.applyMotions(.lime-release-large-high-motion(1.1), .lime-release-large-low-motion(1.1));
 					}
 				}
 			});
