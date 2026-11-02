@@ -124,6 +124,25 @@ describe('VideoPlayer.Video', () => {
 			expect(actual).toBe(expected);
 		});
 
+		test('should render and load the preload when `preloadSource` changes from the same as `source`', () => {
+			const {rerender} = render(
+				<Video data-testid="video-id" preloadSource="abc.mp4" source="abc.mp4" />
+			);
+
+			const video = screen.getByTestId('video-id');
+
+			expect(video.nextElementSibling).toBeNull();
+
+			rerender(
+				<Video data-testid="video-id" preloadSource="def.mp4" source="abc.mp4" />
+			);
+
+			const preload = video.nextElementSibling;
+
+			expect(preload).not.toBeNull();
+			expect(HTMLMediaElement.prototype.load.mock.contexts).toContain(preload);
+		});
+
 		test('should use the same node when changing `preloadSource`', () => {
 			const {rerender} = render(
 				<Video data-testid="video-id" preloadSource="def.mp4" source="abc.mp4" />

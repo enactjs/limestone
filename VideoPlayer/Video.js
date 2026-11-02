@@ -63,9 +63,9 @@ const VideoBase = (props) => {
 	const preloadLoadStartRef = useRef(null);
 	const prevKeysRef = useRef(null);
 
-	// The React keys of the source and preload videos, and the source keys they were last given
-	// for. When a source moves between the two slots its key moves with it, so React keeps the
-	// same video element. Updated during render only when the sources change.
+	// The React keys of the two video slots, plus the source and preload keys from the last change.
+	// When a source moves to the other slot its key moves with it, so React reuses the same video
+	// element. Only updated during render when the sources change.
 	const [keyState, setKeyState] = useState(initialKeyState);
 	const nextKeyState = getKeys(source, preloadSource, keyState);
 	const keysChanged = (
@@ -109,11 +109,9 @@ const VideoBase = (props) => {
 		preloadVideoRef.current = node;
 	}, []);
 
-	// Responds to source changes: when the preload video becomes the source, re-emits its cached
-	// `onLoadStart` and emits `onUpdate`; when the source changes, plays it if `autoPlay` is set;
-	// when `preloadSource` changes, reloads the preload video. It is a layout effect so this runs
-	// right after the swapped video elements are committed, before the browser paints, so
-	// VideoPlayer receives these events and playback starts before the new frame is shown.
+	// Responds to source changes after they are committed: promotes the preload video, plays a new
+	// source when `autoPlay` is set, and reloads a changed preload. A layout effect, so the swapped
+	// video's ref is already attached when it runs.
 	useLayoutEffect(() => {
 		const key = getKeyFromSource(source);
 		const preloadKey = getKeyFromSource(preloadSource);
