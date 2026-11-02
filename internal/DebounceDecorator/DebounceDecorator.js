@@ -8,7 +8,7 @@
 import hoc from '@enact/core/hoc';
 import {checkPropTypes, Job} from '@enact/core/util';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 /**
  * Default config for {@link limestone/internal/DebounceDecorator.DebounceDecorator}.
@@ -75,7 +75,7 @@ const DebounceDecorator = hoc(defaultConfig, (config, Wrapped) => {
 			}
 		}, delay), []);
 
-		useEffect(() => {
+		useLayoutEffect(() => {
 			propsRef.current = props;
 		});
 
