@@ -63,9 +63,46 @@ async function waitForScrollStartStop (timeout = 3000) {
 	await browser.waitUntil(await isNotScrolling, {timeout});
 }
 
+async function focusById (id) {
+	await browser.execute(function (targetId) {
+		document.getElementById(targetId).focus();
+	}, id);
+	await browser.pause(200);
+}
+
+async function holdDownKey (repeatCount) {
+	await browser.execute(function () {
+		window.repeatKeyDownCount = 0;
+		window.addEventListener('keydown', function (ev) {
+			if (ev.repeat) {
+				window.repeatKeyDownCount++;
+			}
+		});
+	});
+	for (let i = 0; i < repeatCount; i++) {
+		await browser.execute(function (repeat) {
+			// eslint-disable-next-line no-undef
+			const event = new KeyboardEvent('keydown', {bubbles: true, cancelable: true, code: 'ArrowDown', key: 'ArrowDown', keyCode: 40, repeat});
+			document.activeElement.dispatchEvent(event);
+		}, i > 0);
+		await browser.pause(50);
+	}
+	await browser.execute(function () {
+		// eslint-disable-next-line no-undef
+		const event = new KeyboardEvent('keyup', {bubbles: true, cancelable: true, code: 'ArrowDown', key: 'ArrowDown', keyCode: 40});
+		document.activeElement.dispatchEvent(event);
+	});
+
+	return await browser.execute(function () {
+		return window.repeatKeyDownCount;
+	});
+}
+
 exports.expectFocusedItem = expectFocusedItem;
 exports.expectNoFocusedItem = expectNoFocusedItem;
+exports.focusById = focusById;
 exports.focusedElement = focusedElement;
+exports.holdDownKey = holdDownKey;
 exports.waitForScrollStartStop = waitForScrollStartStop;
 exports.waitUntilFocused = waitUntilFocused;
 exports.waitUntilVisible = waitUntilVisible;
