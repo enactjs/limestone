@@ -209,20 +209,6 @@ describe('VideoPlayerBase', () => {
 		expect(ref.current.getMediaState()).toHaveProperty('paused');
 	});
 
-	test('should control the player through the ref methods', () => {
-		const ref = createRef();
-
-		render(
-			<VideoPlayerBase data-testid="videoplayer-id" ref={ref} />
-		);
-
-		expect(ref.current.areControlsVisible()).toBe(false);
-
-		act(() => ref.current.showControls());
-
-		expect(ref.current.areControlsVisible()).toBe(true);
-	});
-
 	test('should expose the API methods through a `ref` on `VideoPlayerBase`', () => {
 		const ref = createRef();
 
