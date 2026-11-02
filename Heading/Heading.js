@@ -133,15 +133,6 @@ const HeadingBase = kind({
 	}
 });
 
-/**
- * Applies Limestone specific behaviors to {@link limestone/Heading.HeadingBase|HeadingBase}.
- *
- * @hoc
- * @memberof limestone/Heading
- * @mixes limestone/Marquee.MarqueeDecorator
- * @mixes limestone/Skinnable.Skinnable
- * @public
- */
 // Sits ahead of MarqueeDecorator, whose own default is `marqueeOn: 'focus'`. React 19 ignores
 // `defaultProps` on the function component returned by Pure.
 const defaultMarqueeOn = (Wrapped) => {
@@ -152,6 +143,15 @@ const defaultMarqueeOn = (Wrapped) => {
 	return DefaultMarqueeOn;
 };
 
+/**
+ * Applies Limestone specific behaviors to {@link limestone/Heading.HeadingBase|HeadingBase}.
+ *
+ * @hoc
+ * @memberof limestone/Heading
+ * @mixes limestone/Marquee.MarqueeDecorator
+ * @mixes limestone/Skinnable.Skinnable
+ * @public
+ */
 const HeadingDecorator = compose(
 	Pure,
 	defaultMarqueeOn,
