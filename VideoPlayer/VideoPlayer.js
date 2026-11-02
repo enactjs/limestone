@@ -675,6 +675,7 @@ VideoPlayerView.propTypes = {
 	hasNextHandler: PropTypes.bool.isRequired,
 	hasPreviousHandler: PropTypes.bool.isRequired,
 	id: PropTypes.string.isRequired,
+	instanceRef: PropTypes.object.isRequired,
 	playerRef: PropTypes.object.isRequired,
 	refCallbacks: PropTypes.object.isRequired,
 	state: PropTypes.object.isRequired
