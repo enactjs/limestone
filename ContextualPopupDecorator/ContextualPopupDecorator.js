@@ -9,11 +9,11 @@
  */
 
 import ApiDecorator from '@enact/core/internal/ApiDecorator';
+import {getFragmentBoundingClientRect} from '@enact/core/internal/fragmentHost';
 import {on, off} from '@enact/core/dispatcher';
 import {handle, forProp, forKey, forward, forwardCustom, stop} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import EnactPropTypes from '@enact/core/internal/prop-types';
-import {WithRef} from '@enact/core/internal/WithRef';
 import {checkPropTypes, extractAriaProps, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight, {getDirection} from '@enact/spotlight';
@@ -22,7 +22,7 @@ import FloatingLayer from '@enact/ui/FloatingLayer';
 import ri from '@enact/ui/resolution';
 import compose from 'ramda/src/compose';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Fragment, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {ContextualPopup} from './ContextualPopup';
 import HolePunchScrim from './HolePunchScrim';
@@ -94,7 +94,6 @@ const ContextualPopupContainer = SpotlightContainerDecorator(
 
 const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 	const {noArrow, noSkin, openProp} = config;
-	const WrappedWithRef = WithRef(Wrapped);
 
 	// eslint-disable-next-line no-shadow
 	const ContextualPopupDecorator = (props) => {
@@ -116,7 +115,6 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		const prevProps = useRef(componentProps);
 		const snapshot = useRef(null);
 		const resizeObserver = useRef(null);
-		const findClientSiblingRef = useRef(null);
 		const holepunchScrimRef = useRef(false);
 
 		const keyDownRef = useRef(null);
@@ -376,9 +374,12 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		 * @returns {undefined}
 		 */
 		const positionContextualPopup = useCallback(() => {
-			if (containerNode.current && clientSiblingRef?.current) {
+			if (containerNode.current && clientSiblingRef.current) {
 				const localContainerNode = containerNode.current.getBoundingClientRect();
-				const clientRect = clientSiblingRef.current.getBoundingClientRect();
+				const clientRect = getFragmentBoundingClientRect(clientSiblingRef.current);
+				if (!clientRect) {
+					return;
+				}
 				const {top, left, bottom, right, width, height} = clientRect;
 				const clientNode = {top, left, bottom, right, width, height};
 
@@ -541,7 +542,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		}, []);
 
 		const getClientSiblingNodeWidth = useCallback(() => {
-			return clientSiblingRef.current && clientSiblingRef.current.getBoundingClientRect().width || 0;
+			return getFragmentBoundingClientRect(clientSiblingRef.current)?.width || 0;
 		}, []);
 
 		const getSnapshotBeforeUpdate = useCallback(() => {
@@ -622,12 +623,7 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 			// DOM. There is no hook that runs pre-commit, so we instead persist the previous
 			// measurements across renders and compare the current (post-render) DOM against them.
 			const prevSnapshot = snapshot.current;
-			const currentClientSiblingWidth = getClientSiblingNodeWidth();
 			const currentContainerWidth = getContainerNodeWidth();
-
-			if (prevSnapshot && prevSnapshot.clientSiblingWidth !== currentClientSiblingWidth) {
-				clientSiblingRef.current = findClientSiblingRef.current();
-			}
 
 			if (prevProps.current.direction !== componentProps.direction ||
                 (prevSnapshot && prevSnapshot.containerWidth !== currentContainerWidth) ||
@@ -653,12 +649,11 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 
 			// Store this cycle's measurements to compare against on the next update.
 			snapshot.current = {
-				clientSiblingWidth: currentClientSiblingWidth,
 				containerWidth: currentContainerWidth
 			};
 
 			prevProps.current = componentProps;
-		}, [activator, componentProps, getContainerNodeWidth, getClientSiblingNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
+		}, [activator, componentProps, getContainerNodeWidth, getSnapshotBeforeUpdate, positionContextualPopup, spotActivator]);
 
 		const {
 			'data-webos-voice-exclusive': voiceExclusive,
@@ -694,8 +689,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 		useEffect(() => {
 			holepunchScrimRef.current = holepunchScrim;
 
-			if (clientSiblingRef?.current && holepunchScrim) {
-				setHoleBounds(clientSiblingRef.current.getBoundingClientRect());
+			const clientRect = getFragmentBoundingClientRect(clientSiblingRef.current);
+			if (clientRect && holepunchScrim) {
+				setHoleBounds(clientRect);
 			}
 		}, [holepunchScrim]);
 
@@ -740,7 +736,9 @@ const Decorator = hoc(defaultConfig, (config, Wrapped) => {
 						</ContextualPopupContainer>
 					</div>
 				</FloatingLayer>
-				<WrappedWithRef {...rest} outermostRef={clientSiblingRef} findOutermostRef={findClientSiblingRef} referrerName="ContextualPopup" />
+				<Fragment ref={clientSiblingRef}>
+					<Wrapped {...rest} />
+				</Fragment>
 			</div>
 		);
 	};
