@@ -17,7 +17,7 @@ const ImageListItem = (props) => {
 			src={data[dataIndex].src}
 			showSelection={data[dataIndex].showSelection}
 			selected={selectedItems.includes(dataIndex)}
-			/* eslint-disable react/jsx-no-bind */
+			/* eslint-disable enact/jsx-no-bind */
 			onClick={onClick}
 			{...props}
 		>{data[dataIndex].caption}</ImageItem>

@@ -55,6 +55,6 @@ describe('Scroller List Of Things', function () {
 		// 5-way Right a few times.
 		await ScrollerPage.spotlightRight();
 		// One (1) onKeyDown event is added for each 5-way Left.
-		expect(Number(await ScrollerPage.scroller.getAttribute('data-keydown-events'))).toBe(++keydownEvent);
+		expect(Number(await ScrollerPage.scroller.getAttribute('data-keydown-events'))).toBe(keydownEvent + 1);
 	});
 });
