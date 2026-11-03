@@ -776,7 +776,6 @@ const useMediaControlsDecorator = (componentProps) => {
 	const mediaControlsRef = useRef(null);
 	const moreComponentsNodeRef = useRef(null);
 	const propsRef = useRef(componentProps);
-	const handlePulseRef = useRef(null);
 	const pulsingKeyCodeRef = useRef(null);
 	const pulsingRef = useRef(null);
 	const showMoreRef = useRef(showMoreActive);
@@ -796,9 +795,9 @@ const useMediaControlsDecorator = (componentProps) => {
 		}
 	}, []);
 
-	const handlePulse = useCallback(() => {
+	const handlePulse = useCallback(function handlePulse () {
 		forward('onJump', {keyCode: pulsingKeyCodeRef.current}, propsRef.current);
-		keyLoopRef.current = setTimeout(() => handlePulseRef.current(), propsRef.current.jumpDelay);
+		keyLoopRef.current = setTimeout(handlePulse, propsRef.current.jumpDelay);
 	}, []);
 
 	const startListeningForPulses = useCallback((keyCode) => {
@@ -955,7 +954,6 @@ const useMediaControlsDecorator = (componentProps) => {
 	useLayoutEffect(() => {
 		propsRef.current = componentProps;
 		showMoreRef.current = showMoreActive;
-		handlePulseRef.current = handlePulse;
 
 		const prev = committedRef.current;
 		const next = {
