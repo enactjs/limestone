@@ -59,13 +59,7 @@ const mockLineBoxes = (lineRects) => {
 	}));
 };
 
-// NOTE: Temporarily skipped. These specs require `ui/Marquee` vertical-orientation
-// support (the `data-vertical-marquee-*` DOM, `translateY` track, `--vertical-marquee-lines`,
-// and `maxLines` behavior) which lived on the Enact `feature/NXT-20756-marquee` branch.
-// CI was reverted (limestone #457) to clone Enact `develop`, which does not yet contain
-// that support, so every spec here fails. Re-enable (`describe` instead of `describe.skip`)
-// once the vertical marquee support is merged into Enact `develop`. See NXT-20756.
-describe.skip('VerticalMarquee Specs', () => {
+describe('VerticalMarquee Specs', () => {
 	test('should not become focusable on its own when marqueeOn is focus', () => {
 		render(<VerticalMarquee data-testid="vertical-marquee">Text</VerticalMarquee>);
 		const view = screen.getByTestId('vertical-marquee');
