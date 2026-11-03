@@ -6,7 +6,8 @@ import Item, {ItemBase} from '../Item';
 const longItem = 'A long item label that should marquee only after Spotlight focus';
 
 const mockOverflow = () => {
-	const original = global.Element.prototype.getBoundingClientRect;
+	const originalGetBoundingClientRect = global.Element.prototype.getBoundingClientRect;
+	const originalIntersectionObserver = global.IntersectionObserver;
 	global.Element.prototype.getBoundingClientRect = function () {
 		const wide = this && this.tagName === 'SPAN';
 		return {width: wide ? 400 : 100, height: 20, top: 0, left: 0, bottom: 20, right: wide ? 400 : 100};
@@ -16,7 +17,13 @@ const mockOverflow = () => {
 		observe () {}
 	};
 	return () => {
-		global.Element.prototype.getBoundingClientRect = original;
+		global.Element.prototype.getBoundingClientRect = originalGetBoundingClientRect;
+		// jsdom has no IntersectionObserver, so remove it
+		if (originalIntersectionObserver) {
+			global.IntersectionObserver = originalIntersectionObserver;
+		} else {
+			delete global.IntersectionObserver;
+		}
 	};
 };
 
@@ -142,27 +149,29 @@ describe('Item Specs', () => {
 		jest.useFakeTimers();
 		const restore = mockOverflow();
 
-		render(<Item data-testid="item">{longItem}</Item>);
-		const item = screen.getByTestId('item');
+		try {
+			render(<Item data-testid="item">{longItem}</Item>);
+			const item = screen.getByTestId('item');
 
-		expect(item).toHaveClass('spottable');
+			expect(item).toHaveClass('spottable');
 
-		act(() => {
-			jest.advanceTimersByTime(1000);
-		});
+			act(() => {
+				jest.advanceTimersByTime(1000);
+			});
 
-		expect(screen.getAllByText(longItem).some(node => node.classList.contains('animate'))).toBe(false);
+			expect(screen.getAllByText(longItem).some(node => node.classList.contains('animate'))).toBe(false);
 
-		fireEvent.focus(item);
+			fireEvent.focus(item);
 
-		act(() => {
-			jest.advanceTimersByTime(1000);
-		});
+			act(() => {
+				jest.advanceTimersByTime(1000);
+			});
 
-		expect(item).toHaveAttribute('data-spotlight-focused');
-		expect(screen.getAllByText(longItem).some(node => node.classList.contains('animate'))).toBe(true);
-
-		restore();
-		jest.useRealTimers();
+			expect(item).toHaveAttribute('data-spotlight-focused');
+			expect(screen.getAllByText(longItem).some(node => node.classList.contains('animate'))).toBe(true);
+		} finally {
+			restore();
+			jest.useRealTimers();
+		}
 	});
 });
