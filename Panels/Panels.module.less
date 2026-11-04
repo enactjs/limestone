@@ -1,11 +1,16 @@
 // Panels.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
 .panels {
 	pointer-events: none;
+	.applyMotions(
+		.lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion()),
+		.lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion())
+	);
 
 	> * {
 		pointer-events: auto;

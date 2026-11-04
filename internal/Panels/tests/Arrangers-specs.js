@@ -272,4 +272,183 @@ describe('Panels Arrangers Specs', () => {
 			expect(returnedAnimation.reverse).toHaveBeenCalledTimes(1);
 		});
 	});
+
+	describe('with motion tokens', () => {
+		const easeOut = 'cubic-bezier(0.1, 0.6, 0.15, 1)';
+		const easeIn = 'cubic-bezier(0.4, 0, 1, 1)';
+		let motions;
+
+		const createMockElement = () => ({...createMockNode(), nodeType: 1});
+
+		beforeEach(() => {
+			motions = {
+				'--lime-view-enter-motion': `transform 450ms 0ms ${easeOut}, opacity 300ms 0ms ${easeOut}`,
+				'--lime-view-exit-motion': `transform 300ms 0ms ${easeIn}, opacity 250ms 0ms ${easeIn}`
+			};
+			window.requestIdleCallback = jest.fn((callback) => callback());
+			jest.spyOn(window, 'getComputedStyle').mockImplementation(() => ({
+				getPropertyValue: (name) => motions[name] || ''
+			}));
+		});
+
+		afterEach(() => {
+			delete window.requestIdleCallback;
+			jest.restoreAllMocks();
+		});
+
+		test('should animate each property of BasicArranger with the timing of the enter motion', () => {
+			const node = createMockElement();
+
+			BasicArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{transform: 'translateX(100%)', offset: 0, easing: easeOut},
+				{opacity: 0, offset: 0, easing: easeOut},
+				{opacity: 1, offset: 300 / 450},
+				{transform: 'none', offset: 1},
+				{opacity: 1, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 450, direction: 'normal'});
+			expect(options.easing).toBeUndefined();
+		});
+
+		test('should hold the starting values of BasicArranger during the delay of the motion', () => {
+			const node = createMockElement();
+			motions['--lime-view-enter-motion'] = `transform 550ms 50ms ${easeOut}, opacity 470ms 130ms ${easeOut}`;
+
+			BasicArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{transform: 'translateX(100%)', offset: 0},
+				{opacity: 0, offset: 0},
+				{transform: 'translateX(100%)', offset: 50 / 600, easing: easeOut},
+				{opacity: 0, offset: 130 / 600, easing: easeOut},
+				{transform: 'none', offset: 1},
+				{opacity: 1, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 600});
+		});
+
+		test('should set the starting values of BasicArranger before the deferred animation runs', () => {
+			const node = createMockElement();
+			window.requestIdleCallback = jest.fn();
+
+			BasicArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			expect(node.style).toEqual({transform: 'translateX(100%)', opacity: 0});
+
+			// flush the batched animations so the next tests aren't queued behind this one
+			window.requestIdleCallback.mock.calls[0][0]();
+		});
+
+		test('should use the exit motion for the view leaving with BasicArranger', () => {
+			const node = createMockElement();
+
+			BasicArranger.leave({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{transform: 'none', offset: 0, easing: easeIn},
+				{opacity: 1, offset: 0, easing: easeIn},
+				{opacity: 0, offset: 250 / 300},
+				{transform: 'translateX(-100%)', offset: 1},
+				{opacity: 0, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 300});
+		});
+
+		test('should use the enter motion instead of the reversed exit motion for a reverse transition', () => {
+			const node = createMockElement();
+
+			BasicArranger.leave({node, duration: 300, reverse: true, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes[0]).toEqual({transform: 'translateX(-100%)', offset: 0, easing: easeOut});
+			expect(keyframes[keyframes.length - 2]).toEqual({transform: 'none', offset: 1});
+			expect(options).toMatchObject({duration: 450, direction: 'normal'});
+		});
+
+		test('should animate only the properties set in the motion', () => {
+			const node = createMockElement();
+			motions['--lime-view-exit-motion'] = `opacity 250ms 0ms ${easeIn}`;
+
+			BasicArranger.leave({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{opacity: 1, offset: 0, easing: easeIn},
+				{opacity: 0, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 250});
+		});
+
+		test('should finish immediately with a motion without duration', () => {
+			const node = createMockElement();
+			motions['--lime-view-enter-motion'] = `transform 0ms 0ms ${easeOut}, opacity 0ms 0ms ${easeOut}`;
+
+			BasicArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [, options] = node.animate.mock.calls[0];
+
+			expect(options).toMatchObject({duration: 0});
+		});
+
+		test('should support times in seconds', () => {
+			const node = createMockElement();
+			motions['--lime-view-enter-motion'] = 'opacity 0.25s 0.1s linear';
+
+			FadeArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{opacity: 0, offset: 0},
+				{opacity: 0, offset: 100 / 350, easing: 'linear'},
+				{opacity: 1, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 350});
+		});
+
+		test('should fade with the opacity of the enter and exit motions in FadeArranger', () => {
+			const enterNode = createMockElement();
+			const leaveNode = createMockElement();
+			motions['--lime-view-enter-motion'] = `opacity 250ms 0ms ${easeOut}`;
+			motions['--lime-view-exit-motion'] = `opacity 250ms 0ms ${easeIn}`;
+
+			FadeArranger.enter({node: enterNode, duration: 300, reverse: false, rtl: false});
+			FadeArranger.leave({node: leaveNode, duration: 300, reverse: false, rtl: false});
+
+			expect(enterNode.animate.mock.calls[0][0]).toEqual([
+				{opacity: 0, offset: 0, easing: easeOut},
+				{opacity: 1, offset: 1}
+			]);
+			expect(leaveNode.animate.mock.calls[0][0]).toEqual([
+				{opacity: 1, offset: 0, easing: easeIn},
+				{opacity: 0, offset: 1}
+			]);
+			expect(enterNode.animate.mock.calls[0][1]).toMatchObject({duration: 250, direction: 'normal'});
+		});
+
+		test('should fall back to the default animation when no motion is set', () => {
+			const node = createMockElement();
+			motions = {};
+
+			BasicArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{transform: 'translateX(100%)', offset: 0},
+				{transform: 'none', offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 300, easing: quadInOut});
+		});
+	});
 });
