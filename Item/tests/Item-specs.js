@@ -133,7 +133,7 @@ describe('Item Specs', () => {
 
 		expect(screen.getByTestId('item')).not.toHaveClass('selected');
 		expect(screen.getByText('First')).toBeInTheDocument();
-		expect(screen.getByTestId('item')).not.toHaveAttribute('disabled');
+		expect(screen.getByTestId('item')).toHaveAttribute('aria-disabled', 'false');
 
 		rerender(
 			<Item data-testid="item" disabled label="Second" selected>Hello Item</Item>
