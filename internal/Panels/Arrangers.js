@@ -261,23 +261,32 @@ const BasicArranger = {
 /**
  * Arranger that slides panels in from the right and out to the left.
  *
+ * When the views are within a container which sets the motion with `.lime-view-motions()`, the
+ * `transform` and `opacity` transitions of the motion are used instead of the default fade and slide.
+ *
  * @type {Arranger}
  * @private
  */
 const FadeAndSlideArranger = {
 	enter: (config) => {
-		return arrange(config, [
-			{transform: `translateX(${config.rtl ? '-' : ''}100%)`, opacity: 0, offset: 0},
-			{opacity: 0, offset: 0.5},
-			{transform: 'none', opacity: 1, offset: 1}
-		], animationOptions);
+		const from = `translateX(${config.rtl ? '-' : ''}100%)`;
+
+		return arrangeViewMotion(arrange, config, 'enter', {transform: [from, 'none'], opacity: [0, 1]}) ||
+			arrange(config, [
+				{transform: from, opacity: 0, offset: 0},
+				{opacity: 0, offset: 0.5},
+				{transform: 'none', opacity: 1, offset: 1}
+			], animationOptions);
 	},
 	leave: (config) => {
-		return arrange(config, [
-			{transform: 'none', opacity: 1, offset: 0},
-			{opacity: 0, offset: 0.5},
-			{transform: `translateX(${config.rtl ? '' : '-'}100%)`, opacity: 0, offset: 1}
-		], animationOptions);
+		const to = `translateX(${config.rtl ? '' : '-'}100%)`;
+
+		return arrangeViewMotion(arrange, config, 'leave', {transform: ['none', to], opacity: [1, 0]}) ||
+			arrange(config, [
+				{transform: 'none', opacity: 1, offset: 0},
+				{opacity: 0, offset: 0.5},
+				{transform: to, opacity: 0, offset: 1}
+			], animationOptions);
 	}
 };
 

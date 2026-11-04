@@ -1,6 +1,7 @@
 // FlexiblePopupPanels.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
@@ -28,6 +29,10 @@
 
 	.viewport {
 		position: relative;
+		.applyMotions(
+			.lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion()),
+			.lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion())
+		);
 
 		.panel {
 			padding: @lime-flexiblepopuppanels-padding;

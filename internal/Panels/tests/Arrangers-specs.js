@@ -436,6 +436,47 @@ describe('Panels Arrangers Specs', () => {
 			expect(enterNode.animate.mock.calls[0][1]).toMatchObject({duration: 250, direction: 'normal'});
 		});
 
+		test('should slide and fade with the enter and exit motions in FadeAndSlideArranger', () => {
+			const enterNode = createMockElement();
+			const leaveNode = createMockElement();
+
+			FadeAndSlideArranger.enter({node: enterNode, duration: 300, reverse: false, rtl: true});
+			FadeAndSlideArranger.leave({node: leaveNode, duration: 300, reverse: false, rtl: true});
+
+			expect(enterNode.animate.mock.calls[0][0]).toEqual([
+				{transform: 'translateX(-100%)', offset: 0, easing: easeOut},
+				{opacity: 0, offset: 0, easing: easeOut},
+				{opacity: 1, offset: 300 / 450},
+				{transform: 'none', offset: 1},
+				{opacity: 1, offset: 1}
+			]);
+			expect(enterNode.animate.mock.calls[0][1]).toMatchObject({duration: 450, direction: 'normal'});
+			expect(leaveNode.animate.mock.calls[0][0]).toEqual([
+				{transform: 'none', offset: 0, easing: easeIn},
+				{opacity: 1, offset: 0, easing: easeIn},
+				{opacity: 0, offset: 250 / 300},
+				{transform: 'translateX(100%)', offset: 1},
+				{opacity: 0, offset: 1}
+			]);
+			expect(leaveNode.animate.mock.calls[0][1]).toMatchObject({duration: 300, direction: 'normal'});
+		});
+
+		test('should fall back to the default fade and slide in FadeAndSlideArranger when no motion is set', () => {
+			const node = createMockElement();
+			motions = {};
+
+			FadeAndSlideArranger.enter({node, duration: 300, reverse: false, rtl: false});
+
+			const [keyframes, options] = node.animate.mock.calls[0];
+
+			expect(keyframes).toEqual([
+				{transform: 'translateX(100%)', opacity: 0, offset: 0},
+				{opacity: 0, offset: 0.5},
+				{transform: 'none', opacity: 1, offset: 1}
+			]);
+			expect(options).toMatchObject({duration: 300, easing: quadInOut});
+		});
+
 		test('should fall back to the default animation when no motion is set', () => {
 			const node = createMockElement();
 			motions = {};
