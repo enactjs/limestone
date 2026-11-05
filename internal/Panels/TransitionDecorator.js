@@ -1,9 +1,10 @@
 import {forward, handle} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
+import useHandlers from '@enact/core/useHandlers';
+import {setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import PropTypes from 'prop-types';
 import {useCallback, useLayoutEffect, useRef} from 'react';
-import useHandlers from "@enact/core/useHandlers";
 
 const transitionDecoratorHandlers = {
 	onHide: handle(
@@ -37,7 +38,9 @@ const transitionDecoratorHandlers = {
  */
 const TransitionDecorator = hoc((config, Wrapped) => {
 	// eslint-disable-next-line no-shadow
-	const TransitionDecorator = (props) => {
+	const TransitionDecorator = (componentProps) => {
+		const props = setDefaultProps(componentProps, TransitionDecorator.defaultProps || {});
+
 		const paused = useRef(new Pause('TransitionDecorator'));
 
 		const pause = useCallback(() => paused.current.pause(), []);
