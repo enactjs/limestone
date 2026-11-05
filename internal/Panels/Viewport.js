@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
 import useHandlers from "@enact/core/useHandlers";
-import {mapAndFilterChildren, setDefaultProps, usePrevious} from '@enact/core/util';
+import {mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -89,10 +89,10 @@ const ViewportBase = (componentProps) => {
 	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, ...rest} = props;
 
 	const [state, dispatch] = useReducer(reducer, {prevIndex: -1, direction: 'forward'});
-	const prevIndex = usePrevious(index);
 
 	const context = use(SharedState);
 	const nodeRef = useRef();
+	const prevIndexRef = useRef(props.index);
 	const paused = useRef(new Pause('Viewport'));
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
@@ -145,23 +145,25 @@ const ViewportBase = (componentProps) => {
 	}
 
 	useLayoutEffect(() => {
-		if (index !== prevIndex) {
+		if (index !== prevIndexRef.current) {
 			const current = Spotlight.getCurrent();
 			// :scope refers to the current node and allows us to use the direct descendant '>'
 			// selector to limit the results to views (and not other components with [data-index])
-			const panel = nodeRef.current.querySelector(`:scope > [data-index='${prevIndex}']`);
+			const panel = nodeRef.current.querySelector(`:scope > [data-index='${prevIndexRef.current}']`);
 
 			if (current && panel && panel.contains(current)) {
 				current.blur();
 			}
+
+			prevIndexRef.current = index;
 		}
-	}, [index, prevIndex]);
+	}, [index]);
 
 	useEffect(() => {
-		for (let i = prevIndex; context && i > index; i--) {
+		for (let i = prevIndexRef.current; context && i > index; i--) {
 			context.delete(i);
 		}
-	}, [context, index, prevIndex]);
+	}, [context, index]);
 
 	useLayoutEffect(() => {
 		return () => {
