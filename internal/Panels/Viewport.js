@@ -145,7 +145,7 @@ const ViewportBase = (componentProps) => {
 	}, [index, prevIndex]);
 
 	useEffect(() => {
-		if (prevIndex !== null) {
+		if (prevIndex != null) {
 			for (let i = prevIndex; context && i > index; i--) {
 				context.delete(i);
 			}
