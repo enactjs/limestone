@@ -314,4 +314,20 @@ describe('MediaControls', () => {
 
 		expect(mediaControls.current.areMoreComponentsAvailable()).toBe(false);
 	});
+
+	test('should show more components when the action guide is clicked', () => {
+		const mediaControls = createRef();
+
+		render(
+			<MediaControls id="mediaControls" ref={mediaControls} visible actionGuideLabel="Show more">
+				<button>Item</button>
+			</MediaControls>
+		);
+
+		expect(mediaControls.current.areMoreComponentsAvailable()).toBe(false);
+
+		fireEvent.click(screen.getByRole('button', {name: 'More'}));
+
+		expect(mediaControls.current.areMoreComponentsAvailable()).toBe(true);
+	});
 });
