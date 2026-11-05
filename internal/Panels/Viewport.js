@@ -9,17 +9,7 @@ import ViewManager, {shape} from '@enact/ui/ViewManager';
 import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {
-	Children,
-	cloneElement,
-	createContext,
-	use,
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState
-} from 'react';
+import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 
 import SharedStateDecorator, {SharedState} from '../SharedStateDecorator';
 
