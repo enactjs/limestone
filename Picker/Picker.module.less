@@ -3,7 +3,17 @@
 
 @import "../styles/variables.less";
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/skin.less";
+
+.picker {
+	// Value transition motion, read by the Picker arranger (`.lime-view-motions()`).
+	// Fast.carouselIn(+-270, 0) / Fast.carouselOut(+-270, 0); the distance is set by the arranger.
+	.applyMotions(
+		.lime-view-motions(.lime-carousel-in-fast-motion(), .lime-carousel-out-fast-motion()),
+		.lime-view-motions(.lime-carousel-in-fast-motion(), .lime-carousel-out-fast-motion())
+	);
+}
 
 .title {
 	.margin-start-end(@lime-picker-title-margin-left, .extract(@lime-heading-margin, right)[]);
