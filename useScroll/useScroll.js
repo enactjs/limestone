@@ -18,7 +18,7 @@ import {getRect, intersects} from '@enact/spotlight/src/utils';
 import {assignPropertiesOf, constants, useScrollBase} from '@enact/ui/useScroll';
 import utilDOM from '@enact/ui/useScroll/utilDOM';
 import utilEvent from '@enact/ui/useScroll/utilEvent';
-import {use, useRef} from 'react';
+import {use, useLayoutEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
 import {SharedState} from '../internal/SharedStateDecorator';
@@ -29,6 +29,7 @@ import {
 	useEventTouch, useEventVoice, useEventWheel
 } from './useEvent';
 import useOverscrollEffect from './useOverscrollEffect';
+import installScrollMotion from './scrollMotion';
 import {useSpotlightRestore} from './useSpotlight';
 
 import overscrollCss from './OverscrollEffect.module.less';
@@ -469,6 +470,16 @@ const useScroll = (props) => {
 		snapToCenter,
 		spotlightContainerDisabled,
 		verticalScrollbarHandle
+	});
+
+	// ui/useScroll assigns `start` in its own layout effect on every commit. This effect is
+	// registered after that one, so it can publish the motion token onto the fresh `start`.
+	useLayoutEffect(() => {
+		installScrollMotion({
+			containerNode: scrollContainerRef.current,
+			scrollContainerHandle: scrollContainerHandle.current,
+			scrollContentHandle: scrollContentHandle.current
+		});
 	});
 
 	assignProperties('scrollContainerProps', { // eslint-disable-line react-hooks/refs
