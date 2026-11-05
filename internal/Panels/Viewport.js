@@ -9,7 +9,17 @@ import ViewManager, {shape} from '@enact/ui/ViewManager';
 import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useRef} from 'react';
+import {
+	Children,
+	cloneElement,
+	createContext,
+	use,
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState
+} from 'react';
 
 import SharedStateDecorator, {SharedState} from '../SharedStateDecorator';
 
@@ -29,7 +39,7 @@ const viewPortBaseHandlers = {
 	onTransition: handle(
 		forward('onTransition'),
 		(ev, props, {removeTransitioningClass}) => {
-			removeTransitioningClass();
+			return removeTransitioningClass();
 		},
 		(ev, props, {resume}) => {
 			resume();
@@ -38,7 +48,7 @@ const viewPortBaseHandlers = {
 	onWillTransition: handle(
 		forward('onWillTransition'),
 		(ev, props, {addTransitioningClass}) => {
-			addTransitioningClass();
+			return addTransitioningClass();
 		},
 		(ev, props, {pause}) => {
 			pause();
@@ -82,7 +92,7 @@ const ViewportBase = (componentProps) => {
 
 	const context = use(SharedState);
 	const prevIndex = usePrevious(index);
-	const nodeRef = useRef();
+	const [node, setNode] = useState();
 	const paused = useRef(new Pause('Viewport'));
 
 	const direction = prevIndex != null && prevIndex > index ? 'backward' : 'forward';
@@ -114,35 +124,33 @@ const ViewportBase = (componentProps) => {
 	}, []);
 
 	const addTransitioningClass = useCallback(() => {
-		if (nodeRef.current) {
-			nodeRef.current.classList.add(css.transitioning);
+		if (node) {
+			node.classList.add(css.transitioning);
 		}
 
 		return true;
-	}, []);
+	}, [node]);
 
 	const removeTransitioningClass = useCallback(() => {
-		if (nodeRef.current) {
-			nodeRef.current.classList.remove(css.transitioning);
+		if (node) {
+			node.classList.remove(css.transitioning);
 		}
 
 		return true;
-	}, []);
+	}, [node]);
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	useLayoutEffect(() => {
-		if (prevIndex != null && index !== prevIndex) {
-			const current = Spotlight.getCurrent();
-			// :scope refers to the current node and allows us to use the direct descendant '>'
-			// selector to limit the results to views (and not other components with [data-index])
-			const panel = nodeRef.current?.querySelector(`:scope > [data-index='${prevIndex}']`);
+	if (prevIndex != null && index !== prevIndex) {
+		const current = Spotlight.getCurrent();
+		// :scope refers to the current node and allows us to use the direct descendant '>'
+		// selector to limit the results to views (and not other components with [data-index])
+		const panel = node?.querySelector(`:scope > [data-index='${prevIndex}']`);
 
-			if (current && panel && panel.contains(current)) {
-				current.blur();
-			}
+		if (current && panel && panel.contains(current)) {
+			current.blur();
 		}
-	}, [index, prevIndex]);
+	}
 
 	useEffect(() => {
 		if (prevIndex != null) {
@@ -171,9 +179,9 @@ const ViewportBase = (componentProps) => {
 				enteringProp={enteringProp}
 				index={index}
 				noAnimation={noAnimation}
-				onTransition={handlers.handleTransition}
-				onWillTransition={handlers.handleWillTransition}
-				ref={nodeRef}
+				onTransition={handlers.onTransition}
+				onWillTransition={handlers.onWillTransition}
+				ref={setNode}
 				rtl={rtl}
 			>
 				{mappedChildren}
