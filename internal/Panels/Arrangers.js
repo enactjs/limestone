@@ -1,5 +1,7 @@
 import {arrange} from '@enact/ui/ViewManager';
 
+import {getViewMotion} from '../util/motion';
+
 const quadInOut = 'cubic-bezier(0.455, 0.030, 0.515, 0.955)';
 const animationOptions = {easing: quadInOut};
 
@@ -133,53 +135,6 @@ const deferArrange = (config, keyframes, options) => {
 		reverse,
 		...options
 	});
-};
-
-// Splits `value` at each character matching `separator` which isn't nested in parentheses
-const splitOutsideParens = (value, separator) => {
-	const parts = [];
-	let depth = 0, start = 0;
-
-	for (let i = 0; i < value.length; i++) {
-		if (value[i] === '(') {
-			depth++;
-		} else if (value[i] === ')') {
-			depth--;
-		} else if (depth === 0 && separator.test(value[i])) {
-			parts.push(value.slice(start, i));
-			start = i + 1;
-		}
-	}
-	parts.push(value.slice(start));
-
-	return parts.map(part => part.trim()).filter(Boolean);
-};
-
-const timeRegex = /^(-?[\d.]+)(m?s)$/;
-
-const toMilliseconds = (time) => {
-	const [, amount, unit] = timeRegex.exec(time);
-	return unit === 's' ? amount * 1000 : Number(amount);
-};
-
-// Parses a `transition` value (e.g. `transform 450ms 0ms ease-out, opacity 300ms 0ms ease-out`) into
-// the timing of each property. Expects the property to precede the easing, as the motion mixins write it.
-const parseTransition = (value) => splitOutsideParens(value, /,/).map((transition) => {
-	const tokens = splitOutsideParens(transition, /\s/);
-	const [duration = 0, delay = 0] = tokens.filter(token => timeRegex.test(token)).map(toMilliseconds);
-	const [property, easing = 'ease'] = tokens.filter(token => !timeRegex.test(token));
-
-	return {property, duration, delay, easing};
-});
-
-// Reads the motion set by `.lime-view-motions()` (styles/motion-mixins.less) for `type` ('enter' | 'exit').
-// Returns `null` when the node isn't within a container which sets the motion.
-const getViewMotion = (node, type) => {
-	if (typeof window === 'undefined' || !node || node.nodeType !== 1) return null;
-
-	const transitions = parseTransition(window.getComputedStyle(node).getPropertyValue(`--lime-view-${type}-motion`));
-
-	return transitions.length ? transitions : null;
 };
 
 // Builds the keyframes animating each property of `values` (`{property: [from, to]}`) with the
