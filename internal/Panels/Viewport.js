@@ -78,19 +78,23 @@ const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
  */
 const ViewportBase = (componentProps) => {
 	const props = setDefaultProps(componentProps, viewPortBaseDefaultProps);
-	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, ...rest} = props;
+	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
 
 	const context = use(SharedState);
 	const [node, setNode] = useState();
-	const [{mappedChildren, prevIndex}, setState] = useState(() => ({
-		prevIndex: -1,
-		direction: 'forward',
-		mappedChildren: mapChildren(children, generateId, autoFocus, 'forward')
-	}));
+	const [transition, setTransition] = useState({prevIndex: index, direction: 'forward'});
 	const paused = useRef(new Pause('Viewport'));
+	const prevIndexRef = useRef(-1);
+
+	let currentDirection = transition.direction;
+	if (index !== transition.prevIndex) {
+		currentDirection = index > transition.prevIndex ? 'forward' : 'backward';
+		setTransition({prevIndex: index, direction: currentDirection});
+	}
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const className = classnames(css.viewport, rest.className);
+	const mappedChildren = mapChildren(children, generateId, autoFocus, currentDirection);
+	const className = classnames(css.viewport, customClassName);
 
 	const count = Children.count(mappedChildren);
 	invariant(
@@ -133,35 +137,28 @@ const ViewportBase = (componentProps) => {
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	if (index !== prevIndex) {
-		setState((prevState) => {
-			const direction = prevState.prevIndex > index ? 'backward' : 'forward';
-
-			return {
-				prevIndex: index,
-				mappedChildren: mapChildren(children, generateId, autoFocus, direction)
-			};
-		});
-	}
-
 	useLayoutEffect(() => {
-		if (index !== prevIndex) {
+		const prevIndex = prevIndexRef.current;
+		if (prevIndex !== -1 && index !== prevIndex) {
 			const current = Spotlight.getCurrent();
-			// :scope refers to the current node and allows us to use the direct descendant '>'
-			// selector to limit the results to views (and not other components with [data-index])
 			const panel = node?.querySelector(`:scope > [data-index='${prevIndex}']`);
 
 			if (current && panel && panel.contains(current)) {
 				current.blur();
 			}
 		}
-	}, [index, node, prevIndex]);
+	}, [index, node]);
 
 	useEffect(() => {
-		for (let i = prevIndex; context && i > index; i--) {
-			context.delete(i);
+		const prevIndex = prevIndexRef.current;
+		if (prevIndex !== -1) {
+			for (let i = prevIndex; context && i > index; i--) {
+				context.delete(i);
+			}
 		}
-	}, [context, index, prevIndex]);
+
+		prevIndexRef.current = index;
+	}, [context, index]);
 
 	useLayoutEffect(() => {
 		return () => {
@@ -169,7 +166,6 @@ const ViewportBase = (componentProps) => {
 		};
 	}, [resume]);
 
-	delete rest.className;
 	return (
 		<PanelsStateContext value={panelsContext}>
 			<ViewManager
