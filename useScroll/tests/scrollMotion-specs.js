@@ -129,6 +129,54 @@ describe('scrollMotion', () => {
 			expect(start).toHaveBeenCalledWith({targetX: 0, targetY: 10, animate: false});
 		});
 
+		test('should wait out a token delay before starting a translate scroll', () => {
+			jest.useFakeTimers();
+			try {
+				container.style.setProperty('--lime-scroll-motion', 'transform 600ms 30ms cubic-bezier(0.22, 0.61, 0.36, 1)');
+				const start = jest.fn();
+				const handle = {start};
+
+				installScrollMotion({
+					containerNode: container,
+					scrollContainerHandle: handle,
+					scrollContentHandle: null
+				});
+
+				handle.start({targetX: 10, targetY: 40});
+				expect(start).not.toHaveBeenCalled();
+
+				jest.advanceTimersByTime(30);
+
+				expect(start).toHaveBeenCalledWith({targetX: 10, targetY: 40, duration: 600});
+			} finally {
+				jest.useRealTimers();
+			}
+		});
+
+		test('should replace a delayed translate scroll when another scroll starts', () => {
+			jest.useFakeTimers();
+			try {
+				container.style.setProperty('--lime-scroll-motion', 'transform 600ms 30ms cubic-bezier(0.22, 0.61, 0.36, 1)');
+				const start = jest.fn();
+				const handle = {start};
+
+				installScrollMotion({
+					containerNode: container,
+					scrollContainerHandle: handle,
+					scrollContentHandle: null
+				});
+
+				handle.start({targetX: 1, targetY: 2});
+				handle.start({targetX: 10, targetY: 40});
+				jest.advanceTimersByTime(30);
+
+				expect(start).toHaveBeenCalledTimes(1);
+				expect(start).toHaveBeenCalledWith({targetX: 10, targetY: 40, duration: 600});
+			} finally {
+				jest.useRealTimers();
+			}
+		});
+
 		test('should wrap a start function replaced on a later commit', () => {
 			const handle = {start: jest.fn()};
 
@@ -198,6 +246,123 @@ describe('scrollMotion', () => {
 			window.requestAnimationFrame.mockRestore();
 			window.cancelAnimationFrame.mockRestore();
 			window.performance.now.mockRestore();
+		});
+
+		test('should move a native scroll through an intermediate frame before the target', () => {
+			const frames = [];
+			jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+				frames.push(callback);
+				return frames.length;
+			});
+			jest.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
+			jest.spyOn(window.performance, 'now').mockReturnValue(0);
+
+			const node = document.createElement('div');
+			const scrollEnd = jest.fn();
+			node.addEventListener('scrollend', scrollEnd);
+			node.scrollTo = jest.fn(({left, top}) => {
+				node.scrollLeft = left;
+				node.scrollTop = top;
+			});
+			Object.defineProperty(node, 'scrollLeft', {value: 0, writable: true});
+			Object.defineProperty(node, 'scrollTop', {value: 0, writable: true});
+			document.body.appendChild(node);
+
+			const contentHandle = {
+				props: {scrollContentRef: {current: node}},
+				getRtlPositionX: (x) => x,
+				scrollAnimationId: null,
+				scrollToPosition: jest.fn()
+			};
+
+			installScrollMotion({
+				containerNode: container,
+				scrollContainerHandle: {start () {}},
+				scrollContentHandle: contentHandle
+			});
+
+			contentHandle.scrollToPosition(100, 40, 'smooth', false);
+			frames[0](300);
+
+			const midway = node.scrollTo.mock.calls[0][0];
+			expect(midway.behavior).toBe('instant');
+			expect(midway.left).toBeGreaterThan(50);
+			expect(midway.left).toBeLessThan(100);
+			expect(midway.top).toBeGreaterThan(20);
+			expect(midway.top).toBeLessThan(40);
+			expect(contentHandle.scrolling).toBe(true);
+			expect(scrollEnd).not.toHaveBeenCalled();
+
+			frames[1](600);
+
+			expect(node.scrollTo).toHaveBeenLastCalledWith({left: 100, top: 40, behavior: 'instant'});
+			expect(contentHandle.scrolling).toBe(false);
+			expect(scrollEnd).toHaveBeenCalled();
+
+			document.body.removeChild(node);
+			window.requestAnimationFrame.mockRestore();
+			window.cancelAnimationFrame.mockRestore();
+			window.performance.now.mockRestore();
+		});
+
+		test('should release a native scroll that is cancelled once it has reached its target', () => {
+			const frames = [];
+			jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback) => {
+				frames.push(callback);
+				return frames.length;
+			});
+			jest.spyOn(window, 'cancelAnimationFrame').mockImplementation(() => {});
+
+			const node = document.createElement('div');
+			const scrollEnd = jest.fn();
+			node.addEventListener('scrollend', scrollEnd);
+			Object.defineProperty(node, 'scrollLeft', {value: 0, writable: true});
+			Object.defineProperty(node, 'scrollTop', {value: 0, writable: true});
+
+			const contentHandle = {
+				props: {scrollContentRef: {current: node}},
+				getRtlPositionX: (x) => x,
+				scrollAnimationId: null,
+				scrollToPosition: jest.fn()
+			};
+
+			installScrollMotion({
+				containerNode: container,
+				scrollContainerHandle: {start () {}},
+				scrollContentHandle: contentHandle
+			});
+
+			contentHandle.scrollToPosition(100, 40, 'smooth', false);
+			node.scrollLeft = 100;
+			node.scrollTop = 40;
+			contentHandle.scrollToPosition(100, 40, 'smooth', false);
+
+			expect(window.cancelAnimationFrame).toHaveBeenCalled();
+			expect(contentHandle.scrolling).toBe(false);
+			expect(contentHandle.scrollAnimationId).toBeNull();
+			expect(scrollEnd).toHaveBeenCalled();
+
+			window.requestAnimationFrame.mockRestore();
+			window.cancelAnimationFrame.mockRestore();
+		});
+
+		test('should keep a zero-duration native scroll instant', () => {
+			container.style.setProperty('--lime-scroll-motion', 'transform 0ms 0ms cubic-bezier(0.22, 0.61, 0.36, 1)');
+			const original = jest.fn();
+			const contentHandle = {
+				props: {scrollContentRef: {current: document.createElement('div')}},
+				scrollToPosition: original
+			};
+
+			installScrollMotion({
+				containerNode: container,
+				scrollContainerHandle: {start () {}},
+				scrollContentHandle: contentHandle
+			});
+
+			contentHandle.scrollToPosition(100, 40, 'smooth', false);
+
+			expect(original).toHaveBeenCalledWith(100, 40, 'instant', false);
 		});
 
 		test('should leave a repeated native scroll on the existing path', () => {
