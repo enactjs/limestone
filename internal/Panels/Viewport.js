@@ -54,8 +54,6 @@ const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
 			'data-index': dataIndex
 		};
 
-		console.log(direction)
-
 		// Respect Panel-configured autoFocus if it is set
 		if (child.props.autoFocus == null) {
 			if (autoFocus) {
