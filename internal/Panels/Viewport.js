@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
 import useHandlers from "@enact/core/useHandlers";
-import {mapAndFilterChildren, setDefaultProps, usePrevious} from '@enact/core/util';
+import {mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -81,13 +81,15 @@ const ViewportBase = (componentProps) => {
 	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, ...rest} = props;
 
 	const context = use(SharedState);
-	const prevIndex = usePrevious(index);
 	const [node, setNode] = useState();
+	const [{mappedChildren, prevIndex}, setState] = useState(() => ({
+		prevIndex: -1,
+		direction: 'forward',
+		mappedChildren: mapChildren(children, generateId, autoFocus, 'forward')
+	}));
 	const paused = useRef(new Pause('Viewport'));
 
-	const direction = prevIndex != null && prevIndex > index ? 'backward' : 'forward';
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const mappedChildren = mapChildren(children, generateId, autoFocus, direction);
 	const className = classnames(css.viewport, rest.className);
 
 	const count = Children.count(mappedChildren);
@@ -131,7 +133,16 @@ const ViewportBase = (componentProps) => {
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	if (prevIndex != null && index !== prevIndex) {
+	if (index !== prevIndex) {
+		setState((prevState) => {
+			const direction = prevState.prevIndex > index ? 'backward' : 'forward';
+
+			return {
+				prevIndex: index,
+				mappedChildren: mapChildren(children, generateId, autoFocus, direction)
+			};
+		});
+
 		const current = Spotlight.getCurrent();
 		// :scope refers to the current node and allows us to use the direct descendant '>'
 		// selector to limit the results to views (and not other components with [data-index])
@@ -143,10 +154,8 @@ const ViewportBase = (componentProps) => {
 	}
 
 	useEffect(() => {
-		if (prevIndex != null) {
-			for (let i = prevIndex; context && i > index; i--) {
-				context.delete(i);
-			}
+		for (let i = prevIndex; context && i > index; i--) {
+			context.delete(i);
 		}
 	}, [context, index, prevIndex]);
 
