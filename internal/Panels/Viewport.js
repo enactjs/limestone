@@ -131,26 +131,29 @@ const ViewportBase = (componentProps) => {
 		return true;
 	}, [node]);
 
+	const blurPreviousIndex = useCallback((prevDataIndex) => {
+		const current = Spotlight.getCurrent();
+		// :scope refers to the current node and allows us to use the direct descendant '>'
+		// selector to limit the results to views (and not other components with [data-index])
+		const panel = node?.querySelector(`:scope > [data-index='${prevDataIndex}']`);
+
+		if (current && panel && panel.contains(current)) {
+			current.blur();
+		}
+	}, [node]);
+
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
 	if (index !== prevIndex) {
 		setState((prevState) => {
 			const direction = prevState.prevIndex > index ? 'backward' : 'forward';
+			blurPreviousIndex(prevState.prevIndex);
 
 			return {
 				prevIndex: index,
 				mappedChildren: mapChildren(children, generateId, autoFocus, direction)
 			};
 		});
-
-		const current = Spotlight.getCurrent();
-		// :scope refers to the current node and allows us to use the direct descendant '>'
-		// selector to limit the results to views (and not other components with [data-index])
-		const panel = node?.querySelector(`:scope > [data-index='${prevIndex}']`);
-
-		if (current && panel && panel.contains(current)) {
-			current.blur();
-		}
 	}
 
 	useEffect(() => {
