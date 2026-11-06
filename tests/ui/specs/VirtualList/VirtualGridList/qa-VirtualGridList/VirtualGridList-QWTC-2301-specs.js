@@ -23,8 +23,8 @@ describe('qa-VirtualGridList', function () {
 		// Step 3-1 Verify: Spotlight is on the 101st item with 'Image 100'.
 		await expectFocusedItem(100);
 
-		// Wait for scroll animation
-		await Page.delay(300);
+		// Wait for the high-tier scroll motion (600ms) to land on the last item.
+		await Page.delay(700);
 
 		expect(await Page.scrollThumbPosition()).toBe('1');
 		// Step 3-2 Verify: The 101st item with 'Image 100' sticks to the bottom in the list.

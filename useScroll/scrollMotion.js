@@ -175,6 +175,18 @@ const setScrollPosition = (node, left, top) => {
 	}
 };
 
+// `scrolling` is cleared first so the scrollend listener in useScroll accepts this event.
+const finishNativeScroll = (handle, node, left, top) => {
+	handle.scrollAnimationId = null;
+	handle.scrolling = false;
+	if (left != null && top != null) {
+		setScrollPosition(node, left, top);
+	}
+	if (typeof node.dispatchEvent === 'function') {
+		node.dispatchEvent(new Event('scrollend'));
+	}
+};
+
 // Native-mode smooth scrolls are animated here so the token's duration and easing apply.
 // `repeat` keeps the scroller's existing held-key path.
 const installNativeScrollMotion = (contentHandle, getMotion) => {
@@ -195,14 +207,19 @@ const installNativeScrollMotion = (contentHandle, getMotion) => {
 		const targetLeft = typeof this.getRtlPositionX === 'function' ? this.getRtlPositionX(left) : left;
 		const targetTop = top;
 
-		if (this.scrollAnimationId) {
+		const hadAnimation = !!this.scrollAnimationId;
+		if (hadAnimation) {
 			window.cancelAnimationFrame(this.scrollAnimationId);
 			this.scrollAnimationId = null;
 		}
 
 		const startLeft = node.scrollLeft;
 		const startTop = node.scrollTop;
-		if (startLeft === targetLeft && startTop === targetTop) return;
+		if (startLeft === targetLeft && startTop === targetTop) {
+			// A cancelled animation must still release the scroller, or the next page key is ignored.
+			if (hadAnimation) finishNativeScroll(this, node);
+			return;
+		}
 
 		const startTime = window.performance.now();
 		let rafId = 0;
@@ -223,19 +240,21 @@ const installNativeScrollMotion = (contentHandle, getMotion) => {
 			}
 			const progress = motion.ease(t);
 
-			setScrollPosition(
-				node,
-				t === 1 ? targetLeft : startLeft + (targetLeft - startLeft) * progress,
-				t === 1 ? targetTop : startTop + (targetTop - startTop) * progress
-			);
-
 			if (t < 1) {
+				setScrollPosition(
+					node,
+					startLeft + (targetLeft - startLeft) * progress,
+					startTop + (targetTop - startTop) * progress
+				);
 				rafId = window.requestAnimationFrame(step);
 				this.scrollAnimationId = rafId;
-			} else {
-				this.scrollAnimationId = null;
-				this.scrolling = false;
+				return;
 			}
+
+			// Clear `scrolling` before the last scroll so `scrollend` is delivered. While it stays
+			// set, useScroll ignores `scrollend` and the focused item is restored only after the
+			// fallback timer, which drops the next page key.
+			finishNativeScroll(this, node, targetLeft, targetTop);
 		};
 
 		this.scrolling = true;
