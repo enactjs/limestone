@@ -84,7 +84,6 @@ const ViewportBase = (componentProps) => {
 	const [node, setNode] = useState();
 	const [transition, setTransition] = useState({prevIndex: index, direction: 'forward'});
 	const paused = useRef(new Pause('Viewport'));
-	const prevIndexRef = useRef(-1);
 
 	let currentDirection = transition.direction;
 	if (index !== transition.prevIndex) {
@@ -137,28 +136,20 @@ const ViewportBase = (componentProps) => {
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	useLayoutEffect(() => {
-		const prevIndex = prevIndexRef.current;
-		if (prevIndex !== -1 && index !== prevIndex) {
-			const current = Spotlight.getCurrent();
-			const panel = node?.querySelector(`:scope > [data-index='${prevIndex}']`);
+	if (index !== transition.prevIndex) {
+		const current = Spotlight.getCurrent();
+		const panel = node?.querySelector(`:scope > [data-index='${transition.prevIndex}']`);
 
-			if (current && panel && panel.contains(current)) {
-				current.blur();
-			}
+		if (current && panel && panel.contains(current)) {
+			current.blur();
 		}
-	}, [index, node]);
+	}
 
 	useEffect(() => {
-		const prevIndex = prevIndexRef.current;
-		if (prevIndex !== -1) {
-			for (let i = prevIndex; context && i > index; i--) {
-				context.delete(i);
-			}
+		for (let i = transition.prevIndex; context && i > index; i--) {
+			context.delete(i);
 		}
-
-		prevIndexRef.current = index;
-	}, [context, index]);
+	}, [context, index, transition.prevIndex]);
 
 	useLayoutEffect(() => {
 		return () => {
