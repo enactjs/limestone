@@ -75,6 +75,24 @@ Global Motion Mixins
 	--lime-view-exit-motion: @exitMotion[transition];
 }
 
+// /**
+//  * Exposes the transition of a scroll motion mixin as a custom property. Scroll position is
+//  * animated in JS, which reads the duration, delay and easing while the scrolled distance stays
+//  * with the scroller. The custom property is inherited, so it can be set on any ancestor.
+//  *
+//  * @param {Ruleset} @motion - Scroll motion mixin, usually the tier alias
+//  *                            (`.lime-scroll-high-motion()` / `.lime-scroll-low-motion()`).
+//  *
+//  * @example
+//  * .applyMotions(
+//  *     .lime-scroll-motions(.lime-scroll-high-motion()),
+//  *     .lime-scroll-motions(.lime-scroll-low-motion())
+//  * );
+//  */
+.lime-scroll-motions(@motion) when (isruleset(@motion)) {
+	--lime-scroll-motion: @motion[transition];
+}
+
 /* focus-in */
 .lime-focus-in-fast-motion(@scale-to: 1.1) {
 	transform: scale(@scale-to);
