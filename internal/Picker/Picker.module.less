@@ -4,6 +4,14 @@
 @import "../../styles/mixins.less";
 @import "../../styles/skin.less";
 
+// Resets the view motions so a picker does not inherit the ones set by a container (e.g. Panels).
+// The motion is set by each picker component with `.lime-view-motions()`; without it, the arranger
+// uses its default animation. `:where()` keeps the specificity at 0 so any component rule overrides it.
+:where(.picker) {
+	--lime-view-enter-motion: initial;
+	--lime-view-exit-motion: initial;
+}
+
 .picker {
 	vertical-align: bottom;
 	position: relative;
