@@ -22,8 +22,8 @@
 			.position(auto);
 			pointer-events: auto;
 			.applyMotions(
-				.lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion()),
-				.lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion())
+				.lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion(), @lime-panels-motion-distance),
+				.lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion(), @lime-panels-motion-distance)
 			);
 		}
 	}

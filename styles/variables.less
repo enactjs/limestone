@@ -1015,6 +1015,7 @@
 @lime-pageviews-indicator-icon-opacity: 0.4;
 @lime-pageviews-indicator-icon-gap: var(--primitive-spacing-24);
 @lime-pageviews-navigation-text-area-padding: 0 var(--primitive-spacing-36);
+@lime-pageviews-motion-distance: 3600px;
 
 // Panels
 // ---------------------------------------
@@ -1022,6 +1023,7 @@
 @lime-panel-body-padding-top: .extract(#guide.panel[body-padding], top)[]; // Used in this file only, for consistency
 @lime-panel-body-padding-right: .extract(#guide.panel[body-padding], right)[];
 @lime-panel-body-padding: @lime-panel-body-padding-top ~"calc(@{lime-panel-body-padding-right} - @{lime-component-spacing})";
+@lime-panels-motion-distance: 1200px;
 
 // Picker
 // ----------------------------------------
@@ -1361,4 +1363,5 @@
 @lime-wizardpanels-content-margin-left: .extract(@lime-panel-body-padding, left)[];
 @lime-wizardpanels-content-margin: var(--primitive-spacing-60) ~"calc(324px - @{lime-wizardpanels-content-margin-left})";
 @lime-wizardpanels-footer-margin: 0 0 var(--primitive-spacing-132) 0;
+@lime-wizardpanels-motion-distance: 4000px;
 @lime-wizardpanels-button-icon-text-gap: var(--primitive-spacing-36);

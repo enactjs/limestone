@@ -477,6 +477,39 @@ describe('Panels Arrangers Specs', () => {
 			expect(options).toMatchObject({duration: 300, easing: quadInOut});
 		});
 
+		test('should slide by the distance of the motion in BasicArranger', () => {
+			const enterNode = createMockElement();
+			const leaveNode = createMockElement();
+			motions['--lime-view-motion-distance'] = ' 25rem';
+
+			BasicArranger.enter({node: enterNode, duration: 300, reverse: false, rtl: false});
+			BasicArranger.leave({node: leaveNode, duration: 300, reverse: false, rtl: false});
+
+			expect(enterNode.animate.mock.calls[0][0][0]).toEqual({transform: 'translateX(25rem)', offset: 0, easing: easeOut});
+			expect(leaveNode.animate.mock.calls[0][0]).toContainEqual({transform: 'translateX(-25rem)', offset: 1});
+		});
+
+		test('should slide by the distance of the motion in the other direction in RTL', () => {
+			const enterNode = createMockElement();
+			const leaveNode = createMockElement();
+			motions['--lime-view-motion-distance'] = '25rem';
+
+			FadeAndSlideArranger.enter({node: enterNode, duration: 300, reverse: false, rtl: true});
+			FadeAndSlideArranger.leave({node: leaveNode, duration: 300, reverse: false, rtl: true});
+
+			expect(enterNode.animate.mock.calls[0][0][0]).toEqual({transform: 'translateX(-25rem)', offset: 0, easing: easeOut});
+			expect(leaveNode.animate.mock.calls[0][0]).toContainEqual({transform: 'translateX(25rem)', offset: 1});
+		});
+
+		test('should negate a distance which is not a plain length with `calc()`', () => {
+			const node = createMockElement();
+			motions['--lime-view-motion-distance'] = 'var(--distance)';
+
+			BasicArranger.leave({node, duration: 300, reverse: false, rtl: false});
+
+			expect(node.animate.mock.calls[0][0]).toContainEqual({transform: 'translateX(calc(-1 * var(--distance)))', offset: 1});
+		});
+
 		test('should fall back to the default animation when no motion is set', () => {
 			const node = createMockElement();
 			motions = {};

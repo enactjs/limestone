@@ -10,8 +10,8 @@
 	display: inline-flex;
 	flex-direction: column;
 	.applyMotions(
-		.lime-view-motions(.lime-carousel-in-large-high-motion(), .lime-carousel-out-large-high-motion()),
-		.lime-view-motions(.lime-carousel-in-large-low-motion(), .lime-carousel-out-large-low-motion())
+		.lime-view-motions(.lime-carousel-in-large-high-motion(), .lime-carousel-out-large-high-motion(), @lime-pageviews-motion-distance),
+		.lime-view-motions(.lime-carousel-in-large-low-motion(), .lime-carousel-out-large-low-motion(), @lime-pageviews-motion-distance)
 	);
 
 	.navButton {

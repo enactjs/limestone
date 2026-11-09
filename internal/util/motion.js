@@ -96,8 +96,25 @@ const getViewMotion = (node, type) => {
 	return transitions.length ? transitions : null;
 };
 
+/**
+ * Reads the travel distance set by `.lime-view-motions()` (styles/motion-mixins.less) on `node` or
+ * one of its ancestors. The value is a CSS length (e.g. `25rem`), usable as is in a `transform`.
+ *
+ * @function
+ * @param   {Node}      node        The animated node.
+ * @returns {String|null}           The distance, or `null` when no distance is set.
+ * @memberof limestone/internal/util/motion
+ * @private
+ */
+const getViewMotionDistance = (node) => {
+	if (typeof window === 'undefined' || !node || node.nodeType !== 1) return null;
+
+	return window.getComputedStyle(node).getPropertyValue('--lime-view-motion-distance').trim() || null;
+};
+
 export {
 	getViewMotion,
+	getViewMotionDistance,
 	parseTransition,
 	splitOutsideParens
 };

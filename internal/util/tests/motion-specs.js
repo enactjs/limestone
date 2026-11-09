@@ -1,4 +1,4 @@
-import {getViewMotion, parseTransition, splitOutsideParens} from '../motion';
+import {getViewMotion, getViewMotionDistance, parseTransition, splitOutsideParens} from '../motion';
 
 describe('motion', () => {
 	describe('splitOutsideParens', () => {
@@ -64,6 +64,31 @@ describe('motion', () => {
 
 			expect(getViewMotion(node, 'enter')).toEqual([{property: 'transform', duration: 470, delay: 30, easing: 'ease-out'}]);
 			expect(getViewMotion(node, 'exit')).toEqual([{property: 'transform', duration: 500, delay: 0, easing: 'ease-in-out'}]);
+		});
+	});
+
+	describe('getViewMotionDistance', () => {
+		afterEach(() => {
+			document.body.innerHTML = '';
+		});
+
+		test('should return `null` when no node is given', () => {
+			expect(getViewMotionDistance(null)).toBeNull();
+		});
+
+		test('should return `null` when the distance is not set', () => {
+			const node = document.createElement('div');
+			document.body.appendChild(node);
+
+			expect(getViewMotionDistance(node)).toBeNull();
+		});
+
+		test('should read the distance', () => {
+			const node = document.createElement('div');
+			node.style.setProperty('--lime-view-motion-distance', '25rem');
+			document.body.appendChild(node);
+
+			expect(getViewMotionDistance(node)).toBe('25rem');
 		});
 	});
 });

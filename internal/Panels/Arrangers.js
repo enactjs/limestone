@@ -1,6 +1,6 @@
 import {arrange} from '@enact/ui/ViewManager';
 
-import {getViewMotion} from '../util/motion';
+import {getViewMotion, getViewMotionDistance} from '../util/motion';
 
 const quadInOut = 'cubic-bezier(0.455, 0.030, 0.515, 0.955)';
 const animationOptions = {easing: quadInOut};
@@ -178,6 +178,16 @@ const arrangeViewMotion = (arrangeFn, config, type, values) => {
 	return arrangeFn({...config, duration, reverse: false}, keyframes);
 };
 
+const negateLength = (length) => (/^[\d.]+[a-z%]*$/i.test(length) ? `-${length}` : `calc(-1 * ${length})`);
+
+// Translates a view off by the distance set with `.lime-view-motions()` or, when no distance is
+// set, by its full width. `toStart` moves it towards the start edge (left in LTR).
+const getSlideTransform = (node, toStart) => {
+	const distance = getViewMotionDistance(node) || '100%';
+
+	return `translateX(${toStart ? negateLength(distance) : distance})`;
+};
+
 /**
  * Arranger that slides panels in from the right and out to the left.
  *
@@ -187,14 +197,15 @@ const arrangeViewMotion = (arrangeFn, config, type, values) => {
  * {@link ui/ViewManager.SlideLeftArranger} can be written in documentation instead of BasicArranger in unavoidable case.
  *
  * When the views are within a container which sets the motion with `.lime-view-motions()`, the
- * `transform` and `opacity` transitions of the motion are used instead of `duration`.
+ * `transform` and `opacity` transitions of the motion are used instead of `duration`, and the views
+ * slide by the motion's distance instead of their full width.
  *
  * @type {Arranger}
  * @private
  */
 const BasicArranger = {
 	enter: (config) => {
-		const from = `translateX(${config.rtl ? '-' : ''}100%)`;
+		const from = getSlideTransform(config.node, config.rtl);
 
 		return arrangeViewMotion(deferArrange, config, 'enter', {transform: [from, 'none'], opacity: [0, 1]}) ||
 			deferArrange(config, [
@@ -203,7 +214,7 @@ const BasicArranger = {
 			], animationOptions);
 	},
 	leave: (config) => {
-		const to = `translateX(${config.rtl ? '' : '-'}100%)`;
+		const to = getSlideTransform(config.node, !config.rtl);
 
 		return arrangeViewMotion(deferArrange, config, 'leave', {transform: ['none', to], opacity: [1, 0]}) ||
 			deferArrange(config, [
@@ -217,14 +228,15 @@ const BasicArranger = {
  * Arranger that slides panels in from the right and out to the left.
  *
  * When the views are within a container which sets the motion with `.lime-view-motions()`, the
- * `transform` and `opacity` transitions of the motion are used instead of the default fade and slide.
+ * `transform` and `opacity` transitions of the motion are used instead of the default fade and slide,
+ * and the views slide by the motion's distance instead of their full width.
  *
  * @type {Arranger}
  * @private
  */
 const FadeAndSlideArranger = {
 	enter: (config) => {
-		const from = `translateX(${config.rtl ? '-' : ''}100%)`;
+		const from = getSlideTransform(config.node, config.rtl);
 
 		return arrangeViewMotion(arrange, config, 'enter', {transform: [from, 'none'], opacity: [0, 1]}) ||
 			arrange(config, [
@@ -234,7 +246,7 @@ const FadeAndSlideArranger = {
 			], animationOptions);
 	},
 	leave: (config) => {
-		const to = `translateX(${config.rtl ? '' : '-'}100%)`;
+		const to = getSlideTransform(config.node, !config.rtl);
 
 		return arrangeViewMotion(arrange, config, 'leave', {transform: ['none', to], opacity: [1, 0]}) ||
 			arrange(config, [
