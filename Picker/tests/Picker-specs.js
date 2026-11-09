@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import {Picker, PickerBase} from '../Picker';
 
@@ -110,5 +110,58 @@ describe('Picker Specs', () => {
 		const expected = "[\"Option 1\",\"The second one\",\"This is the third option\",\"4\"]";
 
 		expect(picker).toHaveAttribute('data-webos-voice-labels-ext', expected);
+	});
+
+	test('should show value, disabled, and title changes immediately', () => {
+		const {rerender} = render(
+			<Picker title="First" value={0}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		expect(screen.getByText('One')).toBeInTheDocument();
+		expect(screen.getByText('First')).toBeInTheDocument();
+		expect(screen.getAllByRole('button')[0]).toHaveAttribute('aria-disabled', 'false');
+
+		rerender(
+			<Picker disabled title="Next" value={2}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		expect(screen.getByText('Three')).toBeInTheDocument();
+		expect(screen.getByText('Next')).toBeInTheDocument();
+		expect(screen.queryByText('First')).not.toBeInTheDocument();
+		expect(screen.getAllByRole('button')[0]).toHaveAttribute('aria-disabled', 'true');
+		expect(screen.getAllByRole('button')[1]).toHaveAttribute('aria-disabled', 'true');
+	});
+
+	test('should keep picker buttons spottable when the value changes', () => {
+		const {rerender} = render(
+			<Picker value={1}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		const buttons = screen.getAllByRole('button');
+
+		expect(buttons[0]).toHaveClass('spottable');
+		expect(buttons[1]).toHaveClass('spottable');
+
+		rerender(
+			<Picker value={0}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		const nextButtons = screen.getAllByRole('button');
+
+		expect(nextButtons[0]).toHaveClass('spottable');
+		expect(nextButtons[1]).toHaveClass('spottable');
+		expect(screen.getByText('One')).toBeInTheDocument();
+
+		fireEvent.focus(nextButtons[0]);
+
+		expect(nextButtons[0]).toHaveAttribute('data-spotlight-focused');
 	});
 });

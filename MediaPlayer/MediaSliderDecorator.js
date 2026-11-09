@@ -1,66 +1,56 @@
-import {adaptEvent, call, handle, forKey, forward, forwardCustom, oneOf, preventDefault, returnsTrue, stopImmediate} from '@enact/core/handle';
+import {forKey, forward, forwardCustom, handle, oneOf, preventDefault, stopImmediate} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
 import platform from '@enact/core/platform';
+import useHandlers from '@enact/core/useHandlers';
 import {calcProportion} from '@enact/ui/Slider/utils';
 import clamp from 'ramda/src/clamp';
 import PropTypes from 'prop-types';
-import {Component} from 'react';
+import {useCallback, useLayoutEffect, useRef, useState} from 'react';
 
-// decrements the MediaKnob position if we're tracking
-const decrement = (state) => {
-	if (state.tracking && state.x > 0) {
-		const x = Math.max(0, state.x - 0.05);
+const STEP = 0.05;
 
-		return {x};
-	}
-
-	return null;
-};
-
-// increments the MediaKnob position if we're tracking
-const increment = (state) => {
-	if (state.tracking && state.x < 1) {
-		const x = Math.min(1, state.x + 0.05);
-
-		return {x};
-	}
-
-	return null;
-};
-
-const handleBlur = handle(
-	forward('onBlur'),
-	call('untrack')
-);
-
-const handleFocus = handle(
-	forward('onFocus'),
-	// extract target from the event and pass it to track()
-	adaptEvent(({target}) => target, call('track'))
-);
-
-const handleKeyDown = handle(
-	forward('onKeyDown'),
-	call('isTracking'),
-	// if tracking and the key is left/right update the preview x position
-	oneOf(
-		[forKey('left'), returnsTrue(call('decrement'))],
-		[forKey('right'), returnsTrue(call('increment'))]
+// Event handlers. Each receives (ev, props, context) from useHandlers, where context holds
+// the component's imperative methods (track, untrack, increment, ...).
+const handlers = {
+	onBlur: handle(
+		forward('onBlur'),
+		(ev, props, {untrack}) => untrack()
 	),
-	// if we handled left or right, preventDefault to prevent browser scroll behavior
-	preventDefault,
-	// stopImmediate to prevent spotlight handling
-	stopImmediate
-);
 
-const handleKeyUp = handle(
-	forward('onKeyUp'),
-	call('isTracking'),
-	forKey('enter'),
-	// prevent limestone/Slider from activating the knob
-	preventDefault,
-	adaptEvent(call('getEventPayload'), forwardCustom('onChange', ev => ev))
-);
+	onFocus: handle(
+		forward('onFocus'),
+		(ev, props, {track}) => track(ev.target)
+	),
+
+	onKeyDown: handle(
+		forward('onKeyDown'),
+		(ev, props, {isTracking}) => isTracking(),
+		// if tracking and the key is left/right update the preview x position
+		oneOf(
+			[forKey('left'), (ev, props, {decrement}) => {
+				decrement();
+				return true;
+			}],
+			[forKey('right'), (ev, props, {increment}) => {
+				increment();
+				return true;
+			}]
+		),
+		// if we handled left or right, preventDefault to prevent browser scroll behavior
+		preventDefault,
+		// stopImmediate to prevent spotlight handling
+		stopImmediate
+	),
+
+	onKeyUp: handle(
+		forward('onKeyUp'),
+		(ev, props, {isTracking}) => isTracking(),
+		forKey('enter'),
+		// prevent limestone/Slider from activating the knob
+		preventDefault,
+		(ev, props, {getEventPayload}) => forwardCustom('onChange', payload => payload)(getEventPayload(), props)
+	)
+};
 
 /**
  * MediaSlider for {@link limestone/VideoPlayer}.
@@ -71,152 +61,152 @@ const handleKeyUp = handle(
  * @private
  */
 const MediaSliderDecorator = hoc((config, Wrapped) => {
-	return class extends Component {
-		static displayName = 'MediaSliderDecorator';
+	const Decorator = (props) => {
+		const {selection, ...rest} = props;
+		let {backgroundProgress} = props;
+		let progressAnchor = 0;
 
-		static propTypes = {
-			backgroundProgress: PropTypes.number,
-			selection: PropTypes.arrayOf(PropTypes.number),
-			value: PropTypes.number
-		};
+		const [tracking, setTracking] = useState(false);
+		const [x, setX] = useState(0);
 
-		constructor (props) {
-			super(props);
+		// Refs mirror values that must be read synchronously inside handlers
+		// (the class version read this.state directly).
+		const trackingRef = useRef(false);
+		const boundsRef = useRef({minX: 0, maxX: 0});
+		const xRef = useRef(x);
+		const propsRef = useRef(props);
+		const prevXRef = useRef(x);
 
-			this.handleMouseOver = this.handleMouseOver.bind(this);
-			this.handleMouseOut = this.handleMouseOut.bind(this);
-			this.handleMouseMove = this.handleMouseMove.bind(this);
-			if (platform.touchEvent) {
-				this.handleTouchMove = this.handleTouchMove.bind(this);
+		// Keep refs in sync after each render (refs must not be written during render).
+		// A layout effect runs before any user event can reach the handlers.
+		useLayoutEffect(() => {
+			xRef.current = x;
+			propsRef.current = props;
+		});
+
+		// Equivalent of componentDidUpdate: notify onKnobMove when x changes (not on mount)
+		useLayoutEffect(() => {
+			if (prevXRef.current !== x) {
+				prevXRef.current = x;
+				forwardCustom('onKnobMove', ev => ev)({value: x, proportion: x}, propsRef.current);
 			}
+		}, [x]);
 
-			handleBlur.bindAs(this, 'handleBlur');
-			handleFocus.bindAs(this, 'handleFocus');
-			handleKeyDown.bindAs(this, 'handleKeyDown');
-			handleKeyUp.bindAs(this, 'handleKeyUp');
+		const getEventPayload = useCallback(() => ({
+			value: xRef.current,
+			proportion: xRef.current
+		}), []);
 
-			this.state = {
-				maxX: 0,
-				minX: 0,
-				tracking: false,
-				x: 0
-			};
-		}
-
-		componentDidUpdate (prevProps, prevState) {
-			if (prevState.x !== this.state.x) {
-				forwardCustom('onKnobMove', ev => ev)(this.getEventPayload(), this.props);
-			}
-		}
-
-		getEventPayload () {
-			return {
-				value: this.state.x,
-				proportion: this.state.x
-			};
-		}
-
-		track (target) {
+		const track = useCallback((target) => {
 			const bounds = target.getBoundingClientRect();
 
-			this.setState({
-				maxX: bounds.right,
-				minX: bounds.left,
-				tracking: true,
-				x: this.props.value
-			});
-		}
+			boundsRef.current = {minX: bounds.left, maxX: bounds.right};
+			trackingRef.current = true;
+			setTracking(true);
+			setX(propsRef.current.value);
+		}, []);
 
-		move (clientX) {
-			this.setState((state) => {
-				const value = clamp(state.minX, state.maxX, clientX);
-				return {
-					x: calcProportion(state.minX, state.maxX, value)
-				};
-			});
-		}
+		const untrack = useCallback(() => {
+			boundsRef.current = {minX: 0, maxX: 0};
+			trackingRef.current = false;
+			setTracking(false);
+		}, []);
 
-		untrack () {
-			this.setState({
-				maxX: 0,
-				minX: 0,
-				tracking: false
-			});
-		}
+		const move = useCallback((clientX) => {
+			const {minX, maxX} = boundsRef.current;
+			const value = clamp(minX, maxX, clientX);
 
-		decrement () {
-			this.setState(decrement);
-		}
+			setX(calcProportion(minX, maxX, value));
+		}, []);
 
-		increment () {
-			this.setState(increment);
-		}
+		const decrement = useCallback(() => {
+			if (trackingRef.current) {
+				setX(prevX => Math.max(0, prevX - STEP));
+			}
+		}, []);
 
-		isTracking () {
-			return this.state.tracking;
-		}
+		const increment = useCallback(() => {
+			if (trackingRef.current) {
+				setX(prevX => Math.min(1, prevX + STEP));
+			}
+		}, []);
 
-		handleMouseOver (ev) {
+		const isTracking = useCallback(() => trackingRef.current, []);
+
+		const handleMouseOver = useCallback((ev) => {
 			if (ev.currentTarget.contains(ev.relatedTarget)) {
 				return;
 			}
 
-			this.track(ev.currentTarget);
-			this.move(ev.clientX);
-		}
+			track(ev.currentTarget);
+			move(ev.clientX);
+		}, [move, track]);
 
-		handleMouseOut (ev) {
+		const handleMouseOut = useCallback((ev) => {
 			if (ev.currentTarget.contains(ev.relatedTarget)) {
 				return;
 			}
 
-			this.untrack();
-		}
+			untrack();
+		}, [untrack]);
 
-		handleMouseMove (ev) {
-			this.move(ev.clientX);
-		}
+		const handleMouseMove = useCallback((ev) => {
+			move(ev.clientX);
+		}, [move]);
 
-		handleTouchMove (ev) {
+		const handleTouchMove = useCallback((ev) => {
 			// ignores multi touch
-			this.move(ev.touches[0].clientX);
+			move(ev.touches[0].clientX);
+		}, [move]);
+
+		const boundHandlers = useHandlers(handlers, props, {
+			decrement,
+			getEventPayload,
+			increment,
+			isTracking,
+			track,
+			untrack
+		});
+
+		if (selection != null && selection.length > 0) {
+			// extracts both values from selection, defaulting backgroundProgress to
+			// progressAnchor if not defined
+			[progressAnchor, backgroundProgress = progressAnchor] = selection;
 		}
 
-		render () {
-			const {selection, ...rest} = this.props;
-			let {backgroundProgress} = this.props;
-			let progressAnchor = 0;
+		delete rest.onKnobMove;
 
-			if (selection != null && selection.length > 0) {
-				// extracts both values from selection, defaulting backgroundProgress to
-				// progressAnchor if not defined
-				[progressAnchor, backgroundProgress = progressAnchor] = selection;
-			}
-
-			delete rest.onKnobMove;
-
-			if (platform.touchEvent) {
-				rest.onTouchMove = this.handleTouchMove;
-			}
-
-			return (
-				<Wrapped
-					{...rest}
-					backgroundProgress={backgroundProgress}
-					onBlur={this.handleBlur}
-					onFocus={this.handleFocus}
-					onKeyDown={this.handleKeyDown}
-					onKeyUp={this.handleKeyUp}
-					onMouseOver={this.handleMouseOver}
-					onMouseOut={this.handleMouseOut}
-					onMouseMove={this.handleMouseMove}
-					preview={this.state.tracking}
-					previewProportion={this.state.x}
-					progressAnchor={progressAnchor}
-				/>
-			);
+		if (platform.touchEvent) {
+			rest.onTouchMove = handleTouchMove;
 		}
+
+		return (
+			<Wrapped
+				{...rest}
+				backgroundProgress={backgroundProgress}
+				onBlur={boundHandlers.onBlur}
+				onFocus={boundHandlers.onFocus}
+				onKeyDown={boundHandlers.onKeyDown}
+				onKeyUp={boundHandlers.onKeyUp}
+				onMouseOver={handleMouseOver}
+				onMouseOut={handleMouseOut}
+				onMouseMove={handleMouseMove}
+				preview={tracking}
+				previewProportion={x}
+				progressAnchor={progressAnchor}
+			/>
+		);
 	};
+
+	Decorator.displayName = 'MediaSliderDecorator';
+
+	Decorator.propTypes = {
+		backgroundProgress: PropTypes.number,
+		selection: PropTypes.arrayOf(PropTypes.number),
+		value: PropTypes.number
+	};
+
+	return Decorator;
 });
 
 export default MediaSliderDecorator;
