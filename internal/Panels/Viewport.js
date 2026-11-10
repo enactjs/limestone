@@ -81,9 +81,11 @@ const ViewportBase = (componentProps) => {
 	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
 
 	const context = use(SharedState);
+	// Stored in state rather than useRef so the DOM node is accessible during render for Spotlight blurring.
 	const [node, setNode] = useState();
 	const [transition, setTransition] = useState({prevIndex: index, direction: 'forward'});
 	const paused = useRef(new Pause('Viewport'));
+	const committedIndex = useRef(index);
 
 	let currentDirection = transition.direction;
 	if (index !== transition.prevIndex) {
@@ -148,10 +150,11 @@ const ViewportBase = (componentProps) => {
 	}
 
 	useEffect(() => {
-		for (let i = transition.prevIndex; context && i > index; i--) {
+		for (let i = committedIndex.current; context && i > index; i--) {
 			context.delete(i);
 		}
-	}, [context, index, transition.prevIndex]);
+		committedIndex.current = index;
+	}, [context, index]);
 
 	useLayoutEffect(() => {
 		return () => {
