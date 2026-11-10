@@ -1,8 +1,31 @@
 import {forward, handle} from '@enact/core/handle';
 import hoc from '@enact/core/hoc';
+import useHandlers from '@enact/core/useHandlers';
+import {setDefaultProps} from '@enact/core/util';
 import Pause from '@enact/spotlight/Pause';
 import PropTypes from 'prop-types';
-import {Component} from 'react';
+import {useCallback, useLayoutEffect, useRef} from 'react';
+
+const transitionDecoratorHandlers = {
+	onHide: handle(
+		forward('onHide'),
+		(ev, props, {resume}) => {
+			resume();
+		}
+	),
+	onTransition: handle(
+		forward('onTransition'),
+		(ev, props, {resume}) => {
+			resume();
+		}
+	),
+	onWillTransition: handle(
+		forward('onWillTransition'),
+		(ev, props, {pause}) => {
+			pause();
+		}
+	)
+};
 
 /**
  * A higher-order component that manages spotlight pause state for both popup and panels
@@ -14,71 +37,61 @@ import {Component} from 'react';
  * @memberof limestone/Panels
  */
 const TransitionDecorator = hoc((config, Wrapped) => {
-	return class extends Component {
-		static displayName = 'TransitionDecorator';
+	// eslint-disable-next-line no-shadow
+	const TransitionDecorator = (componentProps) => {
+		const props = setDefaultProps(componentProps, TransitionDecorator.defaultProps || {});
 
-		static propTypes = /** @lends limestone/Panels.TransitionDecorator.prototype */ {
-			/**
-			 * Called after hide transition has completed, and immediately with no transition.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onHide: PropTypes.func,
+		const paused = useRef(new Pause('TransitionDecorator'));
 
-			/**
-			 * Called once when all panels have completed their transition.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onTransition: PropTypes.func,
+		const pause = useCallback(() => paused.current.pause(), []);
+		const resume = useCallback(() => paused.current.resume(), []);
 
-			/**
-			 * Called once before panels begin their transition.
-			 *
-			 * @type {Function}
-			 * @public
-			 */
-			onWillTransition: PropTypes.func
-		};
+		const handlers = useHandlers(transitionDecoratorHandlers, props, {pause, resume});
 
-		componentWillUnmount () {
-			this.resume();
-		}
+		useLayoutEffect(() => {
+			return () => {
+				resume();
+			};
+		}, [resume]);
 
-		paused = new Pause('TransitionDecorator');
-
-		pause = () => this.paused.pause();
-
-		resume = () => this.paused.resume();
-
-		handleHide = handle(
-			forward('onHide'),
-			this.resume
-		).bindAs(this, 'handleHide');
-
-		handleTransition = handle(
-			forward('onTransition'),
-			this.resume
-		).bindAs(this, 'handleTransition');
-
-		handleWillTransition = handle(
-			forward('onWillTransition'),
-			this.pause
-		).bindAs(this, 'handleWillTransition');
-
-		render () {
-			return (
-				<Wrapped
-					{...this.props}
-					onHide={this.handleHide}
-					onTransition={this.handleTransition}
-					onWillTransition={this.handleWillTransition}
-				/>
-			);
-		}
+		return (
+			<Wrapped
+				{...props}
+				onHide={handlers.onHide}
+				onTransition={handlers.onTransition}
+				onWillTransition={handlers.onWillTransition}
+			/>
+		);
 	};
+
+	TransitionDecorator.displayName = 'TransitionDecorator';
+	TransitionDecorator.propTypes = /** @lends limestone/Panels.TransitionDecorator.prototype */ {
+		/**
+		 * Called after hide transition has completed, and immediately with no transition.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onHide: PropTypes.func,
+
+		/**
+		 * Called once when all panels have completed their transition.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onTransition: PropTypes.func,
+
+		/**
+		 * Called once before panels begin their transition.
+		 *
+		 * @type {Function}
+		 * @public
+		 */
+		onWillTransition: PropTypes.func
+	};
+
+	return TransitionDecorator;
 });
 
 export default TransitionDecorator;
