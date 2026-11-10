@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import CheckboxItem, {CheckboxItemGroup} from '@enact/limestone/CheckboxItem';
 import Item from '@enact/limestone/Item';

@@ -145,7 +145,7 @@ class MarqueeWithContentChanged extends Component {
 	}
 
 	handleClick = () => {
-		this.setState(({count}) => ({count: ++count % 3}));
+		this.setState(({count}) => ({count: (count + 1) % 3}));
 	};
 
 	render () {
@@ -176,7 +176,7 @@ class MarqueeSynchronizedWithContentChanged extends Component {
 	}
 
 	handleClick = () => {
-		this.setState(({count}) => ({count: ++count % 3}));
+		this.setState(({count}) => ({count: (count + 1) % 3}));
 	};
 
 	render () {

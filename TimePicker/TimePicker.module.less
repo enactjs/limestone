@@ -1,6 +1,7 @@
 // TimePicker.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/skin.less";
 @import "../styles/variables.less";
 
@@ -37,6 +38,18 @@
 				order: 4;
 			}
 		});
+	}
+
+	.hourPicker,
+	.minutePicker,
+	.meridiemPicker {
+		// Value transition motion, read by the Picker arranger (`.lime-view-motions()`).
+		// Carousel motion: size medium, speed fast, same motion in high/low tier.
+		// Fast.carouselIn(0, +-165) / Fast.carouselOut(0, +-165); the distance is set by the arranger.
+		.applyMotions(
+			.lime-view-motions(.lime-carousel-in-medium-high-motion(), .lime-carousel-out-medium-high-motion()),
+			.lime-view-motions(.lime-carousel-in-medium-low-motion(), .lime-carousel-out-medium-low-motion())
+		);
 	}
 
 	.lime-custom-text({

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import Dropdown from '@enact/limestone/Dropdown';
 import {useState} from 'react';
