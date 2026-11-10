@@ -9,7 +9,7 @@ import ViewManager, {shape} from '@enact/ui/ViewManager';
 import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef} from 'react';
 
 import SharedStateDecorator, {SharedState} from '../SharedStateDecorator';
 
@@ -46,27 +46,37 @@ const viewPortBaseHandlers = {
 	)
 };
 
-const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
-	return mapAndFilterChildren(childrenList, (child, dataIndex) => {
-		const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
-		const localProps = {
-			spotlightId,
-			'data-index': dataIndex
-		};
+const createMapChildren = () => {
+	let prevIndex = -1;
 
-		// Respect Panel-configured autoFocus if it is set
-		if (child.props.autoFocus == null) {
-			if (autoFocus) {
-				// if not and Viewport-wide autoFocus is configured, use it
-				localProps.autoFocus = autoFocus;
-			} else if (direction === 'forward') {
-				// Otherwise, only set autofocus when moving forward
-				localProps.autoFocus = 'default-element';
+	return (childrenList, getSpotlightId, autoFocus, index) => {
+		const direction = prevIndex > index ? 'backward' : 'forward';
+		console.log('direction', direction, prevIndex, index);
+		prevIndex = index;
+
+		return mapAndFilterChildren(childrenList, (child, dataIndex) => {
+			const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
+
+			prevIndex = index;
+			const localProps = {
+				spotlightId,
+				'data-index': dataIndex
+			};
+
+			// Respect Panel-configured autoFocus if it is set
+			if (child.props.autoFocus == null) {
+				if (autoFocus) {
+					// if not and Viewport-wide autoFocus is configured, use it
+					localProps.autoFocus = autoFocus;
+				} else if (direction === 'forward') {
+					// Otherwise, only set autofocus when moving forward
+					localProps.autoFocus = 'default-element';
+				}
 			}
-		}
 
-		return cloneElement(child, localProps);
-	});
+			return cloneElement(child, localProps);
+		});
+	};
 };
 
 /**
@@ -78,23 +88,16 @@ const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
  */
 const ViewportBase = (componentProps) => {
 	const props = setDefaultProps(componentProps, viewPortBaseDefaultProps);
-	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
+	const {arranger, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
 
 	const context = use(SharedState);
-	// Stored in state rather than useRef so the DOM node is accessible during render for Spotlight blurring.
-	const [node, setNode] = useState();
-	const [transition, setTransition] = useState({prevIndex: index, direction: 'forward'});
+	const mapChildren = useMemo(() => createMapChildren(), []);
 	const paused = useRef(new Pause('Viewport'));
 	const committedIndex = useRef(index);
-
-	let currentDirection = transition.direction;
-	if (index !== transition.prevIndex) {
-		currentDirection = index > transition.prevIndex ? 'forward' : 'backward';
-		setTransition({prevIndex: index, direction: currentDirection});
-	}
+	const nodeRef = useRef();
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const mappedChildren = mapChildren(children, generateId, autoFocus, currentDirection);
+	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, index);
 	const className = classnames(css.viewport, customClassName);
 
 	const count = Children.count(mappedChildren);
@@ -121,33 +124,35 @@ const ViewportBase = (componentProps) => {
 	}, []);
 
 	const addTransitioningClass = useCallback(() => {
-		if (node) {
-			node.classList.add(css.transitioning);
+		if (nodeRef.current) {
+			nodeRef.current.classList.add(css.transitioning);
 		}
 
 		return true;
-	}, [node]);
+	}, []);
 
 	const removeTransitioningClass = useCallback(() => {
-		if (node) {
-			node.classList.remove(css.transitioning);
+		if (nodeRef.current) {
+			nodeRef.current.classList.remove(css.transitioning);
 		}
 
 		return true;
-	}, [node]);
+	}, []);
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	if (index !== transition.prevIndex) {
-		const current = Spotlight.getCurrent();
-		// :scope refers to the current node and allows us to use the direct descendant '>'
-		// selector to limit the results to views (and not other components with [data-index])
-		const panel = node?.querySelector(`:scope > [data-index='${transition.prevIndex}']`);
+	useLayoutEffect(() => {
+		if (index !== committedIndex.current) {
+			const current = Spotlight.getCurrent();
+			// :scope refers to the current node and allows us to use the direct descendant '>'
+			// selector to limit the results to views (and not other components with [data-index])
+			const panel = nodeRef.current?.querySelector(`:scope > [data-index='${committedIndex.current}']`);
 
-		if (current && panel && panel.contains(current)) {
-			current.blur();
+			if (current && panel && panel.contains(current)) {
+				current.blur();
+			}
 		}
-	}
+	}, [index]);
 
 	useEffect(() => {
 		for (let i = committedIndex.current; context && i > index; i--) {
@@ -176,7 +181,7 @@ const ViewportBase = (componentProps) => {
 				noAnimation={noAnimation}
 				onTransition={handlers.onTransition}
 				onWillTransition={handlers.onWillTransition}
-				ref={setNode}
+				ref={nodeRef}
 				rtl={rtl}
 			>
 				{mappedChildren}
