@@ -244,13 +244,14 @@ describe('TimePicker', function () {
 
 			describe('pointer', function () {
 				it('should not update hour on click', async function () {
+					const {hour} = await extractValues(timePicker);
 					await timePicker.hour.click();
 					expect(await timePicker.hour.isFocused()).toBe(true);
 
 					await timePicker.incrementer('hour').click();
-					browser.pause(500);
+					await Page.delay(500);
 					const {hour: value} = await extractValues(timePicker);
-					expect(value).toBe(12);
+					expect(value).toBe(hour);
 				});
 			});
 		});
