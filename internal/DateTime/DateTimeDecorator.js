@@ -14,7 +14,7 @@ import Spotlight from '@enact/spotlight';
 import Changeable from '@enact/ui/Changeable';
 import DateFactory from 'ilib/lib/DateFactory';
 import PropTypes from 'prop-types';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 /*
  * Converts a JavaScript Date to unix time
@@ -57,6 +57,8 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 		const [initialValue, setInitialValue] = useState(null);
 		const [value, setValue] = useState(newValue || Date.now());
 		const [pickerValue, setPickerValue] = useState(null);
+		// The `value` prop seen by the previous run of the sync effect below
+		const prevPropValue = useRef(newValue);
 
 		const emitChange = (date) => {
 			forwardCustom('onChange', () => ({value: date ? date.getJSDate() : null}))(null, props);
@@ -125,6 +127,8 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 
 		useEffect(() => {
 			let newestValue = toTime(props.value);
+			const propChanged = newestValue !== prevPropValue.current;
+			prevPropValue.current = newestValue;
 
 			if (props.open && !props.disabled && initialValue == null && value == null) {
 				// when the expandable opens, we cache the prop value so it can be restored on
@@ -132,8 +136,11 @@ const DateTimeDecorator = hoc((config, Wrapped) => {
 				// pickers
 				setInitialValue(newestValue);
 				setValue(newestValue || Date.now());
-			} else if (value !== newestValue) {
-				// always respect a value change from props
+			} else if (value !== newestValue && (newestValue != null || propChanged)) {
+				// Respect a value from props. An empty `value` prop is only applied when it has just
+				// changed (e.g. a date reset to `null`). Otherwise, it would replace the value generated
+				// on mount before the `onChange` emitted for it comes back as the `value` prop, making
+				// the pickers animate to their fallback values and back.
 				setValue(newestValue);
 			}
 		}, [initialValue, props, value]);
