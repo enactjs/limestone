@@ -795,9 +795,9 @@ const useMediaControlsDecorator = (componentProps) => {
 		}
 	}, []);
 
-	const handlePulse = useCallback(function handlePulse () {
+	const handlePulse = useCallback(function pulse () {
 		forward('onJump', {keyCode: pulsingKeyCodeRef.current}, propsRef.current);
-		keyLoopRef.current = setTimeout(handlePulse, propsRef.current.jumpDelay);
+		keyLoopRef.current = setTimeout(pulse, propsRef.current.jumpDelay);
 	}, []);
 
 	const startListeningForPulses = useCallback((keyCode) => {
