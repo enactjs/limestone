@@ -33,14 +33,17 @@
 		display: flex;
 		align-items: center;
 
+		&:first-child,
+		&:last-child {
+			position: absolute;
+		}
+
 		&:first-child {
-			justify-content: flex-end;
-			padding-inline-end: @lime-card-sports-logo-spacing;
+			left: @lime-card-sports-logo-spacing;
 		}
 
 		&:last-child {
-			justify-content: flex-start;
-			padding-inline-start: @lime-card-sports-logo-spacing;
+			right: @lime-card-sports-logo-spacing;
 		}
 	}
 
@@ -53,6 +56,9 @@
 	.score {
 		align-items: center;
 		display: flex;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
 		font-size: @lime-card-duration-font-size;
 		gap: @lime-card-score-gap;
 		height: fit-content;
@@ -63,6 +69,25 @@
 		border-radius: @lime-card-score-border-radius;
 		width: fit-content;
 		white-space: nowrap;
+
+		&:has(> :nth-child(2):last-child) {
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+
+			.left,
+			.right {
+				max-width: 4ch;
+				overflow: hidden;
+			}
+
+			.left {
+				text-align: right;
+			}
+
+			.right {
+				text-align: left;
+			}
+		}
 	}
 
 	.lime-custom-text({
