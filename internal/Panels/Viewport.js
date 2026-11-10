@@ -93,7 +93,7 @@ const ViewportBase = (componentProps) => {
 	const context = use(SharedState);
 	const mapChildren = useMemo(() => createMapChildren(), []);
 	const paused = useRef(new Pause('Viewport'));
-	const committedIndex = useRef(index);
+	const previousIndex = useRef(index);
 	const nodeRef = useRef();
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
@@ -142,11 +142,11 @@ const ViewportBase = (componentProps) => {
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
 	useLayoutEffect(() => {
-		if (index !== committedIndex.current) {
+		if (index !== previousIndex.current) {
 			const current = Spotlight.getCurrent();
 			// :scope refers to the current node and allows us to use the direct descendant '>'
 			// selector to limit the results to views (and not other components with [data-index])
-			const panel = nodeRef.current?.querySelector(`:scope > [data-index='${committedIndex.current}']`);
+			const panel = nodeRef.current?.querySelector(`:scope > [data-index='${previousIndex.current}']`);
 
 			if (current && panel && panel.contains(current)) {
 				current.blur();
@@ -155,10 +155,10 @@ const ViewportBase = (componentProps) => {
 	}, [index]);
 
 	useEffect(() => {
-		for (let i = committedIndex.current; context && i > index; i--) {
+		for (let i = previousIndex.current; context && i > index; i--) {
 			context.delete(i);
 		}
-		committedIndex.current = index;
+		previousIndex.current = index;
 	}, [context, index]);
 
 	useLayoutEffect(() => {
