@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import DayPicker from '@enact/limestone/DayPicker';
 import {FixedPopupPanels, Header, Panel} from '@enact/limestone/FixedPopupPanels';
