@@ -12,6 +12,18 @@
 	--lime-view-exit-motion: initial;
 }
 
+// Travel distance of the value transition: Fast.carouselIn/Out(+-270, 0) for a horizontal picker and
+// Fast.carouselIn/Out(0, +-165) for a vertical one. Set on the picker so it doesn't inherit the distance
+// of a container (e.g. Panels). Like the motions above, a component can override it with
+// `.lime-view-motions()`.
+:where(.picker.horizontal) {
+	--lime-view-motion-distance: @lime-picker-horizontal-motion-distance;
+}
+
+:where(.picker.vertical) {
+	--lime-view-motion-distance: @lime-picker-vertical-motion-distance;
+}
+
 .picker {
 	vertical-align: bottom;
 	position: relative;

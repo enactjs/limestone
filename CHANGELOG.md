@@ -15,6 +15,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` value transition distance to scale with the screen resolution
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
 - `limestone/Dropdown` scrollbar not to appear when unnecessary

@@ -45,7 +45,7 @@
 	.meridiemPicker {
 		// Value transition motion, read by the Picker arranger (`.lime-view-motions()`).
 		// Carousel motion: size medium, speed fast, same motion in high/low tier.
-		// Fast.carouselIn(0, +-165) / Fast.carouselOut(0, +-165); the distance is set by the arranger.
+		// The distance depends on the orientation (`@lime-picker-horizontal/vertical-motion-distance`).
 		.applyMotions(
 			.lime-view-motions(.lime-carousel-in-medium-high-motion(), .lime-carousel-out-medium-high-motion()),
 			.lime-view-motions(.lime-carousel-in-medium-low-motion(), .lime-carousel-out-medium-low-motion())

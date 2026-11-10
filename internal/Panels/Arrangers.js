@@ -1,6 +1,6 @@
 import {arrange} from '@enact/ui/ViewManager';
 
-import {getViewMotion, getViewMotionDistance} from '../util/motion';
+import {getViewMotion, getViewMotionDistance, negateLength} from '../util/motion';
 
 const quadInOut = 'cubic-bezier(0.455, 0.030, 0.515, 0.955)';
 const animationOptions = {easing: quadInOut};
@@ -177,8 +177,6 @@ const arrangeViewMotion = (arrangeFn, config, type, values) => {
 
 	return arrangeFn({...config, duration, reverse: false}, keyframes);
 };
-
-const negateLength = (length) => (/^[\d.]+[a-z%]*$/i.test(length) ? `-${length}` : `calc(-1 * ${length})`);
 
 // Translates a view off by the distance set with `.lime-view-motions()` or, when no distance is
 // set, by its full width. `toStart` moves it towards the start edge (left in LTR).

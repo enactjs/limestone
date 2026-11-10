@@ -1,4 +1,4 @@
-import {getViewMotion, getViewMotionDistance, parseTransition, splitOutsideParens} from '../motion';
+import {getViewMotion, getViewMotionDistance, negateLength, parseTransition, splitOutsideParens} from '../motion';
 
 describe('motion', () => {
 	describe('splitOutsideParens', () => {
@@ -89,6 +89,18 @@ describe('motion', () => {
 			document.body.appendChild(node);
 
 			expect(getViewMotionDistance(node)).toBe('25rem');
+		});
+	});
+
+	describe('negateLength', () => {
+		test('should prefix a plain length with a minus sign', () => {
+			expect(negateLength('25rem')).toBe('-25rem');
+			expect(negateLength('270px')).toBe('-270px');
+			expect(negateLength('100%')).toBe('-100%');
+		});
+
+		test('should negate any other value with `calc()`', () => {
+			expect(negateLength('var(--distance)')).toBe('calc(-1 * var(--distance))');
 		});
 	});
 });

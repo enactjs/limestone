@@ -97,7 +97,7 @@ const getViewMotion = (node, type) => {
 };
 
 /**
- * Reads the travel distance set by `.lime-view-motions()` (styles/motion-mixins.less) on `node` or
+ * Reads the travel distance set by `.lime-view-motions()` on `node` or
  * one of its ancestors. The value is a CSS length (e.g. `25rem`), usable as is in a `transform`.
  *
  * @function
@@ -112,9 +112,23 @@ const getViewMotionDistance = (node) => {
 	return window.getComputedStyle(node).getPropertyValue('--lime-view-motion-distance').trim() || null;
 };
 
+/**
+ * Negates a CSS length, e.g. a distance read with `getViewMotionDistance()`. A plain length
+ * (`25rem`, `270px`) gets a minus sign; any other value (e.g. `var(--distance)`) is wrapped in
+ * `calc()`.
+ *
+ * @function
+ * @param   {String}    length      The CSS length.
+ * @returns {String}                The negated length.
+ * @memberof limestone/internal/util/motion
+ * @private
+ */
+const negateLength = (length) => (/^[\d.]+[a-z%]*$/i.test(length) ? `-${length}` : `calc(-1 * ${length})`);
+
 export {
 	getViewMotion,
 	getViewMotionDistance,
+	negateLength,
 	parseTransition,
 	splitOutsideParens
 };
