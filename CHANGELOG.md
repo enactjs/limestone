@@ -11,11 +11,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Changed
 
 - `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
+- `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
 - `limestone/WizardPanels` prop `noContentAnimation` to be removed
 
 ### Fixed
 
-- `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` value transition distance to scale with the screen resolution
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
