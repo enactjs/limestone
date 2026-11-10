@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import Scroller from '@enact/limestone/Scroller';
 import ToggleButton from '@enact/limestone/SwitchItem';

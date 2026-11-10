@@ -54,6 +54,27 @@ Global Motion Mixins
 	.applyMotions-invalid-arguments();
 }
 
+// /**
+//  * Exposes the transitions of enter and exit motion mixins as custom properties for components
+//  * animated by `ViewManager` arrangers (Panels, PageViews, WizardPanels), which use the Web
+//  * Animations API instead of CSS transitions. The arrangers read the duration, delay and easing of
+//  * each transitioned property while the keyframe values (e.g. slide direction) are set by the arranger.
+//  * The custom properties are inherited, so they can be set on any ancestor of the views.
+//  *
+//  * @param {Ruleset} @enterMotion - Motion mixin used for the entering view.
+//  * @param {Ruleset} @exitMotion  - Motion mixin used for the leaving view.
+//  *
+//  * @example
+//  * .applyMotions(
+//  *     .lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion()),
+//  *     .lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion())
+//  * );
+//  */
+.lime-view-motions(@enterMotion, @exitMotion) when (isruleset(@enterMotion)) and (isruleset(@exitMotion)) {
+	--lime-view-enter-motion: @enterMotion[transition];
+	--lime-view-exit-motion: @exitMotion[transition];
+}
+
 /* focus-in */
 .lime-focus-in-fast-motion(@scale-to: 1.1) {
 	transform: scale(@scale-to);

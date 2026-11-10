@@ -48,7 +48,7 @@ export const _ContextualPopupDecorator = (args) => {
 			<ContextualButton
 				{...actions}
 				{...controls}
-				popupComponent={renderPopup} // eslint-disable-line react/jsx-no-bind
+				popupComponent={renderPopup} // eslint-disable-line enact/jsx-no-bind
 			>
 				{args['button string']}
 			</ContextualButton>

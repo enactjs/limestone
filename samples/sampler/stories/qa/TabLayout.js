@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
 import {InputField} from '@enact/limestone/Input';

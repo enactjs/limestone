@@ -158,7 +158,7 @@ const DropdownListBase = kind({
 					key={key}
 					slotAfter={slotAfter}
 					data-selected={isSelected}
-					// eslint-disable-next-line react/jsx-no-bind
+					// eslint-disable-next-line enact/jsx-no-bind
 					onClick={() => forward('onSelect', {data, selected: index}, props)}
 					size="large"
 				/>
