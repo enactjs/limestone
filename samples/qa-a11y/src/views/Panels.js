@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import {Header, Panel, Panels} from '@enact/limestone/Panels';
 import Item from '@enact/limestone/Item';
