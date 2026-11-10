@@ -9,7 +9,7 @@ import ViewManager, {shape} from '@enact/ui/ViewManager';
 import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef} from 'react';
+import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import SharedStateDecorator, {SharedState} from '../SharedStateDecorator';
 
@@ -46,18 +46,29 @@ const viewPortBaseHandlers = {
 	)
 };
 
+const handleBlur = (index, prevIndex, node) => {
+	if (index !== prevIndex) {
+		const current = Spotlight.getCurrent();
+		// :scope refers to the current node and allows us to use the direct descendant '>'
+		// selector to limit the results to views (and not other components with [data-index])
+		const panel = node.current?.querySelector(`:scope > [data-index='${prevIndex}']`);
+
+		if (current && panel && panel.contains(current)) {
+			current.blur();
+		}
+	}
+};
+
 const createMapChildren = () => {
 	let prevIndex = -1;
 
-	return (childrenList, getSpotlightId, autoFocus, index) => {
+	return (childrenList, getSpotlightId, autoFocus, index, node) => {
 		const direction = prevIndex > index ? 'backward' : 'forward';
-		console.log('direction', direction, prevIndex, index);
+		handleBlur(index, prevIndex, node);
 		prevIndex = index;
 
 		return mapAndFilterChildren(childrenList, (child, dataIndex) => {
 			const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
-
-			prevIndex = index;
 			const localProps = {
 				spotlightId,
 				'data-index': dataIndex
@@ -95,9 +106,10 @@ const ViewportBase = (componentProps) => {
 	const paused = useRef(new Pause('Viewport'));
 	const previousIndex = useRef(index);
 	const nodeRef = useRef();
+	const [node] = useState(() => nodeRef);
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, index);
+	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, index, node);
 	const className = classnames(css.viewport, customClassName);
 
 	const count = Children.count(mappedChildren);
@@ -141,23 +153,11 @@ const ViewportBase = (componentProps) => {
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	useLayoutEffect(() => {
-		if (index !== previousIndex.current) {
-			const current = Spotlight.getCurrent();
-			// :scope refers to the current node and allows us to use the direct descendant '>'
-			// selector to limit the results to views (and not other components with [data-index])
-			const panel = nodeRef.current?.querySelector(`:scope > [data-index='${previousIndex.current}']`);
-
-			if (current && panel && panel.contains(current)) {
-				current.blur();
-			}
-		}
-	}, [index]);
-
 	useEffect(() => {
 		for (let i = previousIndex.current; context && i > index; i--) {
 			context.delete(i);
 		}
+
 		previousIndex.current = index;
 	}, [context, index]);
 
