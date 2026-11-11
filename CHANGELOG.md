@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+
 ## [1.11.4] - 2026-10-20
 
 - Update dependencies including ilib updates.

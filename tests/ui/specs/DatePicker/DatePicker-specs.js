@@ -239,25 +239,27 @@ describe('DatePicker', function () {
 			});
 
 			it('should not increase the day when incrementing disabled picker', async function () {
+				const {day} = await extractValues(datePicker);
 				await datePicker.day.click();
 				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 
 				await datePicker.incrementer('day').click();
-				browser.pause(500);
+				await Page.delay(500);
 				const {day: value} = await extractValues(datePicker);
-				expect(value).toBe(1);
+				expect(value).toBe(day);
 			});
 
 			it('should not decrease the day when decrementing disabled picker', async function () {
+				const {day} = await extractValues(datePicker);
 				await datePicker.day.click();
 				await Page.delay(200);
 				expect(await datePicker.day.isFocused()).toBe(true);
 
 				await datePicker.decrementer('day').click();
-				browser.pause(500);
+				await Page.delay(500);
 				const {day: value} = await extractValues(datePicker);
-				expect(value).toBe(1);
+				expect(value).toBe(day);
 			});
 
 		});
