@@ -15,6 +15,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+- `limestone/DatePicker` and `limestone/TimePicker` to show the current date and time instead of fallback values when `disabled` and `value` is not set
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
