@@ -322,7 +322,6 @@ describe('DatePicker', function () {
 				expect(await datePicker.year.isFocused()).toBe(true);
 				await datePicker.incrementer('year').click();
 
-
 				await Page.delay(500);
 				const {day, month, year} = await extractValues(datePicker);
 				expect(day).toBe(6);
