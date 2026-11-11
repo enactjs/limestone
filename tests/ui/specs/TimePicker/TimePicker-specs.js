@@ -237,13 +237,14 @@ describe('TimePicker', function () {
 
 			describe('pointer', function () {
 				it('should not update hour on click', async function () {
+					const {hour} = await extractValues(timePicker);
 					await timePicker.hour.click();
 					expect(await timePicker.hour.isFocused()).toBe(true);
 
 					await timePicker.incrementer('hour').click();
-					browser.pause(500);
+					await Page.delay(500);
 					const {hour: value} = await extractValues(timePicker);
-					expect(value).toBe(12);
+					expect(value).toBe(hour);
 				});
 			});
 		});
@@ -251,8 +252,6 @@ describe('TimePicker', function () {
 		describe('disabled with \'defaultValue\'', function () {
 			const timePicker = Page.components.timePickerDisabledWithDefaultValue;
 			it('should not update \'defaultValue\' on click', async function () {
-				const {hour, minute, meridiem} = await extractValues(timePicker);
-
 				await timePicker.minute.click();
 				expect(await timePicker.minute.isFocused()).toBe(true);
 				await timePicker.decrementer('minute').click();
@@ -265,7 +264,8 @@ describe('TimePicker', function () {
 				expect(await timePicker.meridiem.isFocused()).toBe(true);
 				await timePicker.decrementer('meridiem').click();
 
-				browser.pause(500);
+				await Page.delay(500);
+				const {hour, minute, meridiem} = await extractValues(timePicker);
 				expect(hour).toBe(12);
 				expect(minute).toBe(0);
 				expect(meridiem).toBe('AM');
