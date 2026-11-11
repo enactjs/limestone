@@ -7,6 +7,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 ### Fixed
 
 - `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+- `limestone/DatePicker` and `limestone/TimePicker` to show the current date and time instead of fallback values when `disabled` and `value` is not set
 
 ## [1.11.4] - 2026-10-20
 
