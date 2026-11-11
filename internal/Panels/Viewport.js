@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
-import useHandlers from "@enact/core/useHandlers";
+import useHandlers from '@enact/core/useHandlers';
 import {mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
