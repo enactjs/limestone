@@ -264,7 +264,6 @@ describe('TimePicker', function () {
 				expect(await timePicker.meridiem.isFocused()).toBe(true);
 				await timePicker.decrementer('meridiem').click();
 
-
 				await Page.delay(500);
 				const {hour, minute, meridiem} = await extractValues(timePicker);
 				expect(hour).toBe(12);
