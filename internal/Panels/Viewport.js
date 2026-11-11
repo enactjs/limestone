@@ -65,7 +65,10 @@ const createMapChildren = () => {
 	return (childrenList, getSpotlightId, autoFocus, index, node) => {
 		const direction = prevIndex > index ? 'backward' : 'forward';
 		handleBlur(index, prevIndex, node);
-		prevIndex = index;
+
+		useEffect(() => {
+			prevIndex = index;
+		}, [index]);
 
 		return mapAndFilterChildren(childrenList, (child, dataIndex) => {
 			const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
