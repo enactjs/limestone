@@ -15,7 +15,7 @@ describe('Page scroll via 5-way', function () {
 		await expectFocusedItem(14);
 		// Step 4: 5-way Down to the item below the last item on the current page.
 		await Page.spotlightDown();
-		await Page.delay(500);
+		await Page.delay(700);
 		// Step 4-1 Verify: The list Scrolled Up
 		const curVerticalScrollThumbPosition = await Page.scrollThumbPosition();
 		expect(curVerticalScrollThumbPosition > initVerticalScrollThumbPosition).toBe(true);
@@ -24,7 +24,7 @@ describe('Page scroll via 5-way', function () {
 		expect(await Page.bottomRightVisibleItemId()).toBe('item19');
 		// Step 5: 5-way Up to the previous item.
 		await Page.spotlightUp();
-		await Page.delay(500);
+		await Page.delay(700);
 		// Step 5-1 Verify: The list does not Scroll Down.
 		expect(await Page.scrollThumbPosition()).toBe(curVerticalScrollThumbPosition);
 		// Step 5-2 Verify: Spotlight is on the item above.
@@ -36,7 +36,7 @@ describe('Page scroll via 5-way', function () {
 		await (await Page.item(Number((await Page.bottomRightVisibleItemId()).slice(4)))).moveTo();
 		await Page.spotlightSelect();
 		await Page.spotlightRight();
-		await Page.delay(500);
+		await Page.delay(700);
 		// Step 7-1 Verify: The list Scrolls Right
 		const curHorizontalScrollThumbPosition = await Page.scrollThumbPosition();
 		expect(curHorizontalScrollThumbPosition > initHorizontalScrollThumbPosition).toBe(true);
@@ -45,7 +45,7 @@ describe('Page scroll via 5-way', function () {
 		expect(await Page.bottomRightVisibleItemId()).toBe('item9');
 		// Step 8: 5-way Left to the previous item.
 		await Page.spotlightLeft();
-		await Page.delay(500);
+		await Page.delay(700);
 		// Step 8-1 Verify: The list does not Scroll Left.
 		expect(await Page.scrollThumbPosition()).toBe(curHorizontalScrollThumbPosition);
 		// Step 8-2 Verify: The spotted item is placed next to the rightest item.

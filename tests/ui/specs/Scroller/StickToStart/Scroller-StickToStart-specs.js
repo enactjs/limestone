@@ -14,7 +14,7 @@ describe('Scroller with stickTo="start"', function () {
 		// Move right into the scrollable region.
 		for (let i = 0; i < 3; i++) {
 			await ScrollerPage.spotlightRight();
-			await ScrollerPage.delay(500);
+			await ScrollerPage.delay(700);
 		}
 		await expectFocusedItem(3);
 
@@ -24,7 +24,7 @@ describe('Scroller with stickTo="start"', function () {
 		// Move right further.
 		for (let i = 0; i < 2; i++) {
 			await ScrollerPage.spotlightRight();
-			await ScrollerPage.delay(500);
+			await ScrollerPage.delay(700);
 		}
 		await expectFocusedItem(5);
 

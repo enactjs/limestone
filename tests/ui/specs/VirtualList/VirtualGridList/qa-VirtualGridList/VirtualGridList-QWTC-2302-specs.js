@@ -45,7 +45,8 @@ describe('qa-VirtualGridList', function () {
 		await expectFocusedItem(27);
 		// Step 4-2: Channel Down.
 		await Page.pageDown();
-		await Page.delay(300);
+		// High-tier scroll motion is 600ms. Spotlight is back on the item after it finishes.
+		await Page.delay(700);
 		// Step 4 Verify: Spotlight stays on the item.
 		await expectFocusedItem(27);
 	});
