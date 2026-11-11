@@ -22,6 +22,7 @@
 
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Card, {CardBase} from '../Card';
@@ -209,6 +210,7 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			className: ({styler}) => styler.append(cardCss.sports),
 			imageOverlay: ({css, imageOverlay, leftTeam, rightTeam}) => {
 				const teamScore = formatTeamScore(leftTeam, rightTeam, true);
+				const scoreClassName = classnames(css.score, {[css.bothScores]: leftTeam?.score && rightTeam?.score});
 
 				return (
 					<>
@@ -220,7 +222,7 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 								) : null}
 							</div>
 							{teamScore ? (
-								<div className={css.score}>{teamScore}</div>
+								<div className={scoreClassName}>{teamScore}</div>
 							) : (
 								<div />
 							)}

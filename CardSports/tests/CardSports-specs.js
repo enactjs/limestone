@@ -30,7 +30,7 @@ describe('CardSports', () => {
 			/>
 		);
 
-		const scoreContainer = screen.getByText(':', {exact: false});
+		const scoreContainer = screen.getByText(':');
 		expect(scoreContainer).toHaveTextContent('0/0:1/1');
 	});
 
@@ -70,7 +70,7 @@ describe('CardSports', () => {
 			/>
 		);
 
-		const scoreContainer = screen.getByText(':', {exact: false});
+		const scoreContainer = screen.getByText(':');
 
 		expect(screen.getByText('Extra Overlay')).toBeInTheDocument();
 		expect(scoreContainer).toHaveTextContent('0/0:0/0');
