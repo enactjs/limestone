@@ -63,16 +63,22 @@ Global Motion Mixins
 //  *
 //  * @param {Ruleset} @enterMotion - Motion mixin used for the entering view.
 //  * @param {Ruleset} @exitMotion  - Motion mixin used for the leaving view.
+//  * @param {Number}  [@distance]  - Travel distance of the sliding views. When omitted, the arranger
+//  *                                 slides the views by their full size.
 //  *
 //  * @example
 //  * .applyMotions(
-//  *     .lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion()),
-//  *     .lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion())
+//  *     .lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion(), 1200px),
+//  *     .lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion(), 1200px)
 //  * );
 //  */
-.lime-view-motions(@enterMotion, @exitMotion) when (isruleset(@enterMotion)) and (isruleset(@exitMotion)) {
+.lime-view-motions(@enterMotion, @exitMotion, @distance: none) when (isruleset(@enterMotion)) and (isruleset(@exitMotion)) {
 	--lime-view-enter-motion: @enterMotion[transition];
 	--lime-view-exit-motion: @exitMotion[transition];
+
+	& when (isnumber(@distance)) {
+		--lime-view-motion-distance: @distance;
+	}
 }
 
 /* focus-in */

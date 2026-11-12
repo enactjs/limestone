@@ -1,7 +1,15 @@
 import {arrange} from '@enact/ui/ViewManager';
 
+import {getViewMotion, getViewMotionDistance, negateLength} from '../util/motion';
+
 const quadInOut = 'cubic-bezier(0.455, 0.030, 0.515, 0.955)';
 const animationOptions = {easing: quadInOut};
+
+// Properties of the first/last keyframe applied to the node while the animation is not running
+const fillProperties = ['opacity', 'transform'];
+
+// Merges the keyframes at `offset` since each animated property may have its own keyframes
+const getKeyframeAt = (keyframes, offset) => Object.assign({}, ...keyframes.filter(keyframe => keyframe.offset === offset));
 
 // Batches animations together so that all views start/end at the same time
 const callbacks = [];
@@ -27,8 +35,8 @@ class AnimateOnIdle {
 
 		// used to "fill" when the animation completes
 		this.keyframes = [
-			keyframes[reverse ? keyframes.length - 1 : 0],
-			keyframes[reverse ? 0 : keyframes.length - 1]
+			getKeyframeAt(keyframes, reverse ? 1 : 0),
+			getKeyframeAt(keyframes, reverse ? 0 : 1)
 		];
 
 		this._onfinish = null;
@@ -71,8 +79,11 @@ class AnimateOnIdle {
 	}
 
 	fill (node, keyframe) {
-		// NOTE: this is naive atm to only address transform. We can extend it later.
-		node.style.transform = keyframe.transform;
+		fillProperties.forEach((property) => {
+			if (property in keyframe) {
+				node.style[property] = keyframe[property];
+			}
+		});
 	}
 
 	get playState () {
@@ -126,6 +137,55 @@ const deferArrange = (config, keyframes, options) => {
 	});
 };
 
+// Builds the keyframes animating each property of `values` (`{property: [from, to]}`) with the
+// duration, delay and easing of its transition. Properties without a transition are not animated.
+const getMotionKeyframes = (transitions, values) => {
+	const animated = transitions.filter(({property}) => property in values);
+	const duration = Math.max(0, ...animated.map(({delay, duration: propertyDuration}) => delay + propertyDuration));
+	const keyframes = [];
+
+	animated.forEach(({delay, duration: propertyDuration, easing, property}) => {
+		const [from, to] = values[property];
+		const start = duration ? delay / duration : 0;
+		const end = duration ? (delay + propertyDuration) / duration : 1;
+
+		if (start > 0) keyframes.push({[property]: from, offset: 0});
+		keyframes.push({[property]: from, offset: start, easing}, {[property]: to, offset: end});
+		if (end < 1) keyframes.push({[property]: to, offset: 1});
+	});
+
+	return {duration, keyframes: keyframes.sort((a, b) => a.offset - b.offset)};
+};
+
+// Arranges a view with the motion set by `.lime-view-motions()` on one of its ancestors. Returns
+// `null` when no motion is set so the arranger can fall back to its default animation.
+//
+// Unlike the default animations, a reverse transition isn't played backwards: the view coming into
+// the viewport always uses the enter motion and the view going out always uses the exit motion.
+const arrangeViewMotion = (arrangeFn, config, type, values) => {
+	const {node, reverse} = config;
+	const transitions = getViewMotion(node, (type === 'enter') !== reverse ? 'enter' : 'exit');
+
+	if (!transitions) return null;
+
+	const directedValues = {};
+	Object.keys(values).forEach((property) => {
+		directedValues[property] = reverse ? [...values[property]].reverse() : values[property];
+	});
+
+	const {duration, keyframes} = getMotionKeyframes(transitions, directedValues);
+
+	return arrangeFn({...config, duration, reverse: false}, keyframes);
+};
+
+// Translates a view off by the distance set with `.lime-view-motions()` or, when no distance is
+// set, by its full width. `toStart` moves it towards the start edge (left in LTR).
+const getSlideTransform = (node, toStart) => {
+	const distance = getViewMotionDistance(node) || '100%';
+
+	return `translateX(${toStart ? negateLength(distance) : distance})`;
+};
+
 /**
  * Arranger that slides panels in from the right and out to the left.
  *
@@ -134,44 +194,64 @@ const deferArrange = (config, keyframes, options) => {
  * Because BasicArranger is an improved version of {@link ui/ViewManager.SlideLeftArranger},
  * {@link ui/ViewManager.SlideLeftArranger} can be written in documentation instead of BasicArranger in unavoidable case.
  *
+ * When the views are within a container which sets the motion with `.lime-view-motions()`, the
+ * `transform` and `opacity` transitions of the motion are used instead of `duration`, and the views
+ * slide by the motion's distance instead of their full width.
+ *
  * @type {Arranger}
  * @private
  */
 const BasicArranger = {
 	enter: (config) => {
-		return deferArrange(config, [
-			{transform: `translateX(${config.rtl ? '-' : ''}100%)`, offset: 0},
-			{transform: 'none', offset: 1}
-		], animationOptions);
+		const from = getSlideTransform(config.node, config.rtl);
+
+		return arrangeViewMotion(deferArrange, config, 'enter', {transform: [from, 'none'], opacity: [0, 1]}) ||
+			deferArrange(config, [
+				{transform: from, offset: 0},
+				{transform: 'none', offset: 1}
+			], animationOptions);
 	},
 	leave: (config) => {
-		return deferArrange(config, [
-			{transform: 'none', offset: 0},
-			{transform: `translateX(${config.rtl ? '' : '-'}100%)`, offset: 1}
-		], animationOptions);
+		const to = getSlideTransform(config.node, !config.rtl);
+
+		return arrangeViewMotion(deferArrange, config, 'leave', {transform: ['none', to], opacity: [1, 0]}) ||
+			deferArrange(config, [
+				{transform: 'none', offset: 0},
+				{transform: to, offset: 1}
+			], animationOptions);
 	}
 };
 
 /**
  * Arranger that slides panels in from the right and out to the left.
  *
+ * When the views are within a container which sets the motion with `.lime-view-motions()`, the
+ * `transform` and `opacity` transitions of the motion are used instead of the default fade and slide,
+ * and the views slide by the motion's distance instead of their full width.
+ *
  * @type {Arranger}
  * @private
  */
 const FadeAndSlideArranger = {
 	enter: (config) => {
-		return arrange(config, [
-			{transform: `translateX(${config.rtl ? '-' : ''}100%)`, opacity: 0, offset: 0},
-			{opacity: 0, offset: 0.5},
-			{transform: 'none', opacity: 1, offset: 1}
-		], animationOptions);
+		const from = getSlideTransform(config.node, config.rtl);
+
+		return arrangeViewMotion(arrange, config, 'enter', {transform: [from, 'none'], opacity: [0, 1]}) ||
+			arrange(config, [
+				{transform: from, opacity: 0, offset: 0},
+				{opacity: 0, offset: 0.5},
+				{transform: 'none', opacity: 1, offset: 1}
+			], animationOptions);
 	},
 	leave: (config) => {
-		return arrange(config, [
-			{transform: 'none', opacity: 1, offset: 0},
-			{opacity: 0, offset: 0.5},
-			{transform: `translateX(${config.rtl ? '' : '-'}100%)`, opacity: 0, offset: 1}
-		], animationOptions);
+		const to = getSlideTransform(config.node, !config.rtl);
+
+		return arrangeViewMotion(arrange, config, 'leave', {transform: ['none', to], opacity: [1, 0]}) ||
+			arrange(config, [
+				{transform: 'none', opacity: 1, offset: 0},
+				{opacity: 0, offset: 0.5},
+				{transform: to, opacity: 0, offset: 1}
+			], animationOptions);
 	}
 };
 
@@ -201,20 +281,25 @@ const CrossFadeArranger = {
 /**
  * Arranger that fade between panels.
  *
+ * When the views are within a container which sets the motion with `.lime-view-motions()`, the
+ * `opacity` transitions of the motion are used instead of the default cross-fade.
+ *
  * @type {Arranger}
  * @private
  */
 const FadeArranger = {
-	enter: (config) => arrange(config, [
-		{opacity: 0, offset: 0},
-		{opacity: 0, offset: 0.5},
-		{opacity: 1, offset: 1}
-	], {duration: 250, easing: 'ease-in-out'}),
-	leave: (config) => arrange(config, [
-		{opacity: 1, offset: 0},
-		{opacity: 0, offset: 0.5},
-		{opacity: 0, offset: 1}
-	], {duration: 250, easing: 'ease-in-out'})
+	enter: (config) => arrangeViewMotion(arrange, config, 'enter', {opacity: [0, 1]}) ||
+		arrange(config, [
+			{opacity: 0, offset: 0},
+			{opacity: 0, offset: 0.5},
+			{opacity: 1, offset: 1}
+		], {duration: 250, easing: 'ease-in-out'}),
+	leave: (config) => arrangeViewMotion(arrange, config, 'leave', {opacity: [1, 0]}) ||
+		arrange(config, [
+			{opacity: 1, offset: 0},
+			{opacity: 0, offset: 0.5},
+			{opacity: 0, offset: 1}
+		], {duration: 250, easing: 'ease-in-out'})
 };
 
 export {

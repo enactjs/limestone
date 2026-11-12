@@ -18,13 +18,13 @@ describe('PopupTabLayout', function () {
 			it('should navigate list of item in popuptablayout [QWTC-2415]', async function () {
 				// Step 4: Click Color Adjust inside the Display Settings Popup.
 				await $('#colorAdjust').click();
-				await Page.delay(500);
+				await Page.delay(1000);
 				// Step 4 Verify: The Panel Picture Modes displays.
 				expect(await popupTabLayout.currentView.getAttribute('id')).toBe('display');
 
 				// Step 5-1: Position the Pointer inside the Picture Modes panel and 5-way Right to change to 5-way mode.
 				const panelSize = await $('#display').getSize();
-				await $('#display').moveTo({xOffset: panelSize.width / 2 - 10, yOffset: -panelSize.height / 2 + 10});
+				await $('#display').moveTo({xOffset: Math.round(panelSize.width / 2 - 10), yOffset: Math.round(-panelSize.height / 2 + 10)});
 				await Page.delay(200);
 				await Page.spotlightRight();
 				// Step 5-1 Verify: Spotlight is on the 'back' button

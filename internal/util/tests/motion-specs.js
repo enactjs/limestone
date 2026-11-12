@@ -1,4 +1,4 @@
-import {getViewMotion, parseTransition, splitOutsideParens} from '../motion';
+import {getViewMotion, getViewMotionDistance, negateLength, parseTransition, splitOutsideParens} from '../motion';
 
 describe('motion', () => {
 	describe('splitOutsideParens', () => {
@@ -64,6 +64,43 @@ describe('motion', () => {
 
 			expect(getViewMotion(node, 'enter')).toEqual([{property: 'transform', duration: 470, delay: 30, easing: 'ease-out'}]);
 			expect(getViewMotion(node, 'exit')).toEqual([{property: 'transform', duration: 500, delay: 0, easing: 'ease-in-out'}]);
+		});
+	});
+
+	describe('getViewMotionDistance', () => {
+		afterEach(() => {
+			document.body.innerHTML = '';
+		});
+
+		test('should return `null` when no node is given', () => {
+			expect(getViewMotionDistance(null)).toBeNull();
+		});
+
+		test('should return `null` when the distance is not set', () => {
+			const node = document.createElement('div');
+			document.body.appendChild(node);
+
+			expect(getViewMotionDistance(node)).toBeNull();
+		});
+
+		test('should read the distance', () => {
+			const node = document.createElement('div');
+			node.style.setProperty('--lime-view-motion-distance', '25rem');
+			document.body.appendChild(node);
+
+			expect(getViewMotionDistance(node)).toBe('25rem');
+		});
+	});
+
+	describe('negateLength', () => {
+		test('should prefix a plain length with a minus sign', () => {
+			expect(negateLength('25rem')).toBe('-25rem');
+			expect(negateLength('270px')).toBe('-270px');
+			expect(negateLength('100%')).toBe('-100%');
+		});
+
+		test('should negate any other value with `calc()`', () => {
+			expect(negateLength('var(--distance)')).toBe('calc(-1 * var(--distance))');
 		});
 	});
 });

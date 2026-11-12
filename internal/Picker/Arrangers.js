@@ -1,4 +1,4 @@
-import {getViewMotion} from '../util/motion';
+import {getViewMotion, getViewMotionDistance, negateLength} from '../util/motion';
 
 /**
  * Fallback values for the enter motion, used when no motion is set with `.lime-view-motions()`
@@ -128,35 +128,38 @@ const toMotionValues = (transitions) => {
  * Resolves the motion values for a node: fallback defaults, then the motion set by the
  * component's styles with `.lime-view-motions()`, then explicit arranger options.
  *
+ * The translation distance is the one set in the styles (see `internal/Picker/Picker.module.less`)
+ * or, when none is set, the `amount` of the arranger.
+ *
  * @param {HTMLElement} node			Animated node.
  * @param {String} type					Motion type ('enter' | 'exit').
  * @param {Object} defaults				Fallback values.
  * @param {Object} options				Explicit arranger options.
- * @param {Number} amount				Translation distance in pixels.
- * @returns {Object}					Resolved motion values including `amount`.
+ * @param {Number} amount				Fallback translation distance in pixels.
+ * @returns {Object}					Resolved motion values including the `distance` CSS length.
  * @private
  */
 const resolveMotion = (node, type, defaults, options, amount) => ({
 	...defaults,
 	...toMotionValues(getViewMotion(node, type) || []),
-	amount,
+	distance: getViewMotionDistance(node) || `${Math.abs(amount)}px`,
 	...options
 });
 
 /**
  * Returns the signed translation for a carousel animation.
  *
- * @param {Number} amount				Translation distance in pixels.
+ * @param {String} distance				Translation distance (CSS length).
  * @param {Number} direction			`1` or `-1`.
  * @param {Boolean} isHorizontal		`true` for horizontal transitions.
  * @returns {String}					CSS transform value.
  * @private
  */
-const getTransform = (amount, direction, isHorizontal) => {
+const getTransform = (distance, direction, isHorizontal) => {
 	const translate = isHorizontal ? 'translateX' : 'translateY';
-	const translateAmount = (isHorizontal ? 1 : -1) * direction * Math.abs(amount);
+	const negative = (isHorizontal ? 1 : -1) * direction < 0;
 
-	return `${translate}(${translateAmount}px)`;
+	return `${translate}(${negative ? negateLength(distance) : distance})`;
 };
 
 /**
@@ -172,7 +175,7 @@ const getTransform = (amount, direction, isHorizontal) => {
  */
 const animateCarouselIn = ({node}, direction, isHorizontal, motion) => {
 	const position = node.animate([
-		{transform: getTransform(motion.amount, direction, isHorizontal)},
+		{transform: getTransform(motion.distance, direction, isHorizontal)},
 		{transform: `${isHorizontal ? 'translateX' : 'translateY'}(0)`}
 	], {duration: motion.positionDuration, delay: motion.positionDelay, easing: motion.positionEasing, fill: 'both'});
 
@@ -197,7 +200,7 @@ const animateCarouselIn = ({node}, direction, isHorizontal, motion) => {
  */
 const animateCarouselOut = ({node}, direction, isHorizontal, motion) => {
 	const position = node.animate([
-		{transform: getTransform(motion.amount, direction, isHorizontal)}
+		{transform: getTransform(motion.distance, direction, isHorizontal)}
 	], {duration: motion.positionDuration, delay: motion.positionDelay, easing: motion.positionEasing, fill: 'both'});
 
 	const opacity = node.animate([
@@ -236,15 +239,18 @@ const animateCarouselStay = ({node}, isHorizontal) => {
  * );
  * ```
  *
- * Otherwise the fallback values are used. The translation distance is set by the arranger
- * (`amount`). `optionsEnter` and `optionsLeave` override both.
+ * Otherwise the fallback values are used. `optionsEnter` and `optionsLeave` override both.
+ *
+ * The translation distance is the `--lime-view-motion-distance` set by the picker's styles
+ * (`@lime-picker-horizontal-motion-distance` / `@lime-picker-vertical-motion-distance`), so it
+ * scales with the screen resolution. `amount` is only used when no distance is set.
  *
  * ViewManager calls `enter` for the entering view and `leave` for the leaving view, and swaps
  * them when `reverse` is set, so the entering view always gets the enter motion and the leaving
  * view always gets the exit motion.
  *
  * @param {Object} config						Carousel arranger configuration.
- * @param {Number} [config.amount=270]			Translation distance in pixels.
+ * @param {Number} [config.amount=270]			Fallback translation distance in pixels.
  * @param {Boolean} [config.isHorizontal=true]	`true` for horizontal transitions; `false` for vertical transitions.
  * @param {Object} [config.optionsEnter={}]		Timing and easing overrides for the enter motion.
  * @param {Object} [config.optionsLeave={}]		Timing and easing overrides for the exit motion.
@@ -271,7 +277,7 @@ export const CarouselArranger = ({amount = 270, isHorizontal = true, optionsEnte
 };
 
 /**
- * Fast horizontal carousel arranger using the default translation distance (270px).
+ * Fast horizontal carousel arranger. Without a distance set in the styles, it translates by 270px.
  *
  * @type {Arranger}
  * @private
@@ -279,7 +285,7 @@ export const CarouselArranger = ({amount = 270, isHorizontal = true, optionsEnte
 const FastHorizontalCarouselArranger = CarouselArranger();
 
 /**
- * Fast vertical carousel arranger with a shorter translation distance (165px).
+ * Fast vertical carousel arranger. Without a distance set in the styles, it translates by 165px.
  *
  * @type {Arranger}
  * @private

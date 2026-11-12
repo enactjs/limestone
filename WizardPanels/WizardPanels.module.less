@@ -1,9 +1,18 @@
 // WizardPanels.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 
 .wizardPanels {
+	.header {
+		// title and subtitle
+		.applyMotions(
+			.lime-view-motions(.lime-fade-in-high-motion(), .lime-fade-out-high-motion()),
+			.lime-view-motions(.lime-fade-in-low-motion(), .lime-fade-out-low-motion())
+		);
+	}
+
 	&.noSteps {
 		.steps {
 			visibility: hidden;
@@ -18,6 +27,10 @@
 
 	.content {
 		margin: @lime-wizardpanels-content-margin;
+		.applyMotions(
+			.lime-view-motions(.lime-carousel-in-large-high-motion(), .lime-carousel-out-large-high-motion(), @lime-wizardpanels-motion-distance),
+			.lime-view-motions(.lime-carousel-in-large-low-motion(), .lime-carousel-out-large-low-motion(), @lime-wizardpanels-motion-distance)
+		);
 	}
 
 	.footer {
