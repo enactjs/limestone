@@ -9,7 +9,7 @@ import ViewManager, {shape} from '@enact/ui/ViewManager';
 import invariant from 'invariant';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
-import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import {Children, cloneElement, createContext, use, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import SharedStateDecorator, {SharedState} from '../SharedStateDecorator';
 
@@ -46,6 +46,30 @@ const viewPortBaseHandlers = {
 	)
 };
 
+const handleBlur = (index, prevIndex, node) => {
+	if (index !== prevIndex) {
+		const current = Spotlight.getCurrent();
+		// :scope refers to the current node and allows us to use the direct descendant '>'
+		// selector to limit the results to views (and not other components with [data-index])
+		const panel = node.current?.querySelector(`:scope > [data-index='${prevIndex}']`);
+
+		if (current && panel && panel.contains(current)) {
+			current.blur();
+		}
+	}
+};
+
+const createIndexTracker = () => {
+	let prevIndex = -1;
+
+	return {
+		getPrevIndex: () => prevIndex,
+		setPrevIndex: (index) => {
+			prevIndex = index;
+		}
+	};
+};
+
 const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
 	return mapAndFilterChildren(childrenList, (child, dataIndex) => {
 		const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
@@ -78,23 +102,21 @@ const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
  */
 const ViewportBase = (componentProps) => {
 	const props = setDefaultProps(componentProps, viewPortBaseDefaultProps);
-	const {arranger, autoFocus, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
+	const {arranger, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
 
 	const context = use(SharedState);
-	// Stored in state rather than useRef so the DOM node is accessible during render for Spotlight blurring.
-	const [node, setNode] = useState();
-	const [transition, setTransition] = useState({prevIndex: index, direction: 'forward'});
+	const indexTracker = useMemo(() => createIndexTracker(), []);
 	const paused = useRef(new Pause('Viewport'));
-	const committedIndex = useRef(index);
+	const previousIndex = useRef(index);
+	const nodeRef = useRef();
+	const [node] = useState(() => nodeRef);
 
-	let currentDirection = transition.direction;
-	if (index !== transition.prevIndex) {
-		currentDirection = index > transition.prevIndex ? 'forward' : 'backward';
-		setTransition({prevIndex: index, direction: currentDirection});
-	}
+	const prevIndex = indexTracker.getPrevIndex();
+	const direction = prevIndex > index ? 'backward' : 'forward';
+	handleBlur(index, prevIndex, node);
 
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const mappedChildren = mapChildren(children, generateId, autoFocus, currentDirection);
+	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, direction);
 	const className = classnames(css.viewport, customClassName);
 
 	const count = Children.count(mappedChildren);
@@ -121,39 +143,33 @@ const ViewportBase = (componentProps) => {
 	}, []);
 
 	const addTransitioningClass = useCallback(() => {
-		if (node) {
-			node.classList.add(css.transitioning);
+		if (nodeRef.current) {
+			nodeRef.current.classList.add(css.transitioning);
 		}
 
 		return true;
-	}, [node]);
+	}, []);
 
 	const removeTransitioningClass = useCallback(() => {
-		if (node) {
-			node.classList.remove(css.transitioning);
+		if (nodeRef.current) {
+			nodeRef.current.classList.remove(css.transitioning);
 		}
 
 		return true;
-	}, [node]);
+	}, []);
 
 	const handlers = useHandlers(viewPortBaseHandlers, props, {addTransitioningClass, removeTransitioningClass, pause, resume});
 
-	if (index !== transition.prevIndex) {
-		const current = Spotlight.getCurrent();
-		// :scope refers to the current node and allows us to use the direct descendant '>'
-		// selector to limit the results to views (and not other components with [data-index])
-		const panel = node?.querySelector(`:scope > [data-index='${transition.prevIndex}']`);
-
-		if (current && panel && panel.contains(current)) {
-			current.blur();
-		}
-	}
+	useEffect(() => {
+		indexTracker.setPrevIndex(index);
+	}, [index, indexTracker]);
 
 	useEffect(() => {
-		for (let i = committedIndex.current; context && i > index; i--) {
+		for (let i = previousIndex.current; context && i > index; i--) {
 			context.delete(i);
 		}
-		committedIndex.current = index;
+
+		previousIndex.current = index;
 	}, [context, index]);
 
 	useLayoutEffect(() => {
@@ -176,7 +192,7 @@ const ViewportBase = (componentProps) => {
 				noAnimation={noAnimation}
 				onTransition={handlers.onTransition}
 				onWillTransition={handlers.onWillTransition}
-				ref={setNode}
+				ref={nodeRef}
 				rtl={rtl}
 			>
 				{mappedChildren}
