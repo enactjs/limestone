@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import {getContainerConfig} from '@enact/spotlight/src/container';
 import {act, render, screen} from '@testing-library/react';
 
 import ImageItem from '../../ImageItem';
@@ -344,6 +345,43 @@ describe('VirtualGridList', () => {
 			const actual = screen.getByRole('list').parentElement.parentElement.children.length;
 
 			expect(actual).toBe(expected);
+		});
+	});
+
+	describe('continue5WayHold', () => {
+		test('should set \'continue5WayHold\' to the spotlight container when only \'spotlightId\' is provided', () => {
+			render(
+				<VirtualGridList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldGrid"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldGrid').continue5WayHold;
+
+			expect(actual).toBe(true);
+		});
+
+		test('should set \'continue5WayHold\' to the spotlight container when \'id\' differs from \'spotlightId\'', () => {
+			render(
+				<VirtualGridList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					id="continue5WayHoldGridDomId"
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldGridSpotlightId"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldGridSpotlightId').continue5WayHold;
+
+			expect(actual).toBe(true);
 		});
 	});
 });
