@@ -18,6 +18,16 @@ import css from './Viewport.module.less';
 
 const PanelsStateContext = createContext({});
 
+// Delay, in milliseconds, after a panel has entered before its children are rendered (via the
+// `hideChildren` entering prop) and it can receive focus.
+const ENTERING_DELAY = 100;
+
+// Maximum time, in milliseconds, to keep capturing keys after a transition completes while waiting
+// for focus to land within the viewport. This only applies when the new panel never receives focus
+// (e.g. `autoFocus="none"` or no spottable content) and must exceed `ENTERING_DELAY` plus a frame
+// and a render.
+const CAPTURE_RELEASE_TIMEOUT = ENTERING_DELAY + 200;
+
 /**
  * The container for a set of Panels
  *
@@ -201,7 +211,9 @@ const ViewportBase = class extends Component {
 	}
 
 	componentWillUnmount () {
-		this.resume();
+		this.cancelCaptureRelease();
+		this.paused.resume();
+		stopCapture();
 	}
 
 	addTransitioningClass = () => {
@@ -221,13 +233,64 @@ const ViewportBase = class extends Component {
 	};
 
 	pause = () => {
+		// a new transition supersedes any pending capture release from a previous one
+		this.cancelCaptureRelease();
 		startCapture();
 		this.paused.pause();
 	};
 
 	resume = () => {
-		stopCapture();
+		// Spotlight must be resumed immediately so the entering panel is able to focus itself
 		this.paused.resume();
+		this.releaseCaptureOnFocus();
+	};
+
+	// Cleans up the pending capture release (listener and timer) without releasing the capture
+	clearCaptureRelease = null;
+
+	cancelCaptureRelease = () => {
+		if (this.clearCaptureRelease) {
+			this.clearCaptureRelease();
+		}
+	};
+
+	// The transition completes before the entering panel renders its children (see `hideChildren`
+	// and `enteringDelay`) and focuses them. During that window nothing is focused and key events
+	// would be handled by Spotlight without a current element, allowing focus to escape the
+	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
+	// falling back to a timeout for panels that never receive focus.
+	releaseCaptureOnFocus = () => {
+		this.cancelCaptureRelease();
+
+		const node = this.node;
+		const current = Spotlight.getCurrent();
+
+		if (
+			!node ||
+			this.props.noAnimation ||
+			(current && node.contains(current))
+		) {
+			stopCapture();
+			return;
+		}
+
+		let timerId = null;
+
+		const clear = () => {
+			// eslint-disable-next-line no-use-before-define
+			node.removeEventListener('focusin', release);
+			clearTimeout(timerId);
+			this.clearCaptureRelease = null;
+		};
+
+		const release = () => {
+			clear();
+			stopCapture();
+		};
+
+		node.addEventListener('focusin', release);
+		timerId = setTimeout(release, CAPTURE_RELEASE_TIMEOUT);
+		this.clearCaptureRelease = clear;
 	};
 
 	handle = handle.bind(this);
@@ -305,7 +368,7 @@ const ViewportBase = class extends Component {
 					className={className}
 					component="main"
 					duration={250}
-					enteringDelay={100} // TODO: Can we remove this?
+					enteringDelay={ENTERING_DELAY} // TODO: Can we remove this?
 					enteringProp={enteringProp}
 					index={index}
 					noAnimation={noAnimation}
