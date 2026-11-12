@@ -59,38 +59,38 @@ const handleBlur = (index, prevIndex, node) => {
 	}
 };
 
-const createMapChildren = () => {
+const createIndexTracker = () => {
 	let prevIndex = -1;
 
-	return (childrenList, getSpotlightId, autoFocus, index, node) => {
-		const direction = prevIndex > index ? 'backward' : 'forward';
-		handleBlur(index, prevIndex, node);
-
-		useEffect(() => {
+	return {
+		getPrevIndex: () => prevIndex,
+		setPrevIndex: (index) => {
 			prevIndex = index;
-		}, [index]);
-
-		return mapAndFilterChildren(childrenList, (child, dataIndex) => {
-			const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
-			const localProps = {
-				spotlightId,
-				'data-index': dataIndex
-			};
-
-			// Respect Panel-configured autoFocus if it is set
-			if (child.props.autoFocus == null) {
-				if (autoFocus) {
-					// if not and Viewport-wide autoFocus is configured, use it
-					localProps.autoFocus = autoFocus;
-				} else if (direction === 'forward') {
-					// Otherwise, only set autofocus when moving forward
-					localProps.autoFocus = 'default-element';
-				}
-			}
-
-			return cloneElement(child, localProps);
-		});
+		}
 	};
+};
+
+const mapChildren = (childrenList, getSpotlightId, autoFocus, direction) => {
+	return mapAndFilterChildren(childrenList, (child, dataIndex) => {
+		const {spotlightId = getSpotlightId(dataIndex, 'panel-container', Spotlight.remove)} = child.props;
+		const localProps = {
+			spotlightId,
+			'data-index': dataIndex
+		};
+
+		// Respect Panel-configured autoFocus if it is set
+		if (child.props.autoFocus == null) {
+			if (autoFocus) {
+				// if not and Viewport-wide autoFocus is configured, use it
+				localProps.autoFocus = autoFocus;
+			} else if (direction === 'forward') {
+				// Otherwise, only set autofocus when moving forward
+				localProps.autoFocus = 'default-element';
+			}
+		}
+
+		return cloneElement(child, localProps);
+	});
 };
 
 /**
@@ -105,14 +105,22 @@ const ViewportBase = (componentProps) => {
 	const {arranger, children, generateId, index, noAnimation, rtl, type, className: customClassName, ...rest} = props;
 
 	const context = use(SharedState);
-	const mapChildren = useMemo(() => createMapChildren(), []);
+	const indexTracker = useMemo(() => createIndexTracker(), []);
 	const paused = useRef(new Pause('Viewport'));
 	const previousIndex = useRef(index);
 	const nodeRef = useRef();
 	const [node] = useState(() => nodeRef);
 
+	const prevIndex = indexTracker.getPrevIndex();
+	const direction = prevIndex > index ? 'backward' : 'forward';
+	handleBlur(index, prevIndex, node);
+
+	useEffect(() => {
+		indexTracker.setPrevIndex(index);
+	}, [index, indexTracker]);
+
 	const enteringProp = noAnimation ? null : 'hideChildren';
-	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, index, node);
+	const mappedChildren = mapChildren(children, generateId, rest.autoFocus, direction);
 	const className = classnames(css.viewport, customClassName);
 
 	const count = Children.count(mappedChildren);
