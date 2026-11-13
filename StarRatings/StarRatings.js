@@ -29,6 +29,7 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import clamp from 'ramda/src/clamp';
 import compose from 'ramda/src/compose';
 
+import $L from '../internal/$L';
 import Skinnable from '../Skinnable';
 
 import Star from './Star';
@@ -539,6 +540,9 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
+		'aria-label': ({value, max}) => {
+            return $L(`Star rating ${value} out of ${max} stars change a value with left right button`);
+		},
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		// The selected rating, which Spotlight enters the row at
 		selected: ({max, readOnly, value}) => (readOnly ? null : toTenths(value, max, readOnly) / 10),
@@ -550,6 +554,7 @@ const StarRatingsBase = kind({
 	},
 
 	render: ({
+		ariaLabelStar,
 		disabled,
 		id,
 		max,
@@ -578,10 +583,12 @@ const StarRatingsBase = kind({
 			>
 				{Array.from({length: max}, (_, i) => {
 					const starValue = clamp(0, 10, tenths - i * 10) / 10;
+					const ariaLabel = i === 0 ? $L('1 star') : $L(`${i + 1} stars`)
 
 					return (
 						<Star
 							key={i}
+							aria-label={ariaLabel}
 							data-star-selected={i + 1 === selected ? true : null}
 							id={`${id}-star-${i + 1}`}
 							disabled={disabled}
