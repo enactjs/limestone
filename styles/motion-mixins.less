@@ -6,6 +6,81 @@
 Global Motion Mixins
 ------------------------------------------ */
 
+// /**
+//  * Applies a ruleset to a specific animation tier ('high' or 'low').
+//  * Useful for applying motion mixins to a specific tier, or targeting
+//  * specific nested classes within those tiers.
+//  *
+//  * @param {Ruleset} @componentMotion  - CSS rules to apply.
+//  * @param {string}  @tier             - Target tier ('high' | 'low').
+//  * @param {string}  [@selector=where] - Pseudo-class selector type ('where' | 'is').
+//  *
+//  * @example
+//  * .applyMotions({
+//  *     .bg { .lime-focus-in-small-high-motion(1.1); }
+//  * }, high);
+//  */
+.applyMotions(@componentMotion, @tier, @selector: where) when (isruleset(@componentMotion)) and ((@tier = low) or (@tier = high)) and ((@selector = where) or (@selector = is)) {
+	&:@{selector}(:global(.animationTier-@{tier}) *) {
+		@componentMotion();
+	}
+}
+
+// /**
+//  * Applies distinct rulesets for high and low animation tiers in a single call.
+//  * Mostly used when you need to apply motion mixins directly without nested classes.
+//  *
+//  * @param {Ruleset} @highTierMotion   - Ruleset executed when tier is 'high'.
+//  * @param {Ruleset} @lowTierMotion    - Ruleset executed when tier is 'low'.
+//  * @param {string}  [@selector=where] - Pseudo-class selector type ('where' | 'is').
+//  *
+//  * @example
+//  * .applyMotions(
+//  *     .lime-focus-out-small-high-motion(1),
+//  *     .lime-focus-out-small-low-motion(1)
+//  * );
+//  */
+.applyMotions(@highTierMotion, @lowTierMotion, @selector: where) when (isruleset(@highTierMotion)) and (isruleset(@lowTierMotion)) and ((@selector = where) or (@selector = is)) {
+	each(high low, {
+		@currentMotion: if((@value = high), @highTierMotion, @lowTierMotion);
+
+		&:@{selector}(:global(.animationTier-@{value}) *) {
+			@currentMotion();
+		}
+	});
+}
+
+.applyMotions(@a, @b: null, @c: null) when (default()) {
+	.applyMotions-invalid-arguments();
+}
+
+// /**
+//  * Exposes the transitions of enter and exit motion mixins as custom properties for components
+//  * animated by `ViewManager` arrangers (Panels, PageViews, WizardPanels), which use the Web
+//  * Animations API instead of CSS transitions. The arrangers read the duration, delay and easing of
+//  * each transitioned property while the keyframe values (e.g. slide direction) are set by the arranger.
+//  * The custom properties are inherited, so they can be set on any ancestor of the views.
+//  *
+//  * @param {Ruleset} @enterMotion - Motion mixin used for the entering view.
+//  * @param {Ruleset} @exitMotion  - Motion mixin used for the leaving view.
+//  * @param {Number}  [@distance]  - Travel distance of the sliding views. When omitted, the arranger
+//  *                                 slides the views by their full size.
+//  *
+//  * @example
+//  * .applyMotions(
+//  *     .lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion(), 1200px),
+//  *     .lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion(), 1200px)
+//  * );
+//  */
+.lime-view-motions(@enterMotion, @exitMotion, @distance: none) when (isruleset(@enterMotion)) and (isruleset(@exitMotion)) {
+	--lime-view-enter-motion: @enterMotion[transition];
+	--lime-view-exit-motion: @exitMotion[transition];
+
+	& when (isnumber(@distance)) {
+		--lime-view-motion-distance: @distance;
+	}
+}
+
 /* focus-in */
 .lime-focus-in-fast-motion(@scale-to: 1.1) {
 	transform: scale(@scale-to);
