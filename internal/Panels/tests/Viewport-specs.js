@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {StrictMode} from 'react';
 
 import {SharedState} from '../../SharedStateDecorator';
@@ -30,16 +30,20 @@ const renderViewport = (Wrapper, {viewportProps, panels = threePanels} = {}) => 
 			</SharedState>
 		</Wrapper>
 	);
-	const {rerender} = render(viewport(0));
+	const {rerender, unmount} = render(viewport(0));
 
 	return {
 		shared,
 		// Each call re-renders the same Viewport with a new `index` (and optional extra props and panel list)
-		rerenderAt: (index, extraProps, panelList) => rerender(viewport(index, extraProps, panelList))
+		rerenderAt: (index, extraProps, panelList) => rerender(viewport(index, extraProps, panelList)),
+		unmount
 	};
 };
 
 const NoWrapper = ({children}) => children;
+
+// `fireEvent` returns `false` when the event was canceled, i.e. captured by `captureKeys`
+const isKeyCaptured = () => !fireEvent.keyDown(document.body, {keyCode: 38});
 
 describe('Panels Viewport Specs', () => {
 	describe.each([
@@ -159,6 +163,83 @@ describe('Panels Viewport Specs', () => {
 			rerenderAt(1);
 
 			expect(screen.getByTestId('panel-1')).toHaveAttribute('data-autofocus', 'last-focused');
+		});
+
+		describe('5-way key capture', () => {
+			beforeEach(() => {
+				jest.useFakeTimers();
+			});
+
+			afterEach(() => {
+				jest.useRealTimers();
+			});
+
+			const withAnimation = {viewportProps: {noAnimation: false}};
+
+			test('should keep capturing 5-way keys after the transition until focus enters the viewport', () => {
+				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1);
+
+				expect(isKeyCaptured()).toBe(true);
+
+				act(() => screen.getByTestId('button-1').focus());
+
+				expect(isKeyCaptured()).toBe(false);
+			});
+
+			test('should stop capturing 5-way keys after a timeout when focus never enters the viewport', () => {
+				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1);
+
+				act(() => jest.advanceTimersByTime(250));
+				expect(isKeyCaptured()).toBe(true);
+
+				act(() => jest.advanceTimersByTime(100));
+				expect(isKeyCaptured()).toBe(false);
+			});
+
+			test('should not stop capturing 5-way keys when focus moves outside the viewport', () => {
+				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1);
+				act(() => screen.getByTestId('outside').focus());
+
+				expect(isKeyCaptured()).toBe(true);
+			});
+
+			test('should restart capturing when a new transition begins before focus enters the viewport', () => {
+				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1);
+				act(() => jest.advanceTimersByTime(200));
+				rerenderAt(2);
+
+				// the timeout of the first transition must not release the capture of the second one
+				act(() => jest.advanceTimersByTime(150));
+				expect(isKeyCaptured()).toBe(true);
+
+				act(() => screen.getByTestId('button-2').focus());
+				expect(isKeyCaptured()).toBe(false);
+			});
+
+			test('should not capture 5-way keys after the transition when `noAnimation`', () => {
+				const {rerenderAt} = renderViewport(Wrapper);
+
+				rerenderAt(1);
+
+				expect(isKeyCaptured()).toBe(false);
+			});
+
+			test('should stop capturing 5-way keys when unmounted while waiting for focus', () => {
+				const {rerenderAt, unmount} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1);
+				unmount();
+
+				expect(isKeyCaptured()).toBe(false);
+			});
 		});
 	});
 });

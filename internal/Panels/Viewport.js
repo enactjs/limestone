@@ -20,6 +20,16 @@ import css from './Viewport.module.less';
 
 const PanelsStateContext = createContext({});
 
+// Delay, in milliseconds, after a panel has entered before its children are rendered (via the
+// `hideChildren` entering prop) and it can receive focus.
+const ENTERING_DELAY = 100;
+
+// Maximum time, in milliseconds, to keep capturing keys after a transition completes while waiting
+// for focus to land within the viewport. This only applies when the new panel never receives focus
+// (e.g. `autoFocus="none"` or no spottable content) and must exceed `ENTERING_DELAY` plus a frame
+// and a render.
+const CAPTURE_RELEASE_TIMEOUT = ENTERING_DELAY + 200;
+
 const viewPortBaseDefaultProps = {
 	index: 0,
 	noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION
@@ -31,8 +41,8 @@ const viewPortBaseHandlers = {
 		(ev, props, {removeTransitioningClass}) => {
 			return removeTransitioningClass();
 		},
-		(ev, props, {resume}) => {
-			resume();
+		(ev, {noAnimation}, {resume}) => {
+			resume(noAnimation);
 		}
 	),
 	onWillTransition: handle(
@@ -132,15 +142,66 @@ const ViewportBase = (componentProps) => {
 		count
 	};
 
-	const pause = useCallback(() => {
-		startCapture();
-		paused.current.pause();
+	// Cleans up the pending capture release (listener and timer) without releasing the capture
+	const clearCaptureRelease = useRef(null);
+
+	const cancelCaptureRelease = useCallback(() => {
+		if (clearCaptureRelease.current) {
+			clearCaptureRelease.current();
+		}
 	}, []);
 
-	const resume = useCallback(() => {
-		stopCapture();
+	// The transition completes before the entering panel renders its children (see `hideChildren`
+	// and `enteringDelay`) and focuses them. During that window nothing is focused and key events
+	// would be handled by Spotlight without a current element, allowing focus to escape the
+	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
+	// falling back to a timeout for panels that never receive focus.
+	const releaseCaptureOnFocus = useCallback((skipWait) => {
+		cancelCaptureRelease();
+
+		const viewportNode = nodeRef.current;
+		const current = Spotlight.getCurrent();
+
+		if (
+			!viewportNode ||
+			skipWait ||
+			(current && viewportNode.contains(current))
+		) {
+			stopCapture();
+			return;
+		}
+
+		let timerId = null;
+
+		const clear = () => {
+			// eslint-disable-next-line no-use-before-define
+			viewportNode.removeEventListener('focusin', release);
+			clearTimeout(timerId);
+			clearCaptureRelease.current = null;
+		};
+
+		const release = () => {
+			clear();
+			stopCapture();
+		};
+
+		viewportNode.addEventListener('focusin', release);
+		timerId = setTimeout(release, CAPTURE_RELEASE_TIMEOUT);
+		clearCaptureRelease.current = clear;
+	}, [cancelCaptureRelease]);
+
+	const pause = useCallback(() => {
+		// a new transition supersedes any pending capture release from a previous one
+		cancelCaptureRelease();
+		startCapture();
+		paused.current.pause();
+	}, [cancelCaptureRelease]);
+
+	const resume = useCallback((noAnimationTransition) => {
+		// Spotlight must be resumed immediately so the entering panel is able to focus itself
 		paused.current.resume();
-	}, []);
+		releaseCaptureOnFocus(noAnimationTransition);
+	}, [releaseCaptureOnFocus]);
 
 	const addTransitioningClass = useCallback(() => {
 		if (nodeRef.current) {
@@ -173,10 +234,14 @@ const ViewportBase = (componentProps) => {
 	}, [context, index]);
 
 	useLayoutEffect(() => {
+		const pausedInstance = paused.current;
+
 		return () => {
-			resume();
+			cancelCaptureRelease();
+			pausedInstance.resume();
+			stopCapture();
 		};
-	}, [resume]);
+	}, [cancelCaptureRelease]);
 
 	return (
 		<PanelsStateContext value={panelsContext}>
@@ -186,7 +251,7 @@ const ViewportBase = (componentProps) => {
 				className={className}
 				component="main"
 				duration={250}
-				enteringDelay={100} // TODO: Can we remove this?
+				enteringDelay={ENTERING_DELAY} // TODO: Can we remove this?
 				enteringProp={enteringProp}
 				index={index}
 				noAnimation={noAnimation}
