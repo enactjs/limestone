@@ -22,6 +22,7 @@
 
 import hoc from '@enact/core/hoc';
 import kind from '@enact/core/kind';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import Card, {CardBase} from '../Card';
@@ -46,9 +47,22 @@ const teamShape = PropTypes.shape({
 	score: PropTypes.string
 });
 
-const formatTeamScore = (leftTeam, rightTeam) => {
+const formatTeamScore = (leftTeam, rightTeam, imageOverlay) => {
 	const leftScore = leftTeam?.score;
 	const rightScore = rightTeam?.score;
+
+	if (imageOverlay) {
+		const leftScoreSpan = leftScore && <span className={componentCss.left}>{leftScore}</span>;
+		const rightSpanScore = rightScore && <span className={componentCss.right}>{rightScore}</span>;
+
+		if (leftScore && rightScore) {
+			return (
+				<>{leftScoreSpan}:{rightSpanScore}</>
+			);
+		}
+
+		return leftScoreSpan || rightSpanScore || null;
+	}
 
 	if (leftScore && rightScore) return `${leftScore} : ${rightScore}`;
 
@@ -195,7 +209,8 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			),
 			className: ({styler}) => styler.append(cardCss.sports),
 			imageOverlay: ({css, imageOverlay, leftTeam, rightTeam}) => {
-				const teamScore = formatTeamScore(leftTeam, rightTeam);
+				const teamScore = formatTeamScore(leftTeam, rightTeam, true);
+				const scoreClassName = classnames(css.score, {[css.bothScores]: leftTeam?.score && rightTeam?.score});
 
 				return (
 					<>
@@ -207,7 +222,7 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 								) : null}
 							</div>
 							{teamScore ? (
-								<div className={css.score}>{teamScore}</div>
+								<div className={scoreClassName}>{teamScore}</div>
 							) : (
 								<div />
 							)}

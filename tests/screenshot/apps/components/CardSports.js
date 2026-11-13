@@ -9,6 +9,9 @@ const imageBadge = <Image src={img} />;
 
 const CardSportsTests = [
 	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge}>Item Label</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '1/2'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '11/2'}} roundedImage secondaryBadge={imageBadge}>Item Label</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge}} roundedImage secondaryBadge={imageBadge}>Left Score</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '1/1'}} roundedImage secondaryBadge={imageBadge}>Right Score</CardSports>,
 	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge} selected>Item Label</CardSports>
 ];
 

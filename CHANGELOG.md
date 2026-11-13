@@ -17,10 +17,11 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
-- `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
+- `limestone/CardSports` team image positioning to remain fixed regardless of score area size
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
+- `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/VirtualList` scrollthumb not to cut off
 
 ## [1.12.0] - 2026-10-01
