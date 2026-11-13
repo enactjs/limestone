@@ -20,7 +20,7 @@ describe('qa-VirtualGridList', function () {
 			await Page.spotlightLeft();
 			await Page.delay(200);
 		}
-		await Page.delay(500);
+		await Page.delay(700);
 		// Step 3-2 Verify: Spotlight is on item 16.
 		await expectFocusedItem(16);
 		const curScrollThumbPosition = await Page.scrollThumbPosition();

@@ -270,7 +270,8 @@ describe('Dropdown', function () {
 			)).not.toBe(0);
 
 			await Page.spotlightUp();
-			await Page.delay(250);
+			// High-tier scroll motion is 600ms. The title is back at the top only after it finishes.
+			await Page.delay(700);
 
 			const expected = 0;
 			const actual = getDropdownOffset(

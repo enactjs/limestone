@@ -43,7 +43,8 @@ describe('Scroller List Of Things', function () {
 		// Step 6-2: 5-way Spot Item 99.
 		for (let i = 0; i < 19; i++) {
 			await ScrollerPage.pageDown();
-			await ScrollerPage.delay(700);
+			// 600ms motion, then focus returns on scroll stop. The next Page Down is ignored until that item is focused.
+			await ScrollerPage.delay(1000);
 		}
 		await ScrollerPage.spotlightUp();
 		await expectFocusedItem(99);

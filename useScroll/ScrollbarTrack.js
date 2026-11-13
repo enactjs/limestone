@@ -9,6 +9,8 @@ import {useCallback, useEffect, useRef} from 'react';
 
 import $L from '../internal/$L';
 
+import {getScrollMotionWait} from './scrollMotion';
+
 import css from './ScrollbarTrack.module.less';
 
 const nop = () => {};
@@ -92,6 +94,7 @@ const ScrollbarTrack = (props) => {
 				if (ev.repeat || (scrollSize !== 1) && ((scrollParam.isForward && scrollProgress !== 1) || (!scrollParam.isForward && scrollProgress !== 0))) {
 					consumeEventWithScroll(scrollParam, ev);
 
+					const scrollStopWait = getScrollMotionWait(ref.current, scrollStopWaiting);
 					setTimeout(() => {
 						const updatedScrollProgress = Number(ref.current && ref.current.style.getPropertyValue('--scrollbar-thumb-progress-ratio'));
 						const horizontalReachLeftMost = rtl ? updatedScrollProgress === 1 : updatedScrollProgress === 0;
@@ -106,7 +109,7 @@ const ScrollbarTrack = (props) => {
 								(isRight(keyCode) && horizontalReachRightMost && $L('RIGHTMOST')) // the case that isRight(keyCode) is true
 							);
 						}
-					}, scrollStopWaiting);
+					}, scrollStopWait);
 				}
 			}
 

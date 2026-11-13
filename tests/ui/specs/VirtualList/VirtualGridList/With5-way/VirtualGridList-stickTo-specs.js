@@ -22,7 +22,7 @@ describe('VirtualGridList with stickTo="start"', function () {
 		// Navigate right
 		for (let i = 0; i < 6; i++) {
 			await Page.spotlightRight();
-			await Page.delay(500);
+			await Page.delay(700);
 		}
 
 		const focusedId = await focusedElement();

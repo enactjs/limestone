@@ -29,6 +29,7 @@ import {
 	useEventTouch, useEventVoice, useEventWheel
 } from './useEvent';
 import useOverscrollEffect from './useOverscrollEffect';
+import {getScrollMotion} from './scrollMotion';
 import {useSpotlightRestore} from './useSpotlight';
 
 import overscrollCss from './OverscrollEffect.module.less';
@@ -466,6 +467,8 @@ const useScroll = (props) => {
 		scrollContentHandle,
 		scrollContentRef,
 		scrollContainerRef,
+		// Read at each animated scroll so a tier change applies without caching the token.
+		getScrollMotion: () => getScrollMotion(scrollContainerRef.current),
 		snapToCenter,
 		spotlightContainerDisabled,
 		verticalScrollbarHandle
