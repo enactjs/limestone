@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
+import {Job, mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -26,8 +26,9 @@ const ENTERING_DELAY = 100;
 
 // Maximum time, in milliseconds, to keep capturing keys after a transition completes while waiting
 // for focus to land within the viewport. This only applies when the new panel never receives focus
-// (e.g. `autoFocus="none"` or no spottable content) and must exceed `ENTERING_DELAY` plus a frame
-// and a render.
+// (e.g. `autoFocus="none"`, no spottable content, or pointer mode) and must exceed `ENTERING_DELAY`
+// plus a frame and a render. All keys handled by `captureKeys` are blocked during this time,
+// including Enter and Back, not only the 5-way arrows.
 const CAPTURE_RELEASE_TIMEOUT = ENTERING_DELAY + 200;
 
 const viewPortBaseDefaultProps = {
@@ -142,7 +143,7 @@ const ViewportBase = (componentProps) => {
 		count
 	};
 
-	// Cleans up the pending capture release (listener and timer) without releasing the capture
+	// Cleans up the pending capture release (listener and job) without releasing the capture
 	const clearCaptureRelease = useRef(null);
 
 	const cancelCaptureRelease = useCallback(() => {
@@ -155,7 +156,7 @@ const ViewportBase = (componentProps) => {
 	// and `enteringDelay`) and focuses them. During that window nothing is focused and key events
 	// would be handled by Spotlight without a current element, allowing focus to escape the
 	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
-	// falling back to a timeout for panels that never receive focus.
+	// falling back to a delayed job for panels that never receive focus.
 	const releaseCaptureOnFocus = useCallback((skipWait) => {
 		cancelCaptureRelease();
 
@@ -171,23 +172,23 @@ const ViewportBase = (componentProps) => {
 			return;
 		}
 
-		let timerId = null;
-
-		const clear = () => {
-			// eslint-disable-next-line no-use-before-define
-			viewportNode.removeEventListener('focusin', release);
-			clearTimeout(timerId);
-			clearCaptureRelease.current = null;
-		};
-
 		const release = () => {
-			clear();
+			cancelCaptureRelease();
 			stopCapture();
 		};
 
+		// Use rAF, like the `enteringDelay` job in `ui/ViewManager/View`. If frames are slow, this
+		// fallback is delayed the same way as the entering panel, so it does not fire too early.
+		const releaseJob = new Job(release);
+
 		viewportNode.addEventListener('focusin', release);
-		timerId = setTimeout(release, CAPTURE_RELEASE_TIMEOUT);
-		clearCaptureRelease.current = clear;
+		releaseJob.startRafAfter(CAPTURE_RELEASE_TIMEOUT);
+
+		clearCaptureRelease.current = () => {
+			viewportNode.removeEventListener('focusin', release);
+			releaseJob.stop();
+			clearCaptureRelease.current = null;
+		};
 	}, [cancelCaptureRelease]);
 
 	const pause = useCallback(() => {
@@ -251,7 +252,7 @@ const ViewportBase = (componentProps) => {
 				className={className}
 				component="main"
 				duration={250}
-				enteringDelay={ENTERING_DELAY} // TODO: Can we remove this?
+				enteringDelay={ENTERING_DELAY}
 				enteringProp={enteringProp}
 				index={index}
 				noAnimation={noAnimation}
