@@ -157,7 +157,7 @@ const ViewportBase = (componentProps) => {
 	// would be handled by Spotlight without a current element, allowing focus to escape the
 	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
 	// falling back to a delayed job for panels that never receive focus.
-	const releaseCaptureOnFocus = useCallback((skipWait) => {
+	const releaseCaptureOnFocus = useCallback((noAnimationTransition) => {
 		cancelCaptureRelease();
 
 		const viewportNode = nodeRef.current;
@@ -165,7 +165,7 @@ const ViewportBase = (componentProps) => {
 
 		if (
 			!viewportNode ||
-			skipWait ||
+			noAnimationTransition ||
 			(current && viewportNode.contains(current))
 		) {
 			stopCapture();

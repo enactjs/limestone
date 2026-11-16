@@ -188,7 +188,7 @@ describe('Panels Viewport Specs', () => {
 				expect(isKeyCaptured()).toBe(false);
 			});
 
-			test('should stop capturing 5-way keys after a timeout when focus never enters the viewport', () => {
+			test('should stop capturing 5-way keys after the fallback delay when focus never enters the viewport', () => {
 				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
 
 				rerenderAt(1);
@@ -216,11 +216,19 @@ describe('Panels Viewport Specs', () => {
 				act(() => jest.advanceTimersByTime(200));
 				rerenderAt(2);
 
-				// the timeout of the first transition must not release the capture of the second one
+				// the fallback of the first transition must not release the capture of the second one
 				act(() => jest.advanceTimersByTime(150));
 				expect(isKeyCaptured()).toBe(true);
 
 				act(() => screen.getByTestId('button-2').focus());
+				expect(isKeyCaptured()).toBe(false);
+			});
+
+			test('should stop capturing 5-way keys right after the transition when focus is already within the viewport', () => {
+				const {rerenderAt} = renderViewport(Wrapper, withAnimation);
+
+				rerenderAt(1, {onWillTransition: () => screen.getByTestId('button-1').focus()});
+
 				expect(isKeyCaptured()).toBe(false);
 			});
 
