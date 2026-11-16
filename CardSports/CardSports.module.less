@@ -30,21 +30,24 @@
 	}
 
 	.teamSide {
-		display: flex;
-		align-items: center;
+		&:first-child,
+		&:last-child {
+			position: absolute;
+		}
 
 		&:first-child {
-			justify-content: flex-end;
-			padding-inline-end: @lime-card-sports-logo-spacing;
+			left: @lime-card-sports-logo-spacing;
 		}
 
 		&:last-child {
-			justify-content: flex-start;
-			padding-inline-start: @lime-card-sports-logo-spacing;
+			right: @lime-card-sports-logo-spacing;
 		}
 	}
 
 	.teamLogo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		height: @lime-card-team-logo-size;
 		width: @lime-card-team-logo-size;
 		margin: 0;
@@ -53,22 +56,45 @@
 	.score {
 		align-items: center;
 		display: flex;
-		font-size: @lime-card-duration-font-size;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		font-size: @lime-card-score-font-size;
 		gap: @lime-card-score-gap;
 		height: fit-content;
+		min-height: @lime-card-score-min-height;
 		justify-content: center;
-		line-height: @lime-card-duration-line-height;
-		font-weight: @lime-card-duration-font-weight;
+		line-height: @lime-card-score-line-height;
+		font-weight: @lime-card-score-font-weight;
 		padding: @lime-card-score-padding;
 		border-radius: @lime-card-score-border-radius;
 		width: fit-content;
 		white-space: nowrap;
+
+		&.bothScores {
+			display: grid;
+			grid-template-columns: 1fr auto 1fr;
+
+			.left,
+			.right {
+				max-width: 4ch;
+				overflow: hidden;
+			}
+
+			.left {
+				text-align: end;
+			}
+
+			.right {
+				text-align: start;
+			}
+		}
 	}
 
 	.lime-custom-text({
 		.score {
-			font-size: @lime-card-duration-font-size-large;
-			line-height: @lime-card-duration-line-height-large;
+			font-size: @lime-card-score-font-size-large;
+			line-height: @lime-card-score-line-height-large;
 		}
 	});
 

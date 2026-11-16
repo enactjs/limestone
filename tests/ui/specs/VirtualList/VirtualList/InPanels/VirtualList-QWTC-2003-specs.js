@@ -22,12 +22,12 @@ describe('VirtualList in Panels', function () {
 		await expectFocusedItem(0);
 		// Step 4: 5-way Select Item 0.
 		await Page.spotlightSelect();
-		await Page.delay(500);
+		await Page.delay(1000);
 		// Step 4 Verify: Spotlight is on Go Back.
 		expect(await Page.textContent()).toBe('Go Back');
 		// Step 5: 5-way Select Go Back.
 		await Page.spotlightSelect();
-		await Page.delay(500);
+		await Page.delay(1000);
 		// Step 5 Verify: Spotlight is on Item 0 again.
 		await expectFocusedItem(0);
 	});

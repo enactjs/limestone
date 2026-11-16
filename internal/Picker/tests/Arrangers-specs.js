@@ -22,6 +22,7 @@ const createNode = (motions = {}) => {
 
 	if (motions.enter) node.style.setProperty('--lime-view-enter-motion', motions.enter);
 	if (motions.exit) node.style.setProperty('--lime-view-exit-motion', motions.exit);
+	if (motions.distance) node.style.setProperty('--lime-view-motion-distance', motions.distance);
 
 	node.animate = jest.fn(() => createMockAnimation());
 	document.body.appendChild(node);
@@ -132,7 +133,7 @@ describe('Picker Arrangers Specs', () => {
 			expect(opacity.options).toMatchObject({duration: 380, delay: 120, easing: 'ease-out'});
 		});
 
-		test('should keep the translation distance of the arranger', () => {
+		test('should keep the translation distance of the arranger when no distance is set', () => {
 			const node = createNode({enter: enterMotion});
 
 			FastVerticalCarouselArranger.enter({node, reverse: false});
@@ -140,6 +141,37 @@ describe('Picker Arrangers Specs', () => {
 			const {position} = getAnimations(node);
 
 			expect(position.keyframes).toEqual([{transform: 'translateY(-165px)'}, {transform: 'translateY(0)'}]);
+		});
+
+		test('should translate the entering view by the distance set in the styles', () => {
+			const node = createNode({enter: enterMotion, distance: ' 5.625rem'});
+
+			FastHorizontalCarouselArranger.enter({node, reverse: false});
+
+			const {position} = getAnimations(node);
+
+			expect(position.keyframes).toEqual([{transform: 'translateX(5.625rem)'}, {transform: 'translateX(0)'}]);
+		});
+
+		test('should translate the leaving view by the distance set in the styles', () => {
+			const node = createNode({exit: exitMotion, distance: '3.4375rem'});
+
+			FastVerticalCarouselArranger.leave({node, reverse: false});
+
+			const {position} = getAnimations(node);
+
+			expect(position.keyframes).toEqual([{transform: 'translateY(3.4375rem)'}]);
+		});
+
+		test('should translate the reversed views by the distance set in the styles', () => {
+			const entering = createNode({enter: enterMotion, distance: '5.625rem'});
+			const leaving = createNode({exit: exitMotion, distance: '5.625rem'});
+
+			FastHorizontalCarouselArranger.leave({node: entering, reverse: true});
+			FastHorizontalCarouselArranger.enter({node: leaving, reverse: true});
+
+			expect(getAnimations(entering).position.keyframes).toEqual([{transform: 'translateX(-5.625rem)'}, {transform: 'translateX(0)'}]);
+			expect(getAnimations(leaving).position.keyframes).toEqual([{transform: 'translateX(5.625rem)'}]);
 		});
 
 		test('should let `optionsEnter` override the enter motion', () => {

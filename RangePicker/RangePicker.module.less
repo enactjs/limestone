@@ -8,7 +8,7 @@
 .rangePicker {
 	// Value transition motion, read by the Picker arranger (`.lime-view-motions()`).
 	// Carousel motion: size small, speed fast, same motion in high/low tier.
-	// Fast.carouselIn(+-270, 0) / Fast.carouselOut(+-270, 0); the distance is set by the arranger.
+	// The distance depends on the orientation (`@lime-picker-horizontal/vertical-motion-distance`).
 	.applyMotions(
 		.lime-view-motions(.lime-carousel-in-small-high-motion(), .lime-carousel-out-small-high-motion()),
 		.lime-view-motions(.lime-carousel-in-small-low-motion(), .lime-carousel-out-small-low-motion())
