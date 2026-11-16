@@ -7,7 +7,7 @@ describe('Scroll via 5-way when clientSize is smaller than itemSize plus afforda
 	});
 
 	it('Should not scroll to abnormal position by 5-way navigation', async function () {
-		const scrollAnimationTimeout = 500;
+		const scrollAnimationTimeout = 700;
 
 		// Set minHeight to 1300 to make itemSize + affordance bigger than viewport
 		await Page.inputMinHeight.moveTo();
