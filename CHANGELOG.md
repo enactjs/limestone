@@ -13,6 +13,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
 - `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
+- `limestone/Scroller` styling to match the latest GUI
 - `limestone/WizardPanels` prop `noContentAnimation` to be removed
 
 ### Fixed
