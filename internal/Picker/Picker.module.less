@@ -12,6 +12,17 @@
 	--lime-view-exit-motion: initial;
 }
 
+// Travel distance of the value transition. Set on the picker so it doesn't inherit the distance
+// of a container (e.g. Panels). Like the motions above, a component can override it with
+// `.lime-view-motions()`.
+:where(.picker.horizontal) {
+	--lime-view-motion-distance: @lime-picker-horizontal-motion-distance;
+}
+
+:where(.picker.vertical) {
+	--lime-view-motion-distance: @lime-picker-vertical-motion-distance;
+}
+
 .picker {
 	vertical-align: bottom;
 	position: relative;

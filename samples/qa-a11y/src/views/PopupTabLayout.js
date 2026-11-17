@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 import Alert from '@enact/limestone/Alert';
 import Button from '@enact/limestone/Button';
 import ContextualMenuDecorator from '@enact/limestone/ContextualMenuDecorator';

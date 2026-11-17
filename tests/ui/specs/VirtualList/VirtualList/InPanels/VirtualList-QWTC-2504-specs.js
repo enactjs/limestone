@@ -19,7 +19,7 @@ describe('VirtualList in Panels', function () {
 		// Step 4-2: Keep 5-way Down until scroll happens.
 		const bottomVisibleItem = (await Page.bottomVisibleItemId()).slice(4);
 		await Page.fiveWayToItem(Number(bottomVisibleItem));
-		await Page.delay(500);
+		await Page.delay(700);
 		expect(Number(await Page.getScrollThumbPosition())).toBeGreaterThan(0);
 		// Verify that the list is fully displayed.
 		// Step 4 Verify: Focus on item is not truncated.

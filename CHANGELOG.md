@@ -6,18 +6,23 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/Icon` supported icon list, adding new icon `pinleft` and `pinright`
 - `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
 ### Changed
 
+- `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
+- `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
+- `limestone/Scroller`, `limestone/VirtualList`, and `limestone/VirtualGridList` scroll animation to use motion tokens (`default` speed on the high tier, `fast` speed on the low tier)
 - `limestone/WizardPanels` prop `noContentAnimation` to be removed
 
 ### Fixed
 
-- `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/Alert` Button width for overlay type
+- `limestone/CardSports` team image positioning to remain fixed regardless of score area size
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
+- `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/VirtualList` scrollthumb not to cut off
 - `limestone/VirtualList` and `limestone/VirtualList.VirtualGridList` prop `continue5WayHold` to work when `id` is not the same as `spotlightId`
 

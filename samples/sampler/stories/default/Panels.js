@@ -90,7 +90,7 @@ export const Panels_ = (args) => {
 						icon="arrowlargeright"
 						iconFlip="auto"
 						slot="slotAfter"
-						onClick={forward} // eslint-disable-line react/jsx-no-bind
+						onClick={forward} // eslint-disable-line enact/jsx-no-bind
 					/>
 				</Header>
 				<BodyText>Example text inside an Panel Body</BodyText>
@@ -128,7 +128,7 @@ export const Panels_ = (args) => {
 						icon="arrowlargeright"
 						iconFlip="auto"
 						slot="slotAfter"
-						onClick={forward} // eslint-disable-line react/jsx-no-bind
+						onClick={forward} // eslint-disable-line enact/jsx-no-bind
 					/>
 				</Header>
 				<VirtualGridList
@@ -149,7 +149,7 @@ export const Panels_ = (args) => {
 						icon="arrowlargeright"
 						iconFlip="auto"
 						slot="slotAfter"
-						onClick={forward} // eslint-disable-line react/jsx-no-bind
+						onClick={forward} // eslint-disable-line enact/jsx-no-bind
 					/>
 				</Header>
 				<TabLayout>

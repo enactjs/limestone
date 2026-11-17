@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
+/* eslint-disable enact/jsx-no-bind */
 
 import {Panels} from '@enact/limestone/Panels';
 import ThemeDecorator from '@enact/limestone/ThemeDecorator';
