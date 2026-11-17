@@ -78,6 +78,24 @@ const parseTransition = (value) => splitOutsideParens(value, /,/).map((transitio
 });
 
 /**
+ * Reads a motion custom property on `node` and parses its `transition` value.
+ *
+ * @function
+ * @param   {Node}      node            The animated node.
+ * @param   {String}    propertyName    The custom property that holds the transition.
+ * @returns {Object[]|null}             The parsed transitions, or `null` when no motion is set.
+ * @memberof limestone/internal/util/motion
+ * @private
+ */
+const getMotion = (node, propertyName) => {
+	if (typeof window === 'undefined' || !node || node.nodeType !== 1) return null;
+
+	const transitions = parseTransition(window.getComputedStyle(node).getPropertyValue(propertyName));
+
+	return transitions.length ? transitions : null;
+};
+
+/**
  * Reads the motion set by `.lime-view-motions()` (styles/motion-mixins.less) for `type`
  * ('enter' | 'exit') on `node` or one of its ancestors.
  *
@@ -88,13 +106,7 @@ const parseTransition = (value) => splitOutsideParens(value, /,/).map((transitio
  * @memberof limestone/internal/util/motion
  * @private
  */
-const getViewMotion = (node, type) => {
-	if (typeof window === 'undefined' || !node || node.nodeType !== 1) return null;
-
-	const transitions = parseTransition(window.getComputedStyle(node).getPropertyValue(`--lime-view-${type}-motion`));
-
-	return transitions.length ? transitions : null;
-};
+const getViewMotion = (node, type) => getMotion(node, `--lime-view-${type}-motion`);
 
 /**
  * Reads the travel distance set by `.lime-view-motions()` on `node` or
@@ -126,6 +138,7 @@ const getViewMotionDistance = (node) => {
 const negateLength = (length) => (/^[\d.]+[a-z%]*$/i.test(length) ? `-${length}` : `calc(-1 * ${length})`);
 
 export {
+	getMotion,
 	getViewMotion,
 	getViewMotionDistance,
 	negateLength,

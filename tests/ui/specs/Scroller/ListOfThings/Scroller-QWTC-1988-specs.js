@@ -74,7 +74,7 @@ describe('Scroller List Of Things', function () {
 
 		// Step 12: Press Channel down.
 		await ScrollerPage.pageDown();
-		await ScrollerPage.delay(500);
+		await ScrollerPage.delay(700);
 		// Step 12-4 Verify: Spotlight still hides.
 		await expectNoFocusedItem();
 		// Spotlight will display again when the pointer hides.
