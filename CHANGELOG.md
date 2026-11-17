@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Fixed
+
+- `limestone/VirtualList` and `limestone/VirtualList.VirtualGridList` prop `continue5WayHold` to work when `id` is not the same as `spotlightId`
+
 ## [1.11.4] - 2026-10-20
 
 - Update dependencies including ilib updates.
