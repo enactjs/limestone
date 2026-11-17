@@ -75,7 +75,7 @@ let VirtualList = (props) => {
 	}
 	const {continue5WayHold, itemSize, hoverToScroll, ...rest} = virtualListProps;
 
-	Spotlight.set(props.id, {continue5WayHold});
+	Spotlight.set(props['data-spotlight-id'], {continue5WayHold});
 
 	const itemSizeProps = itemSize && itemSize.minSize ?
 		{
@@ -591,7 +591,7 @@ let VirtualGridList = (props) => {
 	}
 	const {continue5WayHold, hoverToScroll, ...rest} = virtualGridListProps;
 
-	Spotlight.set(props.id, {continue5WayHold});
+	Spotlight.set(props['data-spotlight-id'], {continue5WayHold});
 
 	const {
 		// Variables
