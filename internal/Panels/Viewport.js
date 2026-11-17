@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
 import useHandlers from '@enact/core/useHandlers';
-import {mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
+import {Job, mapAndFilterChildren, setDefaultProps} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -20,6 +20,17 @@ import css from './Viewport.module.less';
 
 const PanelsStateContext = createContext({});
 
+// Delay, in milliseconds, after a panel has entered before its children are rendered (via the
+// `hideChildren` entering prop) and it can receive focus.
+const ENTERING_DELAY = 100;
+
+// Maximum time, in milliseconds, to keep capturing keys after a transition completes while waiting
+// for focus to land within the viewport. This only applies when the new panel never receives focus
+// (e.g. `autoFocus="none"`, no spottable content, or pointer mode) and must exceed `ENTERING_DELAY`
+// plus a frame and a render. All keys handled by `captureKeys` are blocked during this time,
+// including Enter and Back, not only the 5-way arrows.
+const CAPTURE_RELEASE_TIMEOUT = ENTERING_DELAY + 200;
+
 const viewPortBaseDefaultProps = {
 	index: 0,
 	noAnimation: typeof ENACT_PACK_NO_ANIMATION !== 'undefined' && ENACT_PACK_NO_ANIMATION
@@ -31,8 +42,8 @@ const viewPortBaseHandlers = {
 		(ev, props, {removeTransitioningClass}) => {
 			return removeTransitioningClass();
 		},
-		(ev, props, {resume}) => {
-			resume();
+		(ev, {noAnimation}, {resume}) => {
+			resume(noAnimation);
 		}
 	),
 	onWillTransition: handle(
@@ -132,15 +143,66 @@ const ViewportBase = (componentProps) => {
 		count
 	};
 
-	const pause = useCallback(() => {
-		startCapture();
-		paused.current.pause();
+	// Cleans up the pending capture release (listener and job) without releasing the capture
+	const clearCaptureRelease = useRef(null);
+
+	const cancelCaptureRelease = useCallback(() => {
+		if (clearCaptureRelease.current) {
+			clearCaptureRelease.current();
+		}
 	}, []);
 
-	const resume = useCallback(() => {
-		stopCapture();
+	// The transition completes before the entering panel renders its children (see `hideChildren`
+	// and `enteringDelay`) and focuses them. During that window nothing is focused and key events
+	// would be handled by Spotlight without a current element, allowing focus to escape the
+	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
+	// falling back to a delayed job for panels that never receive focus.
+	const releaseCaptureOnFocus = useCallback((noAnimationTransition) => {
+		cancelCaptureRelease();
+
+		const viewportNode = nodeRef.current;
+		const current = Spotlight.getCurrent();
+
+		if (
+			!viewportNode ||
+			noAnimationTransition ||
+			(current && viewportNode.contains(current))
+		) {
+			stopCapture();
+			return;
+		}
+
+		const release = () => {
+			cancelCaptureRelease();
+			stopCapture();
+		};
+
+		// Use rAF, like the `enteringDelay` job in `ui/ViewManager/View`. If frames are slow, this
+		// fallback is delayed the same way as the entering panel, so it does not fire too early.
+		const releaseJob = new Job(release);
+
+		viewportNode.addEventListener('focusin', release);
+		releaseJob.startRafAfter(CAPTURE_RELEASE_TIMEOUT);
+
+		clearCaptureRelease.current = () => {
+			viewportNode.removeEventListener('focusin', release);
+			releaseJob.stop();
+			clearCaptureRelease.current = null;
+		};
+	}, [cancelCaptureRelease]);
+
+	const pause = useCallback(() => {
+		// a new transition supersedes any pending capture release from a previous one
+		cancelCaptureRelease();
+		startCapture();
+		paused.current.pause();
+	}, [cancelCaptureRelease]);
+
+	const resume = useCallback((noAnimationTransition) => {
+		// Spotlight must be resumed immediately so the entering panel is able to focus itself
 		paused.current.resume();
-	}, []);
+		releaseCaptureOnFocus(noAnimationTransition);
+	}, [releaseCaptureOnFocus]);
 
 	const addTransitioningClass = useCallback(() => {
 		if (nodeRef.current) {
@@ -173,10 +235,14 @@ const ViewportBase = (componentProps) => {
 	}, [context, index]);
 
 	useLayoutEffect(() => {
+		const pausedInstance = paused.current;
+
 		return () => {
-			resume();
+			cancelCaptureRelease();
+			pausedInstance.resume();
+			stopCapture();
 		};
-	}, [resume]);
+	}, [cancelCaptureRelease]);
 
 	return (
 		<PanelsStateContext value={panelsContext}>
@@ -186,7 +252,7 @@ const ViewportBase = (componentProps) => {
 				className={className}
 				component="main"
 				duration={250}
-				enteringDelay={100} // TODO: Can we remove this?
+				enteringDelay={ENTERING_DELAY}
 				enteringProp={enteringProp}
 				index={index}
 				noAnimation={noAnimation}
