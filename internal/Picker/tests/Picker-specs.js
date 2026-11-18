@@ -521,12 +521,10 @@ describe('Picker Specs', () => {
 		render(
 			<Picker index={0} joined max={1} min={-1} orientation="horizontal" />
 		);
-		const picker = screen.getByLabelText('0 press ok button to change the value');
 
-		const expected = 2; // joined value plus the indicator container
-		const actual = picker.children.item(0).children.length;
+		const indicatorContainer = screen.queryByRole('list', {hidden: true});
 
-		expect(actual).toBe(expected);
+		expect(indicatorContainer).toBeNull();
 	});
 
 	test('indicator Container should not show any indicator when \'joined\' and \'horizontal\' and has one children', () => {
@@ -535,12 +533,10 @@ describe('Picker Specs', () => {
 				<PickerItem>Test one picker</PickerItem>
 			</Picker>
 		);
-		const picker = screen.getByRole('spinbutton', {hidden: true});
 
-		const expected = 2; // PickerItem plus the indicator container
-		const actual = picker.children.length;
+		const indicatorContainer = screen.queryByRole('list', {hidden: true});
 
-		expect(actual).toBe(expected);
+		expect(indicatorContainer).toBeNull();
 	});
 
 	test('indicator Container should show with the exact number of children indicator when \'joined\' and \'horizontal\'', () => {
@@ -551,10 +547,10 @@ describe('Picker Specs', () => {
 				<PickerItem>Test three picker</PickerItem>
 			</Picker>
 		);
-		const picker = screen.getByRole('spinbutton', {hidden: true});
+		const indicatorContainer = screen.getByRole('list', {hidden: true});
 
 		const expected = 3; // one indicator per PickerItem
-		const actual = picker.children.item(2).children.length; // indicator container
+		const actual = indicatorContainer.children.length;
 
 		expect(actual).toBe(expected);
 	});
