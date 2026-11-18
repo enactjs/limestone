@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import {getContainerConfig} from '@enact/spotlight/src/container';
 import {act, render, screen} from '@testing-library/react';
 
 import Item from '../../Item';
@@ -388,6 +389,43 @@ describe('VirtualList', () => {
 			const actual = screen.getByRole('list').parentElement.parentElement.children.length;
 
 			expect(actual).toBe(expected);
+		});
+	});
+
+	describe('continue5WayHold', () => {
+		test('should set \'continue5WayHold\' to the spotlight container when only \'spotlightId\' is provided', () => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldList"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldList').continue5WayHold;
+
+			expect(actual).toBe(true);
+		});
+
+		test('should set \'continue5WayHold\' to the spotlight container when \'id\' differs from \'spotlightId\'', () => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					id="continue5WayHoldListDomId"
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldListSpotlightId"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldListSpotlightId').continue5WayHold;
+
+			expect(actual).toBe(true);
 		});
 	});
 });
