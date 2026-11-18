@@ -8,6 +8,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/TabLayout` isomorphic build
 - `limestone/VirtualList` long press scroll between multiple VirtualLists
+- `limestone/VirtualList` and `limestone/VirtualList.VirtualGridList` prop `continue5WayHold` to work when `id` is not the same as `spotlightId`
 
 ## [1.9.4] - 2026-06-18
 
