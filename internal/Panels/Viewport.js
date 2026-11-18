@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import handle, {forward} from '@enact/core/handle';
-import {mapAndFilterChildren} from '@enact/core/util';
+import {Job, mapAndFilterChildren} from '@enact/core/util';
 import {I18nContextDecorator} from '@enact/i18n/I18nDecorator';
 import Spotlight from '@enact/spotlight';
 import Pause from '@enact/spotlight/Pause';
@@ -17,6 +17,17 @@ import {ContextAsDefaults} from './util';
 import css from './Viewport.module.less';
 
 const PanelsStateContext = createContext({});
+
+// Delay, in milliseconds, after a panel has entered before its children are rendered (via the
+// `hideChildren` entering prop) and it can receive focus.
+const ENTERING_DELAY = 100;
+
+// Maximum time, in milliseconds, to keep capturing keys after a transition completes while waiting
+// for focus to land within the viewport. This only applies when the new panel never receives focus
+// (e.g. `autoFocus="none"`, no spottable content, or pointer mode) and must exceed `ENTERING_DELAY`
+// plus a frame and a render. All keys handled by `captureKeys` are blocked during this time,
+// including Enter and Back, not only the 5-way arrows.
+const CAPTURE_RELEASE_TIMEOUT = ENTERING_DELAY + 200;
 
 /**
  * The container for a set of Panels
@@ -201,7 +212,9 @@ const ViewportBase = class extends Component {
 	}
 
 	componentWillUnmount () {
-		this.resume();
+		this.cancelCaptureRelease();
+		this.paused.resume();
+		stopCapture();
 	}
 
 	addTransitioningClass = () => {
@@ -221,13 +234,64 @@ const ViewportBase = class extends Component {
 	};
 
 	pause = () => {
+		// a new transition supersedes any pending capture release from a previous one
+		this.cancelCaptureRelease();
 		startCapture();
 		this.paused.pause();
 	};
 
 	resume = () => {
-		stopCapture();
+		// Spotlight must be resumed immediately so the entering panel is able to focus itself
 		this.paused.resume();
+		this.releaseCaptureOnFocus();
+	};
+
+	// Cleans up the pending capture release (listener and job) without releasing the capture
+	clearCaptureRelease = null;
+
+	cancelCaptureRelease = () => {
+		if (this.clearCaptureRelease) {
+			this.clearCaptureRelease();
+		}
+	};
+
+	// The transition completes before the entering panel renders its children (see `hideChildren`
+	// and `enteringDelay`) and focuses them. During that window nothing is focused and key events
+	// would be handled by Spotlight without a current element, allowing focus to escape the
+	// viewport (e.g. out of a popup). Keep capturing keys until focus lands within the viewport,
+	// falling back to a delayed job for panels that never receive focus.
+	releaseCaptureOnFocus = () => {
+		this.cancelCaptureRelease();
+
+		const node = this.node;
+		const current = Spotlight.getCurrent();
+
+		if (
+			!node ||
+			this.props.noAnimation ||
+			(current && node.contains(current))
+		) {
+			stopCapture();
+			return;
+		}
+
+		const release = () => {
+			this.cancelCaptureRelease();
+			stopCapture();
+		};
+
+		// Use rAF, like the `enteringDelay` job in `ui/ViewManager/View`. If frames are slow, this
+		// fallback is delayed the same way as the entering panel, so it does not fire too early.
+		const releaseJob = new Job(release);
+
+		node.addEventListener('focusin', release);
+		releaseJob.startRafAfter(CAPTURE_RELEASE_TIMEOUT);
+
+		this.clearCaptureRelease = () => {
+			node.removeEventListener('focusin', release);
+			releaseJob.stop();
+			this.clearCaptureRelease = null;
+		};
 	};
 
 	handle = handle.bind(this);
@@ -305,7 +369,7 @@ const ViewportBase = class extends Component {
 					className={className}
 					component="main"
 					duration={250}
-					enteringDelay={100} // TODO: Can we remove this?
+					enteringDelay={ENTERING_DELAY}
 					enteringProp={enteringProp}
 					index={index}
 					noAnimation={noAnimation}

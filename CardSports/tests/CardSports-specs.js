@@ -30,7 +30,8 @@ describe('CardSports', () => {
 			/>
 		);
 
-		expect(screen.getByText('0/0 : 1/1')).toBeInTheDocument();
+		const scoreContainer = screen.getByText(':');
+		expect(scoreContainer).toHaveTextContent('0/0:1/1');
 	});
 
 	test('should render team logos with the same badge implementation as `primaryBadge`', () => {
@@ -69,8 +70,10 @@ describe('CardSports', () => {
 			/>
 		);
 
+		const scoreContainer = screen.getByText(':');
+
 		expect(screen.getByText('Extra Overlay')).toBeInTheDocument();
-		expect(screen.getByText('0/0 : 0/0')).toBeInTheDocument();
+		expect(scoreContainer).toHaveTextContent('0/0:0/0');
 	});
 
 	test('should still render `primaryBadge` and `secondaryBadge`', () => {
