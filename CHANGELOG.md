@@ -20,6 +20,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` Button width for overlay type
 - `limestone/CardSports` team image positioning to remain fixed regardless of score area size
+- `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+- `limestone/DatePicker` and `limestone/TimePicker` to show the current date and time instead of fallback values when `disabled` and `value` is not set
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
 - `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, and `limestone/Panels` to keep focus inside the panels when 5-way keys are pressed right after a panel transition
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
