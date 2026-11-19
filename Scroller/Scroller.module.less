@@ -7,31 +7,30 @@
 .focusableBody {
 	display: flex;
 	flex-direction: column;
-	width: calc(100% - 2 * @lime-scroll-focusablebody-margin);
-	height: calc(100% - 2 * @lime-scroll-focusablebody-margin);
-	margin: @lime-scroll-focusablebody-margin;
+	width: 100%;
+	height: 100%;
 	overflow: inherit;
 
 	&::before {
 		content: '';
 		position: absolute;
-		.position(0);
+		.position(calc(-1 * @lime-scroll-focusablebody-margin));
 		border-radius: @lime-scroll-focusablebody-focus-border-radius;
 		opacity: 0;
 	}
 
 	&.hasVerticalScrollbar::before {
-		right: var(--scroll-scrollbar-size);
+		right: calc(var(--scroll-scrollbar-size) - @lime-scroll-focusablebody-margin);
 	}
 
 	&.hasHorizontalScrollbar::before {
-		bottom: var(--scroll-scrollbar-size);
+		bottom: calc(var(--scroll-scrollbar-size) - @lime-scroll-focusablebody-margin);
 	}
 
 	.enact-locale-rtl({
 		&.hasVerticalScrollbar::before {
-			right: 0;
-			left: var(--scroll-scrollbar-size);
+			right: calc(-1 * @lime-scroll-focusablebody-margin);
+			left: calc(var(--scroll-scrollbar-size) - @lime-scroll-focusablebody-margin);
 		}
 	});
 

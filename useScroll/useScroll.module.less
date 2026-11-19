@@ -21,37 +21,8 @@
 	overflow: hidden;
 
 	&.focusableBodyExtend {
-		width: calc(100% + 2 * @lime-scroll-focusablebody-margin);
-		height: calc(100% + 2 * @lime-scroll-focusablebody-margin);
-		margin: calc(-1 * @lime-scroll-focusablebody-margin);
-
-		.verticalScrollbar {
-			top: @lime-scroll-focusablebody-margin;
-			height: calc(100% - 2 * @lime-scrollbar-padding - 2 * @lime-scroll-focusablebody-margin);
-		}
-
-		.horizontalScrollbar {
-			left: @lime-scroll-focusablebody-margin;
-			bottom: @lime-scroll-focusablebody-margin;
-			width: calc(100% - 2 * @lime-scrollbar-padding - 2 * @lime-scroll-focusablebody-margin);
-		}
-
-		&.bidirectional {
-			.verticalScrollbar {
-				height: calc(100% - 2 * @lime-scrollbar-padding - var(--scroll-scrollbar-size) - 2 * @lime-scroll-focusablebody-margin);
-			}
-
-			.horizontalScrollbar {
-				left: @lime-scroll-focusablebody-margin;
-				width: calc(100% - 2 * @lime-scrollbar-padding - var(--scroll-scrollbar-size) - 2 * @lime-scroll-focusablebody-margin);
-			}
-
-			.enact-locale-rtl({
-				.horizontalScrollbar {
-					left: calc(var(--scroll-scrollbar-size) + @lime-scroll-focusablebody-margin);
-				}
-			});
-		}
+		overflow: clip;
+		overflow-clip-margin: @lime-scroll-focusablebody-margin;
 	}
 
 	&.focusableScrollbar {
