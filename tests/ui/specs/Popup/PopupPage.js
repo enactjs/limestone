@@ -66,7 +66,7 @@ class PopupInterface {
 		return element(`#${this.id}`, browser);
 	}
 	get         title () {
-		return getText(element(`#${this.id}>div>div`, browser));
+		return getText(element(`#${this.id}>div>div:first-child`, browser));
 	}
 	get        isOpen () {
 		return $(`.enact_ui_Transition_Transition_shown #${this.id}`).isExisting();

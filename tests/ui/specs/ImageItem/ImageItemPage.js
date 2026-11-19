@@ -14,7 +14,7 @@ class ImageItemInterface {
 		return $(`#${this.id}`);
 	}
 	get textContent () {
-		return getText(element(`#${this.id} .ImageItem_ImageItem_caption`, this.self));
+		return getText(element(`#${this.id} .enact_ui_ImageItem_ImageItem_caption`, this.self));
 	}
 	get valueText () {
 		return getText($(`#${this.id} > div .enact_ui_Marquee_Marquee_text`));

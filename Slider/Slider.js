@@ -292,6 +292,7 @@ const SliderBase = (props) => {
 					orientation={rest.orientation}
 					showMinMax={displayMinMax}
 					startLabel={sideStartLabel}
+					value={rest.value}
 				/> : null
 			}
 		/>
@@ -425,6 +426,10 @@ SliderBase.propTypes = /** @lends limestone/Slider.SliderBase.prototype */ {
 	 * Ignored when {@link limestone/Slider.SliderBase.automaticLabels|automaticLabels} is set.
 	 *
 	 * Labels are displayed on a single line. Overflowing text is marqueed.
+	 *
+	 * While the slider is focused, only one label marquees: the tick closest to the current value,
+	 * or the nearer end when only start and end labels are shown. Hover marquees a label only when
+	 * the slider is not focused.
 	 *
 	 * @type {Array<Node>}
 	 * @public

@@ -26,6 +26,11 @@ describe('Chips', () => {
 			</ChipBase>
 		]
 	};
+
+	function renderChips ({children, ...rest}) {
+		return render(<ChipsBase {...rest}>{children}</ChipsBase>);
+	}
+
 	function getAllDeleteButtons () {
 		// Look for buttons that are inside deleteButtonContainer
 		const container = document.querySelector('.chips');
@@ -43,13 +48,13 @@ describe('Chips', () => {
 	}
 
 	it('should render correctly with default props', () => {
-		const {container} = render(<ChipsBase {...defaultProps} />);
+		const {container} = renderChips(defaultProps);
 		expect(container.firstChild.firstChild).toHaveClass('chips');
 		expect(container.firstChild.firstChild).toHaveClass('vertical');
 	});
 
 	it('should focus the correct chip on navigation', () => {
-		render(<ChipsBase {...defaultProps} />);
+		renderChips(defaultProps);
 		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
@@ -69,7 +74,7 @@ describe('Chips', () => {
 	});
 
 	it('should call handleDelete when delete button is clicked', () => {
-		render(<ChipsBase {...defaultProps} />);
+		renderChips(defaultProps);
 
 		const chipButtons = screen.getAllByRole('checkbox', {name: /Chip [12]/i});
 		fireEvent.focus(chipButtons[0]);
@@ -87,7 +92,7 @@ describe('Chips', () => {
 			...defaultProps,
 			orientation: 'horizontal'
 		};
-		const {container} = render(<ChipsBase {...horizontalProps} />);
+		const {container} = renderChips(horizontalProps);
 		expect(container.firstChild.firstChild).toHaveClass('chips');
 		expect(container.firstChild.firstChild).toHaveClass('horizontal');
 	});
@@ -97,7 +102,7 @@ describe('Chips', () => {
 			...defaultProps,
 			orientation: 'horizontal'
 		};
-		render(<ChipsBase {...horizontalProps} />);
+		renderChips(horizontalProps);
 		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
 
@@ -124,7 +129,7 @@ describe('Chips', () => {
 				<ChipBase key="chip2" id="chip2">Chip 2</ChipBase>
 			]
 		};
-		render(<ChipsBase {...propsWithoutDelete} />);
+		renderChips(propsWithoutDelete);
 
 		const deleteButtons = getAllDeleteButtons();
 		expect(deleteButtons).toHaveLength(0);
@@ -153,7 +158,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...mixedPositionProps} />);
+		renderChips(mixedPositionProps);
 
 		const deleteButtons = getAllDeleteButtons();
 		expect(deleteButtons).toHaveLength(2);
@@ -175,7 +180,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...clickableProps} />);
+		renderChips(clickableProps);
 
 		const chipButton = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		fireEvent.click(chipButton);
@@ -195,7 +200,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...iconProps} />);
+		renderChips(iconProps);
 
 		expect(screen.getByText('Chip with Star')).toBeInTheDocument();
 		expect(screen.getByText('Chip with Heart')).toBeInTheDocument();
@@ -218,7 +223,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...disabledProps} />);
+		renderChips(disabledProps);
 
 		const disabledChips = screen.getAllByRole('checkbox');
 		disabledChips.forEach(chip => {
@@ -239,7 +244,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...singleChipProps} />);
+		renderChips(singleChipProps);
 
 		expect(screen.getByText('Single Chip')).toBeInTheDocument();
 		const deleteButtons = getAllDeleteButtons();
@@ -251,7 +256,7 @@ describe('Chips', () => {
 			orientation: 'vertical',
 			children: []
 		};
-		const {container} = render(<ChipsBase {...emptyProps} />);
+		const {container} = renderChips(emptyProps);
 
 		expect(container.firstChild.firstChild).toHaveClass('chips');
 		expect(container.firstChild.firstChild).toHaveClass('vertical');
@@ -264,7 +269,7 @@ describe('Chips', () => {
 			...defaultProps,
 			className: 'custom-chips-class'
 		};
-		const {container} = render(<ChipsBase {...customProps} />);
+		const {container} = renderChips(customProps);
 
 		expect(container.firstChild.firstChild).toHaveClass('chips');
 		expect(container.firstChild.firstChild).toHaveClass('vertical');
@@ -276,7 +281,7 @@ describe('Chips', () => {
 			...defaultProps,
 			orientation: 'vertical'
 		};
-		render(<ChipsBase {...verticalProps} />);
+		renderChips(verticalProps);
 
 		const chip1 = screen.getByText('Chip 1').closest('[role="checkbox"]');
 		const chip2 = screen.getByText('Chip 2').closest('[role="checkbox"]');
@@ -317,7 +322,7 @@ describe('Chips', () => {
 				</ChipBase>
 			]
 		};
-		render(<ChipsBase {...propsWithParams} />);
+		renderChips(propsWithParams);
 
 		const deleteButtons = getAllDeleteButtons();
 		expect(deleteButtons.length).toBeGreaterThan(0);

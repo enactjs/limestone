@@ -103,6 +103,7 @@ const StorybookDecorator = (story, config = {}) => {
 			textSize={JSON.parse(globals['large text']) ? 'large' : 'normal'}
 			focusRing={JSON.parse(globals['focus ring'])}
 			highContrast={JSON.parse(globals['high contrast'])}
+			animationTier={globals['animation tier']}
 			style={{
 				'--lime-env-background': globals.background === 'default' ? '' : globals.background
 			}}

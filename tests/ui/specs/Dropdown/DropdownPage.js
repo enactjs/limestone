@@ -30,6 +30,10 @@ class DropdownInterface {
 		return getComponent({component: 'Dropdown', child: 'dropdownList'}, browser);
 	}
 
+	get verticalScrollbar () {
+		return element('.useScroll_useScroll_verticalScrollbar', this.list);
+	}
+
 	get focusedItemText () {
 		return browser.execute(() => {
 			const focused = document.activeElement;

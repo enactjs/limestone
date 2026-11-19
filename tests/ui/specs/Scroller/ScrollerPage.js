@@ -46,8 +46,9 @@ class ScrollerPage extends Page {
 		return element('#bottom', browser);
 	}
 
+	// Every item renders its own `#removeItem`; the first one belongs to item 0
 	get buttonRemoveItem () {
-		return element('#removeItem', browser);
+		return $$('#removeItem')[0];
 	}
 	get buttonHideScrollbar () {
 		return element('#hideScrollbar', browser);

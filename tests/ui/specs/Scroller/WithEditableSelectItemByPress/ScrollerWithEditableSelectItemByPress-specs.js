@@ -266,7 +266,7 @@ describe('Editable Scroller', function () {
 			const item0 = await $('#item0');
 			await item0.click();
 			// Click on remove button.
-			const removeButton = await $('#removeItem');
+			const removeButton = await $$('#removeItem')[0];
 			await removeButton.click();
 
 			// Verify: Item 0 is deleted.
@@ -287,7 +287,7 @@ describe('Editable Scroller', function () {
 				}
 			]);
 			// Click on Remove Button.
-			const removeButton = await $('#removeItem');
+			const removeButton = await $$('#removeItem')[0];
 			await removeButton.click();
 
 			// Verify: Item 0 is deleted.
@@ -299,7 +299,7 @@ describe('Editable Scroller', function () {
 			const item0 = await $('#item0');
 			await item0.click();
 			// Click on Hide Button.
-			const hideButton = await $('#hideItem');
+			const hideButton = await $$('#hideItem')[0];
 			await hideButton.click();
 			const showButton = await $('#showItem');
 			await item0.scrollIntoView();

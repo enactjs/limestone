@@ -70,8 +70,9 @@ class VideoPlayerInterface {
 		return $(this.selector + ' .VideoPlayer_MediaTitle_title .enact_ui_Marquee_Marquee_text');
 	}
 
+	// The first time element is the current time; the second is the total time
 	get mediaControlsTime () {
-		return $(this.selector + ' .MediaPlayer_Times_times time');
+		return $$(this.selector + ' .MediaPlayer_Times_times time')[0];
 	}
 
 	get mediaTitleInfoComponent () {

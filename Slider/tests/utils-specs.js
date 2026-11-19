@@ -1,4 +1,4 @@
-import {getAutomaticTickLabels, getTickAlignedStep, getTickConfig} from '../utils';
+import {getAutomaticTickLabels, getFocusedTickIndex, getTickAlignedStep, getTickConfig} from '../utils';
 
 describe('Slider utils', () => {
 	describe('getTickConfig', () => {
@@ -72,6 +72,31 @@ describe('Slider utils', () => {
 
 		test('should divide the range by the number of tick intervals', () => {
 			expect(getTickAlignedStep(0, 100, 5)).toBe(25);
+		});
+	});
+
+	describe('getFocusedTickIndex', () => {
+		test('should return the tick index when the value lands on a tick', () => {
+			expect(getFocusedTickIndex(0, 0, 100, 5)).toBe(0);
+			expect(getFocusedTickIndex(50, 0, 100, 5)).toBe(2);
+			expect(getFocusedTickIndex(100, 0, 100, 5)).toBe(4);
+		});
+
+		test('should return the nearest tick when the value is between ticks', () => {
+			expect(getFocusedTickIndex(10, 0, 100, 5)).toBe(0);
+			expect(getFocusedTickIndex(40, 0, 100, 3)).toBe(1);
+			expect(getFocusedTickIndex(90, 0, 100, 5)).toBe(4);
+		});
+
+		test('should clamp values outside the range onto the end ticks', () => {
+			expect(getFocusedTickIndex(-10, 0, 100, 5)).toBe(0);
+			expect(getFocusedTickIndex(140, 0, 100, 5)).toBe(4);
+		});
+
+		test('should return -1 when a tick cannot be resolved', () => {
+			expect(getFocusedTickIndex(0, 0, 100, 1)).toBe(-1);
+			expect(getFocusedTickIndex(0, 100, 0, 5)).toBe(-1);
+			expect(getFocusedTickIndex(NaN, 0, 100, 5)).toBe(-1);
 		});
 	});
 });

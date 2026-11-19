@@ -1,8 +1,10 @@
+import Button from '@enact/limestone/Button';
 import Heading from '@enact/limestone/Heading';
 import SwitchItem from '@enact/limestone/SwitchItem';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, text} from '@enact/storybook-utils/addons/controls';
 import Group from '@enact/ui/Group';
+import {Fragment, useCallback, useState} from 'react';
 
 SwitchItem.displayName = 'SwitchItem';
 
@@ -96,3 +98,53 @@ text('Long Text 2', _Group, SwitchItem, 'Second ' + inputData.longText);
 text('Long Text 3', _Group, SwitchItem, 'Third ' + inputData.longText);
 
 _Group.storyName = 'Group';
+
+// QEVENTTH-15000 / NXT-21006
+//
+// A selected SwitchItem used to replay the handle "bounce" animation every time it re-mounted
+// (e.g. navigating away from a panel and back), even though the toggle state had not changed,
+// because the bounce is a CSS `animation` that the browser replays on mount. This story
+// re-mounts the SwitchItem on demand so the behavior can be checked by eye.
+//
+// Steps:
+//   1. Toggle "Microphone" on — the handle should bounce once (expected).
+//   2. Press "Re-mount the switch above" repeatedly. The switch stays on and must NOT bounce.
+// The handle should still bounce only when it is actually toggled off and back on.
+export const BounceOnReMount = (args) => {
+	const disabled = args['disabled'];
+	const [selected, setSelected] = useState(true);
+	const [mountKey, setMountKey] = useState(0);
+
+	const handleToggle = useCallback((ev) => {
+		setSelected(ev.selected);
+		action('onToggle')(ev);
+	}, []);
+	const remount = useCallback(() => setMountKey((k) => k + 1), []);
+
+	return (
+		<div>
+			<Heading showLine>{'Re-mount should not replay the bounce (QEVENTTH-15000)'}</Heading>
+			<Fragment key={mountKey}>
+				<SwitchItem
+					disabled={disabled}
+					onToggle={handleToggle}
+					selected={selected}
+				>
+					{'Microphone'}
+				</SwitchItem>
+			</Fragment>
+			<Button onClick={remount} size="small">
+				{'Re-mount the switch above'}
+			</Button>
+		</div>
+	);
+};
+
+boolean('disabled', BounceOnReMount, SwitchItem, false);
+
+BounceOnReMount.storyName = 'bounce on re-mount';
+BounceOnReMount.parameters = {
+	info: {
+		text: 'A selected SwitchItem should not replay the bounce animation when it re-mounts.'
+	}
+};

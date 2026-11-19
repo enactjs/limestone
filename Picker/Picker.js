@@ -285,6 +285,7 @@ const PickerBase = kind({
 
 	styles: {
 		css: componentCss,
+		className: 'picker',
 		publicClassNames: ['inlineTitle', 'title']
 	},
 

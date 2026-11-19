@@ -68,7 +68,9 @@
 			transition: left 200ms, background-color 200ms;
 		}
 
-		&.selected .icon {
+		// Play the bounce only on an actual off-to-on toggle (`.bouncing`, set by
+		// BounceOnToggle), not whenever a selected switch mounts/re-mounts. (QEVENTTH-15000)
+		&.selected.bouncing .icon {
 			.lime-toggle-motion();
 		}
 	}

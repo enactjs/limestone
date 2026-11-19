@@ -512,6 +512,9 @@ const IconBase = kind({
  * ezsetting
  * fitness
  * auracast2
+ * iclinkaccount
+ * pinleft
+ * pinright
 };
  * ```
  *

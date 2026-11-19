@@ -166,6 +166,10 @@ const dropIn = {
 		<Button key="yes" disabled size="small">Yes</Button>,
 		<Button key="no" disabled size="small">No</Button>
 	],
+	twoLongSmallButtons: [
+		<Button key="yes" size="small">Yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees</Button>,
+		<Button key="no" size="small">Nooooooooooooooooooooooooooooooooooooooo</Button>
+	],
 	threeSmallButtons: [
 		<Button key="yes" size="small">Yes</Button>,
 		<Button key="no" size="small">No</Button>,
@@ -234,6 +238,7 @@ const alertWithButtonsTests = [
 	...withProps({type: 'overlay', buttons: dropIn.oneSmallButton}, overlaySizes),
 	...withProps({type: 'overlay', buttons: dropIn.twoSmallButtons}, overlaySizes),
 	...withProps({type: 'overlay', buttons: dropIn.twoDisabledSmallButtons}, overlaySizes),
+	...withProps({type: 'overlay', buttons: dropIn.twoLongSmallButtons}, overlaySizes),
 	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.twoSmallButtons}, overlaySizes),
 	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.threeSmallButtons}, overlaySizes),
 	...withProps({type: 'overlay', buttonDirection: 'auto', buttons: dropIn.fourSmallButtons}, overlaySizes),

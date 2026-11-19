@@ -2,18 +2,46 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [1.13.0] - 2026-11-19
+
+### Added
+
+- `limestone/Icon` supported icon list, adding new icon `pinleft` and `pinright`
+- `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
+
+### Changed
+
+- `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
+- `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
+- `limestone/Scroller`, `limestone/VirtualList`, and `limestone/VirtualGridList` scroll animation to use motion tokens (`default` speed on the high tier, `fast` speed on the low tier)
+- `limestone/WizardPanels` prop `noContentAnimation` to be removed
+
+### Fixed
+
+- `limestone/Alert` Button width for overlay type
+- `limestone/CardSports` team image positioning to remain fixed regardless of score area size
+- `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+- `limestone/DatePicker` and `limestone/TimePicker` to show the current date and time instead of fallback values when `disabled` and `value` is not set
+- `limestone/Dropdown` scrollbar not to appear when unnecessary
+- `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, and `limestone/Panels` to keep focus inside the panels when 5-way keys are pressed right after a panel transition
+- `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
+- `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
+- `limestone/VirtualList` scrollthumb not to cut off
+
 ## [1.12.0] - 2026-10-01
 
 ### Added
 
 - `limestone/CardSports` to display a sports match layout with team colors, logos, and score
 - `limestone/Chips.Chip` prop `multiline` to be able to show the text on multiple lines
+- `limestone/Icon` supported icon list, adding new icon `iclinkaccount`
 - `limestone/IconItem` prop `description`
 - `limestone/ImageItem` prop `secondaryLabel`
 - `limestone/Item` prop `secondaryLabel`
 - `limestone/Slider` props `ticks` and `labels` to display equally spaced tick marks and labels
 - `limestone/Slider` prop `alignStepsWithTicks` to snap the knob to tick marks
 - `limestone/Slider` prop `automaticLabels` to label ticks from `min` and `max`
+- `limestone/ThemeDecorator` prop `animationTier` to set the animation tier of the device
 - `limestone/WizardPanels` prop `noContentAnimation` to disable the content transition animation
 
 ### Changed

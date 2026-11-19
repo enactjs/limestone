@@ -25,7 +25,7 @@ describe('CheckboxItem', function () {
 			});
 
 			it('should have the icon to the left of marquee text', async function () {
-				expectOrdering(checkboxItem.checkboxIcon, checkboxItem.value);
+				await expectOrdering(checkboxItem.checkboxIcon, checkboxItem.value);
 			});
 
 			describe('5-way', function () {
@@ -144,11 +144,11 @@ describe('CheckboxItem', function () {
 			});
 
 			it('should have a node(icon) to the right of checkbox icon', async function () {
-				expectOrdering(await checkboxItem.checkboxIcon, checkboxItem.slotBeforeNode);
+				await expectOrdering(await checkboxItem.checkboxIcon, checkboxItem.slotBeforeNode);
 			});
 
 			it('should have a node(icon) to the left of text', async function () {
-				expectOrdering(await checkboxItem.slotBeforeNode, checkboxItem.value);
+				await expectOrdering(await checkboxItem.slotBeforeNode, checkboxItem.value);
 			});
 		});
 
@@ -264,17 +264,17 @@ describe('CheckboxItem', function () {
 
 		it('should have checkbox icon to the right of text when default', async function () {
 			const checkboxItem = await Page.components.checkboxDefault;
-			expectOrdering(checkboxItem.value, checkboxItem.checkboxIcon);
+			await expectOrdering(checkboxItem.value, checkboxItem.checkboxIcon);
 		});
 
 		it('should have a node(icon) to the right of text when default', async function () {
 			const checkboxItem = await Page.components.checkboxSlot;
-			expectOrdering(checkboxItem.value, checkboxItem.slotBeforeNode);
+			await expectOrdering(checkboxItem.value, checkboxItem.slotBeforeNode);
 		});
 
 		it('should have checkbox icon to the right of a node(icon)', async function () {
 			const checkboxItem = await Page.components.checkboxSlot;
-			expectOrdering(checkboxItem.slotBeforeNode, checkboxItem.checkboxIcon);
+			await expectOrdering(checkboxItem.slotBeforeNode, checkboxItem.checkboxIcon);
 		});
 
 		it('should have two inlined checkboxes positioned inlined', async function () {

@@ -8,7 +8,7 @@ class PickerInterface {
 	}
 
 	async focus () {
-		return browser.execute((el) => el.focus(), await $(`.${this.className}>div`));
+		return browser.execute((el) => el.focus(), await $(`.${this.className} > .internal_Picker_Picker_incrementer`));
 	}
 
 	async focusJoined () {

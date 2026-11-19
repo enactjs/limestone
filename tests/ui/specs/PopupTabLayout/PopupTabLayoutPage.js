@@ -5,7 +5,6 @@ const getContent = getComponent({component: 'TabLayout', child: 'content'});
 const getTabPanels = getComponent({component: 'PopupTabLayout', child: 'panels'});
 const getTabLayout = getComponent({component: 'TabLayout'});
 const getTabs = getComponent({component: 'TabLayout', child: 'tabsExpanded'});
-const getCollapsedTabs = getComponent({component: 'TabLayout', child: 'tabs'});
 
 class PopupTabLayoutInterface {
 	constructor (id) {
@@ -22,10 +21,10 @@ class PopupTabLayoutInterface {
 	}
 
 	async helpButton () {
-		return $('.Panels_Header_slotAfter > span > div');
+		return $('.Panels_Header_slotAfter > span > [role="button"]');
 	}
 	async backButton () {
-		return $('.Panels_Header_slotBefore > span > div');
+		return $('.Panels_Header_slotBefore > span > [role="button"]');
 	}
 
 	get self () {
@@ -58,7 +57,7 @@ class PopupTabLayoutInterface {
 	}
 	// get tabsScroller () {return getScroller(this.self);}
 	get collapsedTabs () {
-		return getCollapsedTabs(this.self);
+		return this.self.$('.TabLayout_TabLayout_tabs:not(.TabLayout_TabLayout_tabsExpanded)');
 	}
 }
 

@@ -22,7 +22,7 @@ import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/conta
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {Component, use, useEffect} from 'react';
+import {use, useEffect, useLayoutEffect, useState} from 'react';
 import compose from 'ramda/src/compose';
 
 import Skinnable from '../Skinnable';
@@ -324,68 +324,67 @@ const PopupTabLayoutBase = kind({
 });
 
 const OptimizedFocusDecorator = hoc((config, Wrapped) => {
-	return class extends Component {
-		static displayName = 'OptimizedFocusDecorator';
+	// eslint-disable-next-line no-shadow
+	const OptimizedFocusDecorator = (props) => {
+		checkPropTypes(OptimizedFocusDecorator, props);
 
-		static propTypes = /** @lends limestone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
-			/**
-			 * Controls the visibility of the PopupTabLayout.
-			 *
-			 * @type {Boolean}
-			 * @private
-			 */
-			open: PropTypes.bool,
+		const {open, optimized, spotlightId} = props;
 
-			/**
-			 * Optimizes PopupTabLayout without Popup when true.
-			 *
-			 * @type {Boolean}
-			 * @private
-			 */
-			optimized: PropTypes.bool,
+		// Pauses Spotlight before the children are mounted so the focus can be set to the layout on mount
+		const [paused] = useState(() => {
+			const pause = new Pause('PopupTabLayout');
 
-			/**
-			 * The container id.
-			 *
-			 * @type {String}
-			 * @private
-			 */
-			spotlightId: PropTypes.string
-		};
-
-		constructor (props) {
-			super(props);
-			if (props.optimized) {
-				this.paused = new Pause('PopupTabLayout');
-				if (props.open) {
-					this.paused.pause();
-				}
+			if (optimized && open) {
+				pause.pause();
 			}
-		}
 
-		componentDidMount () {
-			if (this.props.optimized && this.props.open) {
-				this.paused.resume();
-				Spotlight.focus(this.props.spotlightId);
-			}
-		}
+			return pause;
+		});
 
-		componentDidUpdate (prevProps) {
-			if (this.props.optimized && this.props.open !== prevProps.open) {
-				if (this.props.open) {
-					Spotlight.focus(this.props.spotlightId);
-				}
+		useLayoutEffect(() => {
+			if (optimized && open) {
+				// Only resumes when paused on mount
+				paused.resume();
+				Spotlight.focus(spotlightId);
 			}
-		}
+		}, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-		render () {
-			if (this.props.optimized) {
-				return <Wrapped {...this.props} style={!this.props.open ? {display: 'none'} : null} />;
-			} else {
-				return <Wrapped {...this.props} />;
-			}
+		if (optimized) {
+			return <Wrapped {...props} style={!open ? {display: 'none'} : null} />;
+		} else {
+			return <Wrapped {...props} />;
 		}
 	};
+
+	OptimizedFocusDecorator.displayName = 'OptimizedFocusDecorator';
+
+	OptimizedFocusDecorator.propTypes = /** @lends limestone/PopupTabLayout.OptimizedFocusDecorator.prototype */ {
+		/**
+		 * Controls the visibility of the PopupTabLayout.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		open: PropTypes.bool,
+
+		/**
+		 * Optimizes PopupTabLayout without Popup when true.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		optimized: PropTypes.bool,
+
+		/**
+		 * The container id.
+		 *
+		 * @type {String}
+		 * @private
+		 */
+		spotlightId: PropTypes.string
+	};
+
+	return OptimizedFocusDecorator;
 });
 
 

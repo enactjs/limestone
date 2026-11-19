@@ -158,7 +158,7 @@ const DropdownListBase = kind({
 					key={key}
 					slotAfter={slotAfter}
 					data-selected={isSelected}
-					// eslint-disable-next-line react/jsx-no-bind
+					// eslint-disable-next-line enact/jsx-no-bind
 					onClick={() => forward('onSelect', {data, selected: index}, props)}
 					size="large"
 				/>
@@ -193,6 +193,7 @@ const DropdownListBase = kind({
 					cbScrollTo={scrollTo}
 					dataSize={dataSize}
 					itemSize={ri.scale(itemSize)}
+					noAffordance
 					role="group"
 					scrollbarTrackCss={css}
 					style={{

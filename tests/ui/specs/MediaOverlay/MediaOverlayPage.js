@@ -5,7 +5,7 @@ class MediaOverlayInterface {
 	constructor (id) {
 		this.id = id;
 		this.selector = `#${this.id}`;
-		this.marqueeAnimatedSelector = `#${this.id} > div .enact_ui_Marquee_Marquee_animate`;
+		this.marqueeAnimatedSelector = `#${this.id} .MediaOverlay_MediaOverlay_text .enact_ui_Marquee_Marquee_animate`;
 	}
 
 	async focus () {

@@ -1,6 +1,7 @@
 // Popup.module.less
 //
 @import "../styles/mixins.less";
+@import "../styles/motion-mixins.less";
 @import "../styles/variables.less";
 @import "../styles/skin.less";
 
@@ -146,6 +147,50 @@
 		.inner {
 			height: 100%;
 			width: 100%;
+		}
+	}
+
+	&.shown {
+		.inner {
+			.applyMotions(.lime-enter-small-high-motion(), .lime-enter-small-low-motion(), is);
+		}
+
+		&.center .inner {
+			.applyMotions(.lime-enter-medium-high-motion(), .lime-enter-medium-low-motion(), is);
+		}
+
+		// Alert Fullscreen
+		&.fullscreen .inner { .lime-enter-none-motion(); }
+	}
+
+	&.hidden {
+		&.bottom .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, 336px), .lime-exit-small-low-motion(0, 336px), is);
+		}
+
+		&.top .inner {
+			.applyMotions(.lime-exit-small-high-motion(0, -336px), .lime-exit-small-low-motion(0, -336px), is);
+		}
+
+		&.left .inner {
+			.applyMotions(.lime-exit-small-high-motion(-336px, 0), .lime-exit-small-low-motion(-336px, 0), is);
+		}
+
+		&.right .inner {
+			.applyMotions(.lime-exit-small-high-motion(336px, 0), .lime-exit-small-low-motion(336px, 0), is);
+		}
+
+		// Alert Overlay
+		&.center .inner {
+			.applyMotions(.lime-exit-medium-high-motion(0, 32px), .lime-exit-medium-low-motion(0, 32px), is);
+		}
+	}
+
+	:global(.noAnimation) & {
+		&.shown .inner,
+		&.hidden .inner {
+			transition: none;
+			animation: none;
 		}
 	}
 }

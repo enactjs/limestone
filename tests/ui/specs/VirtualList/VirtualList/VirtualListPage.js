@@ -100,7 +100,7 @@ class VirtualListPage extends Page {
 
 	// scrollThumb api
 	get scrollThumb () {
-		return $(`${scrollThumbSelector}`);
+		return $$(scrollThumbSelector)[0];
 	}
 
 	async getScrollThumbPosition (index = 0) {

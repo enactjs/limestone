@@ -42,9 +42,13 @@
 			border: @lime-button-border-width solid transparent;
 			box-sizing: border-box;
 			will-change: transform;
-			.lime-slider-focus-out-motion();
 		}
 	}
+
+	.applyMotions(
+		{ .knob::before { .lime-slider-focus-out-high-motion(); }},
+		{ .knob::before { .lime-slider-focus-out-low-motion(); }}
+	);
 
 	&.showAnchor {
 		.knob {
@@ -121,7 +125,7 @@
 			opacity: 0;
 			pointer-events: none;
 			transform: translate(-50%, -50%) scale(@lime-slider-focus-scale);
-			transition: opacity var(--lime-focus-in-motion-duration) var(--lime-focus-in-motion-easing-function);
+			transition: opacity var(--lime-motion-medium2-duration) var(--lime-EIO-motion-easing-function);
 		}
 	}
 
@@ -141,13 +145,26 @@
 		line-height: @lime-slider-tick-label-line-height;
 		letter-spacing: @lime-slider-tick-label-letter-spacing;
 		max-width: 100%;
+		overflow: hidden;
 		pointer-events: auto;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.tickLabel {
 		position: absolute;
 		top: 100%;
 		margin-top: @lime-slider-tick-label-offset;
+		width: 100%;
+	}
+
+	// A disabled Marquee drops `alignment`, so center and ellipsize the plain label here.
+	.tick .tickLabelMarquee {
+		display: block;
+		overflow: hidden;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		width: 100%;
 	}
 
@@ -217,11 +234,13 @@
 
 			.startLabel {
 				left: ~"calc("@h-gap ~"-" @lime-slider-side-label-gap ~"-" @lime-slider-side-label-width ~")";
+				text-align: right;
 			}
 
 			.endLabel {
 				left: ~"calc(100% - "@h-gap ~"+" @lime-slider-side-label-gap ~")";
 				right: auto;
+				text-align: left;
 			}
 		}
 
@@ -282,6 +301,7 @@
 				width: max-content;
 				max-width: @lime-slider-side-label-width;
 				left: 50%;
+				text-align: center;
 				transform: translateX(-50%);
 			}
 
@@ -394,9 +414,10 @@
 
 		:global(.spotlight-input-mouse) & {
 			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
-				.knob::before {
-					.lime-slider-focus-in-motion();
-				}
+				.applyMotions(
+					{ .knob::before { .lime-slider-focus-in-high-motion(); }},
+					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
+				);
 			}
 
 			&:not([disabled]):not(.colorPicker, .pressed) {
@@ -422,26 +443,33 @@
 					background-color: @lime-slider-handle-focused-color;
 					border-color: @lime-slider-handle-focused-border-color;
 					box-shadow: @lime-slider-handle-focused-shadow;
-					.lime-slider-focus-in-motion();
 				}
+
+				.applyMotions(
+					{ .knob::before { .lime-slider-focus-in-high-motion(); }},
+					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
+				);
 
 				&:active,
 				&.pressed {
-					.knob::before {
-						.lime-slider-press-motion();
-					}
+					.applyMotions(
+						{ .knob::before { .lime-slider-press-high-motion(); }},
+						{ .knob::before { .lime-slider-press-low-motion(); }}
+					);
 				}
 
 				&:not(.pressed) {
-					.knob::before {
-						.lime-slider-release-motion();
-					}
+					.applyMotions(
+						{ .knob::before { .lime-slider-release-high-motion(); }},
+						{ .knob::before { .lime-slider-release-low-motion(); }}
+					);
 				}
 
 				.disabled({
-					.knob::before {
-						.lime-slider-focus-out-motion();
-					}
+					.applyMotions(
+						{ .knob::before { .lime-slider-focus-out-high-motion(); }},
+						{ .knob::before { .lime-slider-focus-out-low-motion(); }}
+					);
 				});
 			}
 
@@ -462,8 +490,12 @@
 				background-color: @lime-slider-handle-focused-color;
 				border-color: @lime-slider-handle-focused-border-color;
 				box-shadow: @lime-slider-handle-focused-shadow;
-				.lime-slider-focus-in-motion();
 			}
+
+			.applyMotions(
+				{ .knob::before { .lime-slider-focus-in-high-motion(); }},
+				{ .knob::before { .lime-slider-focus-in-low-motion(); }}
+			);
 		}
 
 		:global(.noAnimation) & {
