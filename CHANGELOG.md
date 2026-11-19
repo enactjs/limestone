@@ -6,11 +6,14 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/CardSports` `secondaryText` on `leftTeam` and `rightTeam`, shown under each team's score
 - `limestone/Icon` supported icon list, adding new icon `pinleft` and `pinright`
 - `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
 ### Changed
 
+- `limestone/CardSports` size to 978 × 540
+- `limestone/CardSports` badge position to 30px from the top and side edges
 - `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
 - `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
 - `limestone/Scroller`, `limestone/VirtualList`, and `limestone/VirtualGridList` scroll animation to use motion tokens (`default` speed on the high tier, `fast` speed on the low tier)

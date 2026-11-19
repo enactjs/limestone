@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
+import ri from '@enact/ui/resolution';
 
 import {CardSportsBase} from '../CardSports';
 
@@ -88,6 +89,67 @@ describe('CardSports', () => {
 
 		expect(screen.getByText('Primary Badge')).toBeInTheDocument();
 		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
+	});
+
+	test('should use a 978 by 540 image by default', () => {
+		render(
+			<CardSportsBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0'}}
+			/>
+		);
+
+		const card = screen.getByTestId('card');
+
+		expect(card.style.getPropertyValue('--card-image-width')).toBe(ri.scaleToRem(978));
+		expect(card.style.getPropertyValue('--card-image-height')).toBe(ri.scaleToRem(540));
+	});
+
+	test('should allow `imageSize` to override the sports card size', () => {
+		render(
+			<CardSportsBase
+				data-testid="card"
+				imageSize={{height: 200, width: 400}}
+				leftTeam={{backgroundColor: '#1b2a4a', score: '1'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '0'}}
+			/>
+		);
+
+		const card = screen.getByTestId('card');
+
+		expect(card.style.getPropertyValue('--card-image-width')).toBe(ri.scaleToRem(400));
+		expect(card.style.getPropertyValue('--card-image-height')).toBe(ri.scaleToRem(200));
+	});
+
+	test('should render secondary text under each team score', () => {
+		render(
+			<CardSportsBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryText: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryText: '0/1'}}
+			/>
+		);
+
+		const scoreContainer = screen.getByText(':');
+
+		expect(screen.getByText('2')).toBeInTheDocument();
+		expect(screen.getByText('1/2')).toBeInTheDocument();
+		expect(screen.getByText('1')).toBeInTheDocument();
+		expect(screen.getByText('0/1')).toBeInTheDocument();
+		expect(scoreContainer).toHaveTextContent('21/2:10/1');
+	});
+
+	test('should include secondary text in the aria-label', () => {
+		render(
+			<CardSportsBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryText: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryText: '0/1'}}
+			>
+				Title
+			</CardSportsBase>
+		);
+
+		expect(screen.getByLabelText('Title 2 1/2 : 1 0/1')).toBeInTheDocument();
 	});
 
 	test('should render a single score when only one team has a score', () => {
