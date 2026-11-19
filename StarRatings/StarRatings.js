@@ -250,6 +250,7 @@ const FocusPreviewDecorator = (Wrapped) => {
 	const FocusPreview = ({onBlur, onFocus, onMouseEnter, onMouseLeave, ...rest}) => {
 		const {id} = rest;
 		const [focusedStar, setFocusedStar] = useState(null);
+		const [isNavigating, setIsNavigating] = useState(null);
 		const pointerInside = useRef(false);
 		const restoring = useRef(false);
 		const redirecting = useRef(false);
@@ -296,10 +297,11 @@ const FocusPreviewDecorator = (Wrapped) => {
 
 			// Focus events bubble from the stars; anything else in the row is ignored
 			setFocusedStar(isOwnStar(ev.target) ? getStarNumber(ev.target.id, id) || null : null);
+			setIsNavigating(!!focusedStar);
 
 			if (restoring.current) return; // the star got its focus back; nothing changed
 			if (onFocus) onFocus(ev);
-		}, [id, isOwnStar, onFocus]);
+		}, [focusedStar, id, isOwnStar, onFocus]);
 
 		const handleBlur = useCallback((ev) => {
 			const star = ev.target;
@@ -333,6 +335,7 @@ const FocusPreviewDecorator = (Wrapped) => {
 			<Wrapped
 				{...rest}
 				focusedStar={focusedStar}
+				isNavigating={isNavigating}
 				onBlur={handleBlur}
 				onFocus={handleFocus}
 				onMouseEnter={handleMouseEnter}
@@ -413,6 +416,17 @@ const StarRatingsBase = kind({
 		 * @private
 		 */
 		focusedStar: PropTypes.number,
+
+		/**
+		 * `true` once 5-way navigation moves between stars after initial focus enters the row.
+		 *
+		 * Used to suppress the individual star's accessibility readout on first entry so only the
+		 * group instruction is read, and restore individual star readouts during navigation.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		isNavigating: PropTypes.bool,
 
 		/**
 		 * The number of stars.
@@ -573,6 +587,7 @@ const StarRatingsBase = kind({
 	render: ({
 		disabled,
 		id,
+		isNavigating,
 		max,
 		onStarClick,
 		onTouchEnd,
@@ -610,7 +625,7 @@ const StarRatingsBase = kind({
 							<Star
 								key={i}
 								aria-hidden={false}
-								aria-label={ariaLabel}
+								aria-label={isNavigating ? ariaLabel : null}
 								data-star-selected={i + 1 === selected ? true : null}
 								id={`${id}-star-${i + 1}`}
 								disabled={disabled}
