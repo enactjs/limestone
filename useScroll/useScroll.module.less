@@ -20,6 +20,11 @@
 	box-sizing: border-box;
 	overflow: hidden;
 
+	&.focusableBodyExtend {
+		overflow: clip;
+		overflow-clip-margin: @lime-scroll-focusablebody-margin;
+	}
+
 	&.focusableScrollbar {
 		--scroll-scrollbar-size: @lime-scrollbar-focusable-size;
 	}

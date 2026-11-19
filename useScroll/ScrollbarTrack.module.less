@@ -73,6 +73,10 @@
 		margin: 0 var(--scrollbar-track-margin);
 		width: @lime-scrollbar-track-width;
 
+		&.focusableScrollbar {
+			margin-inline-start: calc(var(--scrollbar-track-margin) + @lime-scroll-focusablebody-margin);
+		}
+
 		.thumb {
 			height: var(--scrollbar-thumb-size);
 			top: var(--scrollbar-thumb-progress);
@@ -99,6 +103,10 @@
 	&:not(.vertical) {
 		margin: var(--scrollbar-track-margin) 0;
 		height: @lime-scrollbar-track-width;
+
+		&.focusableScrollbar {
+			margin-top: calc(var(--scrollbar-track-margin) + @lime-scroll-focusablebody-margin);
+		}
 
 		.thumb {
 			width: var(--scrollbar-thumb-size);
