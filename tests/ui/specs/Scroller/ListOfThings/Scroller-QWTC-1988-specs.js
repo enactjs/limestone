@@ -1,3 +1,4 @@
+const {waitForScrollStartStop} = require('../../VirtualList/VirtualList-utils');
 const {expectFocusedItem, expectNoFocusedItem, focusedElement} = require('../Scroller-utils.js');
 const ScrollerPage = require('../ScrollerPage');
 
@@ -74,7 +75,8 @@ describe('Scroller List Of Things', function () {
 
 		// Step 12: Press Channel down.
 		await ScrollerPage.pageDown();
-		await ScrollerPage.delay(700);
+		// The top-level item is chosen on scroll stop, so the pointer must stay visible until then.
+		await waitForScrollStartStop();
 		// Step 12-4 Verify: Spotlight still hides.
 		await expectNoFocusedItem();
 		// Spotlight will display again when the pointer hides.
