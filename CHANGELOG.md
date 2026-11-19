@@ -2,7 +2,7 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
-## [unreleased]
+## [1.13.0] - 2026-11-19
 
 ### Added
 
@@ -27,6 +27,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/VirtualList` scrollthumb not to cut off
+- `limestone/VirtualList` and `limestone/VirtualList.VirtualGridList` prop `continue5WayHold` to work when `id` is not the same as `spotlightId`
 
 ## [1.12.0] - 2026-10-01
 
