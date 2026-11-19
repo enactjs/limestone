@@ -2,12 +2,17 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/StarRatings` to display a star rating or let the user select one
+
 ## [1.13.0] - 2026-11-19
 
 ### Added
 
 - `limestone/Icon` supported icon list, adding new icon `pinleft` and `pinright`
-- `limestone/StarRatings` to display a star rating or let the user select one
 - `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
 ### Changed
