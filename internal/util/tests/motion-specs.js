@@ -1,4 +1,4 @@
-import {getViewMotion, getViewMotionDistance, negateLength, parseTransition, splitOutsideParens} from '../motion';
+import {getMotion, getViewMotion, getViewMotionDistance, negateLength, parseTransition, splitOutsideParens} from '../motion';
 
 describe('motion', () => {
 	describe('splitOutsideParens', () => {
@@ -30,6 +30,33 @@ describe('motion', () => {
 
 		test('should return an empty array for an empty value', () => {
 			expect(parseTransition('')).toEqual([]);
+		});
+	});
+
+	describe('getMotion', () => {
+		const createNode = (properties = {}) => {
+			const node = document.createElement('div');
+			Object.keys(properties).forEach((name) => node.style.setProperty(name, properties[name]));
+			document.body.appendChild(node);
+
+			return node;
+		};
+
+		afterEach(() => {
+			document.body.innerHTML = '';
+		});
+
+		test('should read the named motion property', () => {
+			const node = createNode({'--lime-scroll-motion': 'transform 600ms 0ms ease-out'});
+
+			expect(getMotion(node, '--lime-scroll-motion')).toEqual([
+				{property: 'transform', duration: 600, delay: 0, easing: 'ease-out'}
+			]);
+		});
+
+		test('should return `null` when the property is not set', () => {
+			expect(getMotion(createNode(), '--lime-scroll-motion')).toBeNull();
+			expect(getMotion(null, '--lime-scroll-motion')).toBeNull();
 		});
 	});
 

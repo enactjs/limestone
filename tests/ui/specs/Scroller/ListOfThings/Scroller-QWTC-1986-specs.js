@@ -24,7 +24,8 @@ describe('Scroller List Of Things', function () {
 			expect(Number(await ScrollerPage.scroller.getAttribute('data-keydown-events'))).toBe(index);
 		}
 		// Step 3-3,4 Verify: One (1)  onScrollStart/Stop event is added.
-		await ScrollerPage.delay(300);
+		// High-tier scroll motion is 600ms, so the stop event lands after that.
+		await ScrollerPage.delay(700);
 		expect(Number(await ScrollerPage.scroller.getAttribute('data-scrolling-events'))).toBe(1);
 
 		// Step 4-1: 5-way Up several times until reaching to the item which is upper the screen.
@@ -41,7 +42,7 @@ describe('Scroller List Of Things', function () {
 		}
 
 		// Step 4-3,4 Verify: One (1)  onScrollStart/Stop event is added.
-		await ScrollerPage.delay(300);
+		await ScrollerPage.delay(700);
 		expect(Number(await ScrollerPage.scroller.getAttribute('data-scrolling-events'))).toBe(2);
 
 		// Perform a test of QWTC-1987, which is not covered by QWTC-1986.
