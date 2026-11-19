@@ -22,8 +22,10 @@
 import {adaptEvent, forProp, forward, handle} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Spotlight from '@enact/spotlight';
+import Spottable from '@enact/spotlight/Spottable';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
+import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import clamp from 'ramda/src/clamp';
@@ -35,6 +37,8 @@ import Skinnable from '../Skinnable';
 import Star from './Star';
 
 import css from './StarRatings.module.less';
+
+const SpottableDiv = Spottable('div');
 
 /**
  * Finds the star element under the current touch point.
@@ -456,6 +460,15 @@ const StarRatingsBase = kind({
 		overlayMode: PropTypes.bool,
 
 		/**
+		 * The total number of ratings.
+		 *
+		 * @type {Number}
+		 * @default 0
+		 * @public
+		 */
+		ratings: PropTypes.number,
+
+		/**
 		 * Displays the rating without letting the user change it.
 		 *
 		 * * `true`: the stars cannot be focused or selected, and `value` keeps one decimal place.
@@ -491,6 +504,7 @@ const StarRatingsBase = kind({
 		disabled: false,
 		max: 5,
 		overlayMode: false,
+		ratings: 0,
 		readOnly: false
 	},
 
@@ -540,8 +554,11 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({value, max}) => {
-            return $L(`Star rating ${value} out of ${max} stars change a value with left right button`);
+		'aria-label': ({max, ratings, readOnly, value}) => {
+			const ariaLabel = new IString($L('Star rating {value} out of {max} stars change a value with left right button')).format({value, max});
+			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value, ratings});
+
+            return readOnly ? readOnlyAriaLabel : ariaLabel;
 		},
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		// The selected rating, which Spotlight enters the row at
@@ -570,36 +587,43 @@ const StarRatingsBase = kind({
 	}) => {
 		delete rest.focusedStar;
 		delete rest.onChange;
+		delete rest.ratings;
 		delete rest.value;
 
-		return (
-			<div
-				{...rest}
-				aria-disabled={disabled}
-				id={id}
-				onTouchEnd={onTouchEnd}
-				onTouchMove={onTouchMove}
-				onTouchStart={onTouchStart}
-			>
-				{Array.from({length: max}, (_, i) => {
-					const starValue = clamp(0, 10, tenths - i * 10) / 10;
-					const ariaLabel = i === 0 ? $L('1 star') : $L(`${i + 1} stars`)
+		const StarsContainer = readOnly ? SpottableDiv : 'div';
 
-					return (
-						<Star
-							key={i}
-							aria-label={ariaLabel}
-							data-star-selected={i + 1 === selected ? true : null}
-							id={`${id}-star-${i + 1}`}
-							disabled={disabled}
-							overlayMode={overlayMode}
-							readOnly={readOnly}
-							value={starValue}
-							onClick={onStarClick}
-						/>
-					);
-				})}
-			</div>
+		return (
+			<StarsContainer role="region" aria-labelledby={id}>
+				<div
+					{...rest}
+					aria-disabled={disabled}
+					id={id}
+					onTouchEnd={onTouchEnd}
+					onTouchMove={onTouchMove}
+					onTouchStart={onTouchStart}
+					role="group"
+				>
+					{Array.from({length: max}, (_, i) => {
+						const starValue = clamp(0, 10, tenths - i * 10) / 10;
+						const ariaLabel = i === 0 ? $L('1 star') : new IString($L(`{value} stars`)).format({value: i + 1});
+
+						return (
+							<Star
+								key={i}
+								aria-hidden={false}
+								aria-label={ariaLabel}
+								data-star-selected={i + 1 === selected ? true : null}
+								id={`${id}-star-${i + 1}`}
+								disabled={disabled}
+								overlayMode={overlayMode}
+								readOnly={readOnly}
+								value={starValue}
+								onClick={onStarClick}
+							/>
+						);
+					})}
+				</div>
+			</StarsContainer>
 		);
 	}
 });
