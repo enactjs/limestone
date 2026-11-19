@@ -22,8 +22,8 @@
 import {adaptEvent, forProp, forward, handle} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Spotlight from '@enact/spotlight';
-import Spottable from '@enact/spotlight/Spottable';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
+import Spottable from '@enact/spotlight/Spottable';
 import Changeable from '@enact/ui/Changeable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
@@ -558,7 +558,7 @@ const StarRatingsBase = kind({
 			const ariaLabel = new IString($L('Star rating {value} out of {max} stars change a value with left right button')).format({value, max});
 			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value, ratings});
 
-            return readOnly ? readOnlyAriaLabel : ariaLabel;
+			return readOnly ? readOnlyAriaLabel : ariaLabel;
 		},
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		// The selected rating, which Spotlight enters the row at
@@ -571,7 +571,6 @@ const StarRatingsBase = kind({
 	},
 
 	render: ({
-		ariaLabelStar,
 		disabled,
 		id,
 		max,
