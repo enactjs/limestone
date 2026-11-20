@@ -13,7 +13,19 @@ const CardSportsTests = [
 	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge}} roundedImage secondaryBadge={imageBadge}>Left Score</CardSports>,
 	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '1/1'}} roundedImage secondaryBadge={imageBadge}>Right Score</CardSports>,
 	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge} selected>Item Label</CardSports>,
-	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '2', secondaryScore: '1/2'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '1', secondaryScore: '0/1'}} roundedImage secondaryBadge={imageBadge}>Both Scores</CardSports>
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '2', secondaryScore: '1/2'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '1', secondaryScore: '0/1'}} roundedImage secondaryBadge={imageBadge}>Both Scores</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '000/00', secondaryScore: '000/000'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '000/00', secondaryScore: '000/000'}} roundedImage secondaryBadge={imageBadge}>Max Length Scores</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0000/000', secondaryScore: '0000/0000'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0000/000', secondaryScore: '0000/0000'}} roundedImage secondaryBadge={imageBadge}>Overflow Scores</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '2', secondaryScore: '1/2'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '1'}} roundedImage secondaryBadge={imageBadge}>Left Secondary Score</CardSports>,
+	<CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '2', secondaryScore: '1/2'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge}} roundedImage secondaryBadge={imageBadge}>Left Scores Only</CardSports>,
+	{
+		textSize: 'large',
+		component: <CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '0/0'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '0/0'}} roundedImage secondaryBadge={imageBadge}>Item Label</CardSports>
+	},
+	{
+		textSize: 'large',
+		component: <CardSports captionImageIconsSrc={[img, img, img, img]} hasContainer label="Description Label" leftTeam={{backgroundColor: '#1b2a4a', logo: imageBadge, score: '000/00', secondaryScore: '000/000'}} primaryBadge={iconBadge} rightTeam={{backgroundColor: '#e31c23', logo: imageBadge, score: '000/00', secondaryScore: '000/000'}} roundedImage secondaryBadge={imageBadge}>Max Length Scores</CardSports>
+	}
 ];
 
 export default CardSportsTests;

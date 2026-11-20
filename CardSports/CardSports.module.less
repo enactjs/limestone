@@ -60,7 +60,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		font-size: @lime-card-score-font-size;
-		gap: @lime-card-score-gap;
+		column-gap: @lime-card-score-gap;
 		height: fit-content;
 		min-height: @lime-card-score-min-height;
 		justify-content: center;
@@ -114,6 +114,17 @@
 			.right {
 				align-items: flex-start;
 				text-align: start;
+			}
+
+			&.hasSecondary {
+				.scorePrimary {
+					max-width: 6ch;
+				}
+
+				.scoreSecondary {
+					max-width: 7ch;
+					overflow: hidden;
+				}
 			}
 		}
 	}
