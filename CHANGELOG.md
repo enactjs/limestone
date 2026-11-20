@@ -14,6 +14,7 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/CardSports` size to 978 × 540
 - `limestone/CardSports` badge position to 30px from the top and side edges
+- `limestone/CardSports` score to 54px when it is the only score and 48px when `secondaryText` is shown, with `secondaryText` at 42px
 - `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, `limestone/PageViews`, `limestone/Panels`, and `limestone/WizardPanels` transitions to follow the motion tokens of the `animationTier`
 - `limestone/DatePicker`, `limestone/Picker`, `limestone/RangePicker`, and `limestone/TimePicker` transitions to follow the motion tokens of the `animationTier`
 - `limestone/Scroller`, `limestone/VirtualList`, and `limestone/VirtualGridList` scroll animation to use motion tokens (`default` speed on the high tier, `fast` speed on the low tier)
