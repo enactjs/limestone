@@ -9,12 +9,6 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/CardSports` `secondaryText` on `leftTeam` and `rightTeam`, shown under each team's score
 - `limestone/StarRatings` to display a star rating or let the user select one
 
-### Changed
-
-- `limestone/CardSports` size to 978 × 540
-- `limestone/CardSports` badge position to 30px from the top and side edges
-- `limestone/CardSports` score to 54px when it is the only score and 48px when `secondaryText` is shown, with `secondaryText` at 42px
-
 ## [1.13.0] - 2026-11-19
 
 ### Added
