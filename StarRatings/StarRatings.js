@@ -248,7 +248,8 @@ const ShownValueDecorator = (Wrapped) => {
  */
 const FocusPreviewDecorator = (Wrapped) => {
 	const FocusPreview = ({onBlur, onFocus, onMouseEnter, onMouseLeave, ...rest}) => {
-		const {id} = rest;
+		const {id, value} = rest;
+		const [ariaLabelValue, setAriaLabelValue] = useState(value || null);
 		const [focusedStar, setFocusedStar] = useState(null);
 		const [isNavigating, setIsNavigating] = useState(null);
 		const pointerInside = useRef(false);
@@ -328,12 +329,14 @@ const FocusPreviewDecorator = (Wrapped) => {
 			// Moving between stars fires blur then focus; only clear when focus leaves the row
 			if (!ev.relatedTarget || !ev.currentTarget.contains(ev.relatedTarget)) {
 				setFocusedStar(null);
+				setAriaLabelValue(value);
 			}
-		}, [isOwnStar, onBlur]);
+		}, [isOwnStar, onBlur, value]);
 
 		return (
 			<Wrapped
 				{...rest}
+				ariaLabelValue={ariaLabelValue}
 				focusedStar={focusedStar}
 				isNavigating={isNavigating}
 				onBlur={handleBlur}
@@ -390,6 +393,17 @@ const StarRatingsBase = kind({
 		 * @public
 		 */
 		id: PropTypes.string.isRequired,
+
+		/**
+		 * The rating used in the accessibility label while selecting.
+		 *
+		 * Set by the focus preview decorator and updated when focus leaves the row. If not set
+		 * or `0`, the label uses the default selecting value of `3`.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		ariaLabelValue: PropTypes.number,
 
 		/**
 		 * Disables StarRatings and makes it non-interactive.
@@ -568,9 +582,13 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({max, ratings, readOnly, value}) => {
-			const ariaLabel = new IString($L('Star rating {value} out of {max} stars change a value with left right button')).format({value: value || DEFAULT_SELECTING_VALUE, max});
-			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value, ratings});
+		'aria-label': ({ariaLabelValue, disabled, max, ratings, readOnly, value}) => {
+			const baseLabel = 'Star rating {value} out of {max} stars';
+			const fullLabel = baseLabel.concat(' change a value with left right button');
+			const readOnlyValue = toTenths(value, max, readOnly) / 10;
+
+			const ariaLabel = new IString($L(disabled ? baseLabel : fullLabel)).format({value: ariaLabelValue || DEFAULT_SELECTING_VALUE, max});
+			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value: readOnlyValue, ratings});
 
 			return readOnly ? readOnlyAriaLabel : ariaLabel;
 		},
@@ -599,6 +617,7 @@ const StarRatingsBase = kind({
 		tenths,
 		...rest
 	}) => {
+		delete rest.ariaLabelValue;
 		delete rest.focusedStar;
 		delete rest.onChange;
 		delete rest.ratings;
