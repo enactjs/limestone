@@ -120,6 +120,21 @@ describe('CardSports', () => {
 		expect(screen.getByLabelText('Title 2 : 1 1/2 : 0/1')).toBeInTheDocument();
 	});
 
+	test('should use the provided `aria-label` instead of generating one', () => {
+		render(
+			<CardSportsBase
+				aria-label="Custom label"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryScore: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryScore: '0/1'}}
+			>
+				Title
+			</CardSportsBase>
+		);
+
+		expect(screen.getByLabelText('Custom label')).toBeInTheDocument();
+		expect(screen.queryByLabelText('Title 2 : 1 1/2 : 0/1')).not.toBeInTheDocument();
+	});
+
 	test('should render a single score when only one team has a score', () => {
 		render(
 			<CardSportsBase
