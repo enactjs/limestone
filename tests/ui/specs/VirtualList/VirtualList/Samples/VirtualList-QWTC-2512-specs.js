@@ -24,7 +24,7 @@ describe('VirtualList Samples', function () {
 		await Page.spotlightRight();
 
 		// Wait for scroll animation
-		await Page.delay(500);
+		await Page.delay(700);
 
 		// Verify Spotlight displays on the 21st item ('Item 20');
 		await expectFocusedItem(Number((await Page.bottomVisibleItemId()).slice(4)));
