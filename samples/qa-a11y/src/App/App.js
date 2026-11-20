@@ -48,6 +48,7 @@ import Region from '../views/Region';
 import Scroller from '../views/Scroller';
 import Slider from '../views/Slider';
 import Spinner from '../views/Spinner';
+import StarRatings from '../views/StarRatings';
 import Switch from '../views/Switch';
 import SwitchItem from '../views/SwitchItem';
 import TabLayout from '../views/TabLayout';
@@ -103,6 +104,7 @@ const views = [
 	{title: 'Scroller', view: Scroller},
 	{title: 'Slider', view: Slider},
 	{title: 'Spinner', view: Spinner},
+	{title: 'StarRatings', view: StarRatings},
 	{title: 'Switch', view: Switch},
 	{title: 'SwitchItem', view: SwitchItem},
 	{isHeader: false, title: 'TabLayout', view: TabLayout},

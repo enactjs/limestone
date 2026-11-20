@@ -569,7 +569,7 @@ const StarRatingsBase = kind({
 
 	computed: {
 		'aria-label': ({max, ratings, readOnly, value}) => {
-			const ariaLabel = new IString($L('Star rating {value} out of {max} stars change a value with left right button')).format({value, max});
+			const ariaLabel = new IString($L('Star rating {value} out of {max} stars change a value with left right button')).format({value: value || DEFAULT_SELECTING_VALUE, max});
 			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value, ratings});
 
 			return readOnly ? readOnlyAriaLabel : ariaLabel;
@@ -607,7 +607,11 @@ const StarRatingsBase = kind({
 		const StarsContainer = readOnly ? SpottableDiv : 'div';
 
 		return (
-			<StarsContainer role="region" aria-labelledby={id}>
+			<StarsContainer
+				aria-labelledby={id}
+				className={css.starRatingsContainer}
+				role="region"
+			>
 				<div
 					{...rest}
 					aria-disabled={disabled}

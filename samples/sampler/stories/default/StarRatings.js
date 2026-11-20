@@ -1,7 +1,7 @@
 import Alert from '@enact/limestone/Alert';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
-import {boolean, range} from '@enact/storybook-utils/addons/controls';
+import {boolean, number, range} from '@enact/storybook-utils/addons/controls';
 import {useCallback, useState} from 'react';
 import StarRatings, {StarRatingsBase} from '../../../../StarRatings/StarRatings';
 
@@ -23,6 +23,7 @@ export const _StarRatings = (args) => {
 	const controls = {
 		disabled: args['disabled'],
 		overlayMode: args['overlayMode'],
+		ratings: args['ratings'],
 		readOnly: args['readOnly'],
 		value: args['readOnly'] ? args['value'] : defaultValue
 	};
@@ -48,8 +49,14 @@ export const _StarRatings = (args) => {
 };
 
 boolean('disabled', _StarRatings, StarRatingsConfig);
+number('ratings', _StarRatings, StarRatingsConfig);
 boolean('readOnly', _StarRatings, StarRatingsConfig);
 boolean('overlayMode', _StarRatings, StarRatingsConfig);
 range('value', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01}, 0);
 
 _StarRatings.storyName = 'StarRatings';
+_StarRatings.parameters = {
+	info: {
+		text: 'The basic StarRatings'
+	}
+};
