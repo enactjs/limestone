@@ -1,6 +1,6 @@
+import ri from '@enact/ui/resolution';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
-import ri from '@enact/ui/resolution';
 
 import {CardSportsBase} from '../CardSports';
 
