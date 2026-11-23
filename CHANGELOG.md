@@ -2,6 +2,12 @@
 
 The following is a curated list of changes in the Enact limestone module, newest changes on the top.
 
+## [unreleased]
+
+### Added
+
+- `limestone/StarRatings` to display a star rating or let the user select one
+
 ## [1.13.0] - 2026-11-19
 
 ### Added

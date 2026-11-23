@@ -47,6 +47,7 @@ import Scroller from './components/Scroller';
 import Slider from './components/Slider';
 import Spinner from './components/Spinner';
 import Sprite from './components/Sprite';
+import StarRatings from './components/StarRatings';
 import Steps from './components/Steps';
 import Switch from './components/Switch';
 import SwitchItem from './components/SwitchItem';
@@ -106,6 +107,7 @@ const components = {
 	Slider,
 	Spinner,
 	Sprite,
+	StarRatings,
 	Steps,
 	Switch,
 	SwitchItem,
