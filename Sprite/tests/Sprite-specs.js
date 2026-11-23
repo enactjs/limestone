@@ -53,4 +53,15 @@ describe('Sprite Specs', () => {
 			});
 		});
 	});
+
+	test('should cancel the running animation and start a new one when the frame layout changes', () => {
+		const {rerender} = render(<Sprite {...simpleAnimationProps} />);
+		const firstAnimation = global.Element.prototype.animate.mock.results[0].value;
+		const cancel = jest.spyOn(firstAnimation, 'cancel');
+
+		rerender(<Sprite {...simpleAnimationProps} columns={4} />);
+
+		expect(cancel).toHaveBeenCalled();
+		expect(global.Element.prototype.animate).toHaveBeenCalledTimes(2);
+	});
 });

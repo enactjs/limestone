@@ -1,16 +1,18 @@
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
-import {render, screen, within} from '@testing-library/react';
+import {act, render, screen, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Dropdown, {DropdownBase} from '../Dropdown';
-import DropdownList from '../DropdownList';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
 
 const children = ['option1', 'option2', 'option3'];
 const placeholder = 'Dropdown select';
 const title = 'Options';
+
+// An open list repositions its popup from a MutationObserver callback, which runs after `render` returns
+const flushPopupPositioning = () => act(() => Promise.resolve());
 
 describe('Dropdown', () => {
 	test('should have default `placeholder` when a value is not provided', () => {
@@ -164,7 +166,7 @@ describe('Dropdown', () => {
 		expect(actual).toHaveAttribute('aria-disabled', expected);
 	});
 
-	test('should update when children are removed or added', () => {
+	test('should update when children are removed or added', async () => {
 		const {rerender} = render(
 			<FloatingLayerController>
 				<DropdownBase open title={title}>
@@ -172,6 +174,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const lessChildren = children.slice(0, -1);
 
@@ -182,6 +185,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const lessChildrenExpected = 2;
 		const lessChildrenActual = screen.getByRole('group').children;
@@ -197,6 +201,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const moreChildrenExpected = 3;
 		const moreChildrenActual = screen.getByRole('group').children;
@@ -204,7 +209,7 @@ describe('Dropdown', () => {
 		expect(moreChildrenActual).toHaveLength(moreChildrenExpected);
 	});
 
-	test('should set the `role` of items to "checkbox"', () => {
+	test('should set the `role` of items to "checkbox"', async () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open title={title}>
@@ -212,6 +217,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const expected = 'layout item';
 		const actual = screen.getByRole('checkbox');
@@ -220,7 +226,7 @@ describe('Dropdown', () => {
 		expect(actual).toHaveClass(expected);
 	});
 
-	test('should set the `aria-checked` state of the `selected` item', () => {
+	test('should set the `aria-checked` state of the `selected` item', async () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open selected={0} title={title}>
@@ -228,6 +234,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const expected = 'true';
 		const actual = screen.getByRole('checkbox');
@@ -235,7 +242,7 @@ describe('Dropdown', () => {
 		expect(actual).toHaveAttribute('aria-checked', expected);
 	});
 
-	test('should set the `aria-posinset` and `aria-setsize` state of the item in the list', () => {
+	test('should set the `aria-posinset` and `aria-setsize` state of the item in the list', async () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open title={title}>
@@ -243,6 +250,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const posinsetExpected = '1';
 		const setsizeExpected = '3';
@@ -252,7 +260,7 @@ describe('Dropdown', () => {
 		expect(actual).toHaveAttribute('aria-setsize', setsizeExpected);
 	});
 
-	test('should pass through members of child objects to props for each item', () => {
+	test('should pass through members of child objects to props for each item', async () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open title={title}>
@@ -264,6 +272,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const expected = 'true';
 		const actual = screen.getByRole('checkbox');
@@ -271,7 +280,7 @@ describe('Dropdown', () => {
 		expect(actual).toHaveAttribute('aria-disabled', expected);
 	});
 
-	test('should allow members in child object to override injected aria values', () => {
+	test('should allow members in child object to override injected aria values', async () => {
 		render(
 			<FloatingLayerController>
 				<DropdownBase open selected={0} title={title}>
@@ -285,6 +294,7 @@ describe('Dropdown', () => {
 				</DropdownBase>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const actual = within(screen.getByRole('group')).getByRole('button');
 
@@ -309,7 +319,7 @@ describe('Dropdown', () => {
 		expect(handleSelect).toHaveBeenCalledWith({data: 'option1', selected: 0, type: 'onSelect'});
 	});
 
-	test('should update the open list when options are added, removed, or renamed', () => {
+	test('should update the open list when options are added, removed, or renamed', async () => {
 		const {rerender} = render(
 			<FloatingLayerController>
 				<Dropdown open title={title}>
@@ -317,6 +327,7 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		rerender(
 			<FloatingLayerController>
@@ -325,6 +336,7 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		expect(screen.getByRole('group').children).toHaveLength(2);
 		expect(screen.queryByText('option3')).not.toBeInTheDocument();
@@ -336,6 +348,7 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		expect(screen.getByText('renamed')).toBeInTheDocument();
 		expect(screen.queryByText('option2')).not.toBeInTheDocument();
@@ -347,11 +360,12 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		expect(screen.getAllByRole('checkbox')[0]).toHaveAttribute('aria-setsize', '4');
 	});
 
-	test('should keep the selection when re-rendered with the same options', () => {
+	test('should keep the selection when re-rendered with the same options', async () => {
 		const options = ['option1', 'option2', 'option3'];
 		const {rerender} = render(
 			<FloatingLayerController>
@@ -360,6 +374,7 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		const selected = screen.getByRole('checkbox', {checked: true});
 
@@ -370,6 +385,7 @@ describe('Dropdown', () => {
 				</Dropdown>
 			</FloatingLayerController>
 		);
+		await flushPopupPositioning();
 
 		expect(screen.getByRole('checkbox', {checked: true})).toBe(selected);
 		expect(selected).toHaveTextContent('option2');
@@ -399,23 +415,40 @@ describe('Dropdown', () => {
 		expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
 	});
 
-	describe('DropdownList', () => {
-		test('should include `data` and `selected` in `onSelect` callback', async () => {
-			const handler = jest.fn();
+	describe('opening', () => {
+		test('should fire `onOpen` when a closed Dropdown is clicked', async () => {
+			const handleOpen = jest.fn();
+			const user = userEvent.setup();
+			render(<DropdownBase onOpen={handleOpen} title={title}>{children}</DropdownBase>);
+
+			await user.click(screen.getByRole('button'));
+
+			expect(handleOpen).toHaveBeenCalled();
+		});
+
+		test('should not fire `onOpen` when a disabled Dropdown is clicked', async () => {
+			const handleOpen = jest.fn();
+			const user = userEvent.setup();
+			render(<DropdownBase disabled onOpen={handleOpen} title={title}>{children}</DropdownBase>);
+
+			await user.click(screen.getByRole('button'));
+
+			expect(handleOpen).not.toHaveBeenCalled();
+		});
+
+		test('should not fire `onOpen` again when an open Dropdown is clicked', async () => {
+			const handleOpen = jest.fn();
 			const user = userEvent.setup();
 			render(
-				<DropdownList onSelect={handler}>
-					{children}
-				</DropdownList>
+				<FloatingLayerController>
+					<DropdownBase onOpen={handleOpen} open title={title}>{children}</DropdownBase>
+				</FloatingLayerController>
 			);
-			const firstItem = screen.getByRole('group').children[0].children[0];
+			await flushPopupPositioning();
 
-			await user.click(firstItem);
+			await user.click(screen.getByRole('button'));
 
-			const expected = {data: 'option1', selected: 0};
-			const actual = handler.mock.calls[0][0];
-
-			expect(actual).toEqual(expected);
+			expect(handleOpen).not.toHaveBeenCalled();
 		});
 	});
 });

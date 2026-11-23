@@ -145,7 +145,7 @@ describe('Item Specs', () => {
 		expect(screen.getByTestId('item')).toHaveAttribute('aria-disabled', 'true');
 	});
 
-	test('should stay spottable and marquee on focus', () => {
+	test('should stay spottable and marquee on focus', async () => {
 		jest.useFakeTimers();
 		const restore = mockOverflow();
 
@@ -155,7 +155,8 @@ describe('Item Specs', () => {
 
 			expect(item).toHaveClass('spottable');
 
-			act(() => {
+			// Async so the measurement update from the MutationObserver callback lands inside act
+			await act(async () => {
 				jest.advanceTimersByTime(1000);
 			});
 
@@ -163,7 +164,7 @@ describe('Item Specs', () => {
 
 			fireEvent.focus(item);
 
-			act(() => {
+			await act(async () => {
 				jest.advanceTimersByTime(1000);
 			});
 
@@ -173,5 +174,30 @@ describe('Item Specs', () => {
 			restore();
 			jest.useRealTimers();
 		}
+	});
+
+	test('should render a numeric `label` as text', () => {
+		render(<Item label={5}>Hello Item</Item>);
+
+		expect(screen.getByText('5')).toBeInTheDocument();
+	});
+
+	test('should render `secondaryLabel` next to the `label`', () => {
+		render(<Item label="Label" secondaryLabel="Secondary">Hello Item</Item>);
+
+		expect(screen.getByText('Label')).toBeInTheDocument();
+		expect(screen.getByText('Secondary')).toBeInTheDocument();
+	});
+
+	test('should not render `secondaryLabel` without a `label`', () => {
+		render(<Item secondaryLabel="Secondary">Hello Item</Item>);
+
+		expect(screen.queryByText('Secondary')).toBeNull();
+	});
+
+	test('should center its content when `centered`', () => {
+		render(<Item centered data-testid="item">Hello Item</Item>);
+
+		expect(screen.getByTestId('item')).toHaveStyle({justifyContent: 'center'});
 	});
 });

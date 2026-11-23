@@ -200,4 +200,38 @@ describe('MediaSliderDecorator', () => {
 
 		expect(handleKnobMove).not.toHaveBeenCalled();
 	});
+
+	describe('selection', () => {
+		const SelectionStub = ({backgroundProgress, progressAnchor}) => (
+			<div data-background={backgroundProgress} data-anchor={progressAnchor} data-testid="selection" />
+		);
+		const SelectionSlider = MediaSliderDecorator(SelectionStub);
+
+		test('should highlight the range between the two `selection` values', () => {
+			render(<SelectionSlider selection={[0.2, 0.6]} />);
+
+			const slider = screen.getByTestId('selection');
+
+			expect(slider).toHaveAttribute('data-anchor', '0.2');
+			expect(slider).toHaveAttribute('data-background', '0.6');
+		});
+
+		test('should start and end the highlight at a single `selection` value', () => {
+			render(<SelectionSlider backgroundProgress={0.9} selection={[0.3]} />);
+
+			const slider = screen.getByTestId('selection');
+
+			expect(slider).toHaveAttribute('data-anchor', '0.3');
+			expect(slider).toHaveAttribute('data-background', '0.3');
+		});
+
+		test('should use `backgroundProgress` from the start when there is no `selection`', () => {
+			render(<SelectionSlider backgroundProgress={0.9} />);
+
+			const slider = screen.getByTestId('selection');
+
+			expect(slider).toHaveAttribute('data-anchor', '0');
+			expect(slider).toHaveAttribute('data-background', '0.9');
+		});
+	});
 });

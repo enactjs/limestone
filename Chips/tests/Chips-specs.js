@@ -1,6 +1,10 @@
+import Spotlight from '@enact/spotlight';
+import * as spotlightContainer from '@enact/spotlight/src/container';
+import * as spotlightTarget from '@enact/spotlight/src/target';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 
+import Chips, {Chip} from '../';
 import {ChipsBase} from '../Chips';
 import {ChipBase} from '../Chip';
 
@@ -331,6 +335,128 @@ describe('Chips', () => {
 
 		expect(mockDeleteWithParams).toHaveBeenCalledTimes(1);
 		expect(mockDeleteWithParams).toHaveBeenCalledWith(expect.any(Object));
+	});
+
+	describe('focus after deleting a chip', () => {
+		let focusSpy;
+
+		beforeEach(() => {
+			focusSpy = jest.spyOn(Spotlight, 'focus');
+		});
+
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		const getChip = (name) => screen.getByRole('checkbox', {name: new RegExp(name)});
+		const getDeleteButton = (name) => screen.getByRole('button', {name: new RegExp(name + ' Delete')});
+
+		it('should focus the next chip when the first chip is deleted', () => {
+			renderChips(defaultProps);
+
+			fireEvent.click(getDeleteButton('Chip 1'));
+
+			expect(focusSpy).toHaveBeenCalledWith(getChip('Chip 2'));
+		});
+
+		it('should focus the previous chip when a chip after the first one is deleted', () => {
+			renderChips(defaultProps);
+
+			fireEvent.click(getDeleteButton('Chip 2'));
+
+			expect(focusSpy).toHaveBeenCalledWith(getChip('Chip 1'));
+		});
+
+		it('should focus the nearest target outside the chips when the only chip is deleted', () => {
+			render(
+				<>
+					<button data-testid="outside" />
+					<ChipsBase data-testid="chips">
+						<ChipBase id="only" deleteButton={{onDelete: mockDeleteHandler}}>Only Chip</ChipBase>
+					</ChipsBase>
+				</>
+			);
+			const outside = screen.getByTestId('outside');
+			const chips = screen.getByTestId('chips');
+			let disabledWhileSearching;
+			jest.spyOn(spotlightContainer, 'getAllContainerIds').mockReturnValue(['chips-container', 'other-container']);
+			const nearestSpy = jest.spyOn(spotlightTarget, 'getNearestTargetFromPosition').mockImplementation((position, containerId) => {
+				disabledWhileSearching = chips.dataset.spotlightContainerDisabled;
+				return containerId === 'other-container' ? outside : null;
+			});
+
+			fireEvent.click(getDeleteButton('Only Chip'));
+
+			// The chips container is excluded from the search, then restored
+			expect(disabledWhileSearching).toBe('true');
+			expect(chips.dataset.spotlightContainerDisabled).toBe('false');
+			expect(nearestSpy).toHaveBeenCalledTimes(2);
+			expect(focusSpy).toHaveBeenCalledWith(outside);
+			expect(mockDeleteHandler).toHaveBeenCalledTimes(1);
+		});
+
+		it('should focus the remaining chip after deleting two chips in a row', () => {
+			const threeChips = [
+				...defaultProps.children,
+				<ChipBase key="chip3" id="chip3" deleteButton={{onDelete: mockDeleteHandler}}>Chip 3</ChipBase>
+			];
+			renderChips({children: threeChips});
+
+			fireEvent.click(getDeleteButton('Chip 2'));
+			// Chip 2 is no longer registered, so Chip 1 is now the previous chip of Chip 3
+			fireEvent.click(getDeleteButton('Chip 3'));
+
+			expect(focusSpy).toHaveBeenLastCalledWith(getChip('Chip 1'));
+		});
+	});
+
+	describe('5-way navigation from a delete button', () => {
+		let focusSpy;
+
+		beforeEach(() => {
+			focusSpy = jest.spyOn(Spotlight, 'focus');
+		});
+
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		const getChip = (name) => screen.getByRole('checkbox', {name: new RegExp(name)});
+		const getDeleteButton = (name) => screen.getByRole('button', {name: new RegExp(name + ' Delete')});
+
+		it.each([
+			['vertical', 'up', 38, 'Chip 2', 'Chip 1'],
+			['vertical', 'down', 40, 'Chip 1', 'Chip 2'],
+			['horizontal', 'left', 37, 'Chip 2', 'Chip 1'],
+			['horizontal', 'right', 39, 'Chip 1', 'Chip 2']
+		])('should focus the adjacent chip in a %s Chips when pressing %s', (orientation, _, keyCode, from, to) => {
+			renderChips({...defaultProps, orientation});
+
+			fireEvent.keyDown(getDeleteButton(from), {keyCode});
+
+			expect(focusSpy).toHaveBeenCalledWith(getChip(to));
+		});
+
+		it('should not move to another chip across the Chips orientation', () => {
+			renderChips(defaultProps);
+
+			// Right is not along a vertical Chips, so focus falls back to regular spatial navigation
+			fireEvent.keyDown(getDeleteButton('Chip 1'), {keyCode: 39});
+
+			expect(focusSpy).not.toHaveBeenCalledWith(getChip('Chip 2'));
+		});
+
+		it('should not move past the first chip', () => {
+			renderChips(defaultProps);
+
+			fireEvent.keyDown(getDeleteButton('Chip 1'), {keyCode: 38});
+
+			expect(focusSpy).not.toHaveBeenCalledWith(getChip('Chip 2'));
+		});
+	});
+
+	it('should expose `Chip` as `Chips.Chip`', () => {
+		expect(Chips.Chip).toBe(Chip);
 	});
 
 	beforeEach(() => {

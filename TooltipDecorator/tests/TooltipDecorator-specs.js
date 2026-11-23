@@ -1,4 +1,5 @@
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
+import {scaleToRem} from '@enact/ui/resolution';
 import '@testing-library/jest-dom';
 import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 
@@ -61,6 +62,44 @@ describe('TooltipDecorator', () => {
 			const tooltip = screen.getByText('Label');
 
 			expect(tooltip).not.toHaveClass(unexpected);
+		});
+
+		test('should wrap at a numeric `width` converted to rem', () => {
+			render(<TooltipLabel width={300}>Label</TooltipLabel>);
+
+			const tooltip = screen.getByText('Label');
+
+			expect(tooltip).toHaveClass('multi');
+			expect(tooltip.style.getPropertyValue('--lime-tooltip-label-width')).toBe(scaleToRem(300));
+		});
+
+		test('should use a string `width` as it is', () => {
+			render(<TooltipLabel width="50%">Label</TooltipLabel>);
+
+			expect(screen.getByText('Label').style.getPropertyValue('--lime-tooltip-label-width')).toBe('50%');
+		});
+
+		test('should size the label and the image from `tooltipImageSize`', () => {
+			render(<TooltipLabel tooltipImage={src.hd} tooltipImageSize={{width: 200, height: 100}} width={300}>Label</TooltipLabel>);
+
+			const tooltip = screen.getByText('Label');
+
+			expect(tooltip.style.getPropertyValue('--lime-tooltip-label-width')).toBe(scaleToRem(200));
+			expect(tooltip.style.getPropertyValue('--lime-tooltip-image-width')).toBe(scaleToRem(200));
+			expect(tooltip.style.getPropertyValue('--lime-tooltip-image-height')).toBe(scaleToRem(100));
+		});
+
+		test('should render right-to-left text in RTL direction', () => {
+			render(<TooltipLabel>{'שלום'}</TooltipLabel>);
+
+			expect(screen.getByText('שלום')).toHaveStyle({direction: 'rtl'});
+		});
+
+		test('should not render an image without `tooltipImage`', () => {
+			render(<TooltipLabel>Label</TooltipLabel>);
+
+			const tooltip = screen.getByText('Label');
+			expect(tooltip.querySelector('img')).toBeNull();
 		});
 	});
 

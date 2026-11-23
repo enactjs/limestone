@@ -341,6 +341,55 @@ describe('AlertOverlay specs', () => {
 
 		expect(buttonsLayout).toHaveClass('vertical');
 	});
+
+	test('should show the title in a `large` overlay Alert', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open size="large" title="alert title" type="overlay">
+					<buttons>
+						<Button>yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getByText('alert title')).toBeInTheDocument();
+	});
+
+	test('should not show the title in a `medium` overlay Alert', () => {
+		render(
+			<FloatingLayerController>
+				<Alert open title="alert title" type="overlay">
+					<buttons>
+						<Button>yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		expect(screen.queryByText('alert title')).toBeNull();
+	});
+
+	test.each([
+		['a `large` overlay', {size: 'large', type: 'overlay'}, 'large'],
+		['a `medium` overlay', {type: 'overlay'}, 'small'],
+		['a fullscreen', {size: 'large'}, 'small']
+	])('should size the thumbnail icon of %s Alert accordingly', (_, alertProps, expected) => {
+		render(
+			<FloatingLayerController>
+				<Alert open {...alertProps}>
+					<image>
+						<AlertImage src="testThumbnailImage.png" type="thumbnail" />
+					</image>
+					<buttons>
+						<Button>yes</Button>
+					</buttons>
+				</Alert>
+			</FloatingLayerController>
+		);
+
+		expect(screen.getAllByRole('img')[0]).toHaveClass(expected);
+	});
 });
 
 describe('FittedContentCell', () => {
@@ -392,5 +441,18 @@ describe('FittedContentCell', () => {
 		window.dispatchEvent(new Event('resize'));
 
 		expect(content.style.width).toBe('300px');
+	});
+
+	test('should leave the content width unset when the content has no text rects', () => {
+		window.Range.prototype.getClientRects = () => [];
+
+		render(
+			<FloatingLayerController>
+				<Alert open>{'text content'}</Alert>
+			</FloatingLayerController>
+		);
+
+		const content = document.querySelector('[id$="_content"]');
+		expect(content.style.width).toBe('');
 	});
 });
