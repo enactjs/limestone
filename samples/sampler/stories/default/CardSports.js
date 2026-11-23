@@ -34,12 +34,14 @@ const prop = {
 
 const defaultLeftTeam = {
 	backgroundColor: '#1b2a4a',
-	score: '0/0'
+	score: '2',
+	secondaryScore: '1/2'
 };
 
 const defaultRightTeam = {
 	backgroundColor: '#e31c23',
-	score: '0/0'
+	score: '1',
+	secondaryScore: '0/1'
 };
 
 const defaultCaptionImageIconsSrc = generateImageSrc('0084ff');
@@ -109,6 +111,6 @@ boolean('selected', _CardSports, Config);
 _CardSports.storyName = 'CardSports';
 _CardSports.parameters = {
 	info: {
-		text: 'The sports Card'
+		text: 'Sports card with team colors, logos, a large score, and an optional secondary score under each score'
 	}
 };
