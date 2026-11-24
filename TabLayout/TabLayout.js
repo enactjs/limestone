@@ -304,6 +304,14 @@ const TabLayoutBase = kind({
 		size: PropTypes.oneOf(['small', 'large']),
 
 		/**
+		 * Suppresses the vertical tab collapse animation.
+		 *
+		 * @type {Boolean}
+		 * @private
+		 */
+		suppressCollapseAnimation: PropTypes.bool,
+
+		/**
 		 * Assign a custom size to horizontal tabs.
 		 *
 		 * Tabs in the horizontal orientation automatically stretch to fill the available width.
@@ -483,7 +491,7 @@ const TabLayoutBase = kind({
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
 				isHorizontalScrollableTabs(children.length, offset, size, tabSize);
 		},
-		style: ({children, dimensions, offset, orientation, size, style, tabSize}) => {
+		style: ({children, dimensions, offset, orientation, size, style, suppressCollapseAnimation, tabSize}) => {
 			const isVertical = orientation === 'vertical';
 			const scrollable = isVertical ?
 				(children.length > MAX_TABS_BEFORE_VERTICAL_SCROLLING) :
@@ -497,7 +505,8 @@ const TabLayoutBase = kind({
 				'--scrollable': scrollable ? '1' : '0',
 				'--tabs-width': !isVertical ? totalTabsWidth : '100%',
 				'--tab-width': scaleToRem(tabSizeValue),
-				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0)
+				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0),
+				...((suppressCollapseAnimation && isVertical) && {'--lime-tablayout-collapse-duration': 0})
 			};
 		},
 		index: ({index, primaryIndex}) => {
@@ -523,6 +532,7 @@ const TabLayoutBase = kind({
 		delete rest.offset;
 		delete rest.onTabAnimationEnd;
 		delete rest.rtl;
+		delete rest.suppressCollapseAnimation;
 		delete rest.tabSize;
 
 		const contentSize = (collapsed ? dimensions.content.expanded : dimensions.content.normal);

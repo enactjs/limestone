@@ -9,6 +9,10 @@ The following is a curated list of changes in the Enact limestone module, newest
 - `limestone/CardSports` `secondaryScore` on `leftTeam` and `rightTeam`, shown under each team's score
 - `limestone/StarRatings` to display a star rating or let the user select one
 
+### Fixed
+
+- `limestone/PopupTabLayout` to not show the vertical tab collapse animation when opening
+
 ## [1.13.0] - 2026-11-19
 
 ### Added
