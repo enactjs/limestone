@@ -515,6 +515,8 @@ const Popup = (props) => {
 	}, [componentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
+		const paused = pausedRef.current;
+
 		checkScrimNone(componentProps);
 
 		// Spot the content after it's mounted.
@@ -533,6 +535,9 @@ const Popup = (props) => {
 				off('keydown', handleKeyDown);
 			}
 			Spotlight.remove(containerId);
+			// Spotlight is paused while the popup transitions and is resumed when it ends. If the
+			// popup is unmounted during the transition, it must be resumed here or it stays paused.
+			paused.resume();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
