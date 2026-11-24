@@ -4,7 +4,6 @@ import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import ProgressBar from '@enact/limestone/ProgressBar';
 import Scroller from '@enact/limestone/Scroller';
-import Spotlight from '@enact/spotlight';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -294,45 +293,32 @@ WithCustomSizeImage.storyName = 'with custom size image';
 export const UnmountedWhileOpening = () => {
 	const [mounted, setMounted] = useState(true);
 	const [open, setOpen] = useState(false);
-	const [paused, setPaused] = useState(Spotlight.isPaused());
 	const timerRef = useRef(null);
 
 	useEffect(() => {
-		// Polls the pause state so it can be seen even when Spotlight is paused
-		const interval = setInterval(() => setPaused(Spotlight.isPaused()), 200);
-
-		return () => {
-			clearTimeout(timerRef.current);
-			clearInterval(interval);
-		};
+		return () => clearTimeout(timerRef.current);
 	}, []);
 
 	// Opens the Alert and unmounts it before its open transition ends, like a Panel containing the
 	// Alert being unmounted by the back key while the Alert is opening
 	const handleOpenAndUnmount = useCallback(() => {
-		clearTimeout(timerRef.current);
-		setMounted(true);
 		setOpen(true);
-		timerRef.current = setTimeout(() => setMounted(false), 100);
+		timerRef.current = setTimeout(() => {
+			setMounted(false);
+			setOpen(false);
+		}, 100);
 	}, []);
+
+	const handleMount = useCallback(() => setMounted(true), []);
 
 	const handleClose = useCallback(() => setOpen(false), []);
 
-	const handleReset = useCallback(() => {
-		clearTimeout(timerRef.current);
-		Spotlight.resume();
-		setOpen(false);
-		setMounted(true);
-		Spotlight.focus();
-	}, []);
-
+	// 5-way navigation between the two buttons below should work after the Alert is unmounted
 	return (
 		<>
-			<BodyText>
-				{`Alert mounted: ${mounted} / open: ${open} / Spotlight.isPaused(): ${paused}`}
-			</BodyText>
-			<Button onClick={handleOpenAndUnmount}>Open Alert and unmount it while opening</Button>
-			<Button onClick={handleReset}>Resume Spotlight</Button>
+			<BodyText>{`Alert mounted: ${mounted} / open: ${open}`}</BodyText>
+			<Button disabled={!mounted} onClick={handleOpenAndUnmount}>Open Alert and unmount it while opening</Button>
+			<Button disabled={mounted} onClick={handleMount}>Mount Alert</Button>
 			{mounted ? (
 				<Alert open={open} onClose={handleClose} type="overlay">
 					This Alert is unmounted while it is opening.
