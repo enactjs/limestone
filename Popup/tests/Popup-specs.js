@@ -537,4 +537,32 @@ describe('Popup specs', () => {
 
 		expect(actual).toBe(false);
 	});
+
+	test('should resume Spotlight when unmounted while opening', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Popup>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Popup open>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController />
+		);
+
+		const actual = Spotlight.isPaused();
+
+		Spotlight.resume();
+
+		expect(actual).toBe(false);
+	});
 });
