@@ -1,13 +1,16 @@
 import Alert, {AlertBase, AlertImage} from '@enact/limestone/Alert';
+import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import ProgressBar from '@enact/limestone/ProgressBar';
 import Scroller from '@enact/limestone/Scroller';
+import Spotlight from '@enact/spotlight';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -287,3 +290,54 @@ text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '
 select('type', WithCustomSizeImage, ['fullscreen', 'overlay'], Config, 'overlay');
 
 WithCustomSizeImage.storyName = 'with custom size image';
+
+export const WithOpenChangingFromNullToFalse = () => {
+	const [open, setOpen] = useState(null);
+	const [paused, setPaused] = useState(Spotlight.isPaused());
+	const timerRef = useRef(null);
+
+	// Changes `open` from `null` to `false` without opening the Alert, like an app passing a value
+	// from a store whose initial state is `null`
+	const startTimer = useCallback(() => {
+		clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => setOpen(false), 1000);
+	}, []);
+
+	const changeOpen = useCallback(() => {
+		setOpen(null);
+		startTimer();
+	}, [startTimer]);
+
+	useEffect(() => {
+		startTimer();
+
+		// Polls the pause state so it can be seen even when Spotlight is paused
+		const interval = setInterval(() => setPaused(Spotlight.isPaused()), 200);
+
+		return () => {
+			clearTimeout(timerRef.current);
+			clearInterval(interval);
+		};
+	}, [startTimer]);
+
+	const handleResume = useCallback(() => {
+		Spotlight.resume();
+		Spotlight.focus();
+	}, []);
+
+	return (
+		<>
+			<BodyText>
+				{`open: ${String(open)} / Spotlight.isPaused(): ${paused}`}
+			</BodyText>
+			<Button onClick={changeOpen}>Change open from null to false again</Button>
+			<Button onClick={handleResume}>Resume Spotlight</Button>
+			<Alert open={open} onClose={action('onClose')} type="overlay">
+				This Alert should not be opened.
+				{prop.twoSmallButtons}
+			</Alert>
+		</>
+	);
+};
+
+WithOpenChangingFromNullToFalse.storyName = 'with open changing from null to false';
