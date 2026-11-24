@@ -4,7 +4,6 @@ import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import ProgressBar from '@enact/limestone/ProgressBar';
 import Scroller from '@enact/limestone/Scroller';
-import Spotlight from '@enact/spotlight';
 import {mergeComponentMetadata} from '@enact/storybook-utils';
 import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
@@ -291,53 +290,63 @@ select('type', WithCustomSizeImage, ['fullscreen', 'overlay'], Config, 'overlay'
 
 WithCustomSizeImage.storyName = 'with custom size image';
 
-export const WithOpenChangingFromNullToFalse = () => {
+export const WithOpenChangingFromNullToFalse = (args) => {
 	const [open, setOpen] = useState(null);
-	const [paused, setPaused] = useState(Spotlight.isPaused());
 	const timerRef = useRef(null);
+	const size = args['type'] === 'fullscreen' ? 'large' : 'small';
 
-	// Changes `open` from `null` to `false` without opening the Alert, like an app passing a value
-	// from a store whose initial state is `null`
+	// Changes `open` to `false` without opening the Alert, like an app passing a value from a store
+	// whose initial state is `null`
 	const startTimer = useCallback(() => {
 		clearTimeout(timerRef.current);
-		timerRef.current = setTimeout(() => setOpen(false), 1000);
+		timerRef.current = setTimeout(() => setOpen(false), 100);
 	}, []);
-
-	const changeOpen = useCallback(() => {
-		setOpen(null);
-		startTimer();
-	}, [startTimer]);
 
 	useEffect(() => {
 		startTimer();
 
-		// Polls the pause state so it can be seen even when Spotlight is paused
-		const interval = setInterval(() => setPaused(Spotlight.isPaused()), 200);
-
-		return () => {
-			clearTimeout(timerRef.current);
-			clearInterval(interval);
-		};
+		return () => clearTimeout(timerRef.current);
 	}, [startTimer]);
 
-	const handleResume = useCallback(() => {
-		Spotlight.resume();
-		Spotlight.focus();
+	const handleOpen = useCallback(() => {
+		clearTimeout(timerRef.current);
+		setOpen(true);
 	}, []);
 
+	const handleClose = useCallback((ev) => {
+		setOpen(false);
+		action('onClose')(ev);
+	}, []);
+
+	const handleChange = useCallback(() => {
+		setOpen(null);
+		startTimer();
+	}, [startTimer]);
+
+	// 5-way navigation between the two buttons below should work after `open` changes from `null`
+	// to `false`
 	return (
 		<>
-			<BodyText>
-				{`open: ${String(open)} / Spotlight.isPaused(): ${paused}`}
-			</BodyText>
-			<Button onClick={changeOpen}>Change open from null to false again</Button>
-			<Button onClick={handleResume}>Resume Spotlight</Button>
-			<Alert open={open} onClose={action('onClose')} type="overlay">
-				This Alert should not be opened.
-				{prop.twoSmallButtons}
+			<BodyText>{`open: ${String(open)}`}</BodyText>
+			<Button onClick={handleOpen}>Open Alert</Button>
+			<Button onClick={handleChange}>Change open from null to false</Button>
+			<Alert
+				open={open}
+				onClose={handleClose}
+				title="Fullscreen Alert Title"
+				type={args['type']}
+			>
+				<buttons>
+					<Button size={size}>Button 1</Button>
+					<Button size={size}>Button 2</Button>
+					<Button size={size} onClick={handleClose}>Close</Button>
+				</buttons>
+				Additional text content for Alert
 			</Alert>
 		</>
 	);
 };
+
+select('type', WithOpenChangingFromNullToFalse, ['fullscreen', 'overlay'], Config, 'overlay');
 
 WithOpenChangingFromNullToFalse.storyName = 'with open changing from null to false';
