@@ -141,7 +141,7 @@ describe('MediaOverlay', () => {
 
 		fireEvent.loadedMetadata(video);
 
-		expect(video.parentElement.style.aspectRatio).toBe('');
+		expect(video.parentElement).not.toHaveAttribute('style');
 	});
 
 	test('should be pressed when selected', () => {
