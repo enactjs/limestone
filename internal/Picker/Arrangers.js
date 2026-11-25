@@ -233,10 +233,7 @@ const animateCarouselStay = ({node}, isHorizontal) => {
  * with `.lime-view-motions()` in the component's styles (`styles/motion-mixins.less`), e.g.:
  *
  * ```less
- * .applyMotions(
- *     .lime-view-motions(.lime-carousel-in-small-high-motion(), .lime-carousel-out-small-high-motion()),
- *     .lime-view-motions(.lime-carousel-in-small-low-motion(), .lime-carousel-out-small-low-motion())
- * );
+ * .lime-view-motions(.lime-carousel-in-motion(small), .lime-carousel-out-motion(small));
  * ```
  *
  * Otherwise the fallback values are used. `optionsEnter` and `optionsLeave` override both.

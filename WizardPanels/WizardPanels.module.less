@@ -7,10 +7,7 @@
 .wizardPanels {
 	.header {
 		// title and subtitle
-		.applyMotions(
-			.lime-view-motions(.lime-fade-in-high-motion(), .lime-fade-out-high-motion()),
-			.lime-view-motions(.lime-fade-in-low-motion(), .lime-fade-out-low-motion())
-		);
+		.lime-view-motions(.lime-fade-in-motion(large), .lime-fade-out-motion(large));
 	}
 
 	&.noSteps {
@@ -27,10 +24,7 @@
 
 	.content {
 		margin: @lime-wizardpanels-content-margin;
-		.applyMotions(
-			.lime-view-motions(.lime-carousel-in-large-high-motion(), .lime-carousel-out-large-high-motion(), @lime-wizardpanels-motion-distance),
-			.lime-view-motions(.lime-carousel-in-large-low-motion(), .lime-carousel-out-large-low-motion(), @lime-wizardpanels-motion-distance)
-		);
+		.lime-view-motions(.lime-carousel-in-motion(large), .lime-carousel-out-motion(large), @lime-wizardpanels-motion-distance);
 	}
 
 	.footer {

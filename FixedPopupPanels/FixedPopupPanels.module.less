@@ -21,10 +21,7 @@
 			position: static;
 			.position(auto);
 			pointer-events: auto;
-			.applyMotions(
-				.lime-view-motions(.lime-enter-large-high-motion(), .lime-exit-large-high-motion(), @lime-panels-motion-distance),
-				.lime-view-motions(.lime-enter-large-low-motion(), .lime-exit-large-low-motion(), @lime-panels-motion-distance)
-			);
+			.lime-view-motions(.lime-enter-motion(large), .lime-exit-motion(large), @lime-panels-motion-distance);
 		}
 	}
 

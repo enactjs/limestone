@@ -9,10 +9,7 @@
 	// Value transition motion, read by the Picker arranger (`.lime-view-motions()`).
 	// Carousel motion: size small, speed fast, same motion in high/low tier.
 	// The distance depends on the orientation (`@lime-picker-horizontal/vertical-motion-distance`).
-	.applyMotions(
-		.lime-view-motions(.lime-carousel-in-small-high-motion(), .lime-carousel-out-small-high-motion()),
-		.lime-view-motions(.lime-carousel-in-small-low-motion(), .lime-carousel-out-small-low-motion())
-	);
+	.lime-view-motions(.lime-carousel-in-motion(small), .lime-carousel-out-motion(small));
 
 	.valueWrapper {
 		.lime-font-number();

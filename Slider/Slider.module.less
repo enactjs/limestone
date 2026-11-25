@@ -45,10 +45,7 @@
 		}
 	}
 
-	.applyMotions(
-		{ .knob::before { .lime-slider-focus-out-high-motion(); }},
-		{ .knob::before { .lime-slider-focus-out-low-motion(); }}
-	);
+	.knob::before { .lime-slider-focus-out-motion(); }
 
 	&.showAnchor {
 		.knob {
@@ -122,10 +119,9 @@
 			height: @lime-slider-knob-height;
 			width: @lime-slider-knob-width;
 			border-radius: (@lime-slider-knob-height / 2);
-			opacity: 0;
 			pointer-events: none;
 			transform: translate(-50%, -50%) scale(@lime-slider-focus-scale);
-			transition: opacity var(--lime-motion-medium2-duration) var(--lime-EIO-motion-easing-function);
+			.lime-fade-out-motion(small);
 		}
 	}
 
@@ -414,15 +410,12 @@
 
 		:global(.spotlight-input-mouse) & {
 			&:hover:not([disabled]):not(.colorPicker):not(:has(.tick:hover), .pressed) {
-				.applyMotions(
-					{ .knob::before { .lime-slider-focus-in-high-motion(); }},
-					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
-				);
+				.knob::before { .lime-slider-focus-in-motion(); }
 			}
 
 			&:not([disabled]):not(.colorPicker, .pressed) {
 				.tick:hover::after {
-					opacity: @lime-slider-tick-hover-opacity;
+					.lime-fade-in-motion(small, @lime-slider-tick-hover-opacity);
 				}
 			}
 		}
@@ -445,31 +438,19 @@
 					box-shadow: @lime-slider-handle-focused-shadow;
 				}
 
-				.applyMotions(
-					{ .knob::before { .lime-slider-focus-in-high-motion(); }},
-					{ .knob::before { .lime-slider-focus-in-low-motion(); }}
-				);
+				.knob::before { .lime-slider-focus-in-motion(); }
 
 				&:active,
 				&.pressed {
-					.applyMotions(
-						{ .knob::before { .lime-slider-press-high-motion(); }},
-						{ .knob::before { .lime-slider-press-low-motion(); }}
-					);
+					.knob::before { .lime-slider-press-motion(); }
 				}
 
 				&:not(.pressed) {
-					.applyMotions(
-						{ .knob::before { .lime-slider-release-high-motion(); }},
-						{ .knob::before { .lime-slider-release-low-motion(); }}
-					);
+					.knob::before { .lime-slider-release-motion(); }
 				}
 
 				.disabled({
-					.applyMotions(
-						{ .knob::before { .lime-slider-focus-out-high-motion(); }},
-						{ .knob::before { .lime-slider-focus-out-low-motion(); }}
-					);
+					.knob::before { .lime-slider-focus-out-motion(); }
 				});
 			}
 
@@ -492,10 +473,7 @@
 				box-shadow: @lime-slider-handle-focused-shadow;
 			}
 
-			.applyMotions(
-				{ .knob::before { .lime-slider-focus-in-high-motion(); }},
-				{ .knob::before { .lime-slider-focus-in-low-motion(); }}
-			);
+			.knob::before { .lime-slider-focus-in-motion(); }
 		}
 
 		:global(.noAnimation) & {

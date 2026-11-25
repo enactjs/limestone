@@ -2,7 +2,7 @@
  * Utilities that let JS-driven animations (Web Animations API) use the motion token system.
  *
  * Components animated by `ViewManager` arrangers (Panels, Picker, ...) cannot use CSS transitions,
- * so their `.less` file exposes the motion with `.lime-view-motions()` inside `.applyMotions()`
+ * so their `.less` file exposes the motion with `.lime-view-motions()`
  * (see `styles/motion-mixins.less`):
  *
  * ```css
@@ -10,9 +10,9 @@
  * --lime-view-exit-motion: transform 500ms 0ms <EIO>, opacity 250ms 0ms <EIO>;
  * ```
  *
- * The arrangers read the duration, delay and easing of each transitioned property at animation
- * time, so they follow the active animation tier and any change made to the motion mixins or
- * tokens. The keyframe values (e.g. slide direction and distance) are set by the arranger.
+ * The values come from the `--semantic-motion-*` design tokens. The arrangers read the duration,
+ * delay and easing of each transitioned property at animation time, so they follow the active
+ * animation tier and any change made to the tokens. The keyframe values (e.g. slide direction and distance) are set by the arranger.
  *
  * @module limestone/internal/util/motion
  * @private

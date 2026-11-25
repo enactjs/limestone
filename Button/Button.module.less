@@ -343,7 +343,7 @@
 			border-style: @lime-button-bg-border-style;
 			border-color: @lime-button-outline-border-color;
 			border-radius: @lime-button-border-radius;
-			.applyMotions(.lime-focus-out-small-high-motion(1), .lime-focus-out-small-low-motion(1));
+			.lime-focus-out-motion(small);
 		}
 
 		&.bordered {
@@ -504,7 +504,7 @@
 			}
 
 			&.focusExpand .bg {
-				.applyMotions(.lime-focus-in-small-high-motion(1.1), .lime-focus-in-small-low-motion(1.1));
+				.lime-focus-in-motion(small);
 			}
 		});
 
@@ -517,12 +517,12 @@
 					&.pressed,
 					&:active {
 						.bg {
-							.applyMotions(.lime-press-small-high-motion(1.05), .lime-press-small-low-motion(1.05));
+							.lime-press-motion(small);
 						}
 					}
 
 					&:not(.pressed) .bg {
-						.applyMotions(.lime-release-small-high-motion(1.1), .lime-release-small-low-motion(1.1));
+						.lime-release-motion(small);
 					}
 				}
 			});

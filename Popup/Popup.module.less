@@ -150,39 +150,41 @@
 		}
 	}
 
+	// The motions are set on `.inner.inner`: the repeated class makes them more specific than the
+	// slide rules of ui/Transition, which would otherwise win.
 	&.shown {
-		.inner {
-			.applyMotions(.lime-enter-small-high-motion(), .lime-enter-small-low-motion(), is);
+		.inner.inner {
+			.lime-enter-motion(small);
 		}
 
-		&.center .inner {
-			.applyMotions(.lime-enter-medium-high-motion(), .lime-enter-medium-low-motion(), is);
+		&.center .inner.inner {
+			.lime-enter-motion(medium);
 		}
 
 		// Alert Fullscreen
-		&.fullscreen .inner { .lime-enter-none-motion(); }
+		&.fullscreen .inner { .lime-enter-motion(none); }
 	}
 
 	&.hidden {
-		&.bottom .inner {
-			.applyMotions(.lime-exit-small-high-motion(0, 336px), .lime-exit-small-low-motion(0, 336px), is);
+		&.bottom .inner.inner {
+			.lime-exit-motion(small, 0, 336px);
 		}
 
-		&.top .inner {
-			.applyMotions(.lime-exit-small-high-motion(0, -336px), .lime-exit-small-low-motion(0, -336px), is);
+		&.top .inner.inner {
+			.lime-exit-motion(small, 0, -336px);
 		}
 
-		&.left .inner {
-			.applyMotions(.lime-exit-small-high-motion(-336px, 0), .lime-exit-small-low-motion(-336px, 0), is);
+		&.left .inner.inner {
+			.lime-exit-motion(small, -336px, 0);
 		}
 
-		&.right .inner {
-			.applyMotions(.lime-exit-small-high-motion(336px, 0), .lime-exit-small-low-motion(336px, 0), is);
+		&.right .inner.inner {
+			.lime-exit-motion(small, 336px, 0);
 		}
 
 		// Alert Overlay
-		&.center .inner {
-			.applyMotions(.lime-exit-medium-high-motion(0, 32px), .lime-exit-medium-low-motion(0, 32px), is);
+		&.center .inner.inner {
+			.lime-exit-motion(medium, 0, 32px);
 		}
 	}
 
