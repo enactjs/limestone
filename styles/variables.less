@@ -89,8 +89,8 @@
 
 // Generic/Common/Shared
 // ---------------------------------------
-@lime-component-spacing: var(--primitive-spacing-36);
-@lime-component-spacing-bottom: var(--primitive-spacing-30);
+@lime-component-spacing: var(--semantic-spacing-gap-xl);
+@lime-component-spacing-bottom: var(--semantic-spacing-gap-l);
 @lime-focusexpand-focus-transform: scale(1.1);
 @lime-focusexpand-pressed-transform: scale(1.05);
 @lime-overlay-outline-width: 0.063rem; // 3px
@@ -116,10 +116,10 @@
 
 // Font Sizes
 // ---------------------------------------
-@lime-actionguide-label-font-size:  var(--primitive-font-size-48);
+@lime-actionguide-label-font-size:  var(--semantic-typography-body-48-regular-font-size);
 @lime-actionguide-label-font-size-large:  var(--primitive-font-size-60);
-@lime-actionguide-label-font-weight: var(--primitive-font-weight-regular);
-@lime-alert-overlay-font-size:      var(--primitive-font-size-60);
+@lime-actionguide-label-font-weight: var(--semantic-typography-body-48-regular-font-weight);
+@lime-alert-overlay-font-size:      var(--semantic-typography-body-60-semibold-font-size);
 @lime-alert-overlay-font-size-large: var(--primitive-font-size-72);
 @lime-alert-subtitle-font-size:     @lime-heading-subtitle-font-size;
 @lime-alert-title-font-size:        var(--primitive-font-size-108);
@@ -131,44 +131,44 @@
 @lime-body-small-font-size:         var(--primitive-font-size-54);
 @lime-body-small-font-size-large:   var(--primitive-font-size-66);
 @lime-button-font-size-large:       var(--primitive-font-size-72);
-@lime-button-font-size:             var(--primitive-font-size-60);
+@lime-button-font-size:             var(--semantic-typography-body-60-semibold-font-size);
 @lime-button-small-font-size-large: var(--primitive-font-size-66);
-@lime-button-small-font-size:       var(--primitive-font-size-54);
-@lime-card-caption-font-size:       var(--primitive-font-size-60);
+@lime-button-small-font-size:       var(--semantic-typography-body-54-semibold-font-size);
+@lime-card-caption-font-size:       var(--semantic-typography-body-60-semibold-font-size);
 @lime-card-caption-font-size-large:       var(--primitive-font-size-72);
-@lime-card-duration-font-size:      var(--primitive-font-size-48);
+@lime-card-duration-font-size:      var(--semantic-typography-body-48-semibold-font-size);
 @lime-card-duration-font-size-large:      var(--primitive-font-size-58);
-@lime-card-label-font-size:         var(--primitive-font-size-48);
+@lime-card-label-font-size:         var(--semantic-typography-body-48-regular-font-size);
 @lime-card-label-font-size-large:         var(--primitive-font-size-58);
-@lime-card-score-font-size:         var(--primitive-font-size-60);
+@lime-card-score-font-size:         var(--semantic-typography-body-60-semibold-font-size);
 @lime-card-score-font-size-large:         var(--primitive-font-size-72);
-@lime-card-split-caption-label-font-size:	var(--primitive-font-size-60);
+@lime-card-split-caption-label-font-size:	var(--semantic-typography-body-60-semibold-font-size);
 @lime-card-split-caption-label-font-size-large:	var(--primitive-font-size-72);
 @lime-header-compact-title-font-size: #guide.header[compact-title-font-size];
 @lime-header-mini-title-font-size:  #guide.header[mini-title-font-size];
 @lime-header-wizard-title-font-size: #guide.header[wizard-title-font-size];
-@lime-heading-large-font-size:      var(--primitive-font-size-72);
+@lime-heading-large-font-size:      var(--semantic-typography-title-72-semibold-font-size);
 @lime-heading-large-font-size-large:      var(--primitive-font-size-86);
-@lime-heading-medium-font-size:     var(--primitive-font-size-66);
+@lime-heading-medium-font-size:     var(--semantic-typography-title-66-semibold-font-size);
 @lime-heading-medium-font-size-large:     var(--primitive-font-size-80);
 @lime-heading-small-font-size:      var(--primitive-font-size-54);
 @lime-heading-small-font-size-large:      var(--primitive-font-size-66);
-@lime-heading-tiny-font-size:       var(--primitive-font-size-48);
+@lime-heading-tiny-font-size:       var(--semantic-typography-title-48-semibold-font-size);
 @lime-heading-tiny-font-size-large:       var(--primitive-font-size-58);
 @lime-heading-subtitle-font-size:   #guide.header[standard-subtitle-font-size];
 @lime-heading-subtitle-font-size-large:   #guide.header[standard-subtitle-font-size-large];
 @lime-heading-title-font-size:      #guide.header[standard-title-font-size];
-@lime-iconitem-description-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-description-font-size:     var(--semantic-typography-caption-42-semibold-font-size);
 @lime-iconitem-description-font-size-large:     var(--primitive-font-size-50);
-@lime-iconitem-label-font-size:     var(--primitive-font-size-42);
+@lime-iconitem-label-font-size:     var(--semantic-typography-caption-42-semibold-font-size);
 @lime-iconitem-label-font-size-large:     var(--primitive-font-size-50);
-@lime-iconitem-title-font-size:     var(--primitive-font-size-48);
+@lime-iconitem-title-font-size:     var(--semantic-typography-title-48-semibold-font-size);
 @lime-iconitem-title-font-size-large:     var(--primitive-font-size-58);
 @lime-imageitem-caption-font-size:  var(--primitive-font-size-60);
 @lime-imageitem-caption-font-size-large: var(--primitive-font-size-72);
-@lime-imageitem-label-font-size:    var(--primitive-font-size-48);
+@lime-imageitem-label-font-size:    var(--semantic-typography-body-48-regular-font-size);
 @lime-imageitem-label-font-size-large: var(--primitive-font-size-58);
-@lime-input-font-size:              var(--primitive-font-size-78);
+@lime-input-font-size:              var(--semantic-typography-body-78-semibold-font-size);
 @lime-input-font-size-large:        var(--primitive-font-size-94);
 @lime-input-keypad-key-font-size: var(--primitive-font-size-90);
 @lime-input-keypad-key-font-size-large: var(--primitive-font-size-108);
@@ -185,21 +185,21 @@
 @lime-input-overlay-numberfield-font-size:    @lime-input-font-size;
 @lime-input-overlay-numberfield-font-size-large:    @lime-input-font-size-large;
 @lime-input-invalid-tooltip-font-size:        @lime-inputfield-invalid-tooltip-font-size;
-@lime-inputfield-invalid-tooltip-font-size:   var(--primitive-font-size-48);
+@lime-inputfield-invalid-tooltip-font-size:   var(--semantic-typography-body-48-semibold-font-size);
 @lime-input-invalid-tooltip-font-size-large:  @lime-inputfield-invalid-tooltip-font-size-large;
 @lime-inputfield-invalid-tooltip-font-size-large: var(--primitive-font-size-58);
 @lime-inputfield-small-font-size:	var(--primitive-font-size-60);
 @lime-inputfield-small-font-size-large:	var(--primitive-font-size-72);
-@lime-item-font-size:               var(--primitive-font-size-60);
+@lime-item-font-size:               var(--semantic-typography-body-60-semibold-font-size);
 @lime-item-font-size-large:         var(--primitive-font-size-72);
-@lime-item-label-font-size:         var(--primitive-font-size-48);
+@lime-item-label-font-size:         var(--semantic-typography-body-48-regular-font-size);
 @lime-item-label-font-size-large:   var(--primitive-font-size-58);
-@lime-item-small-font-size:         var(--primitive-font-size-60);
+@lime-item-small-font-size:         var(--semantic-typography-body-60-semibold-font-size);
 @lime-item-small-font-size-large:   var(--primitive-font-size-72);
-@lime-item-small-label-font-size:   var(--primitive-font-size-48);
-@lime-keyguide-font-size:           var(--primitive-font-size-60);
+@lime-item-small-label-font-size:   var(--semantic-typography-body-48-regular-font-size);
+@lime-keyguide-font-size:           var(--semantic-typography-body-60-regular-font-size);
 @lime-keyguide-font-size-large:           var(--primitive-font-size-72);
-@lime-mediaoverlay-caption-font-size:  var(--primitive-font-size-60);
+@lime-mediaoverlay-caption-font-size:  var(--semantic-typography-body-60-semibold-font-size);
 @lime-mediaoverlay-caption-font-size-large:  var(--primitive-font-size-72);
 @lime-mediaoverlay-text-font-size:     var(--primitive-font-size-48);
 @lime-mediaoverlay-text-font-size-large:     var(--primitive-font-size-60);
@@ -209,13 +209,13 @@
 @lime-mediaplayer-times-text-size-large:    var(--primitive-font-size-58);
 @lime-pageviews-number-steps-number-font-size: @lime-base-font-size;
 @lime-pageviews-number-steps-number-font-size-large: @lime-base-font-size-large;
-@lime-picker-font-size:             var(--primitive-font-size-54);
+@lime-picker-font-size:             var(--semantic-typography-body-54-semibold-font-size);
 @lime-picker-font-size-large:             var(--primitive-font-size-66);
 @lime-picker-joined-font-size:      var(--primitive-font-size-66);
 @lime-picker-joined-font-size-large:      var(--primitive-font-size-80);
 @lime-radioitem-icon-font-size: var(--primitive-font-size-48);
 @lime-radioitem-icon-font-size-large: var(--primitive-font-size-56);
-@lime-steps-step-number-font-size: var(--primitive-font-size-48);
+@lime-steps-step-number-font-size: var(--semantic-typography-body-48-semibold-font-size);
 @lime-steps-step-number-font-size-large: var(--primitive-font-size-58);
 @lime-switch-icon-font-size:        var(--primitive-font-size-84);
 @lime-tablayout-tab-small-font-size: var(--primitive-font-size-48);
@@ -230,8 +230,8 @@
 @lime-non-latin-body-small-font-size-large:   var(--primitive-font-size-60);
 @lime-tallglyph-body-small-font-size:   var(--primitive-font-size-48);
 @lime-tallglyph-body-small-font-size-large:   var(--primitive-font-size-60);
-@lime-non-latin-button-large-font-size: var(--primitive-font-size-54);
-@lime-non-latin-button-small-font-size: var(--primitive-font-size-48);
+@lime-non-latin-button-large-font-size: var(--semantic-typography-body-54-bold-font-size);
+@lime-non-latin-button-small-font-size: var(--semantic-typography-body-48-bold-font-size);
 @lime-non-latin-header-compact-title-font-size: @lime-header-compact-title-font-size;
 @lime-non-latin-header-mini-title-font-size: @lime-header-mini-title-font-size;
 @lime-non-latin-header-wizard-title-font-size: @lime-header-wizard-title-font-size;
@@ -289,11 +289,11 @@
 @lime-non-latin-button-small-font-weight: @lime-non-latin-font-weight-bold;
 
 // Card
-@lime-card-caption-font-weight: var(--primitive-font-weight-semibold);
-@lime-card-duration-font-weight: var(--primitive-font-weight-semibold);
-@lime-card-label-font-weight: var(--primitive-font-weight-regular);
-@lime-card-score-font-weight: var(--primitive-font-weight-semibold);
-@lime-card-split-caption-label-font-weight: var(--primitive-font-weight-semibold);
+@lime-card-caption-font-weight: var(--semantic-typography-body-60-semibold-font-weight);
+@lime-card-duration-font-weight: var(--semantic-typography-body-48-semibold-font-weight);
+@lime-card-label-font-weight: var(--semantic-typography-body-48-regular-font-weight);
+@lime-card-score-font-weight: var(--semantic-typography-body-60-semibold-font-weight);
+@lime-card-split-caption-label-font-weight: var(--semantic-typography-body-60-semibold-font-weight);
 
 // Heading
 @lime-heading-line-height: 1.25em;
@@ -323,27 +323,27 @@
 @lime-icon-other-font-family: "LG Icons";
 
 // IconItem
-@lime-iconitem-description-font-weight: var(--primitive-font-weight-semibold);
-@lime-iconitem-label-font-weight: var(--primitive-font-weight-semibold);
-@lime-iconitem-title-font-weight: var(--primitive-font-weight-semibold);
+@lime-iconitem-description-font-weight: var(--semantic-typography-caption-42-semibold-font-weight);
+@lime-iconitem-label-font-weight: var(--semantic-typography-caption-42-semibold-font-weight);
+@lime-iconitem-title-font-weight: var(--semantic-typography-title-48-semibold-font-weight);
 
 // ImageItem
 @lime-imageitem-font-weight: @lime-spottable-font-weight;
-@lime-imageitem-label-font-weight: var(--primitive-font-weight-regular);
+@lime-imageitem-label-font-weight: var(--semantic-typography-body-48-regular-font-weight);
 
 // Input
 @lime-input-invalid-tooltip-font-weight: @lime-inputfield-invalid-tooltip-font-weight;
 
 // InputField
 @lime-inputfield-font-weight: @lime-spottable-font-weight;
-@lime-inputfield-invalid-tooltip-font-weight: var(--primitive-font-weight-semibold);
+@lime-inputfield-invalid-tooltip-font-weight: var(--semantic-typography-body-48-semibold-font-weight);
 
 // InputNumber
 @lime-input-number-font-family: @lime-body-font-family;
 
 // Item
 @lime-item-font-weight: @lime-spottable-font-weight;
-@lime-item-label-font-weight: var(--primitive-font-weight-regular);
+@lime-item-label-font-weight: var(--semantic-typography-body-48-regular-font-weight);
 @lime-item-line-height: @lime-common-line-height;
 @lime-item-line-height-large: @lime-item-line-height;
 @lime-item-label-line-height: 1.33em;
@@ -361,7 +361,7 @@
 
 // Picker
 @lime-tallglyph-picker-line-height: @lime-tallglyph-body-line-height;
-@lime-picker-font-weight: var(--primitive-font-weight-semibold);
+@lime-picker-font-weight: var(--semantic-typography-body-54-semibold-font-weight);
 
 // ---------------------------------------
 // Component Rules
@@ -372,27 +372,27 @@
 @lime-actionguide-max-width: 1500px;
 @lime-actionguide-label-height: 60px;
 @lime-actionguide-label-height-large: 70px;
-@lime-actionguide-icon-height: 84px;
+@lime-actionguide-icon-height: var(--semantic-size-icon-l);
 @lime-actionguide-icon-margin: 0 0 ~"calc("var(--primitive-spacing-12) ~"* -1)" 0;
-@lime-actionguide-padding: var(--primitive-spacing-12) 0 var(--primitive-spacing-36) 0;
+@lime-actionguide-padding: var(--semantic-spacing-content-padding-s) 0 var(--semantic-spacing-content-padding-m) 0;
 
 // Alert
 // ---------------------------------------
 @lime-alert-buttons-margin-top: var(--primitive-spacing-120);
-@lime-alert-fullscreen-content-margin: var(--primitive-spacing-36) 0 0 0;
+@lime-alert-fullscreen-content-margin: var(--semantic-spacing-gap-xl) 0 0 0;
 @lime-alert-fullscreen-image-spacing: var(--primitive-spacing-60);
 @lime-alert-fullscreen-max-width: 2400px;
 @lime-portrait-alert-fullscreen-max-width: 1896px;
 @lime-alert-overlay-buttons-margin-top: var(--primitive-spacing-72);
 @lime-alert-overlay-max-height: 2028px;
-@lime-alert-overlay-image-margin-bottom: var(--primitive-spacing-36);
+@lime-alert-overlay-image-margin-bottom: var(--semantic-spacing-gap-xl);
 @lime-alert-overlay-padding: var(--primitive-spacing-90) 0;
 @lime-alert-overlay-body-padding: 0 var(--primitive-spacing-84);
 @lime-alert-overlay-image-padding: 0 var(--primitive-spacing-90);
 @lime-alert-overlay-width: 1128px;
 @lime-alert-overlay-medium-width: 1656px;
 @lime-alert-overlay-large-width: 2184px;
-@lime-alert-overlay-large-title-margin-bottom: var(--primitive-spacing-36);
+@lime-alert-overlay-large-title-margin-bottom: var(--semantic-spacing-gap-xl);
 @lime-alert-overlay-max-width: calc(100vw - 2 * @lime-popup-position-corner-margin);
 
 // AlertImage
@@ -416,12 +416,12 @@
 @lime-button-transparent-bg-opacity: 0;
 @lime-button-transparent-selected-bg-opacity: 1;
 @lime-button-transparent-disabled-selected-bg-opacity: 0.3;
-@lime-button-margin: var(--primitive-spacing-36);
+@lime-button-margin: var(--semantic-spacing-gap-xl);
 @lime-button-focusexpand-margin: 9px .extract(@lime-button-margin, right)[]; // 9px provides enough space for the expanded focus state
-@lime-button-h-padding: var(--primitive-spacing-60);
+@lime-button-h-padding: var(--semantic-spacing-inset-button);
 @lime-button-height: 132px;
 @lime-button-height-large: @lime-button-height;
-@lime-button-icon-h-margin: var(--primitive-spacing-24);
+@lime-button-icon-h-margin: var(--semantic-spacing-gap-m);
 @lime-button-icon-margin-end: @lime-button-icon-h-margin;
 @lime-button-icon-margin-start: 0;
 @lime-button-icon-padding: 0 ((@lime-button-height - @lime-icon-large-size) / 2);
@@ -437,9 +437,9 @@
 @lime-button-min-width: 300px;
 @lime-button-min-width-default: 840px;
 @lime-button-focus-duration: @lime-spotlight-focus-animation-duration;
-@lime-button-small-margin: var(--primitive-spacing-24);
+@lime-button-small-margin: var(--semantic-spacing-gap-m);
 @lime-button-small-focusexpand-margin: @lime-button-focusexpand-margin;
-@lime-button-small-h-padding: var(--primitive-spacing-60);
+@lime-button-small-h-padding: var(--semantic-spacing-inset-button);
 @lime-button-small-height: 108px;
 @lime-button-small-height-large: @lime-button-small-height;
 @lime-button-small-max-width: 1020px;
@@ -453,7 +453,7 @@
 @lime-button-colordot-height: 24px;
 @lime-button-colordot-height-font-size-large: 30px;
 @lime-button-colordot-h-padding: var(--primitive-spacing-24);
-@lime-button-colordot-padding-start: var(--primitive-spacing-36);
+@lime-button-colordot-padding-start: var(--semantic-spacing-content-padding-m);
 @lime-button-small-colordot-bottom: var(--primitive-spacing-12);
 @lime-button-small-colordot-width: 51px;
 @lime-button-small-colordot-width-font-size-large: 60px;
@@ -464,13 +464,13 @@
 @lime-button-icon-only-colordot-width: 30px;
 @lime-button-icon-only-colordot-height: 12px;
 @lime-button-collapse-duration: 300ms;
-@lime-button-collapsable-icon-margin: 0 var(--primitive-spacing-24);
+@lime-button-collapsable-icon-margin: 0 var(--semantic-spacing-gap-m);
 
 // Card
 // ---------------------------------------
-@lime-card-caption-image-icon-size: 96px;
-@lime-card-caption-image-icon-margin: var(--primitive-spacing-24);
-@lime-card-caption-image-icon-spacing: var(--primitive-spacing-24);
+@lime-card-caption-image-icon-size: var(--semantic-size-icon-xl);
+@lime-card-caption-image-icon-margin: var(--semantic-spacing-gap-m);
+@lime-card-caption-image-icon-spacing: var(--semantic-spacing-gap-m);
 @lime-card-margin: @lime-item-margin;
 @lime-card-border-radius: var(--semantic-radius-container);
 @lime-card-image-border-width: 6px;
@@ -497,7 +497,7 @@
 @lime-card-caption-line-height: 84px;
 @lime-card-caption-line-height-large: 100px;
 @lime-card-duration-border-radius: var(--primitive-radius-12);
-@lime-card-score-border-radius: var(--primitive-radius-999);
+@lime-card-score-border-radius: var(--semantic-radius-full);
 @lime-card-score-padding: var(--primitive-spacing-6) var(--primitive-spacing-42);
 @lime-card-score-gap: var(--primitive-spacing-18);
 @lime-card-score-min-height: var(--primitive-spacing-108);
@@ -510,21 +510,21 @@
 @lime-card-label-line-height-large: 70px;
 @lime-card-score-line-height: 80px;
 @lime-card-score-line-height-large: 96px;
-@lime-card-split-caption-label-padding: 0 var(--primitive-spacing-48);
+@lime-card-split-caption-label-padding: 0 var(--semantic-spacing-inset-card);
 @lime-card-split-caption-lower-label-padding: var(--primitive-spacing-18);
-@lime-card-vertical-captions-padding: var(--primitive-spacing-36) 0;
+@lime-card-vertical-captions-padding: var(--semantic-spacing-content-padding-m) 0;
 @lime-card-vertical-captions-overflow-width: 1140px;
 @lime-card-vertical-captions-gap: var(--primitive-spacing-48);
-@lime-card-vertical-captions-centered-title-gap: var(--primitive-spacing-24);
-@lime-card-vertical-duration-spacing: var(--primitive-spacing-24);
+@lime-card-vertical-captions-centered-title-gap: var(--semantic-spacing-gap-m);
+@lime-card-vertical-duration-spacing: var(--semantic-spacing-gap-m);
 @lime-card-vertical-progress-spacing: var(--primitive-spacing-48);
 @lime-card-vertical-image-icon-size: 180px;
 @lime-card-vertical-image-icon-margin: 0;
-@lime-card-vertical-caption-overlay-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
-@lime-card-vertical-has-container-captions-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-card-vertical-caption-overlay-captions-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-inset-card);
+@lime-card-vertical-has-container-captions-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-inset-card);
 @lime-card-horizontal-width: 1192px;
 @lime-card-horizontal-height: 336px;
-@lime-card-horizontal-captions-padding: var(--primitive-spacing-48);
+@lime-card-horizontal-captions-padding: var(--semantic-spacing-inset-card);
 
 // Checkbox
 // ---------------------------------------
@@ -535,14 +535,14 @@
 
 // CheckboxItem
 // ---------------------------------------
-@lime-checkboxitem-padding: var(--primitive-spacing-36) var(--primitive-spacing-48) var(--primitive-spacing-36) var(--primitive-spacing-60);
-@lime-checkboxitem-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-48) var(--primitive-spacing-60);
+@lime-checkboxitem-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-xl);
+@lime-checkboxitem-withlabel-padding: var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-xl);
 @lime-checkboxitem-form-checkbox-margin-end: abs(.extract(@lime-checkbox-container-position, right)[]); // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
 
 // Chip
 // ---------------------------------------
 @lime-chip-margin: 0;
-@lime-chip-padding-icon-left: var(--primitive-spacing-36);
+@lime-chip-padding-icon-left: var(--semantic-spacing-content-padding-m);
 @lime-chip-border-radius: var(--semantic-radius-container);
 @lime-chip-button-spacing: var(--primitive-spacing-12);
 @lime-chip-line-height: 72px;
@@ -550,11 +550,11 @@
 @lime-chip-min-width: 108px;
 @lime-chip-multiline-padding: var(--primitive-spacing-18);
 @lime-chip-multiline-max-width: 1200px;
-@lime-chips-gap: var(--primitive-spacing-36);
+@lime-chips-gap: var(--semantic-spacing-gap-xl);
 
 // ContextualMenu
 // ---------------------------------------
-@lime-contextualmenu-container-padding: var(--primitive-spacing-36) 0;
+@lime-contextualmenu-container-padding: var(--semantic-spacing-content-padding-m) 0;
 @lime-contextualmenu-max-items: 5;
 @lime-contextualmenu-innercontainer-max-height: @lime-contextualmenu-max-items * @lime-item-small-height;
 @lime-contextualmenu-max-height: (@lime-contextualmenu-innercontainer-max-height + 72px);
@@ -565,15 +565,15 @@
 
 // ContextualPopup
 // ---------------------------------------
-@lime-contextualpopup-padding: var(--primitive-spacing-36) 0;
+@lime-contextualpopup-padding: var(--semantic-spacing-content-padding-m) 0;
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
-@lime-contextualpopup-offset-overlap: var(--primitive-spacing-36);	// used as inverse of small to cause overlap
+@lime-contextualpopup-offset-overlap: var(--semantic-spacing-gap-xl);	// used as inverse of small to cause overlap
 @lime-contextualpopup-offset-small: var(--primitive-spacing-18);
 @lime-contextualpopup-offset-large: var(--primitive-spacing-36);
 
 // Date and Time Picker
-@lime-datecomponentpicker-margin: 0 var(--primitive-spacing-24);
+@lime-datecomponentpicker-margin: 0 var(--semantic-spacing-gap-m);
 @lime-datetime-fontsize: var(--primitive-font-size-66);
 @lime-datetime-fontsize-large: var(--primitive-font-size-80);
 @lime-datetime-heading-margin: 0 0 var(--primitive-spacing-132);
@@ -583,9 +583,9 @@
 // Dropdown
 // ---------------------------------------
 @lime-dropdown-margin: 0 @lime-spotlight-outset; // this extra margin used to align dropdown container with the outer element
-@lime-dropdown-padding: 0 var(--primitive-spacing-48);
+@lime-dropdown-padding: 0 var(--semantic-spacing-content-padding-l);
 @lime-dropdown-min-width: @lime-button-min-width;
-@lime-dropdown-icon-margin: var(--primitive-spacing-36);
+@lime-dropdown-icon-margin: var(--semantic-spacing-gap-xl);
 @lime-dropdown-title-padding: var(--primitive-spacing-36) var(--primitive-spacing-24);
 @lime-dropdown-title-padding-left: .extract(@lime-dropdown-title-padding, left)[];
 @lime-dropdown-title-min-width: ~"calc(@{lime-dropdown-min-width} - @{lime-dropdown-title-padding-left} * 2)";
@@ -618,7 +618,7 @@
 @lime-fixedpopuppanels-half-width: 1716px;
 @lime-fixedpopuppanels-margin: var(--primitive-spacing-60) var(--primitive-spacing-60) var(--primitive-spacing-132);
 @lime-fixedpopuppanels-border-radius: var(--semantic-radius-overlay);
-@lime-fixedpopuppanels-panel-body-padding: var(--primitive-spacing-60);
+@lime-fixedpopuppanels-panel-body-padding: var(--semantic-spacing-content-padding-xl);
 
 // FlexiblePopupPanels
 // ---------------------------------------
@@ -627,7 +627,7 @@
 @lime-flexiblepopuppanels-padding: 0 var(--primitive-spacing-60) ~"calc(var(--primitive-spacing-36) + (var(--primitive-spacing-18) * 1.75))";  // Math in an attempt to use the shadow values to calculate the proper margin size so no shadow clipping occurs.
 @lime-flexiblepopuppanels-panel-border-radius: var(--semantic-radius-overlay);
 @lime-flexiblepopuppanels-panel-margin: 0 var(--primitive-spacing-60);
-@lime-flexiblepopuppanels-panel-padding: var(--primitive-spacing-60);
+@lime-flexiblepopuppanels-panel-padding: var(--semantic-spacing-content-padding-xl);
 @lime-flexiblepopuppanels-body-padding: 0 var(--primitive-spacing-108);
 @lime-flexiblepopuppanels-navbutton-margin: 0;
 @lime-flexiblepopuppanels-small-width: 600px;
@@ -643,7 +643,7 @@
 @lime-header-centered-titleRow-height: 282px;
 @lime-header-popup-titleRow-height: 204px;
 @lime-header-popup-compact-slotafter-padding-offset: var(--primitive-spacing-24);
-@lime-header-slotabove-margin: 0 ~"calc(@{lime-component-spacing} * -1)" var(--primitive-spacing-24) ~"calc(@{lime-component-spacing} * -1)"; // Negative margins accommodate the component-spacing
+@lime-header-slotabove-margin: 0 ~"calc(@{lime-component-spacing} * -1)" var(--semantic-spacing-gap-m) ~"calc(@{lime-component-spacing} * -1)"; // Negative margins accommodate the component-spacing
 @lime-header-slotbelow-margin: var(--primitive-spacing-18) ~"calc(@{lime-component-spacing} * -1)" 0 ~"calc(@{lime-component-spacing} * -1)"; // Negative margins accommodate the component-spacing
 @lime-header-subtitle-height: (@lime-heading-subtitle-font-size * @lime-heading-subtitle-line-height);
 @lime-header-subtitle-margin-start: var(--primitive-spacing-6);
@@ -674,8 +674,8 @@
 @lime-header-standard-title-padding: 0;
 @lime-header-standard-title-margin-top: var(--primitive-spacing-60);
 @lime-header-standard-subtitle-margin: 0;
-@lime-header-standard-slotbefore-margin-end: var(--primitive-spacing-36);
-@lime-header-standard-slotafter-margin-start: var(--primitive-spacing-36);
+@lime-header-standard-slotbefore-margin-end: var(--semantic-spacing-gap-xl);
+@lime-header-standard-slotafter-margin-start: var(--semantic-spacing-gap-xl);
 @lime-header-compact-margin: 0;
 @lime-header-compact-padding:
 	(
@@ -745,15 +745,15 @@
 // Heading
 // ---------------------------------------
 @lime-heading-border-width: 1px;
-@lime-heading-margin: 0 var(--primitive-spacing-24) var(--primitive-spacing-36);
-@lime-heading-margin-tiny: var(--primitive-spacing-36) var(--primitive-spacing-24);
+@lime-heading-margin: 0 var(--semantic-spacing-gap-m) var(--semantic-spacing-gap-xl);
+@lime-heading-margin-tiny: var(--semantic-spacing-gap-xl) var(--semantic-spacing-gap-m);
 @lime-heading-padding: 0;
 @lime-heading-spacing-title: 0;
 @lime-heading-spacing-subtitle: 0;
 @lime-heading-spacing-large: 78px;
 @lime-heading-spacing-medium: 42px;
 @lime-heading-spacing-small: 18px;
-@lime-heading-spacing-small-margin-bottom: ~"calc(var(--primitive-spacing-36) - @{lime-heading-border-width})";
+@lime-heading-spacing-small-margin-bottom: ~"calc(var(--semantic-spacing-gap-xl) - @{lime-heading-border-width})";
 
 // HolePunchScrim
 // ---------------------------------------
@@ -768,7 +768,7 @@
 @lime-icon-small-size-large: (@lime-icon-small-size * 1.2);
 @lime-icon-tiny-size: 60px;
 @lime-icon-tiny-size-large: (@lime-icon-tiny-size * 1.2);
-@lime-icon-margin: var(--primitive-spacing-24);
+@lime-icon-margin: var(--semantic-spacing-gap-m);
 
 // IconItem
 // ---------------------------------------
@@ -792,12 +792,12 @@
 @lime-iconitem-label-image-height: ~"calc("@lime-iconitem-height ~"- "@lime-iconitem-label-line-height ~"- 24px)";
 @lime-iconitem-label-line-height: 56px;
 @lime-iconitem-label-line-height-large: 66px;
-@lime-iconitem-label-padding: 0 var(--primitive-spacing-12);
+@lime-iconitem-label-padding: 0 var(--semantic-spacing-content-padding-s);
 @lime-iconitem-description-line-height: @lime-iconitem-label-line-height;
 @lime-iconitem-description-line-height-large: @lime-iconitem-label-line-height-large;
 @lime-iconitem-title-line-height: 64px;
 @lime-iconitem-title-line-height-large: 80px;
-@lime-iconitem-title-margin: var(--primitive-spacing-24) 0 0 0;
+@lime-iconitem-title-margin: var(--semantic-spacing-gap-m) 0 0 0;
 @lime-iconitem-focus-transform: scale(1.2);
 @lime-iconitem-pressed-transform: scale(1.1);
 @lime-iconitem-release-transform: @lime-iconitem-focus-transform;
@@ -814,22 +814,22 @@
 @lime-imageitem-placeholder-caption-height: 102px;
 @lime-imageitem-placeholder-label-height: 66px;
 @lime-imageitem-horizontal-padding: var(--primitive-spacing-30);
-@lime-imageitem-horizontal-image-width: 180px;
+@lime-imageitem-horizontal-image-width: var(--semantic-size-thumbnail-m);
 @lime-imageitem-horizontal-image-height: @lime-imageitem-horizontal-image-width;
 @lime-imageitem-horizontal-image-margin: var(--primitive-spacing-48);
-@lime-imageitem-horizontal-wideimage-padding: var(--primitive-spacing-48);
+@lime-imageitem-horizontal-wideimage-padding: var(--semantic-spacing-content-padding-l);
 @lime-imageitem-horizontal-wideimage-image-width: 426px;
 @lime-imageitem-horizontal-wideimage-image-height: 240px;
 @lime-imageitem-horizontal-selection-icon-size: 60px;
 @lime-imageitem-horizontal-selection-icon-size-large: (@lime-imageitem-horizontal-selection-icon-size * 1.2);
 @lime-imageitem-vertical-padding: var(--primitive-spacing-24) var(--primitive-spacing-24) var(--primitive-spacing-30);
-@lime-imageitem-vertical-full-image-padding: var(--primitive-spacing-60); // 24px(for expanding) + 36px(for showing shadow)
+@lime-imageitem-vertical-full-image-padding: var(--semantic-spacing-content-padding-xl); // 24px(for expanding) + 36px(for showing shadow)
 @lime-imageitem-vertical-full-image-border-width: 2px;
 @lime-imageitem-vertical-full-image-focus-border-width: 6px;
-@lime-imageitem-vertical-captions-margin-top: var(--primitive-spacing-30);
+@lime-imageitem-vertical-captions-margin-top: var(--semantic-spacing-gap-l);
 @lime-imageitem-vertical-label-height: 64px;
 @lime-imageitem-vertical-focus-image-transform: scale(1.1);
-@lime-imageitem-vertical-image-icon-margin: 0 var(--primitive-spacing-24) 0 0;
+@lime-imageitem-vertical-image-icon-margin: 0 var(--semantic-spacing-gap-m) 0 0;
 @lime-imageitem-vertical-image-icon-size: 132px;
 @lime-imageitem-vertical-image-icon-size-large: (@lime-imageitem-vertical-image-icon-size * 1.2);
 @lime-imageitem-vertical-selection-icon-size: 120px;
@@ -861,10 +861,10 @@
 @lime-input-fullscreen-numbercell-margin: 0;
 @lime-input-fullscreen-numbercell-gap: var(--primitive-spacing-60);
 @lime-input-fullscreen-numberfield-width: 1104px;
-@lime-input-fullscreen-numberfield-height: 132px;
+@lime-input-fullscreen-numberfield-height: var(--semantic-size-control-min-height-m);
 @lime-input-fullscreen-numberfield-margin: auto;
-@lime-input-fullscreen-numberfield-padding: 0 var(--primitive-spacing-48);
-@lime-input-fullscreen-numberfield-letter-spacing: var(--primitive-spacing-30);
+@lime-input-fullscreen-numberfield-padding: 0 var(--semantic-spacing-content-padding-l);
+@lime-input-fullscreen-numberfield-letter-spacing: var(--semantic-spacing-gap-l);
 @lime-input-fullscreen-keypad-margin: var(--primitive-spacing-132) auto 0 auto;
 @lime-input-fullscreen-buttonarea-margin: 0;
 @lime-input-fullscreen-invalid-tooltip-width: 3240px;
@@ -876,14 +876,14 @@
 @lime-input-overlay-border-radius: var(--semantic-radius-popup);
 @lime-input-overlay-width: 1320px;
 @lime-input-overlay-inputarea-margin: var(--primitive-spacing-60) 0 var(--primitive-spacing-24);
-@lime-input-overlay-numbercell-margin: 0 var(--primitive-spacing-24);
+@lime-input-overlay-numbercell-margin: 0 var(--semantic-spacing-gap-m);
 @lime-input-overlay-numbercell-width: 132px;
-@lime-input-overlay-numbercell-height: 156px;
+@lime-input-overlay-numbercell-height: var(--semantic-size-control-min-height-l);
 @lime-input-overlay-numberfield-width: 936px;
-@lime-input-overlay-numberfield-height: 132px;
+@lime-input-overlay-numberfield-height: var(--semantic-size-control-min-height-m);
 @lime-input-overlay-numberfield-margin: @lime-input-fullscreen-numberfield-margin;
-@lime-input-overlay-numberfield-padding: 0 var(--primitive-spacing-48);
-@lime-input-overlay-numberfield-letter-spacing: var(--primitive-spacing-30);
+@lime-input-overlay-numberfield-padding: 0 var(--semantic-spacing-content-padding-l);
+@lime-input-overlay-numberfield-letter-spacing: var(--semantic-spacing-gap-l);
 @lime-input-overlay-keypad-gap: var(--primitive-spacing-60);
 @lime-input-overlay-keypad-margin: var(--primitive-spacing-132) 198px var(--primitive-spacing-60) 198px;
 @lime-input-overlay-keypad-width: 624px;
@@ -893,27 +893,27 @@
 @lime-input-overlay-textfield-width: 1032px;
 @lime-input-overlay-no-title-height: 120px;
 @lime-input-overlay-title-margin: 0 var(--primitive-spacing-144) 0 var(--primitive-spacing-144);
-@lime-input-invalid-tooltip-margin-top: var(--primitive-spacing-24);
+@lime-input-invalid-tooltip-margin-top: var(--semantic-spacing-gap-m);
 @lime-input-invalid-tooltip-line-height: 60px;
 @lime-input-invalid-tooltip-line-height-large: 70px;
 
 // InputField
 // ---------------------------------------
 @lime-inputfield-margin: 0;
-@lime-inputfield-icon-margin: var(--primitive-spacing-30);
+@lime-inputfield-icon-margin: var(--semantic-spacing-gap-l);
 @lime-inputfield-padding: var(--primitive-spacing-24) var(--primitive-spacing-48);
 @lime-inputfield-padding-large: 0 @lime-inputfield-icon-margin;
-@lime-inputfield-password-spacing: var(--primitive-spacing-30);
+@lime-inputfield-password-spacing: var(--semantic-spacing-gap-l);
 @lime-inputfield-text-indent: 0.2em;
 @lime-inputfield-border-radius: var(--semantic-radius-button);
-@lime-inputfield-invalid-tooltip-margin-top: var(--primitive-spacing-30);
+@lime-inputfield-invalid-tooltip-margin-top: var(--semantic-spacing-gap-l);
 @lime-inputfield-invalid-tooltip-line-height: @lime-input-invalid-tooltip-line-height;
 @lime-inputfield-invalid-tooltip-line-height-large: @lime-input-invalid-tooltip-line-height-large;
 @lime-inputfield-height: 168px;
 @lime-inputfield-width: 1560px;
 @lime-inputfield-withoneicon-width: 1386px;
 @lime-inputfield-withtwoicons-width: 1272px;
-@lime-inputfield-small-height: 132px;
+@lime-inputfield-small-height: var(--semantic-size-control-min-height-m);
 @lime-inputfield-small-height-large: 156px;
 @lime-inputfield-highlight-height: 100%;
 @lime-inputfield-small-width: 1200px;
@@ -926,13 +926,13 @@
 @lime-item-shadow-height: @lime-spotlight-focus-shadow-height;
 @lime-item-withlabel-height: 240px;
 @lime-item-withsecondlabel-height: 304px;
-@lime-item-withlabel-padding: var(--primitive-spacing-48) var(--primitive-spacing-48);
+@lime-item-withlabel-padding: var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-l);
 @lime-item-inline-max-width: 480px;
 @lime-item-border-radius: var(--semantic-radius-button);
 @lime-item-slotafter-spacing: var(--primitive-spacing-48);
 @lime-item-slotbefore-spacing: var(--primitive-spacing-48);
 @lime-item-margin: 0 @lime-component-spacing @lime-component-spacing-bottom @lime-component-spacing;
-@lime-item-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-item-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-l);
 @lime-item-small-height: 126px;
 @lime-item-small-height-large: @lime-item-small-height;
 @lime-item-small-withlabel-height: 210px;
@@ -946,11 +946,11 @@
 @lime-keyguide-colordot-width: 60px;
 @lime-keyguide-colordot-width-large: calc(@lime-keyguide-colordot-width * 1.2);
 @lime-keyguide-colordot-border-radius: var(--semantic-radius-full);
-@lime-keyguide-font-weight: var(--primitive-font-weight-regular);
+@lime-keyguide-font-weight: var(--semantic-typography-body-60-regular-font-weight);
 @lime-keyguide-icon-border-radius: var(--semantic-radius-container);
 @lime-keyguide-icon-icon-margin-right: var(--primitive-spacing-48);
 @lime-keyguide-icon-gap: var(--primitive-spacing-42);
-@lime-keyguide-icon-padding: var(--primitive-spacing-48);
+@lime-keyguide-icon-padding: var(--semantic-spacing-content-padding-l);
 @lime-keyguide-icon-position-bottom: var(--primitive-spacing-120);
 @lime-keyguide-icon-position-right: 150px;
 @lime-keyguide-icon-width: 750px;
@@ -959,24 +959,24 @@
 @lime-keyguide-item-height: 84px;
 @lime-keyguide-image-item-height: 252px;
 @lime-keyguide-image-item-width: 856px;
-@lime-keyguide-image-image-width: 180px;
-@lime-keyguide-image-image-height: 180px;
+@lime-keyguide-image-image-width: var(--semantic-size-thumbnail-m);
+@lime-keyguide-image-image-height: var(--semantic-size-thumbnail-m);
 @lime-keyguide-image-image-margin-right: var(--primitive-spacing-48);
 @lime-keyguide-arrow-border-width: 30px;
 
 // MediaOverlay
 // ---------------------------------------
 @lime-mediaoverlay-border-radius: var(--primitive-radius-12);
-@lime-mediaoverlay-caption-margin-top: var(--primitive-spacing-36);
-@lime-mediaoverlay-caption-margin-bottom: var(--primitive-spacing-36);
-@lime-mediaoverlay-caption-font-weight: var(--primitive-font-weight-semibold);
+@lime-mediaoverlay-caption-margin-top: var(--semantic-spacing-gap-xl);
+@lime-mediaoverlay-caption-margin-bottom: var(--semantic-spacing-gap-xl);
+@lime-mediaoverlay-caption-font-weight: var(--semantic-typography-body-60-semibold-font-weight);
 @lime-mediaoverlay-font-weight: var(--primitive-font-weight-regular);
 @lime-mediaoverlay-line-height: 60px;
 @lime-mediaoverlay-line-height-large: 70px;
 @lime-mediaoverlay-caption-line-height: 1.4em;
 @lime-mediaoverlay-padding: var(--primitive-spacing-24);
-@lime-mediaoverlay-progressbar-margin: var(--primitive-spacing-24);
-@lime-mediaoverlay-text-margin-bottom: var(--primitive-spacing-36);
+@lime-mediaoverlay-progressbar-margin: var(--semantic-spacing-gap-m);
+@lime-mediaoverlay-text-margin-bottom: var(--semantic-spacing-gap-xl);
 @lime-mediaoverlay-textlayout-margin: var(--primitive-spacing-24) var(--primitive-spacing-60);
 @lime-mediaoverlay-width: 768px;
 @lime-mediaoverlay-focus-media-outline-width: 6px;
@@ -987,14 +987,14 @@
 @lime-mediaplayer-button-height: 180px;
 @lime-mediaplayer-button-icon-size: 108px;
 @lime-mediaplayer-button-icon-size-large: 130px;
-@lime-mediaplayer-button-padding: var(--primitive-spacing-36);
+@lime-mediaplayer-button-padding: var(--semantic-spacing-content-padding-m);
 @lime-mediaplayer-controls-actionguide-height: 168px;
 @lime-mediaplayer-controls-actionguide-padding-bottom: 0;
 @lime-mediaplayer-controls-actionguide-padding-top: var(--primitive-spacing-72);
 @lime-mediaplayer-controls-actionguide-time: 0.2s;		// Length of the animation
 @lime-mediaplayer-controls-gap: var(--primitive-spacing-120);
 @lime-mediaplayer-controls-height: 180px;
-@lime-mediaplayer-controls-margin-top: var(--primitive-spacing-36);
+@lime-mediaplayer-controls-margin-top: var(--semantic-spacing-gap-xl);
 @lime-mediaplayer-controls-moreComponents-gap: 204px;
 @lime-mediaplayer-controls-moreComponents-margin-top: var(--primitive-spacing-60);
 @lime-mediaplayer-slider-height: 12px;
@@ -1008,7 +1008,7 @@
 // ---------------------------------------
 @lime-pageviews-contents-border-radius: var(--semantic-radius-container);
 @lime-pageviews-navigation-button-area-width: 216px;
-@lime-pageviews-steps-area-min-height: 132px;
+@lime-pageviews-steps-area-min-height: var(--semantic-size-control-min-height-m);
 @lime-pageviews-steps-height: 96px;
 @lime-pageviews-dot-highlighted-step-size: 24px;
 @lime-pageviews-dot-step-size: 18px;
@@ -1019,8 +1019,8 @@
 @lime-pageviews-number-steps-number-width: 168px;
 @lime-pageviews-number-steps-separator-width: 33px;
 @lime-pageviews-indicator-icon-opacity: 0.4;
-@lime-pageviews-indicator-icon-gap: var(--primitive-spacing-24);
-@lime-pageviews-navigation-text-area-padding: 0 var(--primitive-spacing-36);
+@lime-pageviews-indicator-icon-gap: var(--semantic-spacing-gap-m);
+@lime-pageviews-navigation-text-area-padding: 0 var(--semantic-spacing-content-padding-m);
 @lime-pageviews-motion-distance: 3600px;
 
 // Panels
@@ -1047,7 +1047,7 @@
 @lime-picker-joined-horizontal-border-radius: var(--semantic-radius-full);
 @lime-picker-joined-horizontal-height: 210px;
 @lime-picker-joined-horizontal-large-value-width: 696px;
-@lime-picker-joined-horizontal-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-picker-joined-horizontal-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-l);
 @lime-picker-joined-horizontal-value-margin: 0 0 var(--primitive-spacing-48) 0;
 @lime-picker-joined-vertical-border-radius: var(--semantic-radius-button);
 @lime-picker-joined-value-height: 90px;
@@ -1055,7 +1055,7 @@
 @lime-picker-small-value-width: (@lime-icon-large-size + (@lime-spotlight-outset * 3));
 @lime-picker-medium-value-width: 360px;
 @lime-picker-large-value-width: 468px;
-@lime-picker-incrementer-margin: var(--primitive-spacing-36);
+@lime-picker-incrementer-margin: var(--semantic-spacing-gap-xl);
 @lime-picker-incrementer-width: 120px;
 @lime-picker-horizontal-motion-distance: 270px;
 @lime-picker-vertical-motion-distance: 165px;
@@ -1078,17 +1078,17 @@
 @lime-popuptablayout-tab-icon-size: 96px;
 @lime-popuptablayout-tab-icon-size-large: (@lime-popuptablayout-tab-icon-size * 1.2);
 @lime-popuptablayout-tabs-border-radius: var(--semantic-radius-container);
-@lime-popuptablayout-tabs-content-spacing: var(--primitive-spacing-36);
+@lime-popuptablayout-tabs-content-spacing: var(--semantic-spacing-gap-xl);
 @lime-popuptablayout-content-border-radius: var(--semantic-radius-overlay);
 @lime-popuptablayout-content-margin: 0;
-@lime-popuptablayout-panel-body-padding: var(--primitive-spacing-60);
+@lime-popuptablayout-panel-body-padding: var(--semantic-spacing-content-padding-xl);
 @lime-popuptablayout-panel-min-height: 996px;
 
 // ProgressBar
 // ---------------------------------------
 @lime-progressbar-bar-thickness: 12px;
 @lime-progressbar-bar-border-radius: var(--semantic-radius-full);
-@lime-progressbar-margin: var(--primitive-spacing-24) 0;
+@lime-progressbar-margin: var(--semantic-spacing-gap-m) 0;
 @lime-progressbar-vertical-min-height: 240px;
 @lime-progressbar-radial-size: 68px;
 @lime-progressbar-radial-thickness: 6px;
@@ -1127,7 +1127,7 @@
 	// this value must be specifically considered as to not impose layout issues related to, for
 	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
 @lime-radioitem-icon-border-radius: var(--semantic-radius-full);
-@lime-radioitem-icon-margin: var(--primitive-spacing-24);
+@lime-radioitem-icon-margin: var(--semantic-spacing-gap-m);
 
 // Scrim
 // ---------------------------------------
@@ -1139,7 +1139,7 @@
 @lime-scrollbar-size: 36px;
 @lime-scrollbar-focusable-size: 60px;
 @lime-scrollbar-track-margin: var(--primitive-spacing-12);
-@lime-scrollbar-track-focusable-margin: var(--primitive-spacing-24);
+@lime-scrollbar-track-focusable-margin: var(--semantic-spacing-gap-m);
 @lime-scrollbar-track-width: 12px;
 @lime-scrollbar-track-border-radius: var(--semantic-radius-full);
 @lime-scrollbar-thumb-border-radius: var(--semantic-radius-full);
@@ -1155,7 +1155,7 @@
 // Scroller
 // ---------------------------------------
 @lime-scroll-fade-out-size: 48px;
-@lime-scroll-fade-out-offset: var(--primitive-spacing-24);
+@lime-scroll-fade-out-offset: var(--semantic-spacing-gap-m);
 @lime-scroll-vertical-fade-out-padding: @lime-scroll-fade-out-size 0;
 @lime-scroll-horizontal-fade-out-padding: 0 @lime-scroll-fade-out-size;
 @lime-scroll-hover-area-size: 120px;
@@ -1177,35 +1177,35 @@
 @lime-slider-color-picker-knob-outline-width: 6px;
 @lime-slider-bar-vertical-min-height: 240px;
 @lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
-@lime-slider-bar-padding: var(--primitive-spacing-60);
+@lime-slider-bar-padding: var(--semantic-spacing-content-padding-xl);
 @lime-slider-tick-width: 6px;
 @lime-slider-tick-height: 36px;
-@lime-slider-tick-border-radius: var(--primitive-radius-999);
+@lime-slider-tick-border-radius: var(--semantic-radius-full);
 @lime-slider-tick-margin: var(--primitive-spacing-12);
 @lime-slider-tick-label-margin-top: var(--primitive-spacing-12);
 @lime-slider-tick-label-offset: ~"calc("@lime-slider-tick-label-margin-top ~"+" ((@lime-slider-tick-height - @lime-slider-bar-height) / 2) ~")";
-@lime-slider-tick-label-font-size: var(--primitive-font-size-48);
+@lime-slider-tick-label-font-size: var(--semantic-typography-body-48-regular-font-size);
 @lime-slider-tick-label-font-size-large: var(--primitive-font-size-60);
-@lime-slider-tick-label-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-tick-label-font-weight: var(--semantic-typography-body-48-regular-font-weight);
 @lime-slider-tick-label-line-height: 64px;
 @lime-slider-tick-label-line-height-large: 80px;
 @lime-slider-tick-label-letter-spacing: 0;
-@lime-slider-bar-ticks-padding-bottom: var(--primitive-spacing-36);
+@lime-slider-bar-ticks-padding-bottom: var(--semantic-spacing-content-padding-m);
 @lime-slider-bar-tick-labels-padding-bottom: var(--primitive-spacing-100);
 @lime-slider-side-label-width: 360px;
-@lime-slider-side-label-gap: var(--primitive-spacing-36);
+@lime-slider-side-label-gap: var(--semantic-spacing-gap-xl);
 @lime-slider-knob-width: 48px;
 @lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
 @lime-slider-tooltip-offset-focused: (@lime-slider-knob-width * @lime-slider-focus-scale / 2);
-@lime-slider-min-max-margin-top: var(--primitive-spacing-24);
-@lime-slider-min-max-font-size: var(--primitive-font-size-48);
+@lime-slider-min-max-margin-top: var(--semantic-spacing-gap-m);
+@lime-slider-min-max-font-size: var(--semantic-typography-body-48-regular-font-size);
 @lime-slider-min-max-font-size-large: var(--primitive-font-size-60);
-@lime-slider-min-max-font-weight: var(--primitive-font-weight-regular);
+@lime-slider-min-max-font-weight: var(--semantic-typography-body-48-regular-font-weight);
 @lime-slider-min-max-line-height: 60px;
 @lime-slider-min-max-line-height-large: 70px;
-@lime-slider-vertical-min-max-margin-left: var(--primitive-spacing-24);
+@lime-slider-vertical-min-max-margin-left: var(--semantic-spacing-gap-m);
 @lime-slider-tooltip-above-offset: (-@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-below-offset: (@lime-progressbar-bar-thickness);
 @lime-slider-tooltip-before-offset: (-@lime-progressbar-bar-thickness);
@@ -1219,16 +1219,16 @@
 @lime-spinner-time: 1.25s;		// Length of the spinner animation
 @lime-spinner-line-width: 6px;
 @lime-spinner-small-line-width: 6px;
-@lime-spinner-line-margin: var(--primitive-spacing-24);
+@lime-spinner-line-margin: var(--semantic-spacing-gap-m);
 @lime-spinner-small-line-margin: var(--primitive-spacing-12);
 @lime-spinner-font-weight: var(--primitive-font-weight-semibold);
-@lime-spinner-client-height: 132px;
+@lime-spinner-client-height: var(--semantic-size-control-min-height-m);
 @lime-spinner-client-line-height: @lime-common-line-height;
 
 // Steps
 // ---------------------------------------
-@lime-steps-step-number-font-weight: var(--primitive-font-weight-semibold);
-@lime-steps-step-margin: 0 var(--primitive-spacing-30);
+@lime-steps-step-number-font-weight: var(--semantic-typography-body-48-semibold-font-weight);
+@lime-steps-step-margin: 0 var(--semantic-spacing-gap-l);
 @lime-steps-step-current-opacity: 1;
 @lime-steps-step-future-opacity: 1;
 @lime-steps-step-highlight-current-only-future-opacity: 1;
@@ -1237,12 +1237,12 @@
 @lime-steps-pageindicator-border-radius: var(--semantic-radius-full);
 @lime-steps-pageindicator-current-size: 24px;
 @lime-steps-pageindicator-current-size-large: calc(@lime-steps-pageindicator-current-size * 1.2);
-@lime-steps-highlight-current-only-gap: var(--primitive-spacing-24);
-@lime-steps-highlight-current-only-margin-top: var(--primitive-spacing-30);
+@lime-steps-highlight-current-only-gap: var(--semantic-spacing-gap-m);
+@lime-steps-highlight-current-only-margin-top: var(--semantic-spacing-gap-l);
 
 // Switch
 // ---------------------------------------
-@lime-switch-border-radius: var(--primitive-radius-999);
+@lime-switch-border-radius: var(--semantic-radius-full);
 @lime-switch-height: 60px;
 @lime-switch-width: 120px;
 @lime-switch-icon-height: 48px;
@@ -1265,22 +1265,22 @@
 @lime-tablayout-vertical-content-margin-top: 0;
 @lime-tablayout-horizontal-content-margin-top: var(--primitive-spacing-96);
 @lime-tablayout-horizontal-scrollable-tabs-padding: 0 var(--primitive-spacing-132);
-@lime-tablayout-horizontal-tabs-padding: var(--primitive-spacing-12);
+@lime-tablayout-horizontal-tabs-padding: var(--semantic-spacing-content-padding-s);
 @lime-tablayout-horizontal-tabs-spacing: var(--primitive-spacing-48);
-@lime-tablayout-vertical-tabs-padding: var(--primitive-spacing-36);
+@lime-tablayout-vertical-tabs-padding: var(--semantic-spacing-content-padding-m);
 @lime-tablayout-vertical-tabs-spacing: @lime-tablayout-vertical-tabs-padding;
-@lime-tablayout-tab-vertical-button-height: 156px;
-@lime-tablayout-tab-vertical-margin: var(--primitive-spacing-30);
-@lime-tablayout-tab-vertical-padding: var(--primitive-spacing-36) var(--primitive-spacing-48);
+@lime-tablayout-tab-vertical-button-height: var(--semantic-size-control-min-height-l);
+@lime-tablayout-tab-vertical-margin: var(--semantic-spacing-gap-l);
+@lime-tablayout-tab-vertical-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-l);
 @lime-tablayout-tab-vertical-icon-padding: var(--primitive-spacing-30);
-@lime-tablayout-tab-vertical-icon-padding-right: var(--primitive-spacing-48);
-@lime-tablayout-tab-horizontal-button-height: 108px;
+@lime-tablayout-tab-vertical-icon-padding-right: var(--semantic-spacing-content-padding-l);
+@lime-tablayout-tab-horizontal-button-height: var(--semantic-size-control-min-height-s);
 @lime-tablayout-tab-horizontal-small-button-height: 96px;
 @lime-tablayout-tab-horizontal-small-button-line-height: 60px;
 @lime-tablayout-tab-horizontal-small-button-line-height-large: 70px;
 @lime-tablayout-tab-horizontal-padding: var(--primitive-spacing-24);
 @lime-tablayout-tab-group-vertical-height: 1584px;
-@lime-tablayout-tab-group-vertical-scrollbar-track-margin: var(--primitive-spacing-36);
+@lime-tablayout-tab-group-vertical-scrollbar-track-margin: var(--semantic-spacing-gap-xl);
 @lime-tablayout-tab-group-vertical-scrollbar-height: calc(100% - 72px);
 @lime-tablayout-tab-margin: 0;
 
@@ -1288,7 +1288,7 @@
 // ---------------------------------------
 @lime-tooltip-font-weight: var(--primitive-font-weight-semibold);
 @lime-tooltip-transparent-font-weight: var(--primitive-font-weight-regular);
-@lime-tooltip-offset: var(--primitive-spacing-24);
+@lime-tooltip-offset: var(--semantic-spacing-gap-m);
 @lime-tooltip-transparent-label-offset: 0px;
 @lime-tooltip-arrow-offset: 0;
 @lime-tooltip-point-width: 31px; // actual value is 30px. +1px to ensure no gaps
@@ -1296,13 +1296,13 @@
 @lime-tooltip-border-radius: var(--semantic-radius-button);
 @lime-tooltip-image-border-radius: var(--semantic-radius-button);
 @lime-tooltip-image-container-border-radius: var(--semantic-radius-container);
-@lime-tooltip-image-gap: var(--primitive-spacing-36);
+@lime-tooltip-image-gap: var(--semantic-spacing-gap-xl);
 @lime-tooltip-image-height: 540px;
-@lime-tooltip-image-padding: var(--primitive-spacing-60);
+@lime-tooltip-image-padding: var(--semantic-spacing-content-padding-xl);
 @lime-tooltip-image-width: 960px;
 @lime-tooltip-label-line-height: 72px;
 @lime-tooltip-label-line-height-large: 84px;
-@lime-tooltip-padding: var(--primitive-spacing-12) var(--primitive-spacing-48);
+@lime-tooltip-padding: var(--semantic-spacing-content-padding-s) var(--semantic-spacing-content-padding-l);
 @lime-tooltip-margin-offset: var(--primitive-spacing-18); // GUI for the length of the arrow
 @lime-tooltip-marquee-width: 600px;
 @lime-tooltip-max-width: 1200px;
@@ -1313,19 +1313,19 @@
 @lime-video-back-button-top:                       var(--primitive-spacing-102);
 @lime-video-slider-tooltip-arrow-border-left-right: 18px;
 @lime-video-slider-tooltip-arrow-border-top:       24px;
-@lime-video-slider-tooltip-content-padding:        0 var(--primitive-spacing-36);
+@lime-video-slider-tooltip-content-padding:        0 var(--semantic-spacing-content-padding-m);
 @lime-video-slider-tooltip-position-bottom:        var(--primitive-spacing-42);
 @lime-video-slider-tooltip-shift-position-bottom:  ~"calc(@{lime-video-slider-tooltip-position-bottom} + @{lime-video-slider-tooltip-arrow-border-top})";
 @lime-video-slider-tooltip-margin-bottom:          var(--primitive-spacing-6);
-@lime-video-slider-tooltip-font-size:              var(--primitive-font-size-48);
+@lime-video-slider-tooltip-font-size:              var(--semantic-typography-body-48-regular-font-size);
 @lime-video-slider-tooltip-font-size-large:        var(--primitive-font-size-58);
-@lime-video-slider-tooltip-font-weight:            var(--primitive-font-weight-regular);
+@lime-video-slider-tooltip-font-weight:            var(--semantic-typography-body-48-regular-font-weight);
 @lime-video-slider-tooltip-line-height:            72px;
 @lime-video-slider-tooltip-line-height-large:      84px;
 @lime-video-slider-tooltip-gutter-width:           var(--primitive-spacing-42);
 @lime-video-slider-tooltip-thumbnail-content-font-size:     var(--primitive-font-size-54);
 @lime-video-slider-tooltip-thumbnail-content-font-size-large: var(--primitive-font-size-56);
-@lime-video-slider-tooltip-thumbnail-content-margin-bottom: var(--primitive-spacing-30);
+@lime-video-slider-tooltip-thumbnail-content-margin-bottom: var(--semantic-spacing-gap-l);
 @lime-video-slider-tooltip-thumbnail-border-radius: var(--primitive-radius-12);
 @lime-video-slider-tooltip-thumbnail-border-width:  12px;
 @lime-video-slider-tooltip-thumbnail-width:  426px;
@@ -1333,8 +1333,8 @@
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;
 @lime-video-feedback-icon-font-size:               1.25em;
 @lime-video-feedback-icon-font-size-large:         1.5em;
-@lime-video-feedback-mini-font-size:               var(--primitive-font-size-66);
-@lime-video-feedback-mini-font-weight:             var(--primitive-font-weight-regular);
+@lime-video-feedback-mini-font-size:               var(--semantic-typography-body-66-regular-font-size);
+@lime-video-feedback-mini-font-weight:             var(--semantic-typography-body-66-regular-font-weight);
 @lime-video-feedback-mini-padding:                 var(--primitive-spacing-18) var(--primitive-spacing-60);
 @lime-video-feedback-mini-height:                  84px;
 @lime-video-feedback-mini-margin-bottom:           var(--primitive-spacing-72);
@@ -1342,21 +1342,21 @@
 @lime-video-feedback-mini-top:					   @lime-video-back-button-top;
 @lime-video-feedback-message-font-weight:          var(--primitive-font-weight-semibold);
 @lime-video-player-badge-text-size:                var(--primitive-font-size-48);
-@lime-video-player-info-font-size:                 var(--primitive-font-size-54);
+@lime-video-player-info-font-size:                 var(--semantic-typography-body-54-regular-font-size);
 @lime-video-player-info-font-size-large:           var(--primitive-font-size-66);
-@lime-video-player-info-font-weight:               var(--primitive-font-weight-regular);
+@lime-video-player-info-font-weight:               var(--semantic-typography-body-54-regular-font-weight);
 @lime-video-player-info-height:                    84px;
 @lime-video-player-info-line-height:               72px;
 @lime-video-player-info-line-height-large:         84px;
 @lime-video-player-info-padding:                   var(--primitive-spacing-72) var(--primitive-spacing-48) 0;
 @lime-video-player-info-margin-bottom:             var(--primitive-spacing-60);
-@lime-video-player-slider-container-height:        132px;
-@lime-video-player-slider-container-padding:       0 var(--primitive-spacing-48);
+@lime-video-player-slider-container-height:        var(--semantic-size-control-min-height-m);
+@lime-video-player-slider-container-padding:       0 var(--semantic-spacing-content-padding-l);
 @lime-video-player-padding-bottom:                 0;
 @lime-video-player-padding-side:                   var(--primitive-spacing-132);
 @lime-video-player-label-font-size:                var(--primitive-font-size-90);
 @lime-video-player-label-font-size-large:          var(--primitive-font-size-108);
-@lime-video-player-label-font-weight:              var(--primitive-font-weight-semibold);
+@lime-video-player-label-font-weight:              var(--semantic-typography-title-90-semibold-font-weight);
 @lime-video-player-label-line-height:              120px;
 @lime-video-player-label-line-height-large:        146px;
 
@@ -1372,4 +1372,4 @@
 @lime-wizardpanels-content-margin: var(--primitive-spacing-60) ~"calc(324px - @{lime-wizardpanels-content-margin-left})";
 @lime-wizardpanels-footer-margin: 0 0 var(--primitive-spacing-132) 0;
 @lime-wizardpanels-motion-distance: 4000px;
-@lime-wizardpanels-button-icon-text-gap: var(--primitive-spacing-36);
+@lime-wizardpanels-button-icon-text-gap: var(--semantic-spacing-gap-xl);
