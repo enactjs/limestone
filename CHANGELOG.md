@@ -11,6 +11,8 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Fixed
 
+- `limestone/Alert` and `limestone/Popup` to not pause Spotlight when `open` changes between falsy values
+- `limestone/Alert` and `limestone/Popup` to resume Spotlight when unmounted while opening
 - `limestone/PopupTabLayout` to not show the vertical tab collapse animation when opening
 
 ## [1.13.0] - 2026-11-19

@@ -302,7 +302,11 @@ const Popup = (props) => {
 	checkPropTypes(Popup, props);
 
 	const componentProps = setDefaultProps(props, popupDefaultProps);
-	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
+	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open: openProp, position, scrimType, spotlightRestrict, ...rest} = componentProps;
+	// Normalize `open` so a change between falsy values (e.g. `null` to `false`) is not treated as
+	// a change of the open state, which would pause Spotlight while waiting for a transition that
+	// never happens.
+	const open = Boolean(openProp);
 
 	// Assign the needed props to the rest object for the child component
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
@@ -515,6 +519,8 @@ const Popup = (props) => {
 	}, [componentProps, noAnimation, open, popupOpen, prevOpen, spotActivator, spotPopupContent]);
 
 	useEffect(() => {
+		const paused = pausedRef.current;
+
 		checkScrimNone(componentProps);
 
 		// Spot the content after it's mounted.
@@ -533,6 +539,9 @@ const Popup = (props) => {
 				off('keydown', handleKeyDown);
 			}
 			Spotlight.remove(containerId);
+			// Spotlight is paused while the popup transitions and is resumed when it ends. If the
+			// popup is unmounted during the transition, it must be resumed here or it stays paused.
+			paused.resume();
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
