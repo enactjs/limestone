@@ -515,6 +515,58 @@ describe('Popup specs', () => {
 		expect(transitionContainer).toHaveClass(expected);
 	});
 
+	test('should not pause Spotlight when `open` changes between falsy values', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Popup open={null}>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Popup open={false}>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		const actual = Spotlight.isPaused();
+
+		Spotlight.resume();
+
+		expect(actual).toBe(false);
+	});
+
+	test('should resume Spotlight when unmounted while opening', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Popup>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Popup open>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController />
+		);
+
+		const actual = Spotlight.isPaused();
+
+		Spotlight.resume();
+
+		expect(actual).toBe(false);
+	});
+
 	describe('closing with 5-way keys', () => {
 		afterEach(() => {
 			jest.restoreAllMocks();

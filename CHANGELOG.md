@@ -6,7 +6,13 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/CardSports` `secondaryScore` on `leftTeam` and `rightTeam`, shown under each team's score
 - `limestone/StarRatings` to display a star rating or let the user select one
+
+### Fixed
+
+- `limestone/Alert` and `limestone/Popup` to not pause Spotlight when `open` changes between falsy values
+- `limestone/Alert` and `limestone/Popup` to resume Spotlight when unmounted while opening
 
 ## [1.13.0] - 2026-11-19
 

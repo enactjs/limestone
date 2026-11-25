@@ -7,8 +7,8 @@
  *   captionImageIconsSrc={[src, src, src, src]}
  *   hasContainer
  *   roundedImage
- *   leftTeam={{backgroundColor: '#1b2a4a', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
- *   rightTeam={{backgroundColor: '#e31c23', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
+ *   leftTeam={{backgroundColor: '#1b2a4a', logo: <Image src={teamLogoSrc} />, score: '2', secondaryScore: '1/2'}}
+ *   rightTeam={{backgroundColor: '#e31c23', logo: <Image src={teamLogoSrc} />, score: '1', secondaryScore: '0/1'}}
  *   label="A secondary caption"
  * >
  *  The primary caption
@@ -44,29 +44,65 @@ const teamShape = PropTypes.shape({
 			width: PropTypes.number
 		})
 	]),
-	score: PropTypes.string
+	score: PropTypes.string,
+	secondaryScore: PropTypes.string
 });
 
+const hasTeamScore = (team) => Boolean(team?.score || team?.secondaryScore);
+
+const joinScore = (left, right) => {
+	if (left && right) return `${left} : ${right}`;
+
+	return left || right || '';
+};
+
+const teamScoreText = (leftTeam, rightTeam) => {
+	const primary = joinScore(leftTeam?.score, rightTeam?.score);
+	const secondary = joinScore(leftTeam?.secondaryScore, rightTeam?.secondaryScore);
+
+	return [primary, secondary].filter(Boolean).join(' ') || null;
+};
+
+const renderStackedScore = (team, alignClass) => {
+	if (!hasTeamScore(team)) return null;
+
+	return (
+		<span className={alignClass}>
+			{team.score ? <span className={componentCss.scorePrimary}>{team.score}</span> : null}
+			{team.secondaryScore ? <span className={componentCss.scoreSecondary}>{team.secondaryScore}</span> : null}
+		</span>
+	);
+};
+
+const renderScoreRows = (leftTeam, rightTeam) => (
+	<>
+		<span className={classnames(componentCss.left, componentCss.scorePrimary)}>{leftTeam?.score}</span>
+		{leftTeam?.score && rightTeam?.score ? ':' : <span />}
+		<span className={classnames(componentCss.right, componentCss.scorePrimary)}>{rightTeam?.score}</span>
+		{leftTeam?.secondaryScore || rightTeam?.secondaryScore ? (
+			<>
+				<span className={classnames(componentCss.left, componentCss.scoreSecondary)}>{leftTeam?.secondaryScore}</span>
+				{leftTeam?.secondaryScore && rightTeam?.secondaryScore ? (
+					<span className={componentCss.scoreSecondary}>:</span>
+				) : (
+					<span />
+				)}
+				<span className={classnames(componentCss.right, componentCss.scoreSecondary)}>{rightTeam?.secondaryScore}</span>
+			</>
+		) : null}
+	</>
+);
+
 const formatTeamScore = (leftTeam, rightTeam, imageOverlay) => {
-	const leftScore = leftTeam?.score;
-	const rightScore = rightTeam?.score;
-
 	if (imageOverlay) {
-		const leftScoreSpan = leftScore && <span className={componentCss.left}>{leftScore}</span>;
-		const rightSpanScore = rightScore && <span className={componentCss.right}>{rightScore}</span>;
-
-		if (leftScore && rightScore) {
-			return (
-				<>{leftScoreSpan}:{rightSpanScore}</>
-			);
+		if (hasTeamScore(leftTeam) && hasTeamScore(rightTeam)) {
+			return renderScoreRows(leftTeam, rightTeam);
 		}
 
-		return leftScoreSpan || rightSpanScore || null;
+		return renderStackedScore(leftTeam, componentCss.left) || renderStackedScore(rightTeam, componentCss.right);
 	}
 
-	if (leftScore && rightScore) return `${leftScore} : ${rightScore}`;
-
-	return leftScore || rightScore || null;
+	return teamScoreText(leftTeam, rightTeam);
 };
 
 /**
@@ -102,7 +138,8 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			 *   {@link limestone/Card.CardBase#primaryBadge|primaryBadge} (`Element` or `String`)
 			 * * `logoSize` - The size of the logo. Same type as
 			 *   {@link limestone/Card.CardBase#primaryBadgeSize|primaryBadgeSize}
-			 * * `score` - The score text for this team
+			 * * `score` - The large score text for this team
+			 * * `secondaryScore` - The secondary score shown under `score`
 			 *
 			 * @type {Object}
 			 * @required
@@ -125,8 +162,8 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			/**
 			 * The "aria-label" for the Card.
 			 *
-			 * If not provided, it is generated from the captions, the team score, and the selected
-			 * state.
+			 * If not provided, it is generated from the captions, the team score, the secondary score
+			 * text, and the selected state.
 			 *
 			 * @type {String}
 			 * @public
@@ -157,6 +194,8 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			 *
 			 * * `cardSports` - The root class name
 			 * * `score` - The score pill
+			 * * `scorePrimary` - The large score text
+			 * * `scoreSecondary` - The secondary text under a score
 			 * * `sportsBackground` - The diagonal team-color gradient behind the image
 			 * * `sportsOverlay` - The logos and score overlay
 			 * * `teamLogo` - Applied to a team's logo
@@ -210,7 +249,10 @@ const CardSportsDecorator = hoc(defaultConfig, (_config, Wrapped) => {
 			className: ({styler}) => styler.append(cardCss.sports),
 			imageOverlay: ({css, imageOverlay, leftTeam, rightTeam}) => {
 				const teamScore = formatTeamScore(leftTeam, rightTeam, true);
-				const scoreClassName = classnames(css.score, {[css.bothScores]: leftTeam?.score && rightTeam?.score});
+				const scoreClassName = classnames(css.score, {
+					[css.bothScores]: hasTeamScore(leftTeam) && hasTeamScore(rightTeam),
+					[css.hasSecondary]: Boolean(leftTeam?.secondaryScore || rightTeam?.secondaryScore)
+				});
 
 				return (
 					<>
@@ -283,8 +325,8 @@ const CardSportsBase = CardSportsDecorator(CardBase);
  * <CardSports
  *   captionImageIconsSrc={[src, src, src, src]}
  *   hasContainer
- *   leftTeam={{backgroundColor: '#1b2a4a', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
- *   rightTeam={{backgroundColor: '#e31c23', logo: <Image src={teamLogoSrc} />, score: '0/0'}}
+ *   leftTeam={{backgroundColor: '#1b2a4a', logo: <Image src={teamLogoSrc} />, score: '2', secondaryScore: '1/2'}}
+ *   rightTeam={{backgroundColor: '#e31c23', logo: <Image src={teamLogoSrc} />, score: '1', secondaryScore: '0/1'}}
  *   label="A secondary caption"
  * >
  *  The primary caption

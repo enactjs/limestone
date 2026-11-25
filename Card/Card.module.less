@@ -91,11 +91,28 @@
 
 	&.sports {
 		.primaryBadge, .secondaryBadge {
+			top: @lime-card-sports-badge-top;
 			z-index: 2;
+		}
+
+		.primaryBadge {
+			left: @lime-card-sports-badge-left;
+		}
+
+		.secondaryBadge {
+			right: @lime-card-sports-badge-right;
 		}
 
 		.image {
 			overflow: hidden;
+		}
+
+		&.vertical {
+			width: @lime-card-sports-width;
+
+			.image {
+				height: @lime-card-sports-height;
+			}
 		}
 
 		&.selected .image::after {
