@@ -1,4 +1,5 @@
 import Alert, {AlertBase, AlertImage} from '@enact/limestone/Alert';
+import BodyText from '@enact/limestone/BodyText';
 import Button from '@enact/limestone/Button';
 import CheckboxItem from '@enact/limestone/CheckboxItem';
 import ProgressBar from '@enact/limestone/ProgressBar';
@@ -8,6 +9,7 @@ import {action} from '@enact/storybook-utils/addons/actions';
 import {boolean, select, text} from '@enact/storybook-utils/addons/controls';
 import {Row} from '@enact/ui/Layout';
 import ri from '@enact/ui/resolution';
+import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {svgGenerator} from '../helper/svg';
 
@@ -287,3 +289,64 @@ text('src', WithCustomSizeImage, ImageConfig, svgGenerator(240, 240, 'd8d8d8', '
 select('type', WithCustomSizeImage, ['fullscreen', 'overlay'], Config, 'overlay');
 
 WithCustomSizeImage.storyName = 'with custom size image';
+
+export const WithOpenChangingFromNullToFalse = (args) => {
+	const [open, setOpen] = useState(null);
+	const timerRef = useRef(null);
+	const size = args['type'] === 'fullscreen' ? 'large' : 'small';
+
+	// Changes `open` to `false` without opening the Alert, like an app passing a value from a store
+	// whose initial state is `null`
+	const startTimer = useCallback(() => {
+		clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => setOpen(false), 100);
+	}, []);
+
+	useEffect(() => {
+		startTimer();
+
+		return () => clearTimeout(timerRef.current);
+	}, [startTimer]);
+
+	const handleOpen = useCallback(() => {
+		clearTimeout(timerRef.current);
+		setOpen(true);
+	}, []);
+
+	const handleClose = useCallback((ev) => {
+		setOpen(false);
+		action('onClose')(ev);
+	}, []);
+
+	const handleChange = useCallback(() => {
+		setOpen(null);
+		startTimer();
+	}, [startTimer]);
+
+	// 5-way navigation between the two buttons below should work after `open` changes from `null`
+	// to `false`
+	return (
+		<>
+			<BodyText>{`open: ${String(open)}`}</BodyText>
+			<Button onClick={handleOpen}>Open Alert</Button>
+			<Button onClick={handleChange}>Change open from null to false</Button>
+			<Alert
+				open={open}
+				onClose={handleClose}
+				title="Fullscreen Alert Title"
+				type={args['type']}
+			>
+				<buttons>
+					<Button size={size}>Button 1</Button>
+					<Button size={size}>Button 2</Button>
+					<Button size={size} onClick={handleClose}>Close</Button>
+				</buttons>
+				Additional text content for Alert
+			</Alert>
+		</>
+	);
+};
+
+select('type', WithOpenChangingFromNullToFalse, ['fullscreen', 'overlay'], Config, 'overlay');
+
+WithOpenChangingFromNullToFalse.storyName = 'with open changing from null to false';

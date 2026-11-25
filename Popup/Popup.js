@@ -302,7 +302,11 @@ const Popup = (props) => {
 	checkPropTypes(Popup, props);
 
 	const componentProps = setDefaultProps(props, popupDefaultProps);
-	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open, position, scrimType, spotlightRestrict, ...rest} = componentProps;
+	const {noAnimation, noAutoDismiss, no5WayClose, onClose, open: openProp, position, scrimType, spotlightRestrict, ...rest} = componentProps;
+	// Normalize `open` so a change between falsy values (e.g. `null` to `false`) is not treated as
+	// a change of the open state, which would pause Spotlight while waiting for a transition that
+	// never happens.
+	const open = Boolean(openProp);
 
 	// Assign the needed props to the rest object for the child component
 	Object.assign(rest, {noAnimation, position, spotlightRestrict});
