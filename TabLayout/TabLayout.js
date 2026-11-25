@@ -506,7 +506,7 @@ const TabLayoutBase = kind({
 				'--tabs-width': !isVertical ? totalTabsWidth : '100%',
 				'--tab-width': scaleToRem(tabSizeValue),
 				'--tablayout-expand-collapse-diff': ((orientation === 'vertical') ? scaleToRem(dimensions.tabs.normal - dimensions.tabs.collapsed) : 0),
-				...((suppressCollapseAnimation && isVertical) && {'--lime-tablayout-collapse-duration': 0})
+				...(suppressCollapseAnimation && {'--lime-tablayout-collapse-duration': 0})
 			};
 		},
 		index: ({index, primaryIndex}) => {
