@@ -22,6 +22,7 @@ import Pure from '@enact/ui/internal/Pure';
 import Slottable from '@enact/ui/Slottable';
 import PropTypes from 'prop-types';
 import compose from 'ramda/src/compose';
+import {useCallback, useState} from 'react';
 
 import Image from '../Image';
 import {Marquee, MarqueeController} from '../Marquee';
@@ -29,6 +30,39 @@ import ProgressBar from '../ProgressBar';
 import Skinnable from '../Skinnable';
 
 import componentCss from './MediaOverlay.module.less';
+
+/**
+ * Wraps the `Media` element and keeps the container at the aspect ratio of the most recently
+ * loaded media.
+ *
+ * When the `source` changes, `ui/Media` reloads the same media element, which resets it to its
+ * default intrinsic size (300x150) until the new metadata is available. Holding the last known
+ * aspect ratio on the container prevents the resulting layout shift.
+ *
+ * @private
+ */
+const MediaContainer = ({children, className, mediaClassName, ...mediaProps}) => {
+	const [aspectRatio, setAspectRatio] = useState(null);
+
+	const handleLoadedMetadata = useCallback(({target}) => {
+		const {videoWidth, videoHeight} = target || {};
+
+		if (videoWidth > 0 && videoHeight > 0) {
+			setAspectRatio(`${videoWidth} / ${videoHeight}`);
+		}
+	}, []);
+
+	return (
+		<div className={className} style={aspectRatio ? {aspectRatio} : null}>
+			<Media
+				{...mediaProps}
+				className={mediaClassName}
+				onLoadedMetadata={handleLoadedMetadata}
+			/>
+			{children}
+		</div>
+	);
+};
 
 /**
  * A media component with image and text overlay support.
@@ -223,16 +257,16 @@ const MediaOverlayBase = kind({
 		return (
 			<div {...rest}>
 				<div className={css.bg} />
-				<div className={css.mediaContainer}>
-					<Media
-						autoPlay={!noAutoPlay}
-						className={css.media}
-						controls={false}
-						loop={loop}
-						mediaComponent={mediaComponent}
-						muted={muted}
-						source={source}
-					/>
+				<MediaContainer
+					autoPlay={!noAutoPlay}
+					className={css.mediaContainer}
+					controls={false}
+					loop={loop}
+					mediaClassName={css.media}
+					mediaComponent={mediaComponent}
+					muted={muted}
+					source={source}
+				>
 					{imageOverlay ? (
 						<Image
 							className={css.image}
@@ -260,7 +294,7 @@ const MediaOverlayBase = kind({
 							progress={progress}
 						/> : null
 					}
-				</div>
+				</MediaContainer>
 				<div className={css.captionContainer}>
 					{caption ? (
 						<Marquee className={css.caption} marqueeOn={marqueeOn}>{caption}</Marquee>

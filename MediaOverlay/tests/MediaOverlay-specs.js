@@ -111,6 +111,41 @@ describe('MediaOverlay', () => {
 		expect(actual).toBe(expected);
 	});
 
+	test('should apply the media aspect ratio to the media container once metadata is loaded', () => {
+		render(<MediaOverlay data-testid="mediaOverlay" source="abc.mp4" />);
+		const video = screen.getByTestId('mediaOverlay').querySelector('video');
+
+		Object.defineProperty(video, 'videoWidth', {configurable: true, value: 1920});
+		Object.defineProperty(video, 'videoHeight', {configurable: true, value: 1080});
+		fireEvent.loadedMetadata(video);
+
+		expect(video.parentElement.style.aspectRatio).toBe('1920 / 1080');
+	});
+
+	test('should keep the previous aspect ratio while a new `source` is loading', () => {
+		const {rerender} = render(<MediaOverlay data-testid="mediaOverlay" source="abc.mp4" />);
+		const video = screen.getByTestId('mediaOverlay').querySelector('video');
+
+		Object.defineProperty(video, 'videoWidth', {configurable: true, value: 1920});
+		Object.defineProperty(video, 'videoHeight', {configurable: true, value: 1080});
+		fireEvent.loadedMetadata(video);
+
+		rerender(<MediaOverlay data-testid="mediaOverlay" source="def.mp4" />);
+
+		const actual = screen.getByTestId('mediaOverlay').querySelector('video').parentElement;
+
+		expect(actual.style.aspectRatio).toBe('1920 / 1080');
+	});
+
+	test('should not apply an aspect ratio when the media has no dimensions', () => {
+		render(<MediaOverlay data-testid="mediaOverlay" source="abc.mp4" />);
+		const video = screen.getByTestId('mediaOverlay').querySelector('video');
+
+		fireEvent.loadedMetadata(video);
+
+		expect(video.parentElement).not.toHaveAttribute('style');
+	});
+
 	test('should be pressed when selected', () => {
 		render(<MediaOverlay data-testid="mediaOverlay" source="abc.mp4" />);
 		const mediaOverlay = screen.getByTestId('mediaOverlay');
