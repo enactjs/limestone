@@ -93,7 +93,7 @@
 @lime-component-spacing-bottom: var(--semantic-spacing-gap-l);
 @lime-focusexpand-focus-transform: scale(1.1);
 @lime-focusexpand-pressed-transform: scale(1.05);
-@lime-overlay-outline-width: 0.063rem; // 3px
+@lime-overlay-outline-width: var(--semantic-border-outline);
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
 
@@ -411,7 +411,7 @@
 
 // Button
 // ---------------------------------------
-@lime-button-border-width: 6px;
+@lime-button-border-width: var(--semantic-border-thick);
 @lime-button-bg-opacity: 1;
 @lime-button-transparent-bg-opacity: 0;
 @lime-button-transparent-selected-bg-opacity: 1;
@@ -473,8 +473,8 @@
 @lime-card-caption-image-icon-spacing: var(--semantic-spacing-gap-m);
 @lime-card-margin: @lime-item-margin;
 @lime-card-border-radius: var(--semantic-radius-container);
-@lime-card-image-border-width: 6px;
-@lime-card-resting-border-width: 2px;
+@lime-card-image-border-width: var(--semantic-border-thick);
+@lime-card-resting-border-width: var(--semantic-border-default);
 @lime-card-selection-check-icon-size: 48px;
 @lime-card-selection-check-icon-size-large: 58px;
 @lime-card-selection-icon-size: 144px;
@@ -529,7 +529,7 @@
 // Checkbox
 // ---------------------------------------
 @lime-checkbox-border-radius: var(--semantic-radius-full);
-@lime-checkbox-border-width: 4px;
+@lime-checkbox-border-width: var(--semantic-border-medium);
 @lime-checkbox-container-position: ((@lime-icon-tiny-size - 132px) / 2);  // Container's total dimensions should be `132px` defined in the GUI spec
 @lime-checkbox-container-border-radius: var(--semantic-radius-button);
 
@@ -538,6 +538,10 @@
 @lime-checkboxitem-padding: var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-m) var(--semantic-spacing-content-padding-xl);
 @lime-checkboxitem-withlabel-padding: var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-l) var(--semantic-spacing-content-padding-xl);
 @lime-checkboxitem-form-checkbox-margin-end: abs(.extract(@lime-checkbox-container-position, right)[]); // checkbox container is a negative value, but we're only interested in positive margin values for this. It's also currently just one value, but could be more in the future, so we'll extract the "right" value.
+
+// ColorPicker
+// ---------------------------------------
+@lime-colorpicker-border-width: var(--semantic-border-thin);
 
 // Chip
 // ---------------------------------------
@@ -565,6 +569,7 @@
 
 // ContextualPopup
 // ---------------------------------------
+@lime-contextualpopup-border-width: var(--semantic-border-thin);
 @lime-contextualpopup-padding: var(--semantic-spacing-content-padding-m) 0;
 @lime-contextualpopup-arrow-height: 60px;
 @lime-contextualpopup-arrow-width: 60px;
@@ -601,12 +606,12 @@
 @lime-dropdown-x-large-title-width: ~"calc(@{lime-dropdown-x-large-width} - @{lime-dropdown-title-padding-left} * 2)";
 @lime-dropdown-huge-width: 1380px;
 @lime-dropdown-huge-title-width: ~"calc(@{lime-dropdown-huge-width} - @{lime-dropdown-title-padding-left} * 2)";
-@lime-dropdown-list-tiny-width: (@lime-dropdown-tiny-width - @lime-button-border-width);
-@lime-dropdown-list-small-width: (@lime-dropdown-small-width - @lime-button-border-width);
-@lime-dropdown-list-medium-width: (@lime-dropdown-medium-width - @lime-button-border-width);
-@lime-dropdown-list-large-width: (@lime-dropdown-large-width - @lime-button-border-width);
-@lime-dropdown-list-x-large-width: (@lime-dropdown-x-large-width - @lime-button-border-width);
-@lime-dropdown-list-huge-width: (@lime-dropdown-huge-width - @lime-button-border-width);
+@lime-dropdown-list-tiny-width: calc(@lime-dropdown-tiny-width - @lime-button-border-width);
+@lime-dropdown-list-small-width: calc(@lime-dropdown-small-width - @lime-button-border-width);
+@lime-dropdown-list-medium-width: calc(@lime-dropdown-medium-width - @lime-button-border-width);
+@lime-dropdown-list-large-width: calc(@lime-dropdown-large-width - @lime-button-border-width);
+@lime-dropdown-list-x-large-width: calc(@lime-dropdown-x-large-width - @lime-button-border-width);
+@lime-dropdown-list-huge-width: calc(@lime-dropdown-huge-width - @lime-button-border-width);
 @lime-dropdown-max-items: 5;
 @lime-dropdown-list-min-width: @lime-dropdown-min-width;
 @lime-dropdown-list-max-height: (@lime-dropdown-max-items * @lime-item-height + @lime-item-shadow-height);
@@ -744,7 +749,7 @@
 
 // Heading
 // ---------------------------------------
-@lime-heading-border-width: 1px;
+@lime-heading-border-width: var(--semantic-border-thin);
 @lime-heading-margin: 0 var(--semantic-spacing-gap-m) var(--semantic-spacing-gap-xl);
 @lime-heading-margin-tiny: var(--semantic-spacing-gap-xl) var(--semantic-spacing-gap-m);
 @lime-heading-padding: 0;
@@ -780,7 +785,7 @@
 @lime-iconitem-title-height-large: ~"calc("@lime-iconitem-height ~"+ "@lime-iconitem-title-line-height-large ~"+ 24px)";
 @lime-iconitem-border-radius: var(--semantic-radius-container);
 @lime-iconitem-border-style: solid;
-@lime-iconitem-border-width: 4px;
+@lime-iconitem-border-width: var(--semantic-border-medium);
 @lime-iconitem-icon-margin: 0;
 @lime-iconitem-icon-height: 120px;
 @lime-iconitem-icon-height-large: 146px;
@@ -806,7 +811,7 @@
 // ---------------------------------------
 @lime-imageitem-margin: @lime-item-margin;
 @lime-imageitem-border-radius: var(--semantic-radius-button);
-@lime-imageitem-image-border-width: 6px;
+@lime-imageitem-image-border-width: var(--semantic-border-thick);
 @lime-imageitem-caption-line-height: 80px;
 @lime-imageitem-caption-line-height-large: 100px;
 @lime-imageitem-label-line-height: 64px;
@@ -824,8 +829,8 @@
 @lime-imageitem-horizontal-selection-icon-size-large: (@lime-imageitem-horizontal-selection-icon-size * 1.2);
 @lime-imageitem-vertical-padding: var(--primitive-spacing-24) var(--primitive-spacing-24) var(--primitive-spacing-30);
 @lime-imageitem-vertical-full-image-padding: var(--semantic-spacing-content-padding-xl); // 24px(for expanding) + 36px(for showing shadow)
-@lime-imageitem-vertical-full-image-border-width: 2px;
-@lime-imageitem-vertical-full-image-focus-border-width: 6px;
+@lime-imageitem-vertical-full-image-border-width: var(--semantic-border-default);
+@lime-imageitem-vertical-full-image-focus-border-width: var(--semantic-border-thick);
 @lime-imageitem-vertical-captions-margin-top: var(--semantic-spacing-gap-l);
 @lime-imageitem-vertical-label-height: 64px;
 @lime-imageitem-vertical-focus-image-transform: scale(1.1);
@@ -979,7 +984,7 @@
 @lime-mediaoverlay-text-margin-bottom: var(--semantic-spacing-gap-xl);
 @lime-mediaoverlay-textlayout-margin: var(--primitive-spacing-24) var(--primitive-spacing-60);
 @lime-mediaoverlay-width: 768px;
-@lime-mediaoverlay-focus-media-outline-width: 6px;
+@lime-mediaoverlay-focus-media-outline-width: var(--semantic-border-thick);
 
 // MediaPlayer
 // ---------------------------------------
@@ -1122,7 +1127,7 @@
 
 // RadioItem
 // ---------------------------------------
-@lime-radioitem-icon-border-width: 4px; // ### Exceptional Case ###
+@lime-radioitem-icon-border-width: var(--semantic-border-medium); // ### Exceptional Case ###
 	// 4px, not being a multiple of 3, poses special problems. Any math or assignment related to
 	// this value must be specifically considered as to not impose layout issues related to, for
 	// example a width of 39.9996px, which can be treated by 38px or 40px, depending on the case.
@@ -1174,7 +1179,7 @@
 @lime-slider-color-picker-bar-border-radius: (@lime-slider-color-picker-bar-height / 2);
 @lime-slider-color-picker-knob-container-size: (@lime-slider-knob-width + 12px);
 @lime-slider-color-picker-knob-container-size-focused: (@lime-slider-knob-width-large + 12px);
-@lime-slider-color-picker-knob-outline-width: 6px;
+@lime-slider-color-picker-knob-outline-width: var(--semantic-border-thick);
 @lime-slider-bar-vertical-min-height: 240px;
 @lime-slider-bar-min-max-padding-bottom: var(--primitive-spacing-84);
 @lime-slider-bar-padding: var(--semantic-spacing-content-padding-xl);
@@ -1327,7 +1332,7 @@
 @lime-video-slider-tooltip-thumbnail-content-font-size-large: var(--primitive-font-size-56);
 @lime-video-slider-tooltip-thumbnail-content-margin-bottom: var(--semantic-spacing-gap-l);
 @lime-video-slider-tooltip-thumbnail-border-radius: var(--primitive-radius-12);
-@lime-video-slider-tooltip-thumbnail-border-width:  12px;
+@lime-video-slider-tooltip-thumbnail-border-width:  var(--semantic-border-extra-thick);
 @lime-video-slider-tooltip-thumbnail-width:  426px;
 @lime-video-slider-tooltip-thumbnail-height: 240px;
 @lime-video-slider-tooltip-deactivated-thumbnail-opacity: 0.5;

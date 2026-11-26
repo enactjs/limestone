@@ -84,7 +84,7 @@
 	.applySkins({
 		.container {
 			background-color: @lime-contextualpopup-container-color;
-			border: 1px solid @lime-contextualpopup-border-color;
+			border: @lime-contextualpopup-border-width solid @lime-contextualpopup-border-color;
 			border-radius: @lime-contextualpopup-border-radius;
 			box-shadow: @lime-contextualpopup-shadow;
 
@@ -106,7 +106,7 @@
 			outline-color: @lime-overlay-outline-color;
 			outline-style: @lime-overlay-outline-style;
 			outline-width: @lime-overlay-outline-width;
-			outline-offset: ~"calc(@{lime-overlay-outline-width} * -1)";
+			outline-offset: calc(-1 * @lime-overlay-outline-width);
 		}
 	});
 }

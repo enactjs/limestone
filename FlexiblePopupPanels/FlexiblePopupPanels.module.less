@@ -77,7 +77,7 @@
 			.lime-custom-text({
 				.lime-small-button-text();
 				height: @lime-button-small-height;
-				line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+				line-height: calc(@lime-button-small-height - (2 * @lime-button-border-width));
 				min-width: @lime-button-small-height;
 			});
 		}
@@ -110,7 +110,7 @@
 			outline-color: @lime-overlay-outline-color;
 			outline-style: @lime-overlay-outline-style;
 			outline-width: @lime-overlay-outline-width;
-			outline-offset: -@lime-overlay-outline-width;
+			outline-offset: calc(-1 * @lime-overlay-outline-width);
 		}
 
 		:global(.noAnimation) & {

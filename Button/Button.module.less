@@ -8,7 +8,7 @@
 .button {
 	// default is size="large"
 	.lime-large-button-text();
-	line-height: (@lime-button-height - (2 * @lime-button-border-width));
+	line-height: calc(@lime-button-height - (2 * @lime-button-border-width));
 	height: @lime-button-height;
 	min-width: @lime-button-min-width;
 	max-width: @lime-button-max-width;
@@ -21,7 +21,7 @@
 	.lime-custom-text({
 		font-size: @lime-button-font-size-large;
 		height: @lime-button-height-large;
-		line-height: (@lime-button-height-large - (2 * @lime-button-border-width));
+		line-height: calc(@lime-button-height-large - (2 * @lime-button-border-width));
 		--button-height: $height;
 
 		&.red,
@@ -160,7 +160,7 @@
 
 	&.small {
 		.lime-small-button-text();
-		line-height: (@lime-button-small-height - (2 * @lime-button-border-width));
+		line-height: calc(@lime-button-small-height - (2 * @lime-button-border-width));
 		height: @lime-button-small-height;
 		min-width: @lime-button-small-min-width;
 		max-width: @lime-button-small-max-width;
@@ -242,7 +242,7 @@
 		.lime-custom-text({
 			font-size: @lime-button-small-font-size-large;
 			height: @lime-button-small-height-large;
-			line-height: (@lime-button-small-height-large - (2 * @lime-button-border-width));
+			line-height: calc(@lime-button-small-height-large - (2 * @lime-button-border-width));
 			--button-height: $height;
 
 			&.red,
