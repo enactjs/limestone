@@ -111,4 +111,17 @@ describe('IconItem', () => {
 		fireEvent.mouseUp(iconItem);
 		expect(iconItem).not.toHaveClass('pressed');
 	});
+
+	test('should support `description` prop', () => {
+		render(<IconItemBase description="description" title="title" />);
+
+		expect(screen.getByText('description')).toBeInTheDocument();
+	});
+
+	test('should not render a description when `description` is not set', () => {
+		render(<IconItemBase data-testid="iconitem" title="title" />);
+
+		const iconItem = screen.getByTestId('iconitem');
+		expect(iconItem.querySelector('.description')).toBeNull();
+	});
 });

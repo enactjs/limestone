@@ -270,4 +270,68 @@ describe('QuickGuidePanels Specs', () => {
 			});
 		}
 	);
+
+	test('should use `closeButtonAriaLabel` for the close button', () => {
+		render(
+			<QuickGuidePanels closeButtonAriaLabel="Close guide">
+				<QuickGuidePanel />
+			</QuickGuidePanels>
+		);
+
+		expect(screen.getByLabelText('Close guide')).toBeInTheDocument();
+	});
+
+	test('should announce the page out of the total pages along with the `aria-label` of the current Panel', () => {
+		render(
+			<QuickGuidePanels index={1}>
+				<QuickGuidePanel />
+				<QuickGuidePanel aria-label="Guide" />
+				<QuickGuidePanel />
+			</QuickGuidePanels>
+		);
+
+		expect(document.getElementById('quickguidepanel_index_1')).toHaveAttribute('aria-label', 'Page 2 out of 3  Guide');
+	});
+
+	test('should announce and show the specified `current` and `total` steps', () => {
+		render(
+			<QuickGuidePanels current={2} total={5}>
+				<QuickGuidePanel />
+				<QuickGuidePanel />
+			</QuickGuidePanels>
+		);
+
+		expect(document.getElementById('quickguidepanel_index_0')).toHaveAttribute('aria-label', expect.stringContaining('Page 2 out of'));
+		expect(screen.getByRole('list').children).toHaveLength(5);
+	});
+
+	test('should stay on the last panel when its next button is clicked', async () => {
+		const handleChange = jest.fn();
+		const user = userEvent.setup();
+		render(
+			<QuickGuidePanels index={1} nextButtonVisibility="always" onChange={handleChange}>
+				<QuickGuidePanel />
+				<QuickGuidePanel />
+			</QuickGuidePanels>
+		);
+
+		await user.click(screen.getByLabelText('Next'));
+
+		expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
+	});
+
+	test('should not go back from the first panel when its previous button is clicked', async () => {
+		const handleChange = jest.fn();
+		const user = userEvent.setup();
+		render(
+			<QuickGuidePanels index={0} onChange={handleChange} prevButtonVisibility="always">
+				<QuickGuidePanel />
+				<QuickGuidePanel />
+			</QuickGuidePanels>
+		);
+
+		await user.click(screen.getByLabelText('Previous'));
+
+		expect(handleChange).not.toHaveBeenCalled();
+	});
 });

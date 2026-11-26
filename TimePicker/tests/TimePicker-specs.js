@@ -241,4 +241,48 @@ describe('TimePicker', () => {
 			expect(time).toBeNull();
 		});
 	});
+
+	// am-ET uses the Ethiopian clock, 6 hours behind (12:30 shows as 6:30), and has five meridiems over
+	// those hours: ጥዋት 00:00-05:59, ቀትር 06:00-06:00, ከሰዓት 06:01-11:59, ከምሽቱ 12:00-17:59, ከሌሊቱ 18:00-23:59
+	describe('changing the meridiem in a locale with more than 2 meridiems', () => {
+		beforeEach(() => {
+			ilib.setLocale('am-ET');
+		});
+
+		afterEach(() => {
+			ilib.setLocale('en-US');
+		});
+
+		const changeMeridiem = async (time, arrow) => {
+			const handleChange = jest.fn();
+			const user = userEvent.setup();
+			render(<TimePicker locale="am-ET" onChange={handleChange} value={time} />);
+
+			await user.click(screen.getAllByText(arrow)[2]);
+
+			return handleChange.mock.calls[0][0].value;
+		};
+
+		test('should move to the start hour of the next meridiem and keep the minutes', async () => {
+			// From 6:30 ከሰዓት to 12:30 ከምሽቱ
+			const value = await changeMeridiem(new Date(2000, 0, 1, 12, 30), '▲');
+
+			expect(value).toEqual(new Date(2000, 0, 1, 18, 30));
+		});
+
+		test('should clamp the minutes to the end of a meridiem that is shorter than the time', async () => {
+			// From 6:30 ከሰዓት, ቀትር only spans 6:00, so 6:30 is moved back to 6:00
+			const value = await changeMeridiem(new Date(2000, 0, 1, 12, 30), '▼');
+
+			expect(value).toEqual(new Date(2000, 0, 1, 12, 0));
+		});
+
+		test('should move the minutes to the start of a meridiem that starts after the hour', async () => {
+			// From 6:00 ቀትር, ከሰዓት starts at 6:01, so 6:00 is moved to 6:01
+			const value = await changeMeridiem(new Date(2000, 0, 1, 12, 0), '▲');
+
+			expect(value).toEqual(new Date(2000, 0, 1, 12, 1));
+		});
+	});
+
 });
