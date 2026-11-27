@@ -50,4 +50,12 @@ describe('BodyText Specs', () => {
 
 		expect(bodyText).toHaveClass(expected);
 	});
+
+	test('should center the marquee when `centered` and `noWrap` are true', () => {
+		render(<BodyText centered noWrap>Centered text</BodyText>);
+
+		const marquee = screen.getByText('Centered text');
+
+		expect(marquee).toHaveStyle({textAlign: 'center'});
+	});
 });

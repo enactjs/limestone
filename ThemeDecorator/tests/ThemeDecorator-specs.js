@@ -1,6 +1,8 @@
 import Spotlight from '@enact/spotlight';
+import {ResizeContext} from '@enact/ui/Resizable';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
+import {useContext, useEffect} from 'react';
 
 import ThemeDecorator from '../';
 
@@ -111,6 +113,33 @@ describe('ThemeDecorator', () => {
 
 			expect(appRoot).toHaveClass('largeText');
 			expect(appRoot).toHaveClass('grayscale');
+		});
+		describe('resize notification', () => {
+			const ResizeListener = ({onResize}) => {
+				const register = useContext(ResizeContext);
+
+				useEffect(() => register(onResize).unregister, [onResize, register]);
+
+				return null;
+			};
+
+			test('should notify resizable descendants when `textSize` changes', () => {
+				const handleResize = jest.fn();
+				const {rerender} = render(<A11yApp textSize="normal"><ResizeListener onResize={handleResize} /></A11yApp>);
+
+				rerender(<A11yApp textSize="large"><ResizeListener onResize={handleResize} /></A11yApp>);
+
+				expect(handleResize).toHaveBeenCalledTimes(1);
+			});
+
+			test('should not notify resizable descendants when `textSize` stays the same', () => {
+				const handleResize = jest.fn();
+				const {rerender} = render(<A11yApp textSize="normal"><ResizeListener onResize={handleResize} /></A11yApp>);
+
+				rerender(<A11yApp highContrast textSize="normal"><ResizeListener onResize={handleResize} /></A11yApp>);
+
+				expect(handleResize).not.toHaveBeenCalled();
+			});
 		});
 	});
 });

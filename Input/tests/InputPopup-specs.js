@@ -51,6 +51,8 @@ describe('InputPopup Specs', () => {
 	test('should set value instead defaultValue when both values are set', () => {
 		const strDefaultValue = 'This is the default value';
 		const strValue = 'This is the value';
+		// Changeable warns that `defaultValue` is ignored, which is expected here
+		const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
 		render(
 			<FloatingLayerController>
@@ -61,5 +63,6 @@ describe('InputPopup Specs', () => {
 		const actual = screen.getByDisplayValue(strValue);
 
 		expect(actual).toBeTruthy();
+		expect(consoleError.mock.calls.flat().join('\n')).toContain('Do not specify both \'value\' and \'defaultValue\'');
 	});
 });

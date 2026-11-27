@@ -60,7 +60,7 @@
 		left: 50%;
 		transform: translateX(-50%);
 		font-size: @lime-card-score-font-size;
-		gap: @lime-card-score-gap;
+		column-gap: @lime-card-score-gap;
 		height: fit-content;
 		min-height: @lime-card-score-min-height;
 		justify-content: center;
@@ -71,22 +71,60 @@
 		width: fit-content;
 		white-space: nowrap;
 
+		.left,
+		.right {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.scorePrimary {
+			font-size: inherit;
+			line-height: inherit;
+			font-weight: inherit;
+		}
+
+		.scoreSecondary {
+			font-size: @lime-card-score-secondary-font-size;
+			line-height: @lime-card-score-secondary-line-height;
+			font-weight: @lime-card-score-secondary-font-weight;
+		}
+
+		// Large score size used when the small score is also shown.
+		&.hasSecondary {
+			align-items: flex-start;
+			font-size: @lime-card-score-with-secondary-font-size;
+			line-height: @lime-card-score-with-secondary-line-height;
+		}
+
 		&.bothScores {
 			display: grid;
 			grid-template-columns: 1fr auto 1fr;
 
-			.left,
-			.right {
+			.scorePrimary {
 				max-width: 4ch;
 				overflow: hidden;
 			}
 
 			.left {
+				align-items: flex-end;
 				text-align: end;
 			}
 
 			.right {
+				align-items: flex-start;
 				text-align: start;
+			}
+
+			&.hasSecondary {
+				.scorePrimary {
+					max-width: 6ch;
+				}
+
+				.scoreSecondary {
+					max-width: 7ch;
+					overflow: hidden;
+				}
 			}
 		}
 	}
@@ -95,6 +133,16 @@
 		.score {
 			font-size: @lime-card-score-font-size-large;
 			line-height: @lime-card-score-line-height-large;
+
+			.scoreSecondary {
+				font-size: @lime-card-score-secondary-font-size-large;
+				line-height: @lime-card-score-secondary-line-height-large;
+			}
+
+			&.hasSecondary {
+				font-size: @lime-card-score-with-secondary-font-size-large;
+				line-height: @lime-card-score-with-secondary-line-height-large;
+			}
 		}
 	});
 

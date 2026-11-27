@@ -228,4 +228,13 @@ describe('ColorPicker', () => {
 		expect(hslRedColor).toEqual(hexRedColor);
 		expect(hslYellowColor).toEqual(hexYellowColor);
 	});
+
+	test('should return hsl from hex color if length is 7', () => {
+		expect(hexToHSL('#0000ff')).toEqual({h: 240, s: 100, l: 50});
+		expect(hexToHSL('#ff99aa')).toEqual({h: 350, s: 100, l: 80});
+	});
+
+	test('should return hex from hsl color with a hue between 300 and 360', () => {
+		expect(HSLToHex(330, 100, 50)).toEqual('#ff0080');
+	});
 });

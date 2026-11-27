@@ -161,4 +161,11 @@ describe('Steps Specs', () => {
 
 		expect(currentStep).toBe(expected);
 	});
+
+	test('should support numeric step identifier for `skipIcon`', () => {
+		render(<Steps skip={2} skipIcon="numbers" current={3} total={5} />);
+		const skippedStep = screen.getByRole('list').children.item(1);
+
+		expect(skippedStep).toHaveTextContent('2');
+	});
 });
