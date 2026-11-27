@@ -123,5 +123,17 @@ describe('Switch Specs', () => {
 
 			expect(actual).not.toHaveClass('bouncing');
 		});
+
+		test('should forward `onAnimationEnd` when the bounce ends', () => {
+			const handleAnimationEnd = jest.fn();
+			const {rerender} = render(<Bounceable onAnimationEnd={handleAnimationEnd} selected={false} />);
+			rerender(<Bounceable onAnimationEnd={handleAnimationEnd} selected />);
+
+			act(() => {
+				screen.getByRole('button').dispatchEvent(new Event('animationend', {bubbles: true}));
+			});
+
+			expect(handleAnimationEnd).toHaveBeenCalled();
+		});
 	});
 });

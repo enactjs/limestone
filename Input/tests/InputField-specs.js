@@ -450,4 +450,174 @@ describe('InputField Specs', () => {
 			expect(focusSpy).not.toHaveBeenCalled();
 		});
 	});
+
+	describe('5-way keys while the input is active', () => {
+		afterEach(() => {
+			jest.restoreAllMocks();
+			Spotlight.resume();
+		});
+
+		const activate = (props) => {
+			render(<InputField {...props} />);
+			const input = screen.getByPlaceholderText('');
+			fireEvent.mouseDown(input);
+
+			return input;
+		};
+
+		test('should leave and deactivate the input when focus moves away with 5-way', () => {
+			const handleDeactivate = jest.fn();
+			const moveSpy = jest.spyOn(Spotlight, 'move').mockReturnValue(true);
+			const input = activate({onDeactivate: handleDeactivate});
+
+			fireEvent.keyDown(input, {keyCode: 40});
+
+			expect(moveSpy).toHaveBeenCalledWith('down');
+			expect(handleDeactivate).toHaveBeenCalled();
+		});
+
+		test('should deactivate the input but keep focus on the field when there is nowhere to move', () => {
+			const handleDeactivate = jest.fn();
+			jest.spyOn(Spotlight, 'move').mockReturnValue(false);
+			const input = activate({onDeactivate: handleDeactivate});
+
+			fireEvent.keyDown(input, {keyCode: 38});
+
+			expect(handleDeactivate).toHaveBeenCalled();
+			expect(input.closest('.spottable')).toHaveFocus();
+		});
+
+		test('should keep moving the caret with left when it is not at the start of the text', () => {
+			const moveSpy = jest.spyOn(Spotlight, 'move');
+			const input = activate({value: 'abc'});
+			input.setSelectionRange(1, 1);
+
+			fireEvent.keyDown(input, {keyCode: 37});
+
+			expect(moveSpy).not.toHaveBeenCalled();
+		});
+
+		test('should move focus with left when the caret is at the start of the text', () => {
+			const moveSpy = jest.spyOn(Spotlight, 'move').mockReturnValue(true);
+			const input = activate({value: 'abc'});
+			input.setSelectionRange(0, 0);
+
+			fireEvent.keyDown(input, {keyCode: 37});
+
+			expect(moveSpy).toHaveBeenCalledWith('left');
+		});
+
+		test('should move focus with left in a number field regardless of the caret', () => {
+			const moveSpy = jest.spyOn(Spotlight, 'move').mockReturnValue(true);
+			const input = activate({type: 'number', value: '123'});
+
+			fireEvent.keyDown(input, {keyCode: 37});
+
+			expect(moveSpy).toHaveBeenCalledWith('left');
+		});
+
+		test('should not let up and down change the value of a number field', () => {
+			jest.spyOn(Spotlight, 'move').mockReturnValue(true);
+			const input = activate({type: 'number', value: '5'});
+
+			const notPrevented = fireEvent.keyDown(input, {keyCode: 38});
+
+			expect(notPrevented).toBe(false);
+		});
+
+		test('should fire `onSpotlightDisappear` when unmounted while the input is active', () => {
+			const handleSpotlightDisappear = jest.fn();
+			const {unmount} = render(<InputField onSpotlightDisappear={handleSpotlightDisappear} />);
+			fireEvent.mouseDown(screen.getByPlaceholderText(''));
+
+			unmount();
+
+			expect(handleSpotlightDisappear).toHaveBeenCalled();
+		});
+
+		test('should not fire `onSpotlightDisappear` when unmounted while the input is not active', () => {
+			const handleSpotlightDisappear = jest.fn();
+			const {unmount} = render(<InputField onSpotlightDisappear={handleSpotlightDisappear} />);
+
+			unmount();
+
+			expect(handleSpotlightDisappear).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('autoFocus', () => {
+		afterEach(() => {
+			Spotlight.resume();
+		});
+
+		test('should activate the input as soon as the field gets focus', () => {
+			const handleActivate = jest.fn();
+			render(<InputField autoFocus onActivate={handleActivate} />);
+			const field = screen.getByPlaceholderText('').closest('.spottable');
+
+			fireEvent.focus(field);
+
+			expect(handleActivate).toHaveBeenCalled();
+			expect(screen.getByPlaceholderText('')).toHaveFocus();
+		});
+
+		test('should deactivate and forward `onBlur` when the active input loses focus to another element', () => {
+			const handleBlur = jest.fn();
+			const handleDeactivate = jest.fn();
+			render(<InputField autoFocus onBlur={handleBlur} onDeactivate={handleDeactivate} />);
+			const input = screen.getByPlaceholderText('');
+			fireEvent.focus(input.closest('.spottable'));
+
+			fireEvent.blur(input, {relatedTarget: document.body});
+
+			expect(handleDeactivate).toHaveBeenCalled();
+			expect(handleBlur).toHaveBeenCalled();
+		});
+	});
+
+	describe('blurring the active input', () => {
+		afterEach(() => {
+			jest.restoreAllMocks();
+			Spotlight.resume();
+		});
+
+		test('should deactivate and forward `onBlur` when the input loses focus in pointer mode', () => {
+			const handleBlur = jest.fn();
+			const handleDeactivate = jest.fn();
+			jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(true);
+			render(<InputField onBlur={handleBlur} onDeactivate={handleDeactivate} />);
+			const input = screen.getByPlaceholderText('');
+			fireEvent.mouseDown(input);
+
+			fireEvent.blur(input);
+
+			expect(handleDeactivate).toHaveBeenCalled();
+			expect(handleBlur).toHaveBeenCalled();
+		});
+
+		test('should not forward `onBlur` when the input loses focus outside pointer mode', () => {
+			const handleBlur = jest.fn();
+			jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(false);
+			render(<InputField onBlur={handleBlur} />);
+			const input = screen.getByPlaceholderText('');
+			fireEvent.mouseDown(input);
+
+			fireEvent.blur(input);
+
+			expect(handleBlur).not.toHaveBeenCalled();
+		});
+
+		test('should not forward `onBlur` when an autoFocus input blurs to its own field', () => {
+			const handleBlur = jest.fn();
+			render(<InputField autoFocus onBlur={handleBlur} />);
+			const input = screen.getByPlaceholderText('');
+			const field = input.closest('.spottable');
+			fireEvent.focus(field);
+
+			fireEvent.blur(input, {relatedTarget: field});
+
+			expect(handleBlur).not.toHaveBeenCalled();
+		});
+	});
+
 });

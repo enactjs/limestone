@@ -2,7 +2,7 @@ import * as dispatcher from '@enact/core/dispatcher';
 import {getPointerMode} from '@enact/spotlight/src/pointer';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import Button from '../../Button';
@@ -479,7 +479,7 @@ describe('ContextualPopupDecorator Specs', () => {
 		expect(handleOnKeyDown).toHaveBeenCalled();
 	});
 
-	test('should render floatingLayer according to prop \'scrimType\'', () => {
+	test('should render floatingLayer according to prop \'scrimType\'', async () => {
 		const Root = FloatingLayerDecorator('div');
 		const {rerender} = render(
 			<Root>
@@ -488,6 +488,7 @@ describe('ContextualPopupDecorator Specs', () => {
 				</ContextualButton>
 			</Root>
 		);
+		await act(() => Promise.resolve());
 
 		const scrimDivFirst = screen.getByRole('alert').previousElementSibling;
 		const expectedFirst = 'holePunchScrim';
@@ -499,6 +500,7 @@ describe('ContextualPopupDecorator Specs', () => {
 				</ContextualButton>
 			</Root>
 		);
+		await act(() => Promise.resolve());
 
 		const scrimDivSecond = screen.getByRole('alert').parentElement.previousElementSibling;
 		const expectedSecond = 'transparent';

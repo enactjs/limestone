@@ -1,11 +1,13 @@
 import Spotlight from '@enact/spotlight';
+import {setInputType} from '@enact/spotlight/SpotlightRootDecorator';
 import {scaleToRem} from '@enact/ui/resolution';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {use, useEffect} from 'react';
 
 import Button from '../../Button';
-import TabLayout, {TabLayoutBase, Tab} from '../TabLayout';
+import TabLayout, {TabLayoutBase, TabLayoutContext, Tab} from '../TabLayout';
 
 const keyDown = (keyCode) => (tab) => fireEvent.keyDown(tab, {keyCode});
 const keyUp = (keyCode) => (tab) => fireEvent.keyUp(tab, {keyCode});
@@ -696,5 +698,97 @@ describe('TabLayout specs', () => {
 
 		expect(Spotlight.setPointerMode).toHaveBeenCalledWith(false);
 		expect(Spotlight.move).toHaveBeenCalledWith('down');
+	});
+
+	describe('expanding collapsed tabs', () => {
+		const renderCollapsed = (props) => render(
+			<TabLayoutBase collapsed {...props}>
+				<Tab icon="home" title="Home">
+					<div>Home</div>
+				</Tab>
+				<Tab icon="demosync" title="Button">
+					<div>Button</div>
+				</Tab>
+			</TabLayoutBase>
+		);
+
+		afterEach(() => {
+			setInputType('key');
+		});
+
+		test('should expand when a collapsed tab gets focus by key', () => {
+			const handleExpand = jest.fn();
+			renderCollapsed({onExpand: handleExpand});
+
+			fireEvent.focus(screen.getAllByRole('tab')[0]);
+
+			expect(handleExpand).toHaveBeenCalled();
+		});
+
+		test('should not expand on focus when the input is touch', () => {
+			const handleExpand = jest.fn();
+			setInputType('touch');
+			renderCollapsed({onExpand: handleExpand});
+
+			fireEvent.focus(screen.getAllByRole('tab')[0]);
+
+			expect(handleExpand).not.toHaveBeenCalled();
+		});
+
+		test('should expand when a collapsed tab is tapped', () => {
+			const handleExpand = jest.fn();
+			setInputType('touch');
+			renderCollapsed({onExpand: handleExpand});
+
+			fireEvent.click(screen.getAllByRole('tab')[0]);
+
+			expect(handleExpand).toHaveBeenCalled();
+		});
+
+		test('should not expand on click when the input is not touch', () => {
+			const handleExpand = jest.fn();
+			renderCollapsed({onExpand: handleExpand});
+
+			fireEvent.click(screen.getAllByRole('tab')[0]);
+
+			expect(handleExpand).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('entering a panel within a tab', () => {
+		// Content such as PopupTabLayout's TabPanels reports its panel changes through the context
+		const PanelChange = ({index, previousIndex}) => {
+			const onTransition = use(TabLayoutContext);
+
+			useEffect(() => {
+				onTransition({index, previousIndex});
+			}, [index, onTransition, previousIndex]);
+
+			return null;
+		};
+
+		const renderWithPanelChange = (handleCollapse, change) => render(
+			<TabLayoutBase onCollapse={handleCollapse}>
+				<Tab icon="home" title="Home">
+					<PanelChange {...change} />
+				</Tab>
+			</TabLayoutBase>
+		);
+
+		test('should collapse the tabs when moving to a deeper panel', () => {
+			const handleCollapse = jest.fn();
+
+			renderWithPanelChange(handleCollapse, {index: 1, previousIndex: 0});
+
+			expect(handleCollapse).toHaveBeenCalled();
+		});
+
+		test('should not collapse the tabs when moving back to a previous panel', () => {
+			const handleCollapse = jest.fn();
+
+			renderWithPanelChange(handleCollapse, {index: 0, previousIndex: 1});
+
+			expect(handleCollapse).not.toHaveBeenCalled();
+		});
 	});
 });

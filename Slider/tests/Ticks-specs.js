@@ -100,6 +100,18 @@ describe('Ticks', () => {
 
 		expect(marquee()).toEqual([false, false, false]);
 	});
+
+	test('should keep the hovered tick while the pointer moves between ticks', () => {
+		render(<Ticks count={3} css={{tick: 'tick', tickLabel: 'tickLabel'}} labels={['Low', 'Mid', 'High']} />);
+
+		const labels = [...document.querySelectorAll('.tickLabel')];
+		const ticks = [...document.querySelectorAll('.tick')];
+
+		fireEvent.mouseOver(ticks[1]);
+		fireEvent.mouseOver(ticks[0].parentElement);
+
+		expect(labels.map(hasMarquee)).toEqual([false, true, false]);
+	});
 });
 
 describe('SliderExtras', () => {
@@ -216,5 +228,4 @@ describe('SliderExtras', () => {
 
 		expect(labels.map(hasMarquee)).toEqual([false, true, false]);
 	});
-
 });

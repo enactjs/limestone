@@ -1,9 +1,11 @@
+import Spotlight from '@enact/spotlight';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
+import ri from '@enact/ui/resolution';
 import '@testing-library/jest-dom';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {FlexiblePopupPanels, Panel} from '../';
+import {FlexiblePopupPanels, Header, Panel} from '../';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
 
@@ -331,5 +333,138 @@ describe('FlexiblePopupPanels Specs', () => {
 		const actual = screen.getByTestId('flexiblePopupPanels').parentElement.parentElement;
 
 		expect(actual).toHaveClass(expected);
+	});
+
+	describe('Header', () => {
+		test('should show an "Exit app" button that fires `onClose`', async () => {
+			const user = userEvent.setup();
+			const handleClose = jest.fn();
+
+			render(
+				<FloatingLayerController>
+					<FlexiblePopupPanels onClose={handleClose} open>
+						<Panel>
+							<Header title="Title" />
+						</Panel>
+					</FlexiblePopupPanels>
+				</FloatingLayerController>
+			);
+
+			await user.click(screen.getByRole('button', {name: 'Exit app'}));
+
+			const expected = {type: 'onClose'};
+			const actual = handleClose.mock.calls.length && handleClose.mock.calls[0][0];
+
+			expect(actual).toMatchObject(expected);
+		});
+
+		test('should use `closeButtonAriaLabel` for the close button', () => {
+			render(
+				<FloatingLayerController>
+					<FlexiblePopupPanels closeButtonAriaLabel="Close settings" open>
+						<Panel>
+							<Header title="Title" />
+						</Panel>
+					</FlexiblePopupPanels>
+				</FloatingLayerController>
+			);
+
+			expect(screen.getByRole('button', {name: 'Close settings'})).toBeInTheDocument();
+		});
+
+		test('should hide the close button when `noCloseButton` is set', () => {
+			render(
+				<FloatingLayerController>
+					<FlexiblePopupPanels noCloseButton open>
+						<Panel>
+							<Header title="Title" />
+						</Panel>
+					</FlexiblePopupPanels>
+				</FloatingLayerController>
+			);
+
+			expect(screen.queryByRole('button', {name: 'Exit app'})).toBeNull();
+		});
+
+		test('should reserve the close button area only when `noCloseButton` is set and there are several panels', () => {
+			const renderPanels = (noCloseButton, panelCount) => (
+				<FloatingLayerController>
+					<FlexiblePopupPanels noCloseButton={noCloseButton} open>
+						{Array.from({length: panelCount}, (_, i) => (
+							<Panel key={i}>
+								<Header data-testid={`header-${i}`} title="Title" />
+							</Panel>
+						))}
+					</FlexiblePopupPanels>
+				</FloatingLayerController>
+			);
+
+			const {rerender} = render(renderPanels(true, 2));
+			expect(screen.getByTestId('header-0')).toHaveClass('showBack');
+
+			rerender(renderPanels(true, 1));
+			expect(screen.getByTestId('header-0')).not.toHaveClass('showBack');
+
+			rerender(renderPanels(false, 2));
+			expect(screen.getByTestId('header-0')).not.toHaveClass('showBack');
+		});
+	});
+
+	describe('nav button focus', () => {
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		const renderPanels = (index) => (
+			<FloatingLayerController>
+				<FlexiblePopupPanels index={index} open>
+					<Panel />
+					<Panel />
+					<Panel />
+				</FlexiblePopupPanels>
+			</FloatingLayerController>
+		);
+
+		test.each([
+			['next', 'Next', '.navCellAfter .navButton'],
+			['previous', 'Previous', '.navCellBefore .navButton']
+		])('should focus the %s button of the new panel after navigating with it', (_, label, selector) => {
+			const {rerender} = render(renderPanels(1));
+			const setSpy = jest.spyOn(Spotlight, 'set');
+			jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(screen.getByRole('button', {name: label}));
+
+			rerender(renderPanels(2));
+
+			expect(setSpy).toHaveBeenCalledWith(expect.any(String), {defaultElement: selector});
+		});
+
+		test('should not target a nav button when focus was elsewhere', () => {
+			const {rerender} = render(renderPanels(1));
+			const setSpy = jest.spyOn(Spotlight, 'set');
+			jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(null);
+
+			rerender(renderPanels(2));
+
+			expect(setSpy).not.toHaveBeenCalledWith(expect.any(String), {defaultElement: expect.stringContaining('navButton')});
+		});
+	});
+
+	test.each([
+		['small', 600],
+		['large', 1320]
+	])('should size the content of a `%s` panel', (size, width) => {
+		render(
+			<FloatingLayerController>
+				<FlexiblePopupPanels open>
+					<Panel size={size}>
+						<div>content</div>
+					</Panel>
+				</FlexiblePopupPanels>
+			</FloatingLayerController>
+		);
+
+		const contentCell = screen.getByText('content').parentElement;
+
+		expect(contentCell.style.getPropertyValue('--cell-size')).toBe(ri.scaleToRem(width));
 	});
 });

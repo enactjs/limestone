@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import ri from '@enact/ui/resolution';
 import {render, screen, fireEvent} from '@testing-library/react';
 
 import Card, {CardBase} from '../Card';
@@ -126,11 +127,15 @@ describe('Card', () => {
 		render(
 			<CardBase
 				src={src}
-				captionImageIconsSrc={[]}
-			/>
+				captionImageIconsSrc={[src.hd, src.fhd]}
+			>
+				Title
+			</CardBase>
 		);
 
-		expect(screen.queryAllByRole('img')).toHaveLength(2);
+		const captionIcons = document.querySelectorAll('.captionImageIcon');
+
+		expect(captionIcons).toHaveLength(2);
 	});
 
 	test('should render a React element passed as `imageIconSrc`', () => {
@@ -212,17 +217,53 @@ describe('Card', () => {
 		expect(screen.getByText('Sports Overlay')).toBeInTheDocument();
 	});
 
-	test('should require `src`', () => {
-		render(<CardBase data-testid="card" />);
+	describe('with an invalid `src`', () => {
+		let consoleError;
 
-		expect(console.error.mock.calls.flat().join('\n')).toContain('marked as required'); // eslint-disable-line no-console
-		console.error.mockClear(); // eslint-disable-line no-console
+		beforeEach(() => {
+			// The prop type and Image warnings are expected, so keep them off the console
+			consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+		});
+
+		afterEach(() => {
+			// The expected prop type warnings must not fail the global console check
+			consoleError.mockClear();
+		});
+
+		test('should require `src`', () => {
+			render(<CardBase data-testid="card" />);
+
+			expect(consoleError.mock.calls.flat().join('\n')).toContain('marked as required');
+		});
+
+		test('should reject an invalid `src` type', () => {
+			render(<CardBase src={[]} />);
+
+			expect(consoleError.mock.calls.flat().join('\n')).toContain('Invalid prop');
+		});
 	});
 
-	test('should reject an invalid `src` type', () => {
-		render(<CardBase src={[]} />);
+	test('should size a badge by width and height when its size is an object', () => {
+		render(<CardBase src={src} primaryBadge="NEW" primaryBadgeSize={{width: 60, height: 30}} />);
 
-		expect(console.error.mock.calls.flat().join('\n')).toContain('Invalid prop'); // eslint-disable-line no-console
-		console.error.mockClear(); // eslint-disable-line no-console
+		expect(screen.getByText('NEW')).toHaveStyle({width: ri.scaleToRem(60), height: ri.scaleToRem(30)});
+	});
+
+	test('should size a badge by font size when its size is a number', () => {
+		render(<CardBase src={src} secondaryBadge="HD" secondaryBadgeSize={24} />);
+
+		expect(screen.getByText('HD')).toHaveStyle({fontSize: ri.scaleToRem(24)});
+	});
+
+	test('should mark a vertical Card without caption content as having no caption', () => {
+		render(<CardBase data-testid="card" src={src} />);
+
+		expect(screen.getByTestId('card')).toHaveClass('noCaption');
+	});
+
+	test('should not mark a vertical Card with a title as having no caption', () => {
+		render(<CardBase data-testid="card" src={src}>Title</CardBase>);
+
+		expect(screen.getByTestId('card')).not.toHaveClass('noCaption');
 	});
 });

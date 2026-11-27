@@ -353,6 +353,29 @@ describe('Input specs', () => {
 			expect(buttonSubmit).toBeNull();
 		});
 
+		test('should mask the digits of a joined password number input', () => {
+			render(
+				<FloatingLayerController>
+					<Input numberInputField="joined" open type="passwordnumber" value="123" />
+				</FloatingLayerController>
+			);
+
+			expect(screen.getByText('●●●')).toBeInTheDocument();
+			expect(screen.queryByText('123')).toBeNull();
+		});
+
+		test('should show the digits of a joined number input', () => {
+			render(
+				<FloatingLayerController>
+					<Input numberInputField="joined" open type="number" value="123" />
+				</FloatingLayerController>
+			);
+
+			// The value is shown both in the popup field and on the Input button
+			expect(screen.getAllByText('123').length).toBeGreaterThan(0);
+			expect(screen.queryByText('●●●')).toBeNull();
+		});
+
 		test('should include a submit button for passwordnumber separated input', () => {
 			render(
 				<FloatingLayerController>
@@ -630,6 +653,90 @@ describe('Input specs', () => {
 
 			expect(marqueeText).not.toBeNull();
 			expect(marqueeText.querySelector('.marquee')).not.toBeNull();
+		});
+	});
+
+	describe('popup header', () => {
+		test('should show a back button that closes a fullscreen popup', async () => {
+			const handleClose = jest.fn();
+			const user = userEvent.setup();
+			render(
+				<FloatingLayerController>
+					<Input onClose={handleClose} open />
+				</FloatingLayerController>
+			);
+
+			await user.click(screen.getByLabelText('go to previous'));
+
+			expect(handleClose).toHaveBeenCalled();
+		});
+
+		test('should use `backButtonAriaLabel` for the back button', () => {
+			render(
+				<FloatingLayerController>
+					<Input backButtonAriaLabel="Back to settings" open />
+				</FloatingLayerController>
+			);
+
+			expect(screen.getByLabelText('Back to settings')).toBeInTheDocument();
+		});
+
+		test('should not show a back button when `noBackButton` is set', () => {
+			render(
+				<FloatingLayerController>
+					<Input noBackButton open />
+				</FloatingLayerController>
+			);
+
+			expect(screen.queryByLabelText('go to previous')).toBeNull();
+		});
+
+		test('should place the back button beside the title in an overlay popup', () => {
+			render(
+				<FloatingLayerController>
+					<Input open popupType="overlay" title="Name" />
+				</FloatingLayerController>
+			);
+
+			expect(screen.getByLabelText('go to previous').parentElement).toHaveClass('titles');
+		});
+
+		test('should place the back button outside the titles in a fullscreen popup', () => {
+			render(
+				<FloatingLayerController>
+					<Input open title="Name" />
+				</FloatingLayerController>
+			);
+
+			expect(screen.getByLabelText('go to previous').parentElement).not.toHaveClass('titles');
+		});
+
+		test('should label the popup with `popupAriaLabel` instead of its titles', () => {
+			render(
+				<FloatingLayerController>
+					<Input open popupAriaLabel="Enter your name" title="Name" />
+				</FloatingLayerController>
+			);
+
+			const popup = screen.getByRole('region', {name: 'Enter your name'});
+
+			expect(popup).not.toHaveAttribute('aria-labelledby');
+		});
+	});
+
+	describe('Input button', () => {
+		test('should mask a password value and read only its length', () => {
+			render(<Input type="password" value="secret" />);
+
+			expect(screen.getByText('******')).toBeInTheDocument();
+			expect(screen.queryByText('secret')).toBeNull();
+			expect(screen.getByLabelText(/6 characters/)).toBeInTheDocument();
+		});
+
+		test('should show a number value of 0', () => {
+			render(<Input type="number" value={0} />);
+
+			expect(screen.getByText('0')).toBeInTheDocument();
 		});
 	});
 });

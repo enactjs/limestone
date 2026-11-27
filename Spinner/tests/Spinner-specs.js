@@ -1,4 +1,5 @@
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
+import Spotlight from '@enact/spotlight';
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 
@@ -68,5 +69,33 @@ describe('Spinner Specs', () => {
 		const expectedClass = 'floatingLayer';
 
 		expect(floatingLayer).toHaveClass(expectedClass);
+	});
+
+	test('should blur the focused element when blocking clicks on the screen', () => {
+		const focused = document.createElement('button');
+		document.body.appendChild(focused);
+		const blur = jest.spyOn(focused, 'blur');
+		const currentSpy = jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(focused);
+
+		render(<FloatingLayerController><Spinner blockClickOn="screen" /></FloatingLayerController>);
+
+		expect(blur).toHaveBeenCalled();
+
+		currentSpy.mockRestore();
+		focused.remove();
+	});
+
+	test('should not blur the focused element when not blocking clicks on the screen', () => {
+		const focused = document.createElement('button');
+		document.body.appendChild(focused);
+		const blur = jest.spyOn(focused, 'blur');
+		const currentSpy = jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(focused);
+
+		render(<FloatingLayerController><Spinner blockClickOn="container" /></FloatingLayerController>);
+
+		expect(blur).not.toHaveBeenCalled();
+
+		currentSpy.mockRestore();
+		focused.remove();
 	});
 });

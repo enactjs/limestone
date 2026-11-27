@@ -202,6 +202,28 @@ describe('Slider', () => {
 		expect(slider).toHaveAttribute(expectedAttribute, expectedValue);
 	});
 
+	test('should ignore wheel events that arrive within `wheelInterval` of the previous one', () => {
+		render(<Slider activateOnSelect defaultValue={50} wheelInterval={10000} />);
+		const slider = screen.getByRole('slider');
+
+		activate(slider);
+		fireEvent.wheel(slider, {deltaY: 10});
+		fireEvent.wheel(slider, {deltaY: 10});
+
+		expect(slider).toHaveAttribute('aria-valuetext', '49');
+	});
+
+	test('should handle every wheel event when `wheelInterval` is not set', () => {
+		render(<Slider activateOnSelect defaultValue={50} />);
+		const slider = screen.getByRole('slider');
+
+		activate(slider);
+		fireEvent.wheel(slider, {deltaY: 10});
+		fireEvent.wheel(slider, {deltaY: 10});
+
+		expect(slider).toHaveAttribute('aria-valuetext', '48');
+	});
+
 	test('should decrement the value of vertical slider on key down when active', () => {
 		render(<Slider activateOnSelect defaultValue={50} orientation="vertical" />);
 		const slider = screen.getByRole('slider');
