@@ -24,11 +24,13 @@ import kind from '@enact/core/kind';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
 import Changeable from '@enact/ui/Changeable';
+import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import clamp from 'ramda/src/clamp';
 import compose from 'ramda/src/compose';
 
+import $L from '../internal/$L';
 import Skinnable from '../Skinnable';
 
 import Star from './Star';
@@ -243,8 +245,10 @@ const ShownValueDecorator = (Wrapped) => {
  */
 const FocusPreviewDecorator = (Wrapped) => {
 	const FocusPreview = ({onBlur, onFocus, onMouseEnter, onMouseLeave, ...rest}) => {
-		const {id} = rest;
+		const {id, value} = rest;
+		const [ariaLabelValue, setAriaLabelValue] = useState(value || null);
 		const [focusedStar, setFocusedStar] = useState(null);
+		const [isNavigating, setIsNavigating] = useState(null);
 		const pointerInside = useRef(false);
 		const restoring = useRef(false);
 		const redirecting = useRef(false);
@@ -291,10 +295,11 @@ const FocusPreviewDecorator = (Wrapped) => {
 
 			// Focus events bubble from the stars; anything else in the row is ignored
 			setFocusedStar(isOwnStar(ev.target) ? getStarNumber(ev.target.id, id) || null : null);
+			setIsNavigating(!!focusedStar);
 
 			if (restoring.current) return; // the star got its focus back; nothing changed
 			if (onFocus) onFocus(ev);
-		}, [id, isOwnStar, onFocus]);
+		}, [focusedStar, id, isOwnStar, onFocus]);
 
 		const handleBlur = useCallback((ev) => {
 			const star = ev.target;
@@ -321,13 +326,16 @@ const FocusPreviewDecorator = (Wrapped) => {
 			// Moving between stars fires blur then focus; only clear when focus leaves the row
 			if (!ev.relatedTarget || !ev.currentTarget.contains(ev.relatedTarget)) {
 				setFocusedStar(null);
+				setAriaLabelValue(value);
 			}
-		}, [isOwnStar, onBlur]);
+		}, [isOwnStar, onBlur, value]);
 
 		return (
 			<Wrapped
 				{...rest}
+				ariaLabelValue={ariaLabelValue}
 				focusedStar={focusedStar}
+				isNavigating={isNavigating}
 				onBlur={handleBlur}
 				onFocus={handleFocus}
 				onMouseEnter={handleMouseEnter}
@@ -384,6 +392,27 @@ const StarRatingsBase = kind({
 		id: PropTypes.string.isRequired,
 
 		/**
+		 * The "aria-label" for the star ratings.
+		 *
+		 * If not specified, the "aria-label" will be generated from the current value and maximum stars.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		'aria-label': PropTypes.string,
+
+		/**
+		 * The rating used in the accessibility label while selecting.
+		 *
+		 * Set by the focus preview decorator and updated when focus leaves the row. If not set
+		 * or `0`, the label uses the default selecting value of `3`.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		ariaLabelValue: PropTypes.number,
+
+		/**
 		 * Disables StarRatings and makes it non-interactive.
 		 *
 		 * The rating is still shown, at 30% opacity. No star can be selected and `onChange` is not
@@ -408,6 +437,17 @@ const StarRatingsBase = kind({
 		 * @private
 		 */
 		focusedStar: PropTypes.number,
+
+		/**
+		 * `true` once 5-way navigation moves between stars after initial focus enters the row.
+		 *
+		 * Used to suppress the individual star's accessibility readout on first entry so only the
+		 * group instruction is read, and restore individual star readouts during navigation.
+		 *
+		 * @type {Number}
+		 * @private
+		 */
+		isNavigating: PropTypes.bool,
 
 		/**
 		 * The number of stars.
@@ -539,6 +579,14 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
+		'aria-label': ({'aria-label': ariaLabel, ariaLabelValue, disabled, max}) => {
+			if (ariaLabel) return ariaLabel;
+
+			const baseLabel = $L('Star rating') + ' ' + $L('{value} out of {max} stars');
+			const fullLabel = baseLabel.concat(' ').concat($L('change a value with left right button'));
+
+			return new IString(disabled ? baseLabel : fullLabel).format({value: ariaLabelValue || DEFAULT_SELECTING_VALUE, max});
+		},
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		// The selected rating, which Spotlight enters the row at
 		selected: ({max, readOnly, value}) => (readOnly ? null : toTenths(value, max, readOnly) / 10),
@@ -552,6 +600,7 @@ const StarRatingsBase = kind({
 	render: ({
 		disabled,
 		id,
+		isNavigating,
 		max,
 		onStarClick,
 		onTouchEnd,
@@ -563,35 +612,46 @@ const StarRatingsBase = kind({
 		tenths,
 		...rest
 	}) => {
+		delete rest.ariaLabelValue;
 		delete rest.focusedStar;
 		delete rest.onChange;
 		delete rest.value;
 
 		return (
 			<div
-				{...rest}
-				aria-disabled={disabled}
-				id={id}
-				onTouchEnd={onTouchEnd}
-				onTouchMove={onTouchMove}
-				onTouchStart={onTouchStart}
+				aria-labelledby={id}
+				className={css.starRatingsContainer}
+				role="region"
 			>
-				{Array.from({length: max}, (_, i) => {
-					const starValue = clamp(0, 10, tenths - i * 10) / 10;
+				<div
+					{...rest}
+					aria-disabled={disabled}
+					id={id}
+					onTouchEnd={onTouchEnd}
+					onTouchMove={onTouchMove}
+					onTouchStart={onTouchStart}
+					role="group"
+				>
+					{Array.from({length: max}, (_, i) => {
+						const starValue = clamp(0, 10, tenths - i * 10) / 10;
+						const ariaLabel = i === 0 ? $L('1 star') : new IString($L(`{value} stars`)).format({value: i + 1});
 
-					return (
-						<Star
-							key={i}
-							data-star-selected={i + 1 === selected ? true : null}
-							id={`${id}-star-${i + 1}`}
-							disabled={disabled}
-							overlayMode={overlayMode}
-							readOnly={readOnly}
-							value={starValue}
-							onClick={onStarClick}
-						/>
-					);
-				})}
+						return (
+							<Star
+								key={i}
+								aria-hidden={false}
+								aria-label={isNavigating ? ariaLabel : null}
+								data-star-selected={i + 1 === selected ? true : null}
+								id={`${id}-star-${i + 1}`}
+								disabled={disabled}
+								overlayMode={overlayMode}
+								readOnly={readOnly}
+								value={starValue}
+								onClick={onStarClick}
+							/>
+						);
+					})}
+				</div>
 			</div>
 		);
 	}

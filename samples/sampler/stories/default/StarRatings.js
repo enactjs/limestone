@@ -53,3 +53,8 @@ boolean('overlayMode', _StarRatings, StarRatingsConfig);
 range('value', _StarRatings, StarRatingsConfig, {min: 0, max: 5, step: 0.01}, 0);
 
 _StarRatings.storyName = 'StarRatings';
+_StarRatings.parameters = {
+	info: {
+		text: 'The basic StarRatings'
+	}
+};
