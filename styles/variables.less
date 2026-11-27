@@ -91,8 +91,11 @@
 // ---------------------------------------
 @lime-component-spacing: var(--semantic-spacing-gap-xl);
 @lime-component-spacing-bottom: var(--semantic-spacing-gap-l);
-@lime-focusexpand-focus-transform: scale(1.1);
-@lime-focusexpand-pressed-transform: scale(1.05);
+@lime-focusexpand-normal-scale: var(--semantic-scale-common-normal);
+@lime-focusexpand-focus-scale: var(--semantic-scale-common-focus);
+@lime-focusexpand-pressed-scale: var(--semantic-scale-common-press);
+@lime-focusexpand-focus-transform: scale(@lime-focusexpand-focus-scale);
+@lime-focusexpand-pressed-transform: scale(@lime-focusexpand-pressed-scale);
 @lime-overlay-outline-width: var(--semantic-border-outline);
 @lime-smallest-tappable-size: 168px;
 @lime-translate-center: translate(-50%, -50%);
@@ -803,8 +806,11 @@
 @lime-iconitem-title-line-height: 64px;
 @lime-iconitem-title-line-height-large: 80px;
 @lime-iconitem-title-margin: var(--semantic-spacing-gap-m) 0 0 0;
-@lime-iconitem-focus-transform: scale(1.2);
-@lime-iconitem-pressed-transform: scale(1.1);
+@lime-iconitem-normal-scale: var(--semantic-scale-icon-normal);
+@lime-iconitem-focus-scale: var(--semantic-scale-icon-focus);
+@lime-iconitem-pressed-scale: var(--semantic-scale-icon-press);
+@lime-iconitem-focus-transform: scale(@lime-iconitem-focus-scale);
+@lime-iconitem-pressed-transform: scale(@lime-iconitem-pressed-scale);
 @lime-iconitem-release-transform: @lime-iconitem-focus-transform;
 
 // ImageItem
@@ -833,7 +839,7 @@
 @lime-imageitem-vertical-full-image-focus-border-width: var(--semantic-border-thick);
 @lime-imageitem-vertical-captions-margin-top: var(--semantic-spacing-gap-l);
 @lime-imageitem-vertical-label-height: 64px;
-@lime-imageitem-vertical-focus-image-transform: scale(1.1);
+@lime-imageitem-vertical-focus-image-transform: @lime-focusexpand-focus-transform;
 @lime-imageitem-vertical-image-icon-margin: 0 var(--semantic-spacing-gap-m) 0 0;
 @lime-imageitem-vertical-image-icon-size: 132px;
 @lime-imageitem-vertical-image-icon-size-large: (@lime-imageitem-vertical-image-icon-size * 1.2);
@@ -1169,10 +1175,12 @@
 
 // Slider
 // ---------------------------------------
-@lime-slider-focus-scale: 1.33;
+@lime-slider-normal-scale: var(--semantic-scale-slider-normal);
+@lime-slider-focus-scale: var(--semantic-scale-slider-focus);
+@lime-slider-pressed-scale: var(--semantic-scale-slider-press);
 @lime-slider-focusin-transform: scale(@lime-slider-focus-scale);
-@lime-slider-focusout-transform: scale(1);
-@lime-slider-press-transform: scale(1.16);
+@lime-slider-focusout-transform: scale(@lime-slider-normal-scale);
+@lime-slider-press-transform: scale(@lime-slider-pressed-scale);
 @lime-slider-release-transform: @lime-slider-focusin-transform;
 @lime-slider-bar-height: @lime-progressbar-bar-thickness;
 @lime-slider-color-picker-bar-height: 48px;
@@ -1203,7 +1211,7 @@
 @lime-slider-knob-width-large: 60px;
 @lime-slider-knob-height: @lime-slider-knob-width;
 @lime-slider-tooltip-offset: (@lime-slider-knob-height / 2);
-@lime-slider-tooltip-offset-focused: (@lime-slider-knob-width * @lime-slider-focus-scale / 2);
+@lime-slider-tooltip-offset-focused: calc(@lime-slider-knob-width * @lime-slider-focus-scale / 2);
 @lime-slider-min-max-margin-top: var(--semantic-spacing-gap-m);
 @lime-slider-min-max-font-size: var(--semantic-typography-body-48-regular-font-size);
 @lime-slider-min-max-font-size-large: var(--primitive-font-size-60);

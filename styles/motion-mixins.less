@@ -23,7 +23,7 @@ Global Motion Mixins
 //  *
 //  * @example
 //  * .focus({
-//  *     .bg { .lime-focus-in-motion(small, 1.1); }
+//  *     .bg { .lime-focus-in-motion(small); }
 //  * });
 //  *
 //  * &.fullscreen .inner { .lime-enter-motion(none); }
@@ -40,7 +40,7 @@ Global Motion Mixins
 }
 
 /* focus-in */
-.lime-focus-in-motion(@size, @scale-to: 1.1) {
+.lime-focus-in-motion(@size, @scale-to: @lime-focusexpand-focus-scale) {
 	transform: scale(@scale-to);
 	.lime-motion-transition(focus-in, @size);
 }
@@ -52,13 +52,13 @@ Global Motion Mixins
 }
 
 /* press */
-.lime-press-motion(@size, @scale-to: 1.05) {
+.lime-press-motion(@size, @scale-to: @lime-focusexpand-pressed-scale) {
 	transform: scale(@scale-to);
 	.lime-motion-transition(press, @size);
 }
 
 /* release */
-.lime-release-motion(@size, @scale-to: 1.1) {
+.lime-release-motion(@size, @scale-to: @lime-focusexpand-focus-scale) {
 	transform: scale(@scale-to);
 	.lime-motion-transition(release, @size);
 }
@@ -166,19 +166,19 @@ Component Specific Motion Mixins
 }
 
 /* slider */
-.lime-slider-focus-in-motion(@scale-to: 1.33) {
+.lime-slider-focus-in-motion(@scale-to: @lime-slider-focus-scale) {
 	.lime-focus-in-motion(small, @scale-to);
 	transform: translate(-50%, -50%) scale(@scale-to);
 }
-.lime-slider-focus-out-motion(@scale-to: 1) {
+.lime-slider-focus-out-motion(@scale-to: @lime-slider-normal-scale) {
 	.lime-focus-out-motion(small, @scale-to);
 	transform: translate(-50%, -50%) scale(@scale-to);
 }
-.lime-slider-press-motion(@scale-to: 1.16) {
+.lime-slider-press-motion(@scale-to: @lime-slider-pressed-scale) {
 	.lime-press-motion(small, @scale-to);
 	transform: translate(-50%, -50%) scale(@scale-to);
 }
-.lime-slider-release-motion(@scale-to: 1.33) {
+.lime-slider-release-motion(@scale-to: @lime-slider-focus-scale) {
 	.lime-release-motion(small, @scale-to);
 	transform: translate(-50%, -50%) scale(@scale-to);
 }
