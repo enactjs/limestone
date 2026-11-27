@@ -120,7 +120,6 @@ describe('StarRatings', function () {
 
 			it('should not fill up to the focused star of a disabled rating', async function () {
 				await Page.spotlightDown();
-				await Page.spotlightDown();
 				await Page.spotlightRight();
 				await Page.spotlightRight();
 
@@ -128,13 +127,10 @@ describe('StarRatings', function () {
 				expect(await starRatingsDisabled.filledStars()).toBe(2);
 			});
 
-			it('should focus the read-only area rating and then the disabled one', async function () {
+			it('should skip the read-only rating and focus the disabled one', async function () {
 				await Page.spotlightDown();
-				expect(await starRatingsReadOnly.self.parentElement().isFocused()).toBe(true);
 
-				await Page.spotlightDown();
 				expect(await Page.focusedId).toMatch(/^starRatingsDisabled-star-/);
-
 			});
 
 			it('should not change a disabled rating on select', async function () {
@@ -148,7 +144,6 @@ describe('StarRatings', function () {
 			it('should enter a rating at its selected star', async function () {
 				await Page.spotlightLeft();
 				await Page.spotlightLeft();
-				await Page.spotlightDown();
 				await Page.spotlightDown();
 
 				// defaultValue 2, not star 1 below the focused star
@@ -189,8 +184,6 @@ describe('StarRatings', function () {
 				await Page.spotlightRight();
 				await Page.spotlightRight();
 				await Page.spotlightUp();
-				await Page.spotlightUp();
-				await Page.spotlightDown();
 				await Page.spotlightDown();
 
 				expect(await starRatingsDisabled.star(2).isFocused()).toBe(true);

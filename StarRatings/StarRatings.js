@@ -38,8 +38,6 @@ import Star from './Star';
 
 import css from './StarRatings.module.less';
 
-const SpottableDiv = Spottable('div');
-
 /**
  * Finds the star element under the current touch point.
  *
@@ -395,6 +393,16 @@ const StarRatingsBase = kind({
 		id: PropTypes.string.isRequired,
 
 		/**
+		 * The "aria-label" for the star ratings.
+		 *
+		 * If not specified, the "aria-label" will be generated from the current value and maximum stars.
+		 *
+		 * @type {String}
+		 * @public
+		 */
+		'aria-label': PropTypes.string,
+
+		/**
 		 * The rating used in the accessibility label while selecting.
 		 *
 		 * Set by the focus preview decorator and updated when focus leaves the row. If not set
@@ -488,15 +496,6 @@ const StarRatingsBase = kind({
 		overlayMode: PropTypes.bool,
 
 		/**
-		 * The total number of ratings.
-		 *
-		 * @type {Number}
-		 * @default 0
-		 * @public
-		 */
-		ratings: PropTypes.number,
-
-		/**
 		 * Displays the rating without letting the user change it.
 		 *
 		 * * `true`: the stars cannot be focused or selected, and `value` keeps one decimal place.
@@ -532,7 +531,6 @@ const StarRatingsBase = kind({
 		disabled: false,
 		max: 5,
 		overlayMode: false,
-		ratings: 0,
 		readOnly: false
 	},
 
@@ -582,15 +580,13 @@ const StarRatingsBase = kind({
 	},
 
 	computed: {
-		'aria-label': ({ariaLabelValue, disabled, max, ratings, readOnly, value}) => {
-			const baseLabel = 'Star rating {value} out of {max} stars';
-			const fullLabel = baseLabel.concat(' change a value with left right button');
-			const readOnlyValue = toTenths(value, max, readOnly) / 10;
+		'aria-label': ({'aria-label': ariaLabel, ariaLabelValue, disabled, max}) => {
+			if (ariaLabel) return ariaLabel;
 
-			const ariaLabel = new IString($L(disabled ? baseLabel : fullLabel)).format({value: ariaLabelValue || DEFAULT_SELECTING_VALUE, max});
-			const readOnlyAriaLabel = new IString($L('User rating {value} {ratings} ratings')).format({value: readOnlyValue, ratings});
+			const baseLabel = $L('Star rating') + ' ' + $L('{value} out of {max} stars');
+			const fullLabel = baseLabel.concat($L(' change a value with left right button'));
 
-			return readOnly ? readOnlyAriaLabel : ariaLabel;
+			return new IString(disabled ? baseLabel : fullLabel).format({value: ariaLabelValue || DEFAULT_SELECTING_VALUE, max});
 		},
 		className: ({disabled, readOnly, styler}) => styler.append({disabled, readOnly}),
 		// The selected rating, which Spotlight enters the row at
@@ -623,10 +619,8 @@ const StarRatingsBase = kind({
 		delete rest.ratings;
 		delete rest.value;
 
-		const StarsContainer = readOnly ? SpottableDiv : 'div';
-
 		return (
-			<StarsContainer
+			<div
 				aria-labelledby={id}
 				className={css.starRatingsContainer}
 				role="region"
@@ -660,7 +654,7 @@ const StarRatingsBase = kind({
 						);
 					})}
 				</div>
-			</StarsContainer>
+			</div>
 		);
 	}
 });
