@@ -615,7 +615,6 @@ const StarRatingsBase = kind({
 		delete rest.ariaLabelValue;
 		delete rest.focusedStar;
 		delete rest.onChange;
-		delete rest.ratings;
 		delete rest.value;
 
 		return (
