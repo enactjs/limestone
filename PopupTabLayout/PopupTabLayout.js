@@ -22,7 +22,7 @@ import {getContainersForNode, getContainerNode} from '@enact/spotlight/src/conta
 import {getTargetByDirectionFromElement} from '@enact/spotlight/src/target';
 import {IdProvider} from '@enact/ui/internal/IdProvider';
 import PropTypes from 'prop-types';
-import {use, useEffect, useLayoutEffect, useState} from 'react';
+import {use, useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import compose from 'ramda/src/compose';
 
 import Skinnable from '../Skinnable';
@@ -328,8 +328,9 @@ const OptimizedFocusDecorator = hoc((config, Wrapped) => {
 	const OptimizedFocusDecorator = (props) => {
 		checkPropTypes(OptimizedFocusDecorator, props);
 
-		const {open, optimized, spotlightId} = props;
+		const {onHide, onShow, open, optimized, spotlightId} = props;
 
+		const [suppressCollapseAnimation, setSuppressCollapseAnimation] = useState(true);
 		// Pauses Spotlight before the children are mounted so the focus can be set to the layout on mount
 		const [paused] = useState(() => {
 			const pause = new Pause('PopupTabLayout');
@@ -341,6 +342,34 @@ const OptimizedFocusDecorator = hoc((config, Wrapped) => {
 			return pause;
 		});
 
+		const timerRef = useRef(null);
+		const initiallyOpen = useRef(open);
+
+		const clearSuppression = useCallback(() => {
+			clearTimeout(timerRef.current);
+			timerRef.current = null;
+			setSuppressCollapseAnimation(true);
+		}, []);
+
+		// Restore the collapse duration after the show callback
+		const clearSuppressionLater = useCallback(() => {
+			clearTimeout(timerRef.current);
+			timerRef.current = setTimeout(() => {
+				setSuppressCollapseAnimation(false);
+				timerRef.current = null;
+			});
+		}, []);
+
+		const handleOnHide = useCallback((ev) => {
+			if (onHide) onHide(ev);
+			clearSuppression();
+		}, [clearSuppression, onHide]);
+
+		const handleOnShow = useCallback((ev) => {
+			if (onShow) onShow(ev);
+			clearSuppressionLater();
+		}, [clearSuppressionLater, onShow]);
+
 		useLayoutEffect(() => {
 			if (optimized && open) {
 				// Only resumes when paused on mount
@@ -349,10 +378,26 @@ const OptimizedFocusDecorator = hoc((config, Wrapped) => {
 			}
 		}, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
+		useEffect(() => {
+			if (!optimized && initiallyOpen.current) {
+				// An initially open popup may not call onShow
+				clearSuppressionLater();
+			}
+
+			return () => clearTimeout(timerRef.current);
+		}, [clearSuppressionLater, optimized]);
+
+		const wrappedProps = {
+			...props,
+			...(!optimized && {suppressCollapseAnimation}),
+			onHide: optimized ? onHide : handleOnHide,
+			onShow: optimized ? onShow : handleOnShow
+		};
+
 		if (optimized) {
-			return <Wrapped {...props} style={!open ? {display: 'none'} : null} />;
+			return <Wrapped {...wrappedProps} style={!open ? {display: 'none'} : null} />;
 		} else {
-			return <Wrapped {...props} />;
+			return <Wrapped {...wrappedProps} />;
 		}
 	};
 

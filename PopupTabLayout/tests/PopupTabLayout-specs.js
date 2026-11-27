@@ -1,7 +1,7 @@
 import Spotlight from '@enact/spotlight';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import {Item} from '../../Item';
@@ -288,6 +288,59 @@ describe('PopupTabLayout specs', () => {
 			const content = screen.getByText('popupTabLayout');
 			expect(content.closest('[style*="display: none"]')).toBeNull();
 			expect(focusSpy).toHaveBeenCalledWith('optimizedLayout');
+		});
+	});
+
+	describe('collapse animation suppression', () => {
+		const popup = (open, callbacks = {}) => (
+			<FloatingLayerController>
+				<PopupTabLayout data-test-id="tab-layout" noAnimation open={open} {...callbacks}>
+					<Tab title="Tab"><div>content</div></Tab>
+				</PopupTabLayout>
+			</FloatingLayerController>
+		);
+
+		const duration = () => document
+			.querySelector('[data-test-id="tab-layout"]')
+			.style.getPropertyValue('--lime-tablayout-collapse-duration');
+
+		beforeEach(() => jest.useFakeTimers());
+		afterEach(() => jest.useRealTimers());
+
+		test('forwards show and hide callbacks and resets suppression', () => {
+			const onShow = jest.fn();
+			const onHide = jest.fn();
+			const callbacks = {onShow, onHide};
+			const {rerender} = render(popup(false, callbacks));
+
+			rerender(popup(true, callbacks));
+			expect(onShow).toHaveBeenCalledTimes(1);
+			expect(duration()).toBe('0');
+
+			act(() => jest.runOnlyPendingTimers());
+			expect(duration()).toBe('');
+
+			rerender(popup(false, callbacks));
+			expect(onHide).toHaveBeenCalledTimes(1);
+
+			rerender(popup(true, callbacks));
+			expect(onShow).toHaveBeenCalledTimes(2);
+			expect(duration()).toBe('0');
+		});
+
+		test('cancels the pending show timer when hidden without callbacks', () => {
+			const {rerender} = render(popup(false));
+
+			rerender(popup(true));
+			expect(duration()).toBe('0');
+
+			rerender(popup(false));
+			act(() => jest.runOnlyPendingTimers());
+
+			rerender(popup(true));
+			expect(duration()).toBe('0');
+			act(() => jest.runOnlyPendingTimers());
+			expect(duration()).toBe('');
 		});
 	});
 });
