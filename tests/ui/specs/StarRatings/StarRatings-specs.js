@@ -180,7 +180,6 @@ describe('StarRatings', function () {
 
 			it('should return to the selected star of a disabled rating', async function () {
 				await Page.spotlightDown();
-				await Page.spotlightDown();
 				await Page.spotlightRight();
 				await Page.spotlightRight();
 				await Page.spotlightUp();

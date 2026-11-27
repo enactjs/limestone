@@ -23,7 +23,6 @@ import {adaptEvent, forProp, forward, handle} from '@enact/core/handle';
 import kind from '@enact/core/kind';
 import Spotlight from '@enact/spotlight';
 import SpotlightContainerDecorator from '@enact/spotlight/SpotlightContainerDecorator';
-import Spottable from '@enact/spotlight/Spottable';
 import Changeable from '@enact/ui/Changeable';
 import IString from 'ilib/lib/IString';
 import PropTypes from 'prop-types';
