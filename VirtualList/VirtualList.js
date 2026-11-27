@@ -117,7 +117,7 @@ let VirtualList = (props) => {
 		...scrollContentWrapperRest
 	} = scrollContentWrapperProps;
 
-	const themeScrollContainerProps = {...scrollContainerProps, className: classnames(css.scrollContainer, scrollContainerProps.className)};
+	const themeScrollContainerProps = {...scrollContainerProps, className: classnames(css.scrollContainer, css.scrollbarPadding, scrollContainerProps.className)};
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
@@ -635,11 +635,12 @@ let VirtualGridList = (props) => {
 		...scrollContentWrapperRest
 	} = scrollContentWrapperProps;
 
+	const themeScrollContainerProps = {...scrollContainerProps, className: classnames(css.scrollbarPadding, scrollContainerProps.className)};
 	const themeScrollContentProps = useThemeVirtualList({...scrollContentProps, className: classnames(className, scrollContentProps.className)});
 
 	return (
 		<ResizeContext {...resizeContextProps}>
-			<ScrollContentWrapper {...scrollContainerProps} {...scrollContentWrapperRest}>
+			<ScrollContentWrapper {...themeScrollContainerProps} {...scrollContentWrapperRest}>
 				<UiVirtualListBasic {...themeScrollContentProps} ref={scrollContentHandle} />
 				{isVerticalScrollbarVisible ? <Scrollbar {...verticalScrollbarProps} /> : null}
 				{isHorizontalScrollbarVisible ? <Scrollbar {...horizontalScrollbarProps} /> : null}
