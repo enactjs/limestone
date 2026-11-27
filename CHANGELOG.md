@@ -6,6 +6,18 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 ### Added
 
+- `limestone/CardSports` `secondaryScore` on `leftTeam` and `rightTeam`, shown under each team's score
+- `limestone/StarRatings` to display a star rating or let the user select one
+
+### Fixed
+
+- `limestone/Alert` and `limestone/Popup` to not pause Spotlight when `open` changes between falsy values
+- `limestone/Alert` and `limestone/Popup` to resume Spotlight when unmounted while opening
+
+## [1.13.0] - 2026-11-19
+
+### Added
+
 - `limestone/Icon` supported icon list, adding new icon `pinleft` and `pinright`
 - `limestone/VerticalMarquee` to vertically scroll overflowing multi-line text via `ui/Marquee.MarqueeDecorator` configured with `orientation: 'vertical'`
 
@@ -22,10 +34,14 @@ The following is a curated list of changes in the Enact limestone module, newest
 
 - `limestone/Alert` Button width for overlay type
 - `limestone/CardSports` team image positioning to remain fixed regardless of score area size
+- `limestone/DatePicker` and `limestone/TimePicker` to not animate on initial render when `value` is not set
+- `limestone/DatePicker` and `limestone/TimePicker` to show the current date and time instead of fallback values when `disabled` and `value` is not set
 - `limestone/Dropdown` scrollbar not to appear when unnecessary
+- `limestone/FixedPopupPanels`, `limestone/FlexiblePopupPanels`, and `limestone/Panels` to keep focus inside the panels when 5-way keys are pressed right after a panel transition
 - `limestone/Slider` to marquee only one label while focused: the tick closest to the knob, or the nearer end when only start and end labels are shown
 - `limestone/Switch` handle bounce animation to replay on toggle but not on re-mount
 - `limestone/VirtualList` scrollthumb not to cut off
+- `limestone/VirtualList` and `limestone/VirtualList.VirtualGridList` prop `continue5WayHold` to work when `id` is not the same as `spotlightId`
 
 ## [1.12.0] - 2026-10-01
 

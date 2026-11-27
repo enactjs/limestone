@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom';
-import {act, render, screen} from '@testing-library/react';
+import Spotlight from '@enact/spotlight';
+import {getContainerConfig} from '@enact/spotlight/src/container';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 
 import Item from '../../Item';
 import VirtualList from '../VirtualList';
@@ -388,6 +390,147 @@ describe('VirtualList', () => {
 			const actual = screen.getByRole('list').parentElement.parentElement.children.length;
 
 			expect(actual).toBe(expected);
+		});
+	});
+
+	describe('continue5WayHold', () => {
+		test('should set \'continue5WayHold\' to the spotlight container when only \'spotlightId\' is provided', () => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldList"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldList').continue5WayHold;
+
+			expect(actual).toBe(true);
+		});
+
+		test('should set \'continue5WayHold\' to the spotlight container when \'id\' differs from \'spotlightId\'', () => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					continue5WayHold
+					dataSize={dataSize}
+					id="continue5WayHoldListDomId"
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					spotlightId="continue5WayHoldListSpotlightId"
+				/>
+			);
+
+			const actual = getContainerConfig('continue5WayHoldListSpotlightId').continue5WayHold;
+
+			expect(actual).toBe(true);
+		});
+	});
+
+	describe('last focused item restoration', () => {
+		const getItem = (name) => screen.getByText(name).closest('[data-index]');
+		// Spotlight hands the restore function the spottable items of the list
+		const getItems = () => Array.from(screen.getByRole('list').querySelectorAll('[data-index]'));
+
+		const renderList = () => render(
+			<VirtualList
+				clientSize={clientSize}
+				dataSize={dataSize}
+				itemRenderer={renderItem}
+				itemSize={itemSize}
+				spotlightId="restoreList"
+			/>
+		);
+
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		test('should not persist a last focused item before any item is focused', () => {
+			renderList();
+
+			const actual = getContainerConfig('restoreList').lastFocusedPersist();
+
+			expect(actual).toBeUndefined();
+		});
+
+		test('should persist the index of the last focused item', () => {
+			jest.spyOn(Spotlight, 'getPointerMode').mockReturnValue(true);
+			renderList();
+
+			fireEvent.focus(getItem('Account 2'));
+
+			const expected = {container: false, element: true, key: 2};
+			const actual = getContainerConfig('restoreList').lastFocusedPersist();
+
+			expect(actual).toEqual(expected);
+		});
+
+		test('should restore the rendered item with the persisted index', () => {
+			renderList();
+			const listItems = getItems();
+
+			const expected = getItem('Account 3');
+			const actual = getContainerConfig('restoreList').lastFocusedRestore({key: 3}, listItems);
+
+			expect(actual).toBe(expected);
+		});
+
+		test('should not restore any item when the persisted index is not rendered', () => {
+			renderList();
+			const listItems = getItems();
+
+			const actual = getContainerConfig('restoreList').lastFocusedRestore({key: 150}, listItems);
+
+			expect(actual).toBeFalsy();
+		});
+
+		test('should restore to the placeholder with the persisted index when the items are not rendered yet', () => {
+			renderList();
+			const placeholder = document.createElement('div');
+			placeholder.dataset.vlPlaceholder = '';
+			placeholder.dataset.index = '0';
+
+			const actual = getContainerConfig('restoreList').lastFocusedRestore({key: 150}, [placeholder]);
+
+			// Once focused, the placeholder hands the index to the list so it can focus that item
+			expect(actual).toBe(placeholder);
+			expect(placeholder.dataset.index).toBe('150');
+		});
+	});
+
+	describe('native scroll position', () => {
+		const scrollListContent = (scrollMode) => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					dataSize={dataSize}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					scrollMode={scrollMode}
+				/>
+			);
+			const scrollContent = screen.getByRole('list').parentElement;
+
+			scrollContent.scrollTop = 50;
+			fireEvent.scroll(scrollContent);
+
+			return scrollContent;
+		};
+
+		test('should keep the native scroll position at the start in translate mode', () => {
+			const scrollContent = scrollListContent('translate');
+
+			expect(scrollContent.scrollTop).toBe(0);
+		});
+
+		test('should keep the native scroll position in native mode', () => {
+			const scrollContent = scrollListContent('native');
+
+			expect(scrollContent.scrollTop).toBe(50);
 		});
 	});
 });

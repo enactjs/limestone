@@ -1,7 +1,9 @@
+import Spotlight from '@enact/spotlight';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
 import {createEvent, fireEvent, render, screen, waitFor} from '@testing-library/react';
 
+import Button from '../../Button';
 import {Popup} from '../Popup';
 
 const FloatingLayerController = FloatingLayerDecorator('div');
@@ -511,5 +513,158 @@ describe('Popup specs', () => {
 		const expected = 'hidden';
 
 		expect(transitionContainer).toHaveClass(expected);
+	});
+
+	test('should not pause Spotlight when `open` changes between falsy values', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Popup open={null}>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Popup open={false}>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		const actual = Spotlight.isPaused();
+
+		Spotlight.resume();
+
+		expect(actual).toBe(false);
+	});
+
+	test('should resume Spotlight when unmounted while opening', () => {
+		const {rerender} = render(
+			<FloatingLayerController>
+				<Popup>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController>
+				<Popup open>
+					<div>popup</div>
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		rerender(
+			<FloatingLayerController />
+		);
+
+		const actual = Spotlight.isPaused();
+
+		Spotlight.resume();
+
+		expect(actual).toBe(false);
+	});
+
+	describe('closing with 5-way keys', () => {
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		const renderPopup = (props, content = <div>popup</div>) => render(
+			<FloatingLayerController>
+				<Popup noAnimation open {...props}>
+					{content}
+				</Popup>
+			</FloatingLayerController>
+		);
+
+		test('should close on a direction key when it has nothing to focus', () => {
+			const handleClose = jest.fn();
+			renderPopup({onClose: handleClose});
+
+			fireEvent.keyDown(screen.getByText('popup'), {keyCode: 38});
+
+			expect(handleClose).toHaveBeenCalled();
+		});
+
+		test('should not close on a direction key when `no5WayClose` is set', () => {
+			const handleClose = jest.fn();
+			renderPopup({no5WayClose: true, onClose: handleClose});
+
+			fireEvent.keyDown(screen.getByText('popup'), {keyCode: 38});
+
+			expect(handleClose).not.toHaveBeenCalled();
+		});
+
+		describe('with focusable content', () => {
+			// Focus may only leave a popup, and so close it, when the popup does not restrict focus to itself
+			const setUpFocusedPopup = (props) => {
+				renderPopup({spotlightRestrict: 'self-first', ...props}, <Button>button</Button>);
+				const button = screen.getByRole('button');
+				jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(button);
+				jest.spyOn(Spotlight, 'getSpottableDescendants').mockReturnValue([button]);
+
+				return button;
+			};
+
+			test('should move focus instead of closing when focus can move', () => {
+				const handleClose = jest.fn();
+				const button = setUpFocusedPopup({onClose: handleClose});
+				const moveSpy = jest.spyOn(Spotlight, 'move').mockReturnValue(true);
+
+				fireEvent.keyDown(button, {keyCode: 40});
+
+				expect(moveSpy).toHaveBeenCalledWith('down');
+				expect(handleClose).not.toHaveBeenCalled();
+			});
+
+			test('should close a bottom popup when focus cannot move up out of it', () => {
+				const handleClose = jest.fn();
+				const button = setUpFocusedPopup({onClose: handleClose, position: 'bottom'});
+				jest.spyOn(Spotlight, 'move').mockReturnValue(false);
+
+				fireEvent.keyDown(button, {keyCode: 38});
+
+				expect(handleClose).toHaveBeenCalled();
+			});
+
+			test('should not close a bottom popup when focus cannot move down', () => {
+				const handleClose = jest.fn();
+				const button = setUpFocusedPopup({onClose: handleClose, position: 'bottom'});
+				jest.spyOn(Spotlight, 'move').mockReturnValue(false);
+
+				fireEvent.keyDown(button, {keyCode: 40});
+
+				expect(handleClose).not.toHaveBeenCalled();
+			});
+
+			test.each([
+				['center', 37],
+				['top', 40],
+				['left', 39],
+				['right', 37]
+			])('should close a %s popup when focus cannot move away from its content', (position, keyCode) => {
+				const handleClose = jest.fn();
+				const button = setUpFocusedPopup({onClose: handleClose, position});
+				jest.spyOn(Spotlight, 'move').mockReturnValue(false);
+
+				fireEvent.keyDown(button, {keyCode});
+
+				expect(handleClose).toHaveBeenCalled();
+			});
+
+			test('should neither move focus nor close when focus is restricted to the popup', () => {
+				const handleClose = jest.fn();
+				const button = setUpFocusedPopup({onClose: handleClose, spotlightRestrict: 'self-only'});
+				const moveSpy = jest.spyOn(Spotlight, 'move');
+
+				fireEvent.keyDown(button, {keyCode: 38});
+
+				expect(moveSpy).not.toHaveBeenCalled();
+				expect(handleClose).not.toHaveBeenCalled();
+			});
+		});
 	});
 });

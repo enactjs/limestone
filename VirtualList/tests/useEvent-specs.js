@@ -1,3 +1,4 @@
+import Spotlight from '@enact/spotlight';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen} from '@testing-library/react';
 
@@ -192,6 +193,73 @@ describe('VirtualList useEvent', () => {
 		item1.dataset.index = '20';
 		keyDownRepeat(40)(item1);
 		expect(currentFocusIndex).toBe(1);
+
+		// Release the held key so the key hold state does not carry over to other tests
+		fireEvent.keyUp(item1, {keyCode: 40});
+	});
+
+	describe('wrap', () => {
+		let focusSpy;
+
+		beforeEach(() => {
+			focusSpy = jest.spyOn(Spotlight, 'focus');
+		});
+
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		// Spotlight reports the focused item as current
+		const focusItem = (item) => {
+			jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(item);
+			focus(item);
+		};
+
+		// The indexes of the items spotlight was asked to focus
+		const focusedIndexes = () => focusSpy.mock.calls.map(([node]) => node && node.dataset && node.dataset.index);
+
+		const setUpShortList = (props) => {
+			render(
+				<VirtualList
+					clientSize={clientSize}
+					dataSize={5}
+					itemRenderer={renderItem}
+					itemSize={itemSize}
+					{...props}
+				/>
+			);
+
+			const list = screen.getByRole('list');
+
+			return (index) => list.children.item(index).children.item(0);
+		};
+
+		test('should move focus from the last item to the first one when `wrap` is set', () => {
+			const getItem = setUpShortList({wrap: true});
+
+			focusItem(getItem(4));
+			pressDownKey(getItem(4));
+
+			expect(focusedIndexes()).toContain('0');
+		});
+
+		test('should move focus from the first item to the last one when `wrap` is set', () => {
+			const getItem = setUpShortList({wrap: true});
+
+			focusItem(getItem(0));
+			pressUpKey(getItem(0));
+
+			expect(focusedIndexes()).toContain('4');
+		});
+
+		test('should not move focus past the last item when `wrap` is not set', () => {
+			const getItem = setUpShortList();
+
+			focusItem(getItem(4));
+			pressDownKey(getItem(4));
+
+			expect(focusedIndexes()).not.toContain('0');
+		});
 	});
 
 	test('should scroll by page-down key', () => {

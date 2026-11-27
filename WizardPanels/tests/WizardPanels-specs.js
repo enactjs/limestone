@@ -857,4 +857,81 @@ describe('WizardPanels Specs', () => {
 			expect(actual).toBe(expected);
 		}
 	);
+
+	test('should not mention the step in the `aria-label` when `noSteps` is set', () => {
+		render(
+			<WizardPanels noSteps>
+				<Panel title="Title" subtitle="Subtitle" />
+				<Panel />
+			</WizardPanels>
+		);
+
+		const header = screen.getByRole('region').children[0].children[0];
+
+		expect(screen.getByRole('list').children).toHaveLength(1);
+		expect(header).toHaveAttribute('aria-label', 'Title Subtitle');
+	});
+
+	test('should use the `aria-label` of the current Panel as is', () => {
+		render(
+			<WizardPanels>
+				<Panel aria-label="Custom label" />
+				<Panel />
+			</WizardPanels>
+		);
+
+		const header = screen.getByRole('region').children[0].children[0];
+
+		expect(header).toHaveAttribute('aria-label', 'Custom label');
+	});
+
+	test('should stay on the last panel when its next button is clicked', async () => {
+		const handleChange = jest.fn();
+		const user = userEvent.setup();
+		render(
+			<WizardPanels index={1} nextButtonVisibility="always" onChange={handleChange}>
+				<Panel />
+				<Panel />
+			</WizardPanels>
+		);
+
+		await user.click(screen.getByLabelText('Next'));
+
+		expect(handleChange).toHaveBeenCalledWith({index: 1, type: 'onChange'});
+	});
+
+	test('should not go back from the first panel when its previous button is clicked', async () => {
+		const handleChange = jest.fn();
+		const handlePrevClick = jest.fn();
+		const user = userEvent.setup();
+		render(
+			<WizardPanels index={0} onChange={handleChange} onPrevClick={handlePrevClick} prevButtonVisibility="always">
+				<Panel />
+				<Panel />
+			</WizardPanels>
+		);
+
+		await user.click(screen.getByLabelText('Previous'));
+
+		expect(handlePrevClick).toHaveBeenCalled();
+		expect(handleChange).not.toHaveBeenCalled();
+	});
+
+	test('should blur the focused element when going back on back key', () => {
+		render(
+			<WizardPanels defaultIndex={1}>
+				<Panel />
+				<Panel>test</Panel>
+			</WizardPanels>
+		);
+		const focused = screen.getByText('test');
+		const blur = jest.spyOn(focused, 'blur');
+		const currentSpy = jest.spyOn(Spotlight, 'getCurrent').mockReturnValue(focused);
+
+		fireEvent.keyUp(focused, {keyCode: 27});
+
+		expect(blur).toHaveBeenCalled();
+
+		currentSpy.mockRestore();
+	});
 });

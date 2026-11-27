@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import {Picker, PickerBase} from '../Picker';
 
@@ -110,5 +111,95 @@ describe('Picker Specs', () => {
 		const expected = "[\"Option 1\",\"The second one\",\"This is the third option\",\"4\"]";
 
 		expect(picker).toHaveAttribute('data-webos-voice-labels-ext', expected);
+	});
+
+	test('should show value, disabled, and title changes immediately', () => {
+		const {rerender} = render(
+			<Picker title="First" value={0}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		expect(screen.getByText('One')).toBeInTheDocument();
+		expect(screen.getByText('First')).toBeInTheDocument();
+		expect(screen.getAllByRole('button')[0]).toHaveAttribute('aria-disabled', 'false');
+
+		rerender(
+			<Picker disabled title="Next" value={2}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		expect(screen.getByText('Three')).toBeInTheDocument();
+		expect(screen.getByText('Next')).toBeInTheDocument();
+		expect(screen.queryByText('First')).not.toBeInTheDocument();
+		expect(screen.getAllByRole('button')[0]).toHaveAttribute('aria-disabled', 'true');
+		expect(screen.getAllByRole('button')[1]).toHaveAttribute('aria-disabled', 'true');
+	});
+
+	test('should keep picker buttons spottable when the value changes', () => {
+		const {rerender} = render(
+			<Picker value={1}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		const buttons = screen.getAllByRole('button');
+
+		expect(buttons[0]).toHaveClass('spottable');
+		expect(buttons[1]).toHaveClass('spottable');
+
+		rerender(
+			<Picker value={0}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		const nextButtons = screen.getAllByRole('button');
+
+		expect(nextButtons[0]).toHaveClass('spottable');
+		expect(nextButtons[1]).toHaveClass('spottable');
+		expect(screen.getByText('One')).toBeInTheDocument();
+
+		fireEvent.focus(nextButtons[0]);
+
+		expect(nextButtons[0]).toHaveAttribute('data-spotlight-focused');
+	});
+
+	test('should not use children that are not text as voice labels', () => {
+		render(
+			<Picker>
+				{[<span key="one">One</span>, 'Two']}
+			</Picker>
+		);
+
+		const picker = screen.getAllByRole('button')[0].parentElement;
+
+		expect(picker).toHaveAttribute('data-webos-voice-labels-ext', '["","Two"]');
+	});
+
+	test('should change the value in the opposite direction when `reverse` is set on a horizontal Picker', async () => {
+		const user = userEvent.setup();
+		const handleChange = jest.fn();
+		const {rerender} = render(
+			<Picker onChange={handleChange} value={1}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		await user.click(screen.getAllByRole('button')[0]);
+		const forward = handleChange.mock.calls[0][0].value;
+
+		rerender(
+			<Picker onChange={handleChange} reverse value={1}>
+				{['One', 'Two', 'Three']}
+			</Picker>
+		);
+
+		await user.click(screen.getAllByRole('button')[0]);
+		const reversed = handleChange.mock.calls[1][0].value;
+
+		expect(forward).not.toBe(reversed);
+		expect([forward, reversed].sort()).toEqual([0, 2]);
 	});
 });

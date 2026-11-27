@@ -90,6 +90,51 @@ describe('CardSports', () => {
 		expect(screen.getByText('Secondary Badge')).toBeInTheDocument();
 	});
 
+	test('should render a secondary score under each team score', () => {
+		render(
+			<CardSportsBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryScore: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryScore: '0/1'}}
+			/>
+		);
+
+		const scoreContainer = screen.getByText('2').parentElement;
+
+		expect(screen.getByText('1/2')).toBeInTheDocument();
+		expect(screen.getByText('1')).toBeInTheDocument();
+		expect(screen.getByText('0/1')).toBeInTheDocument();
+		expect(scoreContainer).toHaveTextContent('2:11/2:0/1');
+		expect(scoreContainer.textContent.match(/:/g)).toHaveLength(2);
+	});
+
+	test('should include the secondary score in the aria-label', () => {
+		render(
+			<CardSportsBase
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryScore: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryScore: '0/1'}}
+			>
+				Title
+			</CardSportsBase>
+		);
+
+		expect(screen.getByLabelText('Title 2 : 1 1/2 : 0/1')).toBeInTheDocument();
+	});
+
+	test('should use the provided `aria-label` instead of generating one', () => {
+		render(
+			<CardSportsBase
+				aria-label="Custom label"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2', secondaryScore: '1/2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1', secondaryScore: '0/1'}}
+			>
+				Title
+			</CardSportsBase>
+		);
+
+		expect(screen.getByLabelText('Custom label')).toBeInTheDocument();
+		expect(screen.queryByLabelText('Title 2 : 1 1/2 : 0/1')).not.toBeInTheDocument();
+	});
+
 	test('should render a single score when only one team has a score', () => {
 		render(
 			<CardSportsBase
@@ -127,5 +172,50 @@ describe('CardSports', () => {
 		);
 
 		expect(screen.queryAllByRole('img')).toHaveLength(2);
+	});
+
+	test('should compose its `aria-label` from the captions, the score and the selected state', () => {
+		render(
+			<CardSportsBase
+				data-testid="card"
+				label="Live"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1'}}
+				secondaryLabel="Round 1"
+				selected
+			>
+				Match
+			</CardSportsBase>
+		);
+
+		expect(screen.getByTestId('card')).toHaveAttribute('aria-label', 'Match Live Round 1 2 : 1 Selected');
+	});
+
+	test('should compose its `aria-label` from the available parts only', () => {
+		render(
+			<CardSportsBase
+				data-testid="card"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '3'}}
+				rightTeam={{backgroundColor: '#e31c23'}}
+			/>
+		);
+
+		expect(screen.getByTestId('card')).toHaveAttribute('aria-label', ' 3');
+	});
+
+	test('should use a given `aria-label` as is', () => {
+		render(
+			<CardSportsBase
+				aria-label="Custom label"
+				data-testid="card"
+				label="Live"
+				leftTeam={{backgroundColor: '#1b2a4a', score: '2'}}
+				rightTeam={{backgroundColor: '#e31c23', score: '1'}}
+			>
+				Match
+			</CardSportsBase>
+		);
+
+		expect(screen.getByTestId('card')).toHaveAttribute('aria-label', 'Custom label');
 	});
 });

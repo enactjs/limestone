@@ -96,4 +96,10 @@ describe('RangePicker Specs', () => {
 		expect(actual).toHaveClass(expectedInline);
 		expect(actual).toHaveClass(expectedHeader);
 	});
+
+	test('should pad a negative value after its sign', () => {
+		render(<RangePicker min={-100} max={100} value={-5} padded />);
+
+		expect(screen.getByText('-05')).toBeInTheDocument();
+	});
 });

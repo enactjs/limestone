@@ -1,3 +1,4 @@
+import Spotlight from '@enact/spotlight';
 import {FloatingLayerDecorator} from '@enact/ui/FloatingLayer';
 import '@testing-library/jest-dom';
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
@@ -250,5 +251,43 @@ describe('PopupTabLayout specs', () => {
 		leftKeyDown(firstItem);
 
 		expect(onBack).toHaveBeenCalled();
+	});
+
+	describe('optimized', () => {
+		afterEach(() => {
+			jest.restoreAllMocks();
+		});
+
+		test('should stay mounted but hidden while closed', () => {
+			render(
+				<FloatingLayerController>
+					<PopupTabLayout optimized><div>popupTabLayout</div></PopupTabLayout>
+				</FloatingLayerController>
+			);
+
+			const content = screen.getByText('popupTabLayout');
+
+			expect(content).toBeInTheDocument();
+			expect(content.closest('[style*="display: none"]')).not.toBeNull();
+		});
+
+		test('should be shown and focused when opened', () => {
+			const focusSpy = jest.spyOn(Spotlight, 'focus');
+			const {rerender} = render(
+				<FloatingLayerController>
+					<PopupTabLayout optimized spotlightId="optimizedLayout"><div>popupTabLayout</div></PopupTabLayout>
+				</FloatingLayerController>
+			);
+
+			rerender(
+				<FloatingLayerController>
+					<PopupTabLayout open optimized spotlightId="optimizedLayout"><div>popupTabLayout</div></PopupTabLayout>
+				</FloatingLayerController>
+			);
+
+			const content = screen.getByText('popupTabLayout');
+			expect(content.closest('[style*="display: none"]')).toBeNull();
+			expect(focusSpy).toHaveBeenCalledWith('optimizedLayout');
+		});
 	});
 });

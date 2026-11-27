@@ -129,4 +129,17 @@ describe('MediaOverlay', () => {
 		fireEvent.mouseUp(mediaOverlay);
 		expect(mediaOverlay).not.toHaveClass('pressed');
 	});
+
+	test('should render a title', () => {
+		render(<MediaOverlay source="abc.mp4" title="This is a title" />);
+
+		expect(screen.getByText('This is a title').parentElement.parentElement).toHaveClass('title');
+	});
+
+	test('should not render a title when `title` is not set', () => {
+		render(<MediaOverlay caption="caption" data-testid="mediaOverlay" source="abc.mp4" />);
+
+		const mediaOverlay = screen.getByTestId('mediaOverlay');
+		expect(mediaOverlay.querySelector('.title')).toBeNull();
+	});
 });
