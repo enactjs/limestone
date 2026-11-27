@@ -583,7 +583,7 @@ const StarRatingsBase = kind({
 			if (ariaLabel) return ariaLabel;
 
 			const baseLabel = $L('Star rating') + ' ' + $L('{value} out of {max} stars');
-			const fullLabel = baseLabel.concat($L(' change a value with left right button'));
+			const fullLabel = baseLabel.concat(' ').concat($L('change a value with left right button'));
 
 			return new IString(disabled ? baseLabel : fullLabel).format({value: ariaLabelValue || DEFAULT_SELECTING_VALUE, max});
 		},
